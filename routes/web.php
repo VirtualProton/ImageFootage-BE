@@ -15,3 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('admin/dashboard', 'Admin\DashboardController@dashboard');
+Route::get('admin', 'Admin\DashboardController@login');
