@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 Route::get('admin/dashboard', 'Admin\DashboardController@dashboard');
 Route::get('admin', 'Admin\DashboardController@login');
+Route::post('admin/admin_login_process', 'Admin\DashboardController@admin_login_process');
+Route::get('admin/logout', 'Admin\DashboardController@logout');
