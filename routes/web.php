@@ -14,7 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('admin/dashboard', 'Admin\DashboardController@dashboard');
-Route::get('admin', 'Admin\DashboardController@login');
-Route::post('admin/admin_login_process', 'Admin\DashboardController@admin_login_process');
-Route::get('admin/logout', 'Admin\DashboardController@logout');
+Auth::routes();
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+
+Route::get('/login', 'AdminController@login');
+Route::post('/authenticate', 'AdminController@authenticate');
+Route::get('logout', 'AdminController@logout');
+Route::get('/dashboard', 'DashboardController@dashboard');
+//Route::get('dashboard', 'Admin\DashboardController@dashboard');
+//Route::get('login', 'Admin\DashboardController@login');
+//Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');
+//Route::get('logout', 'Admin\DashboardController@logout');
+});

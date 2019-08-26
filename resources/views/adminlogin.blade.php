@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>Admin | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -34,21 +34,32 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
-
-    <form action="admin/admin_login_process" method="post">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+  <p class="login-box-msg">Sign in to start your session</p>
+  <span style="color:red;">@if( Session::has( 'success' ))
+     {{ Session::get( 'success' ) }}
+@elseif( Session::has( 'warning' ))
+     {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
+@endif
+</span>
+    <form action="{{ url('admin/authenticate') }}" method="post">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" name="ademail">
+        <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')}}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
+      @if ($errors->has('email'))
+      <div class="has_error" style="color:red;">{{ $errors->first('email') }}</div>
+     @endif
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="adpassword">
+        <input type="password" class="form-control" placeholder="Password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      @if ($errors->has('password'))
+      <div class="has_error" style="color:red;">{{ $errors->first('password') }}</div>
+     @endif
       <div class="row">
         <div class="col-xs-8">
-          
+
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
