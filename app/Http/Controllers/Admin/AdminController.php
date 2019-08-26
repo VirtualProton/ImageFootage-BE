@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    protected $redirectTo = '/admin/dashboard';
     /**
      * Create a new controller instance.
      *
@@ -13,7 +14,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('admin')->except('logout','login');
+
     }
 
     public function login(){
@@ -44,7 +45,7 @@ class AdminController extends Controller
     }
 
     public function logout(){
-        Auth::logout();
+        Auth::guard('admins')->logout();
         return redirect()->intended('admin/login');
     }
 }
