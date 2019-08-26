@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
-
 Route::get('/login', 'AdminController@login');
 Route::post('/authenticate', 'AdminController@authenticate');
 Route::get('logout', 'AdminController@logout');

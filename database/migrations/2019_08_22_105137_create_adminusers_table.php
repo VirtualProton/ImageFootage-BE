@@ -22,8 +22,8 @@ class CreateAdminusersTable extends Migration
 			$table->string('admin_address')->nullable();
 			$table->dateTime('admin_created_at')->nullable();
 			$table->dateTime('admin_lastlogin')->nullable();
-			$table->enum('admin_type', ['Super', 'Sub','Agent'])->default('Agent');
-			$table->enum('admin_status', ['Active', 'Inactive'])->default('Active');
+			$table->enum('admin_type',['Super', 'Sub','Agent'])->default('Agent');
+			$table->enum('admin_status',['Active', 'Inactive'])->default('Active');
             $table->timestamps();
         });
     }
