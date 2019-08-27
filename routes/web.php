@@ -20,6 +20,9 @@ Route::get('/login', 'AdminController@login');
 Route::post('/authenticate', 'AdminController@authenticate');
 Route::get('logout', 'AdminController@logout');
 Route::get('/dashboard', 'DashboardController@dashboard');
+Route::get('/add_product', 'ProductController@index');
+Route::post('/createproduct', 'ProductController@create');
+
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');
