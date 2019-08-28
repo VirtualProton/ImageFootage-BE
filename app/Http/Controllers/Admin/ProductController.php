@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -23,25 +24,36 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request){
+		 $this->validate($request, [
+            'owner_name'   => 'required',
+            'product_category' => 'required',
+			'product_sub_category' => 'required',
+			'product_vertical'=>'required'
+        ]);
 		 $product = new Product;
 		 $file = $request->file('product_image');
+		 $data = getimagesize($file);
+ 		 $dimenctions = $data[0].'x'.$data[1];
 		 //Get the first three characters using substr.
 		 $firstThreeCharacters = substr($request->owner_name, 0, 3);
 		 $firstThreeCharactersType = substr($request->product_type, 0, 3);
 		 $productid=$firstThreeCharacters.$firstThreeCharactersType;
          $product->product_id =$productid;
+		 $product->product_category=$request->product_category;
+		 $product->product_subcategory=$request->product_sub_category;  
 		 $product->product_owner=$request->owner_name;
 		 $product->product_title=$request->product_title;
 		 $product->product_vertical=$request->product_vertical;
 		 $product->product_keywords=$request->prodect_keywords;
 		 $product->product_thumbnail=$request->product_thumbnail;
-		// $product->product_main_image=$request->product_image;
+		 $product->product_size=$dimenctions;
 		 $product->product_release_details=$request->release_details;
 		 $product->product_price_small=$request->Price_small;
 		 $product->product_price_medium=$request->price_medium;
 		 $product->product_price_large=$request->price_large;
 		 $product->product_price_extralarge=$request->price_extra_large;
 		 $product->product_main_type=$request->product_type;
+		 $product->product_added_by=Auth::guard('admins')->user()->id;
 		 if(isset($request->sub_product_type) && !empty($request->sub_product_type)){
 		 	$product->product_sub_type=$request->sub_product_type;
 		 }

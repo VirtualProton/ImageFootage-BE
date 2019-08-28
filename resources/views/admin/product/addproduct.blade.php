@@ -35,6 +35,24 @@
                       <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="Product Bank/Owner Name">
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Product Category </label>
+                      <select class="form-control" name="product_category" id="product_category">
+                      <option value="">--Select Category --</option>
+                      <option value="1">1</option>
+                       <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Sub Category </label>
+                      <select class="form-control" name="product_sub_category" id="product_category">
+                      <option value="">--Select Sub Category --</option>
+                      <option value="1">1</option>
+                       <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
                       <label for="exampleInputPassword1">Product Type</label>
                       <div class="checkbox">
                           <label>
@@ -108,11 +126,6 @@
     
                       <p class="help-block">Example block-level help text here.</p>
                     </div>
-                     <div class="form-group">
-                      <label for="exampleInputFile">Product Size</label>
-                      <input type="text" id="product_size" placeholder="Product Size" class="form-control" name="product_size" readonly="readonly">
-                      <p class="help-block">Example block-level help text here.</p>
-                    </div>
                   </div>
                   <!-- /.box-body -->
     
@@ -127,4 +140,9 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  @endsection
+  @section('scripts')
+  <script>
+ 
+  </script>
   @endsection

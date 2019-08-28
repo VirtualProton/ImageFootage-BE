@@ -36,6 +36,7 @@ class CreateProductsTable extends Migration
 			$table->enum('product_sub_type', ['Footage','Vector','Photo','Illustrator'])->default('Photo');
 			$table->dateTime('product_added_on')->nullable();
             $table->timestamps();
+		});
 
     }
 
