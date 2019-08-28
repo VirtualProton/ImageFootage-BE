@@ -35,27 +35,61 @@ class ProductController extends Controller
 		 $product->product_vertical=$request->product_vertical;
 		 $product->product_keywords=$request->prodect_keywords;
 		 $product->product_thumbnail=$request->product_thumbnail;
-		 $product->product_main_image=$request->product_image;
+		// $product->product_main_image=$request->product_image;
 		 $product->product_release_details=$request->release_details;
 		 $product->product_price_small=$request->Price_small;
 		 $product->product_price_medium=$request->price_medium;
 		 $product->product_price_large=$request->price_large;
 		 $product->product_price_extralarge=$request->price_extra_large;
 		 $product->product_main_type=$request->product_type;
-		// $product->product_sub_type=$request->sub_product_type;
-		 $product->product_added_on=date('Y-m-d');
-		 $product->save();
-		 $last_id=$product->id;
-		 if($last_id < 10){
-			 $last_id='00'.$last_id;
-		 }else if($last_id < 100){
-			 $last_id='0'.$last_id;
+		 if(isset($request->sub_product_type) && !empty($request->sub_product_type)){
+		 	$product->product_sub_type=$request->sub_product_type;
 		 }
-		 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
-		 $product_update = Product::find($last_id);
-		 $product_update->product_id=$productid;
-		 $product_update->save();
-		  return $productid;
+		 $product->product_added_on=date('Y-m-d');
+		 $result=$product->save();
+		 $last_id=$product->id;
+		 if($result){
+			 if($last_id < 10){
+				 $last_id='00'.$last_id;
+			 }else if($last_id < 100){
+				 $last_id='0'.$last_id;
+			 }
+			 if($request->hasFile('product_image')) {
+				$image = $request->file('product_image');
+				$name = time().'.'.$image->getClientOriginalExtension();
+				$file_path='/uploads/';
+				if($request->product_type=='Image'){
+					if($request->sub_product_type=='Vector'){
+						$file_path.='image/vector/';
+					}else if($request->sub_product_type=='Illustrator'){
+						$file_path.='image/illustrator/';
+					}else{
+						$file_path.='image/photo/';
+					}
+					
+				}else if($request->product_type=='Footage'){
+					$file_path.='footage/';
+				}else if($request->product_type=='Editorial'){
+					if($request->sub_product_type=='Vector'){
+						$file_path.='editorial/vector/';
+					}else if($request->sub_product_type=='Illustrator'){
+						$file_path.='editorial/illustrator/';
+					}else{
+						$file_path.='editorial/photo/';
+					}
+				}
+				$destinationPath = public_path($file_path);
+				$image->move($destinationPath, $name);
+    		 }
+			 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
+			 $product_update = Product::find($last_id);
+			 $product_update->product_id=$productid;
+			 $product_update->product_main_image=$name;
+			 $product_update->save();
+			 return back()->with('success','Product Upload successful');
+		 }else{
+			 return back()->with('warning','Some problem occured.');
+		 }
     }
 
     /**

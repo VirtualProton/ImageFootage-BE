@@ -22,8 +22,11 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Add Product</h3>
                 </div>
-                <!-- /.box-header -->
-                <!-- form start -->
+               @if( Session::has( 'success' ))
+     			{{ Session::get( 'success' ) }}
+			   @elseif( Session::has( 'warning' ))
+                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
+			   @endif
                 <form action="{{ url('admin/createproduct') }}" role="form" method="post" enctype="multipart/form-data">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
