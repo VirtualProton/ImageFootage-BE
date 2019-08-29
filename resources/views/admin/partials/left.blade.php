@@ -46,7 +46,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> List Product</a></li>
+            <li><a href="{{ url('admin/all_products') }}"><i class="fa fa-circle-o"></i> List Product</a></li>
             <li><a href="{{ url('admin/add_product') }}"><i class="fa fa-circle-o"></i> Add Product</a></li>
           </ul>
         </li>

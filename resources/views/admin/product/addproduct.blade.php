@@ -56,17 +56,17 @@
                       <label for="exampleInputPassword1">Product Type</label>
                       <div class="checkbox">
                           <label>
-                            <input type="radio" name="product_type" value="Image"> Image
+                            <input type="radio" name="product_type" value="Image" class="product_type"> Image
                           </label>
                           <label>
-                            <input type="radio" name="product_type" value="Footage"> Footage
+                            <input type="radio" name="product_type" value="Footage" class="product_type"> Footage
                           </label>
                           <label>
-                            <input type="radio" name="product_type" value="Editorial"> Editorial
+                            <input type="radio" name="product_type" value="Editorial" class="product_type"> Editorial
                           </label>
                     	</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none;" id="sub_product_type">
                       <label for="exampleInputPassword1">Sub Product Type</label>
                       <div class="checkbox">
                           <label>
@@ -143,6 +143,16 @@
   @endsection
   @section('scripts')
   <script>
- 
+ //sub_product_type
+ $('.product_type').click(function(){
+ 	if($(this).is(":checked")){
+               var ptype=$(this).val();
+			   if(ptype == 'Image' || ptype == 'Editorial' ){
+				   $("#sub_product_type").css("display","block");
+			   }else{
+				   $("#sub_product_type").css("display","none");
+			   }
+    }
+ });
   </script>
   @endsection

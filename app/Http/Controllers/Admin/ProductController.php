@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use Auth;
+use Image;
 
 class ProductController extends Controller
 {
@@ -28,7 +29,11 @@ class ProductController extends Controller
             'owner_name'   => 'required',
             'product_category' => 'required',
 			'product_sub_category' => 'required',
-			'product_vertical'=>'required'
+			'product_vertical'=>'required',
+			'prodect_keywords'=>'required',
+			'release_details'=>'required',
+			'product_type'=>'required',
+			'product_image'=>'required|file'
         ]);
 		 $product = new Product;
 		 $file = $request->file('product_image');
@@ -115,16 +120,15 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+   public function productsList(){
+	   $product = new Product;
+	   $all_produst_list=$product->all()->toArray();
+	   $title = "Product List";
+	  // echo '<pre>';
+	   //print_r($all_produst_list);
+	   //echo '</pre>';
+       return view('admin.product.productlist', ['products' => $all_produst_list]);
+   }
 
     /**
      * Show the form for editing the specified resource.
