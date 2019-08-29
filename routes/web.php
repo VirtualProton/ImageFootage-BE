@@ -22,6 +22,7 @@ Route::get('logout', 'AdminController@logout');
 Route::get('/dashboard', 'DashboardController@dashboard');
 Route::get('/add_product', 'ProductController@index');
 Route::post('/createproduct', 'ProductController@create');
+Route::resource('/subadmin', 'SubAdminController');
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
