@@ -34,8 +34,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i>List Admin</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Add Admin</a></li>
+            <li><a href="{{ url('admin/subadmin') }}"><i class="fa fa-circle-o"></i>List Admin</a></li>
+            <li><a href="{{ url('admin/subadmin/create') }}"><i class="fa fa-circle-o"></i>Add Admin</a></li>
           </ul>
         </li>
         <li class="treeview">

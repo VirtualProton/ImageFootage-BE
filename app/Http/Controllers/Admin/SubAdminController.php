@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Roles;
 use App\Department;
+use App\Admin;
 
 class SubAdminController extends Controller
 {
@@ -18,6 +19,7 @@ class SubAdminController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->except('login','logout');
+
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +28,9 @@ class SubAdminController extends Controller
      */
     public function index()
     {
-        //
+        $this->Admin = new Admin();
+        $agentlist=$this->Admin->getAgentData();
+        return view('admin.subadmin.index',compact('agentlist'));
     }
 
     /**
@@ -50,7 +54,21 @@ class SubAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'department'   => 'required',
+            'role' => 'required',
+            'name' =>'required',
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+        ]);
+
+        $this->Admin = new Admin();
+        if($this->Admin->save_admin($request)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent has been created successfully !!!");
+        } else {
+            return redirect("admin/subadmin/create")->with("error", "Due to some error, Admin/Agent is not registered yet. Please try again!");
+        }
     }
 
     /**
@@ -72,7 +90,7 @@ class SubAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -84,7 +102,7 @@ class SubAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -95,6 +113,11 @@ class SubAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delagent = Admin::find($id);
+        $delagent->delete();
+
+        // redirect
+     return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
+
     }
 }

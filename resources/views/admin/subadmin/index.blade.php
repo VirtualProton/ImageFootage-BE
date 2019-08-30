@@ -2,101 +2,73 @@
 
 @section('content')
 
-<!-- Page -->
-<div class="page animsition" id="banners">
-    <div class="page-header">
-        <h1 class="page-title">Banners</h1>
-        <div class="page-header-actions">
-            <a class="btn btn-sm btn-default btn-outline btn-round" href="{{ URL::to('admin/banners/create')  }}" >
-                <i class="icon wb-plus-circle" aria-hidden="true"></i>
-                <span class="hidden-xs">Add New Banner</span>
-            </a>
-        </div>
-    </div>
-    <div class="page-content">
-        <!-- Panel Basic -->
-        <div class="panel">
-            <header class="panel-heading">
-                <div class="panel-actions"></div>
-                <h3 class="panel-title">List Banners</h3>
-            </header>
-            @include('admin.partials.message') 
-            <div class="panel-body">
-                <table class="table table-hover dataTable table-striped width-full" data-plugin="dataTable">
-                    <thead>
-                        <tr>
-                            <th>Banner Name</th> 
-                            <th>Link To</th> 
-                            <th>Show Only</th>
-                            <th>Status</th>
-                            <th data-orderable="false">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(!empty($records) && count($records) > 0)
-
-                        @foreach($records as $key => $item) 
-                        <tr>
-                            <td>{{ $item->banner_name }}</td>
-                            <td>{{ $item->link_to }}</td> 
-                            <td> 
-                                @if($item->show_only == 0)
-                                {{ "Text" }}
-                                @elseif($item->show_only == 1)
-                                {{ "Image" }}
-                                @else
-                                {{ "Text & Image" }}
-                                @endif
-                            </td>
-                            <td>@if ($item->status == 1)
-                                {{ "Active" }}
-                                @else
-                                {{ "De-Active" }}
-                                @endif</td>
-                            <td><a href="{{ URL::to('admin/banners/'.$item->id).'/edit' }}"><i class="icon wb-edit pull-left" aria-hidden="true"></i></a>
-                                {!! Form::open(array('url' => 'admin/banners/' . $item->id, 'class' => 'pull-left deletePage',
-                                'data-toggle'=>'modal', 'data-target' => '#confirmDelete', 'data-title' => 'Delete Banner', 'data-message' => 'Are you sure you want to delete this banner ?',
-                                'style' => 'display:inline')) !!}
-                                {!! Form::hidden('_method', 'DELETE') !!}
-                                <button type="button" class="" id="confirm">
-                                    <i class="icon wb-trash" aria-hidden="true"></i>
-                                </button> 
-                                {!! Form::close() !!} 
-                            </td>
-                        </tr>
-                        @endforeach
-
-                        @endif
-                    </tbody>
-                </table> 
+<div class="content-wrapper">
+<section class="content">
+<div class="row">
+<div class="col-xs-12">
+<div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Admin/Agent List</h3>
             </div>
-        </div>
-        <!-- End Panel Basic -->
-    </div>
+            @include('admin.partials.message')
+
+            <!-- /.box-header -->
+            <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="" style="width: 213.247px;">Name</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 262.135px;">Email</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 232.135px;">Mobile</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 183.247px;">Department</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 134.236px;">Role</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 134.236px;">Created Date</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 134.236px;">Status</th>
+                <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="width: 134.236px;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @if(count($agentlist) > 0)
+                    @foreach($agentlist as $agent)
+                <tr role="row" class="odd">
+                  <td class="sorting_1">{{$agent['name']}}</td>
+                  <td>{{$agent['email']}}</td>
+                  <td>{{$agent['mobile']}}</td>
+                  <td>{{$agent['department']['department']}}</td>
+                  <td>{{$agent['role']['role']}}</td>
+                  <td><?php echo date('D, d M, Y',strtotime($agent['created_at'])) ?></td>
+                  <td><?php echo ($agent['created_at']=='A'?"Active":"Inactive"); ?></td>
+                  <td><button href="{{ URL::to('admin/subadmin/edit/'.$agent['id']) }}"><i class="fa fa-edit" aria-hidden="true"></i></button> &nbsp; &nbsp;
+                 <form action="{{ route('subadmin.destroy', $agent['id']) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
+                        </form>
+                  </td>
+                </tr>
+                @endforeach
+                @endif
+
+              </table>
+              </div>
+              </div>
+            <!-- /.box-body -->
+          </div>
+<div>
 </div>
-<!-- End Page -->   
+</div>
 
-@include('admin.partials.confirm_delete')
+    </section>
+      <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    @endsection
+    @section('scripts')
 
-@endsection
+    <script>
+    $(function () {
+    $('#example1').DataTable();
+ })
+    </script>
 
-@section('scripts')
-
-<script>
-
-    $(document).ready(function ($) {
-
-        (function (document, window, $) {
-            'use strict';
-
-            var Site = window.Site;
-            $(document).ready(function () {
-                Site.run();
-            });
-        })(document, window, jQuery);
-
-        @include('admin.partials.confirm_delete_js')
-
-    });
-</script>
 @stop

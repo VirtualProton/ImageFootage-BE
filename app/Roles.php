@@ -9,4 +9,5 @@ class Roles extends Model
     protected $table = 'imagefootage_roles';
 
 
+
 }
