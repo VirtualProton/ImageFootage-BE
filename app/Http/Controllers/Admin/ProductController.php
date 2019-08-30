@@ -97,6 +97,20 @@ class ProductController extends Controller
 				}
 				$destinationPath = public_path($file_path);
 				$image->move($destinationPath, $name);
+				/* for thumbnail image */
+				/*if($request->product_type=='Image' || $request->product_type=='Editorial' ){
+					
+					$input['imagename'] ='thumbnail_'.$name;
+					$destinationPath1 = public_path($file_path.'thumb');
+					$img = Image::make($request->file('product_image')->getRealPath());
+					$img->resize(100, 100, function ($constraint) {
+						$constraint->aspectRatio();
+					})->save($destinationPath1.'/'.$input['imagename']);
+					//$destinationPath = public_path('/images');
+					//$image->move($destinationPath, $input['imagename']);
+					
+				}*/
+				/* end */
     		 }
 			 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $product_update = Product::find($last_id);
@@ -136,9 +150,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function changeProductStatus($status,$id)
     {
-        //
+        return $status;
     }
 
     /**

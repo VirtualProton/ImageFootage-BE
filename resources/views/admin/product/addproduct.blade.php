@@ -33,6 +33,9 @@
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Bank/Owner Name </label>
                       <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="Product Bank/Owner Name">
+                       @if ($errors->has('owner_name'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('owner_name') }}</div>
+                       @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Category </label>
@@ -43,6 +46,9 @@
                         <option value="3">3</option>
                       </select>
                     </div>
+                    @if ($errors->has('product_category'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_category') }}</div>
+                    @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Sub Category </label>
                       <select class="form-control" name="product_sub_category" id="product_category">
@@ -52,6 +58,9 @@
                         <option value="3">3</option>
                       </select>
                     </div>
+                    @if ($errors->has('product_sub_category'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_sub_category') }}</div>
+                    @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Product Type</label>
                       <div class="checkbox">
@@ -66,6 +75,9 @@
                           </label>
                     	</div>
                     </div>
+                    @if ($errors->has('product_type'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_type') }}</div>
+                    @endif
                     <div class="form-group" style="display:none;" id="sub_product_type">
                       <label for="exampleInputPassword1">Sub Product Type</label>
                       <div class="checkbox">
@@ -80,6 +92,9 @@
                           </label>
                     	</div>
                     </div>
+                     @if ($errors->has('sub_product_type'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('sub_product_type') }}</div>
+                    @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Product Vertical</label>
                       <div class="checkbox">
@@ -93,16 +108,25 @@
                             <input type="radio" name="product_vertical" value="Premium Rights Managed"> Premium Rights Managed
                           </label>
                     	</div>
+                         @if ($errors->has('product_vertical'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_vertical') }}</div>
+                         @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Product Keywords</label>
                       <textarea name="prodect_keywords" class="form-control" placeholder="Product Keywords">
                       </textarea>
+                       @if ($errors->has('prodect_keywords'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('prodect_keywords') }}</div>
+                      @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Release Details</label>
                       <textarea name="release_details" class="form-control" placeholder="Release Details">
                       </textarea>
+                       @if ($errors->has('release_details'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('release_details') }}</div>
+                    @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Small </label>
@@ -125,6 +149,9 @@
                       <input type="file" id="product_image" name="product_image">
     
                       <p class="help-block">Example block-level help text here.</p>
+                      @if ($errors->has('product_image'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_image') }}</div>
+                    @endif
                     </div>
                   </div>
                   <!-- /.box-body -->

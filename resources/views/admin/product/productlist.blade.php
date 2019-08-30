@@ -23,8 +23,8 @@
     <section class="content">
         <div class="row">
         	<div class="col-md-12">
-         		<div class="box box-primary">
-                <div class="box-header with-border">
+         		<div class="box box-primary" style="overflow-x:auto;">
+                <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title">Products List</h3>
                 </div>
                @if( Session::has( 'success' ))
@@ -42,6 +42,7 @@
                         <th>Product Owner</th>
                         <th>Product Vertical</th>
                         <th>Product Keywords</th>
+                        <th>Product Type</th>
                         <th>Product</th>
                         <th>Added On</th>
                         <th>Actions</th>
@@ -57,9 +58,35 @@
   <td>{{ $product['product_owner'] }} </td>
   <td>{{ $product['product_vertical'] }} </td>
   <td>{{ $product['product_keywords'] }} </td>
-  <td>{{ $product['product_main_image'] }} </td>
+  <td>{{ $product['product_main_type'] }} </td>
+  <td>
+  
+  @if($product['product_main_type'] =='Image')
+  	@if($product['product_sub_type'] =='Vector')
+
+    @elseif($product['product_sub_type'] =='Photo')
+    <img src="{{URL::asset('uploads/image/photo/'.$product['product_main_image'])}}" alt="User Image" width="100">
+    @elseif($product['product_sub_type'] =='Illustrator')
+    @endif
+  	
+  @elseif($product['product_main_type'] =='Footage')
+  @elseif($product['product_main_type'] =='Editorial')
+  	@if($product['product_sub_type'] =='Vector')
+
+    @elseif($product['product_sub_type'] =='Photo')
+    <img src="{{URL::asset('uploads/editorial/photo/'.$product['product_main_image'])}}" alt="User Image" width="100">
+    @elseif($product['product_sub_type'] =='Illustrator')
+    @endif
+  @endif
+  
+			</td>
   <td>{{ date('Y-m-d',strtotime($product['product_added_on'])) }} </td>
-  <td></td>
+  <td>  @if($product['product_status'] =='Active') 
+  			<a href="{{ url('admin/product/Inactive/'.$product['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+         @elseif($product['product_status'] =='Inactive')
+         	<a href="{{ url('admin/product/Active/'.$product['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+        @endif
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
   </tr>
 @endforeach
                     </tbody>
@@ -71,6 +98,7 @@
                         <th>Product Owner</th>
                         <th>Product Vertical</th>
                         <th>Product Keywords</th>
+                        <th>Product Type</th>
                         <th>Product</th>
                         <th>Added On</th>
                         <th>Actions</th>
