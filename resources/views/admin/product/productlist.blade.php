@@ -28,9 +28,9 @@
                   <h3 class="box-title">Products List</h3>
                 </div>
                @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
+     			<div class="alert alert-success">{{ Session::get( 'success' ) }}</div>
 			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
+               <div class="alert alert-danger"> {{ Session::get( 'warning' ) }}</div> <!-- here to 'withWarning()' -->
 			   @endif
               
                 <table id="example2" class="table table-bordered table-hover">
@@ -86,7 +86,9 @@
          @elseif($product['product_status'] =='Inactive')
          	<a href="{{ url('admin/product/Active/'.$product['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
         @endif
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+            <a href="{{ url('admin/editproduct/'.$product['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <a href="{{ url('admin/deleteproduct/'.$product['id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
   </tr>
 @endforeach
                     </tbody>
@@ -116,14 +118,14 @@
   <script>
   $(function () {
    
-    $('#example2').DataTable({
+    $('#example2').DataTable(/*{
       'paging'      : true,
       'lengthChange': false,
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    })
-  })
+    }*/);
+  });
 </script>
   @endsection
