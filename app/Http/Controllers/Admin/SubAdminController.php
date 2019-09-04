@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Roles;
-use App\Department;
-use App\Admin;
+use App\Models\Roles;
+use App\Models\Department;
+use App\Models\Admin;
 
 class SubAdminController extends Controller
 {
@@ -90,6 +90,12 @@ class SubAdminController extends Controller
      */
     public function edit($id)
     {
+        $title = "Add Admin/Agent";
+        $roles= Roles::where('status','=','A')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $this->Admin = new Admin();
+        $agent_data=$this->Admin->getAgentData($id);
+        return view('admin.subadmin.edit', compact('title','deparments','roles','agent_data'));
 
     }
 
@@ -103,6 +109,20 @@ class SubAdminController extends Controller
     public function update(Request $request, $id)
     {
 
+        $this->validate($request, [
+            'department'   => 'required',
+            'role' => 'required',
+            'name' =>'required',
+            'email'=>'required|email',
+            'password'=>'sometimes|nullable|min:6',
+        ]);
+
+        $this->Admin = new Admin();
+        if($this->Admin->update_admin($request,$id)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent has been updated successfully !!!");
+        } else {
+            return redirect("admin/subadmin/$id/edit")->with("error", "Due to some error, Admin/Agent is not updated yet. Please try again!");
+        }
     }
 
     /**
@@ -115,9 +135,8 @@ class SubAdminController extends Controller
     {
         $delagent = Admin::find($id);
         $delagent->delete();
-
-        // redirect
-     return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
+       // redirect
+       return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
 
     }
 }

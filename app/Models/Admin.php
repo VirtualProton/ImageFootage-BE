@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -38,8 +38,33 @@ class Admin  extends Authenticatable
       return true;
     }
 
-    public function getAgentData(){
+    public function getAgentData($id=NULL){
+
+        if($id==''){
         return Admin::where('id','<>','1')->with('role')->with('department')->get()->toArray();
+        }else{
+         return Admin::where('id','=',$id)->with('role')->with('department')->first()->toArray();
+        }
     }
 
+    public function update_admin($data,$id){
+        try{
+            $admin = Admin::find($id);
+            $admin->id = $id;
+            $admin->name = $data->name;
+            $admin->email = $data->email;
+            $admin->mobile = $data->mobile;
+            $admin->address = $data->address;
+            $admin->role_id = $data->role;
+            $admin->department_id = $data->department;
+            if(!empty($data->password)){
+            $admin->password =Hash::make($data->password);
+            }
+            $admin->save();
+       }catch (Exception $e) {
+        report($e);
+        return false;
+      }
+      return true;
+    }
 }

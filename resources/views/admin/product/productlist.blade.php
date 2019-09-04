@@ -27,12 +27,8 @@
                 <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title">Products List</h3>
                 </div>
-               @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
-			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
-			   @endif
-              
+                @include('admin.partials.message')
+
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
                         <th>Id</th>
@@ -47,7 +43,7 @@
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>
-                   
+
                     <tbody>
                      @foreach($products as $product)
                     <tr>
@@ -60,7 +56,7 @@
   <td>{{ $product['product_keywords'] }} </td>
   <td>{{ $product['product_main_type'] }} </td>
   <td>
-  
+
   @if($product['product_main_type'] =='Image')
   	@if($product['product_sub_type'] =='Vector')
 
@@ -68,7 +64,7 @@
     <img src="{{URL::asset('uploads/image/photo/'.$product['product_main_image'])}}" alt="User Image" width="100">
     @elseif($product['product_sub_type'] =='Illustrator')
     @endif
-  	
+
   @elseif($product['product_main_type'] =='Footage')
   @elseif($product['product_main_type'] =='Editorial')
   	@if($product['product_sub_type'] =='Vector')
@@ -78,15 +74,15 @@
     @elseif($product['product_sub_type'] =='Illustrator')
     @endif
   @endif
-  
+
 			</td>
   <td>{{ date('Y-m-d',strtotime($product['product_added_on'])) }} </td>
-  <td>  @if($product['product_status'] =='Active') 
+  <td>  @if($product['product_status'] =='Active')
   			<a href="{{ url('admin/product/Inactive/'.$product['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
          @elseif($product['product_status'] =='Inactive')
          	<a href="{{ url('admin/product/Active/'.$product['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
         @endif
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+            <i class="fa fa-pe01n-cil-square-o" aria-hidden="true"></i></td>
   </tr>
 @endforeach
                     </tbody>
@@ -115,7 +111,7 @@
   @section('scripts')
   <script>
   $(function () {
-   
+
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,

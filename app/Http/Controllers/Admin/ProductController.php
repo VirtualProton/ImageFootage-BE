@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Product;
+use App\Models\Product;
 use Auth;
 use Image;
 
@@ -45,7 +45,7 @@ class ProductController extends Controller
 		 $productid=$firstThreeCharacters.$firstThreeCharactersType;
          $product->product_id =$productid;
 		 $product->product_category=$request->product_category;
-		 $product->product_subcategory=$request->product_sub_category;  
+		 $product->product_subcategory=$request->product_sub_category;
 		 $product->product_owner=$request->owner_name;
 		 $product->product_title=$request->product_title;
 		 $product->product_vertical=$request->product_vertical;
@@ -83,7 +83,7 @@ class ProductController extends Controller
 					}else{
 						$file_path.='image/photo/';
 					}
-					
+
 				}else if($request->product_type=='Footage'){
 					$file_path.='footage/';
 				}else if($request->product_type=='Editorial'){
@@ -99,7 +99,7 @@ class ProductController extends Controller
 				$image->move($destinationPath, $name);
 				/* for thumbnail image */
 				/*if($request->product_type=='Image' || $request->product_type=='Editorial' ){
-					
+
 					$input['imagename'] ='thumbnail_'.$name;
 					$destinationPath1 = public_path($file_path.'thumb');
 					$img = Image::make($request->file('product_image')->getRealPath());
@@ -108,7 +108,7 @@ class ProductController extends Controller
 					})->save($destinationPath1.'/'.$input['imagename']);
 					//$destinationPath = public_path('/images');
 					//$image->move($destinationPath, $input['imagename']);
-					
+
 				}*/
 				/* end */
     		 }

@@ -1,156 +1,124 @@
 @extends('admin.layouts.default')
- 
+
 @section('content')
-<?php //echo $record[0]->id; echo '<pre>';print_r($record);die;?>
-<div class="page animsition" style="animation-duration: 0s; opacity: 1;">
-    <div class="page-header">
-        <h1 class="page-title">Edit Banner</h1>
-    </div>
-    <div class="page-content container-fluid">
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- Panel Standard Mode -->
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Banner Information</h3>
-                    </div>
-                    <div class="panel-body">
-                        {!! Form::open(array('url' => URL::to('admin/banners/'.$record->id), 'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'AddCMSPage','files'=> true,'autocomplete'=>false)) !!} 
-                        
-                        @include('admin.partials.message')
-                        
-                        <div class="form-group">
-                            <div class="input-group input-group-file col-sm-12 col-xs-12">   
-                                <label class="col-sm-3 text-left control-label">Banner Name</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="banner_name" value="{{ $record->banner_name }}" >
-                                </div>
-                                <div class="col-sm-offset-4 col-xs-offset-4"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="input-group input-group-file col-sm-12 col-xs-12">   
-                                <label class="col-sm-3 text-left control-label">Banner Link to</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="link_to" value="{{ $record->link_to }}" >
-                                </div>
-                                <div class="col-sm-offset-4 col-xs-offset-4"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-sm-3 text-left">Show Only</label>
-                            <div class="col-sm-6">
-                                <div class="radio-custom radio-default radio-inline marnone col-sm-4">
-                                    <input type="radio" id="inputBannerText" name="show_only" value="0" <?php if($record->status==0){echo 'checked="checked"';}?>>
-                                    <label for="inputBannerText">Banner Text</label>
-                                </div>
-                                <div class="radio-custom radio-default radio-inline marnone col-sm-4">
-                                    <input type="radio" id="inputBannerImage" name="show_only" value="1" <?php if($record->status==1){echo 'checked="checked"';}?>>
-                                    <label for="inputBannerImage">Banner Image</label>
-                                </div>
-                                <div class="radio-custom radio-default radio-inline marnone col-sm-4">
-                                    <input type="radio" id="inputBannertTextImage" name="show_only" value="2" <?php if($record->status==2){echo 'checked="checked"';}?>>
-                                    <label for="inputBannertTextImage">Banner Text & Image</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="input-group input-group-file col-sm-12 col-xs-12">   
-                                <label class="col-sm-3 text-left control-label">Banner Image</label>
-                                <div class="col-sm-6">
-                                    <div class="nav-tabs-horizontal">
-                                        <ul class="nav nav-tabs" data-plugin="nav-tabs" role="tablist">
-                                            @if(count($languages)>0)
-                                                @foreach($languages as $key => $lang)
-                                                    <li <?php if($key==0){echo 'class="active"';}?> role="presentation">
-                                                        <a data-toggle="tab" href="#banner_lang_image_<?php echo $lang->id; ?>" aria-controls="banner_lang_image_<?php echo $lang->id; ?>" role="tab">{{ $lang->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            @endif 
-                                        </ul>
-                                        <div class="tab-content padding-top-20">
-                                            @if(count($languages)>0)
-                                                @foreach($languages as $key => $lang)
-                                                    <div class="tab-pane <?php if($key==0){echo 'active';}?>" id="banner_lang_image_<?php echo $lang->id; ?>" role="tabpanel">
-                                                        <input type="file" class="form-control" name="banner_lang_image_<?php echo $lang->id; ?>" value="" style="border:none; padding-left:0" >
-                                                        
-                                                        @if (isset($bannerImages[$lang->id]['banner_image']) && !empty($bannerImages[$lang->id]['banner_image']))
-                                                        <img src="{{ asset('uploads/banners/'.$bannerImages[$lang->id]['banner_image'])}}" width="150" />
-                                                        <input type="hidden" name="old_image_<?php echo $lang->id; ?>" value="{{ $bannerImages[$lang->id]['banner_image'] }}" />
-                                                        @endif
-                                                    </div>
-                                                @endforeach
-                                            @endif 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-offset-4 col-xs-offset-4"></div>
-                            </div>
-                        </div>  
-                        
-                         <div class="form-group">
-                            <div class="input-group input-group-file col-sm-12 col-xs-12">   
-                                <label class="col-sm-3 text-left control-label">Banner Content</label>
-                                <div class="col-sm-6">
-                                    <textarea class="form-control" name="banner_text" rows="6" cols="100">{{ $record->banner_text }}</textarea> 
-                                </div>
-                                <div class="col-sm-offset-4 col-xs-offset-4"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="control-label col-sm-3 text-left">Status</label>
-                            <div class="col-sm-6">
-                                <div class="radio-custom radio-default radio-inline">
-                                    <input type="radio" id="inputBasicActive" name="inputStatus" value="1" <?php if($record->status==1){echo 'checked="checked"';}?>>
-                                    <label for="inputBasicActive">Active</label>
-                                </div>
-                                <div class="radio-custom radio-default radio-inline">
-                                    <input type="radio" id="inputBasicinactive" name="inputStatus" value="0" <?php if($record->status==0){echo 'checked="checked"';}?>>
-                                    <label for="inputBasicinactive">De Active</label>
-                                </div>
-                            </div>
-                        </div>        
-                        <div class="form-group">
-                        <div class="col-sm-6 col-sm-offset-3 col-xs-offset-0">
-                                <button type="submit" class="btn btn-primary" id="validateButton2">Update</button>
-                        </div>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
+<div class="content-wrapper">
+<section class="content">
+
+<div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Edit Admin/Agent</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            {!! Form::open(array('url' => URL::to('admin/subadmin/'.$agent_data['id']),  'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+              @include('admin.partials.message')
+
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Department</label>
+
+                  <div class="col-sm-4">
+                <div class="form-group">
+                 <select class="form-control" name="department" id="department">
+                    <option  value="">Select</option>
+                    @if(count($deparments) > 0)
+                    @foreach($deparments as $depatment)
+                    <option value={{$depatment->id}} <?php if($agent_data['department']['id']==$depatment->id){echo 'selected="selected"';}?>>{{$depatment->department}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Role</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="role" id="role">
+                    <option value="">Select</option>
+                    @if(count($roles) > 0)
+                    @foreach($roles as $role)
+                    <option value={{$role->id}} <?php if($agent_data['role']['id']==$role->id){echo 'selected="selected"';}?>>{{$role->role}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" value=<?php echo $agent_data['name']?>>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value=<?php echo $agent_data['email']?>>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                  </div>
                 </div>
 
-            </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value=<?php echo $agent_data['mobile']?>>
+                </div>
+                  </div>
+                </div>
 
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <textarea name="address" id="address" style="width:422px;height:74px;"><?php echo $agent_data['address']?></textarea>
+                </div>
+                  </div>
+                </div>
 
-        </div>
-    </div>  
-</div>    
-@endsection
+</div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default">Cancel</button>
+                {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
+              </div>
+              <!-- /.box-footer -->
+              {!! Form::close() !!}
+          </div>
 
-@section('scripts')
-<script src="{{ asset('assets/vendor/formvalidation/formValidation.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/formvalidation/framework/bootstrap.min.js') }}"></script>
+    </section>
+      <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    @endsection
+    @section('scripts')
+<script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+<script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
 <script>
 
 $(document).ready(function ($) {
 
-    (function (document, window, $) {
-        'use strict';
-
-        var Site = window.Site;
-        $(document).ready(function () {
-            Site.run();
-        });
-    })(document, window, jQuery);
-
-    // Example Validataion Standard Mode
+   // Example Validataion Standard Mode
     // ---------------------------------
     (function () {
-        $('#AddCMSPage').formValidation({
+
+        var i = 1;
+
+        $('#adminform').formValidation({
             framework: "bootstrap",
             button: {
                 selector: '#validateButton2',
@@ -158,56 +126,68 @@ $(document).ready(function ($) {
             },
             icon: null,
             fields: {
-                banner_name: {
+                department: {
                     validators: {
                         notEmpty: {
-                            message: 'Banner name is required'
+                            message: 'Department is required'
                         }
-
                     }
                 },
-                link_to: {
+                role: {
                     validators: {
                         notEmpty: {
-                            message: 'Banner link to is required'
-                        } 
+                            message: 'Role is required'
+                        }
                     }
-                }, 
-                banner_text: {
+                },
+                name: {
                     validators: {
                         notEmpty: {
-                            message: 'Banner text is required'
-                        } 
+                            message: 'Name is required'
+                        }
                     }
                 },
-                banner_lang_image_1:{
-                    validators:{
-                        file: {
-                            extension: 'jpeg,jpg,png,gif',
-                            type: 'image/jpeg,image/png,image/gif',
-                            message: 'Banner image must be an image' 
-                    } 
-                    }
+                email: {
+                 validators: {
+                notEmpty: {
+                  message: 'The email address is required and cannot be empty'
                 },
-                banner_lang_image_2:{
-                    validators:{
-                        file: {
-                            extension: 'jpeg,jpg,png,gif',
-                            type: 'image/jpeg,image/png,image/gif',
-                            message: 'Banner image must be an image' 
-                    } 
-                    }
+                emailAddress: {
+                  message: 'The email address is not valid'
+                }
+              }
+            },
+            password: {
+              validators: {
+               stringLength: {
+                  min: 6,
+                  message: 'The password must be more than 6 characters long'
+                }
+              }
+            },
+            mobile: {
+              validators: {
+                notEmpty: {
+                  message: 'The phone number is required and cannot be empty'
                 },
-                banner_lang_image_3:{
-                    validators:{
-                        file: {
-                            extension: 'jpeg,jpg,png,gif',
-                            type: 'image/jpeg,image/png,image/gif',
-                            message: 'Banner image must be an image' 
-                    } 
+                digits: {
+                    message: 'Please enter only digits'
+                },
+                stringLength:{
+                    min:10,
+                    max:10,
+                    message: 'Mobile number length should be 10 digits'
+                }
+              }
+             },
+                address: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Address is required'
+                        }
                     }
                 }
-                 
+
             }
         });
     })();
