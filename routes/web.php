@@ -25,7 +25,9 @@ Route::post('/createproduct', 'ProductController@create');
 Route::get('/all_products', 'ProductController@productsList');
 Route::resource('/subadmin', 'SubAdminController');
 Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
-
+Route::get('/deleteproduct/{id}', 'ProductController@destroy');
+Route::get('/editproduct/{id}', 'ProductController@updateProduct');
+Route::post('/editproduct', 'ProductController@update');
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');

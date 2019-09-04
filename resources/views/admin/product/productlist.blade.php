@@ -27,7 +27,9 @@
                 <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title">Products List</h3>
                 </div>
+
                 @include('admin.partials.message')
+
 
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
@@ -82,8 +84,11 @@
          @elseif($product['product_status'] =='Inactive')
          	<a href="{{ url('admin/product/Active/'.$product['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
         @endif
-            <i class="fa fa-pe01n-cil-square-o" aria-hidden="true"></i></td>
-  </tr>
+
+            <a href="{{ url('admin/editproduct/'.$product['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <a href="{{ url('admin/deleteproduct/'.$product['id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
+ </tr>
 @endforeach
                     </tbody>
                     <tfoot>
@@ -112,14 +117,14 @@
   <script>
   $(function () {
 
-    $('#example2').DataTable({
+    $('#example2').DataTable(/*{
       'paging'      : true,
       'lengthChange': false,
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    })
-  })
+    }*/);
+  });
 </script>
   @endsection
