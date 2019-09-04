@@ -30,6 +30,13 @@
                 <form action="{{ url('admin/createproduct') }}" role="form" method="post" enctype="multipart/form-data">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
+                   <div class="form-group">
+                      <label for="exampleInputEmail1">Product Title </label>
+                      <input type="text" class="form-control" name="product_title" id="product_title" placeholder="Product Title">
+                       @if ($errors->has('product_title'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_title') }}</div>
+                       @endif
+                    </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Bank/Owner Name </label>
                       <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="Product Bank/Owner Name">
