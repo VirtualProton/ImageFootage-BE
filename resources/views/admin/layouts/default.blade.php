@@ -44,6 +44,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 <!-- Dynamic Admin Header  -->
+
 @include('admin.partials.header')
 <!-- End  Dynamic Admin Header -->
 
