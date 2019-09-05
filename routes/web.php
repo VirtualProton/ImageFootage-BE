@@ -29,6 +29,16 @@ Route::get('/deleteproduct/{id}', 'ProductController@destroy');
 Route::get('/editproduct/{id}', 'ProductController@updateProduct');
 Route::post('/editproduct', 'ProductController@update');
 Route::get('/add_product_category', 'ProductCategoryController@index');
+Route::post('/insert_product_category', 'ProductCategoryController@createCategory');
+Route::get('/all_product_category', 'ProductCategoryController@productCategoryList');
+Route::get('/productcategory/{status}/{id}', 'ProductCategoryController@changeProductStatus');
+Route::get('/deleteproductcategory/{id}', 'ProductCategoryController@destroy');
+Route::get('/updateproductcategory/{id}', 'ProductCategoryController@updateProduct');
+Route::post('/editproductcategory', 'ProductCategoryController@update');
+Route::get('/add_product_subcategory', 'ProductSubCategory@index');
+
+
+
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');

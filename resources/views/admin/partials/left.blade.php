@@ -59,8 +59,20 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('admin/product_category_list') }}"><i class="fa fa-circle-o"></i>Product Category List</a></li>
+            <li><a href="{{ url('admin/all_product_category') }}"><i class="fa fa-circle-o"></i>Product Category List</a></li>
             <li><a href="{{ url('admin/add_product_category') }}"><i class="fa fa-circle-o"></i> Add Product Category</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Product Sub Category</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('admin/all_product_sudcategory') }}"><i class="fa fa-circle-o"></i>Product Sub Category List</a></li>
+            <li><a href="{{ url('admin/add_product_subcategory') }}"><i class="fa fa-circle-o"></i> Add Product Sub Category</a></li>
           </ul>
         </li>
 

@@ -5,12 +5,11 @@
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Add Product Category
+      <h1>Edit Product Category
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Add Product Category</li>
+        <li class="active">Edit Product Category</li>
       </ol>
     </section>
 
@@ -20,35 +19,37 @@
         	<div class="col-md-12">
          		<div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Add Product Category</h3>
+                  <h3 class="box-title">Edit Product Category</h3>
                 </div>
                @if( Session::has( 'success' ))
      			{{ Session::get( 'success' ) }}
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/insert_product_category') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/editproductcategory') }}" role="form" method="post" enctype="multipart/form-data">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                 <input type="hidden" name="product_category_id" value="{{ $productcategory['category_id'] }}">
                   <div class="box-body">
-                   <div class="form-group">
-                      <label for="exampleInputEmail1">Category Name </label>
-                      <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category Name">
+                  <div class="form-group">
+                     <label for="exampleInputEmail1">Category Name </label>
+                      <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category Name" value="{{ $productcategory['category_name'] }}">
                        @if ($errors->has('category_name'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('category_name') }}</div>
                        @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Category Display Order </label>
-                      <input type="text" class="form-control" name="category_order" id="category_order" placeholder="Category Display Order">
+                      <input type="text" class="form-control" name="category_order" id="category_order" placeholder="Category Display Order" value="{{ $productcategory['category_order'] }}">
                        @if ($errors->has('category_order'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('category_order') }}</div>
                        @endif
                     </div>
+           
                   </div>
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                   </div>
                 </form>
               </div>
