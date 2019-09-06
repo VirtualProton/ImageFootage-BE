@@ -28,10 +28,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191); //NEW: Increase StringLength
 
-           // print_r($modules); die;
         view()->composer('admin.layouts.default', function($view)
         {
-            $modules = Modules::where('status','=','A')->get()->toArray();
+            $modules = Modules::with('submodules')
+            ->where('status','=','A')
+            ->where('parent_module_id','=',0)
+            ->orderBy('sort_order','ASC')
+            ->get()->toArray();
+
             $view->with('modules', $modules);
         });
     }

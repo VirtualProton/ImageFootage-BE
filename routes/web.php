@@ -23,6 +23,8 @@ Route::get('/dashboard', 'DashboardController@dashboard');
 Route::get('/add_product', 'ProductController@index');
 Route::post('/createproduct', 'ProductController@create');
 Route::get('/all_products', 'ProductController@productsList');
+Route::get('/subadmin/status/{status}/{id}', 'SubAdminController@status');
+Route::get('/subadmin/access_management', 'SubAdminController@access_management');
 Route::resource('/subadmin', 'SubAdminController');
 Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
 Route::get('/deleteproduct/{id}', 'ProductController@destroy');

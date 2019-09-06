@@ -51,7 +51,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" value=<?php echo $agent_data['name']?>>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="<?php echo $agent_data['name']; ?>">
                 </div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value=<?php echo $agent_data['email']?>>
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>">
                 </div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value=<?php echo $agent_data['mobile']?>>
+                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php echo $agent_data['mobile']?>">
                 </div>
                   </div>
                 </div>

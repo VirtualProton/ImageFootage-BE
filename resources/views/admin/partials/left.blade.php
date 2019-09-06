@@ -26,20 +26,29 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
+        @if(count($modules)>0)
+        @foreach($modules as $eachmodule)
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>
-            <span>Admin User Managemnt</span>
+            <span>{{$eachmodule['module_name']}}</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          @if(count($eachmodule['submodules']) > 0)
+
           <ul class="treeview-menu">
-            <li><a href="{{ url('admin/subadmin') }}"><i class="fa fa-circle-o"></i>List Admin</a></li>
-            <li><a href="{{ url('admin/subadmin/create') }}"><i class="fa fa-circle-o"></i>Add Admin</a></li>
+          @foreach($eachmodule['submodules'] as $submodule)
+            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-circle-o"></i>{{$submodule['module_name']}}</a></li>
+         @endforeach
           </ul>
+         @endif
         </li>
-        <li class="treeview">
+        @endforeach
+        @endif
+        <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Products</span>
             <span class="pull-right-container">
@@ -50,8 +59,8 @@
             <li><a href="{{ url('admin/all_products') }}"><i class="fa fa-circle-o"></i> List Product</a></li>
             <li><a href="{{ url('admin/add_product') }}"><i class="fa fa-circle-o"></i> Add Product</a></li>
           </ul>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Product Category</span>
             <span class="pull-right-container">
@@ -62,8 +71,8 @@
             <li><a href="{{ url('admin/all_product_category') }}"><i class="fa fa-circle-o"></i>Product Category List</a></li>
             <li><a href="{{ url('admin/add_product_category') }}"><i class="fa fa-circle-o"></i> Add Product Category</a></li>
           </ul>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Product Sub Category</span>
             <span class="pull-right-container">
@@ -74,7 +83,7 @@
             <li><a href="{{ url('admin/all_product_sudcategory') }}"><i class="fa fa-circle-o"></i>Product Sub Category List</a></li>
             <li><a href="{{ url('admin/add_product_subcategory') }}"><i class="fa fa-circle-o"></i> Add Product Sub Category</a></li>
           </ul>
-        </li>
+        </li> -->
 
       </ul>
     </section>

@@ -139,4 +139,33 @@ class SubAdminController extends Controller
        return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
 
     }
+
+    /**
+     * Changing the status of subadmin user.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function status($type,$id)
+    {
+        $title = "Change Status Admin/Agent";
+        $this->Admin = new Admin();
+        if($this->Admin->change_status($type,$id)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent status has been changed successfully !!!");
+        } else {
+            return redirect("admin/subadmin")->with("error", "Due to some error, Admin/Agent status is not changed yet. Please try again!");
+        }
+    }
+    /**
+     * Give access managemnt to roles as per department.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function access_management(){
+
+
+    }
+
+
 }

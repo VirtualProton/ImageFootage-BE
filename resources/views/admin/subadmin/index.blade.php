@@ -47,8 +47,15 @@
                   <td>{{$agent['department']['department']}}</td>
                   <td>{{$agent['role']['role']}}</td>
                   <td><?php echo date('D, d M, Y',strtotime($agent['created_at'])) ?></td>
-                  <td><?php echo ($agent['created_at']=='A'?"Active":"Inactive"); ?></td>
-                  <td><a href="{{ URL::to('admin/subadmin/'.$agent['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
+                  <td><?php echo ($agent['admin_status']=='A'?"Active":"Inactive"); ?></td>
+                  <td>
+                  @if($agent['admin_status'] =='A')
+                    <a href="{{ url('admin/subadmin/status/I/'.$agent['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+                  @elseif($agent['admin_status'] =='I')
+                    <a href="{{ url('admin/subadmin/status/A/'.$agent['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+                  @endif
+                  <a href="{{ URL::to('admin/subadmin/'.$agent['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
+
                   <form action="{{ route('subadmin.destroy', $agent['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf

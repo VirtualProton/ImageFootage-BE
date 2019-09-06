@@ -67,4 +67,17 @@ class Admin  extends Authenticatable
       }
       return true;
     }
+    //change status of subadmin
+    public function change_status($flag,$id){
+      try{
+        $admin = Admin::find($id);
+        $admin->id = $id;
+        $admin->admin_status = $flag;
+        $admin->save();
+        }catch (Exception $e) {
+        report($e);
+        return false;
+      }
+      return true;
+    }
 }
