@@ -5,12 +5,11 @@
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Add Product Sub Category
+      <h1>Edit Product Subcategory
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Add Product Sub Category</li>
+        <li class="active">Edit Product Subcategory</li>
       </ol>
     </section>
 
@@ -20,47 +19,49 @@
         	<div class="col-md-12">
          		<div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Add Product Sub Category</h3>
+                  <h3 class="box-title">Edit Product Subcategory</h3>
                 </div>
                @if( Session::has( 'success' ))
      			{{ Session::get( 'success' ) }}
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/insert_product_subcategory') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/editproductsubcategory') }}" role="form" method="post" enctype="multipart/form-data">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  <div class="box-body">
-                  <div class="form-group">
+                 <input type="hidden" name="product_subcategory_id" value="{{ $ProductSubCategory['subcategory_id'] }}">
+                 <div class="form-group">
                       <label for="exampleInputEmail1">Category</label>
                       <select class="form-control" name="category" id="category"> 
                       	<option value="">Select Category</option>
                         @foreach($productcategory as $category)
-                        <option value="{{ $category['category_id'] }}">{{ $category['category_name'] }}</option>
+                        <option value="{{ $category['category_id'] }}" @if( $ProductSubCategory['category_id']==$category['category_id'] ) selected="selected" @endif >{{ $category['category_name'] }}</option>
                         @endforeach
                       </select>
                        @if ($errors->has('category'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('category') }}</div>
                        @endif
-                    </div>
-                   <div class="form-group">
-                      <label for="exampleInputEmail1">Sub Category Name </label>
-                      <input type="text" class="form-control" name="sub_category_name" id="sub_category_name" placeholder="Sub Category Name">
+                  </div>
+                  <div class="box-body">
+                  <div class="form-group">
+                     <label for="exampleInputEmail1">Sub Category Name </label>
+                      <input type="text" class="form-control" name="sub_category_name" id="sub_category_name" placeholder="Sub Category Name" value="{{ $ProductSubCategory['subcategory_name'] }}">
                        @if ($errors->has('sub_category_name'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('sub_category_name') }}</div>
                        @endif
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Sub Category Display Order </label>
-                      <input type="text" class="form-control" name="sub_category_order" id="sub_category_order" placeholder="Sub Category Display Order">
+                      <input type="text" class="form-control" name="sub_category_order" id="sub_category_order" placeholder="Sub Category Display Order" value="{{ $ProductSubCategory['subcategory_order'] }}">
                        @if ($errors->has('sub_category_order'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('sub_category_order') }}</div>
                        @endif
                     </div>
+           
                   </div>
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                   </div>
                 </form>
               </div>

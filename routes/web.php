@@ -37,7 +37,14 @@ Route::get('/productcategory/{status}/{id}', 'ProductCategoryController@changePr
 Route::get('/deleteproductcategory/{id}', 'ProductCategoryController@destroy');
 Route::get('/updateproductcategory/{id}', 'ProductCategoryController@updateProduct');
 Route::post('/editproductcategory', 'ProductCategoryController@update');
-Route::get('/add_product_subcategory', 'ProductSubCategory@index');
+Route::get('/add_product_subcategory', 'ProductSubCategoryController@index');
+Route::post('/insert_product_subcategory', 'ProductSubCategoryController@addProductSubCategory');
+Route::get('/all_product_subcategory', 'ProductSubCategoryController@productSubCategoryList');
+Route::get('/productsubcategory/{status}/{id}', 'ProductSubCategoryController@changeProductStatus');
+Route::get('/deleteproductsubcategory/{id}', 'ProductSubCategoryController@destroy');
+Route::get('/updateproductsubcategory/{id}', 'ProductSubCategoryController@updateProduct');
+Route::post('/editproductsubcategory', 'ProductSubCategoryController@update');
+
 
 
 

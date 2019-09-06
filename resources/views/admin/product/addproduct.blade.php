@@ -47,10 +47,10 @@
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Category </label>
                       <select class="form-control" name="product_category" id="product_category">
-                      <option value="">--Select Category --</option>
-                      <option value="1">1</option>
-                       <option value="2">2</option>
-                        <option value="3">3</option>
+                      <option value="">--Select Category--</option>
+                        @foreach($productcategory as $category)
+                        <option value="{{ $category['category_id'] }}" >{{ $category['category_name'] }}</option>
+                        @endforeach
                       </select>
                     </div>
                     @if ($errors->has('product_category'))
@@ -60,9 +60,9 @@
                       <label for="exampleInputEmail1">Product Sub Category </label>
                       <select class="form-control" name="product_sub_category" id="product_category">
                       <option value="">--Select Sub Category --</option>
-                      <option value="1">1</option>
-                       <option value="2">2</option>
-                        <option value="3">3</option>
+                      @foreach($productsubcategory as $subcategory)
+                        <option value="{{ $subcategory['subcategory_id'] }}" >{{ $subcategory['subcategory_name'] }}</option>
+                        @endforeach
                       </select>
                     </div>
                     @if ($errors->has('product_sub_category'))

@@ -7,6 +7,8 @@ use App\Models\Product;
 use Auth;
 use Image;
 use File;
+use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 
 class ProductController extends Controller
 {
@@ -16,8 +18,12 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+		$ProductCategory = new ProductCategory;
+	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
+		$ProductSubCategory= new ProductSubCategory;
+		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
 		$title = "Add Product";
-        return view('admin.product.addproduct', compact('title'));
+        return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list]);
     }
 
     /**
