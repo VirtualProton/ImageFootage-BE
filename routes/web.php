@@ -44,8 +44,11 @@ Route::get('/productsubcategory/{status}/{id}', 'ProductSubCategoryController@ch
 Route::get('/deleteproductsubcategory/{id}', 'ProductSubCategoryController@destroy');
 Route::get('/updateproductsubcategory/{id}', 'ProductSubCategoryController@updateProduct');
 Route::post('/editproductsubcategory', 'ProductSubCategoryController@update');
+Route::post('/get_related_subcat', 'ProductController@get_relatedsubcat');
 
-
+Route::get('/add_contributor', 'ContributorController@index');
+Route::post('/addcontributor', 'ContributorController@addcontributor');
+Route::get('/contributor_list', 'ContributorController@contributorList');
 
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');

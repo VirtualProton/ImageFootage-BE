@@ -58,7 +58,7 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Sub Category </label>
-                      <select class="form-control" name="product_sub_category" id="product_category">
+                      <select class="form-control" name="product_sub_category" id="product_sub_category">
                       <option value="">--Select Sub Category --</option>
                       @foreach($productsubcategory as $subcategory)
                         <option value="{{ $subcategory['subcategory_id'] }}" >{{ $subcategory['subcategory_name'] }}</option>
@@ -187,6 +187,19 @@
 				   $("#sub_product_type").css("display","none");
 			   }
     }
+ });
+ $("#product_category").on('change',function(){
+	var prod_id=$(this).val();
+	var csrf='{{ csrf_token() }}';
+	$.ajax({
+			url: '{{ url("admin/get_related_subcat") }}',
+			type: 'POST',
+			data: {'prod_id':prod_id,'_token':csrf},
+			success:function(data){
+				$("#product_sub_category").html('');
+				$("#product_sub_category").html(data);
+			}
+		});
  });
   </script>
   @endsection

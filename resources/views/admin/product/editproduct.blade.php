@@ -49,10 +49,10 @@
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Category </label>
                       <select class="form-control" name="product_category" id="product_category">
-                      <option value="">--Select Category --</option>
-                      <option value="1" @if($product['product_category']==1) selected="selected" @endif >1</option>
-                       <option value="2"  @if($product['product_category']==2) selected="selected" @endif>2</option>
-                        <option value="3"  @if($product['product_category']==3) selected="selected" @endif>3</option>
+                        <option value="">--Select Category--</option>
+                        @foreach($productcategory as $category)
+                        <option value="{{ $category['category_id'] }}" @if($product['product_category']==$category['category_id']) selected="selected" @endif >{{ $category['category_name'] }}</option>
+                        @endforeach
                       </select>
                     </div>
                     @if ($errors->has('product_category'))
@@ -60,11 +60,9 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Sub Category </label>
-                      <select class="form-control" name="product_sub_category" id="product_category">
-                      <option value="">--Select Sub Category --</option>
-                      <option value="1" @if($product['product_subcategory']==1) selected="selected" @endif >1</option>
-                       <option value="2" @if($product['product_subcategory']==2) selected="selected" @endif>2</option>
-                        <option value="3" @if($product['product_subcategory']==3) selected="selected" @endif>3</option>
+                      <select class="form-control" name="product_sub_category" id="product_sub_category">
+                        <option value="">--Select Sub Category --</option>
+                      	
                       </select>
                     </div>
                     @if ($errors->has('product_sub_category'))
@@ -190,6 +188,31 @@
 				   $("#sub_product_type").css("display","none");
 			   }
     }
+ });
+ 	var prod_id=$("#product_category").val();
+	var prod_subcat="{{ $product['product_subcategory'] }}";
+	var csrf='{{ csrf_token() }}';
+	$.ajax({
+			url: '{{ url("admin/get_related_subcat") }}',
+			type: 'POST',
+			data: {'prod_id':prod_id,'_token':csrf,'prod_subcat':prod_subcat},
+			success:function(data){
+				$("#product_sub_category").html('');
+				$("#product_sub_category").html(data);
+			}
+		});
+ $("#product_category").on('change',function(){
+	var prod_id=$(this).val();
+	var csrf='{{ csrf_token() }}';
+	$.ajax({
+			url: '{{ url("admin/get_related_subcat") }}',
+			type: 'POST',
+			data: {'prod_id':prod_id,'_token':csrf},
+			success:function(data){
+				$("#product_sub_category").html('');
+				$("#product_sub_category").html(data);
+			}
+		});
  });
   </script>
   @endsection

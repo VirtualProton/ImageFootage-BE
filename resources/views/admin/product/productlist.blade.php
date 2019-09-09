@@ -35,12 +35,12 @@
                 	<thead>
                         <th>Id</th>
                         <th>Product Id</th>
-                        <th>Product Category</th>
-                        <th>Product Subcategory</th>
-                        <th>Product Owner</th>
-                        <th>Product Vertical</th>
-                        <th>Product Keywords</th>
-                        <th>Product Type</th>
+                        <th>Category</th>
+                        <th>Subcategory</th>
+                        <th>Owner</th>
+                        <th>Vertical</th>
+                        <th>Keywords</th>
+                        <th>Type</th>
                         <th>Product</th>
                         <th>Added On</th>
                         <th>Actions</th>
@@ -51,8 +51,8 @@
                     <tr>
   <td>{{ $product['id'] }} </td>
   <td>{{ $product['product_id'] }} </td>
-  <td>{{ $product['product_category'] }} </td>
-  <td>{{ $product['product_subcategory'] }} </td>
+  <td>{{ $product['category_name'] }} </td>
+  <td>{{ $product['subcategory_name'] }} </td>
   <td>{{ $product['product_owner'] }} </td>
   <td>{{ $product['product_vertical'] }} </td>
   <td>{{ $product['product_keywords'] }} </td>
@@ -94,12 +94,12 @@
                     <tfoot>
                         <th>Id</th>
                         <th>Product Id</th>
-                        <th>Product Category</th>
-                        <th>Product Subcategory</th>
-                        <th>Product Owner</th>
-                        <th>Product Vertical</th>
-                        <th>Product Keywords</th>
-                        <th>Product Type</th>
+                        <th>Category</th>
+                        <th>Subcategory</th>
+                        <th>Owner</th>
+                        <th>Vertical</th>
+                        <th>Keywords</th>
+                        <th>Type</th>
                         <th>Product</th>
                         <th>Added On</th>
                         <th>Actions</th>

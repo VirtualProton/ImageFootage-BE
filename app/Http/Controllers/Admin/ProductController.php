@@ -134,18 +134,18 @@ class ProductController extends Controller
     public function updateProduct($id)
     {
 		$product=Product::find($id)->toArray();
-		//echo '<pre>';
-		//print_r($product);
-        return view('admin.product.editproduct', ['product' => $product]);
+		$ProductCategory = new ProductCategory;
+	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
+		$ProductSubCategory= new ProductSubCategory;
+		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
+        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list]);
     }
 
    public function productsList(){
 	   $product = new Product;
-	   $all_produst_list=$product->all()->toArray();
+	   //$all_produst_list=$product->all()->toArray();
+	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
 	   $title = "Product List";
-	  // echo '<pre>';
-	   //print_r($all_produst_list);
-	   //echo '</pre>';
        return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
 
@@ -286,4 +286,24 @@ class ProductController extends Controller
 			 return back()->with('warning','Some problem occured.');
 		}
     }
+	public function get_relatedsubcat(Request $request){
+		$catid=$request->prod_id;
+		$prod_subcat=$request->prod_subcat;
+		$ProductSubCategory= new ProductSubCategory;
+		$all_produstsubcategory_list=$ProductSubCategory->where('category_id', $catid)->get()->toArray();
+		//print_r($all_produstsubcategory_list);
+		$subcat_o='<option>--Select Subcategory--</option>';
+		$selected='';
+		foreach($all_produstsubcategory_list as $key=>$subcat){
+			if(isset($prod_subcat) && !empty($prod_subcat)){
+				if($subcat['subcategory_id']==$prod_subcat){
+					$selected=' selected="selected"';
+				}else{
+					$selected='';
+				}
+			}
+			$subcat_o.='<option value="'.$subcat['subcategory_id'].'" '.$selected.'>'.$subcat['subcategory_name'].'</option>';
+		}
+		echo $subcat_o;
+	}
 }
