@@ -87,6 +87,7 @@
 
             <a href="{{ url('admin/editproduct/'.$product['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             <a href="{{ url('admin/deleteproduct/'.$product['id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            <a href="{{ url('admin/viewproduct/'.$product['id']) }}" title="View" ><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
  </tr>
 @endforeach

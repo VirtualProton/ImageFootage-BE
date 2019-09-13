@@ -31,7 +31,7 @@ class ContributorController extends Controller
          $contributor->contributor_memberid =$contributorid;
 		 $contributor->contributor_name=$request->contributor_name;
 		 $contributor->contributor_email=$request->contributor_email;
-		 $contributor->contributor_password=$request->contributor_password;
+		 $contributor->contributor_password=md5($request->contributor_password);
 		 $contributor->contributor_type=$request->contributor_type;
 		 $contributor->contributor_added_on=date('Y-m-d H:i:s');
 		 $contributor->contributor_addedby=Auth::guard('admins')->user()->id;
@@ -63,10 +63,86 @@ class ContributorController extends Controller
 	}
 	public function contributorList(){
 		$contributor = new Contributor;
-	   $all_produst_list=$contributor->all()->toArray();
-	  // echo '<pre>';
-	   //print_r($all_produst_list);
-	   //$title = "Product List";
-       //return view('admin.product.productlist', ['products' => $all_produst_list]);
+	   $all_contributor_list=$contributor->all()->toArray();
+       return view('admin.contributor.contributorlist', ['contributor' => $all_contributor_list]);
 	}
+	 public function changeContributorStatus($status,$id){
+		$result = Contributor::where('contributor_id',$id)->update(array('contributor_status'=>$status));
+		if($result){
+          return back()->with('success','Contributor status changed successful');
+		}else{
+		  return back()->with('warning','Some problem occured.');
+		}
+    }
+	 public function updateContributor($id)
+    {   $contributor=new Contributor;
+		$contributor_data=Contributor::find($id)->toArray();
+        return view('admin.contributor.editcontributor', ['contributor'=>$contributor_data]);
+    }
+	public function editcontributor(Request $request){
+		$name='';
+		 $this->validate($request, [
+		 	'contributor_name'=>'required',
+            'contributor_email'   => 'required',
+			'contributor_type'=>'required'
+        ]);
+		if(isset($request->contributor_password) && !empty($request->contributor_password)){
+			 $this->validate($request, [
+			  			'contributor_password' => 'required',
+		 				'contributor_confirm_password' => 'required|same:contributor_password'
+			
+        	]);
+		}
+		if($request->hasFile('contributor_idproof')) {
+		$this->validate($request, [
+			  			'contributor_idproof'=>'required|file'
+			
+        	]);
+		}
+		 $contributor = new Contributor;
+		 $contributor_data=Contributor::find($request->contributor_id)->toArray();
+		 $update_array=array('contributor_name'=>$request->contributor_name,
+		 					 'contributor_email'=>$request->contributor_email,
+							 'contributor_type'=>$request->contributor_type,
+							 'updated_at'=>date('Y-m-d H:i:s')
+							 );
+		 if(isset($request->contributor_password) && !empty($request->contributor_password)){
+			 $update_array['contributor_password']=md5($request->contributor_password);
+		 }
+		 if($request->hasFile('contributor_idproof')){
+				$image = $request->file('contributor_idproof');
+				$name = time().'.'.$image->getClientOriginalExtension();
+				$update_array['contributor_idproof']=$name;
+    	 }
+		 $result = Contributor::where('contributor_id',$request->contributor_id)->update($update_array);
+		 if($result){
+				 if($request->hasFile('contributor_idproof')) {
+					$image = $request->file('contributor_idproof');
+					$file_path='/uploads/idproof/';
+					$destinationPath = public_path($file_path);
+				 	File::delete($destinationPath.$contributor_data['contributor_idproof']);
+					$image->move($destinationPath, $name);
+					$update_array['contributor_idproof']=$name;
+				}
+				return back()->with('success','Contributor updated successful');
+		 }else{
+			    return back()->with('warning','Some problem occured.');
+		 }
+		       
+	}
+	public function destroy($id){
+		 $contributor_data=Contributor::find($id)->toArray();
+		
+		$del_result=Contributor::find($id)->delete();
+		if($del_result){
+			if(isset($contributor_data['contributor_idproof']) && !empty($contributor_data['contributor_idproof'])){
+				$file_path='/uploads/idproof/';
+				$destinationPath = public_path($file_path);
+				File::delete($destinationPath.$contributor_data['contributor_idproof']);
+			}
+			return back()->with('success','Contributor deleated successfully');
+		}else{
+			 return back()->with('warning','Some problem occured.');
+		}
+    }
 }

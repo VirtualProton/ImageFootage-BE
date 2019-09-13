@@ -9,6 +9,7 @@ use Image;
 use File;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Models\Contributor;
 
 class ProductController extends Controller
 {
@@ -18,12 +19,14 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+		$contributor=new Contributor;
+		$all_contributor_list=$contributor->where('contributor_status', 'Active')->get()->toArray();
 		$ProductCategory = new ProductCategory;
 	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
 		$ProductSubCategory= new ProductSubCategory;
 		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
 		$title = "Add Product";
-        return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list]);
+        return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list]);
     }
 
     /**
@@ -132,13 +135,14 @@ class ProductController extends Controller
 		 }
     }
     public function updateProduct($id)
-    {
+    {   $contributor=new Contributor;
+		$all_contributor_list=$contributor->where('contributor_status', 'Active')->get()->toArray();
 		$product=Product::find($id)->toArray();
 		$ProductCategory = new ProductCategory;
 	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
 		$ProductSubCategory= new ProductSubCategory;
 		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
-        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list]);
+        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list]);
     }
 
    public function productsList(){
@@ -305,5 +309,7 @@ class ProductController extends Controller
 			$subcat_o.='<option value="'.$subcat['subcategory_id'].'" '.$selected.'>'.$subcat['subcategory_name'].'</option>';
 		}
 		echo $subcat_o;
+	}
+	public function viewproduct($id){
 	}
 }

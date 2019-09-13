@@ -30,6 +30,8 @@ Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
 Route::get('/deleteproduct/{id}', 'ProductController@destroy');
 Route::get('/editproduct/{id}', 'ProductController@updateProduct');
 Route::post('/editproduct', 'ProductController@update');
+Route::post('/viewproduct/{id}', 'ProductController@viewproduct');
+
 Route::get('/add_product_category', 'ProductCategoryController@index');
 Route::post('/insert_product_category', 'ProductCategoryController@createCategory');
 Route::get('/all_product_category', 'ProductCategoryController@productCategoryList');
@@ -49,7 +51,11 @@ Route::post('/get_related_subcat', 'ProductController@get_relatedsubcat');
 Route::get('/add_contributor', 'ContributorController@index');
 Route::post('/addcontributor', 'ContributorController@addcontributor');
 Route::get('/contributor_list', 'ContributorController@contributorList');
-
+Route::get('/contributor_status/{status}/{id}', 'ContributorController@changeContributorStatus');
+Route::get('/updatecontributor/{id}', 'ContributorController@updateContributor');
+Route::post('/editcontributor', 'ContributorController@editcontributor');
+Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
+//editcontributor
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');

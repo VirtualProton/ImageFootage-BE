@@ -41,7 +41,12 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Bank/Owner Name </label>
-                      <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="Product Bank/Owner Name" value="{{ $product['product_owner'] }}">
+                      <select class="form-control" name="owner_name" id="owner_name">
+                      <option value="">--Product Bank/Owner Name--</option>
+                        @foreach($contributor as $contributor)
+                        <option value="{{ $contributor['contributor_memberid'] }}" @if($product['product_owner']==$contributor['contributor_memberid']) selected="selected" @endif >{{ $contributor['contributor_name'] }}</option>
+                        @endforeach
+                      </select>
                        @if ($errors->has('owner_name'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('owner_name') }}</div>
                        @endif
