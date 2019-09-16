@@ -7,6 +7,7 @@ use App\Models\Product;
 use Auth;
 use Image;
 use File;
+use Mail;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Contributor;
@@ -311,5 +312,16 @@ class ProductController extends Controller
 		echo $subcat_o;
 	}
 	public function viewproduct($id){
+		$product_details=Product::find($id)->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
+		return view('admin.product.viewproduct', ['product' => $product_details]);
 	}
+	public function html_email() {
+      $data = array('name'=>"srinivas");
+      Mail::send('mail', $data, function($message) {
+         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject
+            ('Laravel HTML Testing Mail');
+         $message->from('aksrinivas49@gmail.com','aksrinivas49');
+      });
+      echo "HTML Email Sent. Check your inbox.";
+   }
 }

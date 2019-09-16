@@ -30,7 +30,8 @@ Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
 Route::get('/deleteproduct/{id}', 'ProductController@destroy');
 Route::get('/editproduct/{id}', 'ProductController@updateProduct');
 Route::post('/editproduct', 'ProductController@update');
-Route::post('/viewproduct/{id}', 'ProductController@viewproduct');
+Route::get('/viewproduct/{id}', 'ProductController@viewproduct');
+Route::get('/email', 'ProductController@html_email');
 
 Route::get('/add_product_category', 'ProductCategoryController@index');
 Route::post('/insert_product_category', 'ProductCategoryController@createCategory');
