@@ -56,7 +56,10 @@ Route::get('/contributor_status/{status}/{id}', 'ContributorController@changeCon
 Route::get('/updatecontributor/{id}', 'ContributorController@updateContributor');
 Route::post('/editcontributor', 'ContributorController@editcontributor');
 Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
-//editcontributor
+
+Route::get('/create_package', 'PackageController@createPackage');
+Route::post('/addpackage', 'PackageController@addPackage');
+
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');

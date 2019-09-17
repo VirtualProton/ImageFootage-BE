@@ -27,7 +27,7 @@
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/editproduct') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/editproduct') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                  <input type="hidden" name="product_id" value="{{ $product['id'] }}">
                  <input type="hidden" name="file_name" value="{{ $product['product_main_image'] }}">
@@ -170,7 +170,7 @@
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
                   </div>
                 </form>
               </div>
@@ -182,6 +182,8 @@
   <!-- /.content-wrapper -->
   @endsection
   @section('scripts')
+  <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+  <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
   <script>
  //sub_product_type
  $('.product_type').click(function(){
@@ -220,4 +222,79 @@
 		});
  });
   </script>
+  <script>
+
+$(document).ready(function ($) {
+
+   // Example Validataion Standard Mode
+    // ---------------------------------
+    (function () {
+
+        var i = 1;
+
+        $('#productform').formValidation({
+            framework: "bootstrap",
+            button: {
+                selector: '#validateButton2',
+                disabled: 'disabled'
+            },
+            icon: null,
+            fields: {
+                product_title: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Product title is required'
+                        }
+                    }
+                },
+                owner_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Owner name is required'
+                        }
+                    }
+                },
+                product_category: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Product category is required'
+                        }
+                    }
+                },
+                product_sub_category: {
+                 validators: {
+                notEmpty: {
+                  message: 'Product sub category is required'
+                }
+              }
+            },
+            product_type: {
+              validators: {
+               stringLength: {
+                  message: 'Product type is required'
+                }
+              }
+            },
+            prodect_keywords: {
+              validators: {
+                notEmpty: {
+                  message: 'Product keywords is required'
+                }
+              }
+             },
+              release_details: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Release details is required'
+                        }
+                    }
+                }
+			 
+
+            }
+        });
+    })();
+
+});
+</script>
   @endsection
