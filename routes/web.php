@@ -60,6 +60,9 @@ Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
 Route::get('/create_package', 'PackageController@createPackage');
 Route::post('/addpackage', 'PackageController@addPackage');
 
+Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
+
+Route::resource('/accounts', 'AccountController');
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
