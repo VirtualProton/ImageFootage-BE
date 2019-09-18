@@ -59,6 +59,13 @@ Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
 
 Route::get('/create_package', 'PackageController@createPackage');
 Route::post('/addpackage', 'PackageController@addPackage');
+Route::get('/package_list', 'PackageController@packageList');
+Route::get('/package/{status}/{id}', 'PackageController@changePackageStatus');
+Route::get('/updatepackage/{id}', 'PackageController@updatePackage');
+Route::post('/editpackage', 'PackageController@editPackage');
+Route::get('/deletepackage/{id}', 'PackageController@deletePackage');
+
+
 
 Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
 
