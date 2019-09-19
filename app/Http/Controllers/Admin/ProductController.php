@@ -11,7 +11,7 @@ use Mail;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Contributor;
-
+use App\Models\ProductImages;
 class ProductController extends Controller
 {
     /**
@@ -48,6 +48,7 @@ class ProductController extends Controller
 			'product_image'=>'required|file'
         ]);
 		 $product = new Product;
+		 $productimages=new ProductImages;
 		 $file = $request->file('product_image');
 		 $data = getimagesize($file);
  		 $dimenctions = $data[0].'x'.$data[1];
@@ -125,6 +126,11 @@ class ProductController extends Controller
 				}*/
 				/* end */
     		 }
+			 $productimages->image_name=$name;
+			 $productimages->product_id=$last_id;
+			 $productimages->image_added_on=date('Y-m-d H:i:s');
+			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
+			 $productimages->save();
 			 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $product_update = Product::find($last_id);
 			 $product_update->product_id=$productid;
@@ -149,7 +155,7 @@ class ProductController extends Controller
    public function productsList(){
 	   $product = new Product;
 	   //$all_produst_list=$product->all()->toArray();
-	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
+	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.product_id', '=', 'imagefootage_products.id')->get()->toArray();
 	   $title = "Product List";
        return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
@@ -207,6 +213,7 @@ class ProductController extends Controller
 		 				$update_array['product_sub_type']=$request->sub_product_type;
 		 }
 		 if($request->hasFile('product_image')) {
+			 
 			 $image = $request->file('product_image');
 			  $file = $request->file('product_image');
 			  $name = time().'.'.$image->getClientOriginalExtension();
@@ -214,6 +221,9 @@ class ProductController extends Controller
 		 	  $data = getimagesize($file);
  		 	  $dimenctions = $data[0].'x'.$data[1];
 			  $update_array['product_size']=$dimenctions;
+			  $productimages=new ProductImages;
+			 $update_image=array('image_name'=>$name);
+			 $result = ProductImages::where('product_id',$request->product_id)->update($update_image);
 		 }
 		 $result = Product::where('id',$request->product_id)->update($update_array);
 		 if($result){
@@ -258,8 +268,7 @@ class ProductController extends Controller
      */
     public function destroy($id){
 		$product=Product::find($id)->toArray();
-		//echo '<pre>';
-		//print_r($product);
+		
 		$product_url='';
 		if($product['product_main_type'] =='Image'){
 			if($product['product_sub_type'] =='Vector'){
@@ -281,9 +290,9 @@ class ProductController extends Controller
 			}
 		}
 		$del_result=Product::find($id)->delete();
+		$del_result=ProductImages::where('product_id',$id)->delete();
 		if($del_result){
 			if(isset($product['product_main_image']) && !empty($product['product_main_image'])){
-				//unlink($product_url);
 				File::delete($product_url);
 			}
 			return back()->with('success','Product deleated successfully');

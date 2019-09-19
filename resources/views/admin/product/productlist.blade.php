@@ -72,7 +72,7 @@
   	@if($product['product_sub_type'] =='Vector')
 
     @elseif($product['product_sub_type'] =='Photo')
-    <img src="{{URL::asset('uploads/editorial/photo/'.$product['product_main_image'])}}" alt="User Image" width="100">
+    <img src="{{URL::asset('uploads/editorial/photo/'.$product['image_name'])}}" alt="User Image" width="100">
     @elseif($product['product_sub_type'] =='Illustrator')
     @endif
   @endif
