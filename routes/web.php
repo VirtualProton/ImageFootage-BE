@@ -65,6 +65,15 @@ Route::get('/updatepackage/{id}', 'PackageController@updatePackage');
 Route::post('/editpackage', 'PackageController@editPackage');
 Route::get('/deletepackage/{id}', 'PackageController@deletePackage');
 
+Route::get('/create_static_pages', 'StaticPagesController@createStaticPage');
+Route::post('/addstaticpage', 'StaticPagesController@addStaticPage');
+Route::get('/static_pages_list', 'StaticPagesController@statiePagesList');
+Route::get('/staticpages/{status}/{id}', 'StaticPagesController@changePackageStatus');
+Route::get('/updatestaticpage/{id}', 'StaticPagesController@updateStaticPage');
+Route::post('/editstaticpage', 'StaticPagesController@editStaticPage');
+Route::get('/deletestaticpage/{id}', 'StaticPagesController@deleteStaticPage');
+
+
 
 
 Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
