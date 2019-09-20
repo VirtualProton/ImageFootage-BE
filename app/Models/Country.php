@@ -10,7 +10,7 @@ class Country extends Model
     protected $table = 'countries';
 
     public function getCity($col=NULL,$value=NULL){
-        if(!empty($id) && !empty($type)){
+        if(!empty($col) && !empty($value)){
             $cities = DB::table('cities')->where($col,'=',$value)->get()->toArray();
         }else{
             $cities = DB::table('cities')->get()->toArray();
@@ -20,8 +20,8 @@ class Country extends Model
 
 
     public function getState($col=NULL,$value=NULL){
-        if(!empty($id)){
-            $states = DB::table('states')->where($col,'=',$value)->first();
+        if(!empty($col) && !empty($value)){
+            $states = DB::table('states')->where($col,'=',$value)->get()->toArray();
         }else{
             $states = DB::table('states')->get()->toArray();
         }
@@ -29,7 +29,7 @@ class Country extends Model
     }
 
     public function getcountrylist($col=NULL,$value=NULL){
-        if(!empty($id) && !empty($type)){
+        if(!empty($col) && !empty($value)){
             $countries = DB::table('countries')->where($col,'=',$value)->get()->toArray();
         }else{
             $countries = DB::table('countries')->get()->toArray();

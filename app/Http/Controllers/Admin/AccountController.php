@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Admin;
 use App\Models\Country;
 use App\Models\Common;
+use App\Models\Account;
 use DB;
 
 class AccountController extends Controller
@@ -31,9 +32,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $this->Admin = new Admin();
-        $agentlist=$this->Admin->getAgentData();
-        return view('admin.subadmin.index',compact('agentlist'));
+        $this->Account = new Account();
+        $accountlist=$this->Account->getAgentData();
+        return view('admin.account.index',compact('accountlist'));
     }
 
     /**
@@ -61,19 +62,12 @@ class AccountController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            'department'   => 'required',
-            'role' => 'required',
-            'name' =>'required',
-            'email'=>'required|email',
-            'password'=>'required|min:6',
-        ]);
 
-        $this->Admin = new Admin();
-        if($this->Admin->save_admin($request)){
-            return redirect("admin/subadmin")->with("success", "Admin/Agent has been created successfully !!!");
+        $this->Account = new Account();
+        if($this->Account->save_account($request)){
+            return redirect("admin/accounts")->with("success", "Account has been created successfully !!!");
         } else {
-            return redirect("admin/subadmin/create")->with("error", "Due to some error, Admin/Agent is not registered yet. Please try again!");
+            return redirect("admin/accounts/create")->with("error", "Due to some error, Account is not registered yet. Please try again!");
         }
     }
 

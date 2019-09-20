@@ -19,6 +19,7 @@
                   <div class="col-sm-4">
                   <div class="form-group">
                   <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name">
+                  {{ csrf_field() }}
                 </div>
                   </div>
                 </div>
@@ -52,7 +53,7 @@
 
                   <div class="col-sm-4">
                 <div class="form-group">
-                 <select class="form-control" name="bill_country" id="bill_country">
+                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
                     <option  value="">Select</option>
                     @if(count($countries) > 0)
                     @foreach($countries as $country)
@@ -69,7 +70,7 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="bill_state" id="bill_state">
+                  <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
                     <option value="">Select</option>
 
                   </select>
@@ -239,6 +240,13 @@ $(document).ready(function ($) {
                 }
               }
              },
+             website: {
+                    validators: {
+                        uri: {
+                            message: 'Please enter valid URL.'
+                        }
+                    }
+                },
              bill_country: {
                     validators: {
                         notEmpty: {
@@ -267,11 +275,96 @@ $(document).ready(function ($) {
                         }
                     }
                 },
+                bill_postal: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bill postal is required'
+                        },
+                        digits: {
+                            message: 'Please enter only digits'
+                        },
+                    }
+                },
+                industry_type_id: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Industry Type is required'
+                        }
+                    }
+                },
+                curruncy_id: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Curruncy is required'
+                        }
+                    }
+                },
+                global_region: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Global region is required'
+                        }
+                    }
+                },
 
             }
         });
     })();
 
 });
+
+function getstate(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#bill_state').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
+function getcity(data){
+    console.log(data.value);
+    $.ajax({
+            url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#bill_city').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
 </script>
 @stop
