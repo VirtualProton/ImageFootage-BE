@@ -6,19 +6,96 @@
 
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Edit Account</h3>
+              <h3 class="box-title">Add Lead/User/Contact</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/accounts/'.$account_data['id']),  'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+            {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
               @include('admin.partials.message')
+
               <div class="box-body">
               <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Account Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name" value="<?php echo $account_data['account_name']?>">
+                  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
                   {{ csrf_field() }}
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Last Name</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
+                </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                </div>
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">User Name</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="user_name" id="user_name" placeholder="User Name">
+                </div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Contact Owner</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="contact_owner" id="contact_owner" placeholder="Contact Owner">
+                </div>
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Account Manager</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="global_region" id="global_region">
+                    <option value="">Select</option>
+                    <option value="AS">AS</option>
+                    <option value="UAE">UAE</option>
+                    <option value="US">US</option>
+                    <option value="UK">UK</option>
+                    <option value="AU">AU</option>
+
+                  </select>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Extension</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="extension" name="extension" placeholder="Extension">
                 </div>
                   </div>
                 </div>
@@ -26,29 +103,22 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $account_data['email']?>">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email">
                 </div>
                   </div>
                 </div>
-                  <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $account_data['phone']?>">
-                </div>
-                  </div>
-                </div>
+                 
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Website</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="website" id="website" placeholder="Website" value="<?php echo $account_data['website']?>">
+                  <input type="text" class="form-control" name="website" id="website" placeholder="Website">
                 </div>
             </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Billing Country</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
 
                   <div class="col-sm-4">
                 <div class="form-group">
@@ -56,7 +126,7 @@
                     <option  value="">Select</option>
                     @if(count($countries) > 0)
                     @foreach($countries as $country)
-                    <option value={{$country->id}} <?php if($account_data['bill_country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                    <option value={{$country->id}}>{{$country->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -64,69 +134,58 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing State</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
 
                   <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
                     <option value="">Select</option>
-                    @if(count($states) > 0)
-                    @foreach($states as $state)
-                    <option value={{$state->id}} <?php if($account_data['bill_state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
-                    @endforeach
-                    @endif
+
                   </select>
                 </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing City</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">City</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
 
                   <select class="form-control" name="bill_city" id="bill_city">
                     <option value="">Select</option>
-                    @if(count($cities) > 0)
-                    @foreach($cities as $city)
-                    <option value={{$city->id}} <?php if($account_data['bill_city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
-                    @endforeach
-                    @endif
+
                   </select>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing Address</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"><?php echo $account_data['bill_address']?></textarea>
+                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"></textarea>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing Postal</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Postal</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code" value="<?php echo $account_data['bill_postal']?>">
+                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code">
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Industry Type</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-
-                  <select class="form-control" name="industry_type_id" id="industry_type_id">
+                 <select class="form-control" name="type" id="type">
                     <option value="">Select</option>
-                    @if(count($industry_types) > 0)
-                    @foreach($industry_types as $types)
-                    <option value={{$types->id}} <?php if($account_data['industry_type_id']==$types->id){echo 'selected="selected"';}?>>{{$types->name}}</option>
-                    @endforeach
-                    @endif
+                    <option value="L">Lead</option>
+                    <option value="U">User</option>
+                    <option value="C">Contact</option>
                   </select>
                 </div>
                   </div>
@@ -141,7 +200,7 @@
                     <option value="">Select</option>
                     @if(count($curruncies) > 0)
                     @foreach($curruncies as $cur)
-                    <option value={{$cur->id}} <?php if($account_data['curruncy_id']==$cur->id){echo 'selected="selected"';}?>>{{$cur->name}}</option>
+                    <option value={{$cur->id}}>{{$cur->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -157,11 +216,11 @@
 
                   <select class="form-control" name="global_region" id="global_region">
                     <option value="">Select</option>
-                    <option value="AS" <?php if($account_data['global_region']=='AS'){echo 'selected="selected"';}?>>AS</option>
-                    <option value="UAE" <?php if($account_data['global_region']=='UAE'){echo 'selected="selected"';}?>>UAE</option>
-                    <option value="US" <?php if($account_data['global_region']=='US'){echo 'selected="selected"';}?>>US</option>
-                    <option value="UK" <?php if($account_data['global_region']=='UK'){echo 'selected="selected"';}?>>UK</option>
-                    <option value="AU" <?php if($account_data['global_region']=='AU'){echo 'selected="selected"';}?>>AU</option>
+                    <option value="AS">AS</option>
+                    <option value="UAE">UAE</option>
+                    <option value="US">US</option>
+                    <option value="UK">UK</option>
+                    <option value="AU">AU</option>
 
                   </select>
                 </div>

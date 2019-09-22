@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\Common;
-use App\Models\Account;
+use App\Models\User;
 use DB;
 
-class AccountController extends Controller
+class UserController extends Controller
 {
 
     /**
@@ -31,7 +31,7 @@ class AccountController extends Controller
     {
         $this->Account = new Account();
         $accountlist=$this->Account->getAccountData();
-        return view('admin.account.index',compact('accountlist'));
+        return view('admin.user.index',compact('accountlist'));
     }
 
     /**
@@ -45,9 +45,7 @@ class AccountController extends Controller
         $this->Country = new Country();
         $this->Common = new Common();
         $countries = $this->Country->getcountrylist();
-        $industry_types =$this->Common->getIndustryTypes();
-        $curruncies = $this->Common->getCurruncy();
-        return view('admin.account.create', compact('title','countries','industry_types','curruncies'));
+        return view('admin.user.create', compact('title','countries'));
     }
 
     /**
@@ -62,9 +60,9 @@ class AccountController extends Controller
 
         $this->Account = new Account();
         if($this->Account->save_account($request)){
-            return redirect("admin/accounts")->with("success", "Account has been created successfully !!!");
+            return redirect("admin/users")->with("success", "Account has been created successfully !!!");
         } else {
-            return redirect("admin/accounts/create")->with("error", "Due to some error, Account is not registered yet. Please try again!");
+            return redirect("admin/users/create")->with("error", "Due to some error, Account is not registered yet. Please try again!");
         }
     }
 

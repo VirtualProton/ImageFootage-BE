@@ -70,6 +70,10 @@ Route::get('/deletepackage/{id}', 'PackageController@deletePackage');
 Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
 
 Route::resource('/accounts', 'AccountController');
+
+Route::get('/users/status/{status}/{id}', 'UserController@status');
+
+Route::resource('/users', 'UserController');
 Route::post('/getStatesByCounty', 'CommonController@getStatesByCounty');
 Route::post('/getCityByState', 'CommonController@getCityByState');
 
