@@ -27,7 +27,7 @@
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/insert_product_category') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/insert_product_category') }}" role="form" method="post" id="productform" enctype="multipart/form-data">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
                    <div class="form-group">
@@ -48,7 +48,7 @@
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="validateButton2">Submit</button>
                   </div>
                 </form>
               </div>
@@ -60,6 +60,8 @@
   <!-- /.content-wrapper -->
   @endsection
   @section('scripts')
+  <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+  <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
   <script>
  //sub_product_type
  $('.product_type').click(function(){
@@ -72,5 +74,41 @@
 			   }
     }
  });
+ $(document).ready(function ($) {
+
+   // Example Validataion Standard Mode
+    // ---------------------------------
+    (function () {
+
+        var i = 1;
+
+        $('#productform').formValidation({
+            framework: "bootstrap",
+            button: {
+                selector: '#validateButton2',
+                disabled: 'disabled'
+            },
+            icon: null,
+            fields: {
+                category_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Category Name is required'
+                        }
+                    }
+                },
+                category_order: {
+                    validators: {
+                        integer: {
+                        	message: 'The value is not an integer'
+                    	}
+                    }
+                }
+            }
+        });
+    })();
+
+});
+
   </script>
   @endsection

@@ -16,7 +16,7 @@ class Productimages extends Migration
       Schema::create('imagefootage_productimages', function (Blueprint $table) {
             $table->bigIncrements('image_id');
 			$table->string('image_name')->nullable();
-			$table->integer('product_id')->nullable();
+			$table->integer('image_product_id')->nullable();
 			$table->dateTime('image_added_on')->nullable();
 			$table->integer('image_added_by')->nullable();
 			$table->enum('image_status', ['Active', 'Inactive'])->default('Inactive');

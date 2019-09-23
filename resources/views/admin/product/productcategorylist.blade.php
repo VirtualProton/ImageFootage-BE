@@ -35,7 +35,7 @@
                 	<thead>
                         <th>Id</th>
                         <th>Product Category</th>
-                        <th>Product Category Order</th>
+                        <th>Product Category Alignment</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>

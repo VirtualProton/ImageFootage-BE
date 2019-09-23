@@ -34,6 +34,8 @@ class CreateProductsTable extends Migration
 			$table->enum('product_status', ['Active', 'Inactive'])->default('Inactive');
 			$table->enum('product_main_type', ['Image', 'Footage','Editorial'])->default('Image');
 			$table->enum('product_sub_type', ['Footage','Vector','Photo','Illustrator'])->default('Photo');
+			$table->string('product_verification')->nullable();
+			$table->string('product_rejectod_reason')->nullable();
 			$table->dateTime('product_added_on')->nullable();
             $table->timestamps();
 		});

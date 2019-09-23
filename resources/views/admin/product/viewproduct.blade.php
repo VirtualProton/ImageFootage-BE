@@ -26,6 +26,13 @@
          		<div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title">View Product</h3>
+                  <input type="hidden" value="{{ $product[0]['id'] }}" id="product_id" />
+                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button><button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button><button class="btn vbutton" type="Suggest">Suggest</button>
+                  <div id="demo" class="collapse">
+   <textarea id="reject_message" class="form-control" placeholder="Reason to reject"></textarea>
+   <button class="btn btn-info vbutton" type="Reject">Reject</button>
+   
+  </div>
                 </div>
 
                 @include('admin.partials.message')
@@ -183,4 +190,26 @@
   </div>
   <!-- /.content-wrapper -->
   @endsection
+  @section('scripts')
+  <script>
+  	$(".vbutton").click(function(){
+    	var btn_type=$(this).attr('type');
+		var csrf='{{ csrf_token() }}';
+		var prod_id=$('#product_id').val();
+		var message=$('#reject_message').val();
+		if(btn_type=='Reject' && message ==''){
+			alert('Reason is required.');
+			return false;
+		}
+        $.ajax({
+			url: '{{ url("admin/update_product_verify") }}',
+			type: 'POST',
+			data: {'prod_id':prod_id,'_token':csrf,'type':btn_type,'message':message},
+			success:function(data){
+				alert(data);
+			}
+		});
+    });
+	</script>
   
+  @endsection

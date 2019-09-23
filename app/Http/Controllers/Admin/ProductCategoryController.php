@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Auth;
+
 class ProductCategoryController extends Controller
 {
     public function index(){
@@ -53,14 +53,16 @@ class ProductCategoryController extends Controller
 		$productcategory=ProductCategory::find($id)->toArray();
         return view('admin.product.editproductcategory', ['productcategory' => $productcategory]);
     }
-	 public function update(Request $request){
-		 $this->validate($request, [
+	 public function editProductCategory(Request $request){
+		$this->validate($request, [
             'category_name'   => 'required'
         ]);
-		 $update_array=array('category_name'=>$request->category_name,'category_order'=>$request->category_order,
+		 $update_array=array('category_name'=>$request->category_name,
+		 					 'category_order'=>$request->category_order,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);
+		
 		 if($result){
 				return back()->with('success','Product Category updated successful');
 		 }else{

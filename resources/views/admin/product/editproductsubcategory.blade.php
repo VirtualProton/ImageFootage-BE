@@ -26,7 +26,7 @@
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/editproductsubcategory') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/editproductsubcategory') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                  <input type="hidden" name="product_subcategory_id" value="{{ $ProductSubCategory['subcategory_id'] }}">
                  <div class="form-group">
@@ -61,7 +61,7 @@
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
                   </div>
                 </form>
               </div>
@@ -73,6 +73,8 @@
   <!-- /.content-wrapper -->
   @endsection
   @section('scripts')
+  <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+  <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
   <script>
  //sub_product_type
  $('.product_type').click(function(){
@@ -84,6 +86,48 @@
 				   $("#sub_product_type").css("display","none");
 			   }
     }
+ });
+ $(document).ready(function ($) {
+
+   // Example Validataion Standard Mode
+    // ---------------------------------
+    (function () {
+
+        var i = 1;
+
+        $('#productform').formValidation({
+            framework: "bootstrap",
+            button: {
+                selector: '#validateButton2',
+                disabled: 'disabled'
+            },
+            icon: null,
+            fields: {
+                category: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Category is required'
+                        }
+                    }
+                },
+				sub_category_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Sub Category Name is required'
+                        }
+                    }
+                },
+                sub_category_order: {
+                    validators: {
+                        integer: {
+                        	message: 'The value is not an integer'
+                    	}
+                    }
+                }
+            }
+        });
+    })();
+
  });
   </script>
   @endsection

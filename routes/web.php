@@ -32,6 +32,9 @@ Route::get('/editproduct/{id}', 'ProductController@updateProduct');
 Route::post('/editproduct', 'ProductController@update');
 Route::get('/viewproduct/{id}', 'ProductController@viewproduct');
 Route::get('/email', 'ProductController@html_email');
+Route::post('/update_product_verify', 'ProductController@ajaxProductVerify');
+
+
 
 Route::get('/add_product_category', 'ProductCategoryController@index');
 Route::post('/insert_product_category', 'ProductCategoryController@createCategory');
@@ -39,7 +42,7 @@ Route::get('/all_product_category', 'ProductCategoryController@productCategoryLi
 Route::get('/productcategory/{status}/{id}', 'ProductCategoryController@changeProductStatus');
 Route::get('/deleteproductcategory/{id}', 'ProductCategoryController@destroy');
 Route::get('/updateproductcategory/{id}', 'ProductCategoryController@updateProduct');
-Route::post('/editproductcategory', 'ProductCategoryController@update');
+Route::post('/editproductcategory', 'ProductCategoryController@editProductCategory');
 Route::get('/add_product_subcategory', 'ProductSubCategoryController@index');
 Route::post('/insert_product_subcategory', 'ProductSubCategoryController@addProductSubCategory');
 Route::get('/all_product_subcategory', 'ProductSubCategoryController@productSubCategoryList');

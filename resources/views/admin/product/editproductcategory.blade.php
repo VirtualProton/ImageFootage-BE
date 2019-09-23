@@ -26,22 +26,22 @@
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/editproductcategory') }}" role="form" method="post" enctype="multipart/form-data">
+                <form action="{{ url('admin/editproductcategory') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                  <input type="hidden" name="product_category_id" value="{{ $productcategory['category_id'] }}">
                   <div class="box-body">
                   <div class="form-group">
-                     <label for="exampleInputEmail1">Sub Category Name </label>
-                      <input type="text" class="form-control" name="sub_category_name" id="sub_category_name" placeholder="Sub Category Name" value="{{ $productcategory['category_name'] }}">
-                       @if ($errors->has('sub_category_name'))
-                      		<div class="has_error" style="color:red;">{{ $errors->first('sub_category_name') }}</div>
+                     <label for="exampleInputEmail1">Category Name </label>
+                      <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category Name" value="{{ $productcategory['category_name'] }}">
+                       @if ($errors->has('category_name'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('category_name') }}</div>
                        @endif
                     </div>
                     <div class="form-group">
-                     <label for="exampleInputEmail1">Sub Category Display Order </label>
-                      <input type="text" class="form-control" name="sub_category_order" id="sub_category_order" placeholder="Sub Category Display Order" value="{{ $productcategory['category_order'] }}">
-                       @if ($errors->has('sub_category_order'))
-                      		<div class="has_error" style="color:red;">{{ $errors->first('sub_category_order') }}</div>
+                     <label for="exampleInputEmail1">Category Display Order </label>
+                      <input type="text" class="form-control" name="category_order" id="category_order" placeholder="Category Display Order" value="{{ $productcategory['category_order'] }}">
+                       @if ($errors->has('category_order'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('category_order') }}</div>
                        @endif
                     </div>
            
@@ -49,7 +49,7 @@
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
                   </div>
                 </form>
               </div>
@@ -61,6 +61,8 @@
   <!-- /.content-wrapper -->
   @endsection
   @section('scripts')
+  <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+  <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
   <script>
  //sub_product_type
  $('.product_type').click(function(){
@@ -73,5 +75,40 @@
 			   }
     }
  });
+  $(document).ready(function ($) {
+
+   // Example Validataion Standard Mode
+    // ---------------------------------
+    (function () {
+
+        var i = 1;
+
+        $('#productform').formValidation({
+            framework: "bootstrap",
+            button: {
+                selector: '#validateButton2',
+                disabled: 'disabled'
+            },
+            icon: null,
+            fields: {
+                category_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Category Name is required'
+                        }
+                    }
+                },
+                category_order: {
+                    validators: {
+                        integer: {
+                        	message: 'The value is not an integer'
+                    	}
+                    }
+                }
+            }
+        });
+    })();
+
+});
   </script>
   @endsection

@@ -126,16 +126,18 @@ class ProductController extends Controller
 				}*/
 				/* end */
     		 }
-			 $productimages->image_name=$name;
-			 $productimages->product_id=$last_id;
-			 $productimages->image_added_on=date('Y-m-d H:i:s');
-			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
-			 $productimages->save();
 			 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $product_update = Product::find($last_id);
 			 $product_update->product_id=$productid;
 			 $product_update->product_main_image=$name;
 			 $product_update->save();
+			 
+			 $productimages->image_name=$name;
+			 $productimages->image_product_id=$last_id;
+			 $productimages->image_added_on=date('Y-m-d H:i:s');
+			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
+			 $productimages->save();
+			 
 			 return back()->with('success','Product Upload successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');
@@ -155,7 +157,7 @@ class ProductController extends Controller
    public function productsList(){
 	   $product = new Product;
 	   //$all_produst_list=$product->all()->toArray();
-	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.product_id', '=', 'imagefootage_products.id')->get()->toArray();
+	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.image_product_id', '=', 'imagefootage_products.id')->get()->toArray();
 	   $title = "Product List";
        return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
@@ -223,7 +225,7 @@ class ProductController extends Controller
 			  $update_array['product_size']=$dimenctions;
 			  $productimages=new ProductImages;
 			 $update_image=array('image_name'=>$name);
-			 $result = ProductImages::where('product_id',$request->product_id)->update($update_image);
+			 $result = ProductImages::where('image_product_id',$request->product_id)->update($update_image);
 		 }
 		 $result = Product::where('id',$request->product_id)->update($update_array);
 		 if($result){
@@ -290,7 +292,7 @@ class ProductController extends Controller
 			}
 		}
 		$del_result=Product::find($id)->delete();
-		$del_result=ProductImages::where('product_id',$id)->delete();
+		$del_result=ProductImages::where('image_product_id',$id)->delete();
 		if($del_result){
 			if(isset($product['product_main_image']) && !empty($product['product_main_image'])){
 				File::delete($product_url);
@@ -332,5 +334,18 @@ class ProductController extends Controller
          $message->from('aksrinivas49@gmail.com','aksrinivas49');
       });
       echo "HTML Email Sent. Check your inbox.";
+   }
+   public function ajaxProductVerify(Request $request){
+	   $message=$request->message;
+	   $update_array=array("product_verification"=>$request->type);
+	   if(isset($message) && !empty($message)){
+		   $update_array['product_rejectod_reason']=$request->message;
+	   }
+	   $result = Product::where('id',$request->prod_id)->update($update_array);
+	   if($result){
+		   echo 'Product status changed success.';
+	   }else{
+		   echo 'Some problem occured.';
+	   }
    }
 }
