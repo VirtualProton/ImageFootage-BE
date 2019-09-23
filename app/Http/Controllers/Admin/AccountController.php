@@ -96,13 +96,13 @@ class AccountController extends Controller
         $this->Country = new Country();
         $this->Common = new Common();
         $countries = $this->Country->getcountrylist();
-       
+
         $industry_types =$this->Common->getIndustryTypes();
         $curruncies = $this->Common->getCurruncy();
         $this->Account = new Account();
         $account_data =    $this->Account->getAccountData($id);
         $states = $this->Country->getState('country_id',$account_data['bill_country']);
-        $cities = $this->Country->getCity('state_id',$account_data['bill_state']);    
+        $cities = $this->Country->getCity('state_id',$account_data['bill_state']);
         return view('admin.account.edit', compact('title','countries','industry_types','curruncies','account_data','states','cities'));
 
     }
@@ -132,10 +132,10 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        $delagent = Admin::find($id);
+        $delagent = Account::find($id);
         $delagent->delete();
        // redirect
-       return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
+       return redirect('admin/accounts')->with('success', 'Successfully deleted the admin/agent!');
 
     }
 
@@ -155,6 +155,6 @@ class AccountController extends Controller
             return redirect("admin/accounts")->with("error", "Due to some error, Account status is not changed yet. Please try again!");
         }
     }
-    
+
 
 }

@@ -63,14 +63,13 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="global_region" id="global_region">
+                  <select class="form-control" name="account_manager_id" id="account_manager_id">
                     <option value="">Select</option>
-                    <option value="AS">AS</option>
-                    <option value="UAE">UAE</option>
-                    <option value="US">US</option>
-                    <option value="UK">UK</option>
-                    <option value="AU">AU</option>
-
+                    @if(count($accountlist) > 0)
+                    @foreach($accountlist as $account)
+                    <option value={{ $account['id'] }}>{{$account['account_name']}}</option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                   </div>
@@ -107,17 +106,8 @@
                 </div>
                   </div>
                 </div>
-                 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Website</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="website" id="website" placeholder="Website">
-                </div>
-            </div>
-                </div>
 
-                <div class="form-group">
+               <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
 
                   <div class="col-sm-4">
@@ -191,47 +181,20 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Curruncy</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-
-                  <select class="form-control" name="curruncy_id" id="curruncy_id">
-                    <option value="">Select</option>
-                    @if(count($curruncies) > 0)
-                    @foreach($curruncies as $cur)
-                    <option value={{$cur->id}}>{{$cur->name}}</option>
-                    @endforeach
-                    @endif
-                  </select>
-                </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Global Region</label>
-
-                  <div class="col-sm-4">
-                  <div class="form-group">
-
-                  <select class="form-control" name="global_region" id="global_region">
-                    <option value="">Select</option>
-                    <option value="AS">AS</option>
-                    <option value="UAE">UAE</option>
-                    <option value="US">US</option>
-                    <option value="UK">UK</option>
-                    <option value="AU">AU</option>
-
-                  </select>
+                  <textarea type="text" class="form-control" id="notes" name="notes" placeholder="Notes"></textarea>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Local Region</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="IN" readonly placeholder="Postal Code">
+                  <textarea class="form-control" id="description" name="description" placeholder="Description"></textarea>
                 </div>
                   </div>
                 </div>
@@ -272,29 +235,55 @@ $(document).ready(function ($) {
             },
             icon: null,
             fields: {
-                account_name: {
+                first_name: {
                     validators: {
                         notEmpty: {
-                            message: 'Account Name is required'
+                            message: 'First Name is required'
                         }
                     }
                 },
-
-                email: {
-                 validators: {
-                notEmpty: {
-                  message: 'The email address is required and cannot be empty'
+                last_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Last Name is required'
+                        }
+                    }
                 },
-                emailAddress: {
-                  message: 'The email address is not valid'
-                }
-              }
-            },
-
+                title: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Title is required'
+                        }
+                    }
+                },
+                user_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'User Name is required'
+                        }
+                    }
+                },
+                account_manager_id: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select account manager ID'
+                        }
+                    }
+                },
             phone: {
               validators: {
                 notEmpty: {
                   message: 'The phone number is required and cannot be empty'
+                },
+                digits: {
+                    message: 'Please enter only digits'
+                },
+              }
+             },
+             mobile: {
+              validators: {
+                notEmpty: {
+                  message: 'The mobile number is required and cannot be empty'
                 },
                 digits: {
                     message: 'Please enter only digits'
@@ -306,31 +295,44 @@ $(document).ready(function ($) {
                 }
               }
              },
-             website: {
-                    validators: {
-                        uri: {
-                            message: 'Please enter valid URL.'
-                        }
-                    }
+             extension: {
+              validators: {
+                notEmpty: {
+                  message: 'The Extention is required and cannot be empty'
                 },
-             bill_country: {
+                digits: {
+                    message: 'Please enter only digits'
+                }
+              }
+             },
+            email: {
+                 validators: {
+                notEmpty: {
+                  message: 'The email address is required and cannot be empty'
+                },
+                emailAddress: {
+                  message: 'The email address is not valid'
+                }
+              }
+            },
+           bill_country: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing country is required'
+                            message: 'Country is required'
                         }
                     }
                 },
              bill_state: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing state is required'
+                            message: 'State is required'
                         }
                     }
                 },
             bill_city: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing city is required'
+                            message: 'City is required'
                         }
                     }
                 },
@@ -344,31 +346,31 @@ $(document).ready(function ($) {
                 bill_postal: {
                     validators: {
                         notEmpty: {
-                            message: 'Bill postal is required'
+                            message: 'Postal is required'
                         },
                         digits: {
                             message: 'Please enter only digits'
                         },
                     }
                 },
-                industry_type_id: {
+                type: {
                     validators: {
                         notEmpty: {
-                            message: 'Industry Type is required'
+                            message: 'Type is required'
                         }
                     }
                 },
-                curruncy_id: {
+                description: {
                     validators: {
                         notEmpty: {
-                            message: 'Curruncy is required'
+                            message: 'Description is required'
                         }
                     }
                 },
-                global_region: {
+                notes: {
                     validators: {
                         notEmpty: {
-                            message: 'Global region is required'
+                            message: 'Notes is required'
                         }
                     }
                 },

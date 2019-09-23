@@ -10,7 +10,7 @@ class Modules extends Model
 
 public function submodules()
 {
-    return $this->hasMany(Modules::class, 'parent_module_id');
+    return $this->hasMany(Modules::class, 'parent_module_id')->where('status','=','A')->orderBy('sort_order','ASC');
 }
 
 public function parentmodules()

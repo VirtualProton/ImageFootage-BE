@@ -24,7 +24,7 @@
              <div class="box-body">
             <table id="account" class="table table-bordered table-striped dataTable">
                 <thead>
-                <tr>
+                <tr class="col-sm-12">
                 <th>SN</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -40,7 +40,7 @@
                 <tbody>
                     @if(count($accountlist) > 0)
                     @foreach($accountlist as $k=>$account)
-                <tr role="row" class="odd">
+                <tr role="row" class="odd col-sm-12">
                   <td>{{$k+1}}</td>
                   <td>{{$account['account_name']}}</td>
                   <td>{{$account['email']}}</td>
