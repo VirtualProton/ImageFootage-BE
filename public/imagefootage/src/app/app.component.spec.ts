@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angularui'`, () => {
+  it(`should have as title 'imagefootage'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('angularui');
+    expect(app.title).toEqual('imagefootage');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angularui app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('imagefootage app is running!');
   });
 });
