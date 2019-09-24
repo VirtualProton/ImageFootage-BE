@@ -82,6 +82,38 @@ class User extends Authenticatable
         }
     }
 
+    public function update_user($data,$id){
+        try{
+               $save_data =  User::find($id);
+               $save_data->id = $id;
+               $save_data->first_name = $data->first_name;
+               $save_data->last_name = $data->last_name;
+               $save_data->title = $data->title;
+               $save_data->user_name = $data->user_name;
+               $save_data->contact_owner = $data->contact_owner;
+               $save_data->account_manager_id = $data->account_manager_id;
+
+               $save_data->email = $data->email;
+               $save_data->phone = $data->phone;
+               $save_data->mobile = $data->mobile;
+               $save_data->extension = $data->extension;
+               $save_data->address = $data->bill_address;
+               $save_data->city = $data->bill_city;
+               $save_data->state = $data->bill_state;
+               $save_data->country = $data->bill_country;
+               $save_data->postal_code = $data->bill_postal;
+               $save_data->password =Hash::make('123456');
+               $save_data->type = $data->type;
+               $save_data->notes = $data->notes;
+               $save_data->description = $data->description;
+               $save_data->save();
+          }catch (Exception $e) {
+           report($e);
+           return false;
+         }
+         return true;
+       }
+
     //change status of accounts
     public function change_status($flag,$id){
         try{

@@ -15,7 +15,7 @@
 
               <div class="box-body">
               <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Account Name</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
                   <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">

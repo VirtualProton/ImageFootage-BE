@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $title = "Show Accounts";
+        $title = "Show User";
         $this->Account = new Account();
         $account_data =    $this->Account->getAccountDataForShow($id);
         print_r($account_data);
@@ -91,10 +91,11 @@ class UserController extends Controller
         $title = "Edit Lead/User/Contact";
 
         $countries = $this->Country->getcountrylist();
-        $account_data =    $this->User->getAccountData($id);
-        $states = $this->Country->getState('country_id',$account_data['bill_country']);
-        $cities = $this->Country->getCity('state_id',$account_data['bill_state']);
-        return view('admin.account.edit', compact('title','countries','industry_types','curruncies','account_data','states','cities'));
+        $accountlist=$this->Account->getAccountData();
+        $user_data =    $this->User->getUserData($id);
+        $states = $this->Country->getState('country_id',$user_data['country']);
+        $cities = $this->Country->getCity('state_id',$user_data['state']);
+        return view('admin.user.edit', compact('title','countries','user_data','states','cities','accountlist'));
 
     }
 

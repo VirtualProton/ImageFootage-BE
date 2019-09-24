@@ -10,53 +10,63 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/accounts/'.$account_data['id']),  'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+            {!! Form::open(array('url' => URL::to('admin/users/'.$user_data['id']),  'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
               @include('admin.partials.message')
               <div class="box-body">
               <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Account Name</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name" value="<?php echo $account_data['account_name']?>">
+                  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $user_data['first_name']?>">
                   {{ csrf_field() }}
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Last Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $account_data['email']?>">
+                  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" value="<?php echo $user_data['last_name']?>">
+                </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<?php echo $user_data['title']?>">
                 </div>
                   </div>
                 </div>
                   <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">User Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $account_data['phone']?>">
+                  <input type="text" class="form-control" name="user_name" id="user_name" placeholder="User Name" value="<?php echo $user_data['user_name']?>">
                 </div>
-                  </div>
+                </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Website</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Contact Owner</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="website" id="website" placeholder="Website" value="<?php echo $account_data['website']?>">
+                  <input type="text" class="form-control" name="contact_owner" id="contact_owner" placeholder="Contact Owner" value="<?php echo $user_data['contact_owner']?>">
                 </div>
-            </div>
+                </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Billing Country</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Account Manager</label>
 
                   <div class="col-sm-4">
-                <div class="form-group">
-                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
-                    <option  value="">Select</option>
-                    @if(count($countries) > 0)
-                    @foreach($countries as $country)
-                    <option value={{$country->id}} <?php if($account_data['bill_country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                  <div class="form-group">
+
+                  <select class="form-control" name="account_manager_id" id="account_manager_id">
+                    <option value="">Select</option>
+                    @if(count($accountlist) > 0)
+                    @foreach($accountlist as $account)
+                    <option value={{ $account['id'] }} <?php if($user_data['account_manager_id']==$account['id']){echo 'selected="selected"';}?>>{{$account['account_name']}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -64,7 +74,56 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing State</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $user_data['phone']?>">
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php echo $user_data['mobile']?>">
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Extension</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" id="extension" name="extension" placeholder="Extension" value="<?php echo $user_data['extension']?>">
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $user_data['email']?>">
+                </div>
+                  </div>
+                </div>
+
+               <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+
+                  <div class="col-sm-4">
+                <div class="form-group">
+                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
+                    <option  value="">Select</option>
+                    @if(count($countries) > 0)
+                    @foreach($countries as $country)
+                    <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
@@ -73,7 +132,7 @@
                     <option value="">Select</option>
                     @if(count($states) > 0)
                     @foreach($states as $state)
-                    <option value={{$state->id}} <?php if($account_data['bill_state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                    <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -82,7 +141,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing City</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">City</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
@@ -91,7 +150,7 @@
                     <option value="">Select</option>
                     @if(count($cities) > 0)
                     @foreach($cities as $city)
-                    <option value={{$city->id}} <?php if($account_data['bill_city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
+                    <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -99,80 +158,50 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing Address</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"><?php echo $account_data['bill_address']?></textarea>
+                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"><?php echo $user_data['address']?></textarea>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Billing Postal</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Postal</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code" value="<?php echo $account_data['bill_postal']?>">
+                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code" value="<?php echo $user_data['postal_code']?>" >
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Industry Type</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-
-                  <select class="form-control" name="industry_type_id" id="industry_type_id">
+                 <select class="form-control" name="type" id="type">
                     <option value="">Select</option>
-                    @if(count($industry_types) > 0)
-                    @foreach($industry_types as $types)
-                    <option value={{$types->id}} <?php if($account_data['industry_type_id']==$types->id){echo 'selected="selected"';}?>>{{$types->name}}</option>
-                    @endforeach
-                    @endif
+                    <option value="L" <?php if($user_data['type']=='L'){echo 'selected="selected"';}?>>Lead</option>
+                    <option value="U" <?php if($user_data['type']=='U'){echo 'selected="selected"';}?>>User</option>
+                    <option value="C" <?php if($user_data['type']=='C'){echo 'selected="selected"';}?>>Contact</option>
                   </select>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Curruncy</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-
-                  <select class="form-control" name="curruncy_id" id="curruncy_id">
-                    <option value="">Select</option>
-                    @if(count($curruncies) > 0)
-                    @foreach($curruncies as $cur)
-                    <option value={{$cur->id}} <?php if($account_data['curruncy_id']==$cur->id){echo 'selected="selected"';}?>>{{$cur->name}}</option>
-                    @endforeach
-                    @endif
-                  </select>
-                </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Global Region</label>
-
-                  <div class="col-sm-4">
-                  <div class="form-group">
-
-                  <select class="form-control" name="global_region" id="global_region">
-                    <option value="">Select</option>
-                    <option value="AS" <?php if($account_data['global_region']=='AS'){echo 'selected="selected"';}?>>AS</option>
-                    <option value="UAE" <?php if($account_data['global_region']=='UAE'){echo 'selected="selected"';}?>>UAE</option>
-                    <option value="US" <?php if($account_data['global_region']=='US'){echo 'selected="selected"';}?>>US</option>
-                    <option value="UK" <?php if($account_data['global_region']=='UK'){echo 'selected="selected"';}?>>UK</option>
-                    <option value="AU" <?php if($account_data['global_region']=='AU'){echo 'selected="selected"';}?>>AU</option>
-
-                  </select>
+                  <textarea type="text" class="form-control" id="notes" name="notes" placeholder="Notes"><?php echo $user_data['notes']?></textarea>
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Local Region</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="IN" readonly placeholder="Postal Code">
+                  <textarea class="form-control" id="description" name="description" placeholder="Description"><?php echo $user_data['description']?></textarea>
                 </div>
                   </div>
                 </div>
@@ -186,8 +215,7 @@
               <!-- /.box-footer -->
               {!! Form::close() !!}
           </div>
-
-    </section>
+</section>
       <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -213,29 +241,55 @@ $(document).ready(function ($) {
             },
             icon: null,
             fields: {
-                account_name: {
+                first_name: {
                     validators: {
                         notEmpty: {
-                            message: 'Account Name is required'
+                            message: 'First Name is required'
                         }
                     }
                 },
-
-                email: {
-                 validators: {
-                notEmpty: {
-                  message: 'The email address is required and cannot be empty'
+                last_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Last Name is required'
+                        }
+                    }
                 },
-                emailAddress: {
-                  message: 'The email address is not valid'
-                }
-              }
-            },
-
+                title: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Title is required'
+                        }
+                    }
+                },
+                user_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'User Name is required'
+                        }
+                    }
+                },
+                account_manager_id: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select account manager ID'
+                        }
+                    }
+                },
             phone: {
               validators: {
                 notEmpty: {
                   message: 'The phone number is required and cannot be empty'
+                },
+                digits: {
+                    message: 'Please enter only digits'
+                },
+              }
+             },
+             mobile: {
+              validators: {
+                notEmpty: {
+                  message: 'The mobile number is required and cannot be empty'
                 },
                 digits: {
                     message: 'Please enter only digits'
@@ -247,31 +301,44 @@ $(document).ready(function ($) {
                 }
               }
              },
-             website: {
-                    validators: {
-                        uri: {
-                            message: 'Please enter valid URL.'
-                        }
-                    }
+             extension: {
+              validators: {
+                notEmpty: {
+                  message: 'The Extention is required and cannot be empty'
                 },
-             bill_country: {
+                digits: {
+                    message: 'Please enter only digits'
+                }
+              }
+             },
+            email: {
+                 validators: {
+                notEmpty: {
+                  message: 'The email address is required and cannot be empty'
+                },
+                emailAddress: {
+                  message: 'The email address is not valid'
+                }
+              }
+            },
+           bill_country: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing country is required'
+                            message: 'Country is required'
                         }
                     }
                 },
              bill_state: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing state is required'
+                            message: 'State is required'
                         }
                     }
                 },
             bill_city: {
                     validators: {
                         notEmpty: {
-                            message: 'Billing city is required'
+                            message: 'City is required'
                         }
                     }
                 },
@@ -285,31 +352,31 @@ $(document).ready(function ($) {
                 bill_postal: {
                     validators: {
                         notEmpty: {
-                            message: 'Bill postal is required'
+                            message: 'Postal is required'
                         },
                         digits: {
                             message: 'Please enter only digits'
                         },
                     }
                 },
-                industry_type_id: {
+                type: {
                     validators: {
                         notEmpty: {
-                            message: 'Industry Type is required'
+                            message: 'Type is required'
                         }
                     }
                 },
-                curruncy_id: {
+                description: {
                     validators: {
                         notEmpty: {
-                            message: 'Curruncy is required'
+                            message: 'Description is required'
                         }
                     }
                 },
-                global_region: {
+                notes: {
                     validators: {
                         notEmpty: {
-                            message: 'Global region is required'
+                            message: 'Notes is required'
                         }
                     }
                 },

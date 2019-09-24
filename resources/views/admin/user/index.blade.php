@@ -60,9 +60,9 @@
                   @elseif($user['status'] =='0')
                     <a href="{{ url('admin/users/status/1/'.$user['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
                   @endif
-                  <a href="{{ URL::to('admin/accounts/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
+                  <a href="{{ URL::to('admin/users/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
 
-                  <form action="{{ route('accounts.destroy', $user['id']) }}" method="POST">
+                  <form action="{{ route('users.destroy', $user['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
