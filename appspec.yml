@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /frontent/dist
+  - source: /frontend/dist
     destination: /var/www/html/frontend
   - source: /backend
     destination: /var/www/html/backend
