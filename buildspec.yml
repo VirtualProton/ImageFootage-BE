@@ -2,9 +2,8 @@ version: 0.2
 
 env:
     variables:
-
-APP_NAME: "Imagefootagenew"
-BUILD_ENV : "prod"
+      APP_NAME: "Imagefootagenew"
+      BUILD_ENV : "prod"
 
 phases:
   build:
