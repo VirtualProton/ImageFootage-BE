@@ -9,6 +9,8 @@ phases:
   install :
       runtime-versions:
         nodejs: 10
+       commands:
+          npm install -g @angular/cli 
   build:
         commands:
         # Builds Angular application. You can also build using custom environment here like mock or staging
@@ -16,6 +18,6 @@ phases:
         - ng build --${BUILD_ENV}
 artifacts:
     files:
-        - '/'
+        - '/frontend'
     discard-paths: yes
     base-directory: 'dist*'
