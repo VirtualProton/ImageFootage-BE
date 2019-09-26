@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /frontend/dist
-    destination: /var/www/html/frontend
+  - source: /frontend/dist/frontend
+    destination: /var/www/html
   - source: /backend
     destination: /var/www/html/backend
 hooks:
