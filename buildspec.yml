@@ -6,6 +6,9 @@ env:
       BUILD_ENV : "prod"
 
 phases:
+  install :
+      runtime-versions:
+        nodejs: 10
   build:
         commands:
         # Builds Angular application. You can also build using custom environment here like mock or staging
