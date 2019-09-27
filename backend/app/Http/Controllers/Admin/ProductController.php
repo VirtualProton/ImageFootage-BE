@@ -348,4 +348,11 @@ class ProductController extends Controller
 		   echo 'Some problem occured.';
 	   }
    }
+   //api functions
+   public function productListApi(){
+	   $product = new Product;
+	   //$all_produst_list=$product->all()->toArray();
+	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.image_product_id', '=', 'imagefootage_products.id')->get()->toArray();
+	   return json_encode($all_produst_list);
+   }
 }
