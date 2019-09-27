@@ -1,0 +1,9 @@
+{  
+   "/posts": {  
+      "target": "http://localhost/",  
+      "secure": false,  
+      "logLevel": "debug"  
+   }
+   ,
+    "changeOrigin": true  
+}
