@@ -1,12 +1,13 @@
 version: 0.0
 os: linux
 files:
-  - source: /frontend/dist/frontend
-    destination: /var/www/html/frontend
   - source: /backend
     destination: /var/www/html/backend
+  - source: /frontend/dist/frontend
+    destination: /var/www/html/frontend
 hooks:
   BeforeInstall:
+    - remove: /var/www/html/frontend
     - location: scripts/install_dependencies
       timeout: 300
       runas: root
