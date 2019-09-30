@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-/* import { RestService } from '../rest.service'; */
+import { RestService } from '../services/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,10 +11,10 @@ export class ProductComponent implements OnInit {
 
   products:any = [];
 
-  /*constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }*/
+  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    /*this.getProducts();*/
+    this.getProducts();
   }
 
  getProducts() {

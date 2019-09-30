@@ -1,1 +1,19 @@
-<p>product works!</p>
+<h2>Product List</h2>
+
+
+<table class="table">
+	<thead>
+    <th>S.No</th>
+    <th>Title</th>
+    </thead>
+	<tbody>
+  <tr *ngFor="let p of products; let i=index;">
+  <td>{{i+1}}</td><td>
+    <a routerLink="/product-details/{{products[i]['id']}}">
+      {{ products[i]['product_title'] }}
+    </a>
+    <button class="delete" title="delete product" >x</button></td>
+  </tr>
+  </tbody>
+
+</table>

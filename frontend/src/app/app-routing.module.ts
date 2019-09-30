@@ -8,6 +8,7 @@ import { RequestResetComponent } from './components/password/request-reset/reque
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { BeforeLoginService } from './services/before-login.service';
 import { AfterLoginService } from './services/after-login.service';
+import { ProductComponent } from './components/product/product.component';
 
 const appRoutes: Routes = [
   {
@@ -38,6 +39,11 @@ const appRoutes: Routes = [
   {
     path: 'response-password-reset',
     component: ResponseResetComponent,
+    canActivate: [BeforeLoginService]
+  },
+  {
+    path: 'products',
+    component: ProductComponent,
     canActivate: [BeforeLoginService]
   },
 ];
