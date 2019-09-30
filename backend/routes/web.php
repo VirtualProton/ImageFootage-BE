@@ -76,10 +76,6 @@ Route::get('/updatestaticpage/{id}', 'StaticPagesController@updateStaticPage');
 Route::post('/editstaticpage', 'StaticPagesController@editStaticPage');
 Route::get('/deletestaticpage/{id}', 'StaticPagesController@deleteStaticPage');
 
-//for api
-Route::get('/products_api', 'ProductController@productListApi');
-//end api
-
 Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
 
 Route::resource('/accounts', 'AccountController');

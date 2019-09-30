@@ -13,6 +13,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+// //for api
+
+// //end api
+
+Route::group([
+    'middleware' => ['api','CORS'],
+
+], function () {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+    Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
+    Route::post('resetPassword', 'ChangePasswordController@process');
+    Route::post('/products_api', 'ProductController@productListApi');
 });
