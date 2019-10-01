@@ -18,9 +18,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        header('Access-Control-Allow-Origin : *');
-        header('Access-Control-Allow-Headers : Content-type, X-Auth-Token, Authorization, Origin');
-        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
     /**

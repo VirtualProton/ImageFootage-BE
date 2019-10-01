@@ -7,7 +7,7 @@
    providedIn: 'root'
  })
  export class RestService {
-   endpoint = 'http://localhost/imgfootage/imagefootagenew/backend/public/admin/';
+   endpoint = 'http://localhost/imagefootagenew/backend/public/admin/';
    constructor(private http: HttpClient) { }
     httpOptions = {
  	  headers: new HttpHeaders({
