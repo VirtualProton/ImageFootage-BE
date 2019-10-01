@@ -108,6 +108,67 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('sub_product_type') }}</div>
                     @endif
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Product Color </label>
+                      <select class="form-control" name="product_color" id="product_color">
+                      <option value="">--Select Product Color --</option>
+                      @foreach($pcolorlist as $color)
+                        <option value="{{ $color['id'] }}" >{{ $color['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_color'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_color') }}</div>
+                    @endif
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Product Gender </label>
+                      <select class="form-control" name="product_gender" id="product_gender">
+                      <option value="">--Select Product Gender --</option>
+                      @foreach($productGenders as $gender)
+                        <option value="{{ $gender['id'] }}" >{{ $gender['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_gender'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_gender') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Glow Type </label>
+                      <select class="form-control" name="product_glow_type" id="product_glow_type">
+                      <option value="">--Select Product Glow Type --</option>
+                      @foreach($productimagetypes as $imageglow)
+                        <option value="{{ $imageglow['id'] }}" >{{ $imageglow['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_glow_type'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_glow_type') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Image Size </label>
+                      <select class="form-control" name="product_image_size" id="product_image_size">
+                      <option value="">--Select Product Image Size --</option>
+                      @foreach($productimagesize as $imagesize)
+                        <option value="{{ $imagesize['id'] }}" >{{ $imagesize['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_image_size'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_image_size') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Image Age </label>
+                      <select class="form-control" name="product_image_age" id="product_image_age">
+                      <option value="">--Select Product Image Size --</option>
+                      @foreach($productagewises as $imageage)
+                        <option value="{{ $imageage['id'] }}" >{{ $imageage['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_image_age'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_image_age') }}</div>
+                    @endif
+                    
+                    <div class="form-group">
                       <label for="exampleInputPassword1">Product Vertical</label>
                       <div class="checkbox">
                           <label>

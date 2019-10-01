@@ -12,6 +12,12 @@ use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Contributor;
 use App\Models\ProductImages;
+use App\Models\ProductColors;
+use App\Models\ProductGenders;
+use App\Models\ProductImageTypes;
+use App\Models\ProductImageSizes;
+use App\Models\ProductAgeWises;
+
 class ProductController extends Controller
 {
     /**
@@ -26,8 +32,19 @@ class ProductController extends Controller
 	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
 		$ProductSubCategory= new ProductSubCategory;
 		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
+		$productColors=new ProductColors;
+		$all_produstcolors_list=$productColors->where('status', '1')->get()->toArray();
+		$productGenders=new ProductGenders;
+		$all_productgender_list=$productGenders->where('status', '1')->get()->toArray();
+		$productImageTypes=new ProductImageTypes;
+		$all_productimagetypes_list=$productImageTypes->where('status', '1')->get()->toArray();
+		$productImageSizes=new ProductImageSizes;
+		$all_productimagesize_list=$productImageSizes->where('status', '1')->get()->toArray();
+		$productAgeWises=new ProductAgeWises;
+		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
 		$title = "Add Product";
-        return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list]);
+        return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,
+		'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list]);
     }
 
     /**
@@ -151,7 +168,17 @@ class ProductController extends Controller
 	    $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();
 		$ProductSubCategory= new ProductSubCategory;
 		$all_produstsubcategory_list=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
-        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list]);
+		$productColors=new ProductColors;
+		$all_produstcolors_list=$productColors->where('status', '1')->get()->toArray();
+		$productGenders=new ProductGenders;
+		$all_productgender_list=$productGenders->where('status', '1')->get()->toArray();
+		$productImageTypes=new ProductImageTypes;
+		$all_productimagetypes_list=$productImageTypes->where('status', '1')->get()->toArray();
+		$productImageSizes=new ProductImageSizes;
+		$all_productimagesize_list=$productImageSizes->where('status', '1')->get()->toArray();
+		$productAgeWises=new ProductAgeWises;
+		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
+        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list]);
     }
 
    public function productsList(){
