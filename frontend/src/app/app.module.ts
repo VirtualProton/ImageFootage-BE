@@ -19,6 +19,30 @@ import { AfterLoginService } from './services/after-login.service';
 import { BeforeLoginService } from './services/before-login.service';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { HomeComponent } from './components/home/home.component';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatIconModule,
+  MatButtonModule,
+  MatCardModule } from '@angular/material';
+
+
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com")
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider("396074584437141")
+  }
+]);
+ 
+export function provideConfig() {
+  return config;
+}
 
 
 
@@ -39,10 +63,18 @@ import { HomeComponent } from './components/home/home.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SnotifyModule
+    SnotifyModule,
+	SocialLoginModule,
+	BrowserAnimationsModule,
+	MatIconModule,
+  	MatButtonModule,
+  	MatCardModule
   ],
   providers: [JarwisService, TokenService, AuthService, AfterLoginService, BeforeLoginService,
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults },
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults },{
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
+  },
     SnotifyService],
   bootstrap: [AppComponent]
 })

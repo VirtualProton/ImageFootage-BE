@@ -17,6 +17,7 @@ use App\Models\ProductGenders;
 use App\Models\ProductImageTypes;
 use App\Models\ProductImageSizes;
 use App\Models\ProductAgeWises;
+use App\Models\ProductFilters;
 
 class ProductController extends Controller
 {

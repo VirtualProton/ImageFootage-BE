@@ -4,6 +4,7 @@ import { JarwisService } from '../../services/jarwis.service';
 import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
   handleError(error) {
     this.error = error.error.error;
   }
-  ngOnInit() {
-  }
+   ngOnInit() {
+  } 
 
 }
