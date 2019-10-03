@@ -1,1 +1,33 @@
-<p>home works!</p>
+<div class="mt-4 col-8 offset-2">
+  <div class="card">
+    <div class="card-header">Search Product</div>
+    <div class="card-body">
+      <form #searchForm=ngForm (ngSubmit)="onSubmit()">
+
+        <div class="alert alert-danger" [hidden]="!error">
+          {{error}}
+        </div>
+        <div class="form-group row">
+          <label for="inputSearch3" class="col-sm-2 col-form-label">Search</label>
+          <div class="col-sm-6">
+            <input type="search" name="search" class="form-control" id="inputSearch3" placeholder="Keyword" [(ngModel)]="form.search" required>
+
+          </div>
+          <div class="col-sm-4">
+            <select class="custom-select">
+            <option value="1">Images</option>
+            <option value="2">Footage</option>
+            <option value="3">Image & Footage Both</option>
+          </select>
+        </div>
+
+        </div>
+     <div class="form-group row">
+          <div class="col-sm-10 offset-2">
+            <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid">Search</button>
+       </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

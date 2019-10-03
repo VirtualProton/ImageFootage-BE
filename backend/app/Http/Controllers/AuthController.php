@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
-use App\User;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use CORS;
 
 
@@ -39,7 +40,13 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
-        User::create($request->all());
+        $user = $request->all();
+        $save_data = new User();
+        $save_data->first_name = $request->input('name');
+        $save_data->email =  $request->input('email');
+        $save_data->password =  bcrypt($request->input('password'));
+        $save_data->save();
+        //User::create($request->all());
         return $this->login($request);
     }
 
@@ -88,7 +95,9 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()->name
+            'user' => auth()->user()->first_name
         ]);
     }
+
+
 }

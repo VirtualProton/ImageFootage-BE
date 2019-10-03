@@ -1,7 +1,6 @@
 <?php
-
-namespace App\Models;
 namespace App;
+namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     protected $table = 'imagefootage_users';
+    protected $guard = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -169,8 +169,8 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 }

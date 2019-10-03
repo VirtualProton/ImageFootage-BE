@@ -12,6 +12,11 @@ import { ProductComponent } from './components/product/product.component';
 
 const appRoutes: Routes = [
   {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  {
     path: 'home',
     component: HomeComponent,
     canActivate: [BeforeLoginService]
