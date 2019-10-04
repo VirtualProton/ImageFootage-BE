@@ -15,6 +15,7 @@ class Productfilters extends Migration
     { 
         Schema::create('imagefootage_productfilters', function (Blueprint $table) {
             $table->bigIncrements('filter_id');
+			$table->int('filter_product_id')->nullable();
 			$table->string('filter_type')->nullable();
 			$table->string('filter_type_id')->nullable();
 			$table->string('filter_added_by')->nullable();

@@ -74,7 +74,7 @@ class ProductController extends Controller
 		 $firstThreeCharacters = substr($request->owner_name, 0, 3);
 		 $firstThreeCharactersType = substr($request->product_type, 0, 3);
 		 $productid=$firstThreeCharacters.$firstThreeCharactersType;
-         $product->product_id =$productid;
+		 $product->product_id =$productid;
 		 $product->product_title=$request->product_title;
 		 $product->product_category=$request->product_category;
 		 $product->product_subcategory=$request->product_sub_category;
@@ -98,6 +98,70 @@ class ProductController extends Controller
 		 $result=$product->save();
 		 $last_id=$product->id;
 		 if($result){
+			 /* for filters */
+			 $product_color=$request->product_color;
+			 if(isset($product_color) && !empty($product_color)){
+				 foreach($product_color as $key=>$pc){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_color';
+					   $productFilters->filter_type_id=$pc;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				 }
+			 }
+		 	 $product_gender=$request->product_gender;
+			 if(isset($product_gender) && !empty($product_gender)){
+				   foreach($product_gender as $key=>$pg){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_gender';
+					   $productFilters->filter_type_id=$pg;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				   }
+			 }
+		 	 $product_glow_type=$request->product_glow_type;
+			 if(isset($product_glow_type) && !empty($product_glow_type)){
+				  foreach($product_glow_type as $key=>$pgt){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_glow_type';
+					   $productFilters->filter_type_id=$pgt;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+		 	 $product_image_size=$request->product_image_size;
+			 if(isset( $product_image_size) && !empty( $product_image_size)){
+				  foreach($product_image_size as $key=>$pis){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_image_size';
+					   $productFilters->filter_type_id=$pis;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+		 	 $product_image_age=$request->product_image_age;
+			 if(isset($product_image_age) && !empty($product_image_age)){
+				  foreach($product_image_age as $key=>$pia){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_image_age';
+					   $productFilters->filter_type_id=$pia;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			 /* end filters */
+			 
+			 
 			 if($last_id < 10){
 				 $last_id='00'.$last_id;
 			 }else if($last_id < 100){
@@ -179,7 +243,33 @@ class ProductController extends Controller
 		$all_productimagesize_list=$productImageSizes->where('status', '1')->get()->toArray();
 		$productAgeWises=new ProductAgeWises;
 		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
-        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list]);
+		$productFilters=new ProductFilters;
+		$product_color_array=$productFilters->where('filter_type','product_color')->where('filter_product_id',$id)->get()->toArray();
+		$filtercolourarray=array();
+		foreach($product_color_array as $key=>$val){
+			$filtercolourarray[]=$val['filter_type_id'];
+		}
+		$product_gender_array=$productFilters->where('filter_type','product_gender')->where('filter_product_id',$id)->get()->toArray();
+		$filtergenderarray=array();
+		foreach($product_gender_array as $key=>$val){
+			$filtergenderarray[]=$val['filter_type_id'];
+		}
+		$product_glow_type_array=$productFilters->where('filter_type','product_glow_type')->where('filter_product_id',$id)->get()->toArray();
+		$filterglowarray=array();
+		foreach($product_glow_type_array as $key=>$val){
+			$filterglowarray[]=$val['filter_type_id'];
+		}
+		$product_image_size_array=$productFilters->where('filter_type','product_image_size')->where('filter_product_id',$id)->get()->toArray();
+		$filterimgsizearray=array();
+		foreach($product_image_size_array as $key=>$val){
+			$filterimgsizearray[]=$val['filter_type_id'];
+		}
+		$product_image_age_array=$productFilters->where('filter_type','product_image_age')->where('filter_product_id',$id)->get()->toArray();
+		$filterimgagearray=array();
+		foreach($product_image_age_array as $key=>$val){
+			$filterimgagearray[]=$val['filter_type_id'];
+		}
+        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray]);
     }
 
    public function productsList(){
@@ -255,8 +345,77 @@ class ProductController extends Controller
 			 $update_image=array('image_name'=>$name);
 			 $result = ProductImages::where('image_product_id',$request->product_id)->update($update_image);
 		 }
+		 $product_id=$request->product_id;
 		 $result = Product::where('id',$request->product_id)->update($update_array);
 		 if($result){
+			 /* for filters */
+			 $del_result=ProductFilters::where('filter_product_id',$request->product_id)->delete();
+			 if($del_result){
+			 $product_color=$request->product_color;
+			 if(isset($product_color) && !empty($product_color)){
+				 foreach($product_color as $key=>$pc){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_color';
+					   $productFilters->filter_type_id=$pc;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				 }
+			 }
+		 	 $product_gender=$request->product_gender;
+			 if(isset($product_gender) && !empty($product_gender)){
+				   foreach($product_gender as $key=>$pg){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_gender';
+					   $productFilters->filter_type_id=$pg;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				   }
+			 }
+		 	 $product_glow_type=$request->product_glow_type;
+			 if(isset($product_glow_type) && !empty($product_glow_type)){
+				  
+				  foreach($product_glow_type as $key=>$pgt){
+					  $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_glow_type';
+					   $productFilters->filter_type_id=$pgt;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+		 	 $product_image_size=$request->product_image_size;
+			 if(isset( $product_image_size) && !empty( $product_image_size)){
+				  
+				  foreach($product_image_size as $key=>$pis){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_image_size';
+					   $productFilters->filter_type_id=$pis;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+		 	 $product_image_age=$request->product_image_age;
+			 if(isset($product_image_age) && !empty($product_image_age)){
+				  foreach($product_image_age as $key=>$pia){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_image_age';
+					   $productFilters->filter_type_id=$pia;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			 }
+			 /* end filters */
+
 			 if($request->hasFile('product_image')) {
 				$file_path='/uploads/';
 				if($request->product_type=='Image'){

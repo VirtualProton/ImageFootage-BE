@@ -112,10 +112,10 @@
                     @endif
                      <div class="form-group">
                       <label for="exampleInputEmail1">Product Color </label>
-                      <select class="form-control select2" name="product_color" id="product_color" multiple="multiple">
+                      <select class="form-control select2" name="product_color[]" id="product_color" multiple="multiple">
                       <option value="">--Select Product Color --</option>
                       @foreach($pcolorlist as $color)
-                        <option value="{{ $color['id'] }}" >{{ $color['name'] }}</option>
+                        <option value="{{ $color['id'] }}" @if(in_array($color['id'],$product_color_array)) selected="selected" @endif >{{ $color['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -124,10 +124,10 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Gender </label>
-                      <select class="form-control select2" name="product_gender" id="product_gender" multiple="multiple">
+                      <select class="form-control select2" name="product_gender[]" id="product_gender" multiple="multiple">
                       <option value="">--Select Product Gender --</option>
                       @foreach($productGenders as $gender)
-                        <option value="{{ $gender['id'] }}" >{{ $gender['name'] }}</option>
+                        <option value="{{ $gender['id'] }}" @if(in_array($gender['id'],$product_gender_array)) selected="selected" @endif >{{ $gender['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -136,10 +136,10 @@
                     @endif
                      <div class="form-group">
                       <label for="exampleInputEmail1">Product Glow Type </label>
-                      <select class="form-control select2" name="product_glow_type" id="product_glow_type" multiple="multiple">
+                      <select class="form-control select2" name="product_glow_type[]" id="product_glow_type" multiple="multiple">
                       <option value="">--Select Product Glow Type --</option>
                       @foreach($productimagetypes as $imageglow)
-                        <option value="{{ $imageglow['id'] }}" >{{ $imageglow['name'] }}</option>
+                        <option value="{{ $imageglow['id'] }}" @if(in_array($imageglow['id'],$product_glow_type_array)) selected="selected" @endif>{{ $imageglow['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -148,10 +148,10 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Image Size </label>
-                      <select class="form-control select2" name="product_image_size" id="product_image_size" multiple="multiple">
+                      <select class="form-control select2" name="product_image_size[]" id="product_image_size" multiple="multiple">
                       <option value="">--Select Product Image Size --</option>
                       @foreach($productimagesize as $imagesize)
-                        <option value="{{ $imagesize['id'] }}" >{{ $imagesize['name'] }}</option>
+                        <option value="{{ $imagesize['id'] }}" @if(in_array($imagesize['id'],$product_image_size_array)) selected="selected" @endif >{{ $imagesize['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -160,10 +160,10 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Image Age </label>
-                      <select class="form-control select2" name="product_image_age" id="product_image_age" multiple="multiple">
+                      <select class="form-control select2" name="product_image_age[]" id="product_image_age" multiple="multiple">
                       <option value="">--Select Product Image Size --</option>
                       @foreach($productagewises as $imageage)
-                        <option value="{{ $imageage['id'] }}" >{{ $imageage['name'] }}</option>
+                        <option value="{{ $imageage['id'] }}" @if(in_array($imageage['id'],$product_image_age_array)) selected="selected" @endif >{{ $imageage['name'] }}</option>
                         @endforeach
                       </select>
                     </div>

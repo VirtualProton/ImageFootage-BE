@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
