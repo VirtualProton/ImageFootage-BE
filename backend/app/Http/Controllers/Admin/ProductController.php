@@ -17,7 +17,10 @@ use App\Models\ProductGenders;
 use App\Models\ProductImageTypes;
 use App\Models\ProductImageSizes;
 use App\Models\ProductAgeWises;
+use App\Models\ProductEthinicities;
+use App\Models\ProductLocations;
 use App\Models\ProductFilters;
+use App\Models\ProductPeoples;
 
 class ProductController extends Controller
 {
@@ -43,9 +46,15 @@ class ProductController extends Controller
 		$all_productimagesize_list=$productImageSizes->where('status', '1')->get()->toArray();
 		$productAgeWises=new ProductAgeWises;
 		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
+		$productEthinicities=new ProductEthinicities;
+		$all_productethinicities_list=$productEthinicities->where('status', '1')->get()->toArray();
+		$productLocations=new ProductLocations;
+		$all_productlocations_list=$productLocations->where('status', '1')->get()->toArray();
+		$productPeoples=new ProductPeoples;
+		$all_productPeoples_list=$productPeoples->where('status', '1')->get()->toArray();
 		$title = "Add Product";
         return view('admin.product.addproduct', ['productcategory' => $all_produstcategory_list,
-		'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list]);
+		'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'productPeoples'=>$all_productPeoples_list]);
     }
 
     /**
@@ -159,6 +168,42 @@ class ProductController extends Controller
 					   $result=$productFilters->save();
 				  }
 			 }
+			  $product_locations=$request->product_locations;
+			 if(isset($product_locations) && !empty($product_locations)){
+				  foreach($product_locations as $key=>$loc){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_locations';
+					   $productFilters->filter_type_id=$loc;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			  $product_ethinicities=$request->product_ethinicities;
+			 if(isset($product_ethinicities) && !empty($product_ethinicities)){
+				  foreach($product_ethinicities as $key=>$eth){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_ethinicities';
+					   $productFilters->filter_type_id=$eth;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			 $product_peoples=$request->product_peoples;
+			 if(isset($product_peoples) && !empty($product_peoples)){
+				  foreach($product_peoples as $key=>$peop){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$last_id;
+					   $productFilters->filter_type='product_peoples';
+					   $productFilters->filter_type_id=$peop;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
 			 /* end filters */
 			 
 			 
@@ -245,6 +290,12 @@ class ProductController extends Controller
 		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
 		$productFilters=new ProductFilters;
 		$product_color_array=$productFilters->where('filter_type','product_color')->where('filter_product_id',$id)->get()->toArray();
+		$productEthinicities=new ProductEthinicities;
+		$all_productethinicities_list=$productEthinicities->where('status', '1')->get()->toArray();
+		$productLocations=new ProductLocations;
+		$all_productlocations_list=$productLocations->where('status', '1')->get()->toArray();
+		$productPeoples=new ProductPeoples;
+		$all_productPeoples_list=$productPeoples->where('status', '1')->get()->toArray();
 		$filtercolourarray=array();
 		foreach($product_color_array as $key=>$val){
 			$filtercolourarray[]=$val['filter_type_id'];
@@ -269,7 +320,22 @@ class ProductController extends Controller
 		foreach($product_image_age_array as $key=>$val){
 			$filterimgagearray[]=$val['filter_type_id'];
 		}
-        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray]);
+		$product_ethinicities_array=$productFilters->where('filter_type','product_ethinicities')->where('filter_product_id',$id)->get()->toArray();
+		$filterethinicitiesarray=array();
+		foreach($product_ethinicities_array as $key=>$val){
+			$filterethinicitiesarray[]=$val['filter_type_id'];
+		}
+		$product_locations_array=$productFilters->where('filter_type','product_locations')->where('filter_product_id',$id)->get()->toArray();
+		$filterlocationsarray=array();
+		foreach($product_locations_array as $key=>$val){
+			$filterlocationsarray[]=$val['filter_type_id'];
+		}
+		$product_peoples_array=$productFilters->where('filter_type','product_peoples')->where('filter_product_id',$id)->get()->toArray();
+		$filterpeoplessarray=array();
+		foreach($product_peoples_array as $key=>$val1){
+			$filterpeoplessarray[]=$val1['filter_type_id'];
+		}
+        return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'filterethinicitiesarray'=>$filterethinicitiesarray,'filterlocationsarray'=>$filterlocationsarray,'productPeoples'=>$all_productPeoples_list,'filterpeoplessarray'=>$filterpeoplessarray]);
     }
 
    public function productsList(){
@@ -408,6 +474,42 @@ class ProductController extends Controller
 					   $productFilters->filter_product_id=$product_id;
 					   $productFilters->filter_type='product_image_age';
 					   $productFilters->filter_type_id=$pia;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			 $product_locations=$request->product_locations;
+			 if(isset($product_locations) && !empty($product_locations)){
+				  foreach($product_locations as $key=>$loc){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_locations';
+					   $productFilters->filter_type_id=$loc;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			  $product_ethinicities=$request->product_ethinicities;
+			 if(isset($product_ethinicities) && !empty($product_ethinicities)){
+				  foreach($product_ethinicities as $key=>$eth){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_ethinicities';
+					   $productFilters->filter_type_id=$eth;
+					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					   $result=$productFilters->save();
+				  }
+			 }
+			 $product_peoples=$request->product_peoples;
+			 if(isset($product_peoples) && !empty($product_peoples)){
+				  foreach($product_peoples as $key=>$peop){
+					   $productFilters=new ProductFilters;
+					   $productFilters->filter_product_id=$product_id;
+					   $productFilters->filter_type='product_peoples';
+					   $productFilters->filter_type_id=$peop;
 					   $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
 					   $productFilters->filter_added_on=date('Y-m-d H:i:s');
 					   $result=$productFilters->save();
