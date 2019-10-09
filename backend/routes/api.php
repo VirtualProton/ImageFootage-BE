@@ -33,4 +33,5 @@ Route::group([
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('/products_api', 'ProductController@productListApi');
+    Route::post('search','SearchController@index');
 });

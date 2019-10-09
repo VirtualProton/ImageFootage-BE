@@ -12,7 +12,6 @@ export class JarwisService {
   }
 
   login(data) {
-    console.log(data);
     return this.http.post(`${this.baseUrl}/login`, data)
   }
 
@@ -22,6 +21,11 @@ export class JarwisService {
 
   changePassword(data) {
     return this.http.post(`${this.baseUrl}/resetPassword`, data)
+  }
+
+  search(data) {
+    console.log(data);
+    return this.http.post(`${this.baseUrl}/search`, data)
   }
 
 }

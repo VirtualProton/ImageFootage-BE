@@ -14,10 +14,11 @@
 
           </div>
           <div class="col-sm-4">
-            <select class="custom-select">
-            <option value="1">Images</option>
-            <option value="2">Footage</option>
-            <option value="3">Image & Footage Both</option>
+            <select class="custom-select" name="productType" id="productType" [(ngModel)]="form.productType">
+            <option *ngFor="let product of productTypes" [ngValue] = "product">
+                {{product.name}}
+            </option>
+
           </select>
         </div>
 
