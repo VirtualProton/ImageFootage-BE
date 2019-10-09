@@ -187,14 +187,55 @@
                       <select class="form-control select2" name="product_peoples[]" id="product_peoples" multiple="multiple">
                       <option value="">--Select Product Peoples --</option>
                       @foreach($productPeoples as $peoples)
-                        <option value="{{ $peoples['id'] }}" @if(in_array($locations['id'],$filterpeoplessarray)) selected="selected" @endif>{{ $peoples['name'] }}</option>
+                        <option value="{{ $peoples['id'] }}" @if(in_array($peoples['id'],$filterpeoplessarray)) selected="selected" @endif>{{ $peoples['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
                     @if ($errors->has('product_peoples'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('product_peoples') }}</div>
                     @endif
-
+					
+                    
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Resolution </label>
+                      <select class="form-control select2" name="product_resolution[]" id="product_resolution" multiple="multiple">
+                      <option value="">--Select Product Resolution --</option>
+                      @foreach($imageResolution as $presolut)
+                        <option value="{{ $presolut['id'] }}" @if(in_array($presolut['id'],$filterresolutionarray)) selected="selected" @endif>{{ $presolut['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_resolution'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_resolution') }}</div>
+                    @endif
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Orientations </label>
+                      <select class="form-control select2" name="product_orientations[]" id="product_orientations" multiple="multiple">
+                      <option value="">--Select Product Orientations --</option>
+                      @foreach($productOrientations as $porient)
+                        <option value="{{ $porient['id'] }}" @if(in_array($porient['id'],$filterproductorientationsarray)) selected="selected" @endif>{{ $porient['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_orientations'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_orientations') }}</div>
+                    @endif
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Sort Types </label>
+                      <select class="form-control select2" name="product_sort_types[]" id="product_sort_types" multiple="multiple">
+                      <option value="">--Select Product Locations --</option>
+                      @foreach($imageSortTypes as $sortty)
+                        <option value="{{ $sortty['id'] }}" @if(in_array($sortty['id'],$filtersort_typessarray)) selected="selected" @endif>{{ $sortty['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_sort_types'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_sort_types') }}</div>
+                    @endif
+                    
+                    
+                    
+                    
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Image Age </label>
                       <select class="form-control select2" name="product_image_age[]" id="product_image_age" multiple="multiple">

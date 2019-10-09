@@ -203,7 +203,42 @@
                     @if ($errors->has('product_peoples'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('product_peoples') }}</div>
                     @endif
-
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Resolution </label>
+                      <select class="form-control select2" name="product_resolution[]" id="product_resolution" multiple="multiple">
+                      <option value="">--Select Product Resolution --</option>
+                      @foreach($imageResolution as $presolut)
+                        <option value="{{ $presolut['id'] }}" >{{ $presolut['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_resolution'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_resolution') }}</div>
+                    @endif
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Orientations </label>
+                      <select class="form-control select2" name="product_orientations[]" id="product_orientations" multiple="multiple">
+                      <option value="">--Select Product Orientations --</option>
+                      @foreach($productOrientations as $porient)
+                        <option value="{{ $porient['id'] }}" >{{ $porient['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_orientations'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_orientations') }}</div>
+                    @endif
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Sort Types </label>
+                      <select class="form-control select2" name="product_sort_types[]" id="product_sort_types" multiple="multiple">
+                      <option value="">--Select Product Locations --</option>
+                      @foreach($imageSortTypes as $sortty)
+                        <option value="{{ $sortty['id'] }}" >{{ $sortty['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_sort_types'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_sort_types') }}</div>
+                    @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Product Vertical</label>
                       <div class="checkbox">
