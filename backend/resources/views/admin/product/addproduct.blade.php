@@ -167,7 +167,43 @@
                     @if ($errors->has('product_image_age'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('product_image_age') }}</div>
                     @endif
-                    
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Ethinicities </label>
+                      <select class="form-control select2" name="product_ethinicities[]" id="product_ethinicities" multiple="multiple">
+                      <option value="">--Select Product Ethinicities --</option>
+                      @foreach($productethinicities as $ethinicities)
+                        <option value="{{ $ethinicities['id'] }}" >{{ $ethinicities['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_ethinicities'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_ethinicities') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Locations </label>
+                      <select class="form-control select2" name="product_locations[]" id="product_locations" multiple="multiple">
+                      <option value="">--Select Product Locations --</option>
+                      @foreach($productlocations as $locations)
+                        <option value="{{ $locations['id'] }}" >{{ $locations['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_locations'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_locations') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Peoples </label>
+                      <select class="form-control select2" name="product_peoples[]" id="product_peoples" multiple="multiple">
+                      <option value="">--Select Product Peoples --</option>
+                      @foreach($productPeoples as $peoples)
+                        <option value="{{ $peoples['id'] }}" >{{ $peoples['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @if ($errors->has('product_peoples'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('product_peoples') }}</div>
+                    @endif
+
                     <div class="form-group">
                       <label for="exampleInputPassword1">Product Vertical</label>
                       <div class="checkbox">
