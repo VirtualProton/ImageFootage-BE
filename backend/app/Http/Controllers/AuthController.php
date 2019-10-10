@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use CORS;
 
-
 class AuthController extends Controller
 {
     /**
@@ -39,14 +38,33 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
-        $user = $request->all();
+		$user = $request->all();
         $save_data = new User();
-        $save_data->first_name = $request->input('name');
-        $save_data->email =  $request->input('email');
-        $save_data->password =  bcrypt($request->input('password'));
-        $save_data->save();
+		$save_data->user_name=$request->input('name');
+		$save_data->email =  $request->input('email');
+        $save_data->first_name = $request->input('first_name');
+		$save_data->last_name = $request->input('last_name');
+		$save_data->mobile = $request->input('mobile');
+		$save_data->phone = $request->input('phone');
+		$save_data->occupation = $request->input('occupation');
+		$save_data->title = $request->input('title');
+		$save_data->company = $request->input('company');
+		$save_data->address = $request->input('address');
+		$save_data->city = $request->input('city');
+		$save_data->state = $request->input('state');
+		$save_data->country = $request->input('country');
+		$save_data->postal_code = $request->input('pincode');
+		$save_data->password=Hash::make($request->input('password'));
+		$save_data->type = 'U';
+        //$save_data->password =  bcrypt($request->input('password'));
+        $result=$save_data->save();
         //User::create($request->all());
-        return $this->login($request);
+		if($result){
+			 return response()->json(['success' => 'Successfully registered'], 200);
+		}else{
+			return response()->json(['error' => 'Some problem occured.'], 401);
+		}
+        
     }
 
     /**

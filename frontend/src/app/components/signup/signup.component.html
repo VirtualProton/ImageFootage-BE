@@ -13,9 +13,18 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="inputName3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" name="email" class="form-control" id="inputname3" placeholder="Email" [(ngModel)]="form.email" required>
+            <div class="alert alert-danger" [hidden]="!error.email">
+              {{error.email}}
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="inputName3" class="col-sm-2 col-form-label">First Name</label>
           <div class="col-sm-10">
-            <input type="text" name="name" class="form-control" id="inputname3" placeholder="Name" [(ngModel)]="form.first_name" required>
+            <input type="text" name="first_name" class="form-control" id="inputname3" placeholder="Name" [(ngModel)]="form.first_name" required>
             <div class="alert alert-danger" [hidden]="!error.first_name">
               {{error.first_name}}
             </div>
@@ -24,7 +33,7 @@
         <div class="form-group row">
           <label for="inputName3" class="col-sm-2 col-form-label">Last Name</label>
           <div class="col-sm-10">
-            <input type="text" name="name" class="form-control" id="inputname3" placeholder="Name" [(ngModel)]="form.last_name" required>
+            <input type="text" name="last_name" class="form-control" id="inputname3" placeholder="Name" [(ngModel)]="form.last_name" required>
             <div class="alert alert-danger" [hidden]="!error.last_name">
               {{error.last_name}}
             </div>
@@ -77,29 +86,11 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Flat Number</label>
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Address</label>
           <div class="col-sm-10">
-            <input type="text" name="flat_number" class="form-control" id="flat_number" placeholder="Flat Number" [(ngModel)]="form.flat_number" required>
+            <input type="text" name="address" class="form-control" id="address" placeholder="Address" [(ngModel)]="form.address" required>
             <div class="alert alert-danger" [hidden]="!error.flat_number">
               {{error.flat_number}}
-            </div>
-          </div>
-        </div>
-         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Street</label>
-          <div class="col-sm-10">
-            <input type="text" name="street" class="form-control" id="inputEmail3" placeholder="Street" [(ngModel)]="form.street" required>
-            <div class="alert alert-danger" [hidden]="!error.street">
-              {{error.street}}
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Area</label>
-          <div class="col-sm-10">
-            <input type="text" name="area" class="form-control" id="inputEmail3" placeholder="Area" [(ngModel)]="form.area" required>
-            <div class="alert alert-danger" [hidden]="!error.area">
-              {{error.area}}
             </div>
           </div>
         </div>
