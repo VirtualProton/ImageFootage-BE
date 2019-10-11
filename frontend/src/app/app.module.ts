@@ -27,6 +27,7 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule } from '@angular/material';
+import { ContactusComponent } from './components/contactus/contactus.component';
 
 
 
@@ -57,7 +58,8 @@ export function provideConfig() {
     RequestResetComponent,
     ResponseResetComponent,
 	ProductComponent,
-    HomeComponent
+    HomeComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,

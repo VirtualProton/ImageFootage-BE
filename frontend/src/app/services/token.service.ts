@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 export class TokenService {
   private iss = {
     login: 'http://localhost/imagefootagenew/backend/api/login',
-    signup: 'http://localhost/imagefootagenew/backend/api/signup'
+    signup: 'http://localhost/imagefootagenew/backend/api/signup',
+	contactus: 'http://localhost/imagefootagenew/backend/api/contact_us'
 };
 
   constructor() { }
