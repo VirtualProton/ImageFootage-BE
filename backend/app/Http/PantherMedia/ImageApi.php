@@ -73,14 +73,15 @@ class ImageApi {
                 'q'=>$serach,
                 'page'=>0,
                 'limit'=>100,
-                'extrainfo'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended, packet,subscription,
-                premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,
-                adult_content"
+                'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                'filters'=>'sort: date; type: photos'
             ]
         ]);
         if ($response->getBody()) {
-            echo $response->getBody();
-            // JSON string: { ... }
+            $contents = json_decode($response->getBody(), true);
+            //$contents = $response->getBody();
+            return $contents;
+
         }
  }
 

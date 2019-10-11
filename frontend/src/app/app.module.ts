@@ -9,6 +9,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +19,7 @@ import { AuthService } from './services/auth.service';
 import { AfterLoginService } from './services/after-login.service';
 import { BeforeLoginService } from './services/before-login.service';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
-import { HomeComponent } from './components/home/home.component';
+
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,7 +40,7 @@ let config = new AuthServiceConfig([
     provider: new FacebookLoginProvider("396074584437141")
   }
 ]);
- 
+
 export function provideConfig() {
   return config;
 }

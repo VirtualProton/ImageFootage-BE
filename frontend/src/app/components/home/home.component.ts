@@ -24,9 +24,7 @@ productTypes = [
 
   constructor(
     private Jarwis: JarwisService,
-    private Token: TokenService,
-    private router: Router,
-    private Auth: AuthService,
+    private router: Router
     ) {}
 
   onSubmit() {
@@ -37,9 +35,7 @@ productTypes = [
   }
 
   handleResponse(data) {
-    this.Token.handle(data.access_token);
-    this.Auth.changeAuthStatus(true);
-    this.router.navigateByUrl('/seachlist');
+   this.router.navigateByUrl('/searchlist');
   }
 
   handleError(error) {

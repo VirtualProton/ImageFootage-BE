@@ -24,10 +24,24 @@ class SearchController extends Controller
 
     public function index(SearchRequest $request){
         $keyword = request(['search', 'productType']);
+        if($keyword['productType']['id']=='1'){
+           $all_products = $this->getImagesData($keyword);
+        }else if($keyword['productType']['id']=='2'){
+           $this->getFootageData($keyword);
+        }else{
+            $this->getImagesData($keyword);
+            $this->getFootageData($keyword);
+        }
+
+        return response()->json($all_products);
+    }
+
+    public function getImagesData($keyword){
         $product = new Product();
         $all_products = $product->getProducts($keyword);
         $pantherMediaImages = new ImageApi();
-         $pantherMediaImages->search($keyword);
-       // return response()->json($all_products);
+        $pantharmediaData = $pantherMediaImages->search($keyword);
+        return array('imgfootage'=>$all_products,'api'=>$pantharmediaData);
     }
+
 }
