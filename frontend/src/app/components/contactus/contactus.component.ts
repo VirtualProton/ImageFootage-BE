@@ -10,14 +10,20 @@ import { Router } from '@angular/router';
 })
 export class ContactusComponent implements OnInit {
   public error = [];
+  public form = {
+    user_name: null,
+    user_email: null,
+    user_mobile:null,
+    user_message:null
+    };
   constructor( private Jarwis: JarwisService,
     private Token: TokenService,
     private router: Router) { }
 	 onSubmit() {
-    this.Jarwis.signup(this.form).subscribe(
-      data => this.handleResponse(data),
-      error => this.handleError(error)
-    );
+    // this.Jarwis.signup(this.form).subscribe(
+    //   data => this.handleResponse(data),
+    //   error => this.handleError(error)
+    // );
   }
   handleResponse(data) {
     this.Token.handle(data.access_token);
