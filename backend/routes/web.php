@@ -88,6 +88,10 @@ Route::resource('/users', 'UserController');
 Route::post('/getStatesByCounty', 'CommonController@getStatesByCounty');
 Route::post('/getCityByState', 'CommonController@getCityByState');
 
+Route::get('/send_invoice', 'InvoiceController@send_invoice');
+Route::post('/get_email_template', 'InvoiceController@get_email_template');
+
+
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');

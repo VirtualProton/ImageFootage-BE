@@ -41,5 +41,9 @@
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> -->
+<script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script>
+
+
 
 
