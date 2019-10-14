@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+use Aws\S3\MultipartUploader;
+use Aws\Exception\MultipartUploadException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -72,7 +76,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request){
-		 $this->validate($request, [
+		$image = $request->file('product_image');
+		$name = time().'.'.$image->getClientOriginalExtension();
+		
+		$this->validate($request, [
 		 	'product_title'=>'required',
             'owner_name'   => 'required',
             'product_category' => 'required',
@@ -263,7 +270,8 @@ class ProductController extends Controller
 			 if($request->hasFile('product_image')) {
 				$image = $request->file('product_image');
 				$name = time().'.'.$image->getClientOriginalExtension();
-				$file_path='/uploads/';
+				$files2bucketemp= $image->getPathName();
+				$file_path='';
 				if($request->product_type=='Image'){
 					if($request->sub_product_type=='Vector'){
 						$file_path.='image/vector/';
@@ -285,26 +293,32 @@ class ProductController extends Controller
 					}
 				}
 				$destinationPath = public_path($file_path);
-				$image->move($destinationPath, $name);
-				/* for thumbnail image */
-				/*if($request->product_type=='Image' || $request->product_type=='Editorial' ){
-
-					$input['imagename'] ='thumbnail_'.$name;
-					$destinationPath1 = public_path($file_path.'thumb');
-					$img = Image::make($request->file('product_image')->getRealPath());
-					$img->resize(100, 100, function ($constraint) {
-						$constraint->aspectRatio();
-					})->save($destinationPath1.'/'.$input['imagename']);
-					//$destinationPath = public_path('/images');
-					//$image->move($destinationPath, $input['imagename']);
-
-				}*/
-				/* end */
+				//$image->move($destinationPath, $name);
+				$s3Client = new S3Client([
+					/*'profile' => 'default',*/
+					'region' => 'us-east-2',
+					'version' => '2006-03-01'
+				]);
+				// Use multipart upload
+				//print_r($files2bucketemp);
+				//exit();
+				$finelname=$file_path.$name;
+				$source = $files2bucketemp;
+				$uploader = new MultipartUploader($s3Client, $source, [
+					'bucket' => 'imgfootage',
+					'key' => $finelname,
+				]);
+				
+				try {
+					$fileupresult = $uploader->upload();
+				} catch (MultipartUploadException $e) {
+					echo $e->getMessage() . "\n";
+				}
     		 }
 			 $productid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $product_update = Product::find($last_id);
 			 $product_update->product_id=$productid;
-			 $product_update->product_main_image=$name;
+			 $product_update->product_main_image=$fileupresult['ObjectURL'];
 			 $product_update->save();
 			 
 			 $productimages->image_name=$name;
@@ -626,6 +640,7 @@ class ProductController extends Controller
 			 }
 			 }
 			 /* end filters */
+			 
 
 			 if($request->hasFile('product_image')) {
 				$file_path='/uploads/';

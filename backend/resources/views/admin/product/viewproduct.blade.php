@@ -158,27 +158,16 @@
                     </div>
                 </div>
               @if($product[0]['product_main_type']=='Image')
-              	@if($product[0]['product_sub_type']=='Vector')
-                	<img src="{{URL::asset('uploads/image/vector/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @elseif($product[0]['product_sub_type']=='Illustrator')
-                	<img src="{{URL::asset('uploads/image/illustrator/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @elseif($product[0]['product_sub_type']=='Photo')
-                	<img src="{{URL::asset('uploads/image/photo/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @endif
+              		<img src="{{ $product[0]['product_main_image'] }}" alt="User Image" width="600">
+              	
               @elseif($product[0]['product_main_type']=='Footage')
                   <video width="320" height="240" controls>
-                      <source src="{{URL::asset('uploads/footage/'.$product[0]['product_main_image'])}}" type="video/mp4">
-                      <source src="{{URL::asset('uploads/footage/'.$product[0]['product_main_image'])}}" type="video/ogg">
+                      <source src="{{ $product[0]['product_main_image'] }}" type="video/mp4">
+                      <source src="{{ $product[0]['product_main_image'] }}" type="video/ogg">
                              browser does not support the video tag.
                  </video>
               @elseif($product[0]['product_main_type']=='Editorial')
-              	@if($product[0]['product_sub_type']=='Vector')
-                	<img src="{{URL::asset('uploads/editorial/vector/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @elseif($product[0]['product_sub_type']=='Illustrator')
-                	<img src="{{URL::asset('uploads/editorial/illustrator/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @elseif($product[0]['product_sub_type']=='Photo')
-                	<img src="{{URL::asset('uploads/editorial/photo/'.$product[0]['product_main_image'])}}" alt="User Image" width="600">
-                @endif
+              		<img src="{{ $product[0]['product_main_image'] }}" alt="User Image" width="600">
               @endif
 					
                 </div>

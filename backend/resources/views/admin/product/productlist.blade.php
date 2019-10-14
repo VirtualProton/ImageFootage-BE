@@ -60,26 +60,16 @@
   <td>
 
   @if($product['product_main_type'] =='Image')
-  	@if($product['product_sub_type'] =='Vector')
-
-    @elseif($product['product_sub_type'] =='Photo')
-    <img src="{{URL::asset('uploads/image/photo/'.$product['product_main_image'])}}" alt="User Image" width="100">
-    @elseif($product['product_sub_type'] =='Illustrator')
-    @endif
-
+   <img src="{{ $product['product_main_image']}}" alt="User Image" width="100">
   @elseif($product['product_main_type'] =='Footage')
-  <video width="150" height="120" controls>
-  <source src={{URL::asset('uploads/footage/'.$product['product_main_image'])}}" type="video/mp4">
-  <source src="{{URL::asset('uploads/footage/'.$product['product_main_image'])}}" type="video/ogg">
-  Your browser does not support the video tag.
-</video>
+      <video width="150" height="120" controls>
+      <source src="{{$product['product_main_image'] }}" type="video/mp4">
+      <source src="{{ product['product_main_image'] }}" type="video/ogg">
+      Your browser does not support the video tag.
+      </video>
   @elseif($product['product_main_type'] =='Editorial')
-  	@if($product['product_sub_type'] =='Vector')
-
-    @elseif($product['product_sub_type'] =='Photo')
-    <img src="{{URL::asset('uploads/editorial/photo/'.$product['image_name'])}}" alt="User Image" width="100">
-    @elseif($product['product_sub_type'] =='Illustrator')
-    @endif
+   <img src="{{ $product['image_name']}}" alt="User Image" width="100">
+  	
   @endif
 
 			</td>
