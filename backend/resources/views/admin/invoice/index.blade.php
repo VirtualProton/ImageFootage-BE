@@ -97,8 +97,15 @@ function get_template(data){
                $('#tmp').show();
               //  $('#edit').show();
               //  $('#send').show();
-               CKEDITOR.replace( 'emailtpl' );
-               $('#emailtpl').val(data);
+              var editor = CKEDITOR.instances.emailtpl;
+              if (editor) {
+                  //alert('instance exists');
+                  editor.destroy(true); 
+                  //alert('destroyed');
+              }   
+              CKEDITOR.replace('emailtpl');
+           
+              $('#emailtpl').val(data);
                $('#template_id').val(data.value);
                $('#send').show();
             },
