@@ -91,6 +91,8 @@ Route::post('/getCityByState', 'CommonController@getCityByState');
 Route::get('/send_invoice', 'InvoiceController@send_invoice');
 Route::post('/get_email_template', 'InvoiceController@get_email_template');
 
+Route::post('/sendmail','InvoiceController@sendmail');
+
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');

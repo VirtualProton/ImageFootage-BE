@@ -38,7 +38,7 @@
                    <label for="emailtpl" class="col-sm-2 control-label">Email</label> 
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="email" name="email" class="form-control"/>
+                  <input type="email" name="email" id="email" class="form-control"/>
                   </div>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                </div>  -->
               <input type="hidden" name="template_id" id="template_id" value="" />
               <div class="box-footer" id="send" style="display:none">
-              <button type="button" class="btn btn-succsess">Send Email</button>
+              <button type="button" class="btn btn-succsess" onclick="send_invoice()">Send Email</button>
              </div>
      </div>
               <!-- /.box-body -->
@@ -81,7 +81,6 @@
 </script>
 <script>
 function get_template(data){
-   console.log(data.value);
     $.ajax({
             url: '{{ URL::to("admin/get_email_template") }}',
             data: {
@@ -108,6 +107,35 @@ function get_template(data){
               $('#emailtpl').val(data);
                $('#template_id').val(data.value);
                $('#send').show();
+            },
+            type: 'POST'
+            });
+}
+             
+function send_invoice(){
+  for (instance in CKEDITOR.instances) {
+        CKEDITOR.instances[instance].updateElement();
+    }
+  $.ajax({
+            url: '{{ URL::to("admin/sendmail") }}',
+            data: {
+            templ_id: $('#template_id').val(),
+            email:$('#email').val(),
+            text:$("#emailtpl").val()
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+              if(data.this.statuscode=='1'){
+                  alert(data.this.statusdesc);
+               }else{
+                alert(data.this.statusdesc);
+               }
             },
             type: 'POST'
             });
