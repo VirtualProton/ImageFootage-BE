@@ -45,6 +45,25 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<style>
+#loading{
+  position:fixed;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;
+  background-color:#666;
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+</style>
+ <div id="loading" style="display:none;"> 
+  <div style="margin-left:713px;margin-top:250px;"><img src="{{ asset('/image/loading-circles.gif')}}" /></div>
+ </div> 
+</div>
 <div class="wrapper">
 <!-- Dynamic Admin Header  -->
 
@@ -70,8 +89,18 @@
     }
 });
  </script>
+ <script>
+$(document).ready(function () {
+    $(document).ajaxStart(function () {
+        $("#loading").show();
+    }).ajaxStop(function () {
+        $("#loading").hide();
+    });
+});
+</script>
+
 <!-- End Dynamic Admin Javascripts -->
 <div class="control-sidebar-bg"></div>
-</div>
+
 </body>
 </html>

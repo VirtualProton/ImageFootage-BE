@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Mail;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -33,6 +35,41 @@ class InvoiceController extends Controller
             $new_template = str_replace($replace, $with, $templateData->content);
             echo $new_template;
         }
+  }
+
+  public function sendmail(Request $request){
+      
+     $data["email"]=$request->get("email");
+     $data["text"]=$request->get("text");
+     //print_r($data); die;
+    // $data["subject"]=$request->get("subject");
+    ini_set('max_execution_time', 0);
+    //$data["email"]="amitpathak.bansal@gmail.com";
+    //$data["client_name"]="Test email";
+    $data["subject"]= "Invoice";
+
+    $pdf = PDF::loadHTML($data["text"]);
+
+    try{
+        Mail::send('mail', $data, function($message)use($data,$pdf) {
+        $message->to($data["email"])
+        ->subject($data["subject"])
+        ->attachData($pdf->output(), "invoice.pdf");
+        });
+    }catch(JWTException $exception){
+        $this->serverstatuscode = "0";
+        $this->serverstatusdes = $exception->getMessage();
+    }
+    if (Mail::failures()) {
+         $this->statusdesc  =   "Error sending mail";
+         $this->statuscode  =   "0";
+
+    }else{
+
+       $this->statusdesc  =   "Invoice sent Succesfully";
+       $this->statuscode  =   "1";
+    }
+    return response()->json(compact('this'));
   }
 
 

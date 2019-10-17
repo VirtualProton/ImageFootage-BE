@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
 
