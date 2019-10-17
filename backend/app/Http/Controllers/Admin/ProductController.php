@@ -682,6 +682,35 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
+		//echo '<pre>';
+		$imageval=trim('https://imgfootage.s3.us-east-2.amazonaws.com/image%2Fphoto%2F1571054879.png','https://imgfootage.s3.us-east-2.amazonaws.com/');
+		//print_r($imageval); 
+		$imgarray=explode('https://imgfootage.s3.us-east-2.amazonaws.com/','https://imgfootage.s3.us-east-2.amazonaws.com/image%2Fphoto%2F1571054879.png');
+		//print_r($imgarray);
+		$s3img=str_replace('%2F','/',$imgarray[1]);
+		$bucket = 'imgfootage';
+		$keyname = 'https://imgfootage.s3.us-east-2.amazonaws.com/image/photo/1571054879.png';
+		
+		
+	
+	echo '<pre>';
+		
+			try {	
+				$s3 = new S3Client([
+					'version' => '2006-03-01',
+					'region'  => 'us-east-2'
+				]);
+				
+				// Delete an object from the bucket.
+				$result=$s3->deleteObject([
+					'Bucket' => $bucket,
+					'Key'    => $keyname
+				]);
+				} catch (S3Exception $e) {
+    echo $e->getMessage() . "\n";
+}
+				print_r($result);
+		exit();
 		$product=Product::find($id)->toArray();
 		
 		$product_url='';
@@ -708,7 +737,81 @@ class ProductController extends Controller
 		$del_result=ProductImages::where('image_product_id',$id)->delete();
 		if($del_result){
 			if(isset($product['product_main_image']) && !empty($product['product_main_image'])){
-				File::delete($product_url);
+				//File::delete($product_url);
+				$bucket = 'imgfootage';
+				$keyname = '*** Your Object Key ***';
+				
+				$s3 = new S3Client([
+					'version' => 'latest',
+					'region'  => 'us-east-2'
+				]);
+				
+				// Delete an object from the bucket.
+				$s3->deleteObject([
+					'Bucket' => $bucket,
+					'Key'    => $keyname
+				]);
+				
+				
+				
+				if($request->hasFile('product_image')) {
+				$image = $request->file('product_image');
+				$name = time().'.'.$image->getClientOriginalExtension();
+				$files2bucketemp= $image->getPathName();
+				$file_path='';
+				if($request->product_type=='Image'){
+					if($request->sub_product_type=='Vector'){
+						$file_path.='image/vector/';
+					}else if($request->sub_product_type=='Illustrator'){
+						$file_path.='image/illustrator/';
+					}else{
+						$file_path.='image/photo/';
+					}
+
+				}else if($request->product_type=='Footage'){
+					$file_path.='footage/';
+				}else if($request->product_type=='Editorial'){
+					if($request->sub_product_type=='Vector'){
+						$file_path.='editorial/vector/';
+					}else if($request->sub_product_type=='Illustrator'){
+						$file_path.='editorial/illustrator/';
+					}else{
+						$file_path.='editorial/photo/';
+					}
+				}
+				$destinationPath = public_path($file_path);
+				//$image->move($destinationPath, $name);
+				$s3Client = new S3Client([
+					/*'profile' => 'default',*/
+					'region' => 'us-east-2',
+					'version' => '2006-03-01'
+				]);
+				// Use multipart upload
+				//print_r($files2bucketemp);
+				//exit();
+				$finelname=$file_path.$name;
+				$source = $files2bucketemp;
+				$uploader = new MultipartUploader($s3Client, $source, [
+					'bucket' => 'imgfootage',
+					'key' => $finelname,
+				]);
+				
+				try {
+					$fileupresult = $uploader->upload();
+				} catch (MultipartUploadException $e) {
+					echo $e->getMessage() . "\n";
+				}
+    		 }
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 			return back()->with('success','Product deleated successfully');
 		}else{
