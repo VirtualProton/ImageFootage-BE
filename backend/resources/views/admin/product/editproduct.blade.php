@@ -297,6 +297,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputFile">Product</label>
+                      <input type="hidden"  name="product_url" value="{{ $product['product_main_image'] }}" />
                       <input type="file" id="product_image" name="product_image">
     
                       <p class="help-block">Example block-level help text here.</p>
