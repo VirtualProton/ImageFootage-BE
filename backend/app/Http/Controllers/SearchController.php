@@ -23,7 +23,10 @@ class SearchController extends Controller
     }
 
     public function index(SearchRequest $request){
-        $keyword = request(['search', 'productType']);
+        $getKeyword = request(['search', 'productType']);
+        $keyword = array();
+        $keyword['search'] = $getKeyword['search'];
+        $keyword['productType']['id']= $getKeyword['productType'];
         if($keyword['productType']['id']=='1'){
            $all_products = $this->getImagesData($keyword);
         }else if($keyword['productType']['id']=='2'){
