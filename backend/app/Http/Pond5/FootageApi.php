@@ -12,8 +12,7 @@ class FootageApi {
 
      }
    
-
-    private function str_random($len = 8, $allowed_charset=null) {
+  private function str_random($len = 8, $allowed_charset=null) {
         if($allowed_charset === null){
            $allowed_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         }
