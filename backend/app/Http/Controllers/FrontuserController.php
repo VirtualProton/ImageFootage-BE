@@ -29,7 +29,7 @@ class FrontuserController extends Controller {
 		}
 	}
 	public function userCartList(Request $request){
-		$Usercart=new Usercart;
+		$Usercart = new Usercart;
 		$cart_list=$Usercart->where('cart_added_by',$request->user_id)->get()->toArray();
 		echo json_encode($cart_list,true);
 	}

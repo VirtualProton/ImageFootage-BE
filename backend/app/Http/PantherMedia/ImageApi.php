@@ -36,6 +36,7 @@ class ImageApi {
         print_r($result); die;
      }
 
+
     private function str_random($len = 8, $allowed_charset=null) {
         if($allowed_charset === null){
            $allowed_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -75,6 +76,36 @@ class ImageApi {
                 'limit'=>100,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
                 'filters'=>'sort: date; type: photos'
+            ]
+        ]);
+        if ($response->getBody()) {
+            $contents = json_decode($response->getBody(), true);
+            //$contents = $response->getBody();
+            return $contents;
+
+        }
+ }
+
+ public function get_media_info($media_id){
+        $this->access_key = $this->getAccessKey();
+        // echo $this->access_key; die;
+        $client = new Client(); //GuzzleHttp\Client
+        $response = $client->post('http://rest.panthermedia.net/get-media-info', [
+            'headers'=>[
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Version'=>'1.0'
+            ],
+            'form_params' => [
+                'api_key' => $this->api_key,
+                'access_key' => $this->access_key,
+                'timestamp' => $this->timestamp,
+                'nonce' => $this->nonce,
+                'algo' => $this->algo,
+                'content_type'=>'application/json',
+                'lang'=>'en',
+                'id_media'=>$media_id,
+                'show_articles'=>'yes',
+                'show_top10_keywords'=>'yes'
             ]
         ]);
         if ($response->getBody()) {

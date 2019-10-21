@@ -38,4 +38,5 @@ Route::group([
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('/products_api', 'ProductController@productListApi');
     Route::post('search','SearchController@index');
+    Route::get('details/{id}/{origin}/{type}','MediaController@index');
 });

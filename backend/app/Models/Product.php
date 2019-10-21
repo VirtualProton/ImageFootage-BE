@@ -28,4 +28,12 @@ class Product extends Model
         return  $data;
     }
 
+    public function getProductDetail($media_id,$type){
+        $data =Product::where('product_main_type','=',$type)
+                ->Where('product_id','=',$media_id)
+                ->get()
+                ->toArray();
+        return  $data;    
+    }
+
 }

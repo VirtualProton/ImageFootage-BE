@@ -7,6 +7,7 @@ use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\PantherMedia\ImageApi;
+use App\Http\Pond5\FootageApi;
 use App\Models\Product;
 use CORS;
 
@@ -30,7 +31,7 @@ class SearchController extends Controller
         if($keyword['productType']['id']=='1'){
            $all_products = $this->getImagesData($keyword);
         }else if($keyword['productType']['id']=='2'){
-           $this->getFootageData($keyword);
+            $all_products =$this->getFootageData($keyword);
         }else{
             $this->getImagesData($keyword);
             $this->getFootageData($keyword);
@@ -46,5 +47,15 @@ class SearchController extends Controller
         $pantharmediaData = $pantherMediaImages->search($keyword);
         return array('imgfootage'=>$all_products,'api'=>$pantharmediaData);
     }
+
+    public function getFootageData($keyword){
+        $product = new Product();
+        $all_products = $product->getProducts($keyword);
+        $footageMedia = new FootageApi();
+        $pondfootageMediaData = $footageMedia->search($keyword);
+        return array('imgfootage'=>$all_products,'api'=>$pondfootageMediaData);
+    }
+
+    
 
 }

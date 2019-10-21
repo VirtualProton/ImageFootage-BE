@@ -4,8 +4,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 class FootageApi {
 
-     private  $api_key =  'B349jWEnFUhd299';
-     private $api_secret= 'EXF3xRUA299';
+     private  $api_key =  '22frBD55299';
+     private $api_secret= 'v72OkjirkV6D299';
      private $url = "https://www.pond5.com/?page=api";
      
      public function  __construct(){
@@ -30,25 +30,24 @@ class FootageApi {
         $search_cmd['col'] = 1;
        //Creating the json object with all data (this is usually wrapped in a subroutine since its always the same)
         $json_object = array();
-        $json_object["api_key"] = $apiKey;
+        $json_object["api_key"] = $this->api_key;
         $json_object["ver"] = 1;
         $json_object["commands_json"] = json_encode( array($search_cmd) );
 
         //NOTE: the commands_hash must always have the string 'dragspel' appended
-        $json_object["commands_hash"] = md5($json_object["commands_json"] . $apiSecret . 'dragspel');
+        $json_object["commands_hash"] = md5($json_object["commands_json"] . $this->api_secret . 'dragspel');
 
         $data_req = json_encode($json_object);
 
         //the post argument
         $post_val = "api=" . urlencode($data_req);
-        
+       
             $client = new Client(); //GuzzleHttp\Client
             $response = $client->post($this->url, [
+                'body' => $post_val,
                 'headers'=>[
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Accept-Version'=>'1.0'
-                ],
-                'form_params' => [$post_val]
+                ]
             ]);
             if ($response->getBody()) {
                 $contents = json_decode($response->getBody(), true);
