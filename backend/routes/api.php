@@ -28,6 +28,7 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
 	Route::post('add_to_cart', 'FrontuserController@addtocart');
+	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
 	Route::post('deleate_cart_itom/{id}', 'FrontuserController@deleteCartItom');
 	Route::post('contact_us', 'AuthController@contactUs');
