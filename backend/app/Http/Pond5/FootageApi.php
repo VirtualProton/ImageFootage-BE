@@ -6,7 +6,7 @@ class FootageApi {
 
      private  $api_key =  '22frBD55299';
      private $api_secret= 'v72OkjirkV6D299';
-     private $url = "https://www.pond5.com/?page=api";
+     private $url = "https://reseller-preprod.pond5.com/api/search";
      
      public function  __construct(){
 
@@ -21,7 +21,7 @@ class FootageApi {
     public function search($keyword){
         $serach = $keyword['search'];
         $search_cmd= array();
-        $search_cmd['command'] = 'search';
+        //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $serach;
         $search_cmd['bm'] = '15';
         $search_cmd['sb'] = '1';
@@ -31,6 +31,7 @@ class FootageApi {
        //Creating the json object with all data (this is usually wrapped in a subroutine since its always the same)
         $json_object = array();
         $json_object["api_key"] = $this->api_key;
+        $json_object["my_secret"] = $this->api_secret;
         $json_object["ver"] = 1;
         $json_object["commands_json"] = json_encode( array($search_cmd) );
 
@@ -41,8 +42,7 @@ class FootageApi {
 
         //the post argument
         $post_val = "api=" . urlencode($data_req);
-       
-            $client = new Client(); //GuzzleHttp\Client
+         $client = new Client(); //GuzzleHttp\Client
             $response = $client->post($this->url, [
                 'body' => $post_val,
                 'headers'=>[
