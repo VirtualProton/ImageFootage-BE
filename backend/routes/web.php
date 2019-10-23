@@ -75,6 +75,17 @@ Route::get('/staticpages/{status}/{id}', 'StaticPagesController@changePackageSta
 Route::get('/updatestaticpage/{id}', 'StaticPagesController@updateStaticPage');
 Route::post('/editstaticpage', 'StaticPagesController@editStaticPage');
 Route::get('/deletestaticpage/{id}', 'StaticPagesController@deleteStaticPage');
+Route::get('/add_product_colors', 'ProductColorController@addProductColor');
+Route::post('/addproductcolorprocess', 'ProductColorController@addProductColorProcess');
+Route::get('/product_colors_list', 'ProductColorController@productColorsList');
+Route::get('/product_colors_status/{status}/{id}', 'ProductColorController@changePackageStatus');
+Route::get('/deletepcolor/{id}', 'ProductColorController@deletePcolorPage');
+Route::get('/editproductcolor/{id}', 'ProductColorController@editProduCtcolor');
+Route::post('/updateproductcolor', 'ProductColorController@updateProductColor');
+
+
+
+
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
 //end api
