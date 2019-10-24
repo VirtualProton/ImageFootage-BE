@@ -1,0 +1,34 @@
+import { NgModule }             from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { HeroesComponent }      from './heroes/heroes.component';
+import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'aboutUs', component: AboutUsComponent },
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'contactUs', component: ContactUsComponent },
+  { path: 'licence', component: LicenceAgreementComponent },
+  { path: 'terms', component: TermsAndConditionsComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'tagging', component: ContactUsComponent },
+];
+
+@NgModule({
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
+})
+export class AppRoutingModule {}

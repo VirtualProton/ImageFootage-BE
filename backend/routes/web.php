@@ -82,7 +82,14 @@ Route::get('/product_colors_status/{status}/{id}', 'ProductColorController@chang
 Route::get('/deletepcolor/{id}', 'ProductColorController@deletePcolorPage');
 Route::get('/editproductcolor/{id}', 'ProductColorController@editProduCtcolor');
 Route::post('/updateproductcolor', 'ProductColorController@updateProductColor');
-
+//product gender
+Route::get('/add_product_gender', 'ProductGenderController@addProductGender');
+Route::post('/addproductgenderprocess', 'ProductGenderController@addProductColorProcess');
+Route::get('/product_gender_list', 'ProductGenderController@ProductGendersList');
+Route::get('/product_gender_status/{status}/{id}', 'ProductGenderController@changeGenderStatus');
+Route::get('/deletepgender/{id}', 'ProductGenderController@deletePgenderPage');
+Route::get('/editproductgender/{id}', 'ProductGenderController@editProduCtgender');
+Route::post('/updateproductgender', 'ProductGenderController@updateProductGender');
 
 
 
