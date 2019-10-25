@@ -1,84 +1,67 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule }       from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
+import { FormsModule }    from '@angular/forms';
+import { HttpClientModule }    from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { ProductComponent } from './components/product/product.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
-import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
-import { HomeComponent } from './components/home/home.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { JarwisService } from './services/jarwis.service';
-import { TokenService } from './services/token.service';
-import { AuthService } from './services/auth.service';
-import { AfterLoginService } from './services/after-login.service';
-import { BeforeLoginService } from './services/before-login.service';
-import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
 
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
-import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatIconModule,
-  MatButtonModule,
-  MatCardModule } from '@angular/material';
-import { ContactusComponent } from './components/contactus/contactus.component';
+import { AppRoutingModule }     from './app-routing.module';
 
-
-
-let config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com")
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider("396074584437141")
-  }
-]);
-
-export function provideConfig() {
-  return config;
-}
-
+import { AppComponent }         from './app.component';
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
+import { HeroesComponent }      from './heroes/heroes.component';
+import { HeroSearchComponent }  from './hero-search/hero-search.component';
+import { MessagesComponent }    from './messages/messages.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
+ 
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    LoginComponent,
-    SignupComponent,
-    ProfileComponent,
-    RequestResetComponent,
-    ResponseResetComponent,
-	ProductComponent,
-    HomeComponent,
-    ContactusComponent
-  ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
+    AppRoutingModule,
     HttpClientModule,
-    SnotifyModule,
-	SocialLoginModule,
-	BrowserAnimationsModule,
-	MatIconModule,
-  	MatButtonModule,
-  	MatCardModule
+    NgbModule,
+    
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
-  providers: [JarwisService, TokenService, AuthService, AfterLoginService, BeforeLoginService,
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults },{
-    provide: AuthServiceConfig,
-    useFactory: provideConfig
-  },
-    SnotifyService],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    HeroesComponent,
+    HeroDetailComponent,
+    MessagesComponent,
+    HeroSearchComponent,
+    FooterComponent,
+    HeaderComponent,
+    AboutUsComponent,
+    SignUpComponent,
+    WishlistComponent,
+    ContactUsComponent,
+    TermsAndConditionsComponent,
+    PrivacyPolicyComponent,
+    LicenceAgreementComponent
+  ],
+  exports:[],
+  bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }

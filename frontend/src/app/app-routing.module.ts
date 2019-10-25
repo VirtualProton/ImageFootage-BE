@@ -1,67 +1,34 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { HomeComponent } from './components/home/home.component';
-import { ContactusComponent } from './components/contactus/contactus.component';
-import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
-import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
-import { BeforeLoginService } from './services/before-login.service';
-import { AfterLoginService } from './services/after-login.service';
-import { ProductComponent } from './components/product/product.component';
 
-const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AfterLoginService]
-  },
-  {
-    path: 'request-password-reset',
-    component: RequestResetComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'response-password-reset',
-    component: ResponseResetComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'products',
-    component: ProductComponent,
-    canActivate: [BeforeLoginService]
-  },
-  {
-    path: 'contact-us',
-    component: ContactusComponent
-  }
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { HeroesComponent }      from './heroes/heroes.component';
+import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'aboutUs', component: AboutUsComponent },
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'contactUs', component: ContactUsComponent },
+  { path: 'licence', component: LicenceAgreementComponent },
+  { path: 'terms', component: TermsAndConditionsComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'tagging', component: ContactUsComponent },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
