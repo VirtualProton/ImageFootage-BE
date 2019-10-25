@@ -90,8 +90,14 @@ Route::get('/product_gender_status/{status}/{id}', 'ProductGenderController@chan
 Route::get('/deletepgender/{id}', 'ProductGenderController@deletePgenderPage');
 Route::get('/editproductgender/{id}', 'ProductGenderController@editProduCtgender');
 Route::post('/updateproductgender', 'ProductGenderController@updateProductGender');
-
-
+//Product ethinicities
+Route::get('/add_product_ethinicities', 'ProductEthinicitiesController@addProductGender');
+Route::post('/addproductethinicitiesprocess', 'ProductEthinicitiesController@addProductEthinicitiesProcess');
+Route::get('/product_ethinicities_list', 'ProductEthinicitiesController@ProductEthinicitiesList');
+Route::get('/product_ethinicities_status/{status}/{id}', 'ProductEthinicitiesController@changeEthinicitiesStatus');
+Route::get('/deletepethinicities/{id}', 'ProductEthinicitiesController@deletePethinicitiesPage');
+Route::get('/editproductethinicities/{id}', 'ProductEthinicitiesController@editProductEthinicities');
+Route::post('/updateproductethinicities', 'ProductEthinicitiesController@updateProductEthinicities');
 
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
