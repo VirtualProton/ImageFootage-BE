@@ -99,6 +99,33 @@ Route::get('/deletepethinicities/{id}', 'ProductEthinicitiesController@deletePet
 Route::get('/editproductethinicities/{id}', 'ProductEthinicitiesController@editProductEthinicities');
 Route::post('/updateproductethinicities', 'ProductEthinicitiesController@updateProductEthinicities');
 
+//Product locations
+Route::get('/add_product_locations', 'ProductLocationsController@addProductLocation');
+Route::post('/addproduct_ocations_rocess', 'ProductLocationsController@addProductLocationsProcess');
+Route::get('/product_locations_list', 'ProductLocationsController@ProductLocationsList');
+Route::get('/product_locations_status/{status}/{id}', 'ProductLocationsController@changeLocationsStatus');
+Route::get('/deletelocation/{id}', 'ProductLocationsController@deleteProductLocation');
+Route::get('/editproductlocation/{id}', 'ProductLocationsController@editProductLocations');
+Route::post('/updateproductlocation', 'ProductLocationsController@updateProductLocations');
+
+//Product image sizes
+Route::get('/add_product_image_sizes', 'ProductImageSizesController@addProductImageSize');
+Route::post('/addproduct_imagesizes_process', 'ProductImageSizesController@addProductImageSizesProcess');
+Route::get('/product_image_sizes_list', 'ProductImageSizesController@ProductImageSizesList');
+Route::get('/product_imagesizes_status/{status}/{id}', 'ProductImageSizesController@changeProductImageSizesStatus');
+Route::get('/deleteproductimagesizes/{id}', 'ProductImageSizesController@deleteProductImageSizes');
+Route::get('/editproductimagesizes/{id}', 'ProductImageSizesController@editProductImageSizes');
+Route::post('/updateproductimagesizes', 'ProductImageSizesController@updateProductImageSizes');
+
+//Product image types
+Route::get('/add_product_image_types', 'ProductImageTypesController@addProductImageType');
+Route::post('/addproduct_imagetype_process', 'ProductImageTypesController@addProductImageTypesProcess');
+Route::get('/product_image_types_list', 'ProductImageTypesController@productImageTypesList');
+Route::get('/product_imagetypes_status/{status}/{id}', 'ProductImageTypesController@changeProductImageTypesStatus');
+Route::get('/deleteproductimagestatus/{id}', 'ProductImageTypesController@deleteProductImageTypes');
+Route::get('/editproductimagetypes/{id}', 'ProductImageTypesController@editProductImageTypes');
+Route::post('/updateproductimagetypes', 'ProductImageTypesController@updateProductImageTypes');
+
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
 //end api
