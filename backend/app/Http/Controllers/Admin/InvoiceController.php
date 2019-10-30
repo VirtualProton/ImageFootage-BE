@@ -72,6 +72,9 @@ class InvoiceController extends Controller
     return response()->json(compact('this'));
   }
 
+  public function quotation($user_id){
+    return view('admin.invoice.quotation',compact('templates'));   
 
+  }
 
 }

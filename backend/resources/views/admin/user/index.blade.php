@@ -61,7 +61,7 @@
                     <a href="{{ url('admin/users/status/1/'.$user['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
                   @endif
                   <a href="{{ URL::to('admin/users/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
-
+                  <a href="{{ URL::to('admin/tran/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
                   <form action="{{ route('users.destroy', $user['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf
