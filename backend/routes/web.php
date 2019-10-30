@@ -126,6 +126,24 @@ Route::get('/deleteproductimagestatus/{id}', 'ProductImageTypesController@delete
 Route::get('/editproductimagetypes/{id}', 'ProductImageTypesController@editProductImageTypes');
 Route::post('/updateproductimagetypes', 'ProductImageTypesController@updateProductImageTypes');
 
+//Product peoples
+Route::get('/add_product_image_peoples', 'ProductImagePeoplesController@addProductImageSize');
+Route::post('/addproduct_imagepeoples_process', 'ProductImagePeoplesController@addProductPeoplesProcess');
+Route::get('/product_image_peoples_list', 'ProductImagePeoplesController@ProductPeoplesList');
+Route::get('/product_imagepeoples_status/{status}/{id}', 'ProductImagePeoplesController@changeProductPeoplesStatus');
+Route::get('/deleteproductpeoples/{id}', 'ProductImagePeoplesController@deleteProductPeoples');
+Route::get('/editproductpeoples/{id}', 'ProductImagePeoplesController@editProductPeoples');
+Route::post('/updateproductpeoples', 'ProductImagePeoplesController@updateProductPeoples');
+
+//Product  Orientations
+Route::get('/add_product_orientations ', 'ProductImageOrientationsController@addProductOrientations');
+Route::post('/addproduct_orientations_process', 'ProductImageOrientationsController@addProductOrientationsProcess');
+Route::get('/product_orientations_list', 'ProductImageOrientationsController@ProductOrientationsList');
+Route::get('/product_orientations_status/{status}/{id}', 'ProductImageOrientationsController@changeProductOrientationsStatus');
+Route::get('/deleteproductorientations/{id}', 'ProductImageOrientationsController@deleteProductOrientations');
+Route::get('/editproductorientations/{id}', 'ProductImageOrientationsController@editProductOrientations');
+Route::post('/updateproductorientations', 'ProductImageOrientationsController@updateProductOrientations');
+
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
 //end api
