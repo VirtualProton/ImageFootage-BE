@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /backend
     destination: /var/www/html/backend
-  - source: /frontend/dist/frontend
+  - source: /frontend/dist
     destination: /var/www/html/frontend
 hooks:
   BeforeInstall:
