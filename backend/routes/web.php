@@ -144,6 +144,18 @@ Route::get('/deleteproductorientations/{id}', 'ProductImageOrientationsControlle
 Route::get('/editproductorientations/{id}', 'ProductImageOrientationsController@editProductOrientations');
 Route::post('/updateproductorientations', 'ProductImageOrientationsController@updateProductOrientations');
 
+//Product  Sort Types
+Route::get('/add_product_sort_type', 'ProductImageSortTypesController@addImageSortTypes');
+Route::post('/addproduct_sort_type_process', 'ProductImageSortTypesController@addImageSortTypesProcess');
+Route::get('/product_sort_type_list', 'ProductImageSortTypesController@ImageSortTypesList');
+Route::get('/product_sort_type_status/{status}/{id}', 'ProductImageSortTypesController@changeImageSortTypeStatus');
+Route::get('/deleteproductsorttype/{id}', 'ProductImageSortTypesController@deleteImageSortTypes');
+Route::get('/editproductsort_type/{id}', 'ProductImageSortTypesController@editImageSortTypes');
+Route::post('/updatproductsort_type', 'ProductImageSortTypesController@updateImageSortTypes');
+
+//bulk upload products
+Route::get('/upload_products_csv', 'ProductBulkUploadController@uploadCSV');
+
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
 //end api
