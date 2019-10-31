@@ -13,7 +13,7 @@ export class HeroService {
 
   private heroesUrl = 'api/heroes';  // URL to web api
   private carouselImagesUrl = 'api/carouselImages';
-  private aosImagesUrl= 'http://localhost/imagefootagenew/backend/api/home';
+  private aosImagesUrl= 'api/aosImages';
   private currentUserSubject: BehaviorSubject<userData>;
   public currentUser: Observable<userData>;
 
