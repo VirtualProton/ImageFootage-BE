@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { HeroService } from '../hero.service';
+
 
 
 
@@ -11,29 +12,33 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 })
 export class HeaderComponent implements OnInit {
 
-  closeResult: string;
+  public currentUser: any;
+  showloginPopup:boolean=false;
 
-  constructor(private modalService: NgbModal) {}
+
+  constructor( private router: Router, private authenticationService: HeroService) {    
+    this.authenticationService.currentUser.subscribe(x => {
+        this.currentUser = x;
+    });  
+  }
 
   ngOnInit() {
 
   }
-  
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+
+  clickLoginPopup(){
+    this.showloginPopup = true;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
+  hideLoginPopup(event){
+    this.showloginPopup = false;
+    this.router.navigate(['/']);
   }
+
+  logout() {
+      this.authenticationService.logout();
+      this.router.navigate(['/dashboard']);
+  }
+  
+
 }

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MustMatch } from '../_helpers/must-match.validator';
+import { HeroService } from '../hero.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-up',
@@ -7,9 +12,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor() { }
+
+    registerForm: FormGroup;
+    loading = false;
+    submitted = false;
+    showloginPopup:boolean=false;
+
+  constructor( private formBuilder: FormBuilder,private authenticationService: HeroService,private router: Router) { }
 
   ngOnInit() {
+
+    this.registerForm = this.formBuilder.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        jobTitle: ['', Validators.required],
+        company: ['', Validators.required],
+        mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+        phoneNumber: ['', Validators.required],
+        iagree:['', Validators.required],
+
+    }, {
+       validator: MustMatch('password', 'confirmPassword')
+  });
+  
+  }
+
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+    this.authenticationService.register(this.registerForm.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate(['/']);
+                },
+                error => {
+                    this.loading = false;
+                });
+  }
+
+  clickLoginPopup(){
+    this.showloginPopup = true;
+  }
+
+  hideLoginPopup(event){
+    this.showloginPopup = false;
+    this.router.navigate(['/signUp']);
   }
 
 }

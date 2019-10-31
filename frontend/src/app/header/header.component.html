@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Image Footage</a>
+      <a class="navbar-brand js-scroll-trigger" routerLink="/dashboard">Image Footage</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -24,63 +24,25 @@
             <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>
           </li>
           
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger"  (click)="open(loginContent)">Login</a>
+          <li class="nav-item" *ngIf="!currentUser">
+            <a class="nav-link js-scroll-trigger"  (click)="clickLoginPopup()">Login</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="currentUser">
+            <a class="nav-link js-scroll-trigger"  (click)="logout()">Logout</a>
+          </li>
+          <li class="nav-item"  *ngIf="!currentUser">
             <a class="nav-link js-scroll-trigger" routerLink="/signUp">Sign Up</a>
           </li>
+          <li class="nav-item" *ngIf="currentUser">
+              <a class="nav-link js-scroll-trigger"  routerLink="/wishlist">wishlist</a>
+            </li>
         </ul>
       </div>
     </div>
   </nav>
 
-<ng-template #loginContent let-modal>
-<div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;outline: 0;">    
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content rounded-0">
-            <div class="modal-header border-0">
-                <button type="button" class="close f-36" data-dismiss="modal" (click)="modal.dismiss('Cross click')">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="col-lg-8 offset-lg-2 col-md-8 offset-md- col-sm-10 offset-sm-1">
-                    <div class="pl-5 pr-5 pt-2 pb-2">           
-                        <div class="login-sec">
-                            <h2 class="text-center f-20 text-black mb-3"><strong>Sign in to Image Footage</strong></h2>
-                            <form class="loignForm">
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-outline-dark pt-2 pb-2 pl-5 pr-5 rounded-0"><span class="icon-facebook text-primary"></span> Facebook</button>
-                                    <button type="button" class="btn btn-outline-dark pt-2 pb-2 pl-5 pr-5 rounded-0 ml-2"><span class="icon-google text-danger"></span> Google</button>
-                                    <p class="pt-3 f-12">All your activity will remain private.</p>
-                                    <div class="orSec"><span class="ortextNew">or</span></div>
-                                </div>
-                                
-                                <div class="form-group mt-5">
-                                    <label class="text-uppercase f-14 text-black">Email </label>
-                                    <input type="email" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label class="text-uppercase f-14 text-black">Password</label>
-                                    <input type="password" class="form-control" placeholder="">
-                                </div>
-        
-                                <a href="#" class="f-14 text-primary">Forgot Password?</a>
-        
-                                <div class="form-group mt-3">                                
-                                    <button type="submit" class="btn btn-dark w-100 d-block rounded-0 p-3 text-white shadow-lg mb-3">Submit</button>
-                                    <p class="f-12 text-center">Not a member as yet?<a href="#" class="text-primary"> Register Now</a></p>
-                                </div>      
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div> -->
-</div>
-</ng-template>
+<ng-container *ngIf="showloginPopup">
+  <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>
   

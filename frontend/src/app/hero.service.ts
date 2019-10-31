@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Hero,carouselSlider,aosSlider } from './hero';
+import { Hero,carouselSlider,aosSlider, userData } from './hero';
 import { MessageService } from './message.service';
 
 
@@ -13,7 +13,10 @@ export class HeroService {
 
   private heroesUrl = 'api/heroes';  // URL to web api
   private carouselImagesUrl = 'api/carouselImages';
-  private aosImagesUrl= 'api/aosImages';
+  private aosImagesUrl= 'http://localhost/imagefootagenew/backend/api/home';
+  private currentUserSubject: BehaviorSubject<userData>;
+  public currentUser: Observable<userData>;
+
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +24,14 @@ export class HeroService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService) { 
+        this.currentUserSubject = new BehaviorSubject<userData>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUser = this.currentUserSubject.asObservable();
+    }
+
+    public get currentUserValue():userData{
+      return this.currentUserSubject.value;
+    }
 
     /** GET Slider Images from the server */
   getcarouselSliderImages (): Observable<carouselSlider[]> {
@@ -41,6 +51,34 @@ export class HeroService {
       catchError(this.handleError<aosSlider[]>('getCarouselImages', []))
     );
 }
+
+
+
+  getLogin(email: any, password: string): Observable<userData> {
+    return this.http.post<any>(`api/userData`, { email, password }, this.httpOptions).pipe(
+      map(user => {
+        console.log(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
+      }),
+      catchError(this.handleError<userData>(`unable to get data`))
+    );
+  }
+
+  register(usrData: userData) : Observable<any> {
+      return this.http.post(`api/userData`,usrData, this.httpOptions).pipe(
+        map(userInfo => {
+           return true;
+        }),
+        catchError(this.handleError<userData>(`unable to register data`))
+      );;
+  }
+
+  logout(){
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
 
 
 

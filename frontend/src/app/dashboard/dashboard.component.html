@@ -9,18 +9,20 @@
         <div class="col-md-9 col-sm-9 m-auto">
             <form class="search_m">
     <div class="input-group">
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Photos + Videos
+          <div class="input-group-btn" ngbDropdown >
+            <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
+             <span *ngIf='searchBoxLabel == "all"'>Photos + Videos</span>
+             <span *ngIf='searchBoxLabel == "photo"'>Photos Only</span>
+             <span *ngIf='searchBoxLabel == "video"'>Videos Only</span>
             </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0)">Photos + Videos</a>
-              <a class="dropdown-item" href="javascript:void(0)"><i class=""></i> Photos Only</a>
-              <a class="dropdown-item" href="javascript:void(0)">Videos Only</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('all')" ngbDropdownItem>Photos + Videos</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('photo')" ngbDropdownItem><i class=""></i> Photos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('video')" ngbDropdownItem>Videos Only</a>
                </div>
           </div>
-          <input type="text" class="form-control" aria-label="Text input with dropdown button">
-          <a href="#" class="iconSearch"><span class="icon-search"></span></a>
+          <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button">
+          <a href="javascript:void(0)" class="iconSearch" (click)="searchAosData(searchBoxEle.value)"><span class="icon-search"></span></a>
         </div>
   </form>
         
@@ -35,7 +37,7 @@
           <div id="recipeCarousel" class="carousel slide w-100">
               <div class="carousel-inner" role="listbox">              
 
-                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators"> 
+                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
                     <div class="carousel-item">
                         <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages;let i= index">
                           <div class="col-11 m-auto">
@@ -51,14 +53,14 @@
 
                 
               </div>
-              <a class="carousel-control-prev" href="javascript:void(0)" role="button" data-slide="prev">
+            <!--  <a class="carousel-control-prev" href="javascript:void(0)" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
               </a>
               <a class="carousel-control-next" href="javascript:void(0)" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
-              </a>
+              </a>--> 
             </div>
         </div>
       </div>
@@ -66,7 +68,7 @@
           <div class="container-fluid photos">
             <div class="row align-items-stretch">
 
-                <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages;let i= index">
+                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                     <a href="single.html" class="d-block photo-item">
                       <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
                       <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
@@ -80,144 +82,16 @@
                     </a>
                 </div>
 
-             <!--   <div [ngClass]="getClassName(2)" data-aos="fade-up" data-aos-delay="100">
-                    <a href="single.html" class="d-block photo-item">
-                        <iframe  src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" allowfullscreen height="300" width="100%"></iframe>
-                        <div class="photo-text-more">
-                          <div class="photo-text-more">
-                            <h3 class="heading">Photos Title Here</h3>
-                            <span class="meta">42 Photos</span>
-                          </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up">
-                    <a href="single.html" class="d-block photo-item">
-                      <img src="assets/images/img_1.jpg" alt="Image" class="img-fluid">
-                      <div class="photo-text-more">
-                        <h3 class="heading">Photos Title Here</h3>
-                        <span class="meta">42 Photos</span>
-                      </div>
-                    </a>
-                </div>
-
-                <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                      <a href="single.html" class="d-block photo-item">
-                        <img src="assets/images/img_2.jpg" alt="Image" class="img-fluid">
-                        <div class="photo-text-more">
-                          <div class="photo-text-more">
-                          <h3 class="heading">Photos Title Here</h3>
-                          <span class="meta">42 Photos</span>
-                        </div>
-                        </div>
-                      </a>
-                </div>
-                    
-                   <div class="col-6 col-md-1 col-lg-1" data-aos="fade-up" data-aos-delay="300">
-                        <a href="single.html" class="d-block photo-item">
-                          <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">
-                          <div class="photo-text-more">
-                            <div class="photo-text-more">
-                            <h3 class="heading">Photos Title Here</h3>
-                            <span class="meta">42 Photos</span>
-                          </div>
-                          </div>
-                        </a>
-                   </div>
-                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                          <a href="single.html" class="d-block photo-item">
-                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">
-                            <div class="photo-text-more">
-                              <div class="photo-text-more">
-                              <h3 class="heading">Photos Title Here</h3>
-                              <span class="meta">42 Photos</span>
-                            </div>
-                            </div>
-                          </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
-                            <a href="single.html" class="d-block photo-item">
-                              <img src="assets/images/img_6.jpg" alt="Image" class="img-fluid">
-                              <div class="photo-text-more">
-                                <div class="photo-text-more">
-                                <h3 class="heading">Photos Title Here</h3>
-                                <span class="meta">42 Photos</span>
-                              </div>
-                              </div>
-                            </a>
-                    </div>
-                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-                              <a href="single.html" class="d-block photo-item">
-                                <img src="assets/images/img_7.jpg" alt="Image" class="img-fluid">
-                                <div class="photo-text-more">
-                                  <div class="photo-text-more">
-                                  <h3 class="heading">Photos Title Here</h3>
-                                  <span class="meta">42 Photos</span>
-                                </div>
-                                </div>
-                              </a>
-                    </div>
-
-                            <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">
-                                <a href="single.html" class="d-block photo-item">
-                                  <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">
-                                  <div class="photo-text-more">
-                                    <div class="photo-text-more">
-                                    <h3 class="heading">Photos Title Here</h3>
-                                    <span class="meta">42 Photos</span>
-                                  </div>
-                                  </div>
-                                </a>
-                              </div>
-                              <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                                  <a href="single.html" class="d-block photo-item">
-                                    <img src="assets/images/img_9.jpg" alt="Image" class="img-fluid">
-                                    <div class="photo-text-more">
-                                      <div class="photo-text-more">
-                                      <h3 class="heading">Photos Title Here</h3>
-                                      <span class="meta">42 Photos</span>
-                                    </div>
-                                    </div>
-                                  </a>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                                    <a href="single.html" class="d-block photo-item">
-                                      <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">
-                                      <div class="photo-text-more">
-                                        <div class="photo-text-more">
-                                        <h3 class="heading">Photos Title Here</h3>
-                                        <span class="meta">42 Photos</span>
-                                      </div>
-                                      </div>
-                                    </a>
-                                  </div>
-                                  <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
-                                      <a href="single.html" class="d-block photo-item">
-                                        <img src="assets/images/img_1.jpg" alt="Image" class="img-fluid">
-                                        <div class="photo-text-more">
-                                          <div class="photo-text-more">
-                                          <h3 class="heading">Photos Title Here</h3>
-                                          <span class="meta">42 Photos</span>
-                                        </div>
-                                        </div>
-                                      </a>
-                                    </div>   -->
-
-            </div>
+           </div>
 
             
 
             <div class="col-md-5 col-sm-6 col-12 m-auto">
-                  <ul class="pagination pagination_d  d-flex justify-content-center my-5">                  
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">Previous</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">5</a></li>
-                      <li class="page-item"><a class="page-link" href="javascript:void(0)">Next</a></li>
-                  </ul>            
+                <!-- <ngb-pagination
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [collectionSize]="items.length"></ngb-pagination>  -->   
+                    <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
             </div>
           </div>
       </main>

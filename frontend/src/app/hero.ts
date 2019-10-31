@@ -20,4 +20,13 @@ export class aosSlider{
   imageName:string;
   type:string;
   count:number;
+  eleClass:number;
+}
+
+export class userData{
+  id:number;
+  firstName:string;
+  lastName:string;
+  email:any;
+  password:string;
 }

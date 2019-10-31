@@ -1,6 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -24,6 +24,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
+import { LoginComponent } from './login/login.component';
  
 
 
@@ -34,6 +35,7 @@ import { LicenceAgreementComponent } from './licence-agreement/licence-agreement
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    ReactiveFormsModule,
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -58,9 +60,10 @@ import { LicenceAgreementComponent } from './licence-agreement/licence-agreement
     ContactUsComponent,
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
-    LicenceAgreementComponent
+    LicenceAgreementComponent,
+    LoginComponent
   ],
-  exports:[],
+  exports:[LoginComponent],
   bootstrap: [ AppComponent ]
 })
 

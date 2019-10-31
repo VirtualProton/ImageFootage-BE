@@ -1,0 +1,54 @@
+
+        <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;outline: 0;">    
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header border-0">
+                        <button type="button" class="close f-36" data-dismiss="modal" (click)="closePopup()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-8 offset-lg-2 col-md-8 offset-md- col-sm-10 offset-sm-1">
+                            <div class="pl-5 pr-5 pt-2 pb-2">           
+                                <div class="login-sec">
+                                    <h2 class="text-center f-20 text-black mb-3"><strong>Sign in to Image Footage</strong></h2>
+                                    <form class="loignForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-outline-dark pt-2 pb-2 pl-5 pr-5 rounded-0"><span class="icon-facebook text-primary"></span> Facebook</button>
+                                            <button type="button" class="btn btn-outline-dark pt-2 pb-2 pl-5 pr-5 rounded-0 ml-2"><span class="icon-google text-danger"></span> Google</button>
+                                            <p class="pt-3 f-12">All your activity will remain private.</p>
+                                            <div class="orSec"><span class="ortextNew">or</span></div>
+                                        </div>
+                                        
+                                        <div class="form-group mt-5">
+                                            <label class="text-uppercase f-14 text-black">Email </label>
+                                            <input type="email" class="form-control" formControlName="email" name="email" [ngClass]="{ 'is-invalid': submitted && f.email?.errors }">
+                                            <div *ngIf="submitted && f.email?.errors" class="invalid-feedback">
+                                              <div *ngIf="f.email?.errors.required">Email is required</div>
+                                              <div *ngIf="f.email?.errors.pattern">Invalid email format</div>
+                                            </div>
+                                          </div>
+                                        <div class="form-group mt-3">
+                                            <label class="text-uppercase f-14 text-black">Password</label>
+                                            <input type="password" class="form-control" formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password?.errors }">
+                                            <div *ngIf="submitted && f.password?.errors" class="invalid-feedback">
+                                              <div *ngIf="f.password?.errors.required">Password is required</div>
+                                          </div>
+                                        </div>
+                
+                                        <a href="#" class="f-14 text-primary">Forgot Password?</a>
+                
+                                        <div class="form-group mt-3">                                
+                                            <button type="submit" [disabled]="loading" class="btn btn-dark w-100 d-block rounded-0 p-3 text-white shadow-lg mb-3">Submit</button>
+                                            <p class="f-12 text-center">Not a member as yet?<a routerLink="/signUp" class="text-primary"> Register Now</a></p>
+                                        </div>      
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+            </div> -->
+        </div>

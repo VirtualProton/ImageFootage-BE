@@ -40,4 +40,6 @@ Route::group([
     Route::post('/products_api', 'ProductController@productListApi');
     Route::post('search','SearchController@index');
     Route::get('details/{id}/{origin}/{type}','MediaController@index');
+    Route::get('home','SearchController@home');
+    
 });
