@@ -179,6 +179,8 @@ Route::post('/sendmail','InvoiceController@sendmail');
 
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
 
+Route::get('/product/{id}', 'ProductController@getproduct');
+
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');

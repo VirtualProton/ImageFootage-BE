@@ -73,7 +73,8 @@ class InvoiceController extends Controller
   }
 
   public function quotation($user_id){
-    return view('admin.invoice.quotation',compact('templates'));   
+
+    return view('admin.invoice.quotation',compact('user_id'));   
 
   }
 

@@ -15,7 +15,7 @@
               <div class="box-body">
                
               <div class="panel-body">
-						<form role="form" name="downloadOnBehalf" method="post" ng-submit="productSubmit()" class="ng-valid-email ng-invalid ng-invalid-required ng-dirty ng-valid-parse">
+						<form role="form" name="downloadOnBehalf" method="post"  class="">
 						
 							
 							<div class="row">
@@ -23,7 +23,7 @@
 									<div class="">
 										<div class="form-group">
 											<label>UID</label>
-											<input type="text" class="form-control"  ng-blur="user_id = commonService.checkElementLength(vm.formData,'user_id');" required=""  ng-change="checkuserNOtBlock()">
+											<input type="text" name="uid" id="uid" class="form-control"  value="{{$user_id}}"  readonly >
 										</div>
 									</div>
 									<!-- /.col-lg-6 (nested) -->
@@ -40,7 +40,7 @@
 												Download Packs
 											  </label>
 											  <label class="margin-right">
-											  <input type="radio"  value="custom"  name="quotation_type">
+											  <input type="radio"  value="custom"  name="quotation_type" checked="checked">
 												Custom
 											  </label>
 											
@@ -55,34 +55,31 @@
 						
 									<!-- /.col-lg-6 (nested) -->
 									
-						<!-- ngIf: vm.formData.type=='custom' --><div ng-if="vm.formData.type=='custom'" class="ng-scope">		
-						
-								
-										
+						<!-- ngIf: vm.formData.type=='custom' --><div  class="">		
 				<div class="row">					
 				<div class="col-sm-12">					
-						<!-- ngRepeat: name in vm.formData.names track by $index --><div class="col-lg-6 col-md-4 col-xs-4 repeated-dv ng-scope" ng-repeat="name in vm.formData.names track by $index">
+						<!-- ngRepeat: name in vm.formData.names track by $index --><div class="col-lg-6 col-md-4 col-xs-4 repeated-dv ">
 								
 								<div class="form-group">
 									
-								<label class="ng-binding">Image 1</label>
+								<label class="">Image 1</label>
 								
-								<input type="hidden" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.names[$index].id" autocomplete="off">
-								<input type="hidden" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.names[$index].product_web" autocomplete="off">
+								<input type="hidden" class="form-control"  autocomplete="off">
+								<input type="hidden" class="form-control"  autocomplete="off">
 								
-								<input type="text" class="form-control ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required" ng-model="vm.formData.names[$index].name" ng-change="checkProductExits(vm.formData.names[$index].name,$index);" ng-blur="names[$index].name = commonService.checkElementLength(vm.formData,'names[$index].name');" required="" ng-class="{myBlur:mode}">
+								<input type="text" class="form-control" name="product_id[]" id="product_1" required="" onblur="getproduct(this)" >
 								
-								<div data-ng-show="productnotFound0" class="ng-hide">
+								<div data-ng-show="productnotFound0">
 								<span class="productNOtFound">Image Not found</span>
 						
-								<label><button type="button" class="btn btn-danger" ng-click="uploadImageInCrm($index);">Upload Image </button></label>
+								<label><button type="button" class="btn btn-danger">Upload Image </button></label>
 								
 								</div>
 								</div>
 								<div class="form-group">
 									
 									<label for="sub_total">Image Size</label>
-									<select ng-model="vm.formData.names[$index].pro_size" required="" ng-change="getThetotalAmount(vm.formData.names[$index].pro_size,$index,vm.formData.names[$index].pro_type,vm.formData.names[$index].product_web);" class="ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required">
+									<select  required=""  class="">
 										<option value="" selected="">--Select a size--</option>
 										<option value="Small">Small</option>
 										<option value="Medium">Medium</option>
@@ -94,7 +91,7 @@
 								<div class="form-group">
 									
 									<label for="pro_type">Image type</label>
-									<select ng-model="vm.formData.names[$index].pro_type" required="" disabled="" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+									<select  required="" class="">
 										<option value="">--Select a Type--</option>
 										<option value="right_managed">Right Managed</option>
 										<option value="royalty_free">Royality Free</option>
@@ -104,19 +101,19 @@
 								</div>
 								
 							<!-- start main div for the oriduct id --->	
-					<div ng-switch="vm.formData.names[$index].pro_type">
+					<div>
 						
 						<!-- ngSwitchWhen: right_managed -->
 						
 						<!-- ngSwitchWhen: royalty_free -->	
 					</div>
 								
-					<label ng-show="$index>0" class="ng-hide"><button type="button" class="btn btn-danger" ng-click="deleteRow($event,name)" ng-show="$last">Delete Image</button> </label>
+					<label  ><button type="button" class="btn btn-danger" >Delete Image</button> </label>
 					&nbsp;
-					<label ng-show="vm.formData.names[$index].pro_size!=''" class="">
+					<label  class="">
 				
 					
-					<button ng-click="addRow($index)" type="button" class="btn btn-danger" ng-disabled="downloadOnBehalf.$invalid" ng-show="$last" disabled="disabled">Add More Image</button> </label>
+					<button  type="button" class="btn btn-danger"   disabled="disabled">Add More Image</button> </label>
 			
 			</div><!-- end ngRepeat: name in vm.formData.names track by $index -->
 	
@@ -128,7 +125,7 @@
 								<div class="form-group">
 								 <label for="promoCode">Promo code</label>
 							
-								<input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="vm.formData.promoCode" name="promoCode">
+								<input type="text" class="form-control"  name="promoCode">
 
 							
 								</div>		
@@ -136,58 +133,45 @@
 								 <label for="tax">Tax Applicable</label>
 								 
 								 
-								<!-- ngRepeat: tax in vm.formData.taxes track by $index --><div ng-repeat="tax in vm.formData.taxes track by $index" class="ng-binding ng-scope">
+								<!-- ngRepeat: tax in vm.formData.taxes track by $index --><div>
 							
 							
-								<input type="checkbox" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.tax_selected[tax.id]" ng-change="checkThetax($index);" name="tax_checkbox[SGST]" value="SGST"> SGST- +6%
-								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div ng-repeat="tax in vm.formData.taxes track by $index" class="ng-binding ng-scope">
+								<input type="checkbox" class="form-control"  name="tax_checkbox[SGST]" value="SGST"> SGST- +6%
+								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.tax_selected[tax.id]" ng-change="checkThetax($index);" name="tax_checkbox[CGST]" value="CGST"> CGST- +6%
-								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div ng-repeat="tax in vm.formData.taxes track by $index" class="ng-binding ng-scope">
+								<input type="checkbox" class="form-control"   name="tax_checkbox[CGST]" value="CGST"> CGST- +6%
+								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.tax_selected[tax.id]" ng-change="checkThetax($index);" name="tax_checkbox[IGST]" value="IGST"> IGST- +12%
-								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div ng-repeat="tax in vm.formData.taxes track by $index" class="ng-binding ng-scope">
+								<input type="checkbox" class="form-control"  name="tax_checkbox[IGST]" value="IGST"> IGST- +12%
+								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.tax_selected[tax.id]" ng-change="checkThetax($index);" name="tax_checkbox[IGST]" value="IGST"> IGST- +18%
+								<input type="checkbox" class="form-control"  name="tax_checkbox[IGST]" value="IGST"> IGST- +18%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index -->
 								
-							<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.tax" name="tax" readonly="">
+								<input type="text" class="form-control " name="tax" readonly="">
 							
 								</div>	
 
 								<div class="form-group">
 								 <label for="Total">Total</label>
 						
-								<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="vm.formData.Total" name="Total" readonly="">
+								<input type="text" class="form-control "  name="Total" readonly="">
 
 							
 								</div>
 						</div>
 				
 					
-					<!--<div class="col-lg-4 col-md-6 col-xs-4">
-							<div class="form-group">
-							 <label for="Mode">Mode</label>
 					
-							<select ng-model="vm.formData.mode"  ng-blur="mode = commonService.checkElementLength(vm.formData,'mode');" required ng-class="{myBlur:mode}" >
-								<option value="" >--Select a Type--</option>
-								<option value="pending">Pending</option>
-								<option value="Approved">Approved</option>
-								
-							</select>
-
-						
-							</div>
-						</div>-->
 						<div class="col-lg-6 col-md-6 col-xs-6">
 							<div class="form-group">
 							 <label for="job_number">JOb Ref/Po #</label>
 					
 							<!--<input type="text" class="form-control" ng-model="vm.formData.job_number" name="job_number" >-->
-							<select ng-model="vm.formData.job_number" class="form-control ng-valid ng-not-empty ng-valid-required ng-dirty ng-valid-parse ng-touched" required="" ng-change="getDateValue(vm.formData.job_number);">
+							<select  class="form-control" required="" >
 								<option value="">--Select a Job PO--</option>
 								<option value="upload_po">Upload PO</option>
 								<option value="email_approval">Email Approval</option>
@@ -197,12 +181,12 @@
 								</select>
 							</div>
 							
-						<!-- ngIf: vm.formData.job_number --><div ng-if="vm.formData.job_number" class="ng-scope">
+						<!-- ngIf: vm.formData.job_number --><div class="">
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-xs-12">
-								<!-- ngIf: vm.formData.job_number=='upload_po' --><div class="form-group ng-scope" ng-if="vm.formData.job_number=='upload_po'">
+								<!-- ngIf: vm.formData.job_number=='upload_po' --><div class="form-group" >
 									<label for="po_no">PO No.</label>
-									<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="vm.formData.po_detail" name="po_detail">
+									<input type="text" class="form-control" >
 									
 									
 								</div><!-- end ngIf: vm.formData.job_number=='upload_po' -->
@@ -213,7 +197,7 @@
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-xs-12">
-								<!-- ngIf: (vm.formData.job_number=='email_approval' || vm.formData.job_number=='upload_po') --><div class="form-group ng-scope" ng-if="(vm.formData.job_number=='email_approval' || vm.formData.job_number=='upload_po')">
+								<!-- ngIf: (vm.formData.job_number=='email_approval' || vm.formData.job_number=='upload_po') --><div class="form-group" >
 									<label for="upload_imge">Upload File</label><!-- ngIf: imagedatafound -->
 									
 									 <input class="form-control" type="file" id="file" name="file" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;">
@@ -422,30 +406,19 @@ $(document).ready(function ($) {
 
 });
 
-function getstate(data){
+function getproduct(data){
    $.ajax({
-            url: '{{ URL::to("admin/getStatesByCounty") }}',
-            data: {
-            country_code: data.value,
-            },
+            url: '{{ URL::to("admin/product") }}'+'/'+data.value,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             error: function() {
             //$('#info').html('<p>An error has occurred</p>');
             },
-            success: function(data) {
-               console.log(data);
-               if(data.response=='success'){
-                  var option='<option value="">Please Select</option>';
-                $.each(data.data, function( i, val ) {
-                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
-                });
-                $('#bill_state').html(option);
-               }
-
-            },
-            type: 'POST'
+            success: function(response) {
+               console.log(response);
+           },
+            type: 'GET'
             });
 }
 function getcity(data){
