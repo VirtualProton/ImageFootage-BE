@@ -27,9 +27,21 @@
 			   @elseif( Session::has( 'warning' ))
                 {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 			   @endif
-                <form action="{{ url('admin/addproduct_sort_type_process') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
+                <form action="{{ url('admin/produt_bulk_upload') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Product Bank/Owner Name </label>
+                       <select class="form-control" name="owner_name" id="owner_name">
+                      <option value="">--Product Bank/Owner Name--</option>
+                        @foreach($contributor as $contributor)
+                        <option value="{{ $contributor['contributor_memberid'] }}" >{{ $contributor['contributor_name'] }}</option>
+                        @endforeach
+                      </select>
+                       @if ($errors->has('owner_name'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('owner_name') }}</div>
+                       @endif
+                    </div>
                    <div class="form-group">
                       <label for="exampleInputEmail1">Product Sort Type </label>
                       <input type="file" class="form-control" name="product_csv" id="product_csv" >

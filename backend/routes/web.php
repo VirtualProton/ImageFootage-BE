@@ -155,6 +155,7 @@ Route::post('/updatproductsort_type', 'ProductImageSortTypesController@updateIma
 
 //bulk upload products
 Route::get('/upload_products_csv', 'ProductBulkUploadController@uploadCSV');
+Route::post('/produt_bulk_upload', 'ProductBulkUploadController@importCSV');
 
 //for api
 Route::get('/products_api', 'ProductController@productListApi');
