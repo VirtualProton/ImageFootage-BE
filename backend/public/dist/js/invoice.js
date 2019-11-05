@@ -12,10 +12,7 @@ app.controller('quotatationController', function($scope, $http) {
         price:""
       }
     ]; 
-    $scope.SGST ="6";
-    $scope.CGST ="6";
-    $scope.IGST ="12";
-    $scope.IGSTT ="18";
+    
     $scope.addProduct = function() {
         var newProduct = { name:"",pro_size:"",pro_type:"",id:"",image:"",price:""};
         $scope.quotation.product.push(newProduct);
@@ -86,6 +83,10 @@ app.controller('quotatationController', function($scope, $http) {
     }
 
     $scope.tax = 0;
+    $scope.SGST ="6";
+    $scope.CGST ="6";
+    $scope.IGST ="12";
+    $scope.IGSTT ="18";
     $scope.checkThetax = function(tax_percent,type){
       
             var subtotal= $scope.quotation.product;
@@ -96,20 +97,32 @@ app.controller('quotatationController', function($scope, $http) {
 						subtotalvalue +=Number(subtotal[j].price);
 				
 				}
-			
-				var intialtotal = $scope.tax;
-					
-				if(tax_percent==true){
-                        
-					    total  = (subtotalvalue*($scope['type'])/100);
-						total=intialtotal+total;
-					}else{
-                        total  =(subtotalvalue*($scope['type'])/100);
-						total=intialtotal-total;
+			    var intialtotal = $scope.tax;
+                if(type=='SGST'){
+                    total  = (subtotalvalue*($scope.SGST)/100);
+                   }
+                   else if(type=='CGST'){
+                    total  = (subtotalvalue*($scope.CGST)/100);
+                   }
+                   else if(type=='IGST'){
+                    total  = (subtotalvalue*($scope.IGST)/100);
+                   }
+                   else if(type=='IGSTT'){
+                    total  = (subtotalvalue*($scope.IGSTT)/100);
+                   }
                     
-                    }
-				subtotal=Number(subtotalvalue);
-				total=Number(total);
+				if(tax_percent==true){
+                      total=intialtotal+total;
+				}else{
+                       if(intialtotal>total){
+                        total = intialtotal-total;
+                       }else{
+                        total = 0;
+                       }
+						
+                }
+				subtotal = Number(subtotalvalue);
+				total = Number(total);
 			    $scope.tax = total;
 			    $scope.total = total+subtotal;
     }
