@@ -12,6 +12,7 @@
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
 
 <!-- Morris.js charts -->
 <script src="{{ asset('bower_components/raphael/raphael.min.js') }}"></script>
@@ -41,8 +42,11 @@
 <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<script src="{{ asset('dist/js/invoice.js') }}"></script>
 <!-- <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> -->
 <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script>
+
+
 
 
 

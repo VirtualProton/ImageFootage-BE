@@ -116,6 +116,11 @@ class ImageApi {
         }
  }
 
+  public function getPriceFromList($media){
+       if(count($media)>0){
+           
+       }
+  }
 
 }
 

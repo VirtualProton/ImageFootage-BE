@@ -8,10 +8,6 @@ use Aws\Exception\MultipartUploadException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Auth;
-use Image;
-use File;
-use Mail;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Contributor;
@@ -28,7 +24,14 @@ use App\Models\ProductPeoples;
 use App\Models\ImageResolution;
 use App\Models\ProductOrientations;
 use App\Models\ImageSortTypes;
+use App\Http\PantherMedia\ImageApi;
+use App\Http\Pond5\FootageApi;
 use DB;
+use Auth;
+use Image;
+use File;
+use Mail;
+
 
 class ProductController extends Controller
 {
@@ -857,16 +860,26 @@ class ProductController extends Controller
 
   public function getproduct($product_id){
 	$products = DB::table('imagefootage_products')
-		->select(DB::raw('product_id','product_title','product_main_image','product_price_small','product_price_medium'
-		,'product_price_large','product_price_extralarge'))
+		->select('product_id','product_title','product_main_image','product_vertical','product_price_small','product_price_medium'
+		,'product_price_large','product_price_extralarge')
         ->where('product_id',$product_id);
         
      $crm_products = DB::table('imagefootage_crm_products')
-            ->select(DB::raw('product_code','name','thumbnail_image','small_size','medium_size','large_size','x-large_size'))
+            ->select('product_code','name','thumbnail_image','type','small_size','medium_size','large_size','x_large_size')
             ->where('product_code',$product_id)
             ->union($products)
             ->get()
-            ->toArray();
-         print_r($crm_products); die;
+			->toArray();
+		
+	 if(count($crm_products)==0){
+		    $imageMedia = new ImageApi();
+			$product_details = $imageMedia->get_media_info($product_id);
+			$prices = $imageMedia->getPriceFromList($product_details);
+			dd($prices);
+	 }else{
+		 return json_encode($crm_products);
+	 }   		
+         
   }
-}
+
+}  

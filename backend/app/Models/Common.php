@@ -26,5 +26,17 @@ class Common extends Model
         return $industrytypes;
     }
 
+    public function changeCurruncy($type=NULL,$value=NULL){
+        if(!empty($type) && !empty($value)){
+           
+            $price_inr = DB::table('currency_convertes')
+                     ->select(DB::raw('12*cur_value as price'))
+                     ->where('name', '=', $type)
+                     ->get();    
+
+        }
+        return $price_inr;
+    }
+
 
 }

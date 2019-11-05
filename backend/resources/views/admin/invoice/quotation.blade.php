@@ -1,12 +1,12 @@
 @extends('admin.layouts.default')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" ng-controller="quotatationController">
 <section class="content">
 
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Send Quotation</h3>
+              <h3 class="box-title">@{{title}}</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -58,28 +58,22 @@
 						<!-- ngIf: vm.formData.type=='custom' --><div  class="">		
 				<div class="row">					
 				<div class="col-sm-12">					
-						<!-- ngRepeat: name in vm.formData.names track by $index --><div class="col-lg-6 col-md-4 col-xs-4 repeated-dv ">
+						<!-- ngRepeat: name in vm.formData.names track by $index --><div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
 								
 								<div class="form-group">
 									
-								<label class="">Image 1</label>
+								<label class="">Image @{{$index+1}}</label>
+								<input type="hidden" class="form-control" ng-model="product.id">
+								<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
 								
-								<input type="hidden" class="form-control"  autocomplete="off">
-								<input type="hidden" class="form-control"  autocomplete="off">
-								
-								<input type="text" class="form-control" name="product_id[]" id="product_1" required="" onblur="getproduct(this)" >
-								
-								<div data-ng-show="productnotFound0">
-								<span class="productNOtFound">Image Not found</span>
-						
-								<label><button type="button" class="btn btn-danger">Upload Image </button></label>
-								
+								<div>
+								<img src="" />
 								</div>
 								</div>
 								<div class="form-group">
 									
 									<label for="sub_total">Image Size</label>
-									<select  required=""  class="">
+									<select  required=""  class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)">
 										<option value="" selected="">--Select a size--</option>
 										<option value="Small">Small</option>
 										<option value="Medium">Medium</option>
@@ -91,7 +85,7 @@
 								<div class="form-group">
 									
 									<label for="pro_type">Image type</label>
-									<select  required="" class="">
+									<select  required="" class="form-control" ng-model="product.pro_type">
 										<option value="">--Select a Type--</option>
 										<option value="right_managed">Right Managed</option>
 										<option value="royalty_free">Royality Free</option>
@@ -103,17 +97,21 @@
 							<!-- start main div for the oriduct id --->	
 					<div>
 						
-						<!-- ngSwitchWhen: right_managed -->
-						
-						<!-- ngSwitchWhen: royalty_free -->	
+					<div ng-show="product.price">
+								<div class="form-group">
+								 <label for="sub_total">Sub Total</label>
+								<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);" >
+					</div>	
+
+						</div>	
 					</div>
 								
-					<label  ><button type="button" class="btn btn-danger" >Delete Image</button> </label>
+					<label><button type="button" class="btn btn-danger"  ng-click="removeProduct(product)" ng-show="$last">Delete Image</button> </label>
 					&nbsp;
 					<label  class="">
 				
 					
-					<button  type="button" class="btn btn-danger"   disabled="disabled">Add More Image</button> </label>
+					<button  type="button" class="btn btn-danger"  ng-click="addProduct()" ng-show="$last">Add More Image</button> </label>
 			
 			</div><!-- end ngRepeat: name in vm.formData.names track by $index -->
 	
@@ -136,29 +134,29 @@
 								<!-- ngRepeat: tax in vm.formData.taxes track by $index --><div>
 							
 							
-								<input type="checkbox" class="form-control"  name="tax_checkbox[SGST]" value="SGST"> SGST- +6%
+								<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control"   name="tax_checkbox[CGST]" value="CGST"> CGST- +6%
+								<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]"> CGST- +6%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control"  name="tax_checkbox[IGST]" value="IGST"> IGST- +12%
+								<input type="checkbox" ng-model="IGST"  ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]" > IGST- +12%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" class="form-control"  name="tax_checkbox[IGST]" value="IGST"> IGST- +18%
+								<input type="checkbox"  ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]" > IGST- +18%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index -->
 								
-								<input type="text" class="form-control " name="tax" readonly="">
+								<input type="text" ng-model="tax" class="form-control " name="tax" readonly="">
 							
 								</div>	
 
 								<div class="form-group">
 								 <label for="Total">Total</label>
 						
-								<input type="text" class="form-control "  name="Total" readonly="">
+								<input type="text" class="form-control " ng-model="total" name="Total" readonly="">
 
 							
 								</div>
@@ -171,7 +169,7 @@
 							 <label for="job_number">JOb Ref/Po #</label>
 					
 							<!--<input type="text" class="form-control" ng-model="vm.formData.job_number" name="job_number" >-->
-							<select  class="form-control" required="" >
+							<select  class="form-control" required=""  ng-model="po">
 								<option value="">--Select a Job PO--</option>
 								<option value="upload_po">Upload PO</option>
 								<option value="email_approval">Email Approval</option>
@@ -406,21 +404,21 @@ $(document).ready(function ($) {
 
 });
 
-function getproduct(data){
-   $.ajax({
-            url: '{{ URL::to("admin/product") }}'+'/'+data.value,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            error: function() {
-            //$('#info').html('<p>An error has occurred</p>');
-            },
-            success: function(response) {
-               console.log(response);
-           },
-            type: 'GET'
-            });
-}
+// function getproduct(data){
+//    $.ajax({
+//             url: '{{ URL::to("admin/product") }}'+'/'+data.value,
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             error: function() {
+//             //$('#info').html('<p>An error has occurred</p>');
+//             },
+//             success: function(response) {
+//                console.log(response);
+//            },
+//             type: 'GET'
+//             });
+// }
 function getcity(data){
     console.log(data.value);
     $.ajax({

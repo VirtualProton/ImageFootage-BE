@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <link rel="stylesheet" href="{{ asset('js/formvalidation/formValidation.css') }}">
 
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -64,7 +65,7 @@
   <div style="margin-left:713px;margin-top:250px;"><img src="{{ asset('/image/loading-circles.gif')}}" /></div>
  </div> 
 </div>
-<div class="wrapper">
+<div class="wrapper" ng-app="imageFootage">
 <!-- Dynamic Admin Header  -->
 
 @include('admin.partials.header')
