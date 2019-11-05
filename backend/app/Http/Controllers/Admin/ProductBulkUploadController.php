@@ -195,7 +195,7 @@ class ProductBulkUploadController extends Controller
 					 
 					  $product_orientations=explode(',',$val[24]);
 					 if(isset($product_orientations) && !empty($product_orientations)){
-						  foreach($product_ethinicities as $key=>$eth){
+						  foreach($product_orientations as $key=>$eth){
 							   $productFilters=new ProductFilters;
 							   $productFilters->filter_product_id=$last_id;
 							   $productFilters->filter_type='product_orientations';
@@ -247,8 +247,8 @@ class ProductBulkUploadController extends Controller
 					 $productimages->image_added_on=date('Y-m-d H:i:s');
 					 $productimages->image_added_by=Auth::guard('admins')->user()->id;
 					 $productimages->save();
-					 if(isset($val[25]) && !empty($val[25])){
-						 $other_images=explode(',',$val[25]);
+					 if(isset($val[14]) && !empty($val[14])){
+						 $other_images=explode(',',$val[14]);
 						 foreach($other_images as $prod){
 							 $productimages=new ProductImages;
 							 $productimages->image_name=$prod;
@@ -262,9 +262,7 @@ class ProductBulkUploadController extends Controller
 			}
 			$i++;
 		}
-		
-    
-     return back()->with('success', 'Excel Data Imported successfully.');
+     return back()->with('success','Products imported successfully.');
     }
 
 }

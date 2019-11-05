@@ -430,11 +430,10 @@ class ProductController extends Controller
     }
 
    public function productsList(){
-	   $product = new Product;
-	   //$all_produst_list=$product->all()->toArray();
-	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.image_product_id', '=', 'imagefootage_products.id')->distinct()->get()->toArray();
-	   $title = "Product List";
-       return view('admin.product.productlist', ['products' => $all_produst_list]);
+	  $product = new Product;
+	  $all_produst_list=$product->adminAllProductList();
+	  $title = "Product List";
+      return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
 
     /**

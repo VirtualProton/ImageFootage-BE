@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usercart;
+use App\Models\UserWishlist;
 
 class FrontuserController extends Controller {
     public function addtocart(Request $request){
@@ -36,7 +37,36 @@ class FrontuserController extends Controller {
 	public function deleteCartItom($id){
 		$del_result=Usercart::find($id)->delete();
 		if($del_result){
-			echo '{"status":"1","message":"Cart iton deleted successfully"}';
+			echo '{"status":"1","message":"Cart itom deleted successfully"}';
+		}else{
+			echo '{"status":"0","message":"Some problem occured."}';
+		}
+	}
+	public function addtoWishlist($id,$product_addedby){
+		$UserWishlist=new UserWishlist;
+		$product_id=$id;
+		$product_addedby=$product_addedby;
+		$cart_list=$UserWishlist->where('wishlist_product',$product_id)->where('wishlist_user_id',$product_addedby)->get()->toArray();
+		if(empty($cart_list)){
+			$UserWishlist=new UserWishlist;
+			$UserWishlist->wishlist_product=$product_id;
+			$UserWishlist->wishlist_user_id=$product_addedby;
+			$UserWishlist->wishlist_added_on=date('Y-m-d H:i:s');
+			$result=$UserWishlist->save();
+			if($result){
+				echo '{"status":"1","message":"Product added to Wishlist successfully"}';
+			}else{
+				echo '{"status":"0","message":"Some problem occured."}';
+			}
+		}else{
+			echo '{"status":"0","message":"Allready this product is in your Wishlist."}';
+		}
+		
+	}
+	public function deleteWishlistItom($id){
+		$del_result=UserWishlist::find($id)->delete();
+		if($del_result){
+			echo '{"status":"1","message":"Wishlist itom deleted successfully"}';
 		}else{
 			echo '{"status":"0","message":"Some problem occured."}';
 		}
