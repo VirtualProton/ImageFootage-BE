@@ -49,7 +49,7 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('product_csv') }}</div>
                        @endif
                     </div>
-                    
+                    <a href="{{ url('product.csv') }}" download> Download sample csv</a>
                   </div>
                   <!-- /.box-body -->
     
