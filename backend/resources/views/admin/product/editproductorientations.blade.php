@@ -1,5 +1,4 @@
 @extends('admin.layouts.default')
-
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -12,7 +11,6 @@
         <li class="active"> Edit Product Peoples</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
         <div class="row">
