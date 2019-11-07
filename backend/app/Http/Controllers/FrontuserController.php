@@ -71,4 +71,7 @@ class FrontuserController extends Controller {
 			echo '{"status":"0","message":"Some problem occured."}';
 		}
 	}
+	public function productList(Request $request){
+		$user_id=$request->user_id;
+	}
 }

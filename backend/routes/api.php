@@ -33,6 +33,8 @@ Route::group([
 	Route::post('deleate_cart_itom/{id}', 'FrontuserController@deleteCartItom');
 	Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
 	Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
+	Route::post('wishlistlist', 'FrontuserController@productList');
+	
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
 	Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');

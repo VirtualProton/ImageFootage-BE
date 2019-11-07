@@ -25,14 +25,18 @@
         	<div class="col-md-12">
          		<div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
-                  <h3 class="box-title">View Product</h3>
+                  <h3 class="box-title">Product Id : {{ $product[0]['product_id'] }}</h3>
                   <input type="hidden" value="{{ $product[0]['id'] }}" id="product_id" />
-                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button><button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button><button class="btn vbutton" type="Suggest">Suggest</button>
+                  <span class="pull-right">
+                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button><button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button>
+                  <a class="btn btn-info" href="{{ url('admin/editproduct/'.$product[0]['id']) }}"  type="Edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                  <?php /*?><button class="btn vbutton" type="Suggest">Suggest</button><?php */?>
                   <div id="demo" class="collapse">
    <textarea id="reject_message" class="form-control" placeholder="Reason to reject"></textarea>
    <button class="btn btn-info vbutton" type="Reject">Reject</button>
    
   </div>
+  </span>
                 </div>
 
                 @include('admin.partials.message')
@@ -157,6 +161,121 @@
                     {{ date('Y-m-d',strtotime($product[0]['product_added_on'])) }}
                     </div>
                 </div>
+                <div class="form-group">
+                      <label for="exampleInputPassword1">Product Type :</label>
+                      {{ $product[0]['product_main_type'] }}
+                    </div>
+                    <div class="form-group"     @if($product[0]['product_main_type']=='Image' || $product[0]['product_main_type']=='Editorial' ) 
+                    style="display:block;" @elseif($product[0]['product_main_type']=='Footage')  style="display:none;" @endif id="sub_product_type">
+                      <label for="exampleInputPassword1">Sub Product Type :</label>
+                      {{ $product[0]['product_sub_type'] }}
+                     
+                    </div>
+                    
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Product Color : </label>
+                      @if(isset($product_color_array))
+                          @foreach($pcolorlist as $color)
+                             @if(in_array($color['id'],$product_color_array)) <span>{{ $color['name'] }}</span> @endif
+                          @endforeach
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Gender : </label>
+                      @foreach($productGenders as $gender)
+                        @if(in_array($gender['id'],$product_gender_array)) <span>{{ $gender['name'] }}</span> @endif 
+                      @endforeach
+                    </div>
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Product Glow Type : </label>
+                      @foreach($productimagetypes as $imageglow)
+                         @if(in_array($imageglow['id'],$product_glow_type_array)) <span>{{ $imageglow['name'] }}</span> @endif
+                      @endforeach
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Image Size : </label>
+                      @foreach($productimagesize as $imagesize)
+                         @if(in_array($imagesize['id'],$product_image_size_array)) <span>{{ $imagesize['name'] }}</span> @endif 
+                      @endforeach
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Ethinicities : </label>
+                      @foreach($productethinicities as $ethinicities)
+                        @if(in_array($ethinicities['id'],$filterethinicitiesarray)) <span>{{ $ethinicities['name'] }}</span> @endif 
+                      @endforeach
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Locations : </label>
+                      @foreach($productlocations as $locations)
+                        @if(in_array($locations['id'],$filterlocationsarray)) <span>{{ $locations['name'] }}</span> @endif
+                      @endforeach
+                    </div>
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Peoples : </label>
+                      @foreach($productPeoples as $peoples)
+                         @if(in_array($peoples['id'],$filterpeoplessarray)) <span>{{ $peoples['name'] }}</span> @endif
+                      @endforeach
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Resolution : </label>
+                      @foreach($imageResolution as $presolut)
+                         @if(in_array($presolut['id'],$filterresolutionarray)) <span>{{ $presolut['name'] }}</span> @endif
+                        @endforeach
+                    </div>
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Orientations : </label>
+                      @foreach($productOrientations as $porient)
+                        @if(in_array($porient['id'],$filterproductorientationsarray)) <span>{{ $porient['name'] }}</span> @endif
+                      @endforeach
+                    </div>
+                      <div class="form-group">
+                      <label for="exampleInputEmail1">Product Sort Types : </label>
+                      @foreach($imageSortTypes as $sortty)
+                         @if(in_array($sortty['id'],$filtersort_typessarray)) <span>{{ $sortty['name'] }} </span>  @endif
+                      @endforeach
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product Image Age : </label>
+                      @foreach($productagewises as $imageage)
+                        @if(in_array($imageage['id'],$product_image_age_array)) <span>{{ $imageage['name'] }} </span> @endif
+                      @endforeach
+                     
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Product Vertical :</label>{{ $product[0]['product_vertical'] }}
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Product Keywords</label>
+                      {{ $product[0]['product_keywords'] }}
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Release Details</label>
+                      {{ $product[0]['product_release_details'] }}
+                     
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price For Small :{{ $product[0]['product_price_small'] }} </label>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price For Medium : {{ $product[0]['product_price_medium'] }}</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price For Large : {{ $product[0]['product_price_large'] }} </label>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price For Extra Large : {{ $product[0]['product_price_extralarge'] }} </label>
+                      
+                    </div>
+
+                
+                
+                
+                
+                
+                
+                
               @if($product[0]['product_main_type']=='Image')
               		<img src="{{ $product[0]['product_main_image'] }}" alt="User Image" width="600">
               	
