@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        View Product
+        Product Details
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">View Product</li>
+        <li class="active">Product Details</li>
       </ol>
     </section>
 
@@ -28,8 +28,16 @@
                   <h3 class="box-title">Product Id : {{ $product[0]['product_id'] }}</h3>
                   <input type="hidden" value="{{ $product[0]['id'] }}" id="product_id" />
                   <span class="pull-right">
-                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button><button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button>
+                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button>
+                  
+                  <button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button>
                   <a class="btn btn-info" href="{{ url('admin/editproduct/'.$product[0]['id']) }}"  type="Edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                  <a class="btn btn-info" href="{{ url('admin/deleteproduct/'.$product[0]['id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                 @if($product[0]['product_status'] =='Active')
+  					<a class="btn btn-info" href="{{ url('admin/product/Inactive/'.$product[0]['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> Status </a>
+         		 @elseif($product[0]['product_status'] =='Inactive')
+         			<a class="btn btn-info" href="{{ url('admin/product/Active/'.$product[0]['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i> Status</a>
+        		 @endif
                   <?php /*?><button class="btn vbutton" type="Suggest">Suggest</button><?php */?>
                   <div id="demo" class="collapse">
    <textarea id="reject_message" class="form-control" placeholder="Reason to reject"></textarea>

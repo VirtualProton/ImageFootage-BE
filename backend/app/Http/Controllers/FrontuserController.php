@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usercart;
 use App\Models\UserWishlist;
+use App\Models\Product;
 
 class FrontuserController extends Controller {
     public function addtocart(Request $request){
@@ -73,5 +74,19 @@ class FrontuserController extends Controller {
 	}
 	public function productList(Request $request){
 		$user_id=$request->user_id;
+		$UserWishlist=new UserWishlist;
+		$products=new Product;
+		$cart_list=$UserWishlist->select('wishlist_product')->where('wishlist_user_id',$user_id)->get()->toArray();
+		if(isset($cart_list) && !empty($cart_list)){
+			$wishlist_products=array();
+			foreach($cart_list as $key=>$wish){
+				$wishlist_products[]=$wish['wishlist_product'];
+			}
+			$productids=implode(',',$wishlist_products);
+			$cart_list=$products->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
+			echo '{"status":"1","data":'.json_encode($cart_list,true).',"message":""}';
+		}else{
+			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
+		}
 	}
 }

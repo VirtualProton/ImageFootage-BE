@@ -84,7 +84,37 @@
                     @if ($errors->has('contributor_type'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('contributor_type') }}</div>
                     @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Bank Holder Name</label>
+                      <input type="text" class="form-control" name="bank_holder_name" id="bank_holder_name" placeholder="Bank Holder Name">
+                    </div>
+                    @if ($errors->has('bank_holder_name'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('bank_holder_name') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Bank Name</label>
+                      <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="Bank Name">
+                    </div>
+                    @if ($errors->has('bank_name'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('bank_name') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Bank Account Number</label>
+                      <input type="text" class="form-control" name="bank_account_number" id="bank_account_number" placeholder="Bank Account Number">
+                    </div>
+                    @if ($errors->has('bank_account_number'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('bank_account_number') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">IFSC number</label>
+                      <input type="text" class="form-control" name="ifsc_number" id="ifsc_number" placeholder="IFSC number">
+                    </div>
+                    @if ($errors->has('ifsc_number'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('ifsc_number') }}</div>
+                    @endif
                   </div>
+                  
+
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
