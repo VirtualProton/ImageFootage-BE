@@ -44,7 +44,7 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('contributor_email') }}</div>
                        @endif
                     </div>
-                    <div class="form-group">
+                    <?php /*<div class="form-group">
                       <label for="exampleInputEmail1">Contributor Password</label>
                       <input type="password" class="form-control" name="contributor_password" id="contributor_password">
                     </div>
@@ -58,7 +58,7 @@
                     </div>
                     @if ($errors->has('contributor_confirm_password'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('contributor_confirm_password') }}</div>
-                    @endif
+                    @endif */ ?>
                     
                     <div class="form-group">
                       <label for="exampleInputFile">ID Proof</label>

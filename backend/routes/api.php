@@ -34,7 +34,8 @@ Route::group([
 	Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
 	Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
 	Route::post('wishlistlist', 'FrontuserController@productList');
-	
+	Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
+	Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
 	Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');

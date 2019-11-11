@@ -909,12 +909,12 @@ class ProductController extends Controller
 	}
 	public function html_email() {
       $data = array('name'=>"srinivas");
+	  $message='hi hello';
       Mail::send('mail', $data, function($message) {
-         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject
-            ('Laravel HTML Testing Mail');
+         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject('Laravel HTML Testing Mail');
          $message->from('aksrinivas49@gmail.com','aksrinivas49');
       });
-      echo "HTML Email Sent. Check your inbox.";
+      echo "HTML Email Sent. Check your inbox.".url('admin/createproduct');
    }
    public function ajaxProductVerify(Request $request){
 	   $message=$request->message;

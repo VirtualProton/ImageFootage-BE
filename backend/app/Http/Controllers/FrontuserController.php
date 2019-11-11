@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Usercart;
 use App\Models\UserWishlist;
 use App\Models\Product;
+use App\Models\Contributor;
 
 class FrontuserController extends Controller {
     public function addtocart(Request $request){
@@ -87,6 +88,33 @@ class FrontuserController extends Controller {
 			echo '{"status":"1","data":'.json_encode($cart_list,true).',"message":""}';
 		}else{
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
+		}
+	}
+	public function validateOtpForcontributorPass(Request $request){
+		$user_id=$request->user_id;
+		$contributor_otp=$request->otp;
+		$contributor=new Contributor;
+		$contributor_list=$contributor->where('contributor_id',$user_id)->where('contributor_otp',$contributor_otp)->get()->toArray();
+		if(count($contributor_list)>0){
+			echo '{"status":"1","data":'.json_encode($contributor_list,true).',"message":""}';
+		}else{
+			echo '{"status":"0","data":{},"message":"Invalied otp."}';
+		}
+	}
+	public function resetContributerPass(Request $request){
+		$this->validate($request, [
+		 	'password'=>'required',
+            'cpassword'   => 'required',
+            'contributer_id' => 'required'
+        ]);
+		$update_array=array('contributor_password'=>md5($request->password),
+							 'updated_at'=>date('Y-m-d H:i:s')
+							 );
+		$result = Contributor::where('contributor_id',$request->contributer_id)->update($update_array);
+		if($result){
+			echo '{"status":"1","data":{},"message":"Reset password successfully."}';
+		}else{
+			echo '{"status":"0","data":{},"message":"Some problem occured."}';
 		}
 	}
 }
