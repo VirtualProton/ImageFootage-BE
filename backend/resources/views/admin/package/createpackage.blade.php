@@ -30,6 +30,16 @@
                 <form action="{{ url('admin/addpackage') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Package-Plan Type </label>
+                      <select class="form-control" name="package_plan" id="package_plan">
+                      <option value="Normal">Normal</option>
+                      <option value="Pro">Pro</option>
+                      </select>
+                       @if ($errors->has('package_plan'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
+                       @endif
+                    </div>
                    <div class="form-group">
                       <label for="exampleInputEmail1">Package Name </label>
                       <input type="text" class="form-control" name="package_name" id="package_name" placeholder="Package name">

@@ -483,6 +483,7 @@ class ProductController extends Controller
 							 'product_price_large'=>$request->price_large,
 							 'product_price_extralarge'=>$request->price_extra_large,
 							 'product_main_type'=>$request->product_type,
+							 'product_editedby'=>Auth::guard('admins')->user()->id,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		 if(isset($request->sub_product_type) && !empty($request->sub_product_type)){
@@ -908,8 +909,16 @@ class ProductController extends Controller
 		return view('admin.product.viewproduct', ['product' => $product_details,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'filterethinicitiesarray'=>$filterethinicitiesarray,'filterlocationsarray'=>$filterlocationsarray,'productPeoples'=>$all_productPeoples_list,'filterpeoplessarray'=>$filterpeoplessarray,'imageResolution'=>$all_productresolution_list,'productOrientations'=>$all_productorientations_list,'imageSortTypes'=>$all_isorttypes_list,'filterproductorientationsarray'=>$filterproductorientationsarray,'filterresolutionarray'=>$filterresolutionarray,'filtersort_typessarray'=>$filtersort_typessarray]);
 	}
 	public function html_email() {
+		ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
+ini_set('max_execution_time', '0'); // for infinite time of execution 
+		Mail::raw('Text to e-mail', function($message)
+{
+    $message->from('srinivask@conceptualpictures.com', 'Laravel');
+
+    $message->to('aksrinivas49@gmail.com');
+});
+	exit();
       $data = array('name'=>"srinivas");
-	  $message='hi hello';
       Mail::send('mail', $data, function($message) {
          $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject('Laravel HTML Testing Mail');
          $message->from('aksrinivas49@gmail.com','aksrinivas49');
