@@ -34,6 +34,7 @@
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
                         <th>Id</th>
+                        <th>Package-Plan Type</th>
                         <th>Name</th>
                         <th>Price </th>
                         <th>Description</th>
@@ -48,6 +49,7 @@
                      @foreach($package as $packages)
                     <tr>
   <td>{{ $packages['package_id'] }} </td>
+  <td>{{ $packages['package_plan'] }} </td>
   <td>{{ $packages['package_name'] }} </td>
   <td>{{ $packages['package_price'] }} </td>
   <td>{{ $packages['package_description'] }} </td>
@@ -68,6 +70,7 @@
                     </tbody>
                     <tfoot>
                         <th>Id</th>
+                        <th>Package-Plan Type</th>
                         <th>Name</th>
                         <th>Price </th>
                         <th>Description</th>

@@ -69,6 +69,15 @@
                      @if ($errors->has('package_products_count'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_products_count') }}</div>
                      @endif
+                     <div id="for_pro" style="display:none;">
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Per Month Download</label>
+                      <input type="text" class="form-control" name="package_month_count" id="package_month_count" placeholder="Products per month Count">
+                    </div>
+                     @if ($errors->has('package_month_count'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_month_count') }}</div>
+                     @endif
+                     </div>
                      <div class="form-group">
                       <label for="exampleInputEmail1">Package Type</label>
                       <select type="text" class="form-control" name="package_type" id="package_type" >
@@ -194,6 +203,17 @@ $(document).ready(function ($) {
     })();
 
 });
+$("#package_plan").change(function(){
+	var pack_type=$(this).val();
+	if(pack_type =='Normal'){
+		$("#package_month_count").val("");
+		$('#for_pro').css('display','none');
+	}else{
+		$('#for_pro').css('display','block');
+	}
+	
+});
+
 </script>
   @endsection
   

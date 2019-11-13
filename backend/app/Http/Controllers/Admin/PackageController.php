@@ -28,6 +28,7 @@ class PackageController extends Controller
 		$package->package_type=$request->package_type;
 		$package->package_added_on=date('Y-m-d H:i:s');
 		$package->package_expiry=$request->package_expiry;
+		$package->package_permonth_download =$request->package_month_count;
 		$package->package_addedby=Auth::guard('admins')->user()->id;
 		$result=$package->save();
 		if($result){
@@ -69,6 +70,7 @@ class PackageController extends Controller
 							 'package_products_count'=>$request->package_products_count,
 							 'package_type'=>$request->package_type,
 							 'package_expiry'=>$request->package_expiry,
+							 'package_permonth_download'=>$request->package_month_count,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);

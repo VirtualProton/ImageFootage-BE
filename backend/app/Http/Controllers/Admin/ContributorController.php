@@ -8,12 +8,15 @@ use Auth;
 use Image;
 use File;
 use App\Models\Contributor;
+use Mail;
 class ContributorController extends Controller
 {
 	public function index(){
 		return view('admin.contributor.addcontributor');
 	}
 	public function addcontributor(Request $request){
+	    ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
+		ini_set('max_execution_time', '0'); // for infinite time of execution 
 		$this->validate($request, [
 		 	'contributor_name'=>'required',
             'contributor_email'   => 'required',
@@ -71,9 +74,16 @@ class ContributorController extends Controller
 			 $contributor_update->contributor_memberid=$contributorid;
 			 $contributor_update->contributor_idproof=$name;
 			 $contributor_update->save();
-			 
-			 $body="Dear ".$request->contributor_name."";
-			 $body.="Please click the below link for activing jyour account";
+			 $body="Dear ".$request->contributor_name."<br>";
+			 $body.="Please click the below link for activate your contributor account<br>";
+			 $body.='OTP:- '.$pass.'<br>';
+			 $cont_url=url('admin/contributorotpvalidate/').$last_id;
+			 $body.='<a href="'.$cont_url.'">Click here to verify account</a>';
+			 $body.="Thanks & Regards,<br>Image Footage Team.";
+			 $data = array('mail_body'=>$body);
+			 Mail::send('createcontributor', $data, function($message) {
+				 $message->to($request->contributor_email, $request->contributor_name)->subject('Welcome to Image Footage');
+			 });
 			 return back()->with('success','Contributor added successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');

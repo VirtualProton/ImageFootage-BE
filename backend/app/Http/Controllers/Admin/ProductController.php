@@ -911,17 +911,9 @@ class ProductController extends Controller
 	public function html_email() {
 		ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
 ini_set('max_execution_time', '0'); // for infinite time of execution 
-		Mail::raw('Text to e-mail', function($message)
-{
-    $message->from('srinivask@conceptualpictures.com', 'Laravel');
-
-    $message->to('aksrinivas49@gmail.com');
-});
-	exit();
       $data = array('name'=>"srinivas");
       Mail::send('mail', $data, function($message) {
-         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject('Laravel HTML Testing Mail');
-         $message->from('aksrinivas49@gmail.com','aksrinivas49');
+         $message->to('aksrinivas49@gmail.com', 'aksrinivas')->subject('Laravel HTML Testing Mail');
       });
       echo "HTML Email Sent. Check your inbox.".url('admin/createproduct');
    }
