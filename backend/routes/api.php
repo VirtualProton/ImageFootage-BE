@@ -41,5 +41,6 @@ Route::group([
     Route::post('search','SearchController@index');
     Route::get('details/{id}/{origin}/{type}','MediaController@index');
     Route::get('home','SearchController@home');
+    Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     
 });

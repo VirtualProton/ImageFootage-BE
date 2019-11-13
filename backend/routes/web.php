@@ -147,7 +147,8 @@ Route::post('/updateproductorientations', 'ProductImageOrientationsController@up
 //Product  Sort Types
 Route::get('/add_product_sort_type', 'ProductImageSortTypesController@addImageSortTypes');
 Route::post('/addproduct_sort_type_process', 'ProductImageSortTypesController@addImageSortTypesProcess');
-Route::get('/product_sort_type_list', 'ProductImageSortTypesController@ImageSortTypesList');
+Route::get('/product_sort_type_list', 'ProductIma
+esController@ImageSortTypesList');
 Route::get('/product_sort_type_status/{status}/{id}', 'ProductImageSortTypesController@changeImageSortTypeStatus');
 Route::get('/deleteproductsorttype/{id}', 'ProductImageSortTypesController@deleteImageSortTypes');
 Route::get('/editproductsort_type/{id}', 'ProductImageSortTypesController@editImageSortTypes');
@@ -165,6 +166,9 @@ Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
 Route::resource('/accounts', 'AccountController');
 
 Route::get('/users/status/{status}/{id}', 'UserController@status');
+Route::get('/users/show/{id}', 'UserController@show');
+Route::get('/users/invoices/{id}', 'UserController@invoices');
+
 
 Route::resource('/users', 'UserController');
 Route::post('/getStatesByCounty', 'CommonController@getStatesByCounty');
@@ -176,11 +180,10 @@ Route::post('/get_email_template', 'InvoiceController@get_email_template');
 
 
 Route::post('/sendmail','InvoiceController@sendmail');
-
-
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
-
 Route::get('/product/{id}', 'ProductController@getproduct');
+Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
+
 
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');

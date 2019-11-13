@@ -75,9 +75,16 @@ class UserController extends Controller
         $title = "Show User";
         $this->Account = new Account();
         $account_data =    $this->Account->getAccountDataForShow($id);
-        print_r($account_data);
-        die();
+        print_r($account_data); die;
         return view('admin.account.show', compact('title','account_data'));
+    }
+
+    public function invoices($id)
+    {
+        $title = "Show Invoices";
+        $this->Account = new Account();
+        $account_invoices =    $this->Account->getAccountInvoices($id);
+        return view('admin.account.invoices', compact('title','account_invoices'));
     }
 
     /**

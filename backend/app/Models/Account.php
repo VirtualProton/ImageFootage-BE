@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class Account  extends Authenticatable
 {
@@ -99,5 +100,23 @@ class Account  extends Authenticatable
         return [];
       }
       
+    }
+
+    public function getAccountInvoices ($id){
+      if($id>0){
+          $data = DB::table('imagefootage_performa_invoices')
+          ->select('imagefootage_performa_invoices.*')
+          ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
+          ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+          ->where('imagefootage_performa_invoices.user_id','=',$id)
+          ->orderBy('imagefootage_performa_invoices.created','desc')
+          ->get()
+          ->toArray();
+          //dd(DB::getQueryLog());
+          $data = json_decode(json_encode($data), True);
+          return $data ;   
+        }else{
+          return [];
+        }
     }
 }

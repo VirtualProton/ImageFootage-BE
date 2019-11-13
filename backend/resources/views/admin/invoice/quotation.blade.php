@@ -15,7 +15,7 @@
               <div class="box-body">
                
               <div class="panel-body">
-						<form role="form" name="downloadOnBehalf" method="post"  class="">
+						<form role="form" name="downloadOnBehalf" method="post"  class="" enctype="multipart/form-data" ng-submit="submitQuotation()">
 						
 							
 							<div class="row">
@@ -32,15 +32,15 @@
 										<div class="form-group">
 											
 											<label class="margin-right">
-												<input type="radio"  value="Subscription"  name="quotation_type">
+												<input type="radio"  ng-value="Subscription"  name="quotation_type" ng-model="quotation_type">
 												Subscription 
 											  </label>
 											  <label class="margin-right">
-												<input type="radio"  value="Download_Packs" name="quotation_type">
+												<input type="radio"  ng-value="Download_Packs" name="quotation_type" ng-model="quotation_type">
 												Download Packs
 											  </label>
 											  <label class="margin-right">
-											  <input type="radio"  value="custom"  name="quotation_type" checked="checked">
+											  <input type="radio"  ng-value="custom"  name="quotation_type"  ng-model="quotation_type" ng-checked="true">
 												Custom
 											  </label>
 											
@@ -58,7 +58,8 @@
 						<!-- ngIf: vm.formData.type=='custom' --><div  class="">		
 				<div class="row">					
 				<div class="col-sm-12">					
-						<!-- ngRepeat: name in vm.formData.names track by $index --><div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
+						<!-- ngRepeat: name in vm.formData.names track by $index -->
+						<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
 								
 								<div class="form-group">
 									
@@ -67,8 +68,12 @@
 								<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
 								
 								<div>
-								<img src="" />
+								
 								</div>
+								</div>
+								<div class="form-group">
+									<span ng-show="product.image"><img src="@{{product.image}}" width="150" /></span>
+									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" ng-file-model="product.newuploadimage[$index]"  style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
 								</div>
 								<div class="form-group">
 									
@@ -79,6 +84,7 @@
 										<option value="Medium">Medium</option>
 										<option value="Large">Large</option>
 										<option value="X-Large">X-Large</option>
+										<option value="Custom">Custom</option>
 									</select>
 									
 								</div>
@@ -123,7 +129,7 @@
 								<div class="form-group">
 								 <label for="promoCode">Promo code</label>
 							
-								<input type="text" class="form-control"  name="promoCode">
+								<input type="text" class="form-control"  name="promoCode" ng-model="promoCode">
 
 							
 								</div>		
@@ -171,8 +177,8 @@
 							<!--<input type="text" class="form-control" ng-model="vm.formData.job_number" name="job_number" >-->
 							<select  class="form-control" required=""  ng-model="po">
 								<option value="">--Select a Job PO--</option>
-								<option value="upload_po">Upload PO</option>
-								<option value="email_approval">Email Approval</option>
+								<!-- <option value="upload_po">Upload PO</option>
+								<option value="email_approval">Email Approval</option> -->
 								<option value="po_in_3days">PO Due In 3 Days</option>
 								<option value="po_in_7days">PO Due In 7 Days</option>
 								<option value="po_in_15days">PO Due In 15 Days</option>
@@ -184,7 +190,7 @@
 								<div class="col-lg-6 col-md-6 col-xs-12">
 								<!-- ngIf: vm.formData.job_number=='upload_po' --><div class="form-group" >
 									<label for="po_no">PO No.</label>
-									<input type="text" class="form-control" >
+									<input type="text" class="form-control"  name="poDate" id="poDate" ng-model="poDate">
 									
 									
 								</div><!-- end ngIf: vm.formData.job_number=='upload_po' -->
@@ -196,9 +202,9 @@
 							
 							<div class="col-lg-6 col-md-6 col-xs-12">
 								<!-- ngIf: (vm.formData.job_number=='email_approval' || vm.formData.job_number=='upload_po') --><div class="form-group" >
-									<label for="upload_imge">Upload File</label><!-- ngIf: imagedatafound -->
+									<!-- <label for="upload_imge">Upload File</label> ngIf: imagedatafound -->
 									
-									 <input class="form-control" type="file" id="file" name="file" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;">
+									 <!-- <input class="form-control" type="file" id="file" name="file" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"> -->
 								</div><!-- end ngIf: (vm.formData.job_number=='email_approval' || vm.formData.job_number=='upload_po') -->
 							</div>
 							
@@ -210,16 +216,13 @@
 						<div class="form-group">
 							 <label for="email_id">Email</label>
 					
-					  <input type="email" class="form-control" id="email_id" name="email_id">
-
-						
-							</div>	
-							
-										<div class="form-group">
+					  <input type="email" class="form-control" id="email_id" name="email_id" ng-model="email" >
+				</div>	
+							<div class="form-group">
 										
 											<label for="expiry">Expiry Period</label><br>
-											<input type="radio"  ng-value="'7'" name="expiry"  class="" value="7">7 Days
-											<input type="radio"  ng-value="'30'" name="expiry"  class="" value="30">30 Days 
+											<input type="radio"  ng-value="'7'" name="expiry" ng-model="expiry_time" class="" value="7">7 Days
+											<input type="radio"  ng-value="'30'" name="expiry" ng-model="expiry_time" ng-model="" class="" value="30">30 Days 
 										
 									</div> 
 						</div>
@@ -446,5 +449,9 @@ function getcity(data){
             type: 'POST'
             });
 }
+$( function() {
+    $( "#poDate" ).datepicker();
+  } );
 </script>
+
 @stop

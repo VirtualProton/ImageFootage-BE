@@ -1,7 +1,10 @@
+base_url ='/imagefootagenew/backend/admin/';
 app= angular.module('imageFootage', []);
-app.controller('quotatationController', function($scope, $http) {
+app.controller('quotatationController', function($scope, $http,$location) {
     $scope.title = "Send Quotation";
     $scope.quotation ={};
+    
+    //$scope.uid
     $scope.quotation.product = [
         { 
         name:"",
@@ -25,13 +28,15 @@ app.controller('quotatationController', function($scope, $http) {
      $scope.prices = [];
      $scope.getproduct = function (product){
         console.log(product);  
+        $('#loading').show();
         var index = $scope.quotation.product.indexOf(product);
         $http({
             method: 'GET',
-            url: 'http://ec2-18-218-68-194.us-east-2.compute.amazonaws.com/backend/admin/product/'+product.name,
+            url: base_url+'product/'+product.name,
      }).then(function (response){
             
             if(response.status=='200' && response.statusText=='OK'){
+                $('#loading').hide();
                 $scope.quotation.product[index].name = response.data[0].product_code;
                 $scope.quotation.product[index].id = response.data[0].id;
                 if(response.data[0].type =="Royalty Free"){
@@ -43,7 +48,7 @@ app.controller('quotatationController', function($scope, $http) {
                 $scope.prices[index] = response.data[0];
             }
     },function (error){
- 
+        $('#loading').hide();
     });
     } 
     
@@ -61,7 +66,7 @@ app.controller('quotatationController', function($scope, $http) {
             }else if(product.pro_size=="X-Large"){
                 amount = $scope.prices[index].x_large_size;
             }else{
-                amount=0;
+                amount=1;
             }
         }else{
             
@@ -83,10 +88,7 @@ app.controller('quotatationController', function($scope, $http) {
     }
 
     $scope.tax = 0;
-    $scope.SGST ="6";
-    $scope.CGST ="6";
-    $scope.IGST ="12";
-    $scope.IGSTT ="18";
+   
     $scope.checkThetax = function(tax_percent,type){
       
             var subtotal= $scope.quotation.product;
@@ -97,23 +99,24 @@ app.controller('quotatationController', function($scope, $http) {
 						subtotalvalue +=Number(subtotal[j].price);
 				
 				}
-			    var intialtotal = $scope.tax;
+                var intialtotal = $scope.tax;
                 if(type=='SGST'){
-                    total  = (subtotalvalue*($scope.SGST)/100);
+                    total  = (subtotalvalue*(6)/100);
                    }
                    else if(type=='CGST'){
-                    total  = (subtotalvalue*($scope.CGST)/100);
+                    total  = (subtotalvalue*(6)/100);
                    }
                    else if(type=='IGST'){
-                    total  = (subtotalvalue*($scope.IGST)/100);
+                    total  = (subtotalvalue*(12)/100);
                    }
                    else if(type=='IGSTT'){
-                    total  = (subtotalvalue*($scope.IGSTT)/100);
+                    total  = (subtotalvalue*(18)/100);
                    }
                     
 				if(tax_percent==true){
-                      total=intialtotal+total;
+                      total = intialtotal+total;
 				}else{
+                     
                        if(intialtotal>total){
                         total = intialtotal-total;
                        }else{
@@ -127,6 +130,85 @@ app.controller('quotatationController', function($scope, $http) {
 			    $scope.total = total+subtotal;
     }
 
+    
+    $scope.submitQuotation = function(){
+        console.log($scope.quotation);
+        var sendData = {
+            "uid":$('#uid').val(),
+            "quotation_type":$scope.quotation_type,
+            "products": $scope.quotation,
+            "promoCode":$scope.promoCode,
+            "po":$scope.po,
+            "poDate":$scope.poDate,
+            "expiry_date":$scope.expiry_time,
+            "tax": $scope.tax,
+            "total": $scope.total,
+            "SGST":$scope.SGST,
+            "CGST":$scope.CGST,
+            "IGST":$scope.IGST,
+            "IGSTT":$scope.IGSTT,
+            "email":$scope.email
+        }
+        $http({
+            method: 'POST',
+            url: base_url+'saveInvoice',
+            data:sendData
+     }).then(function (response){
+                 $('#loading').hide();
+                if(response.this.statuscode=='1'){
+                    alert(response.this.statusdesc);
+                 }else{
+                  alert(response.this.statusdesc);
+                 }
+                // $scope.quotation.product[index].name = response.data[0].product_code;
+                // $scope.quotation.product[index].id = response.data[0].id;
+                // if(response.data[0].type =="Royalty Free"){
+                //     $scope.quotation.product[index].pro_type = "royalty_free";
+                // }else{
+                //     $scope.quotation.product[index].pro_type = "right_managed";
+                // }
+                // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
+                // $scope.prices[index] = response.data[0];
+            //}
+    },function (error){
+        $('#loading').hide();
+    });
 
+    }
+});
 
-  });
+  app.directive('ngFileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.ngFileModel);
+            var isMultiple = attrs.multiple;
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                var values = [];
+                
+                angular.forEach(element[0].files, function (item) {
+                    
+                    var value = {
+                       // File Name 
+                        name: item.name,
+                        //File Size 
+                        size: item.size,
+                        //File URL to view 
+                        url: URL.createObjectURL(item),
+                        // File Input Value 
+                        _file: item
+                    };
+                    values.push(value);
+                });
+                scope.$apply(function () {
+                    if (isMultiple) {
+                        modelSetter(scope, values);
+                    } else {
+                        modelSetter(scope, values[0]);
+                    }
+                });
+            });
+        }
+    };
+}]);

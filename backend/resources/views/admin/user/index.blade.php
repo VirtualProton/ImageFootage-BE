@@ -22,15 +22,15 @@
                 @include('admin.partials.message')
              <!-- /.box-header -->
              <div class="box-body">
-            <table id="account" class="table table-bordered table-striped dataTable ">
+            <table id="account" class="table table-bordered table-striped dataTable " class="col-sm-12">
                 <thead>
-                <tr class="col-sm-12">
+                <tr >
                 <th>SN</th>
+                <th>User Name</th>
                 <th>Name</th>
                 <th>Title</th>
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>User Name</th>
                 <th>Account Manager</th>
                 <th>Type</th>
                 <th>Created Date</th>
@@ -42,26 +42,28 @@
                 <tbody>
                     @if(count($userlist) > 0)
                     @foreach($userlist as $k=>$user)
-                <tr role="row" class="odd col-sm-12">
+                <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
+                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}" target="_blank">{{$user['user_name']}}</td>
                   <td>{{$user['first_name']}} {{$user['last_name']}}</td>
                   <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>
                   <td>{{$user['mobile']}}</td>
-                  <td>{{$user['user_name']}}</td>
+                  
                   <td>{{$user['account']['account_name']}}</td>
                   <td>{{$user['type']}}</td>
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
                   <td><?php echo date('D, d M, Y',strtotime($user['updated_at'])) ?></td>
                   <td><?php echo ($user['status']=='1'?"Active":"Inactive"); ?></td>
                   <td>
+                   
                   @if($user['status'] =='1')
                     <a href="{{ url('admin/users/status/0/'.$user['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
                   @elseif($user['status'] =='0')
                     <a href="{{ url('admin/users/status/1/'.$user['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
                   @endif
                   <a href="{{ URL::to('admin/users/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
-                  <a href="{{ URL::to('admin/tran/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
+                  
                   <form action="{{ route('users.destroy', $user['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf

@@ -535,7 +535,7 @@ class ProductController extends Controller
 					echo $e->getMessage() . "\n";
 				}
     		 
-			 $image = $request->file('product_image');
+			  $image = $request->file('product_image');
 			  $file = $request->file('product_image');
 			  //$name = time().'.'.$image->getClientOriginalExtension();
 			  $name=$fileupresult['ObjectURL'];

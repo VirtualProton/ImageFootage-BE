@@ -54,7 +54,7 @@ class ImageApi {
 
 
  public function search($keyword){
-    $serach = $keyword['search'];
+   $serach = $keyword['search']; 
     $this->access_key = $this->getAccessKey();
       // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
@@ -78,6 +78,7 @@ class ImageApi {
                 'filters'=>'sort: date; type: photos'
             ]
         ]);
+       
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
@@ -117,9 +118,9 @@ class ImageApi {
  }
 
   public function getPriceFromList($media){
-       if(count($media)>0){
-           
-       }
+    //    if(count($media)>0){
+    //        $media['articles']['singlebuy_list'] 
+    //    }
   }
 
 }

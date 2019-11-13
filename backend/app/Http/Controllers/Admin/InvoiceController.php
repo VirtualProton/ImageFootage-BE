@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Common;
 use DB;
 use Mail;
 use PDF;
@@ -13,6 +14,7 @@ class InvoiceController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->except('login','logout');
+        $this->Common = new Common();
 
     }
 
@@ -73,9 +75,13 @@ class InvoiceController extends Controller
   }
 
   public function quotation($user_id){
+        return view('admin.invoice.quotation',compact('user_id'));   
+ }
 
-    return view('admin.invoice.quotation',compact('user_id'));   
-
+  public function saveInvoice(Request $request){
+    $data = $request->input();
+    return $this->Common->save_proforma($data);
+    //print_r($data); die;
   }
 
 }
