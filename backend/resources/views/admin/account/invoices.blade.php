@@ -18,7 +18,7 @@
          		<div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Quotation/Invoices List</h3>
-                  <a href="{{ url('admin/quotation/'.$account_invoices[0]['user_id']) }}">Create Quotation/Proforma Invoice</a>
+                  <a href="{{ url('admin/quotation/'.$user_id) }}">Create Quotation/Proforma Invoice</a>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
