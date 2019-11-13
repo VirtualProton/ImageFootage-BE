@@ -31,6 +31,16 @@
                 <input type="hidden" class="form-control" name="package_id" id="package_id"  value="{{ $package[0]['package_id'] }}">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Package Plan </label>
+                      <select class="form-control" name="package_plan" id="package_plan">
+                      <option value="Normal" @if($package[0]['package_plan']=='Normal') selected="selected" @endif >Normal</option>
+                      <option value="Pro" @if($package[0]['package_plan']=='Pro') selected="selected" @endif >Pro</option>
+                      </select>
+                       @if ($errors->has('package_plan'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
+                       @endif
+                    </div>
                    <div class="form-group">
                       <label for="exampleInputEmail1">Package Name </label>
                       <input type="text" class="form-control" name="package_name" id="package_name" placeholder="Package name" value="{{ $package[0]['package_name'] }}">

@@ -430,11 +430,10 @@ class ProductController extends Controller
     }
 
    public function productsList(){
-	   $product = new Product;
-	   //$all_produst_list=$product->all()->toArray();
-	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.image_product_id', '=', 'imagefootage_products.id')->distinct()->get()->toArray();
-	   $title = "Product List";
-       return view('admin.product.productlist', ['products' => $all_produst_list]);
+	  $product = new Product;
+	  $all_produst_list=$product->adminAllProductList();
+	  $title = "Product List";
+      return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
 
     /**
@@ -484,6 +483,7 @@ class ProductController extends Controller
 							 'product_price_large'=>$request->price_large,
 							 'product_price_extralarge'=>$request->price_extra_large,
 							 'product_main_type'=>$request->product_type,
+							 'product_editedby'=>Auth::guard('admins')->user()->id,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		 if(isset($request->sub_product_type) && !empty($request->sub_product_type)){
@@ -825,17 +825,105 @@ class ProductController extends Controller
 		echo $subcat_o;
 	}
 	public function viewproduct($id){
+		$productColors=new ProductColors;
+		$all_produstcolors_list=$productColors->where('status', '1')->get()->toArray();
+		$productGenders=new ProductGenders;
+		$all_productgender_list=$productGenders->where('status', '1')->get()->toArray();
+		$productImageTypes=new ProductImageTypes;
+		$all_productimagetypes_list=$productImageTypes->where('status', '1')->get()->toArray();
+		$productImageSizes=new ProductImageSizes;
+		$all_productimagesize_list=$productImageSizes->where('status', '1')->get()->toArray();
+		$productAgeWises=new ProductAgeWises;
+		$all_productagewises_list=$productAgeWises->where('status', '1')->get()->toArray();
+		$imageResolution=new ImageResolution;
+		$all_productresolution_list=$imageResolution->where('status', '1')->get()->toArray();
+		$productOrientations= new ProductOrientations;
+		$all_productorientations_list=$productOrientations->where('status', '1')->get()->toArray();
+		$imageSortTypes=new ImageSortTypes;
+		$all_isorttypes_list=$imageSortTypes->where('status', '1')->get()->toArray();
+		$productFilters=new ProductFilters;
+		$product_color_array=$productFilters->where('filter_type','product_color')->where('filter_product_id',$id)->get()->toArray();
+		$productEthinicities=new ProductEthinicities;
+		$all_productethinicities_list=$productEthinicities->where('status', '1')->get()->toArray();
+		$productLocations=new ProductLocations;
+		$all_productlocations_list=$productLocations->where('status', '1')->get()->toArray();
+		$productPeoples=new ProductPeoples;
+		$all_productPeoples_list=$productPeoples->where('status', '1')->get()->toArray();
+		$filtercolourarray=array();
+		foreach($product_color_array as $key=>$val){
+			$filtercolourarray[]=$val['filter_type_id'];
+		}
+		$product_gender_array=$productFilters->where('filter_type','product_gender')->where('filter_product_id',$id)->get()->toArray();
+		$filtergenderarray=array();
+		foreach($product_gender_array as $key=>$val){
+			$filtergenderarray[]=$val['filter_type_id'];
+		}
+		$product_glow_type_array=$productFilters->where('filter_type','product_glow_type')->where('filter_product_id',$id)->get()->toArray();
+		$filterglowarray=array();
+		foreach($product_glow_type_array as $key=>$val){
+			$filterglowarray[]=$val['filter_type_id'];
+		}
+		$product_image_size_array=$productFilters->where('filter_type','product_image_size')->where('filter_product_id',$id)->get()->toArray();
+		$filterimgsizearray=array();
+		foreach($product_image_size_array as $key=>$val){
+			$filterimgsizearray[]=$val['filter_type_id'];
+		}
+		$product_image_age_array=$productFilters->where('filter_type','product_image_age')->where('filter_product_id',$id)->get()->toArray();
+		$filterimgagearray=array();
+		foreach($product_image_age_array as $key=>$val){
+			$filterimgagearray[]=$val['filter_type_id'];
+		}
+		$product_ethinicities_array=$productFilters->where('filter_type','product_ethinicities')->where('filter_product_id',$id)->get()->toArray();
+		$filterethinicitiesarray=array();
+		foreach($product_ethinicities_array as $key=>$val){
+			$filterethinicitiesarray[]=$val['filter_type_id'];
+		}
+		$product_locations_array=$productFilters->where('filter_type','product_locations')->where('filter_product_id',$id)->get()->toArray();
+		$filterlocationsarray=array();
+		foreach($product_locations_array as $key=>$val){
+			$filterlocationsarray[]=$val['filter_type_id'];
+		}
+		$product_peoples_array=$productFilters->where('filter_type','product_peoples')->where('filter_product_id',$id)->get()->toArray();
+		$filterpeoplessarray=array();
+		foreach($product_peoples_array as $key=>$val1){
+			$filterpeoplessarray[]=$val1['filter_type_id'];
+		}
+		
+		
+		$product_orientations_array=$productFilters->where('filter_type','product_orientations')->where('filter_product_id',$id)->get()->toArray();
+		$filterproductorientationsarray=array();
+		foreach($product_orientations_array as $key=>$val1){
+			$filterproductorientationsarray[]=$val1['filter_type_id'];
+		}
+		$product_resolution_array=$productFilters->where('filter_type','product_resolution')->where('filter_product_id',$id)->get()->toArray();
+		$filterresolutionarray=array();
+		foreach($product_resolution_array as $key=>$val1){
+			$filterresolutionarray[]=$val1['filter_type_id'];
+		}
+		$product_sort_types_array=$productFilters->where('filter_type','product_sort_types')->where('filter_product_id',$id)->get()->toArray();
+		$filtersort_typessarray=array();
+		foreach($product_sort_types_array as $key=>$val1){
+			$filtersort_typessarray[]=$val1['filter_type_id'];
+		}
 		$product_details=Product::find($id)->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
-		return view('admin.product.viewproduct', ['product' => $product_details]);
+		return view('admin.product.viewproduct', ['product' => $product_details,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'filterethinicitiesarray'=>$filterethinicitiesarray,'filterlocationsarray'=>$filterlocationsarray,'productPeoples'=>$all_productPeoples_list,'filterpeoplessarray'=>$filterpeoplessarray,'imageResolution'=>$all_productresolution_list,'productOrientations'=>$all_productorientations_list,'imageSortTypes'=>$all_isorttypes_list,'filterproductorientationsarray'=>$filterproductorientationsarray,'filterresolutionarray'=>$filterresolutionarray,'filtersort_typessarray'=>$filtersort_typessarray]);
 	}
 	public function html_email() {
+		ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
+ini_set('max_execution_time', '0'); // for infinite time of execution 
+		Mail::raw('Text to e-mail', function($message)
+{
+    $message->from('srinivask@conceptualpictures.com', 'Laravel');
+
+    $message->to('aksrinivas49@gmail.com');
+});
+	exit();
       $data = array('name'=>"srinivas");
       Mail::send('mail', $data, function($message) {
-         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject
-            ('Laravel HTML Testing Mail');
+         $message->to('srinivas@conceptualpictures.com', 'conceptualpictures')->subject('Laravel HTML Testing Mail');
          $message->from('aksrinivas49@gmail.com','aksrinivas49');
       });
-      echo "HTML Email Sent. Check your inbox.";
+      echo "HTML Email Sent. Check your inbox.".url('admin/createproduct');
    }
    public function ajaxProductVerify(Request $request){
 	   $message=$request->message;

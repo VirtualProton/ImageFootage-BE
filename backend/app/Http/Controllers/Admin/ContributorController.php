@@ -22,6 +22,16 @@ class ContributorController extends Controller
 			'contributor_idproof'=>'required|file',
 			'contributor_type'=>'required'
         ]);
+			$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+			srand((double)microtime()*1000000); 
+			$i = 0; 
+			$pass = '' ; 
+			while ($i <= 7) { 
+				$num = rand() % 33; 
+				$tmp = substr($chars, $num, 1); 
+				$pass = $pass . $tmp; 
+				$i++; 
+			} 
 		 $contributor = new Contributor;
 		 $file = $request->file('contributor_idproof');
 		 //Get the first three characters using substr.
@@ -31,10 +41,15 @@ class ContributorController extends Controller
          $contributor->contributor_memberid =$contributorid;
 		 $contributor->contributor_name=$request->contributor_name;
 		 $contributor->contributor_email=$request->contributor_email;
-		 $contributor->contributor_password=md5($request->contributor_password);
+		 //$contributor->contributor_password=md5($request->contributor_password);
+		 $contributor->contributor_password=md5($pass);
 		 $contributor->contributor_type=$request->contributor_type;
 		 $contributor->contributor_added_on=date('Y-m-d H:i:s');
 		 $contributor->contributor_addedby=Auth::guard('admins')->user()->id;
+		 $contributor->contributor_accountholder=$request->bank_holder_name;
+		 $contributor->contributor_banknumber=$request->bank_account_number;
+		 $contributor->contributor_ifsc=$request->ifsc_number;
+		 $contributor->contributor_bank=$request->bank_name;
 		 $result=$contributor->save();
 		 $last_id=$contributor->contributor_id;
 		 if($result){
@@ -56,6 +71,9 @@ class ContributorController extends Controller
 			 $contributor_update->contributor_memberid=$contributorid;
 			 $contributor_update->contributor_idproof=$name;
 			 $contributor_update->save();
+			 
+			 $body="Dear ".$request->contributor_name."";
+			 $body.="Please click the below link for activing jyour account";
 			 return back()->with('success','Contributor added successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');
@@ -104,6 +122,10 @@ class ContributorController extends Controller
 		 $update_array=array('contributor_name'=>$request->contributor_name,
 		 					 'contributor_email'=>$request->contributor_email,
 							 'contributor_type'=>$request->contributor_type,
+							 'contributor_accountholder'=>$request->bank_holder_name,
+							 'contributor_banknumber'=>$request->bank_account_number,
+		 					 'contributor_ifsc'=>$request->ifsc_number,
+		 					 'contributor_bank'=>$request->bank_name,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		 if(isset($request->contributor_password) && !empty($request->contributor_password)){

@@ -61,6 +61,7 @@
 
             <a href="{{ url('admin/updatecontributor/'.$contributor['contributor_id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             <a href="{{ url('admin/deletecontributor/'.$contributor['contributor_id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this contributor?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            <a class="reset_cont_pass" cont_id='{{ $contributor['contributor_id'] }}'>Reset Password</a>
             </td>
  </tr>
 @endforeach

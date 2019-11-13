@@ -18,14 +18,18 @@ class Contributor extends Migration
 			$table->string('contributor_memberid')->nullable();
 			$table->string('contributor_name')->nullable();
 			$table->string('contributor_email')->nullable();
+			$table->string('contributor_otp')->nullable();
 			$table->string('contributor_password')->nullable();
 			$table->string('contributor_idproof')->nullable();
 			$table->enum('contributor_type', ['Donor', 'For Sale'])->default('For Sale');
 			$table->dateTime('contributor_last_login')->nullable();
 			$table->dateTime('contributor_added_on')->nullable();
-			
 			$table->enum('contributor_status', ['Active', 'Inactive'])->default('Inactive');
 			$table->string('contributor_addedby')->nullable();
+			$table->string('contributor_accountholder')->nullable();
+			$table->string('contributor_banknumber')->nullable();
+			$table->string('contributor_ifsc')->nullable();
+			$table->string('contributor_bank')->nullable();
             $table->timestamps();
         });
     }

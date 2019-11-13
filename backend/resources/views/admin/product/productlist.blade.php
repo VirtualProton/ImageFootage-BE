@@ -43,14 +43,14 @@
                         <th>Type</th>
                         <th>Product</th>
                         <th>Added On</th>
-                        <th>Actions</th>
+                        <?php /*?><th>Actions</th><?php */?>
                     </thead>
 
                     <tbody>
                      @foreach($products as $product)
                     <tr>
-  <td>{{ $product['id'] }} </td>
-  <td>{{ $product['product_id'] }} </td>
+  <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['id'] }}</a> </td>
+  <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['product_id'] }}</a> </td>
   <td>{{ $product['category_name'] }} </td>
   <td>{{ $product['subcategory_name'] }} </td>
   <td>{{ $product['product_owner'] }} </td>
@@ -74,7 +74,7 @@
 
 			</td>
   <td>{{ date('Y-m-d',strtotime($product['product_added_on'])) }} </td>
-  <td>  @if($product['product_status'] =='Active')
+  <?php /*?><td>  @if($product['product_status'] =='Active')
   			<a href="{{ url('admin/product/Inactive/'.$product['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
          @elseif($product['product_status'] =='Inactive')
          	<a href="{{ url('admin/product/Active/'.$product['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
@@ -83,7 +83,7 @@
             <a href="{{ url('admin/editproduct/'.$product['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             <a href="{{ url('admin/deleteproduct/'.$product['id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
             <a href="{{ url('admin/viewproduct/'.$product['id']) }}" title="View" ><i class="fa fa-eye" aria-hidden="true"></i></a>
-            </td>
+            </td><?php */?>
  </tr>
 @endforeach
                     </tbody>
@@ -98,7 +98,7 @@
                         <th>Type</th>
                         <th>Product</th>
                         <th>Added On</th>
-                        <th>Actions</th>
+                        <?php /*?><th>Actions</th><?php */?>
                     </tfoot>
                 </table>
               </div>

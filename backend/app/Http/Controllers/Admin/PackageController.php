@@ -20,6 +20,7 @@ class PackageController extends Controller
 			'package_expiry'=>'required'
         ]);
 		$package=new Package;
+		$package->package_plan =$request->package_plan;
 		$package->package_name =$request->package_name;
 	    $package->package_price=$request->package_price;
 		$package->package_description=$request->package_description;
@@ -62,7 +63,7 @@ class PackageController extends Controller
 			'package_type'=>'required',
 			'package_expiry'=>'required'
         ]);
-		$update_array=array('package_name'=>$request->package_name,
+		$update_array=array('package_plan'=>$request->package_plan,'package_name'=>$request->package_name,
 							 'package_price'=>$request->package_price,
 		 					 'package_description'=>$request->package_description,
 							 'package_products_count'=>$request->package_products_count,
