@@ -98,5 +98,22 @@
       'autoWidth'   : false
     }*/);
   });
+  $('.reset_cont_pass').click(function(){
+	  var cont_id=$(this).attr('cont_id');
+	  alert(cont_id);
+	  $.ajax({
+            type: "POST",
+            data: {},
+            url: "{{ url('admin/request_for_contributorpass/')}}/"+cont_id+"",
+            success: function(msg) {
+				var data=msg.trim();
+				if(data=='success'){
+					alert('Password request rised successfully.');
+				}else{
+					alert('Some problem occured.');
+				}
+				}
+      });
+  });
 </script>
   @endsection

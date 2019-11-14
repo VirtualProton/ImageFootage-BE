@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
+ini_set('max_execution_time', '0'); // for infinite time of execution 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -15,16 +16,15 @@ class ContributorController extends Controller
 		return view('admin.contributor.addcontributor');
 	}
 	public function addcontributor(Request $request){
-	    ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
-		ini_set('max_execution_time', '0'); // for infinite time of execution 
-		$this->validate($request, [
+		/*$this->validate($request, [
 		 	'contributor_name'=>'required',
             'contributor_email'   => 'required',
             'contributor_password' => 'required',
 			'contributor_confirm_password' => 'required|same:contributor_password',
 			'contributor_idproof'=>'required|file',
 			'contributor_type'=>'required'
-        ]);
+        ]); */
+		//echo 'here'; exit();
 			$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 			srand((double)microtime()*1000000); 
 			$i = 0; 
@@ -35,12 +35,17 @@ class ContributorController extends Controller
 				$pass = $pass . $tmp; 
 				$i++; 
 			} 
+			
 		 $contributor = new Contributor;
 		 $file = $request->file('contributor_idproof');
+		 $cemail='';
+		 $cemail='';
 		 //Get the first three characters using substr.
 		 $firstThreeCharacters = substr($request->contributor_name, 0, 3);
 		 $firstThreeCharactersType = substr($request->contributor_type, 0, 3);
 		 $contributorid=$firstThreeCharacters.$firstThreeCharactersType;
+		 $cname=$request->contributor_name;
+		 $cemail=$request->contributor_email;
          $contributor->contributor_memberid =$contributorid;
 		 $contributor->contributor_name=$request->contributor_name;
 		 $contributor->contributor_email=$request->contributor_email;
@@ -74,15 +79,15 @@ class ContributorController extends Controller
 			 $contributor_update->contributor_memberid=$contributorid;
 			 $contributor_update->contributor_idproof=$name;
 			 $contributor_update->save();
-			 $body="Dear ".$request->contributor_name."<br>";
-			 $body.="Please click the below link for activate your contributor account<br>";
-			 $body.='OTP:- '.$pass.'<br>';
-			 $cont_url=url('admin/contributorotpvalidate/').$last_id;
-			 $body.='<a href="'.$cont_url.'">Click here to verify account</a>';
-			 $body.="Thanks & Regards,<br>Image Footage Team.";
-			 $data = array('mail_body'=>$body);
-			 Mail::send('createcontributor', $data, function($message) {
-				 $message->to($request->contributor_email, $request->contributor_name)->subject('Welcome to Image Footage');
+			 //$body="Dear ".$cname.",</br>";
+			 //$body.="Please click the below link for activate your contributor account</br>";
+			 //$body.='OTP:- '.$pass.'<br>';
+			 $cont_url=url('admin/contributorotpvalidate/').'/'.$last_id;
+			 //$body.='<a href="'.$cont_url.'">Click here to verify account</a>';
+			 //$body.="Thanks & Regards,<br>Image Footage Team.";
+			 $data = array('mail_body'=>$body,'cname'=>$cname,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
+				 Mail::send('createcontributor', $data, function($message) use($data) {
+				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
 			 });
 			 return back()->with('success','Contributor added successful');
 		 }else{
@@ -177,4 +182,37 @@ class ContributorController extends Controller
 			 return back()->with('warning','Some problem occured.');
 		}
     }
+	public function requestForContributorPass($id){
+		$contributor = new Contributor;
+	    $all_contributor_list=$contributor->where('contributor_id', $id)->get()->toArray();
+		$name=$all_contributor_list[0]['contributor_name'];
+		$cemail=$all_contributor_list[0]['contributor_email'];
+		//print_r( $all_contributor_list); exit();
+		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+			srand((double)microtime()*1000000); 
+			$i = 0; 
+			$pass = '' ; 
+			while ($i <= 7) { 
+				$num = rand() % 33; 
+				$tmp = substr($chars, $num, 1); 
+				$pass = $pass . $tmp; 
+				$i++; 
+			}
+		 $update_array=array('contributor_otp'=>$pass,
+							 'updated_at'=>date('Y-m-d H:i:s')
+							 );
+		 $result = Contributor::where('contributor_id',$id)->update($update_array);
+		 if($result){
+			 $cont_url=url('admin/contributorotpreset/').'/'.$last_id;
+				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
+					 Mail::send('contributorresetpass', $data, function($message) use($data) {
+					 $message->to($data['cemail'],$data['cname'])->subject('Password');
+			});
+			echo 'success';
+			//return back()->with('success','Password request rised successfully');
+		 }else{
+			 echo 'warning';
+			 //return back()->with('warning','Some problem occured.');
+		 }
+	}
 }
