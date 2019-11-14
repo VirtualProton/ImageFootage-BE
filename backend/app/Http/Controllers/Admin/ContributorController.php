@@ -203,7 +203,7 @@ class ContributorController extends Controller
 							 );
 		 $result = Contributor::where('contributor_id',$id)->update($update_array);
 		 if($result){
-			 $cont_url=url('admin/contributorotpreset/').'/'.$last_id;
+			 $cont_url=url('admin/contributorotpreset/').'/'.$id;
 				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 					 Mail::send('contributorresetpass', $data, function($message) use($data) {
 					 $message->to($data['cemail'],$data['cname'])->subject('Password');
