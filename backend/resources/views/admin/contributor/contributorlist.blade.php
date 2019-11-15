@@ -100,7 +100,6 @@
   });
   $('.reset_cont_pass').click(function(){
 	  var cont_id=$(this).attr('cont_id');
-	  alert(cont_id);
 	  $.ajax({
             type: "POST",
             data: {},

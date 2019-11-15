@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
 ini_set('max_execution_time', '0'); // for infinite time of execution 
@@ -50,7 +49,7 @@ class ContributorController extends Controller
 		 $contributor->contributor_name=$request->contributor_name;
 		 $contributor->contributor_email=$request->contributor_email;
 		 //$contributor->contributor_password=md5($request->contributor_password);
-		 $contributor->contributor_password=md5($pass);
+		 //$contributor->contributor_password=md5($pass);
 		 $contributor->contributor_type=$request->contributor_type;
 		 $contributor->contributor_added_on=date('Y-m-d H:i:s');
 		 $contributor->contributor_addedby=Auth::guard('admins')->user()->id;
@@ -71,8 +70,7 @@ class ContributorController extends Controller
 				$name = time().'.'.$image->getClientOriginalExtension();
 				$file_path='/uploads/idproof/';
 				$destinationPath = public_path($file_path);
-				$image->move($destinationPath, $name);
-				
+				$image->move($destinationPath, $name);	
     		 }
 			 $contributorid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $contributor_update = Contributor::find($last_id);
@@ -85,7 +83,7 @@ class ContributorController extends Controller
 			 $cont_url=url('admin/contributorotpvalidate/').'/'.$last_id;
 			 //$body.='<a href="'.$cont_url.'">Click here to verify account</a>';
 			 //$body.="Thanks & Regards,<br>Image Footage Team.";
-			 $data = array('mail_body'=>$body,'cname'=>$cname,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
+			 $data = array('cname'=>$cname,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 				 Mail::send('createcontributor', $data, function($message) use($data) {
 				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
 			 });
@@ -123,13 +121,11 @@ class ContributorController extends Controller
 			 $this->validate($request, [
 			  			'contributor_password' => 'required',
 		 				'contributor_confirm_password' => 'required|same:contributor_password'
-			
         	]);
 		}
 		if($request->hasFile('contributor_idproof')) {
 		$this->validate($request, [
 			  			'contributor_idproof'=>'required|file'
-			
         	]);
 		}
 		 $contributor = new Contributor;
@@ -214,5 +210,80 @@ class ContributorController extends Controller
 			 echo 'warning';
 			 //return back()->with('warning','Some problem occured.');
 		 }
+	}
+	public function contVerifyRegisteriedOtp($id){
+		//, ['contributor'=>$contributor_data]
+		 return view('admin.contributor.contributorotpverify', ['contributor'=>$id]);
+	}
+	public function contVerifyRegisteriedOtpprocess(Request $request){
+		$this->validate($request, [
+		 	'contributor_otp'=>'required'
+        ]);
+		$cont_id=$request->cont_id;
+		$contributor_otp=$request->contributor_otp;
+		$contributor = new Contributor;
+	    $all_contributor_list=$contributor->where('contributor_id', $cont_id)->where('contributor_otp', $contributor_otp)->get()->toArray();
+		if(isset($all_contributor_list) && !empty($all_contributor_list)){
+			return redirect('admin/contributor_set_password/'.$cont_id);
+		}else{
+			return back()->with('warning','Wrong OTP.');
+		}
+	}
+	public function contSetPassword($id){
+		return view('admin.contributor.contserpassword', ['contributor'=>$id]);
+	}
+	public function setContributorPassword(Request $request){
+		$this->validate($request, [
+		 	'contributor_password'=>'required',
+            'contributor_repassword'   => 'required'
+        ]);
+		$cont_id=$request->cont_id;
+		$password=md5($request->contributor_password);
+		$update_array=array('contributor_password'=>$password,
+		 					 'contributor_otp'=>NULL
+							 );
+		$result = Contributor::where('contributor_id',$cont_id)->update($update_array);
+		if($result){
+			return back()->with('success','Password updated successfully');
+		}else{
+			return back()->with('warning','Some thing went wrong.');
+		}
+	}
+	public function contributorotpverifyReset($id){
+		return view('admin.contributor.contverifyotpreset', ['contributor'=>$id]);
+	}
+	public function verifyOtpforsetpass(Request $request){
+		$this->validate($request, [
+		 	'contributor_otp'=>'required'
+        ]);
+		$cont_id=$request->cont_id;
+		$contributor_otp=$request->contributor_otp;
+		$contributor = new Contributor;
+	    $all_contributor_list=$contributor->where('contributor_id', $cont_id)->where('contributor_otp', $contributor_otp)->get()->toArray();
+		if(isset($all_contributor_list) && !empty($all_contributor_list)){
+			return redirect('admin/contributor_reset_password/'.$cont_id);
+		}else{
+			return back()->with('warning','Wrong OTP.');
+		}
+	}
+	public function contResetPassword($id){
+		return view('admin.contributor.contserresetpassword', ['contributor'=>$id]);
+	}
+	public function contResetPasswordProcess(Request $request){
+		$this->validate($request, [
+		 	'contributor_password'=>'required',
+            'contributor_repassword'   => 'required'
+        ]);
+		$cont_id=$request->cont_id;
+		$password=md5($request->contributor_password);
+		$update_array=array('contributor_password'=>$password,
+		 					 'contributor_otp'=>NULL
+							 );
+		$result = Contributor::where('contributor_id',$cont_id)->update($update_array);
+		if($result){
+			return back()->with('success','Password updated successfully');
+		}else{
+			return back()->with('warning','Some thing went wrong.');
+		}
 	}
 }
