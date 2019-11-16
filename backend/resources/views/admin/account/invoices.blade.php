@@ -18,7 +18,7 @@
          		<div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Quotation/Invoices List</h3>
-                  <a href="{{ url('admin/quotation/'.$user_id) }}">Create Quotation/Proforma Invoice</a>
+                  <a href="{{ url('admin/quotation/'.$user_id) }}" style="align:right;">Create Quotation/Proforma Invoice</a>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
@@ -55,12 +55,14 @@
                     </select>
                </td>
                <td>
-                  <a href="{{ url('admin/accounts/status/1/'.$invioces['id']) }}" title="Cancel">Invoices</a>
-                  <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
+                  <a href="{{ url('admin/invoice/'.$invioces['user_id'].'/'.$invioces['id']) }}" title="Invoice"><i class="fa fa-check" aria-hidden="true"></i></a>
+                  &nbsp;&nbsp;&nbsp;
+                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>
+                  <!-- <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
-                        </form>
+                        </form> -->
                   </td>
                 </tr>
                 @endforeach

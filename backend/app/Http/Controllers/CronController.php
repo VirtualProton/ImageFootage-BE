@@ -34,7 +34,11 @@ class CronController extends Controller
         $pantherMediaImages = new ImageApi();
         $pantharmediaData = $pantherMediaImages->search($keyword);
         $common = new Common();
-         $category_id = $common->checkCategory($percategory);
+        $category_id = $common->checkCategory($percategory);
+        if(count($pantharmediaData) > 0){
+            
+        }    
+
         print_r($pantharmediaData); die;
 
     }

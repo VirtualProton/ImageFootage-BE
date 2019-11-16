@@ -183,6 +183,7 @@ Route::post('/sendmail','InvoiceController@sendmail');
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/product/{id}', 'ProductController@getproduct');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
+Route::get('/invoice/{user_id}/{id}','InvoiceController@invoice');
 
 
 

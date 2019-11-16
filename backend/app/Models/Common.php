@@ -123,9 +123,16 @@ class Common extends Model
 
         if(count($data['products'])>0){
         foreach($data['products']['product'] as $eachproduct){
+            
             if(isset($eachproduct['newuploadimage']) && count($eachproduct['newuploadimage'])>0){
                 
                 $name = "invoice_".time().'_'.$eachproduct['newuploadimage'][0]['name'];
+                echo $eachproduct['newuploadimage'][0]['url'];
+                $type = "image/png";
+                $base64blob = base64_encode($eachproduct['newuploadimage'][0]['url']);
+                $datauri = "data:$type;base64,$base64blob";
+                 echo '<img src="'.$eachproduct['newuploadimage'][0]['url'].'">';
+                die;
                 //file_put_contents('', file_get_contents($eachproduct['newuploadimage'][0]['url']));
 				$files2bucketemp= file_get_contents($eachproduct['newuploadimage'][0]['url']);
 				$file_path='invoice/image';

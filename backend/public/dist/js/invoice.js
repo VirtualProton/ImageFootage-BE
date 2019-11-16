@@ -147,13 +147,22 @@ app.controller('quotatationController', function($scope, $http,$location) {
             "CGST":$scope.CGST,
             "IGST":$scope.IGST,
             "IGSTT":$scope.IGSTT,
-            "email":$scope.email
+            "email":$scope.email,
+            "image1":$('#file1')[0].files[0] 
+
         }
+        
+        console.log($scope.quotation);
+        var fd=new FormData();
+        // angular.forEach($scope.quotation[0],function(file){
+        //     fd.append('file',file);
+        // });
         $http({
             method: 'POST',
             url: base_url+'saveInvoice',
-            data:sendData
-     }).then(function (response){
+            data:sendData,
+            headers: {'Content-Type': undefined},
+         }).then(function (response){
                  $('#loading').hide();
                 if(response.this.statuscode=='1'){
                     alert(response.this.statusdesc);
@@ -188,7 +197,7 @@ app.controller('quotatationController', function($scope, $http,$location) {
                 var values = [];
                 
                 angular.forEach(element[0].files, function (item) {
-                    
+                    console.log(item);
                     var value = {
                        // File Name 
                         name: item.name,
@@ -212,3 +221,17 @@ app.controller('quotatationController', function($scope, $http,$location) {
         }
     };
 }]);
+
+app.directive('ngFile', ['$parse', function ($parse) {
+    return {
+     restrict: 'A',
+     link: function(scope, element, attrs) {
+      element.bind('change', function(){
+   
+       $parse(attrs.ngFile).assign(scope,element[0].files)
+       scope.$apply();
+      });
+     }
+    };
+   }]);
+   

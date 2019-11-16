@@ -80,8 +80,17 @@ class InvoiceController extends Controller
 
   public function saveInvoice(Request $request){
     $data = $request->input();
+    print_r($_FILES);
+    print_r($data); die;
     return $this->Common->save_proforma($data);
     //print_r($data); die;
+  }
+
+  public function invoice($user_id,$invoice_id){
+    if(!empty($invoice_id)){
+        $data=$this->Common->getData($invoice_id,$user_id);
+        return view('admin.invoice.invoice',compact('user_id'));  
+    }
   }
 
 }

@@ -3,7 +3,6 @@
 @section('content')
 <div class="content-wrapper" ng-controller="quotatationController">
 <section class="content">
-
 <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">@{{title}}</h3>
@@ -16,9 +15,7 @@
                
               <div class="panel-body">
 						<form role="form" name="downloadOnBehalf" method="post"  class="" enctype="multipart/form-data" ng-submit="submitQuotation()">
-						
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-sm-6">
 									<div class="">
 										<div class="form-group">
