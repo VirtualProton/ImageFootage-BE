@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MustMatch } from '../_helpers/must-match.validator';
+import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { HeroService } from '../hero.service';
 import { first } from 'rxjs/operators';
 
@@ -18,7 +18,10 @@ export class SignUpComponent implements OnInit {
     submitted = false;
     showloginPopup:boolean=false;
 
-  constructor( private formBuilder: FormBuilder,private authenticationService: HeroService,private router: Router) { }
+  constructor( private formBuilder: FormBuilder,
+      private authenticationService: HeroService,
+      private router: Router,
+      private dataHelper:imageFooterHelper) { }
 
   ngOnInit() {
 
@@ -35,7 +38,7 @@ export class SignUpComponent implements OnInit {
         iagree:['', Validators.required],
 
     }, {
-       validator: MustMatch('password', 'confirmPassword')
+       validator: this.dataHelper.mustMatch('password', 'confirmPassword')
   });
   
   }
@@ -65,7 +68,10 @@ export class SignUpComponent implements OnInit {
 
   hideLoginPopup(event){
     this.showloginPopup = false;
-    this.router.navigate(['/signUp']);
+    if(event){
+      this.router.navigate(['/dashboard']);
+    }
+
   }
 
 }

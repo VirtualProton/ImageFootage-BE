@@ -1,0 +1,183 @@
+<section class="mt-5">
+  
+        <div class="container"> 
+    
+                            <div class="row">
+                   <div class="col-lg-5 col-md-5 col-sm-6 bg-light">
+                      <div class="card z-depth-0">
+                     <form class="loignForm p-5">
+                     <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
+                       <div class="row form-group">
+                       <div class="col-lg-6 col-md-6 col-sm-6">
+                         <label>First Name</label>
+                         <input type="text" class="form-control rounded-0">
+                       </div>
+                      
+                       <div class="col-lg-6 col-md-6 col-sm-6">
+                         <label>Last Name</label>
+                         <input type="text" class="form-control">
+                       </div>
+                       
+                        </div>
+                        
+                     <div class="form-group">
+                         <label>Street Address</label>
+                         <textarea  class="form-control rounded-0" rows="2" style="min-height:70px;"></textarea>
+                       </div>
+                       
+                     <div class="form-group">
+                         <label>City</label>
+                         <input type="text" class="form-control rounded-0">
+                       </div>
+                       
+                       <div class="form-group">
+                         <label>Country</label>
+                         <select class="form-control">
+                          <option value="">India</option>
+                          <option value="">Canada</option>
+                          <option value="">USA</option>
+                          <option value="">Aus</option>
+                         </select>
+                       </div>
+                       
+                       <div class="row form-group pt-4">
+                       <div class="col-md-6 col-lg-6 col-sm-6">
+                         <label>State/province</label>
+                         <select class="form-control">
+                          <option value="">India</option>
+                          <option value="">Canada</option>
+                          <option value="">USA</option>
+                          <option value="">Aus</option>
+                         </select>
+                       </div>
+                       
+                       <div class="col-md-6 col-sm-6 col-lg-6">
+                         <label>Zipcode</label>
+                         <input type="text" class="form-control">
+                       </div>
+                       </div>
+                       
+                       <div class="form-group pt-3">
+                       
+                         <button type="button" class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Enter Address
+                         </strong></button>
+                         <div class="clearfix"></div>
+                         <hr>
+                         <h3 class="f-20 mb-4 mt-5">PAYMENT INFORMATION</h3>
+    
+                         <div class="row">
+                           <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
+                             
+                             <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="customRadio" name="example1" value="customEx" checked="">
+        <label class="custom-control-label" for="customRadio"><strong>Credit Card</strong></label>
+      </div>
+                           </div>
+    
+                           <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+                             
+                             <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>
+                             <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>
+                           </div>
+    
+                         </div>
+                          <div class="row form-group mt-4">
+                       <div class="col-lg-12 col-md-12 col-sm-12">
+                         <label>Credit Card Number</label>
+                         <input type="number" class="form-control rounded-0">
+                       </div>                  
+                        </div>
+    
+                       <div class="row form-group">
+                      <div class="col-md-8 col-lg-8 col-sm-8">
+                         <label>Expiry Date</label>
+                         <div class="row">
+                          <div class="col-md-6 col-sm-6 col-lg-6">
+                         <select class="form-control">
+                          <option value="">MM</option>
+                          <option value="">01</option>
+                          <option value="">02</option>
+                          <option value="">03</option>
+                         </select>
+                       </div>
+                       <div class="col-md-6 col-sm-6 col-lg-6">
+                         <select class="form-control">
+                          <option value="">YY</option>
+                          <option value="">2019</option>
+                          <option value="">2018</option>
+                          <option value="">2017</option>
+                         </select>
+                       </div>
+                       </div>
+                       </div>
+                      
+                       <div class="col-lg-4 col-md-4 col-sm-4">
+                         <label>Security Code</label>
+                         <input type="text" class="form-control" placeholder="CVV">
+                       </div>
+                       
+                        </div>
+    
+                         <div class="row form-group">
+                       <div class="col-lg-12 col-md-12 col-sm-12">
+                         <label>Name on Card</label>
+                         <input type="text" class="form-control rounded-0">
+                       </div>                  
+                        </div>
+                        
+                       
+                       </div>
+                       
+                       
+                     </form>
+                   </div>
+                   
+                   
+                   </div>
+                   
+                   <div class="col-lg-7 col-md-7 col-sm-6">
+                    <div class="card">
+                    <div class="table-responsive">
+                      <table class="table cart-table checkout-table">
+                        <thead class="f-16">
+                          <tr>
+                            <th colspan="2"><h3 class="f-18">CART</h3>
+                            <p class="mb-0">2 Items</p></th>
+                            <th align="right" class="text-right"><button class="btn btn-default rounded-0" (click)="goToWishList()">Edit</button></th>                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let checkout of wishListDataItems;let i= index">
+                            <td width="25%" align="center">
+                              <div class="product-info">
+                                <img src="assets/images/{{checkout.imgPath}}" alt="product-img" height="100">
+                              </div>                             
+                            </td>                            
+                            <td width="50%">
+                               <p class="mb-1 text-black"><strong>{{checkout.name}}</strong></p>
+                               <p class="mb-1"><strong>Size:</strong>  {{checkout.size}}</p>                              
+                            </td>
+                             <td width="25%" align="right"><p class="f-16 text-black"><strong>${{checkout.price}}.00 USD</strong></p>                            
+                             </td>
+                          </tr>
+                        </tbody>
+                        <tfoot class="text-black">
+                          <tr class="f-20">
+                          <td></td>
+                            <td align="right"><strong>TOTAL</strong></td>
+                            <td align="right"><strong>${{showTotalPrice()}}.00 USD</strong></td>
+                          </tr>
+                           <tr class="f-16">
+                          <td></td>
+                            <td align="right"><strong>BALANCE DUE</strong></td>
+                            <td align="right"><strong>${{showTotalPrice()}}.00 USD</strong></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+               </div>
+                
+            </div>
+        </div>
+      </section>

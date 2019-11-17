@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero,carouselSlider,aosSlider } from '../hero';
 import { HeroService } from '../hero.service';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
-import * as AOS from 'aos';
-import { isNullOrUndefined } from 'util';
-import { debounceTime } from 'rxjs/operators';
+
+import { imageFooterHelper } from '../_helpers/image-footer-helper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,8 +15,7 @@ export class DashboardComponent implements OnInit {
   carouselSliderImages: carouselSlider[] =[];
   aoslSliderImages: aosSlider[] =[];
   aoslSliderImagesData: aosSlider[] =[];
-  //showNavigationArrows = false;
-  // showNavigationIndicators = false;
+
   randomNumber:number =0;
   searchBoxLabel:string='all';
   page:number = 1;
@@ -25,18 +23,14 @@ export class DashboardComponent implements OnInit {
   aosSliderSizes:any=[];
   
 
-  constructor(private heroService: HeroService,config: NgbCarouselConfig) {
-  //  config.showNavigationArrows = true;
-   // config.showNavigationIndicators = true;
-    //config.interval=1000;
-   // config.pauseOnHover=true;
+  constructor(private heroService: HeroService,private dataHelper:imageFooterHelper,private router: Router) {
    }
 
 
 
   ngOnInit() {
  
-    AOS.init();
+
     this.heroService.getcarouselSliderImages()
       .subscribe(carouselSliderImages => {
         this.carouselSliderImages = carouselSliderImages;
@@ -53,7 +47,7 @@ export class DashboardComponent implements OnInit {
             ele.eleClass = randArr[j];
             j=j+1;
             if(j == i){
-                this.shuffleArray(randArr);
+                this.dataHelper.shuffleArray(randArr);
                 j=0;
             }
           }
@@ -71,7 +65,7 @@ export class DashboardComponent implements OnInit {
 
   searchAosData(search){
     // debounceTime(400),
-    if(this.searchBoxLabel == 'all'){
+    /*if(this.searchBoxLabel == 'all'){
       this.aoslSliderImagesData = this.aoslSliderImages;
     }else{
       this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.type == this.searchBoxLabel);
@@ -79,6 +73,9 @@ export class DashboardComponent implements OnInit {
 
     if(search.trim().length > 2){
       this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.name == search.trim());
+    }*/
+    if(search.trim().length > 2){
+      this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
     }
   }
 
@@ -86,20 +83,5 @@ export class DashboardComponent implements OnInit {
     this.searchBoxLabel=type;
     }
 
-    shuffleArray (array) {
-      let m = array.length, t, i;
     
-      // While there remain elements to shuffle
-      while (m) {
-        // Pick a remaining element…
-        i = Math.floor(Math.random() * m--);
-    
-        // And swap it with the current element.
-        t = array[m];
-        array[m] = array[i];
-        array[i] = t;
-      }
-    
-      return array;
-    }
 }

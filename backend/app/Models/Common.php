@@ -78,7 +78,7 @@ class Common extends Model
     public function save_proforma($data){
         ini_set('max_execution_time', 0);
         $selected_taxes = array();
-       
+       print_r($data); die;
         if(isset($data['SGST']) && $data['SGST']==1){
             $selected_taxes['SGST']='1';
         }else{
@@ -102,7 +102,7 @@ class Common extends Model
         }
 
         $insert = array(
-            'user_id'=>$data['uid'],
+            'user_id'=> $data['uid'],
             'email_id'=> $data['email'],
             'invoice_name'=>$this->random_numbers(),
             'created'=>date('Y-m-d'),

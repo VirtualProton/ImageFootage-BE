@@ -1,110 +1,69 @@
 <section>
   
-        <div class="container">
-    
-                <div class="card pb-3">
-                
-                  <form method="#">
-                    <div class="table-responsive">
-                      <table class="table cart-table">
-                        <tbody>
-                            <tr>
-                                <td width="25%" align="center">
-                                <div class="product-info">
-                                    <img src="assets/images/img_1.jpg" alt="product-img" height="100">
-                                </div>                             
-                                </td>                            
-                                <td width="50%">
-                                    <p class="mb-1"><strong>IMAGE #2750011</strong></p>
-                                    <p class="mb-1"><strong>Size:</strong>  X-Large (6720 X 4480PX)</p>
-                                    <p class="mb-1">A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.</p>
-                                    
-                                </td>
-                                <td width="25%" align="right">
-                                    <p class="f-16"><strong>$200.00 USD</strong></p>
-                                    <span class="pt-2">
-                                        <div class="btn-group cartGroup">
-                                            <button type="button" class="btn btn-light">Edit</button>
-                                            <button type="button" class="btn btn-light">Delete</button>
-                                            
-                                        </div>
-                                    </span>
-                                </td>
-                            </tr>
-                          
-                          <tr>
-                            <td width="25%" align="center">
-                              <div class="product-info">
-                                <img src="assets/images/wallpaper.jpg" alt="product-img" height="100">
-                              </div>                              
-                            </td>                            
-                            <td width="50%">
-                               <p class="mb-1"><strong>IMAGE #2750011</strong></p>
-                               <p class="mb-1"><strong>Size:</strong>  Small (200 X 450PX)</p>
-                               <p class="mb-1">A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.</p>
-                            </td>
-                            <td width="25%" align="right">
-                                <p class="f-16"><strong>$200.00 USD</strong></p>
-                                <span class="pt-2">
-                                    <div class="btn-group cartGroup">
-                                        <button type="button" class="btn btn-light">Edit</button>
-                                        <button type="button" class="btn btn-light">Delete</button>
-                                    </div>
-                                </span>
-                             </td>
-                          </tr>
-                          
-                          <tr>
-                                <td width="25%" align="center">
-                                    <div class="product-info">
-                                        <img src="assets/images/img_6.jpg" alt="product-img" height="100">
-                                    </div>                             
-                                </td>
-                                    
-                                <td width="50%">
-                                    <p class="mb-1"><strong>IMAGE #2750011</strong></p>
-                                    <p class="mb-1"><strong>Size:</strong>  X-Large (6720 X 4480PX)</p>
-                                    <p class="mb-1">A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.</p>
-                                </td>
-                                <td width="25%" align="right">
-                                    <p class="f-16"><strong>$200.00 USD</strong></p>                             
-                                    <span class="pt-2">
-                                        <div class="btn-group cartGroup">
-                                            <button type="button" class="btn btn-light">Edit</button>
-                                            <button type="button" class="btn btn-light">Delete</button>                                    
-                                        </div>
-                                    </span>
-                                </td>
-                            </tr>
-                          
-                        </tbody>
-                      </table>
+  <div class="container">
+          <div class="card pb-3 shadow-sm">            
+            <form method="#">
+              <div class="table-responsive">
+                <table class="table cart-table">
+                  <tbody>
+                    <tr *ngFor="let wishList of wishListDataItems;let i= index">
+                      <td width="25%" align="center">
+                          <div class="product-info">
+                              <a href="javascript:void(0)">
+                                <img src="assets/images/{{wishList.imgPath}}" alt="product-img">
+                              </a>
+                              <div class="pt-3 cart_option">
+                                  <a href="javascript:void(0)" class="f-22"><i class="fa fa-plus-circle"></i></a>
+                                  <a href="javascript:void(0)" class="f-22 pl-1"><i class="fa fa-times-circle"></i></a>
+                              </div>
+                          </div>                       
+                      </td>                      
+                      <td width="50%">
+                         <p class="mb-1 text-black f-18"><strong>{{wishList.name}}</strong></p>
+                         <p class="mb-1 f-16"><strong>Size:</strong>  {{wishList.size}}</p>
+                         <p class="mb-1">{{wishList.info}}</p>                       
+                      </td>
+                       <td width="25%" align="right"><p class="f-18 text-black"><strong>${{wishList.price}} USD</strong></p>                      
+                       </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+            
+                <div class="col-12">
+                <div class="p-3 row">
+                  <div class="col-md-4 col-sm-4 col-lg-4">
+                  <a href="javascript:void()" id="promocode">Have a promo code ?</a>
+                  <div class=" show-promocode">
+                  <div class="row">
+                    <div class="col-md-8 col-sm-8 col-lg-8">                        
+                      <input type="text" name="" class="form-control" placeholder="Coupon Code">
                     </div>
-                    <hr class="">
-                    <div class="d-flex flex-column flex-md-row align-items-center cart_btn p-3">
-                      <input type="text" class="form-control text-md-left text-center mb-3 mb-md-0 rounded-radius" name="coupon" id="coupon" placeholder="I have a discout coupon">
-                      <button class="btn btn-outline-success ml-md-3 w-100 mb-3 mb-md-0 rounded-radius">Apply Coupon</button>
-                      <a href="#" class="btn ml-md-4 btn-dark w-100 rounded-radius updateCart">Update Cart</a>
+                    <div class="col-md-4 col-sm-4 col-lg-4 pl-1">                        
+                      <button class="btn btn-success">Apply</button>
                     </div>
-                    <hr>
-                  
-                      <div class="col-12">
-                      <div class=" p-3">
-                        <ul class="list-unstyled text-right text-black f-16">
-                          <li class="pb-2">Sub Total <span class="d-inline-block w-100px">$800.00</span></li>
-                          <li class="pb-2">UK Vat <span class="d-inline-block w-100px">$10.00</span></li>
-                          <li class="pb-2">Grand Total <span class="d-inline-block w-100px">$10.00</span></li>
-                        </ul>
-                        </div>
-                        <div class="my-3">
-                         <hr>
-                    <a href="checkout.html" class="btn btn-danger float-right rounded-radius pt-2 pb-2 pl-5 pr-5">Checkout</a>
-                    </div>
-                      </div>
-                    
-                   
-                  </form>
+                  </div>
+                  </div>
                 </div>
-                
-        </div>
-      </section>
+                 <div class="col-md-8 col-sm-8 col-lg-8">
+                  <ul class="list-unstyled text-right text-black f-18 text-black">
+                    <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">${{showTotalPrice()}}.00</span></li>
+                    <li class="pb-5 fw-6 ">UK Vat <span class="d-inline-block w-100px">$10.00</span></li>
+                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">${{showTotalPrice() + 10}}.00</span></li>
+                  </ul>
+                  </div>
+                  </div>
+                  <div class="my-3">
+                   <hr>
+              <a href="javascript:void(0)"  class="btn btn-success float-right pt-3 pb-3 pl-5 pr-5 f-20 text-uppercase" (click)="redirectToCheckout()"><strong>Checkout</strong></a>
+              </div>
+                </div>
+              
+             
+            </form>
+          </div>
+          
+  </div>
+</section>

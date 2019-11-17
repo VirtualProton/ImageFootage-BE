@@ -69,7 +69,7 @@
             <div class="row align-items-stretch">
 
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                    <a href="single.html" class="d-block photo-item">
+                    <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
                       <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
                       <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
                       <div class="photo-text-more">
@@ -86,13 +86,10 @@
 
             
 
-            <div class="col-md-5 col-sm-6 col-12 m-auto">
-                <!-- <ngb-pagination
-                    [(page)]="page"
-                    [pageSize]="pageSize"
-                    [collectionSize]="items.length"></ngb-pagination>  -->   
+            <div class="col-md-5 col-sm-6 col-12 m-auto" *ngIf="aoslSliderImagesData.length !=0"> 
                     <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
             </div>
+
           </div>
       </main>
           

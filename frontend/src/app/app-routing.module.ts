@@ -11,11 +11,14 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'search', component: HeroSearchComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'aboutUs', component: AboutUsComponent },
   { path: 'signUp', component: SignUpComponent },
@@ -25,6 +28,7 @@ const routes: Routes = [
   { path: 'terms', component: TermsAndConditionsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'tagging', component: ContactUsComponent },
+  { path: 'checkout', component: CheckoutComponent },
 ];
 
 @NgModule({

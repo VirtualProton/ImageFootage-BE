@@ -1,11 +1,225 @@
-<div *ngIf="hero">
-  <h2>{{hero.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{hero.id}}</div>
-  <div>
-    <label>name:
-      <input [(ngModel)]="hero.name" placeholder="name"/>
-    </label>
-  </div>
-  <button (click)="goBack()">go back</button>
-  <button (click)="save()">save</button>
-</div>
+<div class="site-wrap mt-5 pt-5 bg-dark">   
+  <main class="main-content">
+    <div class="container-fluid photos">
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8 pl-0">
+          <div class="cartItem" *ngIf="detailPageInfo">
+            <div class="p-3">          
+              <div data-aos="fade-up">
+                  <a href="javascript:void(0)" class="d-block photo-item">
+                      <img src="assets/images/{{detailPageInfo.impagePath}}" alt="Image" class="img-fluid">
+                      <div class="photo-text-more">            
+                        <div class="photo-text-more">
+                          <h3 class="heading">{{detailPageInfo.name}}</h3>
+                          <span class="meta">{{detailPageInfo.photoCount}} Photos</span>
+                        </div>
+                      </div>
+                  </a>
+              </div>         
+              <p class="text-white f-18">{{detailPageInfo.description}}</p>
+              <p>{{detailPageInfo.shortInfo}}</p>
+              <p class="text-warning">Related Keywords</p>            
+              <div class="related_key">
+                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  
+                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>
+                </ng-container>   
+                            
+              </div>
+            </div>
+              
+          </div>
+        </div>
+         
+        <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right" *ngIf="detailPageInfo">
+            <div class="btn-group mb-4" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-dark p-2 text-center rounded-0 z-depth-1 border-right-1">Add to Gallery</button>
+                <button type="button" class="btn btn-dark p-2 text-center rounded-0 z-depth-1">Like (20)</button>
+            </div>
+            <p class="text-white">standard Royalty Free Licenses</p>          
+            <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+                <ng-container *ngFor="let cost of detailPageInfo.licenseCost;let i:index">
+                    <label [class]="i==0 ? 'btn btn-dark active' : 'btn btn-dark'">
+                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''">
+                        <h3><strong> ${{cost.cost}}</strong></h3><p class="mb-0">{{cost.name}}</p>
+                    </label>
+                </ng-container>
+            </div>
+            <p class="text-white">Extended Licenses</p>
+            <div class="btn-group btn-group-toggle  mb-4" data-toggle="buttons">
+                <ng-container *ngFor="let license of detailPageInfo.extendedLicense;let j:index">
+                    <label class="btn btn-dark">
+                        <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''">
+                        <p class="f-14"> {{license.name}}</p><p class="mb-0">${{license.amount}}</p>
+                    </label>
+                </ng-container>
+            </div>
+            <p class="text-white">Use This Image Exclusively</p>
+            <div class="btn-group" role="group" aria-label="Basic example" ngbDropdown>
+              <button type="button" class="btn btn-dark">Market Freeze</button>
+              <button type="button" class="btn btn-dark dropdown-toggle exclus"  id="dropdownDetailPage" ngbDropdownToggle>Select a Duration</button>
+              <ul class="dropdown-menu selctDura" ngbDropdownMenu aria-labelledby="dropdownDetailPage">
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item I</a></li>
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item II</a></li>
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item III</a></li>
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item IV</a></li>
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item V</a></li>
+                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Other</a></li>
+                </ul>
+            </div>
+            <div class="row mt-5">
+                <div class="col-4">
+                    <p class="text-white"><strong>Total</strong></p>
+                </div>
+                <div class="col-8 text-right">
+                    <h2 class="text-warning f-24"><strong>$100.00 USD</strong></h2>
+                </div>
+            </div>
+            <div class="row mt-2 mb-5">
+              <div class="col-12">
+                  <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo.id)">ADD TO CART</button>
+                  <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>
+                  <p>This image is exclusive to Image Footage</p>
+              </div>
+            </div>
+        </div>
+      </div>
+ 
+    
+    
+      <div class="bg-black p-3">
+        <div class="row align-items-stretch">
+          <div class="row mx-auto my-auto mb-5">
+            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
+                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
+                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
+                <div class="carousel-inner" role="listbox">                    
+                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                        <div class="carousel-item">
+                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
+                              <div class="row">
+                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
+                                      <a href="javascript:void(0)" class="d-block photo-item">
+                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
+                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+                                          <div class="photo-text-more">
+                                              <div class="photo-text-more">
+                                                <h3 class="heading">{{images.name}}</h3>
+                                                <span class="meta">{{images.count}} Photos</span>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>   
+                            </ng-template>
+                        </div> 
+                    </ngb-carousel>
+                     
+
+                </div>
+            </div>
+          </div>
+          <div class="row mx-auto my-auto mb-5">
+            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
+                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
+                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
+                <div class="carousel-inner" role="listbox">                    
+                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                        <div class="carousel-item">
+                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
+                              <div class="row">
+                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
+                                      <a href="javascript:void(0)" class="d-block photo-item">
+                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
+                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+                                          <div class="photo-text-more">
+                                              <div class="photo-text-more">
+                                                <h3 class="heading">{{images.name}}</h3>
+                                                <span class="meta">{{images.count}} Photos</span>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>   
+                            </ng-template>
+                        </div> 
+                    </ngb-carousel>
+                     
+
+                </div>
+            </div>
+          </div>
+          <div class="row mx-auto my-auto mb-5">
+            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
+                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
+                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
+                <div class="carousel-inner" role="listbox">                    
+                    <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                        <div class="carousel-item">
+                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
+                              <div class="row">
+                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
+                                      <a href="javascript:void(0)" class="d-block photo-item">
+                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
+                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+                                          <div class="photo-text-more">
+                                              <div class="photo-text-more">
+                                                <h3 class="heading">{{images.name}}</h3>
+                                                <span class="meta">{{images.count}} Photos</span>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </div>
+                              </div>   
+                            </ng-template>
+                        </div> 
+                    </ngb-carousel>
+                     
+
+                </div>
+            </div>
+          </div>
+
+          <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+            <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
+              <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
+              <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+              <div class="photo-text-more">
+              
+                <div class="photo-text-more">
+                <h3 class="heading">{{aosimges.name}}</h3>
+                <span class="meta">{{aosimges.count}} Photos</span>
+              </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-5 col-sm-6 col-12 m-auto">
+
+                <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
+        </div>
+
+
+
+
+      
+      
+      
+
+
+   
+      
+        
+        
+
+      </div>
+      
+       
+      </div>
+    </div>
+  </main>
+
+</div> 
+
+<ng-container *ngIf="showloginPopup">
+    <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>

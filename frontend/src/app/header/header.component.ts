@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeroService } from '../hero.service';
 
-
+import * as AOS from 'aos';
 
 
 @Component({
@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    AOS.init();
 
   }
 

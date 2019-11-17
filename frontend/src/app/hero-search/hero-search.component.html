@@ -1,13 +1,260 @@
-<div id="search-component">
-  <h4><label for="search-box">Hero Search</label></h4>
-
-  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-
-  <ul class="search-result">
-    <li *ngFor="let hero of heroes$ | async" >
-      <a routerLink="/detail/{{hero.id}}">
-        {{hero.name}}
-      </a>
-    </li>
-  </ul>
-</div>
+<div class="site-wrap">
+  <div class="page-wrapper chiller-theme toggled">
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)">
+      <i class="fas fa-bars"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper">
+      <div class="sidebar-content">
+          <div class="sidebar-brand">
+              <a href="javascript:void(0)">FILTERS</a>
+              <div id="close-sidebar">
+                <i class="fas fa-times"></i>
+              </div>
+          </div>
+          <div class="sidebar-header"> 
+                <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
+                  <label  [class]="searchBoxLabel == 'photo' ? 'btn btn-dark active' : 'btn btn-dark'">
+                    <input type="radio"  name="options" [(ngModel)]="searchBoxLabel" value="photo">
+                    <p class="mb-0"> <i class="fa fa-camera"></i> </p>
+                    <p class="mb-0">PHOTOS</p> 
+                  </label>
+                  <label  [class]="searchBoxLabel == 'video' ? 'btn btn-dark active' : 'btn btn-dark'">
+                    <input type="radio" name="options" [(ngModel)]="searchBoxLabel" value="video">
+                    <p class="mb-0"> <i class="fa fa-video"></i> </p>
+                    <p class="mb-0">  VIDEOS </p>
+                  </label>  
+                </div>
+          </div>
+        <div class="sidebar-menu">
+          <ul>           
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  
+                <i class="fa fa-tachometer-alt"></i>
+                <span> People</span>              
+              </a>  
+               <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">Male</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Female</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">One Person</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Two People</a>
+                  </li>  
+                  <li>
+                    <a href="javascript:void(0)">Small Group</a>
+                  </li>  
+                  <li>
+                    <a href="javascript:void(0)">A Crowd</a>
+                  </li>  
+                  <li>
+                    <a href="javascript:void(0)">No People</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu2=!sidebarSubmenu2">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Age</span>
+              </a>
+              <div class="sidebar-submenu sidebar-submenu-btn" *ngIf="sidebarSubmenu2">
+                <a href="javascript:void(0)" class="btn btn-dark"> Baby</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Toddler</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Child</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Tween</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Teenager</a>
+                <a href="javascript:void(0)" class="btn btn-dark">18+</a>
+                <a href="javascript:void(0)" class="btn btn-dark">21+</a>
+                <a href="javascript:void(0)" class="btn btn-dark">20s</a>
+                <a href="javascript:void(0)" class="btn btn-dark">30s</a>
+                <a href="javascript:void(0)" class="btn btn-dark">40s</a>
+                <a href="javascript:void(0)" class="btn btn-dark">50s</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Senior</a>
+                <a href="javascript:void(0)" class="btn btn-dark">Only</a>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu3=!sidebarSubmenu3">
+                <i class="far fa-gem"></i>
+                <span>Ethnicity</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu3">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">General</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Panels</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Tables</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Icons</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Forms</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">
+                <i class="fa fa-chart-line"></i>
+                <span>Location</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu4">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">Pie chart</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Line chart</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Bar chart</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Histogram</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu5=!sidebarSubmenu5">
+                <i class="fa fa-globe"></i>
+                <span>Color</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu5">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">Google maps</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Open street map</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+             <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
+                <i class="fa fa-globe"></i>
+                <span>Shot Details</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">Google maps</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Open street map</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+             <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">
+                <i class="fa fa-globe"></i>
+                <span>Camera Type</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu7">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">Google maps</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Open street map</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+           
+          </ul>
+        </div>
+        <!-- sidebar-menu  -->
+      </div>
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+        <a href="javascript:void(0)">
+          <i class="fa fa-bell"></i>
+          <span class="badge badge-pill badge-warning notification">3</span>
+        </a>
+        <a href="javascript:void(0)">
+          <i class="fa fa-envelope"></i>
+          <span class="badge badge-pill badge-success notification">7</span>
+        </a>
+        <a href="javascript:void(0)">
+          <i class="fa fa-cog"></i>
+          <span class="badge-sonar"></span>
+        </a>
+        <a href="javascript:void(0)">
+          <i class="fa fa-power-off"></i>
+        </a>
+      </div>
+    </nav>
+    <!-- sidebar-wrapper  -->
+    <main class="page-content">
+      <main class="main-content">
+          <div class="search_m header_serach mt-3 mb-3">
+              <div class="input-group search-bar">
+                  <div class="input-group-btn" ngbDropdown >
+                      <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
+                        <span *ngIf='searchBoxLabel == "all"'>Photos + Videos</span>
+                        <span *ngIf='searchBoxLabel == "photo"'>Photos Only</span>
+                        <span *ngIf='searchBoxLabel == "video"'>Videos Only</span>
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('all')" ngbDropdownItem>Photos + Videos</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('photo')" ngbDropdownItem><i class=""></i> Photos Only</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('video')" ngbDropdownItem>Videos Only</a>
+                      </div>
+                  </div>
+                  <input type="text" [(ngModel)]="name" #ctrl="ngModel" (keydown)="onKeydown($event)" class="form-control" aria-label="Text input with dropdown button">
+                  <i class="fa fa-camera"></i>
+              </div>
+          </div>
+          <div class="bg-dark search_menu_l">
+            <ul class="search_menu search_menu col-md-6 m-auto col-sm-6">
+              <li class="active"><a href="javascript:void(0)">CURATED</a></li>
+              <li><a href="javascript:void(0)">LATEST</a></li>
+              <li><a href="javascript:void(0)">EMERGING</a></li>
+              <li><a href="javascript:void(0)">POPULAR</a></li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+          <div class="photos mt-5 pt-5">
+            <div class="row align-items-stretch">  
+                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+                    <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
+                      <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
+                      <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+                      <div class="photo-text-more">
+                      
+                        <div class="photo-text-more">
+                        <h3 class="heading">{{aosimges.name}}</h3>
+                        <span class="meta">{{aosimges.count}} Photos</span>
+                      </div>
+                      </div>
+                    </a>
+                </div>
+            </div>
+        
+            <div class="col-md-5 col-sm-6 col-12 m-auto" *ngIf="aoslSliderImagesData.length !=0">
+              <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
+    
+            </div>        
+          </div>
+    </main>
+  
+    </main>
+    <!-- page-content" -->
+  </div>
+  
+  </div> 
+  

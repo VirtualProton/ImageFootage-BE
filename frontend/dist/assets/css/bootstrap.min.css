@@ -119,9 +119,9 @@ blockquote {
 dfn {
   font-style: italic; }
 
-b,
+/*b,
 strong {
-  font-weight: bolder; }
+  font-weight: bolder; }*/
 
 small {
   font-size: 80%; }
@@ -501,8 +501,8 @@ pre {
   position: relative;
   width: 100%;
   min-height: 1px;
-  padding-right: 10px;
-  padding-left: 10px; }
+  padding-right: 5px;
+  padding-left: 5px; }
 
 .col {
   -ms-flex-preferred-size: 0;

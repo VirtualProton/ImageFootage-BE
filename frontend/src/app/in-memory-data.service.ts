@@ -19,6 +19,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
+    
     const carouselImages =[
       {id:1, categoryNames:
         [
@@ -82,7 +83,78 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 6, firstName: 'test',lastName:'user6',email:'test6@user.com',password:'test6' },
       { id: 7, firstName: 'test',lastName:'user7',email:'test7@user.com',password:'test7' }
     ];
-    return {heroes,carouselImages,aosImages,userData};
+
+    const cartItemsData=[
+      {id:1,name:'IMAGE #2750011',size:'X-Large (6720 X 4480PX)',info:"A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.",price:200,imgPath:'cart-1.jpg'},
+      {id:2,name:'IMAGE #2750011',size:'Small (200 X 450PX)',info:"A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.",price:200,imgPath:'cart-2.jpg'},
+      {id:1,name:'IMAGE #2750011',size:'X-Large (6720 X 4480PX)',info:"A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.",price:200,imgPath:'cart-3.jpg'}
+    ]
+
+    const detailPageInfo=[{
+      id:1,
+      name:'Photos Title Here',
+      impagePath:'wallpaper.jpg',
+      photoCount:42,
+      description:'Silhouetted Girls In Dark Light During Snow Fall',
+      shortInfo:'silhouetted girls in dark light during snowfall (note: visible grain from high ISO)',
+      keywords:[
+        {id:1,name:'underwater'},
+        {id:2,name:'backlit'},
+        {id:3,name:'light'},
+        {id:4,name:'water'},
+        {id:5,name:'dark'},
+        {id:6,name:'shadow'},
+        {id:7,name:'clothing'},
+        {id:8,name:'nature'},
+        {id:9,name:'wear'}
+      ],
+      licenseCost:[
+        {id:1,cost:15,name:'small'},
+        {id:2,cost:30,name:'Medium'},
+        {id:3,cost:75,name:'Large'},
+        {id:4,cost:125,name:'x-Large'}
+      ],
+      extendedLicense:[
+        {id:1,name:'Unlimited Print',amount:300},
+        {id:2,name:'Products Fir Resale',amount:500},
+        {id:3,name:'Multi-Seat (Unlimited)',amount:100}
+      ],
+      duration:'',
+      likesCount:20
+
+    }];
+
+    const marketFreeze=[
+      {id:1,name:'Item I',value:'Item I'},
+      {id:2,name:'Item II', value:'Item II'},
+      {id:3,name:'Item III',value:'Item III'},
+      {id:4,name:'Item IV',value:'Item IV'},
+      {id:5,name:'Item V',value:'Item V'},
+      {id:6,name:'other',value:'other'}
+    ]
+
+    const detailPageCarouselImages =[
+      {id:1,categoryLabel:'The Digital Frontier',categoryImages:
+        [
+        { categoryId: 1, name: 'Skin Care',imageName:"img_4.jpg",type:'photo',count:42},
+        { categoryId: 2, name: 'Cannabis',imageName:"img_1.jpg",type:'photo',count:42 },
+        { categoryId: 3, name: 'Business',imageName:"img_2.jpg",type:'photo',count:42 },
+        { categoryId: 4, name: 'Curated',imageName:"img_3.jpg",type:'photo' ,count:42},
+        { categoryId: 5, name: 'Video' ,imageName:"xcJtL7QggTI",type:'video',count:42},
+        { categoryId: 6, name: 'Autumn',imageName:"img_5.jpg",type:'photo' ,count:42},
+        { categoryId: 7, name: 'Family',imageName:"img_6.jpg",type:'photo' ,count:42},
+        { categoryId: 8, name: 'Halloween',imageName:"img_7.jpg",type:'photo' ,count:42},
+        { categoryId: 9, name: 'Seniors' ,imageName:"img_8.jpg",type:'photo',count:42},
+        { categoryId: 10, name: 'Cats & Dogs',imageName:"img_9.jpg",type:'photo',count:42 },
+        { categoryId: 11, name: 'Time to Party',imageName:"img_10.jpg",type:'photo',count:42 },
+        { categoryId: 12, name: 'Food',imageName:"xcJtL7QggTI",type:'video',count:42 },
+        { categoryId: 13, name: 'Cannabis',imageName:"img_1.jpg",type:'photo',count:42 },
+        { categoryId: 14, name: 'Business',imageName:"img_2.jpg",type:'photo' ,count:42}
+        ]
+      }   
+    ];
+
+    return {heroes,carouselImages,aosImages,userData,detailPageCarouselImages,detailPageInfo,marketFreeze,cartItemsData};
   }
 
   // Overrides the genId method to ensure that a hero always has an id.

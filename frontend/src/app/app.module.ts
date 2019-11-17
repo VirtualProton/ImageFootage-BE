@@ -2,7 +2,7 @@ import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
-
+import { HttpModule } from '@angular/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
@@ -25,6 +25,7 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
 import { LoginComponent } from './login/login.component';
+import { CheckoutComponent } from './checkout/checkout.component';
  
 
 
@@ -34,6 +35,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpModule,
     NgbModule,
     ReactiveFormsModule,
     
@@ -61,7 +63,8 @@ import { LoginComponent } from './login/login.component';
     TermsAndConditionsComponent,
     PrivacyPolicyComponent,
     LicenceAgreementComponent,
-    LoginComponent
+    LoginComponent,
+    CheckoutComponent
   ],
   exports:[LoginComponent],
   bootstrap: [ AppComponent ]
