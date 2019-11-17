@@ -24,6 +24,7 @@ class Packages extends Migration
 			$table->integer('package_expiry')->nullable();
 			$table->string('package_addedby')->nullable();
 			$table->enum('package_status', ['Active', 'Inactive'])->default('Inactive');
+			$table->integer('package_permonth_download')->nullable();
             $table->timestamps();
         });
     }

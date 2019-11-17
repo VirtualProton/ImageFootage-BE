@@ -51,7 +51,7 @@ Route::get('/deleteproductsubcategory/{id}', 'ProductSubCategoryController@destr
 Route::get('/updateproductsubcategory/{id}', 'ProductSubCategoryController@updateProduct');
 Route::post('/editproductsubcategory', 'ProductSubCategoryController@update');
 Route::post('/get_related_subcat', 'ProductController@get_relatedsubcat');
-
+//ContributorController
 Route::get('/add_contributor', 'ContributorController@index');
 Route::post('/addcontributor', 'ContributorController@addcontributor');
 Route::get('/contributor_list', 'ContributorController@contributorList');
@@ -59,6 +59,17 @@ Route::get('/contributor_status/{status}/{id}', 'ContributorController@changeCon
 Route::get('/updatecontributor/{id}', 'ContributorController@updateContributor');
 Route::post('/editcontributor', 'ContributorController@editcontributor');
 Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
+Route::post('/request_for_contributorpass/{id}', 'ContributorController@requestForContributorPass');
+Route::get('/contributorotpvalidate/{id}', 'ContributorController@contVerifyRegisteriedOtp');
+Route::post('/contributorotpvalidateprocess', 'ContributorController@contVerifyRegisteriedOtpprocess');
+Route::get('/contributor_set_password/{id}', 'ContributorController@contSetPassword');
+Route::post('/contributorsetpasswordprocess', 'ContributorController@setContributorPassword');
+Route::get('/contributorotpreset/{id}', 'ContributorController@contributorotpverifyReset');
+Route::post('/contributorotpvaliprocess', 'ContributorController@verifyOtpforsetpass');
+Route::get('/contributor_reset_password/{id}', 'ContributorController@contResetPassword');
+Route::post('/contributorresetpassprocess', 'ContributorController@contResetPasswordProcess');
+
+//end ContributorController
 
 Route::get('/create_package', 'PackageController@createPackage');
 Route::post('/addpackage', 'PackageController@addPackage');
@@ -147,8 +158,7 @@ Route::post('/updateproductorientations', 'ProductImageOrientationsController@up
 //Product  Sort Types
 Route::get('/add_product_sort_type', 'ProductImageSortTypesController@addImageSortTypes');
 Route::post('/addproduct_sort_type_process', 'ProductImageSortTypesController@addImageSortTypesProcess');
-Route::get('/product_sort_type_list', 'ProductIma
-esController@ImageSortTypesList');
+Route::get('/product_sort_type_list', 'ProductImaesController@ImageSortTypesList');
 Route::get('/product_sort_type_status/{status}/{id}', 'ProductImageSortTypesController@changeImageSortTypeStatus');
 Route::get('/deleteproductsorttype/{id}', 'ProductImageSortTypesController@deleteImageSortTypes');
 Route::get('/editproductsort_type/{id}', 'ProductImageSortTypesController@editImageSortTypes');
