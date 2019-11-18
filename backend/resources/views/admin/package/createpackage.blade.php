@@ -77,6 +77,10 @@
                      @if ($errors->has('package_month_count'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_month_count') }}</div>
                      @endif
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" /> </label>
+                      
+                     </div>
                      </div>
                      <div class="form-group">
                       <label for="exampleInputEmail1">Package Type</label>

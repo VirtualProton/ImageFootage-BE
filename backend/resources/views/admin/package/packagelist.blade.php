@@ -42,6 +42,8 @@
                         <th>Type</th>
                         <th>Added On</th>
                         <th>Expiry</th>
+                        <th>Downloads Per Month</th>
+                        <th>Carry Forward</th>
                         <th>Actions</th>
                     </thead>
 
@@ -57,6 +59,8 @@
   <td>{{ $packages['package_type'] }} </td>
   <td>{{  date('Y-m-d',strtotime($packages['package_added_on'])) }} </td>
   <td>{{ $packages['package_expiry'] }} </td>
+  <td>{{ $packages['package_permonth_download'] }}</td>
+  <td>{{ $packages['package_pcarry_forward'] }}</td>
   <td>  @if($packages['package_status'] =='Active')
   			<a href="{{ url('admin/package/Inactive/'.$packages['package_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
          @elseif($packages['package_status'] =='Inactive')
@@ -78,6 +82,8 @@
                         <th>Type</th>
                         <th>Added On</th>
                         <th>Expiry</th>
+                        <th>Downloads Per Month</th>
+                        <th>Carry Forward</th>
                         <th>Actions</th>
                     </tfoot>
                 </table>
