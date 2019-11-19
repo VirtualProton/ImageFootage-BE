@@ -79,9 +79,10 @@ class InvoiceController extends Controller
  }
 
   public function saveInvoice(Request $request){
-    $data = $request->input();
-    return $this->Common->save_proforma($data);
-    //print_r($data); die;
+      // $data = $request->input();
+      $data = json_decode(request()->getContent(), true);
+      return $this->Common->save_proforma($data);
+      //print_r($data); die;
   }
 
   public function invoice($user_id,$invoice_id){

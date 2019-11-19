@@ -21,10 +21,12 @@ class CronController extends Controller
      */
     public function __construct()
     {
+        $this->product = new Product();
 
     }
 
     public function pantherImageUpload(){
+        ini_set("max_execution_time","1000000");
         //$product = new Product();
         //$all_products = $product->getProducts($keyword);
         $home_categories = array('Christmas','SkinCare','Cannabis','Business','Curated',
@@ -36,10 +38,10 @@ class CronController extends Controller
         $common = new Common();
         $category_id = $common->checkCategory($percategory);
         if(count($pantharmediaData) > 0){
-            
+            $this->product->savePantherImage($pantharmediaData,$category_id);
         }    
 
-        print_r($pantharmediaData); die;
+        //print_r($pantharmediaData); die;
 
     }
         //return array('api'=>$pantharmediaData);
