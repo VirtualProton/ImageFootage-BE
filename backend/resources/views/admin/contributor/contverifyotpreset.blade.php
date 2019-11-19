@@ -74,8 +74,8 @@
                   <div class="box-body">
                   <input type="hidden" name="cont_id" value="{{ $contributor }}" />
                    <div class="form-group">
-                      <label for="exampleInputEmail1">Enter OTP</label>
-                      <input type="text" class="form-control" name="contributor_otp" id="contributor_otp" placeholder="Enter OTP">
+                      <label for="exampleInputEmail1">Enter Authentication Key</label>
+                      <input type="text" class="form-control" name="contributor_otp" id="contributor_otp" placeholder="Enter Authentication Key">
                        @if($errors->has('contributor_otp'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('contributor_otp') }}</div>
                        @endif
