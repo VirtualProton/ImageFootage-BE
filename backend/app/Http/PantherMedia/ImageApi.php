@@ -118,9 +118,22 @@ class ImageApi {
  }
 
   public function getPriceFromList($media){
-    //    if(count($media)>0){
-    //        $media['articles']['singlebuy_list'] 
-    //    }
+        if(count($media)>0){
+            $products = array();
+            foreach($media as $eachmedia){
+                $products[0]['name'] = $eachmedia['metadata']['title'];
+                $products[0]['api_product_id'] = $eachmedia['media']['id'];
+                $products[0]['product_code'] = $eachmedia['media']['id'];
+                $products[0]['description'] = $eachmedia['metadata']['description'];
+                $products[0]['thumbnail_image'] = $eachmedia['media']['preview_url_no_wm'];
+                $products[0]['type'] = "Royalty Free";
+                $products[0]['product_web'] = "2";
+                $products[0]['small_size'] = "";
+                $products[0]['medium_size'] = "";
+                $products[0]['large_size'] = "";
+                $products[0]['x_large_size'] = "";
+            }
+        }
   }
 
 }

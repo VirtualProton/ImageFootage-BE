@@ -44,9 +44,8 @@ class Product extends Model
     
     public function savePantherImage($data,$category_id){
         foreach($data['items']['media'] as $eachmedia){
-             
             $media = array(
-                'product_id'=> "IMGFOOT".$id,
+                'product_id'=> "",
                 'api_product_id'=>$eachmedia['id'],
                 'product_category'=>$category_id,
                 'product_title'=>$eachmedia['title'],
@@ -59,13 +58,17 @@ class Product extends Model
                 'product_main_type'=>"Image",
                 'product_sub_type'=>"Photo",
                 'product_added_on'=>date("Y-m-d H:i:s",strtotime($eachmedia['date'])),
-                'product_web'=>'2'
+                'product_web'=>'2',
+                'product_vertical' =>'Royalty Free'
 
             );
            // print_r($media); die;
             DB::table('imagefootage_products')->insert($media);
-            
-        }
+            $id = DB::getPdo()->lastInsertId();
+            DB::table('imagefootage_products')
+                ->where('id','=',$id)
+                ->update(['product_id'=>'IMGFT'.$id]);
+         }
 
     }
 

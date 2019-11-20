@@ -63,7 +63,7 @@
 								
 								<div class="form-group">
 									
-								<label class="">Image @{{$index+1}}</label>
+								<label class="">Image @{{$index+1}} (Product ID)</label>
 								<input type="hidden" class="form-control" ng-model="product.id">
 								<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
 								
@@ -72,7 +72,7 @@
 								</div>
 								</div>
 								<div class="form-group">
-									<span ng-show="product.image"><img src="@{{product.image}}" width="150" /></span>
+									<span ng-show="product.image"><img src="@{{product.image}}" width="150" height="150" /></span>
 									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file@{{$index+1}}" id="file@{{$index+1}}" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
 								</div>
 								<div class="form-group">
@@ -103,7 +103,7 @@
 							<!-- start main div for the oriduct id --->	
 					<div>
 						
-					<div ng-show="product.price">
+					<div>
 								<div class="form-group">
 								 <label for="sub_total">Sub Total</label>
 								<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);" >

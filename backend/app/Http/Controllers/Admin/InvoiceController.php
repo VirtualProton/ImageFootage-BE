@@ -22,8 +22,7 @@ class InvoiceController extends Controller
         $templates = DB::table('email_templates')
                     ->where('type','=','2')
                     ->get();
-
-        return view('admin.invoice.index',compact('templates'));             
+        return view('admin.invoice.index',compact('templates'));
    }
 
    public function get_email_template(Request $request){
