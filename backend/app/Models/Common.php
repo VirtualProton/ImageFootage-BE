@@ -127,39 +127,38 @@ class Common extends Model
             if(isset($eachproduct['newuploadimage']) && count($eachproduct['newuploadimage'])>0){
                 
                 $name = "invoice_".time().'_'.$eachproduct['newuploadimage'][0]['name'];
-                echo $eachproduct['newuploadimage'][0]['url'];
+
                 $type = "image/png";
-                $base64blob = base64_encode($eachproduct['newuploadimage'][0]['url']);
-                $datauri = "data:$type;base64,$base64blob";
-                 echo '<img src="'.$eachproduct['newuploadimage'][0]['url'].'">';
-                die;
-                //file_put_contents('', file_get_contents($eachproduct['newuploadimage'][0]['url']));
-				$files2bucketemp= file_get_contents($eachproduct['newuploadimage'][0]['url']);
-				$file_path='invoice/image';
+//                $base64blob = base64_encode($eachproduct['newuploadimage'][0]['url']);
+//                $datauri = "data:$type;base64,$base64blob";
+//
+//                //file_put_contents('', file_get_contents($eachproduct['newuploadimage'][0]['url']));
+//				$files2bucketemp= file_get_contents($eachproduct['newuploadimage'][0]['url']);
+//				$file_path='invoice/image';
+//
+//				$destinationPath = public_path($file_path);
+//				//$image->move($destinationPath, $name);
+//				$s3Client = new S3Client([
+//					/*'profile' => 'default',*/
+//					'region' => 'us-east-2',
+//					'version' => '2006-03-01'
+//				]);
+//				// Use multipart upload
+//				//print_r($files2bucketemp);
+//				//exit();
+//				$finelname=$file_path.$name;
+//				$source = $files2bucketemp;
+//				$uploader = new MultipartUploader($s3Client, $source, [
+//					'bucket' => 'imgfootage',
+//					'key' => $finelname,
+//				]);
 				
-				$destinationPath = public_path($file_path);
-				//$image->move($destinationPath, $name);
-				$s3Client = new S3Client([
-					/*'profile' => 'default',*/
-					'region' => 'us-east-2',
-					'version' => '2006-03-01'
-				]);
-				// Use multipart upload
-				//print_r($files2bucketemp);
-				//exit();
-				$finelname=$file_path.$name;
-				$source = $files2bucketemp;
-				$uploader = new MultipartUploader($s3Client, $source, [
-					'bucket' => 'imgfootage',
-					'key' => $finelname,
-				]);
-				
-				try {
-					$fileupresult = $uploader->upload();
-				} catch (MultipartUploadException $e) {
-					echo $e->getMessage() . "\n";
-                }
-                $image = $fileupresult['ObjectURL'];
+//				try {
+//					$fileupresult = $uploader->upload();
+//				} catch (MultipartUploadException $e) {
+//					echo $e->getMessage() . "\n";
+//                }
+//                $image = $fileupresult['ObjectURL'];
             }else{
                 $image = $eachproduct['image'];
             }
@@ -181,7 +180,8 @@ class Common extends Model
                 //print_r($dataForEmail); die;
                 //$data["email"]="amitpathak.bansal@gmail.com";
                 //$data["client_name"]="Test email";
-                $dataForEmail = json_decode(json_encode($dataForEmail), True);
+                $dataForEmail = json_decode(json_encode($dataForEmail), true);
+                //print_r($dataForEmail); die;
                 $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
                 $data["email"] = $dataForEmail[0]['email'];
                 $data["invoice"] = $dataForEmail[0]['invoice_name'];
@@ -189,16 +189,43 @@ class Common extends Model
                 //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;
 
                 $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail]));
-                //$fileName = $data["invoice"]."_quotation.pdf";
+                $fileName = $data["invoice"]."_quotation.pdf";
+
 
                 try{
-                    Mail::send('mail', $data, function($message)use($data,$pdf) {
+                    Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
                     $message->to($data["email"])
                     ->subject($data["subject"])
-                    ->attachData($pdf->output(), $data["invoice"]."_quotation.pdf");
+                    ->attachData($pdf->output(), $fileName);
                     });
 
-        // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {
+                    $s3Client = new S3Client([
+                        /*'profile' => 'default',*/
+                        'region' => 'us-east-2',
+                        'version' => '2006-03-01'
+                    ]);
+                    // Use multipart upload
+                    //print_r($files2bucketemp);
+                    //exit();
+                    $path ='quotation/'.$fileName;
+                    $source = file_put_contents($fileName, $pdf->output());
+                    $uploader = new MultipartUploader($s3Client, $source, [
+                        'bucket' => 'imgfootage',
+                        'key' => $path,
+                    ]);
+
+                    try {
+                        $fileupresult = $uploader->upload();
+                    } catch (MultipartUploadException $e) {
+                        echo $e->getMessage() . "\n";
+                    }
+                    $pdf_path = $fileupresult['ObjectURL'];
+                    if(!empty($pdf_path)){
+
+                        DB::table('imagefootage_performa_invoices')->update(['quotation_url'=>$pdf_path]);
+                        unlink($fileName);
+                    }
+                    // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {
         //     $message->to($data["email"])
         //     ->subject($data["subject"]);
         // });

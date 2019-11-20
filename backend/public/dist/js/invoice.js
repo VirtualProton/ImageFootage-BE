@@ -1,4 +1,4 @@
-base_url ='/backend/admin/';
+base_url ='/imagefootagenew/backend/admin/';
 app= angular.module('imageFootage', []);
 app.controller('quotatationController', function($scope, $http,$location) {
     $scope.title = "Send Quotation";

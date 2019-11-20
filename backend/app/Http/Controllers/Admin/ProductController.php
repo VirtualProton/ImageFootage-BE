@@ -955,13 +955,13 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		    $imageMedia = new ImageApi();
 			$product_details = $imageMedia->get_media_info($product_id);
 			$prices = $imageMedia->getPriceFromList($product_details);
-			dd($prices);
+            return json_encode($prices);
 	 }else{
 	     if($crm_products[0]->product_web=='2'){
              $imageMedia = new ImageApi();
              $product_details = $imageMedia->get_media_info($crm_products[0]->api_product_id);
              //dd($product_details);
-             $prices = $imageMedia->getPriceFromList($product_details);
+             $prices = $imageMedia->getPriceFromList($product_details,$crm_products[0]->product_code);
              return json_encode($prices);
             // dd($prices);
          }else{

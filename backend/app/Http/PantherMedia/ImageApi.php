@@ -117,22 +117,25 @@ class ImageApi {
         }
  }
 
-  public function getPriceFromList($media){
+  public function getPriceFromList($media,$product_id= NULL){
         if(count($media)>0){
+            //echo "<pre>";
+            //print_r($media); die;
             $products = array();
-            foreach($media as $eachmedia){
-                $products[0]['name'] = $eachmedia['metadata']['title'];
-                $products[0]['api_product_id'] = $eachmedia['media']['id'];
-                $products[0]['product_code'] = $eachmedia['media']['id'];
-                $products[0]['description'] = $eachmedia['metadata']['description'];
-                $products[0]['thumbnail_image'] = $eachmedia['media']['preview_url_no_wm'];
+            //foreach($media as $eachmedia){
+                $products[0]['name'] = $media['metadata']['title'];
+                $products[0]['api_product_id'] = $media['media']['id'];
+                $products[0]['product_code'] = isset($product_id)?$product_id:$media['media']['id'];
+                $products[0]['description'] = $media['metadata']['description'];
+                $products[0]['thumbnail_image'] = $media['media']['preview_url_no_wm'];
                 $products[0]['type'] = "Royalty Free";
                 $products[0]['product_web'] = "2";
-                $products[0]['small_size'] = "";
-                $products[0]['medium_size'] = "";
-                $products[0]['large_size'] = "";
-                $products[0]['x_large_size'] = "";
-            }
+                $products[0]['small_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']*80;
+                $products[0]['medium_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][2]['price']*80;;
+                $products[0]['large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][3]['price']*80;;
+                $products[0]['x_large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][4]['price']*80;;
+            //}
+            return $products;
         }
   }
 
