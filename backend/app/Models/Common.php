@@ -222,7 +222,9 @@ class Common extends Model
                     $pdf_path = $fileupresult['ObjectURL'];
                     if(!empty($pdf_path)){
 
-                        DB::table('imagefootage_performa_invoices')->update(['quotation_url'=>$pdf_path]);
+                        DB::table('imagefootage_performa_invoices')
+                            ->update(['quotation_url'=>$pdf_path])
+                            ->where('id','=',$id);
                         unlink($fileName);
                     }
                     // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {

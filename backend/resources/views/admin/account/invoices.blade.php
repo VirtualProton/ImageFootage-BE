@@ -33,6 +33,7 @@
                 <th>Job Ref</th>
                 <th>Expiry Invoices</th>
                 <th>Status</th>
+                <th>Download</th>
                 <th>Action</th>
                 </tr>
                 </thead>
@@ -54,6 +55,12 @@
                       <option value="3" <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
                     </select>
                </td>
+                 <td>
+                     @if($invioces['quotation_url'])
+                     <a href="{{$invioces['quotation_url']}}" target="_blank">Download</a>
+                     @endif
+                 </td>
+
                <td>
                   <a href="{{ url('admin/invoice/'.$invioces['user_id'].'/'.$invioces['id']) }}" title="Invoice"><i class="fa fa-check" aria-hidden="true"></i></a>
                   &nbsp;&nbsp;&nbsp;
