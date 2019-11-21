@@ -31,7 +31,8 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-laptop"></i>
+          <i class="{{$eachmodule['module_icon']}}" aria-hidden="true"></i>
+            
             <span>{{$eachmodule['module_name']}}</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
