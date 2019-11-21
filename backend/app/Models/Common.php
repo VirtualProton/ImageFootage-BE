@@ -223,8 +223,8 @@ class Common extends Model
                     if(!empty($pdf_path)){
 
                         DB::table('imagefootage_performa_invoices')
-                            ->update(['quotation_url'=>$pdf_path])
-                            ->where('id','=',$id);
+                            ->where('id','=',$id)
+                            ->update(['quotation_url'=>$pdf_path]);
                         unlink($fileName);
                     }
                     // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {

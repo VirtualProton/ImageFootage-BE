@@ -28,7 +28,7 @@
                 <tr>
                 <th>SN</th>
                 <th>Created</th>
-                <th>Invoice ID</th>
+                <th>Invoice Number</th>
                 <th>Email ID</th>
                 <th>Job Ref</th>
                 <th>Expiry Invoices</th>
@@ -43,11 +43,10 @@
                 <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
                   <td>{{$invioces['created']}}</td>
-                  <td>{{$invioces['id']}}</td>
+                  <td>{{$invioces['invoice_name']}}</td>
                   <td>{{$invioces['email_id']}}</td>
                   <td>{{$invioces['job_number']}}</td>
                   <td>{{$invioces['expiry_invoices']}}</td>
-                  
                   <td>
                   <select>
                       <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Pending</option>

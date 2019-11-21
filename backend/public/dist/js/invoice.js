@@ -163,12 +163,13 @@ app.controller('quotatationController', function($scope, $http,$location) {
             data:sendData,
             headers: {'Content-Type': undefined},
          }).then(function (response){
-                 $('#loading').hide();
-                if(response.this.statuscode=='1'){
-                    alert(response.this.statusdesc);
+                $('#loading').hide();
+                if(response.data.this.statuscode=='1'){
+                    alert(response.data.this.statusdesc);
                  }else{
-                  alert(response.this.statusdesc);
+                  alert(response.data.this.statusdesc);
                  }
+                    window.location =base_url+'users/invoices/'+$('#uid').val();
                 // $scope.quotation.product[index].name = response.data[0].product_code;
                 // $scope.quotation.product[index].id = response.data[0].id;
                 // if(response.data[0].type =="Royalty Free"){
