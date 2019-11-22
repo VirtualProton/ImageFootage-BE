@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Modules;
+use Illuminate\Support\Facades\URL;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -35,7 +36,9 @@ class AppServiceProvider extends ServiceProvider
             ->where('parent_module_id','=',0)
             ->orderBy('sort_order','ASC')
             ->get()->toArray();
-
+			$curl=URL::current();
+			$current_url=explode('/',$curl);
+			$endurl=end($current_url);
             $view->with('modules', $modules);
         });
     }
