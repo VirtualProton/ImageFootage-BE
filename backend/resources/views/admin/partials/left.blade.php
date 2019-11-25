@@ -29,7 +29,7 @@
         @if(count($modules)>0)
         @foreach($modules as $eachmodule)
 
-        <li class="treeview">
+        <li class="treeview @if($eachmodule['id']== $parent_id) active @endif">
           <a href="#">
           <i class="{{$eachmodule['module_icon']}}" aria-hidden="true"></i>
             
