@@ -1,8 +1,8 @@
 <div class="site-wrap mt-5 pt-5 bg-dark">   
-  <main class="main-content">
+  <main class="main-content p-0">
     <div class="container-fluid photos">
-      <div class="row">
-        <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8 pl-0">
+      <div class="row mr-2">
+        <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
           <div class="cartItem" *ngIf="detailPageInfo">
             <div class="p-3">          
               <div data-aos="fade-up">
@@ -30,42 +30,60 @@
           </div>
         </div>
          
-        <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right" *ngIf="detailPageInfo">
-            <div class="btn-group mb-4" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-dark p-2 text-center rounded-0 z-depth-1 border-right-1">Add to Gallery</button>
-                <button type="button" class="btn btn-dark p-2 text-center rounded-0 z-depth-1">Like (20)</button>
-            </div>
-            <p class="text-white">standard Royalty Free Licenses</p>          
-            <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-                <ng-container *ngFor="let cost of detailPageInfo.licenseCost;let i:index">
-                    <label [class]="i==0 ? 'btn btn-dark active' : 'btn btn-dark'">
-                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''">
-                        <h3><strong> ${{cost.cost}}</strong></h3><p class="mb-0">{{cost.name}}</p>
-                    </label>
-                </ng-container>
-            </div>
-            <p class="text-white">Extended Licenses</p>
-            <div class="btn-group btn-group-toggle  mb-4" data-toggle="buttons">
-                <ng-container *ngFor="let license of detailPageInfo.extendedLicense;let j:index">
-                    <label class="btn btn-dark">
-                        <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''">
-                        <p class="f-14"> {{license.name}}</p><p class="mb-0">${{license.amount}}</p>
-                    </label>
-                </ng-container>
-            </div>
-            <p class="text-white">Use This Image Exclusively</p>
-            <div class="btn-group" role="group" aria-label="Basic example" ngbDropdown>
-              <button type="button" class="btn btn-dark">Market Freeze</button>
-              <button type="button" class="btn btn-dark dropdown-toggle exclus"  id="dropdownDetailPage" ngbDropdownToggle>Select a Duration</button>
-              <ul class="dropdown-menu selctDura" ngbDropdownMenu aria-labelledby="dropdownDetailPage">
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item I</a></li>
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item II</a></li>
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item III</a></li>
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item IV</a></li>
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Item V</a></li>
-                  <li class="dropdown-item"><a href="javascript:void(0)" ngbDropdownItem>Other</a></li>
-                </ul>
-            </div>
+        <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
+          <div  class="p-3">
+            <ngb-tabset class="nav nav-tabs mytabs">
+                <ngb-tab   class="nav-item">
+                    <ng-template ngbTabTitle class="nav-link active">Standard Licence</ng-template>
+                  <ng-template ngbTabContent >
+                      <div class="tab-content pt-3">
+                          <div>
+                              <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
+                              <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">
+                                  <ng-container *ngFor="let cost of detailPageInfo.licenseCost;let i=index;let first=first;">
+                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
+                                          <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''">
+                                          <p class="mb-0">{{cost.name}}</p>
+                                          <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.cost}}</p>
+                                      </label>
+                                  </ng-container>
+                              
+                              </div>
+                                <p><small><span class="text-warning"> Small</span> 866x578px | 12.03x8.03" 72dpi</small></p>
+                          </div>
+                      </div>
+                  </ng-template>
+                </ngb-tab>
+
+                <ngb-tab class="nav-item">
+                  <ng-template ngbTabTitle class="nav-link">Extended Licence</ng-template>
+                  <ng-template  ngbTabContent>
+                      <div class="tab-content pt-3">
+                          <div>
+                              <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>
+                              <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">
+                                  <ng-container *ngFor="let license of detailPageInfo.extendedLicense;let j=index;let first=first;">
+                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
+                                          <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''">
+                                          <div class="row align-items-center">
+                                              <div class="col-md-9 col-sm-9 col-lg-9">
+                                                <p class="f-14"> {{license.name}}</p>
+                                              </div>
+                                              <div class="col-md-3 col-sm-3 col-lg-3">
+                                                  <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.amount}}</p>
+                                              </div>
+                                          </div>
+                                      </label>
+                                  </ng-container>
+                                
+                              </div>
+                              
+                           </div>
+                      </div>
+                  </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+          </div>
             <div class="row mt-5">
                 <div class="col-4">
                     <p class="text-white"><strong>Total</strong></p>
@@ -81,7 +99,57 @@
                   <p>This image is exclusive to Image Footage</p>
               </div>
             </div>
-        </div>
+            <p class="">DETAILS</p>
+            <table class="f-12">
+              <tbody>
+                <tr>
+                  <td width="20%">Restrictions :</td>
+                  <td>Contact your local office for all commercial or promotional uses.</td>
+                </tr>
+                <tr>
+                  <td>Credit :</td>
+                  <td>Lintao Zhang / Staff</td>
+                </tr>
+                <tr>
+                  <td>Editorial # :</td>
+                  <td>142933329</td>
+                </tr>
+                <tr>
+                  <td>Collection :</td>
+                  <td>Getty Images News</td>
+                </tr>
+                <tr>
+                  <td>Date created :</td>
+                  <td>15 April, 2012</td>
+                </tr>
+                <tr>
+                  <td>Licence type :</td>
+                  <td>Rights-managed</td>
+                </tr>
+                <tr>
+                  <td>Release info :</td>
+                  <td>Not released. More information</td>
+                </tr>
+                <tr>
+                  <td>Source :</td>
+                  <td>Getty Images AsiaPac</td>
+                </tr>
+
+                <tr>
+                  <td>Object name :</td>
+                  <td>69338444</td>
+                </tr>
+
+                <tr>
+                  <td>Max file size :</td>
+                  <td>3000 x 2000 px (25.40 x 16.93 cm) - 300 dpi - 1.89 MB</td>
+                </tr>
+              </tbody>
+
+            </table>
+        </div> 
+
+        
       </div>
  
     

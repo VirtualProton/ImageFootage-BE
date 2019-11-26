@@ -6,7 +6,7 @@ import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
 
-import { Hero, carouselSlider, aosSlider } from '../hero';
+import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
 import { ActivatedRoute } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
@@ -35,8 +35,11 @@ export class HeroSearchComponent implements OnInit {
   carouselSliderImages: carouselSlider[] =[];
   aoslSliderImages: aosSlider[] =[];
   aoslSliderImagesData: aosSlider[] =[];
+  searchData : Search;
 
-  constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper) {}
+  constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper) {
+    this.searchData = new Search();
+  }
 
       // Push a search term into the observable stream.
       search(term: string): void {
@@ -48,14 +51,15 @@ export class HeroSearchComponent implements OnInit {
           this.sub = this.route
                     .queryParams
                     .subscribe(params => {
-                      this.searchBoxLabel=params.type;
-                      this.name=params.keyword;
-                        this.heroService.getAosSliderImages()
+                      console.log(params);
+                      this.searchData.productType=params.type;
+                      this.searchData.search=params.keyword;
+                        this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
                             // console.log(aoslSliderImages);
                             // console.log(aoslSliderImages.filter(ele=> ele.name.includes(this.name)));
-                            this.aoslSliderImages = aoslSliderImages;
-                            this.maintainSearchData(aoslSliderImages); 
+                            this.aoslSliderImages = aoslSliderImages.media;
+                            this.maintainSearchData(aoslSliderImages.media); 
                             
                           });
                     });
@@ -70,7 +74,7 @@ export class HeroSearchComponent implements OnInit {
       }
 
       searchDropDownClick(type){
-        this.searchBoxLabel=type;
+        this.searchData.productType=type;
       }
 
       getClassName(ele){
@@ -87,14 +91,16 @@ export class HeroSearchComponent implements OnInit {
       maintainSearchData(aoslSliderImages){
             this.aoslSliderImagesData = aoslSliderImages;
       
-            if(this.searchBoxLabel == 'all'){
-              this.aoslSliderImagesData = this.aoslSliderImages;
+            if(this.searchData.productType == 1){
+                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.mimetype == 'image/jpeg');
+            }else if(this.searchData.productType == 2){
+                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.mimetype != 'image/jpeg');
             }else{
-              this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.type == this.searchBoxLabel);
+                this.aoslSliderImagesData = this.aoslSliderImages;
             }
         
-            if(this.name.length > 2){
-              this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.name.includes(this.name.trim()));
+            if( this.searchData.search.length > 2){
+              this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.title.includes(this.name.trim()));
             }
             this.maintainAosSlider();            
       }

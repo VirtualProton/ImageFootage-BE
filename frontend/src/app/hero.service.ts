@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';  // URL to web api
+  private heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl= 'api/aosImages';
   private currentUserSubject: BehaviorSubject<userData>;
@@ -34,22 +34,38 @@ export class HeroService {
     }
 
     /** GET Slider Images from the server */
-  getcarouselSliderImages (): Observable<carouselSlider[]> {
-    return this.http.get<carouselSlider[]>(this.carouselImagesUrl)
+  getcarouselSliderImages (): Observable<any[]> {
+    const url = `${this.heroesUrl}home`;
+    return this.http.get<any[]>(this.carouselImagesUrl)
       .pipe(
         tap(_ => this.log('fetched carousel Images')),
-        catchError(this.handleError<carouselSlider[]>('getCarouselImages', []))
+        catchError(this.handleError<any[]>('getCarouselImages', []))
       );
   }
 
   /** GET Slider Images from the server */
  /** GET Slider Images from the server */
- getAosSliderImages (): Observable<aosSlider[]> {
-  return this.http.get<aosSlider[]>(this.aosImagesUrl)
+ getAosSliderImages (): Observable<any> {
+  const url = `${this.heroesUrl}home`;
+  return this.http.get<any>(url)
     .pipe(
-      tap(_ => this.log('fetched carousel Images')),
-      catchError(this.handleError<aosSlider[]>('getCarouselImages', []))
+     map(aosImagesUrl => {
+      return aosImagesUrl.api.items;
+     // return aosImagesUrl;
+    }),
+      catchError(this.handleError<any>('getCarouselImages', []))
     );
+}
+
+getAosSliderSearchImages (searchData:any): Observable<any> {
+  const url = `${this.heroesUrl}search`;
+
+  return this.http.post<any>(url, searchData, this.httpOptions).pipe(
+    map(searchResultSet => {    
+      return searchResultSet.api.items;
+    }),
+    catchError(this.handleError<any>(`unable to get data`))
+  );
 }
 
 
@@ -90,6 +106,7 @@ export class HeroService {
 
   getDetailPagedetails(id:number):Observable<detailPageInfo>{
     const url = `api/detailPageInfo/?${id}`;
+    //const url = `${this.heroesUrl}details/srima040/3/image`;
     return this.http.get<detailPageInfo>(url).pipe(
       tap(_ => this.log(`fetched detail Page Info id=${id}`)),
       catchError(this.handleError<detailPageInfo>(`getHero id=${id}`))

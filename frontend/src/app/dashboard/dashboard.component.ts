@@ -17,9 +17,9 @@ export class DashboardComponent implements OnInit {
   aoslSliderImagesData: aosSlider[] =[];
 
   randomNumber:number =0;
-  searchBoxLabel:string='all';
+  searchBoxLabel:number= 3;
   page:number = 1;
-  pageSize:number = 12;
+  pageSize:number = 40;
   aosSliderSizes:any=[];
   
 
@@ -38,20 +38,9 @@ export class DashboardComponent implements OnInit {
 
     this.heroService.getAosSliderImages()
       .subscribe(aoslSliderImages => {
-        this.aoslSliderImages = aoslSliderImages;
-        this.aoslSliderImagesData = aoslSliderImages;
-        let i =4,j=0;
-        let randArr = [4, 3, 2,3];
-        this.aoslSliderImagesData.forEach(ele=>{
-          if( i > j){ 
-            ele.eleClass = randArr[j];
-            j=j+1;
-            if(j == i){
-                this.dataHelper.shuffleArray(randArr);
-                j=0;
-            }
-          }
-        })
+        this.aoslSliderImages = aoslSliderImages.media;
+        this.aoslSliderImagesData = aoslSliderImages.media;
+        this.maintainAosSlider();   
       });
 
           
@@ -65,18 +54,27 @@ export class DashboardComponent implements OnInit {
 
   searchAosData(search){
     // debounceTime(400),
-    /*if(this.searchBoxLabel == 'all'){
-      this.aoslSliderImagesData = this.aoslSliderImages;
-    }else{
-      this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.type == this.searchBoxLabel);
-    }
-
-    if(search.trim().length > 2){
-      this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.name == search.trim());
-    }*/
     if(search.trim().length > 2){
       this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
     }
+  }
+
+  maintainAosSlider(){
+    let i =4,j=0;
+    let randArr =[[6,2,3,1],[5,2,3,2],[4,3,2,3],[3,2,3,4],[3,1,6,2],[4,4,2,2],[5,4,2,1],[6,4,1,1],[4,2,4,2],[3,4,3,2]];
+    let mathRandom = Math.floor(Math.random() * 10)
+    this.aoslSliderImagesData.forEach(ele=>{
+      if( i > j){ 
+        // console.log(mathRandom)
+        ele.eleClass = randArr[mathRandom][j];
+        j=j+1;
+        if(j == i){
+            this.dataHelper.shuffleArray(randArr);
+            j=0;
+            mathRandom = Math.floor(Math.random() * 10)
+        }
+      }
+    })
   }
 
   searchDropDownClick(type){

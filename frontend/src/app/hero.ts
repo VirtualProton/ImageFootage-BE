@@ -14,12 +14,17 @@ export class Category{
   name: string;
 }
 
+export class Search{
+  productType: number;
+  search: string;
+}
+
 export class aosSlider{
   id:number;
-  name:string;
-  imageName:string;
-  type:string;
-  count:number;
+  title:string;
+  preview:any;
+  mimetype:string;
+  description:any;
   eleClass:number;
 }
 

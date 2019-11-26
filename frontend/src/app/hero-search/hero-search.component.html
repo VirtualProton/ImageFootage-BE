@@ -13,13 +13,13 @@
           </div>
           <div class="sidebar-header"> 
                 <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
-                  <label  [class]="searchBoxLabel == 'photo' ? 'btn btn-dark active' : 'btn btn-dark'">
-                    <input type="radio"  name="options" [(ngModel)]="searchBoxLabel" value="photo">
+                  <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'">
+                    <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
                     <p class="mb-0"> <i class="fa fa-camera"></i> </p>
                     <p class="mb-0">PHOTOS</p> 
                   </label>
-                  <label  [class]="searchBoxLabel == 'video' ? 'btn btn-dark active' : 'btn btn-dark'">
-                    <input type="radio" name="options" [(ngModel)]="searchBoxLabel" value="video">
+                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'">
+                    <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">
                     <p class="mb-0"> <i class="fa fa-video"></i> </p>
                     <p class="mb-0">  VIDEOS </p>
                   </label>  
@@ -205,17 +205,17 @@
               <div class="input-group search-bar">
                   <div class="input-group-btn" ngbDropdown >
                       <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
-                        <span *ngIf='searchBoxLabel == "all"'>Photos + Videos</span>
-                        <span *ngIf='searchBoxLabel == "photo"'>Photos Only</span>
-                        <span *ngIf='searchBoxLabel == "video"'>Videos Only</span>
+                        <span *ngIf='searchData.productType == 3'>Photos + Videos</span>
+                        <span *ngIf='searchData.productType == 1'>Photos Only</span>
+                        <span *ngIf='searchData.productType == 2'>Videos Only</span>
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('all')" ngbDropdownItem>Photos + Videos</a>
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('photo')" ngbDropdownItem><i class=""></i> Photos Only</a>
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('video')" ngbDropdownItem>Videos Only</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Photos Only</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Videos Only</a>
                       </div>
                   </div>
-                  <input type="text" [(ngModel)]="name" #ctrl="ngModel" (keydown)="onKeydown($event)" class="form-control" aria-label="Text input with dropdown button">
+                  <input type="text" [(ngModel)]="searchData.search" #ctrl="ngModel" (keydown)="onKeydown($event)" class="form-control" aria-label="Text input with dropdown button">
                   <i class="fa fa-camera"></i>
               </div>
           </div>
