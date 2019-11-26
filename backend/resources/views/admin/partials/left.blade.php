@@ -42,7 +42,7 @@
 
           <ul class="treeview-menu">
           @foreach($eachmodule['submodules'] as $submodule)
-            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-circle-o"></i>{{$submodule['module_name']}}</a></li>
+            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
          @endforeach
           </ul>
          @endif
