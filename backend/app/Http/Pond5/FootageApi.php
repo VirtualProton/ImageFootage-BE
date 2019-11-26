@@ -28,26 +28,30 @@ class FootageApi {
         $search_cmd['no'] = '25';
         $search_cmd['p'] = '0';
         $search_cmd['col'] = 1;
+        $search_cmd["secret"] = $this->api_secret;
+        $search_cmd["key"] =  $this->api_key;
        //Creating the json object with all data (this is usually wrapped in a subroutine since its always the same)
-        $json_object = array();
-        $json_object["api_key"] = $this->api_key;
-        $json_object["my_secret"] = $this->api_secret;
-        $json_object["ver"] = 1;
-        $json_object["commands_json"] = json_encode( array($search_cmd) );
-
-        //NOTE: the commands_hash must always have the string 'dragspel' appended
-        $json_object["commands_hash"] = md5($json_object["commands_json"] . $this->api_secret . 'dragspel');
-
-        $data_req = json_encode($json_object);
+//        $json_object = array();
+//        $json_object["api_key"] = $this->api_key;
+//        $json_object["my_secret"] = $this->api_secret;
+//        $json_object["ver"] = 1;
+//        $json_object["commands_json"] = json_encode( array($search_cmd) );
+//
+//        //NOTE: the commands_hash must always have the string 'dragspel' appended
+//        $json_object["commands_hash"] = md5($json_object["commands_json"] . $this->api_secret . 'dragspel');
+//
+//        $data_req = json_encode($json_object);
+         $data_req = json_encode($search_cmd);
 
         //the post argument
-        $post_val = "api=" . urlencode($data_req);
+        //$post_val = "api=" . urlencode($data_req);
          $client = new Client(); //GuzzleHttp\Client
             $response = $client->post($this->url, [
-                'body' => $post_val,
                 'headers'=>[
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ]
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => $data_req,
+
             ]);
             if ($response->getBody()) {
                 $contents = json_decode($response->getBody(), true);
