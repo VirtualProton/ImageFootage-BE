@@ -296,7 +296,6 @@
               @elseif($product[0]['product_main_type']=='Editorial')
               		<img src="{{ $product[0]['product_main_image'] }}" alt="User Image" width="600">
               @endif
-					
                 </div>
               </div>
             </div>

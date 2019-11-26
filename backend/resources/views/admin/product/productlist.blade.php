@@ -49,7 +49,7 @@
                     <tbody>
                      @foreach($products as $product)
                     <tr>
-  <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['id'] }}</a> </td>
+  <td>{{ $product['id'] }}</td>
   <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['product_id'] }}</a> </td>
   <td>{{ $product['category_name'] }} </td>
   <td>{{ $product['subcategory_name'] }} </td>
