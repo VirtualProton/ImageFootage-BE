@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+  private heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl= 'api/aosImages';
   private currentUserSubject: BehaviorSubject<userData>;
