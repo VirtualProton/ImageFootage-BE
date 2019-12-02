@@ -26,7 +26,7 @@ class CronController extends Controller
     }
 
     public function pantherImageUpload(){
-        ini_set("max_execution_time","1000000");
+        ini_set('max_execution_time', 0);
         //$product = new Product();
         //$all_products = $product->getProducts($keyword);
         $home_categories = array('Christmas','SkinCare','Cannabis','Business','Curated',
@@ -78,6 +78,25 @@ class CronController extends Controller
     //     $pondfootageMediaData = $footageMedia->search($keyword);
     //     return array('imgfootage'=>$all_products,'api'=>$pondfootageMediaData);
     // }
+
+    public function pond5Upload()
+    {
+        ini_set('max_execution_time', 0);
+        //$product = new Product();
+        //$all_products = $product->getProducts($keyword);
+        $home_categories = array('Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
+            'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food');
+        foreach ($home_categories as $percategory) {
+            $keyword['search'] = $percategory;
+            $footageMedia = new FootageApi();
+            $pondfootageMediaData = $footageMedia->search($keyword);
+            $common = new Common();
+            $category_id = $common->checkCategory($percategory);
+            if (count($pondfootageMediaData) > 0) {
+                $this->product->savePond5Image($pondfootageMediaData, $category_id);
+            }
+        }
+    }
 
     
 

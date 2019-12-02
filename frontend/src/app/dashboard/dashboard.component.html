@@ -63,13 +63,17 @@
 
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                     <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
-                      <img *ngIf="aosimges.mimetype == 'image/jpeg'" src="{{aosimges.preview}}" alt="Image" class="img-fluid">
-                     <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                      <img *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+                        <video *ngIf="aosimges.product_web == '3'" width="320" height="240" controls onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                        <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                       <div class="photo-text-more">
                       
                         <div class="photo-text-more">
-                        <h3 class="heading">{{aosimges.title}}</h3>
-                        <span class="meta">{{aosimges.description}}</span>
+                        <h3 class="heading">{{aosimges.product_title}}</h3>
+                        <span class="meta">{{aosimges.product_description}}</span>
                       </div>
                       </div>
                     </a>

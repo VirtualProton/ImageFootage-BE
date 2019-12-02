@@ -49,7 +49,7 @@ class Common extends Model
             $category = DB::table('imagefootage_productcategory')
                         ->select('category_id')
                         ->where('category_name' ,'=', $category_name)
-                        ->first();
+                        ->get();
             if(count($category)==0) {
                 $insert = array(
                     'category_name'=>$category_name,
@@ -62,7 +62,7 @@ class Common extends Model
                 $id = DB::getPdo()->lastInsertId();
                 return $id; 
             }else{
-               return $category->category_id;
+               return $category[0]->category_id;
             }           
             
         }

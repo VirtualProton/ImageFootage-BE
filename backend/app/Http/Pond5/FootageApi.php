@@ -27,9 +27,10 @@ class FootageApi {
         $search_cmd['sb'] = '1';
         $search_cmd['no'] = '25';
         $search_cmd['p'] = '0';
-        $search_cmd['col'] = 1;
+        $search_cmd['col'] = '15';
         $search_cmd["secret"] = $this->api_secret;
         $search_cmd["key"] =  $this->api_key;
+
        //Creating the json object with all data (this is usually wrapped in a subroutine since its always the same)
 //        $json_object = array();
 //        $json_object["api_key"] = $this->api_key;

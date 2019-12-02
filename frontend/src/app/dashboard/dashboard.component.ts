@@ -38,8 +38,10 @@ export class DashboardComponent implements OnInit {
 
     this.heroService.getAosSliderImages()
       .subscribe(aoslSliderImages => {
-        this.aoslSliderImages = aoslSliderImages.media;
-        this.aoslSliderImagesData = aoslSliderImages.media;
+        console.log(aoslSliderImages);
+        this.aoslSliderImages = aoslSliderImages;
+        this.aoslSliderImagesData = aoslSliderImages;
+
         this.maintainAosSlider();   
       });
 

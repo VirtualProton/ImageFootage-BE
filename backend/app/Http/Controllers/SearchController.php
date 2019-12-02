@@ -24,12 +24,12 @@ class SearchController extends Controller
     }
 
     public function home(){
-        //$product = new Product();
-        //$all_products = $product->getProducts($keyword);
-        $keyword['search'] = '';
-        $pantherMediaImages = new ImageApi();
-        $pantharmediaData = $pantherMediaImages->search($keyword);
-        return array('api'=>$pantharmediaData);
+        $product = new Product();
+        $all_products = $product->getProductsRandom();
+//        $keyword['search'] = '';
+//        $pantherMediaImages = new ImageApi();
+//        $pantharmediaData = $pantherMediaImages->search($keyword);
+        return array('api'=>$all_products);
     }
     public function index(SearchRequest $request){
         $getKeyword = request(['search', 'productType']);
