@@ -26,6 +26,8 @@ export class HeroDetailComponent implements OnInit {
   showloginPopup:boolean=false;
   id:number=0;
   addedCartItem:boolean=false;
+  webtype:number=0;
+  type:string='';
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +41,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.getcategoryCarouselImages();
+    // this.getcategoryCarouselImages();
      this.getDetailinfo();
 
       this.authenticationService.currentUser.subscribe(x => {
@@ -74,10 +76,12 @@ export class HeroDetailComponent implements OnInit {
 
   getDetailinfo(){
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getDetailPagedetails(this.id)
+    this.webtype = +this.route.snapshot.paramMap.get('webtype');
+    this.type = this.route.snapshot.paramMap.get('type');
+    this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
         console.log(data);
-        this.detailPageInfo = data[0];
+        this.detailPageInfo = data;
       });
 
   }

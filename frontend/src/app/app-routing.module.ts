@@ -17,7 +17,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'detail/:id/:webtype/:type', component: HeroDetailComponent },
   { path: 'search', component: HeroSearchComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'aboutUs', component: AboutUsComponent },

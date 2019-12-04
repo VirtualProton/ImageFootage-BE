@@ -23,11 +23,13 @@ class MediaController extends Controller
     }
 
     public function index($media_id,$origin,$type){
-       if($origin=='1'){
+       if($origin=='2'){
            $imageMedia = new ImageApi();
            $product_details = $imageMedia->get_media_info($media_id);
-        }else if($origin=='2'){
-           // $all_products =$this->getFootageData($keyword);
+        }else if($origin=='3'){
+           $keyword['search'] = $media_id;
+           $footageMedia = new FootageApi();
+           $product_details = $footageMedia->search($keyword);
         }else{
             $product = new Product();
             $product_details = $product->getProductDetail($media_id,$type);

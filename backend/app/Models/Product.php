@@ -39,8 +39,7 @@ class Product extends Model
 	public function adminAllProductList(){
 		  $all_produst_list=Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->get()->toArray();
 		  return $all_produst_list;
-		 
-    }
+	}
     
     public function savePantherImage($data,$category_id){
         foreach($data['items']['media'] as $eachmedia){
@@ -130,7 +129,7 @@ class Product extends Model
 
     public function getProductsRandom(){
         return DB::table('imagefootage_products as pr')
-            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name')
+            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name','product_main_type')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             ->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
                 'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])

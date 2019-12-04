@@ -104,9 +104,10 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
     );
   }
 
-  getDetailPagedetails(id:number):Observable<detailPageInfo>{
-    const url = `api/detailPageInfo/?${id}`;
-    //const url = `${this.heroesUrl}details/srima040/3/image`;
+  getDetailPagedetails(id:number,webtype:number,type:any):Observable<detailPageInfo>{
+     console.log(id);
+    //const url = `api/detailPageInfo/?${id}`;
+    const url = `${this.heroesUrl}details/${id}/${webtype}/${type}`;
     return this.http.get<detailPageInfo>(url).pipe(
       tap(_ => this.log(`fetched detail Page Info id=${id}`)),
       catchError(this.handleError<detailPageInfo>(`getHero id=${id}`))

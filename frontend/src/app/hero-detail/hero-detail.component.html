@@ -7,22 +7,22 @@
             <div class="p-3">          
               <div data-aos="fade-up">
                   <a href="javascript:void(0)" class="d-block photo-item">
-                      <img src="assets/images/{{detailPageInfo.impagePath}}" alt="Image" class="img-fluid">
+                      <img src="{{detailPageInfo.media.preview_url_no_wm}}" alt="Image" class="img-fluid">
                       <div class="photo-text-more">            
                         <div class="photo-text-more">
-                          <h3 class="heading">{{detailPageInfo.name}}</h3>
+                          <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>
                           <span class="meta">{{detailPageInfo.photoCount}} Photos</span>
                         </div>
                       </div>
                   </a>
               </div>         
-              <p class="text-white f-18">{{detailPageInfo.description}}</p>
+              <p class="text-white f-18">{{detailPageInfo.metadata.description}}</p>
               <p>{{detailPageInfo.shortInfo}}</p>
               <p class="text-warning">Related Keywords</p>            
-              <div class="related_key">
-                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  
-                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>
-                </ng-container>   
+              <div class="related_key">{{detailPageInfo.metadata.keywords}}
+<!--                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  -->
+<!--                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>-->
+<!--                </ng-container>   -->
                             
               </div>
             </div>
@@ -108,41 +108,42 @@
                 </tr>
                 <tr>
                   <td>Credit :</td>
-                  <td>Lintao Zhang / Staff</td>
+                  <td>{{detailPageInfo.metadata.author_realname}}</td>
                 </tr>
                 <tr>
                   <td>Editorial # :</td>
-                  <td>142933329</td>
+                  <td>{{detailPageInfo.metadata.editorial}}</td>
                 </tr>
-                <tr>
-                  <td>Collection :</td>
-                  <td>Getty Images News</td>
-                </tr>
+<!--                <tr>-->
+<!--                  <td>Collection :</td>-->
+<!--                  <td>Getty Images News</td>-->
+<!--                </tr>-->
                 <tr>
                   <td>Date created :</td>
-                  <td>15 April, 2012</td>
+                  <td>{{detailPageInfo.metadata.date}}</td>
                 </tr>
                 <tr>
                   <td>Licence type :</td>
-                  <td>Rights-managed</td>
+                  <td *ngIf="detailPageInfo.options.extended=='yes'">Extended</td>
+                    <td *ngIf="detailPageInfo.options.rights_managed=='yes'">Extended</td>
                 </tr>
                 <tr>
                   <td>Release info :</td>
                   <td>Not released. More information</td>
                 </tr>
-                <tr>
-                  <td>Source :</td>
-                  <td>Getty Images AsiaPac</td>
-                </tr>
+<!--                <tr>-->
+<!--                  <td>Source :</td>-->
+<!--                  <td>Getty Images AsiaPac</td>-->
+<!--                </tr>-->
 
                 <tr>
                   <td>Object name :</td>
-                  <td>69338444</td>
+                  <td>{{detailPageInfo.media.id}}</td>
                 </tr>
 
                 <tr>
                   <td>Max file size :</td>
-                  <td>3000 x 2000 px (25.40 x 16.93 cm) - 300 dpi - 1.89 MB</td>
+                  <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}} </td>
                 </tr>
               </tbody>
 

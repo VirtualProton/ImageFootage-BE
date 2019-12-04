@@ -23,11 +23,11 @@ class FootageApi {
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $serach;
-        $search_cmd['bm'] = '15';
+        $search_cmd['bm'] = '4095';
         $search_cmd['sb'] = '1';
         $search_cmd['no'] = '25';
         $search_cmd['p'] = '0';
-        $search_cmd['col'] = '15';
+        $search_cmd['col'] = '2047';
         $search_cmd["secret"] = $this->api_secret;
         $search_cmd["key"] =  $this->api_key;
 
@@ -62,7 +62,7 @@ class FootageApi {
             }
  }
 
-
+    //public function
 }
 
 ?>
