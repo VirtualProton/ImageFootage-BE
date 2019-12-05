@@ -29,12 +29,9 @@
                 </div>
 
                 @include('admin.partials.message')
-
-
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
                         <th>Id</th>
-                        
 <th>user_id</th>
 <th>txn_id</th>
 <th>plan_id</th>
@@ -85,28 +82,65 @@
                     <tbody>
                      @foreach($orders as $orders)
                     <tr>
-  <td>{{ $orders['package_id'] }} </td>
-  <td>{{ $orders['package_plan'] }} </td>
-  <td>{{ $orders['package_name'] }} </td>
-  <td>{{ $orders['package_price'] }} </td>
-  <td>{{ $orders['package_description'] }} </td>
-  <td>{{ $orders['package_products_count'] }} </td>
-  <td>{{ $orders['package_type'] }} </td>
-  <td>{{  date('Y-m-d',strtotime($orders['package_added_on'])) }} </td>
-  <td>{{ $orders['package_expiry'] }} </td>
-  <td>{{ $orders['package_permonth_download'] }}</td>
-  <td>{{ $orders['package_pcarry_forward'] }}</td>
-  <td>  @if($orders['package_status'] =='Active')
-  			<a href="{{ url('admin/package/Inactive/'.$orders['package_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
-         @elseif($packages['package_status'] =='Inactive')
-         	<a href="{{ url('admin/package/Active/'.$orders['package_id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
-        @endif
-            <a href="{{ url('admin/updatepackage/'.$orders['package_id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            <a href="{{ url('admin/deletepackage/'.$orders['package_id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this package?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
+  <td>{{ $orders['id'] }} </td>
+  <td>{{ $orders['user_id'] }} </td>
+  <td>{{ $orders['txn_id'] }} </td>
+  <td>{{ $orders['plan_id'] }} </td>
+  <td>{{ $orders['invoice'] }} </td>
+  <td>{{ $orders['download_plan_id'] }} </td>
+  <td>{{ $orders['download_plan_title'] }} </td>
+  <td>{{ $orders['tax'] }} </td>
+  <td>{{ $orders['tax_selected'] }} </td>
+  <td>{{ $orders['coupon_code'] }}</td>
+  <td>{{ $orders['coupon_type'] }}</td>
+  <td>{{ $orders['coupon_value'] }}</td>
+  <td>{{ $orders['coupon_discount'] }}</td>
+  <td>{{ $orders['order_total'] }}</td>
+  <td>{{  date('Y-m-d',strtotime($orders['order_date'])) }} </td>
+  <td>{{ $orders['order_status'] }}</td>
+  <td>{{ $orders['order_title'] }}</td>
+  <td>{{ $orders['order_cancel_status'] }}</td>
+  <td>{{ $orders['order_type'] }}</td>
+  
+  
+  
+  <td>{{ $orders['order_email'] }}</td>
+  <td>{{ $orders['ip'] }}</td>
+  <td>{{ $orders['payment_mode'] }}</td>
+  <td>{{ $orders['cc_number'] }}</td>
+  
+  
+   <td>{{ $orders['cc_expiry_date'] }}</td>
+    <td>{{ $orders['job_number'] }}</td>
+     <td>{{ $orders['po_detail'] }}</td>
+      <td>{{ $orders['po_image'] }}</td>
+  
+  <td>{{ $orders['order_comments'] }}</td>
+  <td>{{ $orders['bill_firstname'] }}</td>
+  <td>{{ $orders['bill_lastname'] }}</td>
+  <td>{{ $orders['bill_address1'] }}</td>
+   <td>{{ $orders['bill_address2'] }}</td>
+    <td>{{ $orders['bill_city'] }}</td>
+     <td>{{ $orders['bill_state'] }}</td>
+     
+     <td>{{ $orders['bill_zip'] }}</td>
+     <td>{{ $orders['bill_country'] }}</td>
+     <td>{{ $orders['bill_phone'] }}</td>
+     <td>{{ $orders['created'] }}</td>
+     
+     
+     
+     
+     <td>{{ $orders['modified'] }}</td>
+     <td>{{ $orders['invoice_type'] }}</td>
+     <td>{{ $orders['expiry_invoices'] }}</td>
+     <td>{{ $orders['deletion_date'] }}</td>
+     <td>{{ $orders['invoice_closed'] }}</td>
+  
+  
+  
+  
+  
  </tr>
 @endforeach
                     </tbody>
