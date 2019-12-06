@@ -11,13 +11,15 @@
     <div class="input-group">
           <div class="input-group-btn" ngbDropdown >
             <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
-             <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
              <span *ngIf='searchBoxLabel == 1'>Photos Only</span>
              <span *ngIf='searchBoxLabel == 2'>Videos Only</span>
+             <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
+
+
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem>Photos + Videos</a>
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem><i class=""></i> Photos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem>Photos + Videos</a>
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem>Videos Only</a>
                </div>
           </div>
@@ -35,16 +37,16 @@
     <div class="container-fluid text-center my-5">
       <div class="row mx-auto my-auto">
           <div id="recipeCarousel" class="carousel slide w-100">
-              <div class="carousel-inner" role="listbox">              
+              <div class="carousel-inner" role="listbox">
 
-                <!-- <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                <!-- <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
                     <div class="carousel-item">
                         <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages;let i= index">
                           <div class="col-11 m-auto">
                               <div class="row">
                                     <div class="col-md-2 col-sm-2 col-4 text-center" *ngFor="let images of carouseimges.categoryNames">
                                       <a href="javascript:void(0)">{{images.name}}</a>
-                                    </div>                          
+                                    </div>
                               </div>
                           </div>
                         </ng-template>
@@ -62,15 +64,12 @@
             <div class="row align-items-stretch">
 
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                    <a  routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
+                    <a *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
 
-                      <img *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
-                        <video *ngIf="aosimges.product_web == '3'" width="320" height="240" controls onmouseover="this.play()" onmouseout="this.pause()">
-                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
-                           Your browser does not support the video tag.
-                        </video>
+                      <img  src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
-                      <div class="photo-text-more" *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'">
+                      <div class="photo-text-more">
                       
                         <div class="photo-text-more">
                         <h3 class="heading">{{aosimges.product_title}}</h3>
@@ -78,6 +77,13 @@
                       </div>
                       </div>
                     </a>
+                    <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
+                         <video  width="400" height="300" controls onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                 </a>
                 </div>
 
            </div>

@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   aoslSliderImagesData: aosSlider[] =[];
 
   randomNumber:number =0;
-  searchBoxLabel:number= 3;
+  searchBoxLabel:number= 1;
   page:number = 1;
   pageSize:number = 40;
   aosSliderSizes:any=[];

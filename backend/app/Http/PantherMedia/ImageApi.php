@@ -75,7 +75,7 @@ class ImageApi {
                 'page'=>0,
                 'limit'=>1000,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=>'sort: date; type: photos'
+                'filters'=>'people_number:people_0; sort: date; type: photos'
             ]
         ]);
        

@@ -12,6 +12,7 @@ class Product extends Model
 	protected $fillable = ['product_id','product_category','product_subcategory','product_owner','product_title','product_vertical','product_keywords','product_thumbnail','product_main_image','product_release_details','product_price_small','product_price_medium','product_price_large','product_price_extralarge','product_status','product_main_type','product_sub_type','product_added_on','updated_at','product_added_by','product_size','product_verification','product_rejectod_reason','product_editedby'];
     const HomeLimit = '100';
     public function getProducts($keyword){
+        DB::enableQueryLog();
         if($keyword['productType']['id']=='1'){
             $type='Image';
         }else if($keyword['productType']['id']=='2'){
@@ -19,14 +20,22 @@ class Product extends Model
         }else{
             $type='Editorial';
         }
-        $serach = $keyword['search'];
-        $data =Product::where('product_main_type','=',$type)
-                ->orWhere('product_id','=',$serach)
-                ->orWhere('product_title','LIKE', '%'. $serach .'%')
-                ->orwhere('product_keywords','LIKE','%'. $serach .'%')
-                ->get()
-                ->toArray();
-        return  $data;
+        if(!empty($keyword['search'])){
+            $serach = $keyword['search'];
+            $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')
+            ->where(function ($query) use ($type){
+                $query->where('product_web','=',1)->where('product_main_type','=',$type);
+            })->Where(function($query) use ($serach) {
+                    $query->orWhere('product_id','=',$serach)->orWhere('product_title','LIKE', '%'. $serach .'%')->orWhere('product_keywords','LIKE','%'. $serach .'%');
+            })->get()->toArray();
+        }else{
+            $data =Product::where('product_main_type','=',$type)
+                    ->select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')
+                    ->where('product_web','=','1')
+                    ->get()
+                    ->toArray();
+        }
+         return  $data;
     }
 
     public function getProductDetail($media_id,$type){
