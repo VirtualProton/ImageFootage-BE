@@ -5,17 +5,69 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usercontactus;
 use App\Models\ProductColors;
+use App\Models\ProductGenders;
+use App\Models\ProductEthinicities;
+use App\Models\ProductLocations;
+use App\Models\ProductImageSizes;
+use App\Models\ProductImageTypes;
+use App\Models\ProductPeoples;
+use App\Models\ProductOrientations;
+use App\Models\ImageSortTypes;
 
 class FiltersController extends Controller {
    public function getAllFilters(){
 	   $productColors=new ProductColors;
 	   $productcolor_list=$productColors->where('status','1')->get()->toArray();
-	   echo '<pre>';
+	   $productGenders=new ProductGenders;
+	   $productGenderList=$productGenders->where('status','1')->get()->toArray();
+	   $productEthinicities=new ProductEthinicities;
+	   $productEthinicitiesList=$productEthinicities->where('status','1')->get()->toArray();
+	   $productLocations=new ProductLocations;
+	   $productLocationsList=$productLocations->where('status','1')->get()->toArray();
+	   $productImageSizes=new ProductImageSizes;
+	   $productImageSizessList=$productImageSizes->where('status','1')->get()->toArray();
+	   $productImageTypes=new ProductImageTypes;
+	   $productImageTypesList=$productImageTypes->where('status','1')->get()->toArray();
+	   $productPeoples=new ProductPeoples;
+	   $productPeoplesList=$productPeoples->where('status','1')->get()->toArray();
+	   $productOrientations=new ProductOrientations;
+	   $productOrientationslist=$productOrientations->where('status','1')->get()->toArray();
+	   $imageSortTypes=new ImageSortTypes;
+	   $productSortTypelist=$imageSortTypes->where('status','1')->get()->toArray();
 	   $filters=array();
 	   foreach($productcolor_list as $key=>$val){
 		   $filters['product_colors'][]=array('pcolor_id'=>$val['id'],'pcolor_name'=>$val['name']);
 	   }
-	   print_r($filters);
+	   foreach($productGenderList as $key=>$val){
+		   $filters['product_gender'][]=array('gender_id'=>$val['id'],'gender_name'=>$val['name']);
+	   }
+	   foreach($productEthinicitiesList as $key=>$val){
+		   $filters['product_ethinicities'][]=array('ethinicity_id'=>$val['id'],'ethinicity_name'=>$val['name']);
+	   }
+	   foreach($productLocationsList as $key=>$val){
+		   $filters['product_locations'][]=array('location_id'=>$val['id'],'location_name'=>$val['name']);
+	   }
+	   foreach($productImageSizessList as $key=>$val){
+		   $filters['product_imagesizes'][]=array('imagesize_id'=>$val['id'],'imagesize_name'=>$val['name']);
+	   }
+	   foreach($productImageTypesList as $key=>$val){
+		   $filters['product_imagetypes'][]=array('imagetype_id'=>$val['id'],'imagetype_name'=>$val['name']);
+	   }
+	   foreach($productPeoplesList as $key=>$val){
+		   $filters['product_peoples'][]=array('people_id'=>$val['id'],'people_name'=>$val['name']);
+	   }
+	   foreach($productOrientationslist as $key=>$val){
+		   $filters['product_orientations'][]=array('orientation_id'=>$val['id'],'orientation_name'=>$val['name']);
+	   }
+	   foreach($productSortTypelist as $key=>$val){
+		   $filters['product_sorttype'][]=array('sorttype_id'=>$val['id'],'sorttype_name'=>$val['name']);
+	   }
+	   echo '<pre>';
+	   if(isset($filters) && !empty($filters)){
+		   echo '{"status":"1","message":"","data":'.json_encode($filters,true).'}';
+	   }else{
+		   echo '{"status":"0","message":"No data found.","data":""}';
+	   }
    }
    public function submitContactUs(Request $request){
 	   $name=$request->user_name;
