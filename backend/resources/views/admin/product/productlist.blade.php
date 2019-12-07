@@ -64,7 +64,7 @@
   @elseif($product['product_main_type'] =='Footage')
       <video width="150" height="120" controls>
       <source src="{{$product['product_main_image'] }}" type="video/mp4">
-      <source src="{{ product['product_main_image'] }}" type="video/ogg">
+      <source src="{{ $product['product_main_image'] }}" type="video/ogg">
       Your browser does not support the video tag.
       </video>
   @elseif($product['product_main_type'] =='Editorial')

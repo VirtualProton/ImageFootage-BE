@@ -62,7 +62,7 @@ class FiltersController extends Controller {
 	   foreach($productSortTypelist as $key=>$val){
 		   $filters['product_sorttype'][]=array('sorttype_id'=>$val['id'],'sorttype_name'=>$val['name']);
 	   }
-	   echo '<pre>';
+
 	   if(isset($filters) && !empty($filters)){
 		   echo '{"status":"1","message":"","data":'.json_encode($filters,true).'}';
 	   }else{
