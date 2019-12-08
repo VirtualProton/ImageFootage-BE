@@ -11,7 +11,7 @@
             <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:''}">Images</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" routerLink="/portfolio">Footage</a>
+            <a class="nav-link js-scroll-trigger"  [routerLink]="['/search']" [queryParams]="{type:2,keyword:''}">Footage</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" routerLink="/about">Editorial</a>
@@ -20,8 +20,11 @@
             <a class="nav-link js-scroll-trigger" routerLink="/team">Pricing</a>
           </li>
           
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="currentUser">
             <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>
+          </li>
+          <li class="nav-item" *ngIf="!currentUser">
+            <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()">Cart</a>
           </li>
           
           <li class="nav-item" *ngIf="!currentUser">

@@ -11,10 +11,11 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
-  private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
+  private heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
+  private localhostUrl = 'http://localhost/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
+  private countryUrl :string = "https://raw.githubusercontent.com/sagarshirbhate/Country-State-City-Database/master/Contries.json";
   private currentUserSubject: BehaviorSubject<userData>;
   public currentUser: Observable<userData>;
 
@@ -32,6 +33,12 @@ export class HeroService {
 
   public get currentUserValue(): userData {
     return this.currentUserSubject.value;
+  }
+
+
+
+  allCountries(): Observable<any>{
+    return this.http.get(this.countryUrl);
   }
 
   /** GET Slider Images from the server */
@@ -120,12 +127,23 @@ export class HeroService {
     );
   }
 
-  register(usrData: userData): Observable<any> {
-    return this.http.post(`api/userData`, usrData, this.httpOptions).pipe(
+  register(usrData: any): Observable<any> {
+    const url = `${this.heroesUrl}signup`
+    return this.http.post(url, usrData, this.httpOptions).pipe(
       map(userInfo => {
         return true;
       }),
-      catchError(this.handleError<userData>(`unable to register data`))
+      catchError(this.handleError<any>(`unable to register data`))
+    );;
+  }
+
+  contactUs(contactData: any): Observable<any> {
+    const url = `${this.heroesUrl}user_contactus`
+    return this.http.post(url, contactData, this.httpOptions).pipe(
+      map(userInfo => {
+        return true;
+      }),
+      catchError(this.handleError<userData>(`unable to user_contactus data`))
     );;
   }
 
@@ -166,6 +184,22 @@ addcartItemsData(product:any): Observable<userData> {
           console.log(cart);
 
           //this.currentUserSubject.next(cart);
+          return cart;
+        }),
+        catchError(this.handleError<userData>(`unable to get data`))
+    );
+  }
+removeCartItemsData(product:any): Observable<userData> {
+    console.log(product);
+    const url = `${this.heroesUrl}delete_cart_item`;
+    //let tokenData =JSON.parse(product.token);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+     });
+    let options = { headers: headers };
+    return this.http.post<any>(url, {product}, options).pipe(
+        map(cart => {
+          console.log(cart);
           return cart;
         }),
         catchError(this.handleError<userData>(`unable to get data`))

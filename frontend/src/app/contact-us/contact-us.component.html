@@ -39,63 +39,38 @@
           </div>
         </div>
         <div class="col-lg-8">
-          <form
-            class="form-area contact-form text-right"
-            id="myForm"
-            action="mail.php"
-            method="post"
-          >
+          <form class="form-area contact-form text-right"  id="myForm" [formGroup]="contactForm" (ngSubmit)="onContactSubmit()">
             <div class="row">
               <div class="col-lg-6 form-group">
-                <input
-                  name="name"
-                  placeholder="Enter your name"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter your name'"
-                  class="common-input mb-20 form-control"
-                  required=""
-                  type="text"
-                />
-
-                <input
-                  name="email"
-                  placeholder="Enter email address"
-                  pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter email address'"
-                  class="common-input mb-20 form-control"
-                  required=""
-                  type="email"
-                />
-
-                <input
-                  name="subject"
-                  placeholder="Enter subject"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter subject'"
-                  class="common-input mb-20 form-control"
-                  required=""
-                  type="text"
-                />
+                <input name="name" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }"   placeholder="Enter your name"  class="common-input mb-20 form-control"   type="text" />
+                <div *ngIf="submitted && f.user_name.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_name.errors.required">Name is required</div>
+                </div>
+                <input name="email" type="text" placeholder="Enter email address" class="common-input mb-20 form-control" formControlName="user_email" [ngClass]="{ 'is-invalid': submitted && f.user_email.errors }"/>
+                <div *ngIf="submitted && f.user_email.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_email.errors.required">Email is required</div>
+                    <div *ngIf="f.user_email.errors.email">Email must be a valid email address</div>
+                </div>
+                <input  name="subject" placeholder="Enter subject"  class="common-input mb-20 form-control" type="text"  formControlName="user_subject" [ngClass]="{ 'is-invalid': submitted && f.user_subject.errors }"/>
+                <div *ngIf="submitted && f.user_subject.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_subject.errors.required">Subject is required</div>
+                </div>
+                <input placeholder="Enter mobile number"  class="common-input mb-20 form-control" pattern="[0-9]*"  type="text" id="mbnum" formControlName="mobile_number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }" class="form-control text-white">
+                <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
+                  <div *ngIf="f.mobile_number.errors.required">Mobile Number is required</div>
+                  <div *ngIf="f.mobile_number.errors.minlength || f.mobile_number.errors.maxlength">Mobile number should be 10 digits</div>
+                  <div *ngIf="f.mobile_number.errors.pattern">Mobile numberr should be only numbers</div>
+                </div>
               </div>
               <div class="col-lg-6 form-group">
-                <textarea
-                  class="common-textarea form-control"
-                  name="message"
-                  placeholder="Enter Messege"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter Messege'"
-                  required=""
-                ></textarea>
+                <textarea  class="common-textarea form-control"  name="message" formControlName="user_message" [ngClass]="{ 'is-invalid': submitted && f.user_message.errors }" placeholder="Enter Messege"  ></textarea>
+                <div *ngIf="submitted && f.user_message.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_message.errors.required">Message is required</div>
+                </div>
               </div>
               <div class="col-lg-12">
                 <div class="alert-msg" style="text-align: left;"></div>
-                <button
-                  class="primary-btn text-uppercase"
-                  style="float: right;"
-                >
-                  Send Message
-                </button>
+                <button  [disabled]="loading" type="submit" class="primary-btn text-uppercase"   style="float: right;">Send Message </button>
               </div>
             </div>
           </form>

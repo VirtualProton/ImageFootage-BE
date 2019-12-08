@@ -12,16 +12,16 @@
                       <div class="row form-group mb-5">
                           <div class="col-md-4 col-sm-4 mb-3 mb-md-0">
                               <label class="text-white">First Name</label>
-                              <input type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" class="form-control text-white">
-                              <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                                  <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                              <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control text-white">
+                              <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                  <div *ngIf="f.first_name.errors.required">First Name is required</div>
                               </div>
                           </div>
                           <div class="col-md-4 col-sm-4 ">
                               <label class="text-white" >Last Name</label>
-                              <input type="text" formControlName="lastName" id="lname" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"  class="form-control text-white">
-                              <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                                  <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                              <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"  class="form-control text-white">
+                              <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                  <div *ngIf="f.last_name.errors.required">Last Name is required</div>
                               </div>
                           </div>
                           <div class="col-md-4 col-sm-4 ">
@@ -54,9 +54,9 @@
                         
                         <div class="col-md-4 col-sm-4">
                           <label class="text-white">Job Title</label> 
-                          <input type="text" formControlName="jobTitle" id="jobTitle" [ngClass]="{ 'is-invalid': submitted && f.jobTitle.errors }" class="form-control text-white">
-                          <div *ngIf="submitted && f.jobTitle.errors" class="invalid-feedback">
-                            <div *ngIf="f.jobTitle.errors.required">JobTitle is required</div>
+                          <input type="text" formControlName="occupation" id="jobTitle" [ngClass]="{ 'is-invalid': submitted && f.occupation.errors }" class="form-control text-white">
+                          <div *ngIf="submitted && f.occupation.errors" class="invalid-feedback">
+                            <div *ngIf="f.occupation.errors.required">JobTitle is required</div>
                           </div>
                         </div>
                       </div>
@@ -64,14 +64,14 @@
                       <div class="row form-group mb-5">
                         <div class="col-md-4 col-sm-4">
                           <label class="text-white">Company</label> 
-                          <input type="text" id="companyName" formControlName="company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" class="form-control">
+                          <input type="text" id="companyName" formControlName="company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
                             <div *ngIf="f.company.errors.required">Company is required</div>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
                           <label class="text-white">Phone</label> 
-                          <input type="text" id="phne" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" class="form-control">
+                          <input type="text" id="phne" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.phoneNumber.errors.required">PhoneNumber is required</div>
                           </div>
@@ -79,7 +79,7 @@
                         
                         <div class="col-md-4 col-sm-4">
                           <label class="text-white">Mobile Number</label> 
-                          <input type="text" id="mbnum" formControlName="mobileNumber" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" class="form-control">
+                          <input type="text" id="mbnum" formControlName="mobileNumber" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.mobileNumber.errors.required">MobileNumber is required</div>
                             <div *ngIf="f.mobileNumber.errors.minlength || f.mobileNumber.errors.maxlength">Mobile number should be 10 digits</div>
@@ -89,28 +89,52 @@
                       
                       <div class="row form-group mb-5">
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" for="country">Slect Country</label>                           
-                            <select class="form-control  text-white" id="select-language1" onchange=console.log(this.value)> <option value=php>India</option> <option value=javascript>Australia</option> <option value=python>Srilanka</option> <option value=java>Pakistan</option> </select> 
+                            <label class="text-white" >Slect Country</label>                           
+                            <select class="form-control  text-white" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)"> 
+                                <option *ngFor="let country of countryInfo; let i = index"  value="{{i}}">{{country.CountryName}}</option>
+                            </select> 
+                            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                <div *ngIf="f.country.errors.required">Country is required</div>
+                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" for="state">Select State</label>                           
-                            <select class="form-control  text-white" id="select-language2" onchange=console.log(this.value)> <option value=php>India</option> <option value=javascript>Australia</option> <option value=python>Srilanka</option> <option value=java>Pakistan</option> </select> 
+                            <label class="text-white" >Select State</label>                           
+                            <select class="form-control  text-white" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)"> 
+                                <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                                <option *ngFor="let state of stateInfo; let j = index"  value="{{j}}">{{state.StateName}}</option>
+                            </select> 
+                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">State is required</div>
+                             </div>
                         </div>                        
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" for="city">Select City</label> 
-                            <select class="form-control  text-white" id="select-language3" onchange=console.log(this.value)> <option value=php>India</option> <option value=javascript>Australia</option> <option value=python>Srilanka</option> <option value=java>Pakistan</option> </select> 
+                            <label class="text-white">Select City</label> 
+                            <select class="form-control  text-white" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
+                                <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                                <option *ngFor="let city of cityInfo; let k = index"  value="{{k}}">{{city}}</option>
+                            </select> 
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City is required</div>
+                             </div>
                         </div>
                       </div>
   
                       <div class="row form-group mb-5">
                           <div class="col-md-4 col-sm-4">
-                            <label class="text-white" for="zipCode">Zip Code</label> 
-                            <input type="text" id="zipCode" class="form-control">
+                            <label class="text-white" >Zip Code</label> 
+                            <input type="text" id="pincode" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
+                            <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
+                                <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
+                                <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>
+                              </div>
                           </div>
                           
                           <div class="col-md-8 col-sm-8">
-                            <label class="text-white" for="message">Address</label> 
-                            <textarea name="message" id="message" cols="5" rows="1" class="form-control" placeholder=""></textarea>
+                            <label class="text-white">Address</label> 
+                            <textarea name="address" id="address" cols="5" rows="1" class="form-control" placeholder="" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
+                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Address is required</div>
+                            </div>
                           </div>                        
                       </div>
                       

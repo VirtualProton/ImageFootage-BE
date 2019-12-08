@@ -63,7 +63,10 @@ class FrontuserController extends Controller {
 		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->get()->toArray();
 		echo json_encode($cart_list,true);
 	}
-	public function deleteCartItom($id){
+	public function deleteCartItem(Request $request){
+        //dd($request['product']);
+       // $tokens=json_decode($request['product']['token'],true);
+        $id = $request['product']['cart_id'];
 		$del_result=Usercart::find($id)->delete();
 		if($del_result){
 			echo '{"status":"1","message":"Cart itom deleted successfully"}';

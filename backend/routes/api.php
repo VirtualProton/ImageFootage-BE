@@ -54,7 +54,7 @@ Route::group([
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');
     Route::post('user_cart_list', 'FrontuserController@userCartList');
-    Route::post('deleate_cart_itom/{id}', 'FrontuserController@deleteCartItom');
+    Route::post('delete_cart_item', 'FrontuserController@deleteCartItem');
     Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
     Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
     Route::post('wishlistlist', 'FrontuserController@productList');
