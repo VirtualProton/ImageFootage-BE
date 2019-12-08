@@ -91,11 +91,10 @@ export class SignUpComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      console.log('at invalid');
-      console.log(this.registerForm);
+      // console.log('at invalid');      console.log(this.registerForm);
         return;
     }
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
     this.authenticationService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(

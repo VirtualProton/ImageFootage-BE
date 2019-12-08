@@ -112,7 +112,7 @@ export class HeroService {
 
 
 
-  getLogin(email: any, password: string): Observable<userData> {
+  getLogin(email: any, password: string): Observable<any> {
     return this.http.post<any>(`api/userData`, { email, password }, this.httpOptions).pipe(
       map(user => {
         console.log(user);
@@ -124,13 +124,23 @@ export class HeroService {
     );
   }
 
-  register(usrData: userData): Observable<any> {
+  register(usrData: any): Observable<any> {
     const url = `${this.heroesUrl}signup`
     return this.http.post(url, usrData, this.httpOptions).pipe(
       map(userInfo => {
         return true;
       }),
-      catchError(this.handleError<userData>(`unable to register data`))
+      catchError(this.handleError<any>(`unable to register data`))
+    );;
+  }
+
+  contactUs(contactData: any): Observable<any> {
+    const url = `${this.heroesUrl}user_contactus`
+    return this.http.post(url, contactData, this.httpOptions).pipe(
+      map(userInfo => {
+        return true;
+      }),
+      catchError(this.handleError<userData>(`unable to user_contactus data`))
     );;
   }
 
