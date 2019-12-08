@@ -52,12 +52,12 @@ class SearchController extends Controller
         return response()->json($all_products);
     }
 
-    public function getImagesData($keyword,$getKeyword){
+    public function getImagesData($keyword){
         $all_products = [];
         $product = new Product();
-        $all_products = $product->getProducts($keyword,$getKeyword);
+        $all_products = $product->getProducts($keyword);
         $pantherMediaImages = new ImageApi();
-        $pantharmediaData = $pantherMediaImages->search($keyword,$getKeyword);
+        $pantharmediaData = $pantherMediaImages->search($keyword);
         if(count($pantharmediaData)>0){
             foreach($pantharmediaData['items']['media'] as $eachmedia){
                 if(isset($eachmedia['id'])) {
@@ -82,7 +82,7 @@ class SearchController extends Controller
     public function getFootageData($keyword){
         $product = new Product();
         $all_products =[];
-        $all_products = $product->getProducts($keyword,'');
+        $all_products = $product->getProducts($keyword);
         $footageMedia = new FootageApi();
         $pondfootageMediaData = $footageMedia->search($keyword);
         if(count($pondfootageMediaData)>0) {

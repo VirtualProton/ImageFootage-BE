@@ -143,15 +143,21 @@ export class HeroDetailComponent implements OnInit {
            "token":this.token,
            "type":type
          };
-      this.checkoutArray.push(cartval);
+
       this.heroService.addcartItemsData(cartval)
             .subscribe(data => {
                 console.log(data);
-                this.checkoutAray = data;
+                this.checkoutArray.push(cartval);
+                if(data["status"]=='1'){
+                    localStorage.setItem('checkoutAray', this.checkoutArray);
+                    this.router.navigate(['/wishlist']);
+                }else{
+                    alert(data["message"]);
+                }
+
             });
       // this.checkoutArray.push(2);this.checkoutArray.push(3); //remove the line when api integrated
-      localStorage.setItem('checkoutAray', this.checkoutArray);
-      this.router.navigate(['/wishlist']);
+
     }
 
   }
@@ -193,7 +199,7 @@ export class HeroDetailComponent implements OnInit {
     hideLoginPopup(event){
       this.showloginPopup = false;
       if(event){
-        //this.addToCheckoutItem(this.id);
+        this.addToCheckoutItem(this.detailPageInfo,this.standard,this.extended,this.total,'2');
       }
     }
 }

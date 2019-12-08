@@ -22,7 +22,8 @@ export class CheckoutComponent implements OnInit {
                   data => {
                     this.wishListDataItems=data;
                     this.wishListDataItems.forEach(element => {
-                      this.priceArray.push(element.price);
+                      console.log(element);
+                      this.priceArray.push(element["total"]);
                     });
                   },
                   error => {
@@ -30,7 +31,8 @@ export class CheckoutComponent implements OnInit {
                   });
   }
 
-  showTotalPrice(){  
+  showTotalPrice(){
+    console.log(this.priceArray);
     return this.priceArray.reduce(function(acc, val) { return acc + val; }, 0);
   }
 

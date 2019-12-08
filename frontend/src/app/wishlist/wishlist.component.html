@@ -10,7 +10,7 @@
                       <td width="25%" align="center">
                           <div class="product-info">
                               <a href="javascript:void(0)">
-                                <img src="assets/images/{{wishList.imgPath}}" alt="product-img">
+                                <img src="{{wishList.product_thumb}}" alt="product-img">
                               </a>
                               <div class="pt-3 cart_option">
                                   <a href="javascript:void(0)" class="f-22"><i class="fa fa-plus-circle"></i></a>
@@ -19,11 +19,11 @@
                           </div>                       
                       </td>                      
                       <td width="50%">
-                         <p class="mb-1 text-black f-18"><strong>{{wishList.name}}</strong></p>
-                         <p class="mb-1 f-16"><strong>Size:</strong>  {{wishList.size}}</p>
-                         <p class="mb-1">{{wishList.info}}</p>                       
+                         <p class="mb-1 text-black f-18"><strong>{{wishList.product_name}}</strong></p>
+                         <p class="mb-1 f-16"><strong>Size:</strong>  {{wishList.standard_size}}</p>
+                         <p class="mb-1">{{wishList.product_desc}}</p>
                       </td>
-                       <td width="25%" align="right"><p class="f-18 text-black"><strong>${{wishList.price}} USD</strong></p>                      
+                       <td width="25%" align="right"><p class="f-18 text-black"><strong>{{wishList.total}} INR</strong></p>
                        </td>
                     </tr>
                   </tbody>
@@ -35,7 +35,7 @@
                 <div class="col-12">
                 <div class="p-3 row">
                   <div class="col-md-4 col-sm-4 col-lg-4">
-                  <a href="javascript:void()" id="promocode">Have a promo code ?</a>
+                  <a href="javascript:void();" id="promocode">Have a promo code ?</a>
                   <div class=" show-promocode">
                   <div class="row">
                     <div class="col-md-8 col-sm-8 col-lg-8">                        
@@ -49,9 +49,9 @@
                 </div>
                  <div class="col-md-8 col-sm-8 col-lg-8">
                   <ul class="list-unstyled text-right text-black f-18 text-black">
-                    <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">${{showTotalPrice()}}.00</span></li>
-                    <li class="pb-5 fw-6 ">UK Vat <span class="d-inline-block w-100px">$10.00</span></li>
-                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">${{showTotalPrice() + 10}}.00</span></li>
+                    <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">{{showTotalPrice()}} INR</span></li>
+                    <li class="pb-5 fw-6 ">Taxes <span class="d-inline-block w-100px">10.00 INR</span></li>
+                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">{{showTotalPrice() + 10}} INR</span></li>
                   </ul>
                   </div>
                   </div>

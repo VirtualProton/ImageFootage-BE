@@ -12,7 +12,7 @@ class Product extends Model
 	protected $fillable = ['product_id','product_category','product_subcategory','product_owner','product_title','product_vertical','product_keywords','product_thumbnail','product_main_image','product_release_details','product_price_small','product_price_medium','product_price_large','product_price_extralarge','product_status','product_main_type','product_sub_type','product_added_on','updated_at','product_added_by','product_size','product_verification','product_rejectod_reason','product_editedby'];
     const HomeLimit = '100';
 
-    public function getProducts($keyword,$getKeyword){
+    public function getProducts($keyword){
         //dd($getKeyword);
         DB::enableQueryLog();
         if($keyword['productType']['id']=='1'){

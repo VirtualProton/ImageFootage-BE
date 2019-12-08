@@ -18,35 +18,49 @@ class FrontuserController extends Controller {
     public function addtocart(Request $request){
         //$lub = new Lcobucci();
 
-        echo $request['product']['type'];
-        dd($request->all());
+       // echo $request['product']['type'];
+       // dd($request->all());
 		$Usercart=new Usercart;
 		if($request['product']['type']=='2'){
-
+            $product_id = $request['product']['product_info']['media']['id'];
+            $product_type = "Image";
+            $tokens=json_decode($request['product']['token'],true);
+            $product_addedby = $tokens['Utype'];
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            if(empty($cart_list)){
+                $Usercart=new Usercart;
+                $Usercart->cart_product_id=$product_id;
+                $Usercart->cart_product_type= $product_type;
+                $Usercart->cart_added_by= $product_addedby;
+                $Usercart->standard_type= $request['product']['selected_product']['name'];
+                $Usercart->cart_added_on= date('Y-m-d H:i:s');
+                $Usercart->standard_size= $request['product']['selected_product']['width']." X ".$request['product']['selected_product']['height'];
+                $Usercart->standard_price = $request['product']['selected_product']['price']*80;
+                $Usercart->extended_name= ($request['product']['extended'])? $request['product']['extended']['id']:'';
+                $Usercart->extended_price= ($request['product']['extended'])?$request['product']['extended']['price']:'0';
+                $Usercart->total= $request['product']['total'];
+                $Usercart->product_name= $request['product']['product_info']['metadata']['title'];
+                $Usercart->product_thumb= $request['product']['product_info']['media']['thumb_170_url'];
+                $Usercart->product_desc= $request['product']['product_info']['metadata']['description'];
+                $Usercart->product_web= $request['product']['type'];
+                $Usercart->product_json= json_encode($request['product']['product_info']);
+                $result=$Usercart->save();
+                if($result){
+                    echo '{"status":"1","message":"Product added to cart successfully"}';
+                }else{
+                    echo '{"status":"0","message":"Some problem occured."}';
+                }
+            }else{
+                echo '{"status":"0","message":"Allready this product is in your cart."}';
+            }
         }
-		$product_id=$request->product_id;
-		$product_type=$request->product_type;
-		$product_addedby=$request->product_addedby;
-		$cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
-		if(empty($cart_list)){
-			$Usercart=new Usercart;
-			$Usercart->cart_product_id=$product_id;
-			$Usercart->cart_product_type=$product_type;
-			$Usercart->cart_added_by=$product_addedby;
-			$Usercart->cart_added_on=date('Y-m-d H:i:s');
-			$result=$Usercart->save();
-			if($result){
-				echo '{"status":"1","message":"Product added to cart successfully"}';
-			}else{
-				echo '{"status":"0","message":"Some problem occured."}';
-			}
-		}else{
-			echo '{"status":"0","message":"Allready this product is in your cart."}';
-		}
+
+
+
 	}
 	public function userCartList(Request $request){
-		$Usercart = new Usercart;
-		$cart_list=$Usercart->where('cart_added_by',$request->user_id)->get()->toArray();
+        $Usercart = new Usercart;
+		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->get()->toArray();
 		echo json_encode($cart_list,true);
 	}
 	public function deleteCartItom($id){

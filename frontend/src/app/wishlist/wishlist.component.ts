@@ -23,7 +23,7 @@ export class WishlistComponent implements OnInit {
                   data => {
                     this.wishListDataItems=data;
                     this.wishListDataItems.forEach(element => {
-                      this.priceArray.push(element.price);
+                      this.priceArray.push(element["total"]);
                     });
                   },
                   error => {

@@ -150,14 +150,14 @@
                           <tr *ngFor="let checkout of wishListDataItems;let i= index">
                             <td width="25%" align="center">
                               <div class="product-info">
-                                <img src="assets/images/{{checkout.imgPath}}" alt="product-img" height="100">
+                                <img src="{{checkout.product_thumb}}" alt="product-img" height="100">
                               </div>                             
                             </td>                            
                             <td width="50%">
-                               <p class="mb-1 text-black"><strong>{{checkout.name}}</strong></p>
-                               <p class="mb-1"><strong>Size:</strong>  {{checkout.size}}</p>                              
+                               <p class="mb-1 text-black"><strong>{{checkout.product_name}}</strong></p>
+                               <p class="mb-1"><strong>Size:</strong>  {{checkout.standard_size}}</p>
                             </td>
-                             <td width="25%" align="right"><p class="f-16 text-black"><strong>${{checkout.price}}.00 USD</strong></p>                            
+                             <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}} INR</strong></p>
                              </td>
                           </tr>
                         </tbody>
@@ -165,12 +165,17 @@
                           <tr class="f-20">
                           <td></td>
                             <td align="right"><strong>TOTAL</strong></td>
-                            <td align="right"><strong>${{showTotalPrice()}}.00 USD</strong></td>
+                            <td align="right"><strong>{{showTotalPrice()}} USD</strong></td>
                           </tr>
-                           <tr class="f-16">
+                          <tr class="f-20">
+                              <td></td>
+                              <td align="right"><strong>Taxes</strong></td>
+                              <td align="right"><strong>10.00 INR</strong></td>
+                          </tr>
+                          <tr class="f-16">
                           <td></td>
                             <td align="right"><strong>BALANCE DUE</strong></td>
-                            <td align="right"><strong>${{showTotalPrice()}}.00 USD</strong></td>
+                            <td align="right"><strong>{{showTotalPrice() + 10 }} USD</strong></td>
                           </tr>
                         </tfoot>
                       </table>

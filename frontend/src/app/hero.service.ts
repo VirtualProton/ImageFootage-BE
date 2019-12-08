@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'localhost/imagefootagenew/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -173,13 +173,21 @@ addcartItemsData(product:any): Observable<userData> {
   }
 
   getcartItemsData():Observable<Array<cartItemData>>{
-     let params = new HttpParams();
-    const url = `api/cartItemsData`;
-    params = params.append('actors', localStorage.getItem('checkoutAray'));
-    // this.http.get(url, { params: params }) -- Modify when API integrated
-    return this.http.get<Array<cartItemData>>(url).pipe(
-      tap(_ => this.log(`fetched cart items data`)),
-      catchError(this.handleError<Array<cartItemData>>(`getHero id`))
+     //let params = new HttpParams();
+    const url = `${this.heroesUrl}user_cart_list`;
+    let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+tokenData.access_token });
+    let options = { headers: headers };
+    return this.http.post<any>(url,tokenData,options).pipe(
+        map(cart => {
+          console.log(cart);
+
+          //this.currentUserSubject.next(cart);
+          return cart;
+        }),
+        catchError(this.handleError<userData>(`unable to get data`))
     );
   }
 
