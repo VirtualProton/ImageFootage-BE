@@ -15,6 +15,7 @@ export class HeroService {
   private localhostUrl = 'http://localhost/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
+  private countryUrl :string = "https://raw.githubusercontent.com/sagarshirbhate/Country-State-City-Database/master/Contries.json";
   private currentUserSubject: BehaviorSubject<userData>;
   public currentUser: Observable<userData>;
 
@@ -32,6 +33,10 @@ export class HeroService {
 
   public get currentUserValue(): userData {
     return this.currentUserSubject.value;
+  }
+
+  allCountries(): Observable<any>{
+    return this.http.get(this.countryUrl);
   }
 
   /** GET Slider Images from the server */
@@ -120,7 +125,8 @@ export class HeroService {
   }
 
   register(usrData: userData): Observable<any> {
-    return this.http.post(`api/userData`, usrData, this.httpOptions).pipe(
+    const url = `${this.heroesUrl}signup`
+    return this.http.post(url, usrData, this.httpOptions).pipe(
       map(userInfo => {
         return true;
       }),

@@ -17,6 +17,9 @@ export class SignUpComponent implements OnInit {
     loading = false;
     submitted = false;
     showloginPopup:boolean=false;
+    stateInfo: any[] = [];
+    countryInfo: any[] = [];
+    cityInfo: any[] = [];
 
   constructor( private formBuilder: FormBuilder,
       private authenticationService: HeroService,
@@ -26,31 +29,73 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        jobTitle: ['', Validators.required],
+        occupation: ['', Validators.required],
         company: ['', Validators.required],
         mobileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
         phoneNumber: ['', Validators.required],
+        country: ['', Validators.required],
+        state: ['', Validators.required],
+        city: ['', Validators.required],
+        pincode:['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+        address:['', Validators.required],
         iagree:['', Validators.required],
+
 
     }, {
        validator: this.dataHelper.mustMatch('password', 'confirmPassword')
   });
-  
+    this.getCountries();
   }
 
   get f() { return this.registerForm.controls; }
+
+  getCountries(){
+    this.authenticationService.allCountries().
+    subscribe(
+      data2 => {
+        this.countryInfo=data2.Countries;
+        //console.log('Data:', this.countryInfo);
+      },
+      err => console.log(err),
+      () => console.log('complete')
+    )
+  }
+
+  onChangeCountry(countryValue) {
+  //  console.log(this.countryInfo[countryValue]);
+    this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
+    this.stateInfo=this.countryInfo[countryValue].States;
+    this.cityInfo=this.stateInfo[0].Cities;
+   //  console.log(this.cityInfo);
+  }
+
+  onChangeState(stateValue) {
+   // console.log(this.stateInfo[stateValue]);
+    this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
+    this.cityInfo=this.stateInfo[stateValue].Cities;
+    // console.log(this.cityInfo);
+  }
+
+  onChangeCity(cityValue){
+    // console.log(this.cityInfo[cityValue]);
+    this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
+  }
+
 
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      console.log('at invalid');
+      console.log(this.registerForm);
         return;
     }
+    console.log(this.registerForm.value);
     this.authenticationService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
