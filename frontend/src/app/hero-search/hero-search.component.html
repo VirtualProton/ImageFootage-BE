@@ -34,26 +34,8 @@
               </a>  
                <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">Male</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Female</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">One Person</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Two People</a>
-                  </li>  
-                  <li>
-                    <a href="javascript:void(0)">Small Group</a>
-                  </li>  
-                  <li>
-                    <a href="javascript:void(0)">A Crowd</a>
-                  </li>  
-                  <li>
-                    <a href="javascript:void(0)">No People</a>
+                  <li *ngFor="let peoples of leftsideData.product_peoples">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('people',peoples.people_id) ? 'active' : ' '"  (click)="onSideMenuClick('people',peoples.people_id)">{{peoples.people_name}}</a>
                   </li>
                 </ul>
               </div>
@@ -61,22 +43,11 @@
             <li class="sidebar-dropdown">
               <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu2=!sidebarSubmenu2">
                 <i class="fa fa-shopping-cart"></i>
-                <span>Age</span>
+                <span>Gender</span>
               </a>
               <div class="sidebar-submenu sidebar-submenu-btn" *ngIf="sidebarSubmenu2">
-                <a href="javascript:void(0)" class="btn btn-dark"> Baby</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Toddler</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Child</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Tween</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Teenager</a>
-                <a href="javascript:void(0)" class="btn btn-dark">18+</a>
-                <a href="javascript:void(0)" class="btn btn-dark">21+</a>
-                <a href="javascript:void(0)" class="btn btn-dark">20s</a>
-                <a href="javascript:void(0)" class="btn btn-dark">30s</a>
-                <a href="javascript:void(0)" class="btn btn-dark">40s</a>
-                <a href="javascript:void(0)" class="btn btn-dark">50s</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Senior</a>
-                <a href="javascript:void(0)" class="btn btn-dark">Only</a>
+                <a href="javascript:void(0)" [ngClass]="getSideBarClassName('gender',gender.gender_id) ? 'btn btn-dark active' : 'btn btn-dark'"  *ngFor="let gender of leftsideData.product_gender" (click)="onSideMenuClick('gender',gender.gender_id)"> 
+                  {{gender.gender_name}}</a>
               </div>
             </li>
             <li class="sidebar-dropdown">
@@ -86,20 +57,8 @@
               </a>
               <div class="sidebar-submenu" *ngIf="sidebarSubmenu3">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">General</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Panels</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Tables</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Icons</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Forms</a>
+                  <li *ngFor="let ethinicities of leftsideData.product_ethinicities">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('ethinicity',ethinicities.ethinicity_id) ? 'active' : ' '"  (click)="onSideMenuClick('ethinicity',ethinicities.ethinicity_id)">{{ethinicities.ethinicity_name}}</a>
                   </li>
                 </ul>
               </div>
@@ -111,18 +70,9 @@
               </a>
               <div class="sidebar-submenu" *ngIf="sidebarSubmenu4">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">Pie chart</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Line chart</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Bar chart</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Histogram</a>
-                  </li>
+                  <li  *ngFor="let locations of leftsideData.product_locations">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('locations',locations.location_id) ? 'active' : ' '"  (click)="onSideMenuClick('locations',locations.location_id)">{{locations.location_name}}</a>
+                 </li>
                 </ul>
               </div>
             </li>
@@ -133,27 +83,22 @@
               </a>
               <div class="sidebar-submenu" *ngIf="sidebarSubmenu5">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">Google maps</a>
+                  <li  *ngFor="let colors of leftsideData.product_colors">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('colors',colors.pcolor_id) ? 'active' : ' '"  (click)="onSideMenuClick('colors',colors.pcolor_id)">{{colors.pcolor_name}}</a>
                   </li>
-                  <li>
-                    <a href="javascript:void(0)">Open street map</a>
-                  </li>
+                 
                 </ul>
               </div>
             </li>
              <li class="sidebar-dropdown">
               <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
                 <i class="fa fa-globe"></i>
-                <span>Shot Details</span>
+                <span>Orientations</span>
               </a>
               <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">Google maps</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Open street map</a>
+                  <li *ngFor="let orientation of leftsideData.product_orientations">
+                    <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
                   </li>
                 </ul>
               </div>
@@ -161,20 +106,42 @@
              <li class="sidebar-dropdown">
               <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">
                 <i class="fa fa-globe"></i>
-                <span>Camera Type</span>
+                <span>Image Types</span>
               </a>
               <div class="sidebar-submenu" *ngIf="sidebarSubmenu7">
                 <ul>
-                  <li>
-                    <a href="javascript:void(0)">Google maps</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Open street map</a>
+                  <li *ngFor="let imageTypes of leftsideData.product_imagetypes">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imageTypes',imageTypes.imagetype_id) ? 'active' : ' '"    (click)="onSideMenuClick('imageTypes',imageTypes.imagetype_id)">{{imageTypes.imagetype_name}}</a>
                   </li>
                 </ul>
               </div>
             </li>
-           
+            <li class="sidebar-dropdown">
+              <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu8=!sidebarSubmenu8">
+                <i class="fa fa-globe"></i>
+                <span>Image Sizes</span>
+              </a>
+              <div class="sidebar-submenu" *ngIf="sidebarSubmenu8">
+                <ul>
+                  <li *ngFor="let imagesizes of leftsideData.product_imagesizes">
+                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imagesizes',imagesizes.imagesize_id) ? 'active' : ' '"  (click)="onSideMenuClick('imagesizes',imagesizes.imagesize_id)">{{imagesizes.imagesize_name}}</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+                <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu9=!sidebarSubmenu9">
+                  <i class="fa fa-globe"></i>
+                  <span>Sort Types</span>
+                </a>
+                <div class="sidebar-submenu" *ngIf="sidebarSubmenu9">
+                  <ul>
+                    <li *ngFor="let sorttype of leftsideData.product_sorttype">
+                      <a href="javascript:void(0)" [ngClass]="getSideBarClassName('sorttype',sorttype.sorttype_id) ? 'active' : ' '" (click)="onSideMenuClick('sorttype',sorttype.sorttype_id)">{{sorttype.sorttype_name}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
           </ul>
         </div>
         <!-- sidebar-menu  -->
@@ -221,32 +188,31 @@
           </div>
           <div class="bg-dark search_menu_l">
             <ul class="search_menu search_menu col-md-6 m-auto col-sm-6">
-              <li class="active"><a href="javascript:void(0)">CURATED</a></li>
-              <li><a href="javascript:void(0)">LATEST</a></li>
-              <li><a href="javascript:void(0)">EMERGING</a></li>
-              <li><a href="javascript:void(0)">POPULAR</a></li>
+              <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
+              <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
+              <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
             </ul>
           </div>
           <div class="clearfix"></div>
           <div class="photos mt-5 pt-5">
             <div class="row align-items-stretch">  
-                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                    <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
-                      <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
-                      <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
+                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+                    <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
+                      <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_main_image}}" alt="Image" class="img-fluid">
+                      <iframe  *ngIf="aosimges.product_main_type != 'Image'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
                       <div class="photo-text-more">
                       
                         <div class="photo-text-more">
-                        <h3 class="heading">{{aosimges.name}}</h3>
-                        <span class="meta">{{aosimges.count}} Photos</span>
+                        <h3 class="heading">{{aosimges.product_title}}</h3>
+                        <span class="meta">{{aosimges.description}} Photos</span>
                       </div>
                       </div>
                     </a>
                 </div>
             </div>
         
-            <div class="col-md-5 col-sm-6 col-12 m-auto" *ngIf="aoslSliderImagesData.length !=0">
-              <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
+            <div class="col-md-5 col-sm-6 col-12 m-auto" *ngIf="aoslSliderImages.length !=0">
+              <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
     
             </div>        
           </div>

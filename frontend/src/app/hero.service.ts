@@ -4,18 +4,20 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Hero,carouselSlider,aosSlider, userData, carouselSliderImages, detailPageInfo, market, cartItemData } from './hero';
+import { Hero, carouselSlider, aosSlider, userData, carouselSliderImages, detailPageInfo, market, cartItemData } from './hero';
 import { MessageService } from './message.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+  private heroesUrl = 'localhost/imagefootagenew/backend/api/';  // URL to web api
+  private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
-  private aosImagesUrl= 'api/aosImages';
+  private aosImagesUrl = 'api/aosImages';
   private currentUserSubject: BehaviorSubject<userData>;
   public currentUser: Observable<userData>;
+
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,49 +25,85 @@ export class HeroService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { 
-        this.currentUserSubject = new BehaviorSubject<userData>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
+    private messageService: MessageService) {
+    this.currentUserSubject = new BehaviorSubject<userData>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
-    public get currentUserValue():userData{
-      return this.currentUserSubject.value;
-    }
-
-    /** GET Slider Images from the server */
-  getcarouselSliderImages (): Observable<any[]> {
-    const url = `${this.heroesUrl}home`;
-    return this.http.get<any[]>(this.carouselImagesUrl)
-      .pipe(
-        tap(_ => this.log('fetched carousel Images')),
-        catchError(this.handleError<any[]>('getCarouselImages', []))
-      );
+  public get currentUserValue(): userData {
+    return this.currentUserSubject.value;
   }
 
   /** GET Slider Images from the server */
- /** GET Slider Images from the server */
- getAosSliderImages (): Observable<any> {
-  const url = `${this.heroesUrl}home`;
-  return this.http.get<any>(url)
-    .pipe(
-     map(aosImagesUrl => {
-      return aosImagesUrl.api;
-     // return aosImagesUrl;
-    }),
-      catchError(this.handleError<any>('getCarouselImages', []))
+  getcarouselSliderImages(): carouselSlider[] {
+    //  const url = `${this.heroesUrl}home`;
+    /*return this.http.get<any[]>(this.carouselImagesUrl)
+      .pipe(
+        tap(_ => this.log('fetched carousel Images')),
+        catchError(this.handleError<any[]>('getCarouselImages', []))
+      );*/
+
+    let _carouselSlider = new carouselSlider();
+    let _carouselSliderArray = new Array<carouselSlider>();
+    _carouselSlider.id = 1;
+    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 5, name: 'Autumn' },{ id: 6, name: 'Dynama' }]
+    _carouselSliderArray.push(_carouselSlider);
+    let _carouselSlider1 = new carouselSlider();
+    _carouselSlider1.id = 2;
+    _carouselSlider1.categoryNames = [{ id: 11, name: 'Dr Nice' },{ id: 12, name: 'Narco' },{ id: 13, name: 'Bombasto' },{ id: 14, name: 'Celeritas' },{ id: 15, name: 'Magneta' },{ id: 16, name: 'RubberMan' }]
+    _carouselSliderArray.push(_carouselSlider1);
+    let _carouselSlider2 = new carouselSlider();
+    _carouselSlider2.id = 3;
+    _carouselSlider2.categoryNames = [{ id: 21, name: 'Family' },{ id: 22, name: 'Halloween' },{ id: 23, name: 'Seniors' },{ id: 24, name: 'Cats & Dogs' },{ id: 25, name: 'Time to Party' },{ id: 26, name: 'Food' }]
+    _carouselSliderArray.push(_carouselSlider2);
+    let _carouselSlider3 = new carouselSlider();
+    _carouselSlider3.id = 4;
+    _carouselSlider3.categoryNames = [{ id: 31, name: 'The Digital Frontier' },{ id: 32, name: 'Christmas' },{ id: 33, name: 'Real People & Places' },{ id: 34, name: 'Art & Concept' },{ id: 35, name: 'Magma' },{ id: 36, name: 'Tornado' }]
+    _carouselSliderArray.push(_carouselSlider3);
+
+    return _carouselSliderArray;
+  }
+
+  /** GET Slider Images from the server */
+  /** GET Slider Images from the server */
+  getAosSliderImages(): Observable<any> {
+    const url = `${this.heroesUrl}home`;
+    return this.http.get<any>(url)
+      .pipe(
+        map(aosImagesUrl => {
+          return aosImagesUrl.api;
+          // return aosImagesUrl;
+        }),
+        catchError(this.handleError<any>('getCarouselImages', []))
+      );
+  }
+
+  getAosSliderSearchImages(searchData: any): Observable<any> {
+    let url = `${this.heroesUrl}search`;
+    /* if(searchData.productType == 2){
+       url = `${this.localhostUrl}search`;
+     }*/
+
+    return this.http.post<any>(url, searchData, this.httpOptions).pipe(
+      map(searchResultSet => {
+        return searchResultSet.imgfootage;
+      }),
+      catchError(this.handleError<any>(`unable to get data`))
     );
-}
+  }
 
-getAosSliderSearchImages (searchData:any): Observable<any> {
-  const url = `${this.heroesUrl}search`;
+  getSearchLeftFilter(): Observable<any> {
+    const url = `${this.heroesUrl}get_side_filtes`
+    return this.http.get<any>(url)
+      .pipe(
+        map(searchSideMenu => {
+          return searchSideMenu.data;
+          // return aosImagesUrl;
+        }),
+        catchError(this.handleError<any>('searchSideMenu', []))
+      );
 
-  return this.http.post<any>(url, searchData, this.httpOptions).pipe(
-    map(searchResultSet => {    
-      return searchResultSet.api.items;
-    }),
-    catchError(this.handleError<any>(`unable to get data`))
-  );
-}
+  }
 
 
 
@@ -82,16 +120,16 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
     );
   }
 
-  register(usrData: userData) : Observable<any> {
-      return this.http.post(`api/userData`,usrData, this.httpOptions).pipe(
-        map(userInfo => {
-           return true;
-        }),
-        catchError(this.handleError<userData>(`unable to register data`))
-      );;
+  register(usrData: userData): Observable<any> {
+    return this.http.post(`api/userData`, usrData, this.httpOptions).pipe(
+      map(userInfo => {
+        return true;
+      }),
+      catchError(this.handleError<userData>(`unable to register data`))
+    );;
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
@@ -104,18 +142,18 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
     );
   }
 
-  getDetailPagedetails(id:number,webtype:number,type:any):Observable<detailPageInfo>{
-     console.log(id);
+  getDetailPagedetails(id: number, webtype: number, type: any): Observable<detailPageInfo> {
+    console.log(id);
     //const url = `api/detailPageInfo/?${id}`;
     const url = `${this.heroesUrl}details/${id}/${webtype}/${type}`;
     return this.http.get<detailPageInfo>(url).pipe(
       tap(_ => this.log(`fetched detail Page Info id=${id}`)),
       catchError(this.handleError<detailPageInfo>(`getHero id=${id}`))
     );
-    
+
   }
 
-  addcartItemsData(product:any): Observable<userData> {
+addcartItemsData(product:any): Observable<userData> {
     const url = `${this.heroesUrl}add_to_cart`;
     let tokenData =JSON.parse(product.token);
     let headers = new HttpHeaders({
@@ -140,14 +178,14 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
     params = params.append('actors', localStorage.getItem('checkoutAray'));
     // this.http.get(url, { params: params }) -- Modify when API integrated
     return this.http.get<Array<cartItemData>>(url).pipe(
-        tap(_ => this.log(`fetched cart items data`)),
-        catchError(this.handleError<Array<cartItemData>>(`getHero id`))
-      );
+      tap(_ => this.log(`fetched cart items data`)),
+      catchError(this.handleError<Array<cartItemData>>(`getHero id`))
+    );
   }
 
 
 
-  getMarketdeatils():Observable<market>{
+  getMarketdeatils(): Observable<market> {
     const url = `api/marketFreeze`;
     return this.http.get<market>(url).pipe(
       tap(_ => this.log(`fetched market Info id`)),
@@ -158,7 +196,7 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
 
 
   /** GET heroes from the server */
-  getHeroes (): Observable<Hero[]> {
+  getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
         tap(_ => this.log('fetched heroes')),
@@ -204,7 +242,7 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
   //////// Save methods //////////
 
   /** POST: add a new hero to the server */
-  addHero (hero: Hero): Observable<Hero> {
+  addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
@@ -212,7 +250,7 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero (hero: Hero | number): Observable<Hero> {
+  deleteHero(hero: Hero | number): Observable<Hero> {
     const id = typeof hero === 'number' ? hero : hero.id;
     const url = `${this.heroesUrl}/${id}`;
 
@@ -223,7 +261,7 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
   }
 
   /** PUT: update the hero on the server */
-  updateHero (hero: Hero): Observable<any> {
+  updateHero(hero: Hero): Observable<any> {
     return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
@@ -236,7 +274,7 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -255,3 +293,5 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
     this.messageService.add(`HeroService: ${message}`);
   }
 }
+
+

@@ -38,20 +38,20 @@
       <div class="row mx-auto my-auto">
           <div id="recipeCarousel" class="carousel slide w-100">
               <div class="carousel-inner" role="listbox">
-
-                <!-- <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
+               {{carouselSliderImages.categoryNames | json}}
+               <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
                     <div class="carousel-item">
                         <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages;let i= index">
                           <div class="col-11 m-auto">
                               <div class="row">
                                     <div class="col-md-2 col-sm-2 col-4 text-center" *ngFor="let images of carouseimges.categoryNames">
-                                      <a href="javascript:void(0)">{{images.name}}</a>
+                                      <a href="javascript:void(0)" [routerLink]="['/search']" [queryParams]="{type:1,keyword:images.name}">{{images.name}}</a>
                                     </div>
                               </div>
                           </div>
                         </ng-template>
                     </div>
-                </ngb-carousel> -->
+                </ngb-carousel>
 
                 
               </div>
