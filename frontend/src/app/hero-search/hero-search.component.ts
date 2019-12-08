@@ -23,19 +23,33 @@ export class HeroSearchComponent implements OnInit {
   randomNumber:number =0;
   searchBoxLabel:string='all';
   page:number = 1;
-  pageSize:number = 12;
+  pageSize:number = 40;
   sidebarSubmenu1:boolean = false;
+  slidebarPeopleMenu:any=[];
   sidebarSubmenu2:boolean = false;
+  slidebarLocationMenu:any=[];
   sidebarSubmenu3:boolean = false;
+  slidebarGenderMenu:any=[];
   sidebarSubmenu4:boolean = false;
+  slidebarEthnicityMenu:any=[];
   sidebarSubmenu5:boolean = false;
+  slidebarColorMenu:any=[];
   sidebarSubmenu6:boolean = false;
+  slidebarOrientationsMenu:any=[];
   sidebarSubmenu7:boolean = false;
+  slidebarImageTypeMenu:any=[];
+  sidebarSubmenu8:boolean = false;
+  slidebarImageSizeMenu:any=[];
+  sidebarSubmenu9:boolean=false;
+  sliderSortTypeMenu:any=[];
+
   name: string = '';
   carouselSliderImages: carouselSlider[] =[];
   aoslSliderImages: aosSlider[] =[];
   aoslSliderImagesData: aosSlider[] =[];
   searchData : Search;
+  leftsideData:any;
+
 
   constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper) {
     this.searchData = new Search();
@@ -54,19 +68,17 @@ export class HeroSearchComponent implements OnInit {
                       console.log(params);
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
-                        this.heroService.getAosSliderSearchImages(this.searchData)
-                          .subscribe(aoslSliderImages => {
-                            // console.log(aoslSliderImages);
-                            // console.log(aoslSliderImages.filter(ele=> ele.name.includes(this.name)));
-                            this.aoslSliderImages = aoslSliderImages.media;
-                            this.maintainSearchData(aoslSliderImages.media); 
-                            
-                          });
+                      this.searchData.letest=1;
+                      this.searchData.curated=0;
+                      this.searchData.populer=0;
+                        this.searchAPIRequest();
                     });
 
-          this.heroService.getcarouselSliderImages()
-                    .subscribe(carouselSliderImages => {
-                      this.carouselSliderImages = carouselSliderImages;   
+          this.heroService.getSearchLeftFilter()
+                    .subscribe(leftsideData => {
+                      // this.carouselSliderImages = carouselSliderImages; 
+                      console.log(leftsideData);  
+                      this.leftsideData = leftsideData;
                  
                     });
               
@@ -77,14 +89,197 @@ export class HeroSearchComponent implements OnInit {
         this.searchData.productType=type;
       }
 
+      searchAPIRequest(){
+            this.searchData.product_people =this.slidebarPeopleMenu.join(); 
+            this.searchData.product_gender = this.slidebarGenderMenu.join(); 
+            this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
+            this.searchData.product_locations = this.slidebarLocationMenu.join();
+            this.searchData.product_colors = this.slidebarColorMenu.join();
+            this.searchData.product_imagesizes = this.slidebarImageSizeMenu.join();
+            this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
+            this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
+            this.searchData.product_sortType = this.sliderSortTypeMenu.join();
+
+            this.heroService.getAosSliderSearchImages(this.searchData)
+                          .subscribe(aoslSliderImages => {
+                              this.aoslSliderImages = aoslSliderImages;
+                              this.maintainAosSlider(); 
+                              // this.maintainSearchData(aoslSliderImages);                             
+                          });
+      }
+
+      getSideBarClassName(type,id){
+        if(type=='people'){
+          let indexPeople = this.slidebarPeopleMenu.indexOf(id);
+          if (indexPeople > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'gender'){
+          let indexGender = this.slidebarGenderMenu.indexOf(id);
+          if (indexGender > -1) {
+            return true;
+          }else{
+            return false;          
+          }         
+        }else if(type == 'ethinicity'){
+          let indexEthnicity = this.slidebarEthnicityMenu.indexOf(id);
+          if (indexEthnicity > -1) {
+            return true;
+          }else{
+            return false;          
+          }          
+        }else if(type == 'locations'){
+          let indexLocation = this.slidebarLocationMenu.indexOf(id);
+          if (indexLocation > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'colors'){
+          let indexColor = this.slidebarColorMenu.indexOf(id);
+          if (indexColor > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'imagesizes'){
+          let indexImagesize = this.slidebarImageSizeMenu.indexOf(id);
+          if (indexImagesize > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'imageTypes'){
+          let indexImageType = this.slidebarImageTypeMenu.indexOf(id);
+          if (indexImageType > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'orientation'){
+          let indexOrientation = this.slidebarOrientationsMenu.indexOf(id);
+          if (indexOrientation > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }else if(type == 'sorttype'){
+          let indexSorttype = this.sliderSortTypeMenu.indexOf(id);
+          if (indexSorttype > -1) {
+            return true;
+          }else{
+            return false;          
+          }
+        }
+      }
+
+      onSideMenuClick(type,id){
+        if(type=='people'){
+          let indexPeople = this.slidebarPeopleMenu.indexOf(id);
+          if (indexPeople > -1) {
+          //  this.slidebarPeopleMenu.splice(indexPeople, 1);
+          }else{
+            this.slidebarPeopleMenu.push(id);           
+          }
+          this.searchData.product_people =this.slidebarPeopleMenu.join(); 
+        }else if(type == 'gender'){
+          let indexGender = this.slidebarGenderMenu.indexOf(id);
+          if (indexGender > -1) {
+            this.slidebarGenderMenu.splice(indexGender, 1);
+          }else{
+            this.slidebarGenderMenu.push(id);
+          }
+         // this.searchData.product_gender = this.slidebarGenderMenu.join();          
+        }else if(type == 'ethinicity'){
+          let indexEthnicity = this.slidebarEthnicityMenu.indexOf(id);
+          if (indexEthnicity > -1) {
+            this.slidebarEthnicityMenu.splice(indexEthnicity, 1);
+          }else{
+            this.slidebarEthnicityMenu.push(id);
+           }
+          // this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();          
+        }else if(type == 'locations'){
+          let indexLocation = this.slidebarLocationMenu.indexOf(id);
+          if (indexLocation > -1) {
+            this.slidebarLocationMenu.splice(indexLocation, 1);
+          }else{
+            this.slidebarLocationMenu.push(id);
+          }
+          // this.searchData.product_locations = this.slidebarLocationMenu.join();
+        }else if(type == 'colors'){
+          let indexColor = this.slidebarColorMenu.indexOf(id);
+          if (indexColor > -1) {
+            this.slidebarColorMenu.splice(indexColor, 1);
+          }else{
+            this.slidebarColorMenu.push(id);
+          }
+         // this.searchData.product_colors = this.slidebarColorMenu.join();
+        }else if(type == 'imagesizes'){
+          let indexImagesize = this.slidebarImageSizeMenu.indexOf(id);
+          if (indexImagesize > -1) {
+            this.slidebarImageSizeMenu.splice(indexImagesize, 1);
+          }else{
+            this.slidebarImageSizeMenu.push(id);
+          }
+        //  this.searchData.product_imagesizes = this.slidebarImageSizeMenu.join();
+        }else if(type == 'imageTypes'){
+          let indexImageType = this.slidebarImageTypeMenu.indexOf(id);
+          if (indexImageType > -1) {
+            this.slidebarImageTypeMenu.splice(indexImageType, 1);
+          }else{
+            this.slidebarImageTypeMenu.push(id);
+          }
+          // this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
+        }else if(type == 'orientation'){
+          let indexOrientation = this.slidebarOrientationsMenu.indexOf(id);
+          if (indexOrientation > -1) {
+            this.slidebarOrientationsMenu.splice(indexOrientation, 1);
+          }else{
+            this.slidebarOrientationsMenu.push(id);
+          }
+          // this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
+        }else if(type == 'sorttype'){
+          let indexSorttype = this.sliderSortTypeMenu.indexOf(id);
+          if (indexSorttype > -1) {
+            this.sliderSortTypeMenu.splice(indexSorttype, 1);
+          }else{
+            this.sliderSortTypeMenu.push(id);
+          }
+         // this.searchData.product_sortType = this.sliderSortTypeMenu.join();
+        }
+        this.searchAPIRequest();        
+      }
+
+
+      onTabClick(number){
+          if(number == 2){
+            this.searchData.letest=0;
+            this.searchData.curated=1;
+            this.searchData.populer=0;
+          }else if(number == 3){
+            this.searchData.letest=0;
+            this.searchData.curated=0;
+            this.searchData.populer=1;
+          }else {
+            this.searchData.letest=1;
+            this.searchData.curated=0;
+            this.searchData.populer=0;
+          }
+          this.searchAPIRequest();
+      }
+
       getClassName(ele){
         return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
       }
 
       onKeydown(event) {
         if (event.key === "Enter") {
-          // console.log(this.name);
-          this.maintainSearchData(this.aoslSliderImages);
+          this.searchData.letest=1;
+          this.searchData.curated=0;
+          this.searchData.populer=0;
+          this.searchAPIRequest();         
         }
       }
 
@@ -92,15 +287,15 @@ export class HeroSearchComponent implements OnInit {
             this.aoslSliderImagesData = aoslSliderImages;
       
             if(this.searchData.productType == 1){
-                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.mimetype == 'image/jpeg');
+                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.product_main_type == "Image");
             }else if(this.searchData.productType == 2){
-                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.mimetype != 'image/jpeg');
+                this.aoslSliderImagesData = this.aoslSliderImages.filter(ele=> ele.product_main_type != "Image");
             }else{
                 this.aoslSliderImagesData = this.aoslSliderImages;
             }
         
             if( this.searchData.search.length > 2){
-              this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.title.includes(this.name.trim()));
+              this.aoslSliderImagesData =  this.aoslSliderImagesData.filter(ele=> ele.product_title.includes(this.name.trim()));
             }
             this.maintainAosSlider();            
       }
@@ -109,7 +304,7 @@ export class HeroSearchComponent implements OnInit {
           let i =4,j=0;
           let randArr =[[6,2,3,1],[5,2,3,2],[4,3,2,3],[3,2,3,4],[3,1,6,2],[4,4,2,2],[5,4,2,1],[6,4,1,1],[4,2,4,2],[3,4,3,2]];
           let mathRandom = Math.floor(Math.random() * 10)
-          this.aoslSliderImagesData.forEach(ele=>{
+          this.aoslSliderImages.forEach(ele=>{
             if( i > j){ 
               // console.log(mathRandom)
               ele.eleClass = randArr[mathRandom][j];

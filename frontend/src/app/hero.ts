@@ -17,13 +17,25 @@ export class Category{
 export class Search{
   productType: number;
   search: string;
+  letest:number;
+  curated:number;
+  populer:number;
+  product_colors :any;
+  product_gender:any;
+  product_ethinicities:any;
+  product_imagesizes:any;
+  product_people:any;
+  product_locations:any;
+  product_imagetypes:any;
+  product_orientation:any;
+  product_sortType:any;
 }
 
 export class aosSlider{
   id:number;
-  title:string;
-  preview:any;
-  mimetype:string;
+  product_title:string;
+  product_main_image:any;
+  product_main_type:string;
   description:any;
   eleClass:number;
 }
