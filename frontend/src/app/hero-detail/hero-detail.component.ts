@@ -199,7 +199,7 @@ export class HeroDetailComponent implements OnInit {
     hideLoginPopup(event){
       this.showloginPopup = false;
       if(event){
-        this.addToCheckoutItem(this.detailPageInfo,this.standard,this.extended,this.total,'2');
+        this.addToCheckoutItem(this.detailPageInfo,this.standard,this.total,this.extended,'2');
       }
     }
 }
