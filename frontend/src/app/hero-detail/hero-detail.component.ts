@@ -28,6 +28,14 @@ export class HeroDetailComponent implements OnInit {
   addedCartItem:boolean=false;
   webtype:number=0;
   type:string='';
+  total:number=0;
+  extended_price:number=0;
+  currunt_selected_price = 0;
+  cart:any=[];
+  token:any ='';
+  checkoutAray:any =[];
+  extended:any=[];
+  standard:any=[];
 
   constructor(
     private route: ActivatedRoute,
@@ -121,18 +129,44 @@ export class HeroDetailComponent implements OnInit {
     return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
   }
 
-  addToCheckoutItem(id){
+  addToCheckoutItem(productinfo,cartproduct,total,extended,type){
     if (!this.currentUser) {
       this.showloginPopup = true;
     }else{
       this.addedCartItem = !this.addedCartItem;
-      this.checkoutArray.push(id);
+        this.token = localStorage.getItem('currentUser');
+       let cartval = {
+           "product_info":productinfo,
+           "selected_product":cartproduct,
+           "total":total,
+           "extended":extended,
+           "token":this.token,
+           "type":type
+         };
+      this.checkoutArray.push(cartval);
+      this.heroService.addcartItemsData(cartval)
+            .subscribe(data => {
+                console.log(data);
+                this.checkoutAray = data;
+            });
       // this.checkoutArray.push(2);this.checkoutArray.push(3); //remove the line when api integrated
       localStorage.setItem('checkoutAray', this.checkoutArray);
       this.router.navigate(['/wishlist']);
     }
 
   }
+
+  checkPriceTotal(selectedPrice){
+        console.log(selectedPrice);
+        this.currunt_selected_price = selectedPrice.price*80;
+        this.total = this.currunt_selected_price;
+        this.standard=selectedPrice;
+    }
+    addExtendedPriceTotal(selectedPrice){
+        this.extended_price = selectedPrice.price*80;
+        this.total = this.total + this.extended_price;
+        this.extended=selectedPrice;
+    }
 
  /* showCartLabel(){
     let addCart = this.checkoutArray.find(ele=>ele == this.id);
@@ -159,7 +193,7 @@ export class HeroDetailComponent implements OnInit {
     hideLoginPopup(event){
       this.showloginPopup = false;
       if(event){
-        this.addToCheckoutItem(this.id);
+        //this.addToCheckoutItem(this.id);
       }
     }
 }

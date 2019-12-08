@@ -40,16 +40,17 @@
                           <div>
                               <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
                               <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">
-                                  <ng-container *ngFor="let cost of detailPageInfo.licenseCost;let i=index;let first=first;">
+                                  <ng-container *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
                                       <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                          <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''">
-                                          <p class="mb-0">{{cost.name}}</p>
-                                          <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.cost}}</p>
+                                          <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)">
+                                          <p class="mb-0">{{cost.description}}</p>
+                                          <p><small><span class="text-warning"> {{cost.description}}</span> {{cost.width}}x{{cost.height}} </small></p>
+                                          <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.price*80}}</p>
                                       </label>
                                   </ng-container>
                               
                               </div>
-                                <p><small><span class="text-warning"> Small</span> 866x578px | 12.03x8.03" 72dpi</small></p>
+
                           </div>
                       </div>
                   </ng-template>
@@ -62,15 +63,15 @@
                           <div>
                               <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>
                               <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">
-                                  <ng-container *ngFor="let license of detailPageInfo.extendedLicense;let j=index;let first=first;">
+                                  <ng-container *ngFor="let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;">
                                       <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                          <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''">
+                                          <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
                                           <div class="row align-items-center">
                                               <div class="col-md-9 col-sm-9 col-lg-9">
                                                 <p class="f-14"> {{license.name}}</p>
                                               </div>
                                               <div class="col-md-3 col-sm-3 col-lg-3">
-                                                  <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.amount}}</p>
+                                                  <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.price*80}}</p>
                                               </div>
                                           </div>
                                       </label>
@@ -84,17 +85,21 @@
                 </ngb-tab>
             </ngb-tabset>
           </div>
-            <div class="row mt-5">
+            <div class="row mt-5" *ngIf="total>0">
+                <div class="col-12">
+                    <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
+                    <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
+                </div>
                 <div class="col-4">
                     <p class="text-white"><strong>Total</strong></p>
                 </div>
                 <div class="col-8 text-right">
-                    <h2 class="text-warning f-24"><strong>$100.00 USD</strong></h2>
+                    <h2 class="text-warning f-24"><strong>{{total}} INR</strong></h2>
                 </div>
             </div>
             <div class="row mt-2 mb-5">
               <div class="col-12">
-                  <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo.id)">ADD TO CART</button>
+                  <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
                   <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>
                   <p>This image is exclusive to Image Footage</p>
               </div>

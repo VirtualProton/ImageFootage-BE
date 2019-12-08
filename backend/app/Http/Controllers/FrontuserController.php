@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Models\Usercart;
 use App\Models\UserWishlist;
 use App\Models\Product;
 use App\Models\Contributor;
+use Illuminate\Support\Facades\Hash;
+use CORS;
 
 class FrontuserController extends Controller {
+
+
     public function addtocart(Request $request){
+        //$lub = new Lcobucci();
+
+        echo $request['product']['type'];
+        dd($request->all());
 		$Usercart=new Usercart;
+		if($request['product']['type']=='2'){
+
+        }
 		$product_id=$request->product_id;
 		$product_type=$request->product_type;
 		$product_addedby=$request->product_addedby;
-		$cart_list=$Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+		$cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
 		if(empty($cart_list)){
 			$Usercart=new Usercart;
 			$Usercart->cart_product_id=$product_id;

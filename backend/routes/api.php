@@ -27,17 +27,13 @@ Route::group([
 
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
-	Route::post('add_to_cart', 'FrontuserController@addtocart');
+
 	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
-	Route::post('deleate_cart_itom/{id}', 'FrontuserController@deleteCartItom');
-	Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
-	Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
-	Route::post('wishlistlist', 'FrontuserController@productList');
+
 	Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
 	Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
-	Route::post('user_cart_list', 'FrontuserController@userCartList');
-	Route::post('contact_us', 'AuthController@contactUs');
+    Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
@@ -50,4 +46,16 @@ Route::group([
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pond5Upload', 'CronController@pond5Upload');
 	Route::get('get_side_filtes', 'FiltersController@getAllFilters');
+});
+
+Route::group([
+    'middleware' => ['api','CORS','ApiLogin'],
+
+], function () {
+    Route::post('add_to_cart', 'FrontuserController@addtocart');
+    Route::post('user_cart_list', 'FrontuserController@userCartList');
+    Route::post('deleate_cart_itom/{id}', 'FrontuserController@deleteCartItom');
+    Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
+    Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
+    Route::post('wishlistlist', 'FrontuserController@productList');
 });

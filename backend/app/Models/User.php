@@ -21,6 +21,9 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name', 'email'
     ];
+//    protected $hidden = [
+//        'password', 'remember_token',
+//    ];
 
     public function account(){
         return $this->hasOne(Account::class,'id', 'account_manager_id');

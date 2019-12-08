@@ -11,7 +11,9 @@ class Product extends Model
 	protected $primaryKey = 'id';
 	protected $fillable = ['product_id','product_category','product_subcategory','product_owner','product_title','product_vertical','product_keywords','product_thumbnail','product_main_image','product_release_details','product_price_small','product_price_medium','product_price_large','product_price_extralarge','product_status','product_main_type','product_sub_type','product_added_on','updated_at','product_added_by','product_size','product_verification','product_rejectod_reason','product_editedby'];
     const HomeLimit = '100';
-    public function getProducts($keyword){
+
+    public function getProducts($keyword,$getKeyword){
+        //dd($getKeyword);
         DB::enableQueryLog();
         if($keyword['productType']['id']=='1'){
             $type='Image';
@@ -22,12 +24,25 @@ class Product extends Model
         }
         if(!empty($keyword['search'])){
             $serach = $keyword['search'];
+            $filterTypes = array('product_colors'=>'product_color',
+                'product_gender'=>'product_gender',
+                'product_ethinicities'=>'product_ethinicities',
+                'product_imagesizes'=>'product_image_size',
+                'product_imagetypes'=>'product_glow_type',
+                'product_orientations'=>'product_orientations',
+                'product_peoples'=>'product_peoples',
+                'product_locations'=>'product_locations',
+                'product_sorttype'=>'product_sort_types');
             $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')
-            ->where(function ($query) use ($type){
+                    ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+                ->where(function ($query) use ($type){
                 $query->where('product_web','=',1)->where('product_main_type','=',$type);
             })->Where(function($query) use ($serach) {
                     $query->orWhere('product_id','=',$serach)->orWhere('product_title','LIKE', '%'. $serach .'%')->orWhere('product_keywords','LIKE','%'. $serach .'%');
             })->get()->toArray();
+//            if($getKeyword['product_colors']){
+//
+//            }
         }else{
             $data =Product::where('product_main_type','=',$type)
                     ->select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')

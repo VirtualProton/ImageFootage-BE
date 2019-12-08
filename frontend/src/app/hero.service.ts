@@ -11,12 +11,11 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl= 'api/aosImages';
   private currentUserSubject: BehaviorSubject<userData>;
   public currentUser: Observable<userData>;
-
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -71,7 +70,8 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
 
 
   getLogin(email: any, password: string): Observable<userData> {
-    return this.http.post<any>(`api/userData`, { email, password }, this.httpOptions).pipe(
+    const url = `${this.heroesUrl}login`;
+    return this.http.post<any>(url, { email, password }, this.httpOptions).pipe(
       map(user => {
         console.log(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -113,6 +113,25 @@ getAosSliderSearchImages (searchData:any): Observable<any> {
       catchError(this.handleError<detailPageInfo>(`getHero id=${id}`))
     );
     
+  }
+
+  addcartItemsData(product:any): Observable<userData> {
+    const url = `${this.heroesUrl}add_to_cart`;
+    let tokenData =JSON.parse(product.token);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+tokenData.token });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, {product}, options).pipe(
+        map(cart => {
+          console.log(cart);
+
+          //this.currentUserSubject.next(cart);
+          return cart;
+        }),
+        catchError(this.handleError<userData>(`unable to get data`))
+    );
   }
 
   getcartItemsData():Observable<Array<cartItemData>>{
