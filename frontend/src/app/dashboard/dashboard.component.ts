@@ -31,14 +31,16 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
  
 
-    this.heroService.getcarouselSliderImages()
-      .subscribe(carouselSliderImages => {
-        this.carouselSliderImages = carouselSliderImages;
-      });
+    this.carouselSliderImages = this.heroService.getcarouselSliderImages();
+    console.log( this.carouselSliderImages);
+      // .subscribe(carouselSliderImages => {
+      //   console.log(carouselSliderImages);
+      //   this.carouselSliderImages = carouselSliderImages;
+      // });
 
     this.heroService.getAosSliderImages()
       .subscribe(aoslSliderImages => {
-        console.log(aoslSliderImages);
+        // console.log(aoslSliderImages);
         this.aoslSliderImages = aoslSliderImages;
         this.aoslSliderImagesData = aoslSliderImages;
 
