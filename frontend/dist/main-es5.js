@@ -1546,7 +1546,7 @@ var HeroService = /** @class */ (function () {
     function HeroService(http, messageService) {
         this.http = http;
         this.messageService = messageService;
-        this.heroesUrl = 'http://localhost/imagefootagenew/backend/api/'; // URL to web api
+        this.heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/'; // URL to web api
         this.localhostUrl = 'http://localhost/backend/api/';
         this.carouselImagesUrl = 'api/carouselImages';
         this.aosImagesUrl = 'api/aosImages';
