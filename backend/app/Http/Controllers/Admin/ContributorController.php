@@ -183,7 +183,7 @@ class ContributorController extends Controller
 	    $all_contributor_list=$contributor->where('contributor_id', $id)->get()->toArray();
 		$name=$all_contributor_list[0]['contributor_name'];
 		$cemail=$all_contributor_list[0]['contributor_email'];
-		//print_r( $all_contributor_list); exit();
+		$cmobile=$all_contributor_list[0]['contributor_email'];
 		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 			srand((double)microtime()*1000000); 
 			$i = 0; 
@@ -199,6 +199,26 @@ class ContributorController extends Controller
 							 );
 		 $result = Contributor::where('contributor_id',$id)->update($update_array);
 		 if($result){
+			 /* $message1="test";
+		$message = urlencode($message1);
+	$url = "http://tnnraocreations.com/otphttp.php?authkey=yIr6ZZC8adPKWtAIitkU&mobiles=919999999,919999999&message=$massege&sender=cpw&route=4&country=91"; 
+	//Initialize cURL.
+$ch = curl_init();
+
+//Set the URL that you want to GET by using the CURLOPT_URL option.
+curl_setopt($ch, CURLOPT_URL, $url);
+
+//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+//Execute the request.
+$data = curl_exec($ch);
+
+//Close the cURL handle.
+curl_close($ch);  */
 			 $cont_url=url('admin/contributorotpreset/').'/'.$id;
 				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 					 Mail::send('contributorresetpass', $data, function($message) use($data) {
