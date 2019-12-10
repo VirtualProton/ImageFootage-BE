@@ -48,6 +48,7 @@ class ContributorController extends Controller
          $contributor->contributor_memberid =$contributorid;
 		 $contributor->contributor_name=$request->contributor_name;
 		 $contributor->contributor_email=$request->contributor_email;
+		 $contributor->contributor_mobile=$request->contributor_mobile;
 		 //$contributor->contributor_password=md5($request->contributor_password);
 		 //$contributor->contributor_password=md5($pass);
 		 $contributor->contributor_type=$request->contributor_type;
@@ -132,6 +133,7 @@ class ContributorController extends Controller
 		 $contributor_data=Contributor::find($request->contributor_id)->toArray();
 		 $update_array=array('contributor_name'=>$request->contributor_name,
 		 					 'contributor_email'=>$request->contributor_email,
+							 'contributor_mobile'=>$request->contributor_mobile,
 							 'contributor_type'=>$request->contributor_type,
 							 'contributor_accountholder'=>$request->bank_holder_name,
 							 'contributor_banknumber'=>$request->bank_account_number,
@@ -183,7 +185,7 @@ class ContributorController extends Controller
 	    $all_contributor_list=$contributor->where('contributor_id', $id)->get()->toArray();
 		$name=$all_contributor_list[0]['contributor_name'];
 		$cemail=$all_contributor_list[0]['contributor_email'];
-		$cmobile=$all_contributor_list[0]['contributor_email'];
+		$cmobile=$all_contributor_list[0]['contributor_mobile'];
 		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 			srand((double)microtime()*1000000); 
 			$i = 0; 
@@ -199,26 +201,25 @@ class ContributorController extends Controller
 							 );
 		 $result = Contributor::where('contributor_id',$id)->update($update_array);
 		 if($result){
-			 /* $message1="test";
-		$message = urlencode($message1);
-	$url = "http://tnnraocreations.com/otphttp.php?authkey=yIr6ZZC8adPKWtAIitkU&mobiles=919999999,919999999&message=$massege&sender=cpw&route=4&country=91"; 
-	//Initialize cURL.
-$ch = curl_init();
-
-//Set the URL that you want to GET by using the CURLOPT_URL option.
-curl_setopt($ch, CURLOPT_URL, $url);
-
-//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-//Execute the request.
-$data = curl_exec($ch);
-
-//Close the cURL handle.
-curl_close($ch);  */
+			  $messagemob1="Your Imagefootage Authentication Key :-".$pass;
+			  $messagemob = urlencode($messagemob1);
+			  $url = "http://tnnraocreations.com/otphttp.php?authkey=yIr6ZZC8adPKWtAIitkU&mobiles=".$cmobile."&message=".$messagemob."&sender=cpw&route=4&country=91";
+			  //Initialize cURL.
+		      $ch = curl_init();
+			 //Set the URL that you want to GET by using the CURLOPT_URL option.
+			 curl_setopt($ch, CURLOPT_URL, $url);
+		
+		//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		
+		//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		
+		//Execute the request.
+		$data = curl_exec($ch);
+		
+		//Close the cURL handle.
+		curl_close($ch);  
 			 $cont_url=url('admin/contributorotpreset/').'/'.$id;
 				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 					 Mail::send('contributorresetpass', $data, function($message) use($data) {
