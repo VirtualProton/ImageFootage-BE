@@ -9,6 +9,7 @@ use Image;
 use File;
 use App\Models\Contributor;
 use Mail;
+use App\Http\TnnraoSms\TnnraoSms;
 class ContributorController extends Controller
 {
 	public function index(){
@@ -181,6 +182,7 @@ class ContributorController extends Controller
 		}
     }
 	public function requestForContributorPass($id){
+		$TnnraoSms=new TnnraoSms;
 		$contributor = new Contributor;
 	    $all_contributor_list=$contributor->where('contributor_id', $id)->get()->toArray();
 		$name=$all_contributor_list[0]['contributor_name'];
@@ -202,24 +204,7 @@ class ContributorController extends Controller
 		 $result = Contributor::where('contributor_id',$id)->update($update_array);
 		 if($result){
 			  $messagemob1="Your Imagefootage Authentication Key :-".$pass;
-			  $messagemob = urlencode($messagemob1);
-			  $url = "http://tnnraocreations.com/otphttp.php?authkey=yIr6ZZC8adPKWtAIitkU&mobiles=".$cmobile."&message=".$messagemob."&sender=cpw&route=4&country=91";
-			  //Initialize cURL.
-		      $ch = curl_init();
-			 //Set the URL that you want to GET by using the CURLOPT_URL option.
-			 curl_setopt($ch, CURLOPT_URL, $url);
-		
-		//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		
-		//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		
-		//Execute the request.
-		$data = curl_exec($ch);
-		
-		//Close the cURL handle.
-		curl_close($ch);  
+			  $TnnraoSms->sendSms($messagemob1,$cmobile);
 			 $cont_url=url('admin/contributorotpreset/').'/'.$id;
 				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 					 Mail::send('contributorresetpass', $data, function($message) use($data) {
