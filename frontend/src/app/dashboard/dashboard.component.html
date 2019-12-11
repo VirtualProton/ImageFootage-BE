@@ -1,6 +1,41 @@
 
+<div class="video-background-holder">
+  <div class="video-background-overlay"></div>
+  <video playsinline="playsinline" autoplay muted="muted" loop>
+        <source src="https://imagefootage.com/video/VIDEO_2_25MB_home.mp4" type="video/mp4">
+    </video>
+  <div class="video-background-content container h-100">
+    <div class="d-flex h-100 text-center align-items-center">
+      <div class="col-md-10 col-sm-10 col-lg-10 m-auto">
+      <div class="w-100 text-white vedio_text">
+        <h1 class="display-4"><strong>Bring Your Vision to Life Without Compromise</strong></h1>
+           
+          <form class="search_m">
+    <div class="input-group">
+          <div class="input-group-btn" ngbDropdown >
+            <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
+             <span *ngIf='searchBoxLabel == 1'>Photos Only</span>
+             <span *ngIf='searchBoxLabel == 2'>Videos Only</span>
+             <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
 
-<header class="masthead">
+
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem><i class=""></i> Photos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem>Photos + Videos</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem>Videos Only</a>
+               </div>
+          </div>
+          <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button">
+          <a href="javascript:void(0)" class="iconSearch" (click)="searchAosData(searchBoxEle.value)"><span class="fa fa-camera text-gray"></span></a>
+        </div>
+  </form>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<!--<header class="masthead">
     <div class="container">
         <div class="row justify-content-center">
             <video id="theVideo" autoplay="autoplay" loop="loop" controls="controls" muted="muted" style="position: absolute;
@@ -41,7 +76,7 @@
         </div>
       </div>
     </div>
-  </header>
+  </header>-->
 
   <div class="site-wrap">
     <div class="container-fluid text-center my-5">

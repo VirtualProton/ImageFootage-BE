@@ -301,9 +301,9 @@ body {
   margin-top: 0px;
 }
 
-/*.sidebar-wrapper .sidebar-menu .sidebar-submenu {
+.sidebar-wrapper .sidebar-menu .sidebar-submenu {
   display: none;
-}*/
+}
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active > a:after {
   transform: rotate(90deg);
