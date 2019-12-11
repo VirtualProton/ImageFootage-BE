@@ -105,6 +105,7 @@ class ProductController extends Controller
 		 $productid=$firstThreeCharacters.$firstThreeCharactersType;
 		 $product->product_id =$productid;
 		 $product->product_title=$request->product_title;
+		 $product->license_type=$request->license_type;
 		 $product->product_category=$request->product_category;
 		 $product->product_subcategory=$request->product_sub_category;
 		 $product->product_owner=$request->owner_name;
@@ -474,6 +475,7 @@ class ProductController extends Controller
 		 					 'product_subcategory'=>$request->product_sub_category,
 							 'product_owner'=>$request->owner_name,
 							 'product_title'=>$request->product_title,
+							 'license_type'=>$request->license_type,
 							 'product_vertical'=>$request->product_vertical,
 							 'product_keywords'=>$request->prodect_keywords,
 							 'product_thumbnail'=>$request->product_thumbnail,

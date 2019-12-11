@@ -52,6 +52,17 @@
                        @endif
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputEmail1">License Type </label>
+                      <select class="form-control" name="license_type" id="license_type">
+                          <option value="">--Select Type--</option>
+                          <option value="Standard" @if($product['license_type']=="Standard") selected="selected" @endif>Standard</option>
+                          <option value="Extended" @if($product['license_type']=="Extended") selected="selected" @endif>Extended</option>
+                      </select>
+                    </div>
+                    @if ($errors->has('license_type'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('license_type') }}</div>
+                    @endif
+                    <div class="form-group">
                       <label for="exampleInputEmail1">Product Category </label>
                       <select class="form-control" name="product_category" id="product_category">
                         <option value="">--Select Category--</option>

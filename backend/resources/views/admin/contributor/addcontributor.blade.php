@@ -44,6 +44,13 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('contributor_email') }}</div>
                        @endif
                     </div>
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Contributor Mobile</label>
+                      <input type="text" class="form-control" name="contributor_mobile" id="contributor_mobile" placeholder="Contributor Mobile">
+                       @if ($errors->has('contributor_mobile'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('contributor_mobile') }}</div>
+                       @endif
+                    </div>
                     <?php /*<div class="form-group">
                       <label for="exampleInputEmail1">Contributor Password</label>
                       <input type="password" class="form-control" name="contributor_password" id="contributor_password">
