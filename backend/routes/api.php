@@ -46,6 +46,9 @@ Route::group([
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pond5Upload', 'CronController@pond5Upload');
 	Route::get('get_side_filtes', 'FiltersController@getAllFilters');
+    Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
+    Route::get('getCountyStatesList/{id}', 'UserContactusController@getCountyStatesList');
+    Route::get('getStateCityList/{id}', 'UserContactusController@getStateCityList');
 });
 
 Route::group([

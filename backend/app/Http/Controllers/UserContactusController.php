@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usercontactus;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 
 class UserContactusController extends Controller
 {
@@ -25,4 +28,20 @@ class UserContactusController extends Controller
 				echo '{"status":"0","message":"Some problem occured."}';
 	   }
    }
+
+   public function getCountyStatesCityList(){
+     ini_set('max_execution_time',0);
+     $county_list = Country::get()->toArray();
+      return json_encode($county_list);
+   }
+   public function getCountyStatesList($country){
+       ini_set('max_execution_time',0);
+       $state_list = State::where('country_id',$country)->get()->toArray();
+       return json_encode($state_list);
+   }
+    public function getStateCityList($state){
+        ini_set('max_execution_time',0);
+        $cities_list = City::where('state_id',$state)->get()->toArray();
+        return json_encode($cities_list);
+    }
 }

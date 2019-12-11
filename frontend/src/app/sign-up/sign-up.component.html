@@ -89,9 +89,9 @@
                       
                       <div class="row form-group mb-5">
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" >Slect Country</label>                           
-                            <select class="form-control  text-white" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)"> 
-                                <option *ngFor="let country of countryInfo; let i = index"  value="{{i}}">{{country.CountryName}}</option>
+                            <label class="text-white" >Select Country</label>
+                            <select class="form-control" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
+                                <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
                             </select> 
                             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
                                 <div *ngIf="f.country.errors.required">Country is required</div>
@@ -99,9 +99,9 @@
                         </div>
                         <div class="col-md-4 col-sm-4">
                             <label class="text-white" >Select State</label>                           
-                            <select class="form-control  text-white" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)"> 
+                            <select class="form-control" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
                                 <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
-                                <option *ngFor="let state of stateInfo; let j = index"  value="{{j}}">{{state.StateName}}</option>
+                                <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
                             </select> 
                             <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
                                 <div *ngIf="f.state.errors.required">State is required</div>
@@ -111,7 +111,7 @@
                             <label class="text-white">Select City</label> 
                             <select class="form-control  text-white" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
                                 <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
-                                <option *ngFor="let city of cityInfo; let k = index"  value="{{k}}">{{city}}</option>
+                                <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
                             </select> 
                             <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                                 <div *ngIf="f.city.errors.required">City is required</div>

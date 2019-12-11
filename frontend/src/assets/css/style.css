@@ -811,7 +811,7 @@ h1, h2, h3, h4, h5,
 
 
 .search_m {position:relative;}
-.iconSearch{position:absolute;top: 8px;right: 8px;padding: 15px;}
+.iconSearch{position:inherit;top: 8px;right: 8px;padding: 15px;}
 
 
 .search_m .form-control{border:none !important; background:#fff; height:70px; color:#333; font-size:1.3rem; padding-left:10px;}

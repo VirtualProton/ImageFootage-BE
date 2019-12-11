@@ -58,7 +58,8 @@ export class SignUpComponent implements OnInit {
     this.authenticationService.allCountries().
     subscribe(
       data2 => {
-        this.countryInfo=data2.Countries;
+        //this.countryInfo=data2.Countries;
+        this.countryInfo=data2;
         //console.log('Data:', this.countryInfo);
       },
       err => console.log(err),
@@ -68,22 +69,42 @@ export class SignUpComponent implements OnInit {
 
   onChangeCountry(countryValue) {
   //  console.log(this.countryInfo[countryValue]);
-    this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
-    this.stateInfo=this.countryInfo[countryValue].States;
-    this.cityInfo=this.stateInfo[0].Cities;
+    this.authenticationService.allstates(countryValue).
+    subscribe(
+        data2 => {
+          //this.countryInfo=data2.Countries;
+          this.stateInfo=data2;
+          //console.log('Data:', this.countryInfo);
+        },
+        err => console.log(err),
+        () => console.log('complete')
+    )
+   // this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
+   // this.stateInfo=this.countryInfo[countryValue].States;
+   // this.cityInfo=this.stateInfo[0].Cities;
    //  console.log(this.cityInfo);
   }
 
   onChangeState(stateValue) {
    // console.log(this.stateInfo[stateValue]);
-    this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
-    this.cityInfo=this.stateInfo[stateValue].Cities;
+    this.authenticationService.allCities(stateValue).
+    subscribe(
+        data2 => {
+          //this.countryInfo=data2.Countries;
+          this.cityInfo=data2;
+          //console.log('Data:', this.countryInfo);
+        },
+        err => console.log(err),
+        () => console.log('complete')
+    )
+   // this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
+   // this.cityInfo=this.stateInfo[stateValue].Cities;
     // console.log(this.cityInfo);j
   }
 
   onChangeCity(cityValue){
     // console.log(this.cityInfo[cityValue]);
-    this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
+   // this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
   }
 
 
@@ -98,8 +119,19 @@ export class SignUpComponent implements OnInit {
     this.authenticationService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
-                data => {
+                data2 => {
+                    alert("Sucessfully Registered");
                     this.router.navigate(['/']);
+                  // console.log(data2);
+                  // console.log(data2.message);
+                  // console.log(data2["message"]);
+                  // if(data2.status=='1'){
+                  //   alert(data2.message);
+                  //   this.router.navigate(['/']);
+                  // }else{
+                  //   alert(data2.message);
+                  // }
+
                 },
                 error => {
                     this.loading = false;

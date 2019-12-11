@@ -8,7 +8,9 @@ use DB;
 class Country extends Model
 {
     protected $table = 'countries';
-
+    public function state(){
+        return $this->hasMany(State::class,'country_id', 'id');
+    }
     public function getCity($col=NULL,$value=NULL){
         if(!empty($col) && !empty($value)){
             $cities = DB::table('cities')->where($col,'=',$value)->get()->toArray();

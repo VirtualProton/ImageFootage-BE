@@ -38,8 +38,21 @@ export class HeroService {
 
 
   allCountries(): Observable<any>{
-    return this.http.get(this.countryUrl);
+    const url = `${this.heroesUrl}getCountyStatesCityList`;
+    //return this.http.get(this.countryUrl);
+    return this.http.get(url);
   }
+  allstates(country): Observable<any>{
+    const url = `${this.heroesUrl}getCountyStatesList/`+country;
+    //return this.http.get(this.countryUrl);
+    return this.http.get(url);
+  }
+  allCities(state): Observable<any>{
+    const url = `${this.heroesUrl}getStateCityList/`+state;
+    //return this.http.get(this.countryUrl);
+    return this.http.get(url);
+  }
+
 
   /** GET Slider Images from the server */
   getcarouselSliderImages(): carouselSlider[] {
