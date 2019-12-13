@@ -32,7 +32,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   showTotalPrice(){
-    console.log(this.priceArray);
+
     return this.priceArray.reduce(function(acc, val) { return acc + val; }, 0);
   }
 
