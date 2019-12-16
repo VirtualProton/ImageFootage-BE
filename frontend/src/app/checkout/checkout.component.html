@@ -1,59 +1,75 @@
 <section class="mt-5">
   
         <div class="container"> 
-    
-                            <div class="row">
+            <div class="row">
                    <div class="col-lg-5 col-md-5 col-sm-6 bg-light">
                       <div class="card z-depth-0">
-                     <form class="loignForm p-5">
+                     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="loignForm p-5">
                      <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
                        <div class="row form-group">
                        <div class="col-lg-6 col-md-6 col-sm-6">
                          <label>First Name</label>
-                         <input type="text" class="form-control rounded-0">
+                           <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0">
+                           <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                               <div *ngIf="f.first_name.errors.required">First Name is required</div>
+                           </div>
                        </div>
                       
                        <div class="col-lg-6 col-md-6 col-sm-6">
                          <label>Last Name</label>
-                         <input type="text" class="form-control">
+                           <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"  class="form-control">
+                           <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                               <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+                           </div>
                        </div>
                        
                         </div>
                         
                      <div class="form-group">
                          <label>Street Address</label>
-                         <textarea  class="form-control rounded-0" rows="2" style="min-height:70px;"></textarea>
+                         <textarea name="address" id="address" cols="5" rows="1" class="form-control" placeholder="" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
+                         <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                             <div *ngIf="f.address.errors.required">Address is required</div>
+                         </div>
                        </div>
-                       
-                     <div class="form-group">
-                         <label>City</label>
-                         <input type="text" class="form-control rounded-0">
-                       </div>
-                       
                        <div class="form-group">
-                         <label>Country</label>
-                         <select class="form-control">
-                          <option value="">India</option>
-                          <option value="">Canada</option>
-                          <option value="">USA</option>
-                          <option value="">Aus</option>
-                         </select>
-                       </div>
+                             <label>Country</label>
+                             <select class="form-control" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
+                                 <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
+                             </select>
+                             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                 <div *ngIf="f.country.errors.required">Country is required</div>
+                             </div>
+                         </div>
                        
                        <div class="row form-group pt-4">
                        <div class="col-md-6 col-lg-6 col-sm-6">
                          <label>State/province</label>
-                         <select class="form-control">
-                          <option value="">India</option>
-                          <option value="">Canada</option>
-                          <option value="">USA</option>
-                          <option value="">Aus</option>
-                         </select>
+                           <select class="form-control" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
+                               <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                               <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
+                           </select>
+                           <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                               <div *ngIf="f.state.errors.required">State is required</div>
+                           </div>
                        </div>
-                       
-                       <div class="col-md-6 col-sm-6 col-lg-6">
+                           <div class="form-group">
+                               <label>City</label>
+                               <select class="form-control" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
+                                   <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                                   <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
+                               </select>
+                               <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                   <div *ngIf="f.city.errors.required">City is required</div>
+                               </div>
+                           </div>
+                           <div class="col-md-6 col-sm-6 col-lg-6">
                          <label>Zipcode</label>
-                         <input type="text" class="form-control">
+                               <input type="text" id="pincode" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
+                               <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
+                                   <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
+                                   <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>
+                               </div>
                        </div>
                        </div>
                        
@@ -64,22 +80,60 @@
                          <hr>
                          <h3 class="f-20 mb-4 mt-5">PAYMENT INFORMATION</h3>
     
-                         <div class="row">
+                           <div class="row">
                            <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
                              
                              <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="customRadio" name="example1" value="customEx" checked="">
+        <input type="radio" class="custom-control-input" id="customRadio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="">
         <label class="custom-control-label" for="customRadio"><strong>Atom Payment Gateway</strong></label>
       </div>
                            </div>
     
                            <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                             
-                             <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>
-                             <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>
+<!--                             -->
+<!--                             <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
+<!--                             <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
                            </div>
     
                          </div>
+                           <div class="clearfix"></div>
+                           <div class="row">
+                               <div class="clearfix"></div>
+                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
+
+                                   <div class="custom-control custom-radio">
+                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio1" name="paymentGatway" value="payu">
+                                       <label class="custom-control-label" for="customRadio1"><strong>PayUmoney Payment Gateway</strong></label>
+                                   </div>
+                               </div>
+
+                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+
+<!--                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
+<!--                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
+                               </div>
+
+                           </div>
+                           <div class="clearfix"></div>
+                           <div class="clearfix"></div>
+                           <div class="row">
+                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
+
+                                   <div class="custom-control custom-radio">
+                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">
+                                       <label class="custom-control-label" for="customRadio2"><strong>Rozerpay Payment Gateway</strong></label>
+                                   </div>
+                               </div>
+
+                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+
+<!--                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
+<!--                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
+                               </div>
+
+                           </div>
+                           <div class="clearfix"></div>
+                           <div class="clearfix"></div>
 <!--                          <div class="row form-group mt-4">-->
 <!--                       <div class="col-lg-12 col-md-12 col-sm-12">-->
 <!--                         <label>Credit Card Number</label>-->
@@ -123,8 +177,11 @@
 <!--                         <input type="text" class="form-control rounded-0">-->
 <!--                       </div>                  -->
 <!--                        </div>-->
-                           <div class="row form-group"><button type="button" class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Make Payment
-                           </strong></button></div>
+                           <div class="row form-group">
+                               <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Make Payment
+                           </strong>
+                               </button>
+                           </div>
                         
                        
                        </div>
@@ -166,7 +223,7 @@
                           <tr class="f-20">
                           <td></td>
                             <td align="right"><strong>TOTAL</strong></td>
-                            <td align="right"><strong>{{showTotalPrice()}} USD</strong></td>
+                            <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>
                           </tr>
                           <tr class="f-20">
                               <td></td>
@@ -176,7 +233,7 @@
                           <tr class="f-16">
                           <td></td>
                             <td align="right"><strong>BALANCE DUE</strong></td>
-                            <td align="right"><strong>{{showTotalPrice() + 10 }} USD</strong></td>
+                            <td align="right"><strong>{{showTotalPrice() + 10 }} INR</strong></td>
                           </tr>
                         </tfoot>
                       </table>

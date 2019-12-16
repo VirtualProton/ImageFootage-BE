@@ -49,6 +49,8 @@ Route::group([
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
     Route::get('getCountyStatesList/{id}', 'UserContactusController@getCountyStatesList');
     Route::get('getStateCityList/{id}', 'UserContactusController@getStateCityList');
+    Route::post('atomPayResponse', 'PaymentController@atomPayResponse');
+
 });
 
 Route::group([
@@ -61,4 +63,5 @@ Route::group([
     Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
     Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
     Route::post('wishlistlist', 'FrontuserController@productList');
+    Route::post('payment', 'PaymentController@payment');
 });

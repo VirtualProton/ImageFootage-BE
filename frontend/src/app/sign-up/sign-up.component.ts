@@ -11,8 +11,6 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
-
     registerForm: FormGroup;
     loading = false;
     submitted = false;
@@ -107,7 +105,6 @@ export class SignUpComponent implements OnInit {
    // this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
   }
 
-
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
@@ -120,17 +117,14 @@ export class SignUpComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data2 => {
-                    alert("Sucessfully Registered");
+                    //alert("Sucessfully Registered");
+                   // this.router.navigate(['/']);
+                  if(data2.status=='1'){
+                    alert(data2.message);
                     this.router.navigate(['/']);
-                  // console.log(data2);
-                  // console.log(data2.message);
-                  // console.log(data2["message"]);
-                  // if(data2.status=='1'){
-                  //   alert(data2.message);
-                  //   this.router.navigate(['/']);
-                  // }else{
-                  //   alert(data2.message);
-                  // }
+                  }else{
+                    alert(data2.message);
+                  }
 
                 },
                 error => {

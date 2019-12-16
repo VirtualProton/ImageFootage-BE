@@ -52,7 +52,7 @@ module.exports = "<!-- <h1>{{title}}</h1>\n<nav>\n  <a routerLink=\"/dashboard\"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"mt-5\">\n  \n        <div class=\"container\"> \n    \n                            <div class=\"row\">\n                   <div class=\"col-lg-5 col-md-5 col-sm-6 bg-light\">\n                      <div class=\"card z-depth-0\">\n                     <form class=\"loignForm p-5\">\n                     <h3 class=\"f-20 mb-3\">BILLING ADDRESS</h3>\n                       <div class=\"row form-group\">\n                       <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                         <label>First Name</label>\n                         <input type=\"text\" class=\"form-control rounded-0\">\n                       </div>\n                      \n                       <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                         <label>Last Name</label>\n                         <input type=\"text\" class=\"form-control\">\n                       </div>\n                       \n                        </div>\n                        \n                     <div class=\"form-group\">\n                         <label>Street Address</label>\n                         <textarea  class=\"form-control rounded-0\" rows=\"2\" style=\"min-height:70px;\"></textarea>\n                       </div>\n                       \n                     <div class=\"form-group\">\n                         <label>City</label>\n                         <input type=\"text\" class=\"form-control rounded-0\">\n                       </div>\n                       \n                       <div class=\"form-group\">\n                         <label>Country</label>\n                         <select class=\"form-control\">\n                          <option value=\"\">India</option>\n                          <option value=\"\">Canada</option>\n                          <option value=\"\">USA</option>\n                          <option value=\"\">Aus</option>\n                         </select>\n                       </div>\n                       \n                       <div class=\"row form-group pt-4\">\n                       <div class=\"col-md-6 col-lg-6 col-sm-6\">\n                         <label>State/province</label>\n                         <select class=\"form-control\">\n                          <option value=\"\">India</option>\n                          <option value=\"\">Canada</option>\n                          <option value=\"\">USA</option>\n                          <option value=\"\">Aus</option>\n                         </select>\n                       </div>\n                       \n                       <div class=\"col-md-6 col-sm-6 col-lg-6\">\n                         <label>Zipcode</label>\n                         <input type=\"text\" class=\"form-control\">\n                       </div>\n                       </div>\n                       \n                       <div class=\"form-group pt-3\">\n                       \n\n                         <div class=\"clearfix\"></div>\n                         <hr>\n                         <h3 class=\"f-20 mb-4 mt-5\">PAYMENT INFORMATION</h3>\n    \n                         <div class=\"row\">\n                           <div class=\"col-md-8 col-sm-8 col-lg-8 col-xs-8\">\n                             \n                             <div class=\"custom-control custom-radio\">\n        <input type=\"radio\" class=\"custom-control-input\" id=\"customRadio\" name=\"example1\" value=\"customEx\" checked=\"\">\n        <label class=\"custom-control-label\" for=\"customRadio\"><strong>Atom Payment Gateway</strong></label>\n      </div>\n                           </div>\n    \n                           <div class=\"col-md-4 col-sm-4 col-lg-4 col-xs-4\">\n                             \n                             <span><img src=\"assets/images/visa.png\" class=\"border p-1\" height=\"24\"></span>\n                             <span><img src=\"assets/images/mastarcard.png\"  class=\"border p-1\"  height=\"24\"></span>\n                           </div>\n    \n                         </div>\n<!--                          <div class=\"row form-group mt-4\">-->\n<!--                       <div class=\"col-lg-12 col-md-12 col-sm-12\">-->\n<!--                         <label>Credit Card Number</label>-->\n<!--                         <input type=\"number\" class=\"form-control rounded-0\">-->\n<!--                       </div>                  -->\n<!--                        </div>-->\n    \n<!--                       <div class=\"row form-group\">-->\n<!--                      <div class=\"col-md-8 col-lg-8 col-sm-8\">-->\n<!--                         <label>Expiry Date</label>-->\n<!--                         <div class=\"row\">-->\n<!--                          <div class=\"col-md-6 col-sm-6 col-lg-6\">-->\n<!--                         <select class=\"form-control\">-->\n<!--                          <option value=\"\">MM</option>-->\n<!--                          <option value=\"\">01</option>-->\n<!--                          <option value=\"\">02</option>-->\n<!--                          <option value=\"\">03</option>-->\n<!--                         </select>-->\n<!--                       </div>-->\n<!--                       <div class=\"col-md-6 col-sm-6 col-lg-6\">-->\n<!--                         <select class=\"form-control\">-->\n<!--                          <option value=\"\">YY</option>-->\n<!--                          <option value=\"\">2019</option>-->\n<!--                          <option value=\"\">2018</option>-->\n<!--                          <option value=\"\">2017</option>-->\n<!--                         </select>-->\n<!--                       </div>-->\n<!--                       </div>-->\n<!--                       </div>-->\n<!--                      -->\n<!--&lt;!&ndash;                       <div class=\"col-lg-4 col-md-4 col-sm-4\">&ndash;&gt;-->\n<!--&lt;!&ndash;                         <label>Security Code</label>&ndash;&gt;-->\n<!--&lt;!&ndash;                         <input type=\"text\" class=\"form-control\" placeholder=\"CVV\">&ndash;&gt;-->\n<!--&lt;!&ndash;                       </div>&ndash;&gt;-->\n<!--                       -->\n<!--                        </div>-->\n    \n<!--                         <div class=\"row form-group\">-->\n<!--                       <div class=\"col-lg-12 col-md-12 col-sm-12\">-->\n<!--                         <label>Name on Card</label>-->\n<!--                         <input type=\"text\" class=\"form-control rounded-0\">-->\n<!--                       </div>                  -->\n<!--                        </div>-->\n                           <div class=\"row form-group\"><button type=\"button\" class=\"btn btn-success btn-block text-white p-3 text-uppercase\"><strong>Make Payment\n                           </strong></button></div>\n                        \n                       \n                       </div>\n                       \n                       \n                     </form>\n                   </div>\n                   \n                   \n                   </div>\n                   \n                   <div class=\"col-lg-7 col-md-7 col-sm-6\">\n                    <div class=\"card\">\n                    <div class=\"table-responsive\">\n                      <table class=\"table cart-table checkout-table\">\n                        <thead class=\"f-16\">\n                          <tr>\n                            <th colspan=\"2\"><h3 class=\"f-18\">CART</h3>\n                            <p class=\"mb-0\">{{wishListDataItems.length}} Items</p></th>\n                            <th align=\"right\" class=\"text-right\"><button class=\"btn btn-default rounded-0\" (click)=\"goToWishList()\">Edit</button></th>                          \n                          </tr>\n                        </thead>\n                        <tbody>\n                          <tr *ngFor=\"let checkout of wishListDataItems;let i= index\">\n                            <td width=\"25%\" align=\"center\">\n                              <div class=\"product-info\">\n                                <img src=\"{{checkout.product_thumb}}\" alt=\"product-img\" height=\"100\">\n                              </div>                             \n                            </td>                            \n                            <td width=\"50%\">\n                               <p class=\"mb-1 text-black\"><strong>{{checkout.product_name}}</strong></p>\n                               <p class=\"mb-1\"><strong>Size:</strong>  {{checkout.standard_size}}</p>\n                            </td>\n                             <td width=\"25%\" align=\"right\"><p class=\"f-16 text-black\"><strong>{{checkout.total}} INR</strong></p>\n                             </td>\n                          </tr>\n                        </tbody>\n                        <tfoot class=\"text-black\">\n                          <tr class=\"f-20\">\n                          <td></td>\n                            <td align=\"right\"><strong>TOTAL</strong></td>\n                            <td align=\"right\"><strong>{{showTotalPrice()}} USD</strong></td>\n                          </tr>\n                          <tr class=\"f-20\">\n                              <td></td>\n                              <td align=\"right\"><strong>Taxes</strong></td>\n                              <td align=\"right\"><strong>10.00 INR</strong></td>\n                          </tr>\n                          <tr class=\"f-16\">\n                          <td></td>\n                            <td align=\"right\"><strong>BALANCE DUE</strong></td>\n                            <td align=\"right\"><strong>{{showTotalPrice() + 10 }} USD</strong></td>\n                          </tr>\n                        </tfoot>\n                      </table>\n                    </div>\n                  </div>\n               </div>\n                \n            </div>\n        </div>\n      </section>\n"
+module.exports = "<section class=\"mt-5\">\n  \n        <div class=\"container\"> \n            <div class=\"row\">\n                   <div class=\"col-lg-5 col-md-5 col-sm-6 bg-light\">\n                      <div class=\"card z-depth-0\">\n                     <form [formGroup]=\"checkoutForm\" (ngSubmit)=\"onSubmit()\" class=\"loignForm p-5\">\n                     <h3 class=\"f-20 mb-3\">BILLING ADDRESS</h3>\n                       <div class=\"row form-group\">\n                       <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                         <label>First Name</label>\n                           <input type=\"text\" formControlName=\"first_name\" [ngClass]=\"{ 'is-invalid': submitted && f.first_name.errors }\" class=\"form-control rounded-0\">\n                           <div *ngIf=\"submitted && f.first_name.errors\" class=\"invalid-feedback\">\n                               <div *ngIf=\"f.first_name.errors.required\">First Name is required</div>\n                           </div>\n                       </div>\n                      \n                       <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                         <label>Last Name</label>\n                           <input type=\"text\" formControlName=\"last_name\" id=\"lname\" [ngClass]=\"{ 'is-invalid': submitted && f.last_name.errors }\"  class=\"form-control\">\n                           <div *ngIf=\"submitted && f.last_name.errors\" class=\"invalid-feedback\">\n                               <div *ngIf=\"f.last_name.errors.required\">Last Name is required</div>\n                           </div>\n                       </div>\n                       \n                        </div>\n                        \n                     <div class=\"form-group\">\n                         <label>Street Address</label>\n                         <textarea name=\"address\" id=\"address\" cols=\"5\" rows=\"1\" class=\"form-control\" placeholder=\"\" [ngClass]=\"{ 'is-invalid': submitted && f.address.errors }\" formControlName=\"address\"></textarea>\n                         <div *ngIf=\"submitted && f.address.errors\" class=\"invalid-feedback\">\n                             <div *ngIf=\"f.address.errors.required\">Address is required</div>\n                         </div>\n                       </div>\n                       <div class=\"form-group\">\n                             <label>Country</label>\n                             <select class=\"form-control\" id=\"select-language1\" [ngClass]=\"{ 'is-invalid': submitted && f.country.errors }\"  formControlName=\"country\" (change)=\"onChangeCountry($event.target.value)\">\n                                 <option *ngFor=\"let country of countryInfo; let i = index\"  value=\"{{country.id}}\">{{country.name}}</option>\n                             </select>\n                             <div *ngIf=\"submitted && f.country.errors\" class=\"invalid-feedback\">\n                                 <div *ngIf=\"f.country.errors.required\">Country is required</div>\n                             </div>\n                         </div>\n                       \n                       <div class=\"row form-group pt-4\">\n                       <div class=\"col-md-6 col-lg-6 col-sm-6\">\n                         <label>State/province</label>\n                           <select class=\"form-control\" id=\"select-language2\" formControlName=\"state\" [ngClass]=\"{ 'is-invalid': submitted && f.state.errors }\" (change)=\"onChangeState($event.target.value)\">\n                               <option *ngIf=\"stateInfo == ''\" value=\"-1\">--Select State--</option>\n                               <option *ngFor=\"let state of stateInfo; let j = index\"  value=\"{{state.id}}\">{{state.state}}</option>\n                           </select>\n                           <div *ngIf=\"submitted && f.state.errors\" class=\"invalid-feedback\">\n                               <div *ngIf=\"f.state.errors.required\">State is required</div>\n                           </div>\n                       </div>\n                           <div class=\"form-group\">\n                               <label>City</label>\n                               <select class=\"form-control\" id=\"select-language3\" formControlName=\"city\" [ngClass]=\"{ 'is-invalid': submitted && f.city.errors }\" (change)=\"onChangeCity($event.target.value)\">\n                                   <option *ngIf=\"cityInfo == ''\" value=\"-1\">--Select CIty--</option>\n                                   <option *ngFor=\"let city of cityInfo; let k = index\"  value=\"{{city.id}}\">{{city.name}}</option>\n                               </select>\n                               <div *ngIf=\"submitted && f.city.errors\" class=\"invalid-feedback\">\n                                   <div *ngIf=\"f.city.errors.required\">City is required</div>\n                               </div>\n                           </div>\n                           <div class=\"col-md-6 col-sm-6 col-lg-6\">\n                         <label>Zipcode</label>\n                               <input type=\"text\" id=\"pincode\" class=\"form-control\" formControlName=\"pincode\"  [ngClass]=\"{ 'is-invalid': submitted && f.pincode.errors }\">\n                               <div *ngIf=\"submitted && f.pincode.errors\" class=\"invalid-feedback\" >\n                                   <div *ngIf=\"f.pincode.errors.required\">ZipCode is required</div>\n                                   <div *ngIf=\"f.pincode.errors.minlength || f.pincode.errors.maxlength\">ZipCode number should be 6 digits</div>\n                               </div>\n                       </div>\n                       </div>\n                       \n                       <div class=\"form-group pt-3\">\n                       \n\n                         <div class=\"clearfix\"></div>\n                         <hr>\n                         <h3 class=\"f-20 mb-4 mt-5\">PAYMENT INFORMATION</h3>\n    \n                           <div class=\"row\">\n                           <div class=\"col-md-8 col-sm-8 col-lg-8 col-xs-8\">\n                             \n                             <div class=\"custom-control custom-radio\">\n        <input type=\"radio\" class=\"custom-control-input\" id=\"customRadio\" formControlName=\"paymentGatway\"  name=\"paymentGatway\" value=\"atom\" checked=\"\">\n        <label class=\"custom-control-label\" for=\"customRadio\"><strong>Atom Payment Gateway</strong></label>\n      </div>\n                           </div>\n    \n                           <div class=\"col-md-4 col-sm-4 col-lg-4 col-xs-4\">\n<!--                             -->\n<!--                             <span><img src=\"assets/images/visa.png\" class=\"border p-1\" height=\"24\"></span>-->\n<!--                             <span><img src=\"assets/images/mastarcard.png\"  class=\"border p-1\"  height=\"24\"></span>-->\n                           </div>\n    \n                         </div>\n                           <div class=\"clearfix\"></div>\n                           <div class=\"row\">\n                               <div class=\"clearfix\"></div>\n                               <div class=\"col-md-8 col-sm-8 col-lg-8 col-xs-8\">\n\n                                   <div class=\"custom-control custom-radio\">\n                                       <input type=\"radio\" class=\"custom-control-input\" formControlName=\"paymentGatway\"  id=\"customRadio1\" name=\"paymentGatway\" value=\"payu\">\n                                       <label class=\"custom-control-label\" for=\"customRadio1\"><strong>PayUmoney Payment Gateway</strong></label>\n                                   </div>\n                               </div>\n\n                               <div class=\"col-md-4 col-sm-4 col-lg-4 col-xs-4\">\n\n<!--                                   <span><img src=\"assets/images/visa.png\" class=\"border p-1\" height=\"24\"></span>-->\n<!--                                   <span><img src=\"assets/images/mastarcard.png\"  class=\"border p-1\"  height=\"24\"></span>-->\n                               </div>\n\n                           </div>\n                           <div class=\"clearfix\"></div>\n                           <div class=\"clearfix\"></div>\n                           <div class=\"row\">\n                               <div class=\"col-md-8 col-sm-8 col-lg-8 col-xs-8\">\n\n                                   <div class=\"custom-control custom-radio\">\n                                       <input type=\"radio\" class=\"custom-control-input\" formControlName=\"paymentGatway\"  id=\"customRadio2\" name=\"paymentGatway\" value=\"rozerpay\">\n                                       <label class=\"custom-control-label\" for=\"customRadio2\"><strong>Rozerpay Payment Gateway</strong></label>\n                                   </div>\n                               </div>\n\n                               <div class=\"col-md-4 col-sm-4 col-lg-4 col-xs-4\">\n\n<!--                                   <span><img src=\"assets/images/visa.png\" class=\"border p-1\" height=\"24\"></span>-->\n<!--                                   <span><img src=\"assets/images/mastarcard.png\"  class=\"border p-1\"  height=\"24\"></span>-->\n                               </div>\n\n                           </div>\n                           <div class=\"clearfix\"></div>\n                           <div class=\"clearfix\"></div>\n<!--                          <div class=\"row form-group mt-4\">-->\n<!--                       <div class=\"col-lg-12 col-md-12 col-sm-12\">-->\n<!--                         <label>Credit Card Number</label>-->\n<!--                         <input type=\"number\" class=\"form-control rounded-0\">-->\n<!--                       </div>                  -->\n<!--                        </div>-->\n    \n<!--                       <div class=\"row form-group\">-->\n<!--                      <div class=\"col-md-8 col-lg-8 col-sm-8\">-->\n<!--                         <label>Expiry Date</label>-->\n<!--                         <div class=\"row\">-->\n<!--                          <div class=\"col-md-6 col-sm-6 col-lg-6\">-->\n<!--                         <select class=\"form-control\">-->\n<!--                          <option value=\"\">MM</option>-->\n<!--                          <option value=\"\">01</option>-->\n<!--                          <option value=\"\">02</option>-->\n<!--                          <option value=\"\">03</option>-->\n<!--                         </select>-->\n<!--                       </div>-->\n<!--                       <div class=\"col-md-6 col-sm-6 col-lg-6\">-->\n<!--                         <select class=\"form-control\">-->\n<!--                          <option value=\"\">YY</option>-->\n<!--                          <option value=\"\">2019</option>-->\n<!--                          <option value=\"\">2018</option>-->\n<!--                          <option value=\"\">2017</option>-->\n<!--                         </select>-->\n<!--                       </div>-->\n<!--                       </div>-->\n<!--                       </div>-->\n<!--                      -->\n<!--&lt;!&ndash;                       <div class=\"col-lg-4 col-md-4 col-sm-4\">&ndash;&gt;-->\n<!--&lt;!&ndash;                         <label>Security Code</label>&ndash;&gt;-->\n<!--&lt;!&ndash;                         <input type=\"text\" class=\"form-control\" placeholder=\"CVV\">&ndash;&gt;-->\n<!--&lt;!&ndash;                       </div>&ndash;&gt;-->\n<!--                       -->\n<!--                        </div>-->\n    \n<!--                         <div class=\"row form-group\">-->\n<!--                       <div class=\"col-lg-12 col-md-12 col-sm-12\">-->\n<!--                         <label>Name on Card</label>-->\n<!--                         <input type=\"text\" class=\"form-control rounded-0\">-->\n<!--                       </div>                  -->\n<!--                        </div>-->\n                           <div class=\"row form-group\">\n                               <button type=\"submit\" [disabled]=\"loading\"  class=\"btn btn-success btn-block text-white p-3 text-uppercase\"><strong>Make Payment\n                           </strong>\n                               </button>\n                           </div>\n                        \n                       \n                       </div>\n                       \n                       \n                     </form>\n                   </div>\n                   \n                   \n                   </div>\n                   \n                   <div class=\"col-lg-7 col-md-7 col-sm-6\">\n                    <div class=\"card\">\n                    <div class=\"table-responsive\">\n                      <table class=\"table cart-table checkout-table\">\n                        <thead class=\"f-16\">\n                          <tr>\n                            <th colspan=\"2\"><h3 class=\"f-18\">CART</h3>\n                            <p class=\"mb-0\">{{wishListDataItems.length}} Items</p></th>\n                            <th align=\"right\" class=\"text-right\"><button class=\"btn btn-default rounded-0\" (click)=\"goToWishList()\">Edit</button></th>                          \n                          </tr>\n                        </thead>\n                        <tbody>\n                          <tr *ngFor=\"let checkout of wishListDataItems;let i= index\">\n                            <td width=\"25%\" align=\"center\">\n                              <div class=\"product-info\">\n                                <img src=\"{{checkout.product_thumb}}\" alt=\"product-img\" height=\"100\">\n                              </div>                             \n                            </td>                            \n                            <td width=\"50%\">\n                               <p class=\"mb-1 text-black\"><strong>{{checkout.product_name}}</strong></p>\n                               <p class=\"mb-1\"><strong>Size:</strong>  {{checkout.standard_size}}</p>\n                            </td>\n                             <td width=\"25%\" align=\"right\"><p class=\"f-16 text-black\"><strong>{{checkout.total}} INR</strong></p>\n                             </td>\n                          </tr>\n                        </tbody>\n                        <tfoot class=\"text-black\">\n                          <tr class=\"f-20\">\n                          <td></td>\n                            <td align=\"right\"><strong>TOTAL</strong></td>\n                            <td align=\"right\"><strong>{{showTotalPrice()}} INR</strong></td>\n                          </tr>\n                          <tr class=\"f-20\">\n                              <td></td>\n                              <td align=\"right\"><strong>Taxes</strong></td>\n                              <td align=\"right\"><strong>10.00 INR</strong></td>\n                          </tr>\n                          <tr class=\"f-16\">\n                          <td></td>\n                            <td align=\"right\"><strong>BALANCE DUE</strong></td>\n                            <td align=\"right\"><strong>{{showTotalPrice() + 10 }} INR</strong></td>\n                          </tr>\n                        </tfoot>\n                      </table>\n                    </div>\n                  </div>\n               </div>\n                \n            </div>\n        </div>\n      </section>\n"
 
 /***/ }),
 
@@ -561,20 +561,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckoutComponent", function() { return CheckoutComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _hero_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hero.service */ "./src/app/hero.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _hero_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hero.service */ "./src/app/hero.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _helpers_image_footer_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../_helpers/image-footer-helper */ "./src/app/_helpers/image-footer-helper.ts");
+
+
 
 
 
 
 let CheckoutComponent = class CheckoutComponent {
-    constructor(authenticationService, router) {
+    constructor(authenticationService, router, formBuilder, dataHelper) {
         this.authenticationService = authenticationService;
         this.router = router;
+        this.formBuilder = formBuilder;
+        this.dataHelper = dataHelper;
         this.wishListDataItems = [];
         this.priceArray = [];
+        this.loading = false;
+        this.submitted = false;
+        this.stateInfo = [];
+        this.countryInfo = [];
+        this.cityInfo = [];
+        this.taxPrice = 10;
     }
     ngOnInit() {
+        this.checkoutForm = this.formBuilder.group({
+            first_name: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            last_name: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            address: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            country: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            state: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            city: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            pincode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(6)]],
+            paymentGatway: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+        });
+        this.getCountries();
         this.authenticationService.getcartItemsData()
             .subscribe(data => {
             this.wishListDataItems = data;
@@ -583,6 +606,74 @@ let CheckoutComponent = class CheckoutComponent {
                 this.priceArray.push(element["total"]);
             });
         }, error => {
+        });
+    }
+    get f() { return this.checkoutForm.controls; }
+    getCountries() {
+        this.authenticationService.allCountries().
+            subscribe(data2 => {
+            //this.countryInfo=data2.Countries;
+            this.countryInfo = data2;
+            //console.log('Data:', this.countryInfo);
+        }, err => console.log(err), () => console.log('complete'));
+    }
+    onChangeCountry(countryValue) {
+        //  console.log(this.countryInfo[countryValue]);
+        this.authenticationService.allstates(countryValue).
+            subscribe(data2 => {
+            //this.countryInfo=data2.Countries;
+            this.stateInfo = data2;
+            //console.log('Data:', this.countryInfo);
+        }, err => console.log(err), () => console.log('complete'));
+        // this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
+        // this.stateInfo=this.countryInfo[countryValue].States;
+        // this.cityInfo=this.stateInfo[0].Cities;
+        //  console.log(this.cityInfo);
+    }
+    onChangeCity(cityValue) {
+        // console.log(this.cityInfo[cityValue]);
+        // this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
+    }
+    onChangeState(stateValue) {
+        // console.log(this.stateInfo[stateValue]);
+        this.authenticationService.allCities(stateValue).
+            subscribe(data2 => {
+            //this.countryInfo=data2.Countries;
+            this.cityInfo = data2;
+            //console.log('Data:', this.countryInfo);
+        }, err => console.log(err), () => console.log('complete'));
+        // this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
+        // this.cityInfo=this.stateInfo[stateValue].Cities;
+        // console.log(this.cityInfo);j
+    }
+    onSubmit() {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.checkoutForm.invalid) {
+            console.log('at invalid');
+            //console.log(this.checkoutForm);
+            return;
+        }
+        // console.log(this.checkoutForm);
+        this.authenticationService.payment(this.checkoutForm.value, this.priceArray)
+            // .pipe(first())
+            .subscribe(data2 => {
+            // alert("Sucessfully Registered");
+            console.log(data2);
+            console.log(data2.url);
+            window.location.href = data2.url;
+            //this.router.navigate([data2.url]);
+            // console.log(data2);
+            // console.log(data2.message);
+            // console.log(data2["message"]);
+            // if(data2.status=='1'){
+            //   alert(data2.message);
+            //   this.router.navigate(['/']);
+            // }else{
+            //   alert(data2.message);
+            // }
+        }, error => {
+            this.loading = false;
         });
     }
     showTotalPrice() {
@@ -598,7 +689,7 @@ CheckoutComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./checkout.component.html */ "./node_modules/raw-loader/index.js!./src/app/checkout/checkout.component.html"),
         styles: [__webpack_require__(/*! ./checkout.component.css */ "./src/app/checkout/checkout.component.css")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_hero_service__WEBPACK_IMPORTED_MODULE_2__["HeroService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_hero_service__WEBPACK_IMPORTED_MODULE_3__["HeroService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _helpers_image_footer_helper__WEBPACK_IMPORTED_MODULE_5__["imageFooterHelper"]])
 ], CheckoutComponent);
 
 
@@ -1506,7 +1597,7 @@ let HeroService = class HeroService {
     constructor(http, messageService) {
         this.http = http;
         this.messageService = messageService;
-        this.heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/'; // URL to web api
+        this.heroesUrl = 'http://ec2-18-191-221-133.us-east-2.compute.amazonaws.com/backend/api/'; // URL to web api
         this.localhostUrl = 'http://localhost/backend/api/';
         this.carouselImagesUrl = 'api/carouselImages';
         this.aosImagesUrl = 'api/aosImages';
@@ -1601,7 +1692,7 @@ let HeroService = class HeroService {
     register(usrData) {
         const url = `${this.heroesUrl}signup`;
         return this.http.post(url, usrData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(userInfo => {
-            return true;
+            return userInfo;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to register data`)));
         ;
     }
@@ -1734,6 +1825,19 @@ let HeroService = class HeroService {
     /** Log a HeroService message with the MessageService */
     log(message) {
         this.messageService.add(`HeroService: ${message}`);
+    }
+    payment(usrData, cartval) {
+        const url = `${this.heroesUrl}payment`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = { headers: headers };
+        return this.http.post(url, { usrData, cartval, tokenData }, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(userInfo => {
+            return userInfo;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to register data`)));
+        ;
     }
 };
 HeroService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -2240,17 +2344,15 @@ let SignUpComponent = class SignUpComponent {
         this.authenticationService.register(this.registerForm.value)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])())
             .subscribe(data2 => {
-            alert("Sucessfully Registered");
-            this.router.navigate(['/']);
-            // console.log(data2);
-            // console.log(data2.message);
-            // console.log(data2["message"]);
-            // if(data2.status=='1'){
-            //   alert(data2.message);
-            //   this.router.navigate(['/']);
-            // }else{
-            //   alert(data2.message);
-            // }
+            //alert("Sucessfully Registered");
+            // this.router.navigate(['/']);
+            if (data2.status == '1') {
+                alert(data2.message);
+                this.router.navigate(['/']);
+            }
+            else {
+                alert(data2.message);
+            }
         }, error => {
             this.loading = false;
         });
