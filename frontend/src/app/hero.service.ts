@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://ec2-18-218-154-217.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://ec2-18-191-221-133.us-east-2.compute.amazonaws.com/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -144,7 +144,7 @@ export class HeroService {
     const url = `${this.heroesUrl}signup`
     return this.http.post(url, usrData, this.httpOptions).pipe(
       map(userInfo => {
-        return true;
+        return userInfo;
       }),
       catchError(this.handleError<any>(`unable to register data`))
     );;
@@ -347,6 +347,23 @@ removeCartItemsData(product:any): Observable<userData> {
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
+
+    payment(usrData: any,cartval: any): Observable<any> {
+        const url = `${this.heroesUrl}payment`
+        let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+tokenData.access_token });
+        let options = { headers: headers };
+        return this.http.post(url, {usrData,cartval,tokenData}, options).pipe(
+            map(userInfo => {
+                return userInfo;
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );;
+    }
+
+
 }
 
 

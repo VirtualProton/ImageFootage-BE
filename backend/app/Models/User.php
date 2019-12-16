@@ -29,6 +29,21 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Account::class,'id', 'account_manager_id');
     }
 
+    public function country(){
+        return $this->hasOne(Country::class,'id', 'country');
+    }
+
+    public function city(){
+        return $this->hasOne(City::class,'id', 'city');
+    }
+    public function state(){
+        return $this->hasOne(State::class,'id', 'state');
+    }
+    public function cart(){
+        return $this->hasMany(Usercart::class,'cart_added_by', 'id');
+    }
+
+
 
     // /**
     //  * The attributes that should be hidden for arrays.
