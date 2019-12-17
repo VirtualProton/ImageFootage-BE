@@ -29,7 +29,17 @@ class MediaController extends Controller
         }else if($origin=='3'){
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
-           $product_details = $footageMedia->search($keyword);
+           $product_details_data = $footageMedia->search($keyword);
+           if (isset($product_details_data['items'][0]['id'])) {
+               $pond_id_withprefix = $product_details_data['items'][0]['id'];
+               if (strlen($product_details_data['items'][0]['id']) < 9) {
+                   $add_zero = 9 - (strlen($product_details_data['items'][0]['id']));
+                   for ($i = 0; $i < $add_zero; $i++) {
+                       $pond_id_withprefix = "0" . $pond_id_withprefix;
+                   }
+               }
+           }
+           $product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4');
         }else{
             $product = new Product();
             $product_details = $product->getProductDetail($media_id,$type);

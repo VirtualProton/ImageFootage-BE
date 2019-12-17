@@ -199,7 +199,6 @@
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                     <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
                       <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_main_image}}" alt="Image" class="img-fluid">
-                      <iframe  *ngIf="aosimges.product_main_type != 'Image'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
                       <div class="photo-text-more">
                       
                         <div class="photo-text-more">
@@ -207,6 +206,13 @@
                         <span class="meta">{{aosimges.description}} Photos</span>
                       </div>
                       </div>
+                    </a>
+                    <a  *ngIf="aosimges.product_main_type != 'Image'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
+                        <video  width="400" height="300" controls onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                     </a>
                 </div>
             </div>
@@ -223,4 +229,3 @@
   </div>
   
   </div> 
-  

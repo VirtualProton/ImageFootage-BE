@@ -25,10 +25,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private heroService: HeroService,private dataHelper:imageFooterHelper,private router: Router) {
    }
-
-
-
-  ngOnInit() {
+ngOnInit() {
  
 
     this.carouselSliderImages = this.heroService.getcarouselSliderImages();
