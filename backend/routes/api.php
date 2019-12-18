@@ -50,6 +50,7 @@ Route::group([
     Route::get('getCountyStatesList/{id}', 'UserContactusController@getCountyStatesList');
     Route::get('getStateCityList/{id}', 'UserContactusController@getStateCityList');
     Route::post('atomPayResponse', 'PaymentController@atomPayResponse');
+	Route::post('contributorSignup', 'UserContactusController@contributorSignup');
 
 });
 
