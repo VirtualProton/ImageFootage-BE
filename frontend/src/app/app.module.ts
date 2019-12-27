@@ -26,6 +26,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { LicenceAgreementComponent } from './licence-agreement/licence-agreement.component';
 import { LoginComponent } from './login/login.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
  
 
 
@@ -64,7 +65,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     PrivacyPolicyComponent,
     LicenceAgreementComponent,
     LoginComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ContributorSignUpComponent
   ],
   exports:[LoginComponent],
   bootstrap: [ AppComponent ]

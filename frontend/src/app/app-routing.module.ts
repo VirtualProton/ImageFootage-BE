@@ -13,6 +13,7 @@ import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-co
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'tagging', component: ContactUsComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'contributor-sign-up-component', component: ContributorSignUpComponent },
 ];
 
 @NgModule({
