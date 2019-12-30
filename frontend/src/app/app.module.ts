@@ -27,6 +27,9 @@ import { LicenceAgreementComponent } from './licence-agreement/licence-agreement
 import { LoginComponent } from './login/login.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
  
 
 
@@ -39,6 +42,8 @@ import { ContributorSignUpComponent } from './contributor-sign-up/contributor-si
     HttpModule,
     NgbModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
+    NoopAnimationsModule
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

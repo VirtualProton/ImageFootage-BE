@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable, Subject, Subscription } from 'rxjs';
 
+
 import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
@@ -10,6 +11,7 @@ import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
 import { ActivatedRoute } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-hero-search',
@@ -51,7 +53,7 @@ export class HeroSearchComponent implements OnInit {
   leftsideData:any;
 
 
-  constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper) {
+  constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
     this.searchData = new Search();
   }
 
@@ -61,7 +63,7 @@ export class HeroSearchComponent implements OnInit {
       }
 
       ngOnInit(): void {
-    
+          this.spinner.show();
           this.sub = this.route
                     .queryParams
                     .subscribe(params => {
@@ -103,7 +105,8 @@ export class HeroSearchComponent implements OnInit {
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
                               this.aoslSliderImages = aoslSliderImages;
-                              this.maintainAosSlider(); 
+                              this.maintainAosSlider();
+                              this.spinner.hide();
                               // this.maintainSearchData(aoslSliderImages);                             
                           });
       }

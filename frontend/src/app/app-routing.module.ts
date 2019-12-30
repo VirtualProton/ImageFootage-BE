@@ -30,7 +30,8 @@ const routes: Routes = [
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'tagging', component: ContactUsComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'contributor-sign-up-component', component: ContributorSignUpComponent },
+  { path: 'contributor-sign-up', component: ContributorSignUpComponent },
+
 ];
 
 @NgModule({

@@ -11,8 +11,8 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
-  private localhostUrl = 'http://localhost/backend/api/';
+  private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
+  private localhostUrl = 'http://imagefootage.com/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
   private countryUrl :string = "https://raw.githubusercontent.com/sagarshirbhate/Country-State-City-Database/master/Contries.json";

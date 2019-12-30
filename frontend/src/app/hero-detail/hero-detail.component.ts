@@ -7,6 +7,7 @@ import { HeroService }  from '../hero.service';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { isNullOrUndefined } from 'util';
 import { element } from 'protractor';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-hero-detail',
@@ -40,7 +41,7 @@ export class HeroDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router
+    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router,private spinner: NgxSpinnerService
   ) {
     this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
@@ -49,6 +50,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.spinner.show();
     // this.getcategoryCarouselImages();
      this.getDetailinfo();
 
@@ -90,6 +92,7 @@ export class HeroDetailComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.detailPageInfo = data;
+          this.spinner.hide();
       });
 
   }

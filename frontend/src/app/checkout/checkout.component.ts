@@ -5,6 +5,7 @@ import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-checkout',
@@ -23,9 +24,10 @@ export class CheckoutComponent implements OnInit {
   cityInfo: any[] = [];
   taxPrice:any =10;
   
-  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper) { }
+  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+      this.spinner.show();
  this.checkoutForm = this.formBuilder.group({
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
@@ -46,6 +48,7 @@ export class CheckoutComponent implements OnInit {
                       console.log(element);
                       this.priceArray.push(element["total"]);
                     });
+                      this.spinner.hide();
                   },
                   error => {
                      
