@@ -100,6 +100,13 @@
                     @if ($errors->has('package_expiry'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry') }}</div>
                     @endif
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Package Expiry Per Year</label>
+                      <input type="text" class="form-control" name="package_expiry_year" id="package_expiry_year" placeholder="Package Expiry Per Year" value="{{ $package[0]['package_expiry_yearly'] }}">
+                    </div>
+                    @if ($errors->has('package_expiry_year'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_year') }}</div>
+                    @endif
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
