@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Product;
 use App\Models\Orders;
 use App\Models\OrderItem;
+use App\Models\Usercart;
 use CORS;
 
 class PaymentController extends Controller
@@ -125,17 +126,15 @@ class PaymentController extends Controller
         $transactionResponse->setRespHashKey("KEYRESP123657234");
         if($transactionResponse->validateResponse($_POST)){
            // echo "Transaction Processed <br/>";
-           // print_r($_POST);
+           // print_r($_POST);die;
             if(count($_POST)>0){
-                if($_POST['fcode']=='ok'){
-                    $orders = new Orders();
-                    $orders->payment_mode = $_POST['discriminator'];
-                    $orders->order_status = $_POST['desc'];
-                    $orders->response_payment = json_encode($_POST);
-                    $orders->txn_id= $_POST['mer_txn'];
-                    $orders->update();
-
-                }
+                if($_POST['f_code']=='Ok'){
+                    Orders::where('txn_id',$_POST['mer_txn'])
+                            ->update(['payment_mode'=>$_POST['discriminator'],
+                                'order_status'=>$_POST['desc'],'response_payment'=>json_encode($_POST)]);
+                    $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
+                    Usercart::where('cart_added_by',$orders->user_id)->delete();
+                 }
               echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
             }else{
                 echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
