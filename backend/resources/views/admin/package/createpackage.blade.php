@@ -33,8 +33,8 @@
                   <div class="form-group">
                       <label for="exampleInputEmail1">Package-Plan Type </label>
                       <select class="form-control" name="package_plan" id="package_plan">
-                      <option value="Normal">Normal</option>
-                      <option value="Pro">Pro</option>
+                      <option value="Download Pack">Download Pack</option>
+                      <option value="Subscription">Subscription</option>
                       </select>
                        @if ($errors->has('package_plan'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
@@ -98,6 +98,13 @@
                     </div>
                     @if ($errors->has('package_expiry'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry') }}</div>
+                    @endif
+                     <div class="form-group">
+                      <label for="exampleInputPassword1">Package Expiry Per Year</label>
+                      <input type="text" class="form-control" name="package_expiry_year" id="package_expiry_year" placeholder="Package Expiry Per Year">
+                    </div>
+                    @if ($errors->has('package_expiry_year'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_year') }}</div>
                     @endif
                   </div>
                   <!-- /.box-body -->
@@ -209,7 +216,7 @@ $(document).ready(function ($) {
 });
 $("#package_plan").change(function(){
 	var pack_type=$(this).val();
-	if(pack_type =='Normal'){
+	if(pack_type =='Download Pack'){
 		$("#package_month_count").val("");
 		$('#for_pro').css('display','none');
 	}else{
