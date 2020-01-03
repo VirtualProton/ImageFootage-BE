@@ -30,30 +30,25 @@
                 @include('admin.partials.message')
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
-                        <th>Package-Plan Type</th>
-                        <th>Name</th>
+                        <th>Package Provider</th>
+                        <th>Amount</th>
                         <th>Actions</th>
                     </thead>
                     <tbody>
                      @foreach($package as $packages)
                     <tr>
-  <td>{{ $packages['package_id'] }} </td>
-  <td>{{ $packages['package_plan'] }} </td>
+  <td>{{ $packages['api_provider'] }} </td>
+  <td>{{ $packages['api_amount'] }} </td>
   
-  <td>  @if($packages['package_status'] =='Active')
-  			<a href="{{ url('admin/package/Inactive/'.$packages['package_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
-         @elseif($packages['package_status'] =='Inactive')
-         	<a href="{{ url('admin/package/Active/'.$packages['package_id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
-        @endif
-            <a href="{{ url('admin/updatepackage/'.$packages['package_id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            <a href="{{ url('admin/deletepackage/'.$packages['package_id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this package?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+  <td>      <a href="{{ url('admin/updateapiquata/'.$packages['api_id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <a href="{{ url('admin/deleteapiquata/'.$packages['api_id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this API Quata?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
  </tr>
 @endforeach
                     </tbody>
                     <tfoot>
-                        <th>Id</th>
-                        <th>Package-Plan Type</th>
+                        <th>Package Provider</th>
+                        <th>Amount</th>
                         <th>Actions</th>
                     </tfoot>
                 </table>

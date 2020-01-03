@@ -39,42 +39,28 @@ class ProductApiController extends Controller
 		  return back()->with('warning','Some problem occured.');
   		}
   }
-  public function updatePackage($id){
-	   $package = new Package;
-	   $package_data=$package->where('package_id',$id)->get()->toArray();
-	   return view('admin.package.editpackage', ['package' => $package_data]);
+  public function updateApiQuata($id){
+	   $ApiQuota = new ApiQuota;
+	   $package_data=$ApiQuota->where('api_id',$id)->get()->toArray();
+	   return view('admin.package.editapiquata', ['package' => $package_data]);
   }
-  public function editPackage(Request $request){
+  public function editApiQuata(Request $request){
 	  $this->validate($request, [
-		 	'package_name'=>'required',
-			'package_price'=>'required',
-			'package_description'=>'required',
-			'package_products_count'=>'required',
-			'package_type'=>'required',
-			'package_expiry'=>'required'
+		 	'api_provider'=>'required',
+			'api_amount'=>'required'
         ]);
-		$update_array=array('package_plan'=>$request->package_plan,'package_name'=>$request->package_name,
-							 'package_price'=>$request->package_price,
-		 					 'package_description'=>$request->package_description,
-							 'package_products_count'=>$request->package_products_count,
-							 'package_type'=>$request->package_type,
-							 'package_expiry'=>$request->package_expiry,
-							 'package_permonth_download'=>$request->package_month_count,
-							 'package_pcarry_forward'=>$request->products_carry_forward,
-							 'package_expiry_yearly'=>$request->package_expiry_year,
-							 'updated_at'=>date('Y-m-d H:i:s')
-							 );
-		$result = Package::where('package_id',$request->package_id)->update($update_array);
+		$update_array=array('api_provider'=>$request->api_provider,'api_amount'=>$request->api_amount,'updated_at'=>date('Y-m-d H:i:s'));
+		$result = ApiQuota::where('api_id',$request->api_id)->update($update_array);
 		if($result){
-				return back()->with('success','Package updated successful');
+				return back()->with('success','API Quata updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
   }
-  public function deletePackage($id){
-	  $del_result=Package::find($id)->delete();
+  public function deleteapiquata($id){
+	  $del_result=ApiQuota::find($id)->delete();
 	  if($del_result){
-			return back()->with('success','Package deleated successfully');
+			return back()->with('success','API quata deleated successfully');
 		}else{
 			 return back()->with('warning','Some problem occured.');
 		}

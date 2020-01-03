@@ -96,6 +96,9 @@ Route::post('/updateproductcolor', 'ProductColorController@updateProductColor');
 Route::get('/add_api_quota', 'ProductApiController@addApiQuota');
 Route::post('/insertapiquota', 'ProductApiController@insertApiQuota');
 Route::get('/api_quota_list', 'ProductApiController@apiQuotaList');
+Route::get('/updateapiquata/{id}', 'ProductApiController@updateApiQuata');
+Route::post('/editapiquata', 'ProductApiController@editApiQuata');
+Route::get('/deleteapiquata/{id}', 'ProductApiController@deleteapiquata');
 
 //product gender
 Route::get('/add_product_gender', 'ProductGenderController@addProductGender');
