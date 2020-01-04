@@ -35,6 +35,8 @@ class CronController extends Controller
         $keyword['search'] = $percategory;
         $pantherMediaImages = new ImageApi();
         $pantharmediaData = $pantherMediaImages->search($keyword);
+        //echo "<pre>";
+        //print_r($pantharmediaData); die;
         $common = new Common();
         $category_id = $common->checkCategory($percategory);
         if(count($pantharmediaData) > 0){
@@ -44,6 +46,25 @@ class CronController extends Controller
         //print_r($pantharmediaData); die;
 
     }
+        //return array('api'=>$pantharmediaData);
+    }
+    public function pantherImageUpdate(){
+        ini_set('max_execution_time', 0);
+
+        $products = Product::where('id','<','1688')->where('product_web','=','2')->get()->toArray();
+
+        foreach($products as $perproduct){
+            $keyword['search'] = $perproduct['api_product_id'];
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData = $pantherMediaImages->search($keyword);
+            //print_r($pantharmediaData);
+            if(count($pantharmediaData) > 0){
+                $this->product->updatePantherImage($pantharmediaData,$perproduct['product_category']);
+              }
+
+            //print_r($pantharmediaData); die;
+
+        }
         //return array('api'=>$pantharmediaData);
     }
     // public function index(SearchRequest $request){

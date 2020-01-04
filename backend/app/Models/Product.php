@@ -98,9 +98,42 @@ class Product extends Model
                         ->where('id', '=', $id)
                         ->update(['product_id' => 'IMGFT' . $id]);
                     echo "Inserted" . $id;
+                }else{
+                    echo "hello";
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $eachmedia['id'])
+                        ->update(['product_thumbnail' =>$eachmedia['preview_no_wm'],
+                                  'product_main_image'=>$eachmedia['preview_high'],
+                                  'product_description' => $eachmedia['description'],
+                                  'product_title' => $eachmedia['title'],
+                                  'updated_at' => date('Y-m-d H:i:s')
+                            ]);
+                    echo "Updated". $eachmedia['id'];
                 }
             }
          }
+
+    }
+    public function updatePantherImage($data){
+
+            if(isset($data['items']['media']['id'])) {
+                // print_r($media); die;
+                $count = DB::table('imagefootage_products')
+                    ->where('api_product_id', $data['items']['media']['id'])
+                    ->count();
+
+                if ($count > 0) {
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $data['items']['media']['id'])
+                        ->update(['product_thumbnail' =>$data['items']['media']['preview_no_wm'],
+                            'product_main_image'=>$data['items']['media']['preview_high'],
+                            'product_description' => $data['items']['media']['description'],
+                            'product_title' => $data['items']['media']['title'],
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+                    echo "Updated". $data['items']['media']['id'];
+                }
+            }
 
     }
 

@@ -44,6 +44,7 @@ Route::group([
     Route::get('details/{id}/{origin}/{type}','MediaController@index');
     Route::get('home','SearchController@home');
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
+    Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
     Route::get('pond5Upload', 'CronController@pond5Upload');
 	Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');

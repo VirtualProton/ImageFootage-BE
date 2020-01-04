@@ -14,6 +14,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -31,6 +33,7 @@ const routes: Routes = [
   { path: 'tagging', component: ContactUsComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'contributor-sign-up', component: ContributorSignUpComponent },
+  { path: 'orderConfirmation/:id', component: OrderConfirmationComponent },
 
 ];
 
