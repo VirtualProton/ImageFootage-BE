@@ -93,6 +93,13 @@ Route::get('/product_colors_status/{status}/{id}', 'ProductColorController@chang
 Route::get('/deletepcolor/{id}', 'ProductColorController@deletePcolorPage');
 Route::get('/editproductcolor/{id}', 'ProductColorController@editProduCtcolor');
 Route::post('/updateproductcolor', 'ProductColorController@updateProductColor');
+Route::get('/add_api_quota', 'ProductApiController@addApiQuota');
+Route::post('/insertapiquota', 'ProductApiController@insertApiQuota');
+Route::get('/api_quota_list', 'ProductApiController@apiQuotaList');
+Route::get('/updateapiquata/{id}', 'ProductApiController@updateApiQuata');
+Route::post('/editapiquata', 'ProductApiController@editApiQuata');
+Route::get('/deleteapiquata/{id}', 'ProductApiController@deleteapiquata');
+
 //product gender
 Route::get('/add_product_gender', 'ProductGenderController@addProductGender');
 Route::post('/addproductgenderprocess', 'ProductGenderController@addProductColorProcess');

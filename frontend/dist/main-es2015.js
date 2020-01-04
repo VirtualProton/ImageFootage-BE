@@ -2013,8 +2013,8 @@ let HeroService = class HeroService {
     constructor(http, messageService) {
         this.http = http;
         this.messageService = messageService;
-        this.heroesUrl = 'http://imagefootage.com/backend/api/'; // URL to web api
-        this.localhostUrl = 'http://imagefootage.com/backend/api/';
+        this.heroesUrl = 'http://localhost/imagefootagenew/backend/api/'; // URL to web api
+        this.localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
         this.carouselImagesUrl = 'api/carouselImages';
         this.aosImagesUrl = 'api/aosImages';
         this.countryUrl = "https://raw.githubusercontent.com/sagarshirbhate/Country-State-City-Database/master/Contries.json";
