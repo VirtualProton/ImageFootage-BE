@@ -49,6 +49,7 @@
     
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary" id="validateButton2">Submit</button>
+                    <a href="{{ url('admin/all_product_category') }}" class="btn btn-primary">Back</a>
                   </div>
                 </form>
               </div>
