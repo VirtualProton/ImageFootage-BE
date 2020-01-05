@@ -16,6 +16,7 @@ export class AppComponent {
   title = 'Image Footage';
   private sub: Subscription;
   footerEle:boolean=true;
+  dashboardEle:boolean=false;
 
 
   ngOnInit() {
@@ -25,6 +26,11 @@ export class AppComponent {
           this.footerEle = false;
         }else{
           this.footerEle = true;
+        }
+        if(event.url == "/" || event.url == "/#page-top"){
+          this.dashboardEle = true;
+        }else{
+          this.dashboardEle = false;
         }
       }
     })

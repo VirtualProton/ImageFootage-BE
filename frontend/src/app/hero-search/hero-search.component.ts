@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-
-
-import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
-
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
 import { ActivatedRoute } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import {NgxSpinnerService} from "ngx-spinner";
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css' ]
+  styleUrls: [ './hero-search.component.css' ],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class HeroSearchComponent implements OnInit {
   heroes$: Observable<Hero[]>;
@@ -51,6 +47,8 @@ export class HeroSearchComponent implements OnInit {
   aoslSliderImagesData: aosSlider[] =[];
   searchData : Search;
   leftsideData:any;
+  sideBarEle:boolean=true;
+  loadingData:boolean=false;
 
 
   constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
@@ -63,15 +61,18 @@ export class HeroSearchComponent implements OnInit {
       }
 
       ngOnInit(): void {
-          this.spinner.show();
           this.sub = this.route
                     .queryParams
                     .subscribe(params => {
-                      console.log(params);
+                      this.loadingData=false;
+                    //  this.spinner.show();
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
-                      this.searchData.letest=1;
-                      this.searchData.curated=0;
+                      if(!isNullOrUndefined(params.sideBar)){
+                        this.sideBarEle=params.sideBar;
+                      }
+                      this.searchData.letest=0;
+                      this.searchData.curated=1;
                       this.searchData.populer=0;
                         this.searchAPIRequest();
                     });
@@ -106,7 +107,8 @@ export class HeroSearchComponent implements OnInit {
                           .subscribe(aoslSliderImages => {
                               this.aoslSliderImages = aoslSliderImages;
                               this.maintainAosSlider();
-                              this.spinner.hide();
+                            //  this.spinner.hide();
+                            this.loadingData=false;
                               // this.maintainSearchData(aoslSliderImages);                             
                           });
       }
@@ -179,6 +181,7 @@ export class HeroSearchComponent implements OnInit {
       }
 
       onSideMenuClick(type,id){
+        this.loadingData=true;
         if(type=='people'){
           let indexPeople = this.slidebarPeopleMenu.indexOf(id);
           if (indexPeople > -1) {
@@ -186,7 +189,7 @@ export class HeroSearchComponent implements OnInit {
           }else{
             this.slidebarPeopleMenu.push(id);           
           }
-          this.searchData.product_people =this.slidebarPeopleMenu.join(); 
+          this.searchData.product_people = this.slidebarPeopleMenu.join();
         }else if(type == 'gender'){
           let indexGender = this.slidebarGenderMenu.indexOf(id);
           if (indexGender > -1) {
@@ -257,6 +260,8 @@ export class HeroSearchComponent implements OnInit {
 
 
       onTabClick(number){
+       console.log(number);
+        //this.loadingData=true;
           if(number == 2){
             this.searchData.letest=0;
             this.searchData.curated=1;
@@ -305,7 +310,7 @@ export class HeroSearchComponent implements OnInit {
 
       maintainAosSlider(){
           let i =4,j=0;
-          let randArr =[[6,2,3,1],[5,2,3,2],[4,3,2,3],[3,2,3,4],[3,1,6,2],[4,4,2,2],[5,4,2,1],[6,4,1,1],[4,2,4,2],[3,4,3,2]];
+          let randArr =[[3,2,3,4],[5,2,3,2],[4,3,2,3],[2,2,4,4],[3,3,4,2],[4,4,2,2],[3,4,2,3],[3,3,3,3],[4,2,4,2],[3,4,3,2]];
           let mathRandom = Math.floor(Math.random() * 10)
           this.aoslSliderImages.forEach(ele=>{
             if( i > j){ 

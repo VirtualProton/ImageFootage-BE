@@ -66,7 +66,7 @@ export class HeroService {
     let _carouselSlider = new carouselSlider();
     let _carouselSliderArray = new Array<carouselSlider>();
     _carouselSlider.id = 1;
-    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 5, name: 'Autumn' },{ id: 6, name: 'Dynama' }]
+    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 6, name: 'Autumn' }]
     _carouselSliderArray.push(_carouselSlider);
     let _carouselSlider1 = new carouselSlider();
     _carouselSlider1.id = 2;

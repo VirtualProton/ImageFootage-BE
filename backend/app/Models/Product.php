@@ -193,7 +193,7 @@ class Product extends Model
         $final_data = [];
        return   DB::table('imagefootage_products as pr')
             //->where('pr.product_web','2')
-            ->where('pr.width_thumb','<>',NULL)
+            //->where('pr.width_thumb','<>',NULL)
             ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name','product_main_type','width_thumb','height_thumb')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             ->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',

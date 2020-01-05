@@ -34,11 +34,12 @@ class SearchController extends Controller
     public function index(SearchRequest $request){
         ini_set('max_execution_time', 0);
         $getKeyword = $request->all();
+        //dd($getKeyword);
         $keyword = array();
         $keyword['search'] = $getKeyword['search'];
         $keyword['productType']['id']= $getKeyword['productType'];
         if($keyword['productType']['id']=='1'){
-           $all_products = $this->getImagesData($keyword);
+           $all_products = $this->getImagesData($keyword,$getKeyword);
         }else if($keyword['productType']['id']=='2'){
             $all_products =$this->getFootageData($keyword);
         }else{
@@ -52,12 +53,12 @@ class SearchController extends Controller
         return response()->json($all_products);
     }
 
-    public function getImagesData($keyword){
+    public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
         $all_products = $product->getProducts($keyword);
         $pantherMediaImages = new ImageApi();
-        $pantharmediaData = $pantherMediaImages->search($keyword);
+        $pantharmediaData = $pantherMediaImages->search($keyword,$getKeyword);
         if(count($pantharmediaData)>0){
             foreach($pantharmediaData['items']['media'] as $eachmedia){
                 if(isset($eachmedia['id'])) {

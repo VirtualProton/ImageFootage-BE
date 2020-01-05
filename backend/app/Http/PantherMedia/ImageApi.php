@@ -53,17 +53,67 @@ class ImageApi {
  }
 
 
- public function search($keyword){
-   $serach = $keyword['search'];
-   if(isset($keyword['letest']) && $keyword['letest']==1){
+ public function search($keyword,$getKeyword=[]){
+    $serach = $keyword['search'];
+    if(isset($getKeyword['letest']) && $getKeyword['letest']=='1'){
        $sort = 'sort: date;' ;
-   }else if(isset($keyword['populer']) && $keyword['populer']==1){
+   }else if(isset($getKeyword['populer']) && $getKeyword['populer']=='1'){
        $sort = 'sort: buy;' ;
    }else{
        $sort = 'sort: rel;' ;
    }
-   echo $sort;
-   die;
+       $product_filter_data ='people_number:all;';
+       if(isset($getKeyword['product_people']) && !empty($getKeyword['product_people'])){
+             $peoples = explode(',',$getKeyword['product_people']);
+             $count = count($peoples);
+             $people_filter = $peoples[$count-1];
+             if($people_filter=='6'){
+                $product_filter_data = 'people_number:people_0;';
+             }else if($people_filter=='5'){
+                 $product_filter_data = 'people_number:people_any;';
+             }else{
+                 $product_filter_data = 'people_number:people_'.$people_filter.';';
+             }
+       }
+     if(isset($getKeyword['product_gender']) && !empty($getKeyword['product_gender'])){
+         $genders = explode(',',$getKeyword['product_gender']);
+         $count = count($genders);
+         $gender_filter = $genders[$count-1];
+         if($gender_filter=='1'){
+             $gender_filter_data = 'people_gender:m;'
+         }
+     }
+     if(isset($getKeyword['product_ethinicities']) && !empty($getKeyword['product_ethinicities'])){
+         $ethinicities = explode(',',$getKeyword['product_ethinicities']);
+         $count = count($ethinicities);
+         $ethinicities_filter = $ethinicities[$count-1];
+     }
+     if(isset($getKeyword['product_imagesizes']) && !empty($getKeyword['product_imagesizes'])){
+         $imagesizes = explode(',',$getKeyword['product_imagesizes']);
+         $count = count($imagesizes);
+         $imagesize_filter = $imagesizes[$count-1];
+     }
+     if(isset($getKeyword['product_locations']) && !empty($getKeyword['product_locations'])){
+         $locations = explode(',',$getKeyword['product_locations']);
+         $count = count($locations);
+         $location_filter = $locations[$count-1];
+     }
+     if(isset($getKeyword['product_colors']) && !empty($getKeyword['product_colors'])){
+         $colors = explode(',',$getKeyword['product_colors']);
+         $count = count($colors);
+         $color_filter = $colors[$count-1];
+     }
+     if(isset($getKeyword['product_imagetypes']) && !empty($getKeyword['product_imagetypes'])){
+         $types = explode(',',$getKeyword['product_imagetypes']);
+         $count = count($types);
+         $type_filter = $types[$count-1];
+     }
+     if(isset($getKeyword['product_orientation']) && !empty($getKeyword['product_orientation'])){
+         $orientation = explode(',',$getKeyword['product_orientation']);
+         $count = count($orientation);
+         $orientation_filter = $orientation[$count-1];
+     }
+
     $this->access_key = $this->getAccessKey();
       // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
@@ -84,7 +134,7 @@ class ImageApi {
                 'page'=>0,
                 'limit'=>1000,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=> $sort.'type: photos'
+                'filters'=> $sort.'type: photos;'.$product_filter_data
             ]
         ]);
        

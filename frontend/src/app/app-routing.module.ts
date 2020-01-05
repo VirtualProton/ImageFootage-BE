@@ -18,8 +18,8 @@ import { OrderConfirmationComponent } from './order-confirmation/order-confirmat
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+ // { path: '/', redirectTo: '', pathMatch: 'full' },
+  { path: '', component: DashboardComponent },
   { path: 'detail/:id/:webtype/:type', component: HeroDetailComponent },
   { path: 'search', component: HeroSearchComponent },
   { path: 'heroes', component: HeroesComponent },
