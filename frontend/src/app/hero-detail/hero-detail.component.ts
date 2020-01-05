@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -12,7 +12,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
-  styleUrls: [ './hero-detail.component.css' ]
+  styleUrls: [ './hero-detail.component.css' ],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class HeroDetailComponent implements OnInit {
   carouselSliderImages: carouselSliderImages;

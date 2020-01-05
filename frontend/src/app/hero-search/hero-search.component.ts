@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
@@ -51,7 +51,11 @@ export class HeroSearchComponent implements OnInit {
   loadingData:boolean=false;
 
 
-  constructor(private heroService: HeroService,private route: ActivatedRoute,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
+  constructor(private heroService: HeroService,
+    private route: ActivatedRoute,
+    private dataHelper:imageFooterHelper,
+    private myElement: ElementRef,
+    private spinner: NgxSpinnerService) {
     this.searchData = new Search();
   }
 
@@ -280,6 +284,10 @@ export class HeroSearchComponent implements OnInit {
       getClassName(ele){
         return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
       }
+      onPageChange = (pageNumber) => {
+        let el = this.myElement.nativeElement.querySelector('main');
+        el.scrollIntoView();
+       }
 
       onKeydown(event) {
         if (event.key === "Enter") {

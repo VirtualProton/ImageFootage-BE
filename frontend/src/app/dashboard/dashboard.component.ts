@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
 import { Hero,carouselSlider,aosSlider } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -25,7 +25,10 @@ export class DashboardComponent implements OnInit {
   aosSliderSizes:any=[];
   
 
-  constructor(private heroService: HeroService,private dataHelper:imageFooterHelper,private router: Router) {
+  constructor(private heroService: HeroService,
+    private dataHelper:imageFooterHelper,
+    private myElement: ElementRef,
+    private router: Router) {
    }
 ngOnInit() {
  
@@ -61,6 +64,11 @@ ngOnInit() {
       this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
     }
   }
+
+  onPageChange = (pageNumber) => {
+    let el = this.myElement.nativeElement.querySelector('ngb-carousel');
+    el.scrollIntoView();
+   }
 
   maintainAosSlider(){
     let i =4,j=0;

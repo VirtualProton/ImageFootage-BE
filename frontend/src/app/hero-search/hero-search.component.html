@@ -228,8 +228,10 @@
                       </a>
                   </div>
               </div>
-              <div class="col-md-5 col-sm-6 col-12 m-auto" *ngIf="aoslSliderImages.length !=0">
-                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     
+              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0">
+                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize" 
+                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)" 
+                  [boundaryLinks]="true"></ngb-pagination>     
         
               </div> 
           </div>
