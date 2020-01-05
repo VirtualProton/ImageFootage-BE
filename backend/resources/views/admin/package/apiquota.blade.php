@@ -49,6 +49,7 @@
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary" id="validateButton2">Submit</button>
+                    <a href="{{ url('admin/api_quota_list') }}" class="btn btn-primary">Back</a>
                   </div>
                 </form>
               </div>

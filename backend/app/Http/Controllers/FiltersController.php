@@ -34,6 +34,8 @@ class FiltersController extends Controller {
 	   $productOrientationslist=$productOrientations->where('status','1')->get()->toArray();
 	   $imageSortTypes=new ImageSortTypes;
 	   $productSortTypelist=$imageSortTypes->where('status','1')->get()->toArray();
+	  
+	   
 	   $filters=array();
 	   foreach($productcolor_list as $key=>$val){
 		   $filters['product_colors'][]=array('pcolor_id'=>$val['id'],'pcolor_name'=>$val['name']);
