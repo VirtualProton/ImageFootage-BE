@@ -16,8 +16,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+ // { path: '/', redirectTo: '', pathMatch: 'full' },
+  { path: '', component: DashboardComponent },
   { path: 'detail/:id/:webtype/:type', component: HeroDetailComponent },
   { path: 'search', component: HeroSearchComponent },
   { path: 'heroes', component: HeroesComponent },

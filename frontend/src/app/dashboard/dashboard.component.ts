@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Hero,carouselSlider,aosSlider } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: [ './dashboard.component.css' ],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
@@ -62,7 +64,7 @@ ngOnInit() {
 
   maintainAosSlider(){
     let i =4,j=0;
-    let randArr =[[6,2,3,1],[5,2,3,2],[4,3,2,3],[3,2,3,4],[3,1,6,2],[4,4,2,2],[5,4,2,1],[6,4,1,1],[4,2,4,2],[3,4,3,2]];
+    let randArr =[[3,2,3,4],[5,2,3,2],[4,3,2,3],[2,2,4,4],[3,3,4,2],[4,4,2,2],[3,4,2,3],[3,3,3,3],[4,2,4,2],[3,4,3,2]];
     let mathRandom = Math.floor(Math.random() * 10)
     this.aoslSliderImagesData.forEach(ele=>{
       if( i > j){ 

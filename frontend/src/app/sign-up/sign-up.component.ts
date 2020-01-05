@@ -139,7 +139,7 @@ export class SignUpComponent implements OnInit {
   hideLoginPopup(event){
     this.showloginPopup = false;
     if(event){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['']);
     }
 
   }
