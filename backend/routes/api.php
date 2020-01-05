@@ -52,6 +52,8 @@ Route::group([
     Route::post('atomPayResponse', 'PaymentController@atomPayResponse');
 	Route::post('contributorSignup', 'UserContactusController@contributorSignup');
 	Route::get('packages','PackageApiController@packageList');
+	Route::get('userprofile/{id}','UserController@userProfile');
+	Route::get('contributorprofile/{id}','UserController@contributorProfile');
 
 });
 
