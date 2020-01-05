@@ -30,6 +30,7 @@ import { ContributorSignUpComponent } from './contributor-sign-up/contributor-si
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { PricingComponent } from './pricing/pricing.component';
 
  
 
@@ -73,7 +74,8 @@ import { OrderConfirmationComponent } from './order-confirmation/order-confirmat
     LoginComponent,
     CheckoutComponent,
     ContributorSignUpComponent,
-    OrderConfirmationComponent
+    OrderConfirmationComponent,
+    PricingComponent
   ],
   exports:[LoginComponent],
   bootstrap: [ AppComponent ]
