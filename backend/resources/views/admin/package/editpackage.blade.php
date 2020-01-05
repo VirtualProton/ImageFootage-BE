@@ -111,6 +111,7 @@
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
+                    <a href="{{ url('admin/package_list') }}" class="btn btn-primary">Back</a>
                   </div>
                 </form>
               </div>
