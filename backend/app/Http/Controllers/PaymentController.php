@@ -44,8 +44,7 @@ class PaymentController extends Controller
         //dd($userData);
         if($allFields['usrData']['paymentGatway']=='atom'){
             $transactionRequest = new TransactionRequest();
-
-//Setting all values here
+            //Setting all values here
             $transactionRequest->setMode("test");
             $transactionRequest->setLogin(197);
             $transactionRequest->setPassword("Test@123");
@@ -135,9 +134,11 @@ class PaymentController extends Controller
                     $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
                     Usercart::where('cart_added_by',$orders->user_id)->delete();
                  }
-              echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
+              //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
+                return redirect('orderConfirmation/'.$_POST['mer_txn']);
             }else{
-                echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
+                //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
+                return redirect('orderFailed');
             }
         } else {
             echo "Invalid Signature";

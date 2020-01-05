@@ -53,6 +53,36 @@ class FrontuserController extends Controller {
             }else{
                 echo '{"status":"0","message":"Allready this product is in your cart."}';
             }
+        }else if($request['product']['type']=='3'){
+            $product_id = $request['product']['product_info'][0]['items'][0]['id'];
+            $product_type = "Footage";
+            $tokens=json_decode($request['product']['token'],true);
+            $product_addedby = $tokens['Utype'];
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            if(empty($cart_list)){
+                $Usercart=new Usercart;
+                $Usercart->cart_product_id=$product_id;
+                $Usercart->cart_product_type= $product_type;
+                $Usercart->cart_added_by= $product_addedby;
+                $Usercart->standard_type= $request['product']['product_info'][0]['items'][0]['pf'];
+                $Usercart->cart_added_on= date('Y-m-d H:i:s');
+                $Usercart->standard_size= $request['product']['product_info'][0]['items'][0]['filesize'];
+                $Usercart->standard_price = $request['product']['selected_product']['pr']*80;
+                $Usercart->total= $request['product']['total'];
+                $Usercart->product_name= $request['product']['product_info'][0]['items'][0]['pf'];
+                $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
+                $Usercart->product_desc= $request['product']['product_info'][0]['items'][0]['desc'];
+                $Usercart->product_web= $request['product']['type'];
+                $Usercart->product_json= json_encode($request['product']['product_info']);
+                $result=$Usercart->save();
+                if($result){
+                    echo '{"status":"1","message":"Product added to cart successfully"}';
+                }else{
+                    echo '{"status":"0","message":"Some problem occured."}';
+                }
+            }else{
+                echo '{"status":"0","message":"Allready this product is in your cart."}';
+            }
         }
 
 

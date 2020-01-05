@@ -303,22 +303,24 @@
                         <div class="p-3">
                             <div>
                                 <a href="javascript:void(0)" class="photo-item">
+                                <div class="embed-responsive embed-responsive-16by9">
                                 <video  controls onmouseover="this.play()" onmouseout="this.pause()">
                                         <source src="{{detailPageInfo[0].flv_base+detailPageInfo[1]}}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
+                                    </div>
                                     <div class="photo-text-more">
                                         <div class="photo-text-more">
-                                            <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>
-                                            <span class="meta">{{detailPageInfo.photoCount}} Photos</span>
+                                            <h3 class="heading">{{detailPageInfo[0].items[0].pf}}</h3>
+<!--                                            <span class="meta">{{detailPageInfo.photoCount}} Photos</span>-->
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                            <p class="text-white f-18">{{detailPageInfo.metadata.description}}</p>
-                            <p>{{detailPageInfo.shortInfo}}</p>
+                            <p class="text-white f-18">{{detailPageInfo[0].items[0].desc}}</p>
+                            <p>{{detailPageInfo[0].items[0].n}}</p>
                             <p class="text-warning">Related Keywords</p>
-                            <div class="related_key">{{detailPageInfo.metadata.keywords}}
+                            <div class="related_key">{{detailPageInfo[0].items[0].kw}}
                                 <!--                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  -->
                                 <!--                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>-->
                                 <!--                </ng-container>   -->
@@ -339,40 +341,12 @@
                                         <div>
                                             <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
                                             <div class="btn-group btn-g       roup-toggle mb-1" data-toggle="buttons">
-                                                <ng-container *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
+                                                <ng-container *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">
                                                     <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)">
-                                                        <p class="mb-0">{{cost.description}}</p>
-                                                        <p><small><span class="text-warning"> {{cost.description}}</span> {{cost.width}}x{{cost.height}} </small></p>
-                                                        <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.price*80}}</p>
-                                                    </label>
-                                                </ng-container>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-tab>
-
-                            <ngb-tab class="nav-item">
-                                <ng-template ngbTabTitle class="nav-link">Extended Licence</ng-template>
-                                <ng-template  ngbTabContent>
-                                    <div class="tab-content pt-3">
-                                        <div>
-                                            <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>
-                                            <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">
-                                                <ng-container *ngFor="let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;">
-                                                    <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                                        <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-md-9 col-sm-9 col-lg-9">
-                                                                <p class="f-14"> {{license.name}}</p>
-                                                            </div>
-                                                            <div class="col-md-3 col-sm-3 col-lg-3">
-                                                                <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.price*80}}</p>
-                                                            </div>
-                                                        </div>
+                                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">
+                                                        <p class="mb-0">{{cost.size}}</p>
+                                                        <p><small><span class="text-warning"> {{cost.size}}</span>  </small></p>
+                                                        <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.pr*80}}</p>
                                                     </label>
                                                 </ng-container>
 
@@ -398,7 +372,7 @@
                     </div>
                     <div class="row mt-2 mb-5">
                         <div class="col-12">
-                            <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
+                            <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>
                             <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>
                             <p>This image is exclusive to Image Footage</p>
                         </div>
@@ -412,42 +386,38 @@
                         </tr>
                         <tr>
                             <td>Credit :</td>
-                            <td>{{detailPageInfo.metadata.author_realname}}</td>
+                            <td>{{detailPageInfo[0].items[0].artistname}}</td>
                         </tr>
                         <tr>
-                            <td>Editorial # :</td>
-                            <td>{{detailPageInfo.metadata.editorial}}</td>
+                            <td>Duration # :</td>
+                            <td>{{detailPageInfo[0].items[0].dur}}</td>
                         </tr>
-                        <!--                <tr>-->
-                        <!--                  <td>Collection :</td>-->
-                        <!--                  <td>Getty Images News</td>-->
-                        <!--                </tr>-->
-                        <tr>
-                            <td>Date created :</td>
-                            <td>{{detailPageInfo.metadata.date}}</td>
-                        </tr>
-                        <tr>
-                            <td>Licence type :</td>
-                            <td *ngIf="detailPageInfo.options.extended=='yes'">Extended</td>
-                            <td *ngIf="detailPageInfo.options.rights_managed=='yes'">Extended</td>
-                        </tr>
-                        <tr>
-                            <td>Release info :</td>
-                            <td>Not released. More information</td>
-                        </tr>
+                                        <tr>
+                                          <td>FPS :</td>
+                                          <td>{{detailPageInfo[0].items[0].fps}}</td>
+                                        </tr>
+<!--                        <tr>-->
+<!--                            <td>Date created :</td>-->
+<!--                            <td>{{detailPageInfo[0].items[0].date}}</td>-->
+<!--                        </tr>-->
+
+<!--                        <tr>-->
+<!--                            <td>Release info :</td>-->
+<!--                            <td>Not released. More information</td>-->
+<!--                        </tr>-->
                         <!--                <tr>-->
                         <!--                  <td>Source :</td>-->
                         <!--                  <td>Getty Images AsiaPac</td>-->
                         <!--                </tr>-->
 
-                        <tr>
-                            <td>Object name :</td>
-                            <td>{{detailPageInfo.media.id}}</td>
-                        </tr>
+<!--                        <tr>-->
+<!--                            <td>Object name :</td>-->
+<!--                            <td>{{detailPageInfo.media.id}}</td>-->
+<!--                        </tr>-->
 
                         <tr>
                             <td>Max file size :</td>
-                            <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}} </td>
+                            <td>{{detailPageInfo[0].items[0].filesize}}  </td>
                         </tr>
                         </tbody>
 

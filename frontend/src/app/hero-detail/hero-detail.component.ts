@@ -177,6 +177,13 @@ export class HeroDetailComponent implements OnInit {
         this.extended=selectedPrice;
     }
 
+    checkPriceTotalFootage(selectedPrice){
+        console.log(selectedPrice);
+        this.currunt_selected_price = selectedPrice.pr*80;
+        this.total = this.currunt_selected_price;
+        this.standard= selectedPrice;
+    }
+
  /* showCartLabel(){
     let addCart = this.checkoutArray.find(ele=>ele == this.id);
     if(isNullOrUndefined(addCart))

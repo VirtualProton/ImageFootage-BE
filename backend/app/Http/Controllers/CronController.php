@@ -51,7 +51,7 @@ class CronController extends Controller
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
 
-        $products = Product::where('id','<','1688')->where('product_web','=','2')->get()->toArray();
+        $products = Product::where('width_thumb','=',NULL)->where('product_web','=','2')->get()->toArray();
 
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];

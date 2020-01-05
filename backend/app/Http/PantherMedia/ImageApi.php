@@ -54,7 +54,16 @@ class ImageApi {
 
 
  public function search($keyword){
-   $serach = $keyword['search']; 
+   $serach = $keyword['search'];
+   if(isset($keyword['letest']) && $keyword['letest']==1){
+       $sort = 'sort: date;' ;
+   }else if(isset($keyword['populer']) && $keyword['populer']==1){
+       $sort = 'sort: buy;' ;
+   }else{
+       $sort = 'sort: rel;' ;
+   }
+   echo $sort;
+   die;
     $this->access_key = $this->getAccessKey();
       // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
@@ -75,7 +84,7 @@ class ImageApi {
                 'page'=>0,
                 'limit'=>1000,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=>'sort: rel;type: photos'
+                'filters'=> $sort.'type: photos'
             ]
         ]);
        
