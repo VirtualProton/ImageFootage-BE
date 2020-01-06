@@ -75,18 +75,33 @@ class ImageApi {
                  $product_filter_data = 'people_number:people_'.$people_filter.';';
              }
        }
+     $gender_filter_data ='';
      if(isset($getKeyword['product_gender']) && !empty($getKeyword['product_gender'])){
          $genders = explode(',',$getKeyword['product_gender']);
          $count = count($genders);
          $gender_filter = $genders[$count-1];
          if($gender_filter=='1'){
-             $gender_filter_data = 'people_gender:m;'
+             $gender_filter_data = 'people_gender:m;';
+         }else{
+             $gender_filter_data = 'people_gender:f;';
          }
      }
+     $ethinicities_filter_data ='people_ethnicity:all;';
      if(isset($getKeyword['product_ethinicities']) && !empty($getKeyword['product_ethinicities'])){
          $ethinicities = explode(',',$getKeyword['product_ethinicities']);
          $count = count($ethinicities);
          $ethinicities_filter = $ethinicities[$count-1];
+         if($ethinicities_filter=='2' || $ethinicities_filter=='4') {
+             $ethinicities_filter_data = 'people_ethnicity:f;';
+         }else if($ethinicities_filter=='8' || $ethinicities_filter=='5'){
+             $ethinicities_filter_data = 'people_ethnicity:e;';
+         }else if($ethinicities_filter=='7' || $ethinicities_filter=='1'){
+             $ethinicities_filter_data = 'people_ethnicity:a;';
+         }else if($ethinicities_filter=='3'){
+             $ethinicities_filter_data = 'people_ethnicity:xd;';
+         }else if($ethinicities_filter=='9'){
+             $ethinicities_filter_data = 'people_ethnicity:e;';
+         }
      }
      if(isset($getKeyword['product_imagesizes']) && !empty($getKeyword['product_imagesizes'])){
          $imagesizes = explode(',',$getKeyword['product_imagesizes']);
@@ -108,10 +123,20 @@ class ImageApi {
          $count = count($types);
          $type_filter = $types[$count-1];
      }
+     $orientation_filter_data ='orientation:all;';
      if(isset($getKeyword['product_orientation']) && !empty($getKeyword['product_orientation'])){
          $orientation = explode(',',$getKeyword['product_orientation']);
          $count = count($orientation);
          $orientation_filter = $orientation[$count-1];
+         if($orientation_filter=='1'){
+             $orientation_filter_data ='orientation:vertical;';
+         }else if($orientation_filter=='2'){
+             $orientation_filter_data ='orientation:horizontal;';
+         }else if($orientation_filter=='3'){
+             $orientation_filter_data ='orientation:square;';
+         }else if($orientation_filter=='4'){
+             $orientation_filter_data ='orientation:panorama;';
+         }
      }
 
     $this->access_key = $this->getAccessKey();
@@ -134,7 +159,7 @@ class ImageApi {
                 'page'=>0,
                 'limit'=>1000,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=> $sort.'type: photos;'.$product_filter_data
+                'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data
             ]
         ]);
        

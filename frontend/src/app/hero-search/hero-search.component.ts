@@ -68,7 +68,7 @@ export class HeroSearchComponent implements OnInit {
           this.sub = this.route
                     .queryParams
                     .subscribe(params => {
-                      this.loadingData=false;
+                      this.loadingData=true;
                     //  this.spinner.show();
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
@@ -265,7 +265,7 @@ export class HeroSearchComponent implements OnInit {
 
       onTabClick(number){
        console.log(number);
-        //this.loadingData=true;
+        this.loadingData=true;
           if(number == 2){
             this.searchData.letest=0;
             this.searchData.curated=1;

@@ -5,32 +5,45 @@
               <div class="table-responsive">
                 <table class="table cart-table">
                   <tbody>
-                    <tr *ngFor="let wishList of wishListDataItems;let i= index">
+                  <tr *ngFor="let wishList of wishListDataItems;let i= index">
+                      <td width="3%"> <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id=$index name="'example'+i">
+                          <label class="custom-control-label" for=$index></label>
+                      </div>
+                      </td>
                       <td width="25%" align="center">
-                          <div class="product-info" >
+                          <div class="product-info">
                               <a href="javascript:void(0)" *ngIf="wishList.product_web=='2'" >
-                                <img src="{{wishList.product_thumb}}" alt="product-img" />
+                                  <img src="{{wishList.product_thumb}}" alt="product-img" />
                               </a>
                               <a href="javascript:void(0)" *ngIf="wishList.product_web=='3'" >
-                                 <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">
+                                  <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">
                                       <source src="{{wishList.product_thumb}}" type="video/mp4">
                                       Your browser does not support the video tag.
                                   </video>
                               </a>
-                              <div class="pt-3 cart_option">
-<!--                                  <a href="javascript:void(0)" class="f-22"><i class="fa fa-plus-circle"></i></a>-->
-                                  <a href="javascript:void(0)"  class="f-22 pl-1" (click)="removeProductFromCart(wishList)"><i class="fa fa-times-circle"></i></a>
-                              </div>
-                          </div>                       
-                      </td>                      
-                      <td width="50%">
-                         <p class="mb-1 text-black f-18"><strong>{{wishList.product_name}}</strong></p>
-                         <p class="mb-1 f-16"><strong>Size:</strong>  {{wishList.standard_size}}</p>
-                         <p class="mb-1">{{wishList.product_desc}}</p>
+
+                          </div>
+
                       </td>
-                       <td width="25%" align="right"><p class="f-18 text-black"><strong>{{wishList.total}} INR</strong></p>
-                       </td>
-                    </tr>
+
+                      <td width="50%">
+                          <p class="mb-1 text-black f-18"><strong>{{wishList.product_name}}</strong></p>
+                          <p class="mb-1 f-16"><strong>Size:</strong>  {{wishList.standard_size}}</p>
+                          <p class="mb-1">{{wishList.product_desc}}</p>
+
+                          <div class="clearfix"></div>
+                          <div class="mt-2">
+                              <a href="#" class="btn btn-danger btn-sm f-12" (click)="removeProductFromCart(wishList)"><i class="fa fa-times-circle"></i> Remove</a>
+                                <a href="#" class="btn btn-success btn-sm f-12 text-white"><i class="fa fa-heart"></i> Wishlist</a>
+                          </div>
+
+                      </td>
+                      <td width="25%" align="right"><p class="f-18 text-black"><strong>{{wishList.total}} INR</strong></p>
+
+                      </td>
+                  </tr>
+
                   </tbody>
                 </table>
               </div>

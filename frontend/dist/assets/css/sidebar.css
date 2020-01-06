@@ -81,7 +81,7 @@ body {
 
 .page-wrapper.toggled .sidebar-wrapper {
   left: 0px;
-  top:90px;
+  top:136px;
 }
 
 @media screen and (min-width: 768px) {
@@ -99,7 +99,7 @@ body {
   width: 35px;
   transition-delay: 0.3s;
   top: 90px;
-    z-index: 99;
+    z-index: 99999;
 }
 .page-wrapper.toggled #show-sidebar {
   left: -40px;
@@ -301,9 +301,9 @@ body {
   margin-top: 0px;
 }
 
-.sidebar-wrapper .sidebar-menu .sidebar-submenu {
+/*.sidebar-wrapper .sidebar-menu .sidebar-submenu {
   display: none;
-}
+}*/
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active > a:after {
   transform: rotate(90deg);
@@ -369,7 +369,7 @@ body {
 }
 
 .page-wrapper .page-content {
-  overflow-x: hidden;
+  overflow-x: inherit;
 }
 
 /*------scroll bar---------------------*/

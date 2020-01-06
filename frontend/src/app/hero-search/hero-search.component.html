@@ -79,6 +79,19 @@
                     </ul>
                   </div>
                 </li>
+              <li class="sidebar-dropdown">
+                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
+                      <i class="fa fa-globe"></i>
+                      <span>Orientations</span>
+                  </a>
+                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
+                      <ul>
+                          <li *ngFor="let orientation of leftsideData.product_orientations">
+                              <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
                 <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">
                     <i class="fa fa-chart-line"></i>
@@ -106,19 +119,7 @@
                     </ul>
                   </div>
                 </li>
-                 <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
-                    <i class="fa fa-globe"></i>
-                    <span>Orientations</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
-                    <ul>
-                      <li *ngFor="let orientation of leftsideData.product_orientations">
-                        <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+
                  <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">
                     <i class="fa fa-globe"></i>
