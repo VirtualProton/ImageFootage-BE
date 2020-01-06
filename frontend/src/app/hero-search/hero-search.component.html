@@ -183,7 +183,7 @@
 
     <main class="page-content mt-5">
         <main class="main-content">
-          <div style="position: fixed; width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
+          <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
@@ -201,7 +201,7 @@
           </div> 
           <div class="clearfix"></div>
 
-          <div class="photos pt-5 mt-5">
+          <div class="photos"><!-- pt-5 mt-5 -->
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                       <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
