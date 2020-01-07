@@ -39,7 +39,10 @@ export class HeroDetailComponent implements OnInit {
   checkoutAray:any =[];
   extended:any=[];
   standard:any=[];
-
+  standardTab:boolean =true;
+  extendedTab:boolean =false;
+  keyword:any=[];
+  loadingData:boolean=false;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -52,18 +55,19 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.spinner.show();
-    // this.getcategoryCarouselImages();
+      //this.spinner.show();
+      this.loadingData =true;
+     //this.getcategoryCarouselImages();
      this.getDetailinfo();
 
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
       
-     this.heroService.getMarketdeatils()
-      .subscribe(data => {
-        this.marketDetails = data;
-      });
+     // this.heroService.getMarketdeatils()
+     //  .subscribe(data => {
+     //    this.marketDetails = data;
+     //  });
       
      this.heroService.getAosSliderImages()
         .subscribe(aoslSliderImages => {
@@ -92,20 +96,27 @@ export class HeroDetailComponent implements OnInit {
     this.type = this.route.snapshot.paramMap.get('type');
     this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
-        console.log(data);
-        this.detailPageInfo = data;
-          this.spinner.hide();
+         console.log(data);
+         this.detailPageInfo = data;
+         let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
+         this.keyword = keywords.split(",").map(item => item.trim());
+         //this.keyword = keywords.split(',',10);
+         //this.spinner.hide();
+          this.loadingData =false;
       });
 
+  }
+  checkout(){
+      this.router.navigate(['/checkout']);
   }
 
   getcategoryCarouselImages(): void {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.heroService.getcategoryCarouselImages(1)
-      .subscribe(images => {
-          if(!isNullOrUndefined(images)){
-              this.carouselSliderImages = images[0];
+    this.heroService.getAosSliderImages()
+      .subscribe(aoslSliderImages => {
+          if(!isNullOrUndefined(aoslSliderImages)){
+              this.carouselSliderImages = aoslSliderImages;
 
               let randArr = [4, 3, 2,3];
               let tempCarouselSlider= this.chunkArray(this.carouselSliderImages.categoryImages, 4);
@@ -138,6 +149,7 @@ export class HeroDetailComponent implements OnInit {
     if (!this.currentUser) {
       this.showloginPopup = true;
     }else{
+        this.loadingData = true;
       this.addedCartItem = !this.addedCartItem;
         this.token = localStorage.getItem('currentUser');
        let cartval = {
@@ -154,9 +166,11 @@ export class HeroDetailComponent implements OnInit {
                 console.log(data);
                 this.checkoutArray.push(cartval);
                 if(data["status"]=='1'){
+                    this.loadingData =false;
                     localStorage.setItem('checkoutAray', this.checkoutArray);
                     this.router.navigate(['/wishlist']);
                 }else{
+                    this.loadingData =false;
                     alert(data["message"]);
                 }
 
@@ -167,15 +181,19 @@ export class HeroDetailComponent implements OnInit {
 
   }
 
-  checkPriceTotal(selectedPrice){
+   checkPriceTotal(selectedPrice){
         console.log(selectedPrice);
         this.currunt_selected_price = selectedPrice.price*80;
         this.total = this.currunt_selected_price;
-        this.standard=selectedPrice;
+       this.extended_price =0;
+       this.standard=selectedPrice;
     }
+
     addExtendedPriceTotal(selectedPrice){
+
         this.extended_price = selectedPrice.price*80;
-        this.total = this.total + this.extended_price;
+        this.total =  this.extended_price;
+        this.currunt_selected_price = 0;
         this.extended=selectedPrice;
     }
 
@@ -213,5 +231,16 @@ export class HeroDetailComponent implements OnInit {
       if(event){
         this.addToCheckoutItem(this.detailPageInfo,this.standard,this.total,this.extended,'2');
       }
+    }
+
+    tabshow(type){
+      if(type=='1'){
+        this.standardTab = true;
+        this.extendedTab = false;
+      }else if(type=='2'){
+          this.standardTab = false;
+          this.extendedTab = true;
+      }
+
     }
 }

@@ -49,6 +49,7 @@ export class HeroSearchComponent implements OnInit {
   leftsideData:any;
   sideBarEle:boolean=true;
   loadingData:boolean=false;
+  keyword = [];
 
 
   constructor(private heroService: HeroService,
@@ -110,6 +111,9 @@ export class HeroSearchComponent implements OnInit {
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
                               this.aoslSliderImages = aoslSliderImages;
+                              let type = this.aoslSliderImages["0"].product_keywords;
+                              this.keyword = type.split(',',9);
+                              console.log(this.keyword);
                               this.maintainAosSlider();
                             //  this.spinner.hide();
                             this.loadingData=false;

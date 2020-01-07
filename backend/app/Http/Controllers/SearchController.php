@@ -69,6 +69,7 @@ class SearchController extends Controller
                         'product_main_image' => $eachmedia['preview_high'],
                         'product_thumbnail' => $eachmedia['preview_no_wm'],
                         'product_description' => $eachmedia['description'],
+                        'product_keywords' => $eachmedia['keywords'],
                         'product_main_type' => "Image",
                         'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                         'product_web' => '2',

@@ -69,4 +69,6 @@ Route::group([
     Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
     Route::post('wishlistlist', 'FrontuserController@productList');
     Route::post('payment', 'PaymentController@payment');
+    Route::post('orderDetails', 'PaymentController@orderDetails');
+
 });

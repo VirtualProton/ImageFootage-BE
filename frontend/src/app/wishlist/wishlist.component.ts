@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { HeroService } from '../hero.service';
 import { cartItemData } from '../hero';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
-  styleUrls: ['./wishlist.component.css']
+  styleUrls: ['./wishlist.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WishlistComponent implements OnInit {
 
 
     wishListDataItems: Array<cartItemData> = [];
     priceArray: any = [];
+    loadingData:boolean=false;
+    promocodeflag:boolean=false;
 
     constructor(private heroService: HeroService, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
     }
 
     ngOnInit() {
-        this.spinner.show();
+        //this.spinner.show();
+        this.loadingData = true;
         // console.log(localStorage.getItem('checkoutAray'));
         this.authenticationService.getcartItemsData()
             .subscribe(
@@ -28,7 +33,8 @@ export class WishlistComponent implements OnInit {
                     this.wishListDataItems.forEach(element => {
                         this.priceArray.push(element["total"]);
                     });
-                    this.spinner.hide();
+                    this.loadingData = false;
+                    //this.spinner.hide();
                 },
                 error => {
 
@@ -46,13 +52,17 @@ export class WishlistComponent implements OnInit {
         this.router.navigate(['/checkout']);
     }
 
-
+    promocode(){
+        this.promocodeflag = !this.promocodeflag;
+    }
     removeProductFromCart(productinfo) {
         console.log(productinfo);
         if (confirm('Are you sure?') == true) {
+            this.loadingData = true;
             this.heroService.removeCartItemsData(productinfo)
                 .subscribe(data => {
                     if (data["status"] == '1') {
+                        this.priceArray=[];
                         this.authenticationService.getcartItemsData()
                             .subscribe(
                                 data => {
@@ -60,6 +70,7 @@ export class WishlistComponent implements OnInit {
                                     this.wishListDataItems.forEach(element => {
                                         this.priceArray.push(element["total"]);
                                     });
+                                    this.loadingData = false;
                                 },
                                 error => {
 

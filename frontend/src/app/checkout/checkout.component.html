@@ -1,254 +1,467 @@
-<section class="mt-5">
-  
-        <div class="container"> 
-            <div class="row">
-                   <div class="col-lg-5 col-md-5 col-sm-6 bg-light">
-                      <div class="card z-depth-0">
-                     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="loignForm p-5">
-                     <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
-                       <div class="row form-group">
-                       <div class="col-lg-6 col-md-6 col-sm-6">
-                         <label>First Name</label>
-                           <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0">
-                           <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
-                               <div *ngIf="f.first_name.errors.required">First Name is required</div>
-                           </div>
-                       </div>
-                      
-                       <div class="col-lg-6 col-md-6 col-sm-6">
-                         <label>Last Name</label>
-                           <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"  class="form-control">
-                           <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-                               <div *ngIf="f.last_name.errors.required">Last Name is required</div>
-                           </div>
-                       </div>
-                       
+<div class="loader-bg" *ngIf="loadingData">
+    <div class="loader">
+        Loading
+        <span></span>
+    </div>
+</div>
+
+<section class="pt-50 mt-50">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-6">
+                <div class="card shadow">
+                    <form class="loignForm p-5" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                        <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
+                        <div class="row form-group">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>First Name</label>
+                                <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0">
+                                <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.first_name.errors.required">First Name is required</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>Last Name</label>
+                                <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" class="form-control">
+                                <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+                                </div>
+                            </div>
                         </div>
-                        
-                     <div class="form-group">
-                         <label>Street Address</label>
-                         <textarea name="address" id="address" cols="5" rows="1" class="form-control" placeholder="" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
-                         <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                             <div *ngIf="f.address.errors.required">Address is required</div>
-                         </div>
-                       </div>
-                       <div class="form-group">
-                             <label>Country</label>
-                             <select class="form-control" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
-                                 <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
-                             </select>
-                             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                                 <div *ngIf="f.country.errors.required">Country is required</div>
-                             </div>
-                         </div>
-                       
-                       <div class="row form-group pt-4">
-                       <div class="col-md-6 col-lg-6 col-sm-6">
-                         <label>State/province</label>
-                           <select class="form-control" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
-                               <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
-                               <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
-                           </select>
-                           <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
-                               <div *ngIf="f.state.errors.required">State is required</div>
-                           </div>
-                       </div>
-                           <div class="form-group">
-                               <label>City</label>
-                               <select class="form-control" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
-                                   <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
-                                   <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
-                               </select>
-                               <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                                   <div *ngIf="f.city.errors.required">City is required</div>
-                               </div>
-                           </div>
-                           <div class="col-md-6 col-sm-6 col-lg-6">
-                         <label>Zipcode</label>
-                               <input type="text" id="pincode" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
-                               <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
-                                   <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
-                                   <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>
-                               </div>
-                       </div>
-                       </div>
-                       
-                       <div class="form-group pt-3">
-                       
 
-                         <div class="clearfix"></div>
-                         <hr>
-                         <h3 class="f-20 mb-4 mt-5">PAYMENT INFORMATION</h3>
-    
-                           <div class="row">
-                           <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
-                             
-                             <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="customRadio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="">
-        <label class="custom-control-label" for="customRadio"><strong>Atom Payment Gateway</strong></label>
-      </div>
-                           </div>
-    
-                           <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
-<!--                             -->
-<!--                             <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
-<!--                             <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
-                           </div>
-    
-                         </div>
-                           <div class="clearfix"></div>
-                           <div class="row">
-                               <div class="clearfix"></div>
-                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <textarea  class="form-control rounded-0" rows="2" style="min-height:70px;" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
+                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Address is required</div>
+                            </div>
+                        </div>
 
-                                   <div class="custom-control custom-radio">
-                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio1" name="paymentGatway" value="payu">
-                                       <label class="custom-control-label" for="customRadio1"><strong>PayUmoney Payment Gateway</strong></label>
-                                   </div>
-                               </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
+                                <option value="">Select</option>
+                                <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                <div *ngIf="f.country.errors.required">Country is required</div>
+                            </div>
+                        </div>
 
-                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+                        <div class="form-group">
+                            <label>State/province</label>
+                                <select class="form-control" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
+                                    <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                                    <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
+                                </select>
+                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">State is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <select class="form-control" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
+                                <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                                <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Zipcode</label>
+                                <input type="text" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
+                            <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
+                                <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
+                                <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>
+                            </div>
+                        </div>
 
-<!--                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
-<!--                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
-                               </div>
+                        <div class="form-group pt-3">
+                            <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Enter Address
+                            </strong></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-                           </div>
-                           <div class="clearfix"></div>
-                           <div class="clearfix"></div>
-                           <div class="row">
-                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">
+            <div class="col-lg-7 col-md-7 col-sm-6">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table cart-table checkout-table">
+                            <thead class="f-16">
+                            <tr>
+                                <th colspan="3"><h3 class="f-18">CART</h3>
+                                    <p class="mb-0">{{wishListDataItems.length}} Items</p></th>
+                                <th align="right" class="text-right"><button class="btn btn-default rounded-0" (click)="goToWishList()">Edit</button></th>
 
-                                   <div class="custom-control custom-radio">
-                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">
-                                       <label class="custom-control-label" for="customRadio2"><strong>Rozerpay Payment Gateway</strong></label>
-                                   </div>
-                               </div>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let checkout of wishListDataItems;let i= index">
 
-                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+                                <td width="25%" align="center" *ngIf="checkout.product_web=='2'">
+                                    <div class="product-info">
+                                        <img src="{{checkout.product_thumb}}" alt="product-img" height="100">
+                                    </div>
+                                </td>
+                                <td width="25%" align="center" *ngIf="checkout.product_web=='3'">
+                                    <div class="product-info">
+                                        <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">
+                                            <source src="{{checkout.product_thumb}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </td>
 
-<!--                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>-->
-<!--                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>-->
-                               </div>
 
-                           </div>
-                           <div class="clearfix"></div>
-                           <div class="clearfix"></div>
-<!--                          <div class="row form-group mt-4">-->
-<!--                       <div class="col-lg-12 col-md-12 col-sm-12">-->
-<!--                         <label>Credit Card Number</label>-->
-<!--                         <input type="number" class="form-control rounded-0">-->
-<!--                       </div>                  -->
-<!--                        </div>-->
-    
+                                <td width="50%">
+                                    <p class="mb-1 text-black" style="display: inline-block;"><strong>{{checkout.product_name}} #{{checkout.cart_product_id}}</strong>
+
+<!--                                        <a href="javascript:void()" data-toggle="popover"  data-html="true" title="Image 2916217 - Large (2592 X 3872px)$75.00-->
+<!--" data-placement="right" data-content='-->
+<!-- <p class="mb-0 f-12"><b>Size: X-Large (6720 X 4480PX)</b></p>-->
+<!--<p class="mb-0  f-12">By <b>Thomas Pickard</b></p>-->
+<!--                           <p class="f-12">A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.</p>'><i class="fa fa-exclamation-circle"></i></a>-->
+
+<!--                                    </p>-->
+                                    <p class="mb-1"><strong>Size:</strong>{{checkout.standard_type}}  {{checkout.standard_size}}</p>
+
+
+                                    <!-- <div class="clearfix"></div>
+                                    <div class="mt-2">
+
+                                    <a href="#" class="btn btn-danger btn-sm f-12"><i class="fa fa-times-circle"></i> Remove</a>
+                                     <a href="#" class="btn btn-success btn-sm f-12 text-white"><i class="fa fa-heart"></i> Wishlist</a>
+                                   </div> -->
+                                </td>
+                                <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}} INR</strong></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                            <tfoot class="text-black">
+                            <tr class="f-20">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>TOTAL</strong></td>
+                                <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>
+                            </tr>
+                            <tr class="f-20">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>Taxes</strong></td>
+                                <td align="right"><strong>10.00 INR</strong></td>
+                            </tr>
+                            <tr class="f-16">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>BALANCE DUE</strong></td>
+                                <td align="right"><strong>{{showTotalPrice() + 10 }} INR</strong></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+
+                <h3 class="f-20 mb-4 mt-35">PAYMENT INFORMATION</h3>
+                <form  [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                            <label class="mb-0">
+                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">
+                                <img src="/assets/images/atom.png" alt="atom">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                            <label class="mb-0">
+                                <input type="radio"  formControlName="paymentGatway"  name="paymentGatway" value="payu" checked="checked">
+                                <img src="/assets/images/payu.png" alt="payumoney">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                            <label class="mb-0">
+                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">
+                                <img src="/assets/images/rozorpay.png" alt="Rozorpay">
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                </form>
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>
+<!--<section class="mt-5">-->
+<!--  -->
+<!--        <div class="container"> -->
+<!--            <div class="row">-->
+<!--                   <div class="col-lg-5 col-md-5 col-sm-6 bg-light">-->
+<!--                      <div class="card z-depth-0">-->
+<!--                     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="loignForm p-5">-->
+<!--                     <h3 class="f-20 mb-3">BILLING ADDRESS</h3>-->
 <!--                       <div class="row form-group">-->
-<!--                      <div class="col-md-8 col-lg-8 col-sm-8">-->
-<!--                         <label>Expiry Date</label>-->
-<!--                         <div class="row">-->
-<!--                          <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                         <select class="form-control">-->
-<!--                          <option value="">MM</option>-->
-<!--                          <option value="">01</option>-->
-<!--                          <option value="">02</option>-->
-<!--                          <option value="">03</option>-->
-<!--                         </select>-->
-<!--                       </div>-->
-<!--                       <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                         <select class="form-control">-->
-<!--                          <option value="">YY</option>-->
-<!--                          <option value="">2019</option>-->
-<!--                          <option value="">2018</option>-->
-<!--                          <option value="">2017</option>-->
-<!--                         </select>-->
-<!--                       </div>-->
-<!--                       </div>-->
+<!--                       <div class="col-lg-6 col-md-6 col-sm-6">-->
+<!--                         <label>First Name</label>-->
+<!--                           <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0">-->
+<!--                           <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">-->
+<!--                               <div *ngIf="f.first_name.errors.required">First Name is required</div>-->
+<!--                           </div>-->
 <!--                       </div>-->
 <!--                      -->
-<!--&lt;!&ndash;                       <div class="col-lg-4 col-md-4 col-sm-4">&ndash;&gt;-->
-<!--&lt;!&ndash;                         <label>Security Code</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                         <input type="text" class="form-control" placeholder="CVV">&ndash;&gt;-->
-<!--&lt;!&ndash;                       </div>&ndash;&gt;-->
+<!--                       <div class="col-lg-6 col-md-6 col-sm-6">-->
+<!--                         <label>Last Name</label>-->
+<!--                           <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"  class="form-control">-->
+<!--                           <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">-->
+<!--                               <div *ngIf="f.last_name.errors.required">Last Name is required</div>-->
+<!--                           </div>-->
+<!--                       </div>-->
 <!--                       -->
 <!--                        </div>-->
-    
-<!--                         <div class="row form-group">-->
-<!--                       <div class="col-lg-12 col-md-12 col-sm-12">-->
-<!--                         <label>Name on Card</label>-->
-<!--                         <input type="text" class="form-control rounded-0">-->
-<!--                       </div>                  -->
-<!--                        </div>-->
-                           <div class="row form-group">
-                               <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Make Payment
-                           </strong>
-                               </button>
-                           </div>
-                        
-                       
-                       </div>
-                       
-                       
-                     </form>
-                   </div>
-                   
-                   
-                   </div>
-                   
-                   <div class="col-lg-7 col-md-7 col-sm-6">
-                    <div class="card">
-                    <div class="table-responsive">
-                      <table class="table cart-table checkout-table">
-                        <thead class="f-16">
-                          <tr>
-                            <th colspan="2"><h3 class="f-18">CART</h3>
-                            <p class="mb-0">{{wishListDataItems.length}} Items</p></th>
-                            <th align="right" class="text-right"><button class="btn btn-default rounded-0" (click)="goToWishList()">Edit</button></th>                          
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let checkout of wishListDataItems;let i= index">
-                            <td width="25%" align="center" *ngIf="checkout.product_web=='2'">
-                              <div class="product-info">
-                                <img src="{{checkout.product_thumb}}" alt="product-img" height="100">
-                              </div>
-                            </td>
-                              <td width="25%" align="center" *ngIf="checkout.product_web=='3'">
-                                  <div class="product-info">
-                                      <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">
-                                          <source src="{{checkout.product_thumb}}" type="video/mp4">
-                                          Your browser does not support the video tag.
-                                      </video>
-                                  </div>
-                            </td>
-                            <td width="50%">
-                               <p class="mb-1 text-black"><strong>{{checkout.product_name}}</strong></p>
-                               <p class="mb-1"><strong>Size:</strong>  {{checkout.standard_size}}</p>
-                            </td>
-                             <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}} INR</strong></p>
-                             </td>
-                          </tr>
-                        </tbody>
-                        <tfoot class="text-black">
-                          <tr class="f-20">
-                          <td></td>
-                            <td align="right"><strong>TOTAL</strong></td>
-                            <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>
-                          </tr>
-                          <tr class="f-20">
-                              <td></td>
-                              <td align="right"><strong>Taxes</strong></td>
-                              <td align="right"><strong>10.00 INR</strong></td>
-                          </tr>
-                          <tr class="f-16">
-                          <td></td>
-                            <td align="right"><strong>BALANCE DUE</strong></td>
-                            <td align="right"><strong>{{showTotalPrice() + 10 }} INR</strong></td>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
-                  </div>
-               </div>
-                
-            </div>
-        </div>
-      </section>
+<!--                        -->
+<!--                     <div class="form-group">-->
+<!--                         <label>Street Address</label>-->
+<!--                         <textarea name="address" id="address" cols="5" rows="1" class="form-control" placeholder="" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>-->
+<!--                         <div *ngIf="submitted && f.address.errors" class="invalid-feedback">-->
+<!--                             <div *ngIf="f.address.errors.required">Address is required</div>-->
+<!--                         </div>-->
+<!--                       </div>-->
+<!--                       <div class="form-group">-->
+<!--                             <label>Country</label>-->
+<!--                             <select class="form-control" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">-->
+<!--                                 <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>-->
+<!--                             </select>-->
+<!--                             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">-->
+<!--                                 <div *ngIf="f.country.errors.required">Country is required</div>-->
+<!--                             </div>-->
+<!--                         </div>-->
+<!--                       -->
+<!--                       <div class="row form-group pt-4">-->
+<!--                       <div class="col-md-6 col-lg-6 col-sm-6">-->
+<!--                         <label>State/province</label>-->
+<!--                           <select class="form-control" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">-->
+<!--                               <option *ngIf="stateInfo == ''" value="-1">&#45;&#45;Select State&#45;&#45;</option>-->
+<!--                               <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>-->
+<!--                           </select>-->
+<!--                           <div *ngIf="submitted && f.state.errors" class="invalid-feedback">-->
+<!--                               <div *ngIf="f.state.errors.required">State is required</div>-->
+<!--                           </div>-->
+<!--                       </div>-->
+<!--                           <div class="form-group">-->
+<!--                               <label>City</label>-->
+<!--                               <select class="form-control" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">-->
+<!--                                   <option *ngIf="cityInfo == ''" value="-1">&#45;&#45;Select CIty&#45;&#45;</option>-->
+<!--                                   <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>-->
+<!--                               </select>-->
+<!--                               <div *ngIf="submitted && f.city.errors" class="invalid-feedback">-->
+<!--                                   <div *ngIf="f.city.errors.required">City is required</div>-->
+<!--                               </div>-->
+<!--                           </div>-->
+<!--                           <div class="col-md-6 col-sm-6 col-lg-6">-->
+<!--                         <label>Zipcode</label>-->
+<!--                               <input type="text" id="pincode" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">-->
+<!--                               <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >-->
+<!--                                   <div *ngIf="f.pincode.errors.required">ZipCode is required</div>-->
+<!--                                   <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>-->
+<!--                               </div>-->
+<!--                       </div>-->
+<!--                       </div>-->
+<!--                       -->
+<!--                       <div class="form-group pt-3">-->
+<!--                       -->
+
+<!--                         <div class="clearfix"></div>-->
+<!--                         <hr>-->
+<!--                         <h3 class="f-20 mb-4 mt-5">PAYMENT INFORMATION</h3>-->
+<!--    -->
+<!--                           <div class="row">-->
+<!--                           <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">-->
+<!--                             -->
+<!--                             <div class="custom-control custom-radio">-->
+<!--        <input type="radio" class="custom-control-input" id="customRadio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="">-->
+<!--        <label class="custom-control-label" for="customRadio"><strong>Atom Payment Gateway</strong></label>-->
+<!--      </div>-->
+<!--                           </div>-->
+<!--    -->
+<!--                           <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">-->
+<!--&lt;!&ndash;                             &ndash;&gt;-->
+<!--&lt;!&ndash;                             <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                             <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>&ndash;&gt;-->
+<!--                           </div>-->
+<!--    -->
+<!--                         </div>-->
+<!--                           <div class="clearfix"></div>-->
+<!--                           <div class="row">-->
+<!--                               <div class="clearfix"></div>-->
+<!--                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">-->
+
+<!--                                   <div class="custom-control custom-radio">-->
+<!--                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio1" name="paymentGatway" value="payu">-->
+<!--                                       <label class="custom-control-label" for="customRadio1"><strong>PayUmoney Payment Gateway</strong></label>-->
+<!--                                   </div>-->
+<!--                               </div>-->
+
+<!--                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">-->
+
+<!--&lt;!&ndash;                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>&ndash;&gt;-->
+<!--                               </div>-->
+
+<!--                           </div>-->
+<!--                           <div class="clearfix"></div>-->
+<!--                           <div class="clearfix"></div>-->
+<!--                           <div class="row">-->
+<!--                               <div class="col-md-8 col-sm-8 col-lg-8 col-xs-8">-->
+
+<!--                                   <div class="custom-control custom-radio">-->
+<!--                                       <input type="radio" class="custom-control-input" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">-->
+<!--                                       <label class="custom-control-label" for="customRadio2"><strong>Rozerpay Payment Gateway</strong></label>-->
+<!--                                   </div>-->
+<!--                               </div>-->
+
+<!--                               <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">-->
+
+<!--&lt;!&ndash;                                   <span><img src="assets/images/visa.png" class="border p-1" height="24"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                   <span><img src="assets/images/mastarcard.png"  class="border p-1"  height="24"></span>&ndash;&gt;-->
+<!--                               </div>-->
+
+<!--                           </div>-->
+<!--                           <div class="clearfix"></div>-->
+<!--                           <div class="clearfix"></div>-->
+<!--&lt;!&ndash;                          <div class="row form-group mt-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                       <div class="col-lg-12 col-md-12 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;                         <label>Credit Card Number</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                         <input type="number" class="form-control rounded-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>                  &ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--    -->
+<!--&lt;!&ndash;                       <div class="row form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div class="col-md-8 col-lg-8 col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                         <label>Expiry Date</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                         <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                         <select class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">MM</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">01</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">02</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">03</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                         </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                       <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                         <select class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">YY</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">2019</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">2018</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <option value="">2017</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                         </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      &ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                       <div class="col-lg-4 col-md-4 col-sm-4">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                         <label>Security Code</label>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                         <input type="text" class="form-control" placeholder="CVV">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                       </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                       &ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--    -->
+<!--&lt;!&ndash;                         <div class="row form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                       <div class="col-lg-12 col-md-12 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;                         <label>Name on Card</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                         <input type="text" class="form-control rounded-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                       </div>                  &ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                           <div class="row form-group">-->
+<!--                               <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Make Payment-->
+<!--                           </strong>-->
+<!--                               </button>-->
+<!--                           </div>-->
+<!--                        -->
+<!--                       -->
+<!--                       </div>-->
+<!--                       -->
+<!--                       -->
+<!--                     </form>-->
+<!--                   </div>-->
+<!--                   -->
+<!--                   -->
+<!--                   </div>-->
+<!--                   -->
+<!--                   <div class="col-lg-7 col-md-7 col-sm-6">-->
+<!--                    <div class="card">-->
+<!--                    <div class="table-responsive">-->
+<!--                      <table class="table cart-table checkout-table">-->
+<!--                        <thead class="f-16">-->
+<!--                          <tr>-->
+<!--                            <th colspan="2"><h3 class="f-18">CART</h3>-->
+<!--                            <p class="mb-0">{{wishListDataItems.length}} Items</p></th>-->
+<!--                            <th align="right" class="text-right"><button class="btn btn-default rounded-0" (click)="goToWishList()">Edit</button></th>                          -->
+<!--                          </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                          <tr *ngFor="let checkout of wishListDataItems;let i= index">-->
+<!--                            <td width="25%" align="center" *ngIf="checkout.product_web=='2'">-->
+<!--                              <div class="product-info">-->
+<!--                                <img src="{{checkout.product_thumb}}" alt="product-img" height="100">-->
+<!--                              </div>-->
+<!--                            </td>-->
+<!--                              <td width="25%" align="center" *ngIf="checkout.product_web=='3'">-->
+<!--                                  <div class="product-info">-->
+<!--                                      <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">-->
+<!--                                          <source src="{{checkout.product_thumb}}" type="video/mp4">-->
+<!--                                          Your browser does not support the video tag.-->
+<!--                                      </video>-->
+<!--                                  </div>-->
+<!--                            </td>-->
+<!--                            <td width="50%">-->
+<!--                               <p class="mb-1 text-black"><strong>{{checkout.product_name}}</strong></p>-->
+<!--                               <p class="mb-1"><strong>Size:</strong>  {{checkout.standard_size}}</p>-->
+<!--                            </td>-->
+<!--                             <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}} INR</strong></p>-->
+<!--                             </td>-->
+<!--                          </tr>-->
+<!--                        </tbody>-->
+<!--                        <tfoot class="text-black">-->
+<!--                          <tr class="f-20">-->
+<!--                          <td></td>-->
+<!--                            <td align="right"><strong>TOTAL</strong></td>-->
+<!--                            <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>-->
+<!--                          </tr>-->
+<!--                          <tr class="f-20">-->
+<!--                              <td></td>-->
+<!--                              <td align="right"><strong>Taxes</strong></td>-->
+<!--                              <td align="right"><strong>10.00 INR</strong></td>-->
+<!--                          </tr>-->
+<!--                          <tr class="f-16">-->
+<!--                          <td></td>-->
+<!--                            <td align="right"><strong>BALANCE DUE</strong></td>-->
+<!--                            <td align="right"><strong>{{showTotalPrice() + 10 }} INR</strong></td>-->
+<!--                          </tr>-->
+<!--                        </tfoot>-->
+<!--                      </table>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--               </div>-->
+<!--                -->
+<!--            </div>-->
+<!--        </div>-->
+<!--      </section>-->

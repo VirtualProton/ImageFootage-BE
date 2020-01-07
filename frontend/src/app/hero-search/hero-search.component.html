@@ -188,16 +188,7 @@
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="underwater">underwater</a>
-                  <a href="#" class="btn btn-outline-light  btn-sm f-12" title="backlit">backlit</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="light">light</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="water">water</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="dark">dark</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="shadow">shadow</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="clothing">clothing</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="nature">nature</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="wear">wear</a>
-              
+             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
             </span>
           </div> 
           <div class="clearfix"></div>

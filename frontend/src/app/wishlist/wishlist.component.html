@@ -1,3 +1,9 @@
+<div class="loader-bg" *ngIf="loadingData">
+    <div class="loader">
+        Loading
+        <span></span>
+    </div>
+</div>
 <section>
  <div class="container">
           <div class="card pb-3 shadow-sm" *ngIf="wishListDataItems.length>0">
@@ -7,8 +13,8 @@
                   <tbody>
                   <tr *ngFor="let wishList of wishListDataItems;let i= index">
                       <td width="3%"> <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id=$index name="'example'+i">
-                          <label class="custom-control-label" for=$index></label>
+<!--                          <input type="checkbox" class="custom-control-input" id=$index name="'example'+i">-->
+<!--                          <label class="custom-control-label" for=$index></label>-->
                       </div>
                       </td>
                       <td width="25%" align="center">
@@ -34,8 +40,8 @@
 
                           <div class="clearfix"></div>
                           <div class="mt-2">
-                              <a href="#" class="btn btn-danger btn-sm f-12" (click)="removeProductFromCart(wishList)"><i class="fa fa-times-circle"></i> Remove</a>
-                                <a href="#" class="btn btn-success btn-sm f-12 text-white"><i class="fa fa-heart"></i> Wishlist</a>
+                              <a  class="btn btn-danger btn-sm f-12" (click)="removeProductFromCart(wishList)"><i class="fa fa-times-circle"></i> Remove</a>
+                                <a  class="btn btn-success btn-sm f-12 text-white ml-1"><i class="fa fa-heart"></i> Wishlist</a>
                           </div>
 
                       </td>
@@ -53,8 +59,8 @@
                 <div class="col-12">
                 <div class="p-3 row">
                   <div class="col-md-4 col-sm-4 col-lg-4">
-                  <a href="javascript:void();" id="promocode">Have a promo code ?</a>
-                  <div class=" show-promocode">
+                  <a href="javascript:void();" id="promocode" (click)="promocode()">Have a promo code ?</a>
+                  <div class="show-promocode" *ngIf="promocodeflag">
                   <div class="row">
                     <div class="col-md-8 col-sm-8 col-lg-8">                        
                       <input type="text" name="" class="form-control" placeholder="Coupon Code">

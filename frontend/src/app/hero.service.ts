@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -363,6 +363,24 @@ removeCartItemsData(product:any): Observable<userData> {
         );;
     }
 
+    getOrderDetails(id:any):Observable<any>{
+        //let params = new HttpParams();
+        const url = `${this.heroesUrl}orderDetails`;
+        let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+tokenData.access_token });
+        let options = { headers: headers };
+        return this.http.post<any>(url,{id},options).pipe(
+            map(orderDetails => {
+                console.log(orderDetails);
+
+                //this.currentUserSubject.next(cart);
+                return orderDetails;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
 
 }
 

@@ -135,10 +135,10 @@ class PaymentController extends Controller
                     Usercart::where('cart_added_by',$orders->user_id)->delete();
                  }
               //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
-                return redirect('orderConfirmation/'.$_POST['mer_txn']);
+                return redirect('/orderConfirmation/'.$_POST['mer_txn']);
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('orderFailed');
+                return redirect('/orderFailed');
             }
         } else {
             echo "Invalid Signature";
@@ -146,7 +146,18 @@ class PaymentController extends Controller
 
     }
 
+    public function orderDetails(Request $request){
+        $allFields = $request->all();
+        if(count($allFields)>0){
+            $OrderData = Orders::with('items')
+                ->where('txn_id','=',$allFields['id'])
+                ->get()->toArray();
+             echo json_encode(['status'=>"success",'data'=>$OrderData]);
+        }else{
+            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+        }
 
+    }
 
     
 

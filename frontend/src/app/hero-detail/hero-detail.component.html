@@ -1,173 +1,2145 @@
+<div class="loader-bg" *ngIf="loadingData">
+    <div class="loader">
+        Loading
+        <span></span>
+    </div>
+</div>
+<!--<div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='2'">-->
+<!--  <main class="main-content p-0">-->
+<!--    <div class="container-fluid photos">-->
+<!--      <div class="row mr-2">-->
+<!--        <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">-->
+<!--          <div class="cartItem" *ngIf="detailPageInfo">-->
+<!--            <div class="p-3">          -->
+<!--              <div data-aos="fade-up">-->
+<!--                  <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                      <img src="{{detailPageInfo.media.preview_url_no_wm}}" alt="Image" class="img-fluid">-->
+<!--                      <div class="photo-text-more">            -->
+<!--                        <div class="photo-text-more">-->
+<!--                          <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>-->
+<!--                          <span class="meta">{{detailPageInfo.photoCount}} Photos</span>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                  </a>-->
+<!--              </div>         -->
+<!--              <p class="text-white f-18">{{detailPageInfo.metadata.description}}</p>-->
+<!--              <p>{{detailPageInfo.shortInfo}}</p>-->
+<!--              <p class="text-warning">Related Keywords</p>            -->
+<!--              <div class="related_key">{{detailPageInfo.metadata.keywords}}-->
+<!--&lt;!&ndash;                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  &ndash;&gt;-->
+<!--&lt;!&ndash;                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </ng-container>   &ndash;&gt;-->
+<!--                            -->
+<!--              </div>-->
+<!--            </div>-->
+<!--              -->
+<!--          </div>-->
+<!--        </div>-->
+<!--         -->
+<!--        <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">-->
+<!--          <div  class="p-3">-->
+<!--            <ngb-tabset class="nav nav-tabs mytabs">-->
+<!--                <ngb-tab   class="nav-item">-->
+<!--                    <ng-template ngbTabTitle class="nav-link active">Standard Licence</ng-template>-->
+<!--                  <ng-template ngbTabContent >-->
+<!--                      <div class="tab-content pt-3">-->
+<!--                          <div>-->
+<!--                              <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>-->
+<!--                              <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">-->
+<!--                                  <ng-container *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">-->
+<!--                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">-->
+<!--                                          <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)">-->
+<!--                                          <p class="mb-0">{{cost.description}}</p>-->
+<!--                                          <p><small><span class="text-warning"> {{cost.description}}</span> {{cost.width}}x{{cost.height}} </small></p>-->
+<!--                                          <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.price*80}}</p>-->
+<!--                                      </label>-->
+<!--                                  </ng-container>-->
+<!--                              -->
+<!--                              </div>-->
+
+<!--                          </div>-->
+<!--                      </div>-->
+<!--                  </ng-template>-->
+<!--                </ngb-tab>-->
+
+<!--                <ngb-tab class="nav-item">-->
+<!--                  <ng-template ngbTabTitle class="nav-link">Extended Licence</ng-template>-->
+<!--                  <ng-template  ngbTabContent>-->
+<!--                      <div class="tab-content pt-3">-->
+<!--                          <div>-->
+<!--                              <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>-->
+<!--                              <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">-->
+<!--                                  <ng-container *ngFor="let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;">-->
+<!--                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">-->
+<!--                                          <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">-->
+<!--                                          <div class="row align-items-center">-->
+<!--                                              <div class="col-md-9 col-sm-9 col-lg-9">-->
+<!--                                                <p class="f-14"> {{license.name}}</p>-->
+<!--                                              </div>-->
+<!--                                              <div class="col-md-3 col-sm-3 col-lg-3">-->
+<!--                                                  <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.price*80}}</p>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </label>-->
+<!--                                  </ng-container>-->
+<!--                                -->
+<!--                              </div>-->
+<!--                              -->
+<!--                           </div>-->
+<!--                      </div>-->
+<!--                  </ng-template>-->
+<!--                </ngb-tab>-->
+<!--            </ngb-tabset>-->
+<!--          </div>-->
+<!--            <div class="row mt-5" *ngIf="total>0">-->
+<!--                <div class="col-12">-->
+<!--                    <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>-->
+<!--                    <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <p class="text-white"><strong>Total</strong></p>-->
+<!--                </div>-->
+<!--                <div class="col-8 text-right">-->
+<!--                    <h2 class="text-warning f-24"><strong>{{total}} INR</strong></h2>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row mt-2 mb-5">-->
+<!--              <div class="col-12">-->
+<!--                  <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>-->
+<!--                  <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>-->
+<!--                  <p>This image is exclusive to Image Footage</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <p class="">DETAILS</p>-->
+<!--            <table class="f-12">-->
+<!--              <tbody>-->
+<!--                <tr>-->
+<!--                  <td width="20%">Restrictions :</td>-->
+<!--                  <td>Contact your local office for all commercial or promotional uses.</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>Credit :</td>-->
+<!--                  <td>{{detailPageInfo.metadata.author_realname}}</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>Editorial # :</td>-->
+<!--                  <td>{{detailPageInfo.metadata.editorial}}</td>-->
+<!--                </tr>-->
+<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <td>Collection :</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <td>Getty Images News</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+<!--                <tr>-->
+<!--                  <td>Date created :</td>-->
+<!--                  <td>{{detailPageInfo.metadata.date}}</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>Licence type :</td>-->
+<!--                  <td *ngIf="detailPageInfo.options.extended=='yes'">Extended</td>-->
+<!--                    <td *ngIf="detailPageInfo.options.rights_managed=='yes'">Extended</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>Release info :</td>-->
+<!--                  <td>Not released. More information</td>-->
+<!--                </tr>-->
+<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <td>Source :</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <td>Getty Images AsiaPac</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+
+<!--                <tr>-->
+<!--                  <td>Object name :</td>-->
+<!--                  <td>{{detailPageInfo.media.id}}</td>-->
+<!--                </tr>-->
+
+<!--                <tr>-->
+<!--                  <td>Max file size :</td>-->
+<!--                  <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}} </td>-->
+<!--                </tr>-->
+<!--              </tbody>-->
+
+<!--            </table>-->
+<!--        </div> -->
+
+<!--        -->
+<!--      </div>-->
+<!-- -->
+<!--    -->
+<!--    -->
+<!--      <div class="bg-black p-3">-->
+<!--        <div class="row align-items-stretch">-->
+<!--          <div class="row mx-auto my-auto mb-5">-->
+<!--            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                <div class="carousel-inner" role="listbox">                    -->
+<!--                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> -->
+<!--                        <div class="carousel-item">-->
+<!--                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                              <div class="row">-->
+<!--                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                      <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                          <div class="photo-text-more">-->
+<!--                                              <div class="photo-text-more">-->
+<!--                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </a>-->
+<!--                                  </div>-->
+<!--                              </div>   -->
+<!--                            </ng-template>-->
+<!--                        </div> -->
+<!--                    </ngb-carousel>-->
+<!--                     -->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row mx-auto my-auto mb-5">-->
+<!--            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                <div class="carousel-inner" role="listbox">                    -->
+<!--                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> -->
+<!--                        <div class="carousel-item">-->
+<!--                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                              <div class="row">-->
+<!--                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                      <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                          <div class="photo-text-more">-->
+<!--                                              <div class="photo-text-more">-->
+<!--                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </a>-->
+<!--                                  </div>-->
+<!--                              </div>   -->
+<!--                            </ng-template>-->
+<!--                        </div> -->
+<!--                    </ngb-carousel>-->
+<!--                     -->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row mx-auto my-auto mb-5">-->
+<!--            <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                <div class="carousel-inner" role="listbox">                    -->
+<!--                    <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> -->
+<!--                        <div class="carousel-item">-->
+<!--                            <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                              <div class="row">-->
+<!--                                  <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                      <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                          <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                          <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                          <div class="photo-text-more">-->
+<!--                                              <div class="photo-text-more">-->
+<!--                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </a>-->
+<!--                                  </div>-->
+<!--                              </div>   -->
+<!--                            </ng-template>-->
+<!--                        </div> -->
+<!--                    </ngb-carousel>-->
+<!--                     -->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">-->
+<!--            <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">-->
+<!--              <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">-->
+<!--              <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--              <div class="photo-text-more">-->
+<!--              -->
+<!--                <div class="photo-text-more">-->
+<!--                <h3 class="heading">{{aosimges.name}}</h3>-->
+<!--                <span class="meta">{{aosimges.count}} Photos</span>-->
+<!--              </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--&lt;!&ndash;          <div class="col-md-5 col-sm-6 col-12 m-auto">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     &ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+
+
+
+<!--      -->
+<!--      -->
+<!--      -->
+
+
+<!--   -->
+<!--      -->
+<!--        -->
+<!--        -->
+
+<!--      </div>-->
+<!--      -->
+<!--       -->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </main>-->
+
+<!--</div>-->
+
+<!--<div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='3'">-->
+<!--    <main class="main-content p-0">-->
+<!--        <div class="container-fluid photos">-->
+<!--            <div class="row mr-2">-->
+<!--                <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">-->
+<!--                    <div class="cartItem" *ngIf="detailPageInfo">-->
+<!--                        <div class="p-3">-->
+<!--                            <div>-->
+<!--                                <a href="javascript:void(0)" class="photo-item">-->
+<!--                                <div class="embed-responsive embed-responsive-16by9">-->
+<!--                                <video  controls onmouseover="this.play()" onmouseout="this.pause()">-->
+<!--                                        <source src="{{detailPageInfo[0].flv_base+detailPageInfo[1]}}" type="video/mp4">-->
+<!--                                        Your browser does not support the video tag.-->
+<!--                                    </video>-->
+<!--                                    </div>-->
+<!--                                    <div class="photo-text-more">-->
+<!--                                        <div class="photo-text-more">-->
+<!--                                            <h3 class="heading">{{detailPageInfo[0].items[0].pf}}</h3>-->
+<!--&lt;!&ndash;                                            <span class="meta">{{detailPageInfo.photoCount}} Photos</span>&ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <p class="text-white f-18">{{detailPageInfo[0].items[0].desc}}</p>-->
+<!--                            <p>{{detailPageInfo[0].items[0].n}}</p>-->
+<!--                            <p class="text-warning">Related Keywords</p>-->
+<!--                            <div class="related_key">{{detailPageInfo[0].items[0].kw}}-->
+<!--                                &lt;!&ndash;                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  &ndash;&gt;-->
+<!--                                &lt;!&ndash;                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                </ng-container>   &ndash;&gt;-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">-->
+<!--                    <div  class="p-3">-->
+<!--                        <ngb-tabset class="nav nav-tabs mytabs">-->
+<!--                            <ngb-tab   class="nav-item">-->
+<!--                                <ng-template ngbTabTitle class="nav-link active">Standard Licence</ng-template>-->
+<!--                                <ng-template ngbTabContent >-->
+<!--                                    <div class="tab-content pt-3">-->
+<!--                                        <div>-->
+<!--                                            <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>-->
+<!--                                            <div class="btn-group btn-g       roup-toggle mb-1" data-toggle="buttons">-->
+<!--                                                <ng-container *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">-->
+<!--                                                    <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">-->
+<!--                                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">-->
+<!--                                                        <p class="mb-0">{{cost.size}}</p>-->
+<!--                                                        <p><small><span class="text-warning"> {{cost.size}}</span>  </small></p>-->
+<!--                                                        <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.pr*80}}</p>-->
+<!--                                                    </label>-->
+<!--                                                </ng-container>-->
+
+<!--                                            </div>-->
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-template>-->
+<!--                            </ngb-tab>-->
+<!--                        </ngb-tabset>-->
+<!--                    </div>-->
+<!--                    <div class="row mt-5" *ngIf="total>0">-->
+<!--                        <div class="col-12">-->
+<!--                            <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>-->
+<!--                            <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>-->
+<!--                        </div>-->
+<!--                        <div class="col-4">-->
+<!--                            <p class="text-white"><strong>Total</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="col-8 text-right">-->
+<!--                            <h2 class="text-warning f-24"><strong>{{total}} INR</strong></h2>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row mt-2 mb-5">-->
+<!--                        <div class="col-12">-->
+<!--                            <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>-->
+<!--                            <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>-->
+<!--                            <p>This image is exclusive to Image Footage</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <p class="">DETAILS</p>-->
+<!--                    <table class="f-12">-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <td width="20%">Restrictions :</td>-->
+<!--                            <td>Contact your local office for all commercial or promotional uses.</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Credit :</td>-->
+<!--                            <td>{{detailPageInfo[0].items[0].artistname}}</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>Duration # :</td>-->
+<!--                            <td>{{detailPageInfo[0].items[0].dur}}</td>-->
+<!--                        </tr>-->
+<!--                                        <tr>-->
+<!--                                          <td>FPS :</td>-->
+<!--                                          <td>{{detailPageInfo[0].items[0].fps}}</td>-->
+<!--                                        </tr>-->
+<!--&lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>Date created :</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>{{detailPageInfo[0].items[0].date}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>Release info :</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>Not released. More information</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                <tr>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                  <td>Source :</td>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                  <td>Getty Images AsiaPac</td>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                </tr>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>Object name :</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td>{{detailPageInfo.media.id}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </tr>&ndash;&gt;-->
+
+<!--                        <tr>-->
+<!--                            <td>Max file size :</td>-->
+<!--                            <td>{{detailPageInfo[0].items[0].filesize}}  </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+
+<!--                    </table>-->
+<!--                </div>-->
+
+
+<!--            </div>-->
+
+
+
+<!--            <div class="bg-black p-3">-->
+<!--                <div class="row align-items-stretch">-->
+<!--                    <div class="row mx-auto my-auto mb-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">-->
+<!--                                    <div class="carousel-item">-->
+<!--                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                                            <div class="row">-->
+<!--                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                                    <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                                        <div class="photo-text-more">-->
+<!--                                                            <div class="photo-text-more">-->
+<!--                                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </ng-template>-->
+<!--                                    </div>-->
+<!--                                </ngb-carousel>-->
+
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row mx-auto my-auto mb-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">-->
+<!--                                    <div class="carousel-item">-->
+<!--                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                                            <div class="row">-->
+<!--                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                                    <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                                        <div class="photo-text-more">-->
+<!--                                                            <div class="photo-text-more">-->
+<!--                                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </ng-template>-->
+<!--                                    </div>-->
+<!--                                </ngb-carousel>-->
+
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row mx-auto my-auto mb-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">-->
+<!--                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>-->
+<!--                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">-->
+<!--                                    <div class="carousel-item">-->
+<!--                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">-->
+<!--                                            <div class="row">-->
+<!--                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">-->
+<!--                                                    <a href="javascript:void(0)" class="d-block photo-item">-->
+<!--                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">-->
+<!--                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                                        <div class="photo-text-more">-->
+<!--                                                            <div class="photo-text-more">-->
+<!--                                                                <h3 class="heading">{{images.name}}</h3>-->
+<!--                                                                <span class="meta">{{images.count}} Photos</span>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </ng-template>-->
+<!--                                    </div>-->
+<!--                                </ngb-carousel>-->
+
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">-->
+<!--                        <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">-->
+<!--                            <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">-->
+<!--                            <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>-->
+<!--                            <div class="photo-text-more">-->
+
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">{{aosimges.name}}</h3>-->
+<!--                                    <span class="meta">{{aosimges.count}} Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash;          <div class="col-md-5 col-sm-6 col-12 m-auto">&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     &ndash;&gt;-->
+<!--                    &lt;!&ndash;        </div>&ndash;&gt;-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--                </div>-->
+
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </main>-->
+
+<!--</div>-->
+
+
 <div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='2'">
-  <main class="main-content p-0">
-    <div class="container-fluid photos">
-      <div class="row mr-2">
-        <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
-          <div class="cartItem" *ngIf="detailPageInfo">
-            <div class="p-3">          
-              <div data-aos="fade-up">
-                  <a href="javascript:void(0)" class="d-block photo-item">
-                      <img src="{{detailPageInfo.media.preview_url_no_wm}}" alt="Image" class="img-fluid">
-                      <div class="photo-text-more">            
-                        <div class="photo-text-more">
-                          <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>
-                          <span class="meta">{{detailPageInfo.photoCount}} Photos</span>
+
+    <main class="main-content p-0">
+        <div class="container-fluid photos">
+            <div class="row mr-2">
+
+                <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
+                    <div class="cartItem" *ngIf="detailPageInfo">
+
+                        <div class="p-3">
+                            <p class="text-white f-20 mb-0 pt-3">Silhouetted Girls In Dark Light During Snow Fall</p>
+                            <p>silhouetted girls in dark light during snowfall (note: visible grain from high ISO)</p>
+
+                            <div data-aos="fade-up">
+                                <a href="single.html" class="d-block photo-item">
+                                    <img src="{{detailPageInfo.media.preview_url_no_wm}}" alt="Image" class="img-fluid">
+                                    <div class="photo-text-more">
+                                        <div class="photo-text-more">
+                                            <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>
+                                            <span class="meta">{{detailPageInfo.photoCount}}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="p-3">
+                                <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
+                                <div class="related_key">
+                                    <a href="/search?type=1&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                  </a>
-              </div>         
-              <p class="text-white f-18">{{detailPageInfo.metadata.description}}</p>
-              <p>{{detailPageInfo.shortInfo}}</p>
-              <p class="text-warning">Related Keywords</p>            
-              <div class="related_key">{{detailPageInfo.metadata.keywords}}
-<!--                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  -->
-<!--                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>-->
-<!--                </ng-container>   -->
-                            
-              </div>
-            </div>
-              
-          </div>
-        </div>
-         
-        <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
-          <div  class="p-3">
-            <ngb-tabset class="nav nav-tabs mytabs">
-                <ngb-tab   class="nav-item">
-                    <ng-template ngbTabTitle class="nav-link active">Standard Licence</ng-template>
-                  <ng-template ngbTabContent >
-                      <div class="tab-content pt-3">
-                          <div>
-                              <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
-                              <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">
-                                  <ng-container *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
-                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                          <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)">
-                                          <p class="mb-0">{{cost.description}}</p>
-                                          <p><small><span class="text-warning"> {{cost.description}}</span> {{cost.width}}x{{cost.height}} </small></p>
-                                          <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.price*80}}</p>
-                                      </label>
-                                  </ng-container>
-                              
-                              </div>
 
-                          </div>
-                      </div>
-                  </ng-template>
-                </ngb-tab>
-
-                <ngb-tab class="nav-item">
-                  <ng-template ngbTabTitle class="nav-link">Extended Licence</ng-template>
-                  <ng-template  ngbTabContent>
-                      <div class="tab-content pt-3">
-                          <div>
-                              <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>
-                              <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">
-                                  <ng-container *ngFor="let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;">
-                                      <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                          <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
-                                          <div class="row align-items-center">
-                                              <div class="col-md-9 col-sm-9 col-lg-9">
-                                                <p class="f-14"> {{license.name}}</p>
-                                              </div>
-                                              <div class="col-md-3 col-sm-3 col-lg-3">
-                                                  <p class="mb-0"> <i class="fa fa-dollar"></i>{{license.price*80}}</p>
-                                              </div>
-                                          </div>
-                                      </label>
-                                  </ng-container>
-                                
-                              </div>
-                              
-                           </div>
-                      </div>
-                  </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
-          </div>
-            <div class="row mt-5" *ngIf="total>0">
-                <div class="col-12">
-                    <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
-                    <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <p class="text-white"><strong>Total</strong></p>
-                </div>
-                <div class="col-8 text-right">
-                    <h2 class="text-warning f-24"><strong>{{total}} INR</strong></h2>
+
+                <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
+
+                    <div class="p-3">
+                        <ul class="nav nav-tabs mytabs">
+                            <li class="nav-item">
+                             <a class="nav-link "  [ngClass]="[ standardTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('1')">Standard Licence</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="[ extendedTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('2')">Extended Licence</a>
+                            </li>
+
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content pt-3" >
+                            <div id="stalic" *ngIf="standardTab" class="tab-pane active">
+                                <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
+
+                                <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">
+                                    <label class="btn btn-dark" *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
+                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)">
+                                        <p class="f-12">{{cost.description}}</p>
+                                        <p class="f-30 mb-0"> <i class="fa fa-inr"></i>{{cost.price*80}}</p>
+                                    </label>
+                                </div>
+<!--                                <p><small><span class="text-warning"> Small</span> 866x578px | 12.03x8.03" 72dpi</small></p>-->
+                            </div>
+                            <div id="extlic" *ngIf="extendedTab" class="tab-pane active">
+
+                                <p class="text-white lsp-1 f-14 text-uppercase pt-3">Extended Licenses</p>
+                                <div class="btn-group btn-group-toggle mb-4  d-block" data-toggle="buttons">
+                                    <label class="btn btn-dark text-left border-0" *ngFor="let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;">
+                                        <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-9 col-sm-9 col-lg-9">
+                                                <p class="f-14  fw-6 pt-2">{{license.name}}</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-lg-3">
+                                                <p class="mb-0"><strong><i class="fa fa-inr"></i>{{license.price*80}}</strong></p>
+                                            </div>
+                                        </div>
+
+                                    </label>
+                                 </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <!-- <p class="text-white">Use This Image Exclusively</p>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" class="btn btn-dark">Market Freeze</button>
+                          <button type="button" class="btn btn-dark dropdown-toggle exclus" data-toggle="dropdown">Select a Duration</button>
+                          <ul class="dropdown-menu selctDura">
+                              <li class="dropdown-item"><a href="#">Item I</a></li>
+                              <li class="dropdown-item"><a href="#">Item II</a></li>
+                              <li class="dropdown-item"><a href="#">Item III</a></li>
+                              <li class="dropdown-item"><a href="#">Item IV</a></li>
+                              <li class="dropdown-item"><a href="#">Item V</a></li>
+                              <li class="dropdown-item"><a href="#">Other</a></li>
+                            </ul>
+                        </div> -->
+
+                        <div class="row mt-5" *ngIf="total>0">
+                            <div class="col-12">
+                               <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
+                               <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
+                             </div>
+                            <div class="col-4">
+                                <p class="text-white"><strong>TOTAL</strong></p>
+                            </div>
+                            <div class="col-8 text-right">
+                                <h2 class="text-warning f-24 fw-6">{{total}} INR</h2>
+                            </div>
+                        </div>
+<!--                        <div class="row mt-5">-->
+<!--                            <div class="col-4">-->
+<!--                                <p class="text-white"><strong>TOTAL</strong></p>-->
+<!--                            </div>-->
+<!--                            <div class="col-8 text-right">-->
+<!--                                <h2 class="text-warning f-24 fw-6">$100.00 USD</h2>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="row mt-2 mb-5">
+                            <div class="col-12">
+                                <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
+                                <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
+                                <p>This image is exclusive to Image Footage
+
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="">DETAILS</p>
+                        <table class="f-12">
+                            <tbody>
+                            <tr>
+                                <td width="20%">Restrictions :</td>
+                                <td>Contact your local office for all commercial or promotional uses.</td>
+                            </tr>
+                            <tr>
+                                <td>Credit :</td>
+                                <td>{{detailPageInfo.metadata.author_realname}}</td>
+                            </tr>
+                            <tr>
+                                <td>Product ID :</td>
+                                <td>{{detailPageInfo.media.id}}</td>
+                            </tr>
+                            <tr>
+                                <td>Editorial # :</td>
+                                <td>{{detailPageInfo.metadata.editorial}}</td>
+                            </tr>
+<!--                            <tr>-->
+<!--                                <td>Collection :</td>-->
+<!--                                <td>Getty Images News</td>-->
+<!--                            </tr>-->
+                            <tr>
+                                <td>Date created :</td>
+                                <td>{{detailPageInfo.metadata.date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Licence type :</td>
+                                <td *ngIf="detailPageInfo.options.extended=='yes'">Extended</td>
+                                <td *ngIf="detailPageInfo.options.rights_managed=='yes'">Right Managed</td>
+                            </tr>
+                            <tr>
+                                <td>Release info :</td>
+                                <td>Not released. More information</td>
+                            </tr>
+<!--                            <tr>-->
+<!--                                <td>Source :</td>-->
+<!--                                <td>Getty Images AsiaPac</td>-->
+<!--                            </tr>-->
+
+
+
+                            <tr>
+                                <td>Max file size :</td>
+                                <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
                 </div>
             </div>
-            <div class="row mt-2 mb-5">
-              <div class="col-12">
-                  <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
-                  <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>
-                  <p>This image is exclusive to Image Footage</p>
-              </div>
-            </div>
-            <p class="">DETAILS</p>
-            <table class="f-12">
-              <tbody>
-                <tr>
-                  <td width="20%">Restrictions :</td>
-                  <td>Contact your local office for all commercial or promotional uses.</td>
-                </tr>
-                <tr>
-                  <td>Credit :</td>
-                  <td>{{detailPageInfo.metadata.author_realname}}</td>
-                </tr>
-                <tr>
-                  <td>Editorial # :</td>
-                  <td>{{detailPageInfo.metadata.editorial}}</td>
-                </tr>
-<!--                <tr>-->
-<!--                  <td>Collection :</td>-->
-<!--                  <td>Getty Images News</td>-->
-<!--                </tr>-->
-                <tr>
-                  <td>Date created :</td>
-                  <td>{{detailPageInfo.metadata.date}}</td>
-                </tr>
-                <tr>
-                  <td>Licence type :</td>
-                  <td *ngIf="detailPageInfo.options.extended=='yes'">Extended</td>
-                    <td *ngIf="detailPageInfo.options.rights_managed=='yes'">Extended</td>
-                </tr>
-                <tr>
-                  <td>Release info :</td>
-                  <td>Not released. More information</td>
-                </tr>
-<!--                <tr>-->
-<!--                  <td>Source :</td>-->
-<!--                  <td>Getty Images AsiaPac</td>-->
-<!--                </tr>-->
 
-                <tr>
-                  <td>Object name :</td>
-                  <td>{{detailPageInfo.media.id}}</td>
-                </tr>
 
-                <tr>
-                  <td>Max file size :</td>
-                  <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}} </td>
-                </tr>
-              </tbody>
 
-            </table>
-        </div> 
+<!--            <div class="bg-black p-3">-->
+<!--                <div class="row align-items-stretch">-->
+<!--                    <div class="row mx-auto my-auto mb-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" data-ride="carousel">-->
 
-        
-      </div>
- 
-    
-    
-      <div class="bg-black p-3">
+<!--                            <h3 class="text-white f-18 mb-3 float-left">More From This Shoot</h3>-->
+<!--                            <a href="#" class="text-warning pl-3 f-12 text-underline">View All</a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <div class="carousel-item active">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class=" col-6 col-md-4 col-lg-4">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                    <span class="meta">42 Photos</span>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-1 col-lg-1">-->
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+<!--                            <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">-->
+<!--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Previous</span>-->
+<!--                            </a>-->
+<!--                            <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">-->
+<!--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Next</span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mx-auto my-auto mb-5 mt-5 pt-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" data-ride="carousel">-->
+
+<!--                            <h3 class="text-white f-18 mb-3 float-left">More From This Shoot</h3>-->
+<!--                            <a href="#" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <div class="carousel-item active">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class=" col-6 col-md-4 col-lg-4">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <iframe  src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=1&mute=1" allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                                &lt;!&ndash;<img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">&ndash;&gt;-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                    <span class="meta">42 Photos</span>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-1 col-lg-1">-->
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+<!--                            <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">-->
+<!--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Previous</span>-->
+<!--                            </a>-->
+<!--                            <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">-->
+<!--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Next</span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mx-auto my-auto mb-5 mt-5 pt-5">-->
+<!--                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" data-ride="carousel">-->
+
+<!--                            <h3 class="text-white f-18 mb-3 float-left">More From This Shoot</h3>-->
+<!--                            <a href="#" class="text-warning float-right"><strong>See All</strong></a>-->
+<!--                            <div class="carousel-inner" role="listbox">-->
+<!--                                <div class="carousel-item active">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class=" col-6 col-md-4 col-lg-4">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <iframe  src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=1&mute=1" allowfullscreen height="300" width="100%"></iframe>-->
+<!--                                                &lt;!&ndash;<img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">&ndash;&gt;-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                    <span class="meta">42 Photos</span>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-3 col-lg-3">-->
+
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-1 col-lg-1">-->
+
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                                            <a href="single.html" class="d-block photo-item">-->
+<!--                                                <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                                                <div class="photo-text-more">-->
+<!--                                                    <div class="photo-text-more">-->
+<!--                                                        <h3 class="heading">Photos Title Here</h3>-->
+<!--                                                        <span class="meta">42 Photos</span>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+<!--                            <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">-->
+<!--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Previous</span>-->
+<!--                            </a>-->
+<!--                            <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">-->
+<!--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                                <span class="sr-only">Next</span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+
+
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+
+
+
+<!--                            <iframe  src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=1&mute=1" allowfullscreen height="300" width="100%"></iframe>-->
+
+
+<!--                            &lt;!&ndash;<img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">&ndash;&gt;-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <h3 class="heading">Photos Title Here</h3>-->
+<!--                                <span class="meta">42 Photos</span>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-1 col-lg-1" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <iframe  src="https://c.stocksy.com/a/APEB00/y2/2676984.mp4?rel=0&amp;autoplay=1&mute=1" allowfullscreen height="300" width="100%"></iframe>-->
+
+
+
+
+<!--                            &lt;!&ndash;            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            &ndash;&gt;            <div class="photo-text-more">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <h3 class="heading">Photos Title Here</h3>-->
+<!--                                <span class="meta">42 Photos</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-5 col-lg-5" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <h3 class="heading">Photos Title Here</h3>-->
+<!--                                <span class="meta">42 Photos</span>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-1 col-lg-1" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-5 col-lg-5" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <h3 class="heading">Photos Title Here</h3>-->
+<!--                                <span class="meta">42 Photos</span>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-1 col-lg-1" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="300">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_10.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_1.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_2.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="200">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_3.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_6.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_7.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-6 col-md-5 col-lg-5" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_8.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="images/img_9.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-3 col-lg-3" data-aos="fade-up" data-aos-delay="100">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_5.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-6 col-md-2 col-lg-2" data-aos="fade-up" data-aos-delay="">-->
+<!--                        <a href="single.html" class="d-block photo-item">-->
+<!--                            <img src="assets/images/img_4.jpg" alt="Image" class="img-fluid">-->
+<!--                            <div class="photo-text-more">-->
+<!--                                <div class="photo-text-more">-->
+<!--                                    <h3 class="heading">Photos Title Here</h3>-->
+<!--                                    <span class="meta">42 Photos</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+
+
+
+
+
+<!--                </div>-->
+
+<!--                <div class="col-md-5 col-sm-6 col-12 m-auto">-->
+<!--                    <ul class="pagination pagination_d  d-flex justify-content-center my-5">-->
+<!--                        <li class="page-item"><a class="page-link" href="#"><i class="fa fa-chevron-left"></i></a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">4</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">5</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#"><i class="fa fa-chevron-right"></i></a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="bg-black p-3">
         <div class="row align-items-stretch">
           <div class="row mx-auto my-auto mb-5">
             <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
                 <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
                 <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                <div class="carousel-inner" role="listbox">                    
-                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                <div class="carousel-inner" role="listbox">
+                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
                         <div class="carousel-item">
                             <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
                               <div class="row">
@@ -183,11 +2155,11 @@
                                           </div>
                                       </a>
                                   </div>
-                              </div>   
+                              </div>
                             </ng-template>
-                        </div> 
+                        </div>
                     </ngb-carousel>
-                     
+
 
                 </div>
             </div>
@@ -196,8 +2168,8 @@
             <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
                 <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
                 <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                <div class="carousel-inner" role="listbox">                    
-                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                <div class="carousel-inner" role="listbox">
+                    <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
                         <div class="carousel-item">
                             <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
                               <div class="row">
@@ -213,11 +2185,11 @@
                                           </div>
                                       </a>
                                   </div>
-                              </div>   
+                              </div>
                             </ng-template>
-                        </div> 
+                        </div>
                     </ngb-carousel>
-                     
+
 
                 </div>
             </div>
@@ -226,8 +2198,8 @@
             <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
                 <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
                 <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                <div class="carousel-inner" role="listbox">                    
-                    <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true"> 
+                <div class="carousel-inner" role="listbox">
+                    <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
                         <div class="carousel-item">
                             <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
                               <div class="row">
@@ -243,11 +2215,11 @@
                                           </div>
                                       </a>
                                   </div>
-                              </div>   
+                              </div>
                             </ng-template>
-                        </div> 
+                        </div>
                     </ngb-carousel>
-                     
+
 
                 </div>
             </div>
@@ -258,7 +2230,7 @@
               <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
               <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
               <div class="photo-text-more">
-              
+
                 <div class="photo-text-more">
                 <h3 class="heading">{{aosimges.name}}</h3>
                 <span class="meta">{{aosimges.count}} Photos</span>
@@ -266,302 +2238,17 @@
               </div>
             </a>
           </div>
-
-<!--          <div class="col-md-5 col-sm-6 col-12 m-auto">-->
-
-<!--                <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     -->
-<!--        </div>-->
-
-
-
-
-      
-      
-      
-
-
-   
-      
-        
-        
-
-      </div>
-      
-       
-      </div>
-    </div>
-  </main>
-
-</div>
-
-<div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='3'">
-    <main class="main-content p-0">
-        <div class="container-fluid photos">
-            <div class="row mr-2">
-                <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
-                    <div class="cartItem" *ngIf="detailPageInfo">
-                        <div class="p-3">
-                            <div>
-                                <a href="javascript:void(0)" class="photo-item">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                <video  controls onmouseover="this.play()" onmouseout="this.pause()">
-                                        <source src="{{detailPageInfo[0].flv_base+detailPageInfo[1]}}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                    </div>
-                                    <div class="photo-text-more">
-                                        <div class="photo-text-more">
-                                            <h3 class="heading">{{detailPageInfo[0].items[0].pf}}</h3>
-<!--                                            <span class="meta">{{detailPageInfo.photoCount}} Photos</span>-->
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <p class="text-white f-18">{{detailPageInfo[0].items[0].desc}}</p>
-                            <p>{{detailPageInfo[0].items[0].n}}</p>
-                            <p class="text-warning">Related Keywords</p>
-                            <div class="related_key">{{detailPageInfo[0].items[0].kw}}
-                                <!--                <ng-container *ngFor="let keyele of detailPageInfo?.keywords">                  -->
-                                <!--                    <a href="javascript:void(0)"  class="btn btn-outline-light" title="{{keyele.id}}">{{keyele.name}}</a>-->
-                                <!--                </ng-container>   -->
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
-                    <div  class="p-3">
-                        <ngb-tabset class="nav nav-tabs mytabs">
-                            <ngb-tab   class="nav-item">
-                                <ng-template ngbTabTitle class="nav-link active">Standard Licence</ng-template>
-                                <ng-template ngbTabContent >
-                                    <div class="tab-content pt-3">
-                                        <div>
-                                            <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
-                                            <div class="btn-group btn-g       roup-toggle mb-1" data-toggle="buttons">
-                                                <ng-container *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">
-                                                    <label class="btn btn-dark" [ngClass]="first ? 'active' : ''">
-                                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">
-                                                        <p class="mb-0">{{cost.size}}</p>
-                                                        <p><small><span class="text-warning"> {{cost.size}}</span>  </small></p>
-                                                        <p class="f-30 mb-0"> <i class="fa fa-dollar"></i>{{cost.pr*80}}</p>
-                                                    </label>
-                                                </ng-container>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-tab>
-                        </ngb-tabset>
-                    </div>
-                    <div class="row mt-5" *ngIf="total>0">
-                        <div class="col-12">
-                            <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
-                            <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-white"><strong>Total</strong></p>
-                        </div>
-                        <div class="col-8 text-right">
-                            <h2 class="text-warning f-24"><strong>{{total}} INR</strong></h2>
-                        </div>
-                    </div>
-                    <div class="row mt-2 mb-5">
-                        <div class="col-12">
-                            <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>
-                            <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" >ADDED TO CART</button>
-                            <p>This image is exclusive to Image Footage</p>
-                        </div>
-                    </div>
-                    <p class="">DETAILS</p>
-                    <table class="f-12">
-                        <tbody>
-                        <tr>
-                            <td width="20%">Restrictions :</td>
-                            <td>Contact your local office for all commercial or promotional uses.</td>
-                        </tr>
-                        <tr>
-                            <td>Credit :</td>
-                            <td>{{detailPageInfo[0].items[0].artistname}}</td>
-                        </tr>
-                        <tr>
-                            <td>Duration # :</td>
-                            <td>{{detailPageInfo[0].items[0].dur}}</td>
-                        </tr>
-                                        <tr>
-                                          <td>FPS :</td>
-                                          <td>{{detailPageInfo[0].items[0].fps}}</td>
-                                        </tr>
-<!--                        <tr>-->
-<!--                            <td>Date created :</td>-->
-<!--                            <td>{{detailPageInfo[0].items[0].date}}</td>-->
-<!--                        </tr>-->
-
-<!--                        <tr>-->
-<!--                            <td>Release info :</td>-->
-<!--                            <td>Not released. More information</td>-->
-<!--                        </tr>-->
-                        <!--                <tr>-->
-                        <!--                  <td>Source :</td>-->
-                        <!--                  <td>Getty Images AsiaPac</td>-->
-                        <!--                </tr>-->
-
-<!--                        <tr>-->
-<!--                            <td>Object name :</td>-->
-<!--                            <td>{{detailPageInfo.media.id}}</td>-->
-<!--                        </tr>-->
-
-                        <tr>
-                            <td>Max file size :</td>
-                            <td>{{detailPageInfo[0].items[0].filesize}}  </td>
-                        </tr>
-                        </tbody>
-
-                    </table>
-                </div>
-
-
+        </div>
             </div>
+         <div class="col-md-5 col-sm-6 col-12 m-auto">
 
+               <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+      </div>
 
-
-            <div class="bg-black p-3">
-                <div class="row align-items-stretch">
-                    <div class="row mx-auto my-auto mb-5">
-                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
-                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
-                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                            <div class="carousel-inner" role="listbox">
-                                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
-                                    <div class="carousel-item">
-                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
-                                            <div class="row">
-                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
-                                                    <a href="javascript:void(0)" class="d-block photo-item">
-                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
-                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
-                                                        <div class="photo-text-more">
-                                                            <div class="photo-text-more">
-                                                                <h3 class="heading">{{images.name}}</h3>
-                                                                <span class="meta">{{images.count}} Photos</span>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                </ngb-carousel>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mx-auto my-auto mb-5">
-                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
-                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
-                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                            <div class="carousel-inner" role="listbox">
-                                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
-                                    <div class="carousel-item">
-                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
-                                            <div class="row">
-                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
-                                                    <a href="javascript:void(0)" class="d-block photo-item">
-                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
-                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
-                                                        <div class="photo-text-more">
-                                                            <div class="photo-text-more">
-                                                                <h3 class="heading">{{images.name}}</h3>
-                                                                <span class="meta">{{images.count}} Photos</span>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                </ngb-carousel>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mx-auto my-auto mb-5">
-                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
-                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
-                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                            <div class="carousel-inner" role="listbox">
-                                <ngb-carousel  [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
-                                    <div class="carousel-item">
-                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
-                                            <div class="row">
-                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
-                                                    <a href="javascript:void(0)" class="d-block photo-item">
-                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
-                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
-                                                        <div class="photo-text-more">
-                                                            <div class="photo-text-more">
-                                                                <h3 class="heading">{{images.name}}</h3>
-                                                                <span class="meta">{{images.count}} Photos</span>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                </ngb-carousel>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                        <a routerLink="/detail/{{aosimges.id}}" class="d-block photo-item">
-                            <img *ngIf="aosimges.type == 'photo'" src="assets/images/{{aosimges.imageName}}" alt="Image" class="img-fluid">
-                            <iframe  *ngIf="aosimges.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
-                            <div class="photo-text-more">
-
-                                <div class="photo-text-more">
-                                    <h3 class="heading">{{aosimges.name}}</h3>
-                                    <span class="meta">{{aosimges.count}} Photos</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!--          <div class="col-md-5 col-sm-6 col-12 m-auto">-->
-
-                    <!--                <ngb-pagination [collectionSize]="aoslSliderImagesData.length"  [pageSize]="pageSize" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>     -->
-                    <!--        </div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-
-
-            </div>
         </div>
     </main>
 
-</div>
+            </div>
 
 <ng-container *ngIf="showloginPopup">
     <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
