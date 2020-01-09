@@ -183,7 +183,7 @@ class Common extends Model
                 $dataForEmail = json_decode(json_encode($dataForEmail), true);
                 //print_r($dataForEmail); die;
                 $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
-                $data["email"] = $dataForEmail[0]['email'];
+                $data["email"] = $data['email'];
                 $data["invoice"] = $dataForEmail[0]['invoice_name'];
                 
                 //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;

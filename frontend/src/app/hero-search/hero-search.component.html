@@ -197,10 +197,10 @@
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                       <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
-                        <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_main_image}}" alt="Image" class="img-fluid">
                         <div class="photo-text-more">
-                        
-                          <div class="photo-text-more">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+
+                            <div class="photo-text-more">
                           <h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>
                           <p class="icons_thum">
