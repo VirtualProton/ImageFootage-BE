@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+  private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -66,7 +66,7 @@ export class HeroService {
     let _carouselSlider = new carouselSlider();
     let _carouselSliderArray = new Array<carouselSlider>();
     _carouselSlider.id = 1;
-    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 5, name: 'Autumn' },{ id: 6, name: 'Dynama' }]
+    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' },{ id: 6, name: 'Dynama' }]
     _carouselSliderArray.push(_carouselSlider);
     let _carouselSlider1 = new carouselSlider();
     _carouselSlider1.id = 2;
@@ -145,6 +145,16 @@ export class HeroService {
     return this.http.post(url, usrData, this.httpOptions).pipe(
       map(userInfo => {
         return userInfo;
+      }),
+      catchError(this.handleError<any>(`unable to register data`))
+    );;
+  }
+
+  contributorRegister(contributorData: any): Observable<any> {
+    const url = `${this.heroesUrl}contributorSignup`
+    return this.http.post(url, contributorData, this.httpOptions).pipe(
+      map(contributorInfo => {
+        return contributorInfo;
       }),
       catchError(this.handleError<any>(`unable to register data`))
     );;
