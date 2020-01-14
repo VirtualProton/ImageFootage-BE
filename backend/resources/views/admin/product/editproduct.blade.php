@@ -321,6 +321,7 @@
     
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
+                    <a href="{{ url('admin/all_products') }}" class="btn btn-primary">Back</a>
                   </div>
                 </form>
               </div>

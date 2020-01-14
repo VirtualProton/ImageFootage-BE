@@ -10,7 +10,7 @@ class Product extends Model
     protected $table = 'imagefootage_products';
 	protected $primaryKey = 'id';
 	protected $fillable = ['product_id','product_category','product_subcategory','product_owner','product_title','product_vertical','product_keywords','product_thumbnail','product_main_image','product_release_details','product_price_small','product_price_medium','product_price_large','product_price_extralarge','product_status','product_main_type','product_sub_type','product_added_on','updated_at','product_added_by','product_size','product_verification','product_rejectod_reason','product_editedby'];
-    const HomeLimit = '100';
+    const HomeLimit = '60';
 
     public function getProducts($keyword){
         //dd($getKeyword);
@@ -98,9 +98,46 @@ class Product extends Model
                         ->where('id', '=', $id)
                         ->update(['product_id' => 'IMGFT' . $id]);
                     echo "Inserted" . $id;
+                }else{
+                    echo "hello";
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $eachmedia['id'])
+                        ->update(['product_thumbnail' =>$eachmedia['preview_no_wm'],
+                                  'product_main_image'=>$eachmedia['preview_high'],
+                                  'product_description' => $eachmedia['description'],
+                                  'product_title' => $eachmedia['title'],
+                                  'updated_at' => date('Y-m-d H:i:s')
+                            ]);
+                    echo "Updated". $eachmedia['id'];
                 }
             }
          }
+
+    }
+    public function updatePantherImage($data){
+
+            if(isset($data['items']['media']['id'])) {
+                // print_r($media); die;
+                $count = DB::table('imagefootage_products')
+                    ->where('api_product_id', $data['items']['media']['id'])
+                    ->count();
+
+                if ($count > 0) {
+                    $imgData = getimagesize($data['items']['media']['preview_no_wm']);
+
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $data['items']['media']['id'])
+                        ->update(['product_thumbnail' =>$data['items']['media']['preview_no_wm'],
+                            'product_main_image'=>$data['items']['media']['preview_high'],
+                            'product_description' => $data['items']['media']['description'],
+                            'product_title' => $data['items']['media']['title'],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'width_thumb' => $imgData[0],
+                            'height_thumb' => $imgData[1]
+                        ]);
+                    echo "Updated". $data['items']['media']['id'];
+                }
+            }
 
     }
 
@@ -152,13 +189,26 @@ class Product extends Model
     }
 
     public function getProductsRandom(){
-        return DB::table('imagefootage_products as pr')
-            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name','product_main_type')
+        ini_set('max_execution_time',0);
+        $final_data = [];
+       return   DB::table('imagefootage_products as pr')
+            //->where('pr.product_web','2')
+            //->where('pr.width_thumb','<>',NULL)
+            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name','product_main_type','width_thumb','height_thumb')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             ->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
                 'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
             ->inRandomOrder()
             ->limit(Product::HomeLimit)
             ->get();
+//
+//            foreach($data as $k=>$perdata){
+//                 $final_data[$k] = (array)$perdata;
+//                 $imgData =getimagesize($perdata->product_thumbnail);
+//                 $final_data[$k]['width_img'] = $imgData[0];
+//                $final_data[$k] ['height_img']= $imgData[1];
+//                $final_data[$k]['attr'] = $imgData[3];
+//            }
+            //return $final_data;
    }
 }

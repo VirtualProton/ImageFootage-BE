@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cartItemData } from '../hero';
 import { HeroService } from '../hero.service';
@@ -10,7 +10,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CheckoutComponent implements OnInit {
 
@@ -23,11 +24,13 @@ export class CheckoutComponent implements OnInit {
   countryInfo: any[] = [];
   cityInfo: any[] = [];
   taxPrice:any =10;
+  loadingData:boolean=false;
   
   constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-      this.spinner.show();
+      //this.spinner.show();
+       this.loadingData = true;
  this.checkoutForm = this.formBuilder.group({
           first_name: ['', Validators.required],
           last_name: ['', Validators.required],
@@ -48,7 +51,8 @@ export class CheckoutComponent implements OnInit {
                       console.log(element);
                       this.priceArray.push(element["total"]);
                     });
-                      this.spinner.hide();
+                     // this.spinner.hide();
+                      this.loadingData = false;
                   },
                   error => {
                      
@@ -69,12 +73,14 @@ export class CheckoutComponent implements OnInit {
     }
 
     onChangeCountry(countryValue) {
+        this.loadingData = true;
         //  console.log(this.countryInfo[countryValue]);
         this.authenticationService.allstates(countryValue).
         subscribe(
             data2 => {
                 //this.countryInfo=data2.Countries;
                 this.stateInfo=data2;
+                this.loadingData = false;
                 //console.log('Data:', this.countryInfo);
             },
             err => console.log(err),
@@ -90,12 +96,14 @@ export class CheckoutComponent implements OnInit {
         // this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
     }
     onChangeState(stateValue) {
+        this.loadingData = true;
         // console.log(this.stateInfo[stateValue]);
         this.authenticationService.allCities(stateValue).
         subscribe(
             data2 => {
                 //this.countryInfo=data2.Countries;
                 this.cityInfo=data2;
+                this.loadingData = false;
                 //console.log('Data:', this.countryInfo);
             },
             err => console.log(err),
@@ -106,14 +114,17 @@ export class CheckoutComponent implements OnInit {
         // console.log(this.cityInfo);j
     }
     onSubmit() {
+        this.loadingData = true;
         this.submitted = true;
+        //console.log(this.checkoutForm);
         // stop here if form is invalid
         if (this.checkoutForm.invalid) {
             console.log('at invalid');
+            this.loadingData = false;
             //console.log(this.checkoutForm);
             return;
         }
-        // console.log(this.checkoutForm);
+
         this.authenticationService.payment(this.checkoutForm.value,this.priceArray)
            // .pipe(first())
             .subscribe(
@@ -121,6 +132,7 @@ export class CheckoutComponent implements OnInit {
                    // alert("Sucessfully Registered");
                     console.log(data2);
                     console.log(data2.url);
+                    this.loadingData = false;
                     window.location.href = data2.url;
                     //this.router.navigate([data2.url]);
                     // console.log(data2);

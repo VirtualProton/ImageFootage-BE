@@ -49,6 +49,7 @@ export class HeroSearchComponent implements OnInit {
   leftsideData:any;
   sideBarEle:boolean=true;
   loadingData:boolean=false;
+  keyword = [];
 
 
   constructor(private heroService: HeroService,
@@ -75,8 +76,8 @@ export class HeroSearchComponent implements OnInit {
                       if(!isNullOrUndefined(params.sideBar)){
                         this.sideBarEle=params.sideBar;
                       }
-                      this.searchData.letest=1;
-                      this.searchData.curated=0;
+                      this.searchData.letest=0;
+                      this.searchData.curated=1;
                       this.searchData.populer=0;
                         this.searchAPIRequest();
                     });
@@ -110,6 +111,9 @@ export class HeroSearchComponent implements OnInit {
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
                               this.aoslSliderImages = aoslSliderImages;
+                              let type = this.aoslSliderImages["0"].product_keywords;
+                              this.keyword = type.split(',',9);
+                              console.log(this.keyword);
                               this.maintainAosSlider();
                             //  this.spinner.hide();
                             this.loadingData=false;
@@ -264,6 +268,7 @@ export class HeroSearchComponent implements OnInit {
 
 
       onTabClick(number){
+       console.log(number);
         this.loadingData=true;
           if(number == 2){
             this.searchData.letest=0;

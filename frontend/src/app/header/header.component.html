@@ -45,29 +45,58 @@
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:''}">Editorial</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing</a>
+          <a class="nav-link js-scroll-trigger" routerLink="/pricing"><i class="fa fa-credit-card"></i></a>
         </li>
-        
+
         <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>
+          <a class="nav-link js-scroll-trigger" routerLink="/wishlist"><i class="fa fa-shopping-cart"></i></a>
         </li>
         <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()">Cart</a>
+          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><i class="fa fa-shopping-cart"></i></a>
         </li>
-        
+
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link js-scroll-trigger" href="#team"><i class="fa fa-heart"></i> wishlist</a>-->
+<!--        </li>-->
+
+
         <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger"  (click)="clickLoginPopup()">Login</a>
+          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><i class="fa fa-lock"></i></a>
         </li>
         <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger"  (click)="logout()">Logout</a>
+          <a class="nav-link js-scroll-trigger" (click)="logout()">Logout</a>
         </li>
-        <li class="nav-item"  *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger" [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp">Sign Up</a>
+        <li class="nav-item" *ngIf="!currentUser">
+          <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp"><i class="fa fa-user"></i> Sign Up</a>
         </li>
-        <li class="nav-item" *ngIf="currentUser">
-            <a class="nav-link js-scroll-trigger"  routerLink="/wishlist">wishlist</a>
-        </li>     
+
+
+
+        <!--        <li class="nav-item">-->
+<!--          <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing</a>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="nav-item" *ngIf="currentUser">-->
+<!--          <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" *ngIf="!currentUser">-->
+<!--          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()">Cart</a>-->
+<!--        </li>-->
+<!--        -->
+<!--        <li class="nav-item" *ngIf="!currentUser">-->
+<!--          <a class="nav-link js-scroll-trigger"  (click)="clickLoginPopup()">Login</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" *ngIf="currentUser">-->
+<!--          <a class="nav-link js-scroll-trigger"  (click)="logout()">Logout</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item"  *ngIf="!currentUser">-->
+<!--          <a class="nav-link js-scroll-trigger" [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp">Sign Up</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" *ngIf="currentUser">-->
+<!--            <a class="nav-link js-scroll-trigger"  routerLink="/wishlist">wishlist</a>-->
+<!--        </li>     -->
       </ul>
     </div>
   </div>
@@ -126,4 +155,3 @@
 <ng-container *ngIf="showloginPopup">
   <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
 </ng-container>
-  

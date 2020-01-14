@@ -7,9 +7,9 @@
 
 <div class="bg-dark search_menu_l"  style="background: #151414 !important; position: fixed; width: 100%; z-index:9999;">
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6">
-      <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
-      <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
-      <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
+        <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
+       <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
+       <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
     </ul>
 </div>
 
@@ -79,6 +79,19 @@
                     </ul>
                   </div>
                 </li>
+              <li class="sidebar-dropdown">
+                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
+                      <i class="fa fa-globe"></i>
+                      <span>Orientations</span>
+                  </a>
+                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
+                      <ul>
+                          <li *ngFor="let orientation of leftsideData.product_orientations">
+                              <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
                 <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">
                     <i class="fa fa-chart-line"></i>
@@ -106,19 +119,7 @@
                     </ul>
                   </div>
                 </li>
-                 <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
-                    <i class="fa fa-globe"></i>
-                    <span>Orientations</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
-                    <ul>
-                      <li *ngFor="let orientation of leftsideData.product_orientations">
-                        <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+
                  <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">
                     <i class="fa fa-globe"></i>
@@ -187,16 +188,7 @@
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="underwater">underwater</a>
-                  <a href="#" class="btn btn-outline-light  btn-sm f-12" title="backlit">backlit</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="light">light</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="water">water</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="dark">dark</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="shadow">shadow</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="clothing">clothing</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="nature">nature</a>
-                  <a href="#" class="btn btn-outline-light btn-sm f-12" title="wear">wear</a>
-              
+             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
             </span>
           </div> 
           <div class="clearfix"></div>
@@ -205,10 +197,10 @@
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                       <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
-                        <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_main_image}}" alt="Image" class="img-fluid">
                         <div class="photo-text-more">
-                        
-                          <div class="photo-text-more">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+
+                            <div class="photo-text-more">
                           <h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>
                           <p class="icons_thum">

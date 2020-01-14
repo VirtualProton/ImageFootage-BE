@@ -66,7 +66,7 @@ export class HeroService {
     let _carouselSlider = new carouselSlider();
     let _carouselSliderArray = new Array<carouselSlider>();
     _carouselSlider.id = 1;
-    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' },{ id: 6, name: 'Dynama' }]
+    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 6, name: 'Autumn' }]
     _carouselSliderArray.push(_carouselSlider);
     let _carouselSlider1 = new carouselSlider();
     _carouselSlider1.id = 2;
@@ -373,6 +373,24 @@ removeCartItemsData(product:any): Observable<userData> {
         );;
     }
 
+    getOrderDetails(id:any):Observable<any>{
+        //let params = new HttpParams();
+        const url = `${this.heroesUrl}orderDetails`;
+        let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+tokenData.access_token });
+        let options = { headers: headers };
+        return this.http.post<any>(url,{id},options).pipe(
+            map(orderDetails => {
+                console.log(orderDetails);
+
+                //this.currentUserSubject.next(cart);
+                return orderDetails;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
 
 }
 
