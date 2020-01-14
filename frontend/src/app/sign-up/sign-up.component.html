@@ -82,7 +82,7 @@
                           <input type="text" id="mbnum" formControlName="mobileNumber" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.mobileNumber.errors.required">MobileNumber is required</div>
-                            <div *ngIf="f.mobileNumber.errors.minlength || f.mobileNumber.errors.maxlength">Mobile number should be 10 digits</div>
+                            <div *ngIf="f.mobileNumber.errors.pattern">Mobile number should be 10 number digits</div>
                           </div>
                         </div>
                       </div>

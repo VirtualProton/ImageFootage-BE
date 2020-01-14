@@ -150,6 +150,16 @@ export class HeroService {
     );;
   }
 
+  contributorRegister(contributorData: any): Observable<any> {
+    const url = `${this.heroesUrl}contributorSignup`
+    return this.http.post(url, contributorData, this.httpOptions).pipe(
+      map(contributorInfo => {
+        return contributorInfo;
+      }),
+      catchError(this.handleError<any>(`unable to register data`))
+    );;
+  }
+
   contactUs(contactData: any): Observable<any> {
     const url = `${this.heroesUrl}user_contactus`
     return this.http.post(url, contactData, this.httpOptions).pipe(

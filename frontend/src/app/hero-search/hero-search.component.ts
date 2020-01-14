@@ -193,11 +193,11 @@ export class HeroSearchComponent implements OnInit {
         if(type=='people'){
           let indexPeople = this.slidebarPeopleMenu.indexOf(id);
           if (indexPeople > -1) {
-          //  this.slidebarPeopleMenu.splice(indexPeople, 1);
+            this.slidebarPeopleMenu.splice(indexPeople, 1);
           }else{
             this.slidebarPeopleMenu.push(id);           
           }
-          this.searchData.product_people = this.slidebarPeopleMenu.join();
+        //  this.searchData.product_people =this.slidebarPeopleMenu.join(); 
         }else if(type == 'gender'){
           let indexGender = this.slidebarGenderMenu.indexOf(id);
           if (indexGender > -1) {
