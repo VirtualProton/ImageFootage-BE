@@ -98,8 +98,14 @@ export class HeroDetailComponent implements OnInit {
       .subscribe(data => {
          console.log(data);
          this.detailPageInfo = data;
-         let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
-         this.keyword = keywords.split(",").map(item => item.trim());
+         if(this.webtype==2){
+             let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
+             this.keyword = keywords.split(",").map(item => item.trim());
+         }else if(this.webtype==3){
+             let keywords  = this.detailPageInfo[0].items[0].kw;
+             this.keyword = keywords.split(",").map(item => item.trim());
+         }
+
          //this.keyword = keywords.split(',',10);
          //this.spinner.hide();
           this.loadingData =false;

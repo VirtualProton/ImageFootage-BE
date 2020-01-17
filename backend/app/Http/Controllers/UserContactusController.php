@@ -51,7 +51,16 @@ class UserContactusController extends Controller
     }
 	public function contributorSignup(Request $request){
 		
-		/*$this->validate($request, [
+		echo "<pre>";
+		//print_r($request->all());
+		$data = $request->all();
+		$contributor =json_decode($data['Info'],true);
+        $file= $data['image'];
+        print_r($contributor);
+
+        print_r($file);
+		die;
+       /*$this->validate($request, [
 		 	'contributor_name'=>'required',
             'contributor_email'   => 'required',
             'contributor_password' => 'required',

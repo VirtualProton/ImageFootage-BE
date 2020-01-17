@@ -28,6 +28,22 @@
                             <h3 class="f-26 mb-3 font-normal text-center">Sign Up As A Image Footage Content Contributor</h3>
                             <div class="row form-group mt-4">
                                 <div class="col-lg-6 col-md-6 col-sm-6 pl-2">
+                                    <label>First Name</label>
+                                    <input type="text" formControlName="contributor_fname" [ngClass]="{ 'is-invalid': submitted && f.contributor_fname.errors }" class="form-control rounded-0">
+                                    <div *ngIf="submitted && f.contributor_fname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.contributor_fname.errors.required">First Name is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 pr-2">
+                                    <label>Last Name</label>
+                                    <input type="text"  formControlName="contributor_lname" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.contributor_lname.errors }">
+                                    <div *ngIf="submitted && f.contributor_lname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.contributor_lname.errors.required">Last Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group mt-4">
+                                <div class="col-lg-6 col-md-6 col-sm-6 pl-2">
                                     <label>User Name</label>
                                     <input type="text" formControlName="contributor_name" [ngClass]="{ 'is-invalid': submitted && f.contributor_name.errors }" class="form-control rounded-0">
                                     <div *ngIf="submitted && f.contributor_name.errors" class="invalid-feedback">
@@ -65,14 +81,20 @@
                             <div class="row form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <label>Contributor Type</label>
-                                    <input type="text" formControlName="contributor_type" [ngClass]="{ 'is-invalid': submitted && f.contributor_type.errors }" class="form-control rounded-0">
+<!--                                    <input type="text" formControlName="contributor_type" [ngClass]="{ 'is-invalid': submitted && f.contributor_type.errors }" class="form-control rounded-0">-->
+                                    <select formControlName="contributor_type" [ngClass]="{ 'is-invalid': submitted && f.contributor_type.errors }" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="sale">Sale</option>
+                                        <option value="doner">Doner</option>
+                                    </select>
                                     <div *ngIf="submitted && f.contributor_type.errors" class="invalid-feedback">
-                                            <div *ngIf="f.contributor_type.errors.required">PhoneNumber is required</div>
+                                            <div *ngIf="f.contributor_type.errors.required">Contributor Type is required</div>
                                     </div>
                                 </div>                      
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <label>Id proof</label>
-                                    <input type="text"  formControlName="contributor_idproof" [ngClass]="{ 'is-invalid': submitted && f.contributor_idproof.errors }" class="form-control">
+                                    <label>Id proof (Aadhar/Voter ID/Pan Card/Passport) Any</label>
+<!--                                    <input type="text"  formControlName="contributor_idproof" [ngClass]="{ 'is-invalid': submitted && f.contributor_idproof.errors }" class="form-control">-->
+                                    <input type="file" formControlName="contributor_idproof" [ngClass]="{ 'is-invalid': submitted && f.contributor_idproof.errors }" class="form-control" id="file" (change)="handleFileInput($event.target.files)">
                                     <div *ngIf="submitted && f.contributor_idproof.errors" class="invalid-feedback">
                                             <div *ngIf="f.contributor_idproof.errors.required">Id proof is required</div>
                                     </div>

@@ -4,9 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HeroService } from '../hero.service';
 import { first } from 'rxjs/operators';
 
-
-
-
 @Component({
   selector: 'contributor-sign-up',
   templateUrl: './contributor-sign-up.component.html',
@@ -20,9 +17,8 @@ export class ContributorSignUpComponent implements OnInit {
   contributorForm: FormGroup;
   submitted = false;
   loading = false;
-
-
-
+  fileToUpload: File = null;
+  form = new FormData();
 
   constructor(      
     private router: Router,
@@ -34,6 +30,8 @@ export class ContributorSignUpComponent implements OnInit {
   ngOnInit() {
 
     this.contributorForm = this.formBuilder.group({
+      contributor_fname: ['', Validators.required],
+      contributor_lname: ['', Validators.required],
       contributor_name: ['', Validators.required],
       contributor_email: ['', [Validators.required, Validators.email]],
       contributor_mobile: ['', [Validators.required,Validators.pattern(/^[6-9]\d{9}$/)]],
@@ -54,15 +52,29 @@ export class ContributorSignUpComponent implements OnInit {
   clickLoginPopup(){
     this.showloginPopup = true;
   }
+  handleFileInput(files){
+    //const form = new FormData();
+    //this.fileToUpload = files.item(0);
+    //this.formData.append( "file", file[i], file[i]['name'] );
+    for ( let i = 0; i < files.length; i++ ) {
+      console.log(files[i]);
+      console.log(files[i]['name']);
+      this.form.append( "image", files[i], files[i]['name'] );
+    }
+    console.log(this.form);
+  }
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.contributorForm.invalid) {
-       console.log('at invalid');      console.log(this.contributorForm);
+       console.log('at invalid');
+       console.log(this.contributorForm);
         return;
     }
-
-    this.authenticationService.contributorRegister(this.contributorForm.value)
+     this.form.append( 'Info', JSON.stringify(this.contributorForm.value));
+    //var options = { content: this.form };
+    //console.log(options);
+    this.authenticationService.contributorRegister(this.form)
                               .pipe(first())
                               .subscribe(
                                   data2 => {
@@ -77,6 +89,7 @@ export class ContributorSignUpComponent implements OnInit {
                                   });
 
   }
+
 
   hideLoginPopup(event){
     this.showloginPopup = false;
