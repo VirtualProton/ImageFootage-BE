@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'wishlist', component: WishlistComponent },
   { path: 'contactUs', component: ContactUsComponent },
-  { path: 'licence', component: LicenceAgreementComponent },
+  { path: 'license', component: LicenceAgreementComponent },
   { path: 'terms', component: TermsAndConditionsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'tagging', component: ContactUsComponent },
