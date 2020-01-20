@@ -164,6 +164,27 @@ export class HeroService {
     );;
   }
 
+    resendOtp(email: any, mobile:any): Observable<any> {
+        const url = `${this.heroesUrl}resendOtp`
+        return this.http.post(url, {email,mobile},this.httpOptions).pipe(
+            map(otpInfo => {
+                return otpInfo;
+            }),
+            catchError(this.handleError<any>(`unable to resend otp data`))
+        );
+    }
+
+    verifyOtp(email: any, mobile:any,otp:any): Observable<any>{
+        const url = `${this.heroesUrl}verifyOtp`
+        return this.http.post(url, {email,mobile,otp},this.httpOptions).pipe(
+            map(verifyInfo => {
+                return verifyInfo;
+            }),
+            catchError(this.handleError<any>(`unable to verify data`))
+        );
+
+    }
+
   contactUs(contactData: any): Observable<any> {
     const url = `${this.heroesUrl}user_contactus`
     return this.http.post(url, contactData, this.httpOptions).pipe(

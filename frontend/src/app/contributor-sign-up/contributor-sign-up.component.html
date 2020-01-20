@@ -1,3 +1,9 @@
+<div class="loader-bg" *ngIf="loadingData">
+    <div class="loader">
+        Loading
+        <span></span>
+    </div>
+</div>
 <section class="mt-0">
     <div class="container"> 
         <div class="col-md-11 col-xl-11 col-lg-11 col-sm-11 m-auto">    
@@ -23,9 +29,11 @@
                         </div>                     
                    </div>
                    <div class="col-lg-7 col-md-7 col-sm-6">
-                        <form [formGroup]="contributorForm" (ngSubmit)="onSubmit()"   class="loignForm pt-3 pb-3 pl-5 pr-5">
+                        <form [formGroup]="contributorForm" (ngSubmit)="onSubmit()"   class="loignForm pt-3 pb-3 pl-5 pr-5" *ngIf="otp==false">
                             <p class="text-right">Already a member? <a href="javascript:void()" (click)="clickLoginPopup()" > Sign in Here</a></p>
                             <h3 class="f-26 mb-3 font-normal text-center">Sign Up As A Image Footage Content Contributor</h3>
+                            <div class="success" *ngIf="success_message!=null" style="color:green;">{{success_message}}</div>
+                            <div class="error" *ngIf="error_message!=null" style="color:red;">{{error_message}}</div>
                             <div class="row form-group mt-4">
                                 <div class="col-lg-6 col-md-6 col-sm-6 pl-2">
                                     <label>First Name</label>
@@ -148,8 +156,31 @@
                                 <button type="button"[disabled]="loading" type="submit" class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Sign Up
                                 </strong></button>                                
                             </div>                     
-                        </form>    
-                    </div>
+                        </form>
+                        <form [formGroup]="contributorotpForm" (ngSubmit)="onSubmitotp()"   class="loignForm pt-3 pb-3 pl-5 pr-5" *ngIf="otp==true">
+
+                           <h3 class="f-26 mb-3 font-normal text-center">Sign Up As A Image Footage Content Contributor</h3>
+                            <div class="success" *ngIf="success_message!=null" style="color:green;">{{success_message}}</div>
+                            <div class="error" *ngIf="error_message!=null" style="color:red;">{{error_message}}</div>
+                           <div class="row form-group mt-4" *ngIf="completflag==false" >
+                               <div class="col-lg-6 col-md-6 col-sm-6 pl-2">
+                                   <label>Enter OTP</label>
+                                   <input type="text" formControlName="otp" [ngClass]="{ 'is-invalid': submitted && o.otp.errors }" class="form-control rounded-0">
+                                   <div *ngIf="submitted && o.otp.errors" class="invalid-feedback">
+                                       <div *ngIf="o.otp.errors.required">OTP is Required</div>
+                                   </div>
+                               </div>
+                               <div class="col-lg-6 col-md-6 col-sm-6 pr-2">
+                                        <input type="button" class="btn btn-success btn-block text-white p-1 text-uppercase" value="Resend OTP" (click)="resend_otp()" />
+                               </div>
+                           </div>
+                           <div class="form-group pt-3" *ngIf="completflag==false">
+                               <button type="button"[disabled]="loading" type="submit" class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Verify OTP
+                               </strong></button>
+                           </div>
+                       </form>
+
+                   </div>
                 </div>                
             </div>
         </div>                 

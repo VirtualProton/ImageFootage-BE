@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
+
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
 Route::get('/login', 'AdminController@login');
 Route::post('/authenticate', 'AdminController@authenticate');
@@ -211,3 +212,4 @@ Route::get('/invoice/{user_id}/{id}','InvoiceController@invoice');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');
 //Route::get('logout', 'Admin\DashboardController@logout');
 });
+Route::get('emailVerification','UserContactusController@emailVerification');
