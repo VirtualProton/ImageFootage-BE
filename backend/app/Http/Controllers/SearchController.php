@@ -87,6 +87,7 @@ class SearchController extends Controller
         $all_products = $product->getProducts($keyword);
         $footageMedia = new FootageApi();
         $pondfootageMediaData = $footageMedia->search($keyword);
+
         if(count($pondfootageMediaData)>0) {
             foreach ($pondfootageMediaData['items'] as $eachmedia) {
                 if (isset($eachmedia['id'])) {
@@ -107,6 +108,7 @@ class SearchController extends Controller
                         'product_main_type' => "Footage",
                         'product_added_on' => date("Y-m-d H:i:s"),
                         'product_web' => '3',
+                        'product_keywords'=> $eachmedia['kw']
                     );
 
                 }

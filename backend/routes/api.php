@@ -55,6 +55,10 @@ Route::group([
 	Route::get('packages','PackageApiController@packageList');
 	Route::get('userprofile/{id}','UserController@userProfile');
 	Route::get('contributorprofile/{id}','UserController@contributorProfile');
+    Route::post('resendOtp', 'UserContactusController@resendOtp');
+    Route::post('verifyOtp', 'UserContactusController@verifyOtp');
+
+
 
 });
 

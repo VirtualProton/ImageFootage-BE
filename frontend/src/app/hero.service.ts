@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -151,14 +151,39 @@ export class HeroService {
   }
 
   contributorRegister(contributorData: any): Observable<any> {
-    const url = `${this.heroesUrl}contributorSignup`
-    return this.http.post(url, contributorData, this.httpOptions).pipe(
+      const url = `${this.heroesUrl}contributorSignup`
+      let headers = new HttpHeaders({
+          'Content-Type': undefined
+      });
+      let options = { headers: headers };
+      return this.http.post(url, contributorData).pipe(
       map(contributorInfo => {
         return contributorInfo;
       }),
       catchError(this.handleError<any>(`unable to register data`))
     );;
   }
+
+    resendOtp(email: any, mobile:any): Observable<any> {
+        const url = `${this.heroesUrl}resendOtp`
+        return this.http.post(url, {email,mobile},this.httpOptions).pipe(
+            map(otpInfo => {
+                return otpInfo;
+            }),
+            catchError(this.handleError<any>(`unable to resend otp data`))
+        );
+    }
+
+    verifyOtp(email: any, mobile:any,otp:any): Observable<any>{
+        const url = `${this.heroesUrl}verifyOtp`
+        return this.http.post(url, {email,mobile,otp},this.httpOptions).pipe(
+            map(verifyInfo => {
+                return verifyInfo;
+            }),
+            catchError(this.handleError<any>(`unable to verify data`))
+        );
+
+    }
 
   contactUs(contactData: any): Observable<any> {
     const url = `${this.heroesUrl}user_contactus`

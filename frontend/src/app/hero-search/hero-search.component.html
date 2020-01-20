@@ -197,7 +197,7 @@
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                       <a routerLink="/detail/{{aosimges.product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
-                        <div class="photo-text-more">
+                        <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
 
                             <div class="photo-text-more">
@@ -213,7 +213,7 @@
                       </a>
                       <a  *ngIf="aosimges.product_main_type != 'Image'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
                           <video  width="400" height="300" controls onmouseover="this.play()" onmouseout="this.pause()">
-                              <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
+                              <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
                           <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
@@ -221,11 +221,11 @@
                   </div>
               </div>
               <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0">
-                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize" 
-                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)" 
-                  [boundaryLinks]="true"></ngb-pagination>     
-        
-              </div> 
+                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"
+                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"
+                  [boundaryLinks]="true"></ngb-pagination>
+
+              </div>
           </div>
         </main>
     </main>

@@ -117,7 +117,7 @@ export class HeroSearchComponent implements OnInit {
                               this.maintainAosSlider();
                             //  this.spinner.hide();
                             this.loadingData=false;
-                              // this.maintainSearchData(aoslSliderImages);                             
+                              // this.maintainSearchData(aoslSliderImages);
                           });
       }
 
