@@ -60,6 +60,9 @@ class UserContactusController extends Controller
 			'contributor_type'=>'required'
         ]); */
 		//echo 'here'; exit();
+		$user = Contributor::where('contributor_email', '=', $request->contributor_email)->first();
+		
+if ($user === null) {
 			$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 			srand((double)microtime()*1000000); 
 			$i = 0; 
@@ -130,6 +133,11 @@ class UserContactusController extends Controller
 			  return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
 			 //return back()->with('warning','Some problem occured.');
 		 }
+  
+}else{
+	 return response()->json(['status'=>'0','message' => 'Given email-id is allready exist.'], 401);
+}
+
 	
 	}
 }
