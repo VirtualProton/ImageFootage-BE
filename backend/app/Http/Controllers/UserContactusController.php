@@ -69,7 +69,7 @@ class UserContactusController extends Controller
 			'contributor_idproof'=>'required|file',
 			'contributor_type'=>'required'
         ]); */
-<<<<<<< HEAD
+
 		//echo 'here'; exit();
 		$user = Contributor::where('contributor_email', '=', $request->contributor_email)->first();
 		
@@ -151,7 +151,7 @@ if ($user === null) {
 
 	
 	}
-=======
+
 		 $record = Contributor::orWhere('contributor_memberid',$contributor_data['contributor_name'])
                     ->orWhere('contributor_email',$contributor_data['contributor_email'])
                     ->count();
@@ -278,5 +278,5 @@ if ($user === null) {
        }
        
    }
->>>>>>> a2ee54b11b5dbf1e52c570bb1b4372940353d0f3
+
 }
