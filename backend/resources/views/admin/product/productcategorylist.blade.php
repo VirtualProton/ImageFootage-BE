@@ -36,6 +36,7 @@
                         <th>Id</th>
                         <th>Product Category</th>
                         <th>Product Category Alignment</th>
+                        <th>Is Display HomePage</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>
@@ -46,6 +47,12 @@
   <td>{{ $category['category_id'] }} </td>
   <td>{{ $category['category_name'] }} </td>
   <td>{{ $category['category_order'] }} </td>
+  <td>@if($category['is_display_home'] =='1')
+        Yes
+  @else
+      No
+  @endif
+  </td>
   <td>{{ date('Y-m-d',strtotime($category['category_added_on'])) }} </td>
   <td>  @if($category['category_status'] =='Active')
   			<a href="{{ url('admin/productcategory/Inactive/'.$category['category_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>

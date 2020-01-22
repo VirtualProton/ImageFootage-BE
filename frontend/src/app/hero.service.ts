@@ -55,34 +55,55 @@ export class HeroService {
 
 
   /** GET Slider Images from the server */
-  getcarouselSliderImages(): carouselSlider[] {
-    //  const url = `${this.heroesUrl}home`;
-    /*return this.http.get<any[]>(this.carouselImagesUrl)
-      .pipe(
-        tap(_ => this.log('fetched carousel Images')),
-        catchError(this.handleError<any[]>('getCarouselImages', []))
-      );*/
+  getcarouselSliderImages():Observable<any> {
+      const url = `${this.heroesUrl}categoryListApi`;
+       let data = this.http.get(url);
+       return data;
+        //console.log(categories);
+                  // if(data) {
+                       let _carouselSlider = new carouselSlider();
+                       let _carouselSliderArray = new Array<carouselSlider>();
+                       _carouselSlider.id = 1;
+                       _carouselSlider.categoryNames = data["0"];
+                       // [{id: data[], name: 'Skin Care'}, {id: 2, name: 'Cannabis'}, {
+                       //     id: 3,
+                       //     name: 'Business'
+                       // }, {id: 4, name: 'Curated'}, {id: 5, name: 'Video'}, {id: 6, name: 'Autumn'}]
+                       _carouselSliderArray.push(_carouselSlider);
+                       let _carouselSlider1 = new carouselSlider();
+                       _carouselSlider1.id = 2;
+                       _carouselSlider1.categoryNames = data["1"];
 
-    let _carouselSlider = new carouselSlider();
-    let _carouselSliderArray = new Array<carouselSlider>();
-    _carouselSlider.id = 1;
-    _carouselSlider.categoryNames = [{ id: 1, name: 'Skin Care' }, { id: 2, name: 'Cannabis' }, { id: 3, name: 'Business' }, { id: 4, name: 'Curated' }, { id: 5, name: 'Video' }, { id: 6, name: 'Autumn' }]
-    _carouselSliderArray.push(_carouselSlider);
-    let _carouselSlider1 = new carouselSlider();
-    _carouselSlider1.id = 2;
-    _carouselSlider1.categoryNames = [{ id: 11, name: 'Dr Nice' },{ id: 12, name: 'Narco' },{ id: 13, name: 'Bombasto' },{ id: 14, name: 'Celeritas' },{ id: 15, name: 'Magneta' },{ id: 16, name: 'RubberMan' }]
-    _carouselSliderArray.push(_carouselSlider1);
-    let _carouselSlider2 = new carouselSlider();
-    _carouselSlider2.id = 3;
-    _carouselSlider2.categoryNames = [{ id: 21, name: 'Family' },{ id: 22, name: 'Halloween' },{ id: 23, name: 'Seniors' },{ id: 24, name: 'Cats & Dogs' },{ id: 25, name: 'Time to Party' },{ id: 26, name: 'Food' }]
-    _carouselSliderArray.push(_carouselSlider2);
-    let _carouselSlider3 = new carouselSlider();
-    _carouselSlider3.id = 4;
-    _carouselSlider3.categoryNames = [{ id: 31, name: 'The Digital Frontier' },{ id: 32, name: 'Christmas' },{ id: 33, name: 'Real People & Places' },{ id: 34, name: 'Art & Concept' },{ id: 35, name: 'Magma' },{ id: 36, name: 'Tornado' }]
-    _carouselSliderArray.push(_carouselSlider3);
+                       //     [{id: 11, name: 'Dr Nice'}, {id: 12, name: 'Narco'}, {
+                       //     id: 13,
+                       //     name: 'Bombasto'
+                       // }, {id: 14, name: 'Celeritas'}, {id: 15, name: 'Magneta'}, {id: 16, name: 'RubberMan'}]
+                       _carouselSliderArray.push(_carouselSlider1);
+                       let _carouselSlider2 = new carouselSlider();
+                       _carouselSlider2.id = 3;
+                       _carouselSlider2.categoryNames = data["2"];
 
-    return _carouselSliderArray;
-  }
+                       //     [{id: 21, name: 'Family'}, {id: 22, name: 'Halloween'}, {
+                       //     id: 23,
+                       //     name: 'Seniors'
+                       // }, {id: 24, name: 'Cats & Dogs'}, {id: 25, name: 'Time to Party'}, {id: 26, name: 'Food'}]
+                       _carouselSliderArray.push(_carouselSlider2);
+                       let _carouselSlider3 = new carouselSlider();
+                       _carouselSlider3.id = 4;
+                       _carouselSlider3.categoryNames = data["4"];
+
+                       //     [{id: 31, name: 'The Digital Frontier'}, {
+                       //     id: 32,
+                       //     name: 'Christmas'
+                       // }, {id: 33, name: 'Real People & Places'}, {id: 34, name: 'Art & Concept'}, {
+                       //     id: 35,
+                       //     name: 'Magma'
+                       // }, {id: 36, name: 'Tornado'}]
+                       _carouselSliderArray.push(_carouselSlider3);
+                       //return _carouselSliderArray;
+                   //}
+                  // return aosImagesUrl;
+   }
 
   /** GET Slider Images from the server */
   /** GET Slider Images from the server */

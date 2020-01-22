@@ -44,6 +44,12 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('category_order') }}</div>
                        @endif
                     </div>
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">Is Display On Home </label>
+                          <input type="radio"  name="display"  value="1" <?php if($productcategory['is_display_home']=='1'){ echo "checked";} ?> /> Yes
+                          <input type="radio"  name="display"  value="0" <?php if($productcategory['is_display_home']=='0'){ echo "checked";} ?> /> No
+                      </div>
+
            
                   </div>
                   <!-- /.box-body -->

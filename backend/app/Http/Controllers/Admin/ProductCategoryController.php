@@ -18,6 +18,7 @@ class ProductCategoryController extends Controller
 		$ProductCategory->category_name=$request->category_name;
 	    $ProductCategory->category_order=$request->category_order;
 		$ProductCategory->category_added_by=Auth::guard('admins')->user()->id;
+        $ProductCategory->is_display_home = $request->display;
 		$ProductCategory->category_added_on=date('Y-m-d H:i:s');
 		$result=$ProductCategory->save();
 		if($result){
@@ -59,6 +60,7 @@ class ProductCategoryController extends Controller
         ]);
 		 $update_array=array('category_name'=>$request->category_name,
 		 					 'category_order'=>$request->category_order,
+                             'is_display_home'=>$request->display,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);

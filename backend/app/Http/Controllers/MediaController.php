@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use CORS;
 
 class MediaController extends Controller
@@ -45,6 +46,42 @@ class MediaController extends Controller
             $product_details = $product->getProductDetail($media_id,$type);
         }
         return response()->json($product_details);
+    }
+
+
+    public function categoryListApi(){
+       $categories  = ProductCategory::select('category_id','category_name')
+                        ->where('is_display_home',1)
+                        ->orderBy('category_id','desc')
+                        ->limit(24)
+                        ->get()
+                        ->toArray();
+        if(count($categories)>0){
+            $i=0;
+            $catArray = array();
+            $tempArray= array();
+            foreach($categories as $k=>$category){
+                if($k==0){
+                    array_push($tempArray,$category);
+                    $catArray[$i] = $tempArray;
+                }else{
+                if(($k)%6 != '0'){
+                    array_push($tempArray,$category);
+                    $catArray[$i] = $tempArray;
+                }else{
+                    $tempArray= array();
+                    array_push($tempArray,$category);
+                    $i++;
+                    $catArray[$i] = $tempArray;
+                }
+                }
+            }
+
+            return response()->json($catArray);
+        }else{
+            return response()->json(array('status'=>'0','message'=>"No category found"));
+        }
+
     }
 
 

@@ -57,7 +57,8 @@ Route::group([
 	Route::get('contributorprofile/{id}','UserController@contributorProfile');
     Route::post('resendOtp', 'UserContactusController@resendOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
-
+    Route::post('verifyOtp', 'UserContactusController@verifyOtp');
+    Route::get('categoryListApi', 'MediaController@categoryListApi');
 
 
 });
