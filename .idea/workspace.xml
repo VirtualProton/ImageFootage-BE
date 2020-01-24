@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/imagefootagenew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imagefootagenew.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/dist/main-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/main-es5.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/dist/polyfills-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/polyfills-es2015.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/about-us/about-us.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/contact-us/contact-us.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/contact-us/contact-us.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/licence-agreement/licence-agreement.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/licence-agreement/licence-agreement.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/privacy-policy/privacy-policy.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/privacy-policy/privacy-policy.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/terms-and-conditions/terms-and-conditions.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/terms-and-conditions/terms-and-conditions.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +174,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="xpath.settings" />
     <property name="ts.external.directory.path" value="C:\xampp\htdocs\imagefootagenew\frontend\node_modules\typescript\lib" />
   </component>
   <component name="ServiceViewManager">
@@ -217,7 +204,7 @@
       <workItem from="1574699030709" duration="3632000" />
       <workItem from="1574785729844" duration="4204000" />
       <workItem from="1574848759582" duration="529000" />
-      <workItem from="1579843526236" duration="1868000" />
+      <workItem from="1579843526236" duration="3704000" />
     </task>
     <servers />
   </component>
@@ -229,6 +216,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1579845317780" />
+    <state x="184" y="7" key="SettingsEditor" timestamp="1579846223019">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="7" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579846223019" />
     <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579843528173">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
