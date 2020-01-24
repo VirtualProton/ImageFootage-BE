@@ -47,7 +47,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" routerLink="/pricing"><i class="fa fa-credit-card"></i></a>
+          <a class="nav-link js-scroll-trigger" routerLink="/pricing"><img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' /></a>
         </li>
 
         <li class="nav-item" *ngIf="currentUser">
@@ -63,7 +63,7 @@
 
 
         <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><i class="fa fa-lock"></i></a>
+          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><img src="../assets/images/log in icon.png" style='width:70px;margin-top:-15px;' /></a>
         </li>
         <li class="nav-item" *ngIf="currentUser">
           <a class="nav-link js-scroll-trigger" (click)="logout()">Logout</a>

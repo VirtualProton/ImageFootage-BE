@@ -40,8 +40,9 @@ export class AppComponent implements OnInit, OnDestroy {
           this.dashboardEle = false;
         }
       }
+	  window.scrollTo(0, 0)
     })
-
+	
     //window.addEventListener('scroll', this.scroll, true); //third parameter
 
   }

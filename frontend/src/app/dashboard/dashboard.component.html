@@ -13,17 +13,17 @@
           <form class="search_m">
     <div class="input-group search-bar">
           <div class="input-group-btn" ngbDropdown >
-            <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
+            <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
              <span *ngIf='searchBoxLabel == 1'>Photos Only</span>
              <span *ngIf='searchBoxLabel == 2'>Videos Only</span>
              <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
 
 
             </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem><i class=""></i> Photos Only</a>
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem>Photos + Videos</a>
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem>Videos Only</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="top:-192px !important;min-width: 200px;">
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem style="padding: 15px 10px;"><i class=""></i> Photos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem style="padding: 15px 10px;">Videos Only</a>
                </div>
           </div>
           <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button" (keyup.enter)="searchAosData(searchBoxEle.value)">

@@ -5,7 +5,7 @@ body {
   font-weight: 400;
   font-size: 1rem;
   background: #000;
-font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
    }
 
 ::-moz-selection {
@@ -24,7 +24,7 @@ a {
     text-decoration: none; }
 
 h1, h2, h3, h4, h5,
-.h1, .h2, .h3, .h4, .h5 {font-family: 'Open Sans', sans-serif;}
+.h1, .h2, .h3, .h4, .h5 {font-family: 'Poppins', sans-serif !important;}
 .f-8{font-size:8px !important}
 .f-10{font-size:10px !important}
 .f-11{font-size:11px !important}
@@ -47,11 +47,19 @@ h1, h2, h3, h4, h5,
 .f-44{font-size:44px !important}
 .f-46{font-size:46px !important}
 
+.f-3{font-weight: 300 !important;}
+.f-4{font-weight: 400 !important;}
+.f-5{font-weight: 500 !important;}
+.f-6{font-weight: 600 !important;}
+.f-7{font-weight: 700 !important;}
+.f-9{font-weight: 900 !important;}
+.l-space{letter-spacing: 0.3 !important;}
+
 .border-2 {
   border-width: 2px; }
 
 .text-black {
-  color: #000 !important; }
+  color: #1e1e1e!important; }
 
 .bg-black {
   background: #000 !important; }
