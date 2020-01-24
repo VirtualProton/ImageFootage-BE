@@ -344,3 +344,4 @@ module.exports = __webpack_require__(/*! C:\xampp\htdocs\imagefootagenew\fronten
 /***/ })
 
 },[[3,"runtime"]]]);
+//# sourceMappingURL=styles-es2015.js.map
