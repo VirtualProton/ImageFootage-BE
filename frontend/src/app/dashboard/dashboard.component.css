@@ -78,3 +78,6 @@
     transform: rotate(405deg);
   }
 }
+.dropdown-menu{
+	        top: -252px !important;
+}
