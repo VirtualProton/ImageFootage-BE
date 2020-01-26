@@ -5,6 +5,7 @@
     </div>
 </div>
 
+
 <section class="pt-50 mt-50">
 
     <div class="container">
@@ -166,39 +167,41 @@
                 <div class="clearfix"></div>
 
 
-                <h3 class="f-20 mb-4 mt-35">PAYMENT INFORMATION</h3>
-                <form  [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-                <div class="row">
+                <h3 class="f-20 mb-4 mt-35" *ngIf="paymentShow">PAYMENT INFORMATION</h3>
+<!--                <form  [formGroup]="checkoutForm">-->
+                <div class="row" *ngIf="paymentShow">
 
                     <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('atom')">
                             <label class="mb-0">
-                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">
+<!--                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">-->
                                 <img src="/assets/images/atom.png" alt="atom">
                             </label>
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('payu')">
                             <label class="mb-0">
-                                <input type="radio"  formControlName="paymentGatway"  name="paymentGatway" value="payu" checked="checked">
+<!--                                <input type="radio"    name="paymentGatway" value="payu" >-->
                                 <img src="/assets/images/payu.png" alt="payumoney">
                             </label>
                         </div>
-                    </div>
+
+<!--                        <div [innerHTML]="payuData"></div>-->
+                   </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmit()">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('rozerpay')">
                             <label class="mb-0">
-                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">
+<!--                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">-->
                                 <img src="/assets/images/rozorpay.png" alt="Rozorpay">
                             </label>
                         </div>
                     </div>
 
                 </div>
-                </form>
+<!--                </form>-->
 
 
 
@@ -465,3 +468,5 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--      </section>-->
+
+

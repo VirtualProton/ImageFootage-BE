@@ -14,6 +14,7 @@ use App\Models\Orders;
 use App\Models\OrderItem;
 use App\Models\Usercart;
 use CORS;
+use Payumoney;
 
 class PaymentController extends Controller
 {
@@ -34,15 +35,58 @@ class PaymentController extends Controller
         $transactionDate = str_replace(" ", "%20", $datenow);
         $transactionId = rand(1,1000000);
         $allFields = $request->all();
+        //echo "<pre>"; print_r($allFields); die;
         $userData = User::with('country')
                  ->with('city')
                  ->with('state')
                  ->with('cart')
                  ->where('id','=',$allFields['tokenData']['Utype'])
                  ->get()->toArray();
+        $tax = $allFields['cartval'][0]*8/100;
+        $final_tax=round($tax,2);
+        $orders = new Orders();
+        $orders->user_id = $allFields['tokenData']['Utype'];
+        $orders->txn_id = $transactionId;
+        $orders->tax = $final_tax;
+        $orders->order_total = $allFields['cartval'][0]+$final_tax;
+        $orders->order_date = date('Y-m-d H:i:s',strtotime($datenow));
+        $orders->order_email = $userData[0]['email'];
+        $orders->bill_firstname = $allFields['usrData']['first_name'];
+        $orders->bill_lastname = $allFields['usrData']['last_name'];
+        $orders->bill_address1 = $allFields['usrData']['address'];
+        $orders->bill_city = $allFields['usrData']['city'];
+        $orders->bill_state = $allFields['usrData']['state'];
+        $orders->bill_country = $allFields['usrData']['country'];
+        $orders->bill_zip = $allFields['usrData']['pincode'];
+        $orders->paymentgatway = $allFields['type'];
+        $orders->save();
+        $order_id = $orders->id;
+        if(count($userData)>0){
+            foreach($userData[0]['cart'] as $eachCart) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order_id;
+                $orderItem->product_id = $eachCart['cart_product_id'];
+                $orderItem->product_type = $eachCart['cart_product_id'];
+                $orderItem->standard_type = $eachCart['standard_type'];
+                $orderItem->standard_size = $eachCart['standard_size'];
+                $orderItem->standard_price = $eachCart['standard_price'];
+                $orderItem->extended_name = $eachCart['extended_name'];
+                $orderItem->extended_price = $eachCart['extended_price'];
+                $orderItem->total = $eachCart['total'];
+                $orderItem->product_name = $eachCart['product_name'];
+                $orderItem->product_thumb = $eachCart['product_thumb'];
+                $orderItem->product_desc = $eachCart['product_desc'];
+                $orderItem->product_json = $eachCart['product_json'];
+                $orderItem->product_web = $eachCart['product_web'];
+                $orderItem->token = $eachCart['token'];
+                $orderItem->cart_added_by = $eachCart['cart_added_by'];
+                $orderItem->cart_added_on = $eachCart['cart_added_on'];
+                $orderItem->save();
+            }
+        }
 
         //dd($userData);
-        if($allFields['usrData']['paymentGatway']=='atom'){
+        if($allFields['type']=='atom'){
             $transactionRequest = new TransactionRequest();
             //Setting all values here
             $transactionRequest->setMode("test");
@@ -50,14 +94,11 @@ class PaymentController extends Controller
             $transactionRequest->setPassword("Test@123");
             $transactionRequest->setProductId("NSE");
             if(!empty($allFields['cartval'][0])){
-                $tax = $allFields['cartval'][0]*8/100;
-                $final_tax=round($tax,2);
+
                 $transactionRequest->setAmount($allFields['cartval'][0]+$final_tax);
                 $transactionRequest->setTransactionCurrency("INR");
                 $transactionRequest->setTransactionAmount($allFields['cartval'][0]+$final_tax);
             }
-
-
             $transactionRequest->setReturnUrl(url('/api/atomPayResponse'));
             $transactionRequest->setClientCode(123);
             $transactionRequest->setTransactionId($transactionId);
@@ -68,53 +109,48 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerBillingAddress($allFields['usrData']['address']);
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey("KEY123657234");
-            $orders = new Orders();
-            $orders->user_id = $allFields['tokenData']['Utype'];
-            $orders->txn_id = $transactionId;
-            $orders->tax = $final_tax;
-            $orders->order_total = $allFields['cartval'][0]+$final_tax;
-            $orders->order_date = date('Y-m-d H:i:s',strtotime($datenow));
-            $orders->order_email = $userData[0]['email'];
-            $orders->bill_firstname = $allFields['usrData']['first_name'];
-            $orders->bill_lastname = $allFields['usrData']['last_name'];
-            $orders->bill_address1 = $allFields['usrData']['address'];
-            $orders->bill_city = $allFields['usrData']['city'];
-            $orders->bill_state = $allFields['usrData']['state'];
-            $orders->bill_country = $allFields['usrData']['country'];
-            $orders->bill_zip = $allFields['usrData']['pincode'];
-            $orders->paymentgatway = $allFields['usrData']['paymentGatway'];
-            $orders->save();
-            $order_id = $orders->id;
-            if(count($userData)>0){
-                foreach($userData[0]['cart'] as $eachCart) {
-                    $orderItem = new OrderItem();
-                    $orderItem->order_id = $order_id;
-                    $orderItem->product_id = $eachCart['cart_product_id'];
-                    $orderItem->product_type = $eachCart['cart_product_id'];
-                    $orderItem->standard_type = $eachCart['standard_type'];
-                    $orderItem->standard_size = $eachCart['standard_size'];
-                    $orderItem->standard_price = $eachCart['standard_price'];
-                    $orderItem->extended_name = $eachCart['extended_name'];
-                    $orderItem->extended_price = $eachCart['extended_price'];
-                    $orderItem->total = $eachCart['total'];
-                    $orderItem->product_name = $eachCart['product_name'];
-                    $orderItem->product_thumb = $eachCart['product_thumb'];
-                    $orderItem->product_desc = $eachCart['product_desc'];
-                    $orderItem->product_json = $eachCart['product_json'];
-                    $orderItem->product_web = $eachCart['product_web'];
-                    $orderItem->token = $eachCart['token'];
-                    $orderItem->cart_added_by = $eachCart['cart_added_by'];
-                    $orderItem->cart_added_on = $eachCart['cart_added_on'];
-                    $orderItem->save();
-                    }
-            }
 
 
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
             //return Redirect::to($url);
             //header("Location: $url");
-        }
+        }else if($allFields['type']=='payu'){
+
+              $hash=hash('sha512', 'moyhzpcW|46464|100|123456|amit pathak|amitpathak.bansal@gmail.com|||||6578||||||k5fBBBjPVs');
+//            $strReqst = "https://sandboxsecure.payu.in/_payment";
+//            $strReqst .= "&key=moyhzpcW";
+//            $strReqst .= "&productinfo=123456";
+//            $strReqst .= "&amount=100";
+//            $strReqst .= "&txnid=46464";
+//            $strReqst .= "&firstname=amit pathak";
+//            $strReqst .= "&email=amitpathak.bansal@gmail.com";
+//            $strReqst .= "&phone=987706301";
+//            $strReqst .= "&surl=http://localhost/imagefootage/payment";
+//            $strReqst .= "&furl=http://localhost/imagefootage/fpayment";
+//            $strReqst .= "&udf5=6578";
+//            $strReqst .= "&hash=".$hash;
+//            echo json_encode(['url'=>$strReqst]);
+
+
+//             Payumoney::pay([
+//                'txnid'       => $transactionId,
+//                'amount'      => 10.50,
+//                'productinfo' => 'A book',
+//                'firstname'   => 'Peter',
+//                'email'       => 'abc@example.com',
+//                'phone'       => '1234567890',
+//                'surl'        => url('payumoney-test/return'),
+//                'furl'        => url('payumoney-test/return'),
+//            ])->send();
+
+             //return view('payu');
+              $url = url('/payu/'.$transactionId);
+             echo json_encode(['url'=>$url]);
+            //return redirect('/payu/'.$transactionId);
+             //return 1;
+           // echo json_encode(['hash'=>$hash]);
+       }
         //print_r($allFields); die;
 
       //  return response()->json($all_products);
@@ -159,6 +195,55 @@ class PaymentController extends Controller
 
     }
 
+    public function payu($transaction){
+        $OrderData = Orders::with('items')->with('user')
+            ->where('txn_id','=',$transaction)
+            ->get()->toArray();
+        //echo "<pre>";
+        //print_r($OrderData);
+          $items= array();
+          foreach($OrderData[0]['items'] as $each){
+              array_push($items,$each['product_id']);
+          }
+          Payumoney::pay([
+                'txnid'       => $transaction,
+                'amount'      => $OrderData[0]['order_total'],
+                'productinfo' => implode(',',$items),
+                'firstname'   => $OrderData[0]['bill_firstname']." ".$OrderData[0]['bill_lastname'],
+                'email'       => $OrderData[0]['order_email'],
+                'phone'       => $OrderData[0]['user']['mobile'],
+                'surl'        => url('api/payUResponse'),
+                'furl'        => url('api/payUResponsefail'),
+            ])->send();
+    }
+
+    public function payUResponse(Request $request){
+
+        $result = Payumoney::completePay($_POST);
+        //echo "<pre>";
+        //print_r($result); die;
+        if ($result->checksumIsValid() && $result->isSuccess()) {
+            $transaction = $result->getTransactionId();
+            $status = $result->getStatus();
+            $params = $result->getParams();
+            //echo "<pre>";
+            //print_r($params);
+           // die;
+            Orders::where('txn_id',$params['txnid'])
+                ->update(['payment_mode'=>$params['bankcode'],
+                    'order_status'=>$status,'response_payment'=>json_encode($params)]);
+            $orders = Orders::where('txn_id',$params['txnid'])->first();
+            Usercart::where('cart_added_by',$orders->user_id)->delete();
+            return redirect('/orderConfirmation/'.$params['txnid']);
+        } else {
+            return redirect('/orderFailed');
+        }
+
+    }
+
+    public function payUResponsefail(){
+
+    }
     
 
 }

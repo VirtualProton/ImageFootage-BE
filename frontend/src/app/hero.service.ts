@@ -35,8 +35,6 @@ export class HeroService {
     return this.currentUserSubject.value;
   }
 
-
-
   allCountries(): Observable<any>{
     const url = `${this.heroesUrl}getCountyStatesCityList`;
     //return this.http.get(this.countryUrl);
@@ -404,19 +402,36 @@ removeCartItemsData(product:any): Observable<userData> {
     this.messageService.add(`HeroService: ${message}`);
   }
 
-    payment(usrData: any,cartval: any): Observable<any> {
+    payment(usrData: any,cartval: any,type:any): Observable<any> {
         const url = `${this.heroesUrl}payment`
         let tokenData =JSON.parse( localStorage.getItem('currentUser'));
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+tokenData.access_token });
-        let options = { headers: headers };
-        return this.http.post(url, {usrData,cartval,tokenData}, options).pipe(
-            map(userInfo => {
-                return userInfo;
-            }),
-            catchError(this.handleError<any>(`unable to register data`))
-        );;
+        if(type=='atom'){
+            var headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+tokenData.access_token });
+            let options = { headers: headers };
+
+            return this.http.post(url, {usrData,cartval,type,tokenData}, options).pipe(
+                map(userInfo => {
+                    return userInfo;
+                }),
+                catchError(this.handleError<any>(`unable to register data`))
+            );;
+        }else if(type=='payu'){
+            var headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+tokenData.access_token });
+            let options = { headers: headers };
+            return this.http.post(url, {usrData,cartval,type,tokenData}, options).pipe(
+                map(userInfo => {
+                    return userInfo;
+                    //console.log(JSON.stringify(userInfo));
+                    //return JSON.stringify(userInfo);
+                }),
+                catchError(this.handleError<any>(`unable to register data`))
+            );
+        }
+
     }
 
     getOrderDetails(id:any):Observable<any>{
