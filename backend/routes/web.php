@@ -213,3 +213,6 @@ Route::get('/invoice/{user_id}/{id}','InvoiceController@invoice');
 //Route::get('logout', 'Admin\DashboardController@logout');
 });
 Route::get('emailVerification','UserContactusController@emailVerification');
+Route::get('payu/{id}','PaymentController@payu');
+
+

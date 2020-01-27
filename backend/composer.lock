@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "933bd3b5926a72069e735d7f39906ee7",
+    "content-hash": "9c0697fef2b83c53a23f14307cc0c810",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2692,6 +2692,50 @@
                 "uuid"
             ],
             "time": "2019-12-17T08:18:51+00:00"
+        },
+        {
+            "name": "riazxrazor/payumoney",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/riazXrazor/payumoey.git",
+                "reference": "901199032caf9ca93db52180b8c419ce9608b34a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/riazXrazor/payumoey/zipball/901199032caf9ca93db52180b8c419ce9608b34a",
+                "reference": "901199032caf9ca93db52180b8c419ce9608b34a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5|^6",
+                "php": ">=5.6.0",
+                "symfony/http-foundation": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Riazxrazor\\Payumoney\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Riaz Laskar",
+                    "email": "riazcool77@gmail.com"
+                }
+            ],
+            "description": "PayUMoney library for Laravel and core PHP",
+            "homepage": "http://github.com/riazxrazor/payumoney",
+            "keywords": [
+                "payu",
+                "payuindia",
+                "payumoney"
+            ],
+            "time": "2020-01-17T09:21:09+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",

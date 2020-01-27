@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
 import { NgxSpinnerService } from "ngx-spinner";
 
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -25,7 +26,10 @@ export class CheckoutComponent implements OnInit {
   cityInfo: any[] = [];
   taxPrice:any =10;
   loadingData:boolean=false;
-  
+  paymentShow:boolean=true;
+  payuData:any ='';
+  payuForm: FormGroup;
+  hash:any='';
   constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -39,7 +43,7 @@ export class CheckoutComponent implements OnInit {
           state: ['', Validators.required],
           city: ['', Validators.required],
           pincode:['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-          paymentGatway :['', Validators.required],
+          //paymentGatway :['', Validators.required],
 
     });
     this.getCountries();
@@ -124,31 +128,8 @@ export class CheckoutComponent implements OnInit {
             //console.log(this.checkoutForm);
             return;
         }
-
-        this.authenticationService.payment(this.checkoutForm.value,this.priceArray)
-           // .pipe(first())
-            .subscribe(
-                data2 => {
-                   // alert("Sucessfully Registered");
-                    console.log(data2);
-                    console.log(data2.url);
-                    this.loadingData = false;
-                    window.location.href = data2.url;
-                    //this.router.navigate([data2.url]);
-                    // console.log(data2);
-                    // console.log(data2.message);
-                    // console.log(data2["message"]);
-                    // if(data2.status=='1'){
-                    //   alert(data2.message);
-                    //   this.router.navigate(['/']);
-                    // }else{
-                    //   alert(data2.message);
-                    // }
-
-                },
-                error => {
-                    this.loading = false;
-                });
+        this.paymentShow  =true;
+        this.loadingData = false;
     }
     showTotalPrice(){
 
@@ -158,5 +139,46 @@ export class CheckoutComponent implements OnInit {
   goToWishList(){
     this.router.navigate(['/wishlist']);
   }
+
+  onSubmitPayment(paymentgatway){
+      this.loadingData = true;
+      console.log(paymentgatway);
+
+      this.authenticationService.payment(this.checkoutForm.value,this.priceArray,paymentgatway)
+      // .pipe(first())
+          .subscribe(
+              data2 => {
+
+                  // alert("Sucessfully Registered");
+                  console.log(data2);
+                  console.log(paymentgatway);
+                  this.loadingData = false;
+                  if(paymentgatway=='atom')  {
+                      window.location.href = data2.url;
+                  }else if(paymentgatway=='payu'){
+                    console.log(data2);
+                     //this.hash = data2.hash;
+                      window.location.href = data2.url;
+                      //document.getElementById('payuform').onsubmit;
+                     //this.payuData = data2;
+                  }
+
+                  //this.router.navigate([data2.url]);
+                  // console.log(data2);
+                  // console.log(data2.message);
+                  // console.log(data2["message"]);
+                  // if(data2.status=='1'){
+                  //   alert(data2.message);
+                  //   this.router.navigate(['/']);
+                  // }else{
+                  //   alert(data2.message);
+                  // }
+
+              },
+              error => {
+                  this.loading = false;
+              });
+    }
+
 
 }

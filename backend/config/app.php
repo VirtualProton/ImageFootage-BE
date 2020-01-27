@@ -179,6 +179,7 @@ return [
         Aws\Laravel\AwsServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
 
     ],
 
@@ -235,6 +236,7 @@ return [
         'AWS' => Aws\Laravel\AwsFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Payumoney' => Riazxrazor\Payumoney\PayumoneyFacade::class
     ],
 
 ];
