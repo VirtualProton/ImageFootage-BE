@@ -5,9 +5,7 @@ import { HttpClientModule }    from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
-
 import { AppRoutingModule }     from './app-routing.module';
-
 import { AppComponent }         from './app.component';
 import { DashboardComponent }   from './dashboard/dashboard.component';
 import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
@@ -31,8 +29,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TabModule } from 'angular-tabs-component';
 
- 
 
 
 @NgModule({
@@ -45,6 +44,7 @@ import { PricingComponent } from './pricing/pricing.component';
     NgbModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+	TabModule,
     NoopAnimationsModule
     
 
@@ -75,7 +75,8 @@ import { PricingComponent } from './pricing/pricing.component';
     CheckoutComponent,
     ContributorSignUpComponent,
     OrderConfirmationComponent,
-    PricingComponent
+    PricingComponent,
+    UserProfileComponent
   ],
   exports:[LoginComponent],
   bootstrap: [ AppComponent ]
