@@ -26,7 +26,7 @@ export class CheckoutComponent implements OnInit {
   cityInfo: any[] = [];
   taxPrice:any =10;
   loadingData:boolean=false;
-  paymentShow:boolean=true;
+  paymentShow:boolean=false;
   payuData:any ='';
   payuForm: FormGroup;
   hash:any='';

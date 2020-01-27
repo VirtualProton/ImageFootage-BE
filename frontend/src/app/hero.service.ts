@@ -10,8 +10,9 @@ import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class HeroService {
-	//https://imagefootage.com/backend/public/admin/ live
-  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+	//https://imagefootage.com/imagefootagenew/backend/api/   For Live
+    //http://localhost/imagefootagenew/backend/api/       For Local
+    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
