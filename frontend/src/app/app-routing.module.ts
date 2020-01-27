@@ -16,6 +16,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ContributorSignUpComponent } from './contributor-sign-up/contributor-sign-up.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'pricing', component: PricingComponent },
   { path: 'contributor-sign-up', component: ContributorSignUpComponent },
   { path: 'orderConfirmation/:id', component: OrderConfirmationComponent },
+  { path: 'user-profile', component: UserProfileComponent },
 
 ];
 
