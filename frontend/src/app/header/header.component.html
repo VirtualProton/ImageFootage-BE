@@ -47,7 +47,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" routerLink="/pricing"><img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' /></a>
+          <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
         </li>
 
         <li class="nav-item" *ngIf="currentUser">
@@ -62,15 +62,20 @@
 <!--        </li>-->
 
 
-        <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><img src="../assets/images/log in icon.png" style='width:70px;margin-top:-15px;' /></a>
-        </li>
+        <!--<li class="nav-item" *ngIf="!currentUser">
+       <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><img src="../assets/images/log in icon.png" style='width:70px;margin-top:-15px;' />       Login</a>
+        </li>-->
         <li class="nav-item" *ngIf="currentUser">
           <a class="nav-link js-scroll-trigger" (click)="logout()">Logout</a>
         </li>
+        <!--<li class="nav-item" *ngIf="!currentUser">
+          <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp"><i class="fa fa-user"></i> User</a>
+        </li>-->        
         <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp"><i class="fa fa-user"></i> Sign Up</a>
+          <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" 
+          (click)="clickLoginPopup()"><i class="fa fa-user"></i> User</a>
         </li>
+
         <li class="nav-item" *ngIf="!currentUser">
           <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/contributor-sign-up" style="margin-left: 10px;"><i class="fa fa-user"></i> Contributor</a>
         </li>
