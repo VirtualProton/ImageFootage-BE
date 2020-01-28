@@ -19,6 +19,7 @@
         "laravelcollective/html": "^5.7",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.9",
+        "razorpay/razorpay": "2.*",
         "riazxrazor/payumoney": "^1.0",
         "tymon/jwt-auth": "^1.0.0-rc.2",
         "unisharp/laravel-ckeditor": "^4.7"

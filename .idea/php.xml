@@ -109,6 +109,9 @@
       <path value="$PROJECT_DIR$/backend/vendor/intervention/image" />
       <path value="$PROJECT_DIR$/backend/vendor/swiftmailer/swiftmailer" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/backend/vendor/riazxrazor/payumoney" />
+      <path value="$PROJECT_DIR$/backend/vendor/razorpay/razorpay" />
+      <path value="$PROJECT_DIR$/backend/vendor/rmccue/requests" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
