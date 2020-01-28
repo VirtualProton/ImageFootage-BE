@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   @Input() openLoginPopup:boolean;
   @Output() closeLoginPopup:EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() closeLoginPopupForReg:boolean;
 
   closeResult: string;
   loginForm: FormGroup;
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: HeroService,
 
-    
+
     ) {
       if (this.authenticationService.currentUserValue) {
         this.router.navigate(['/']);
@@ -50,18 +51,18 @@ export class LoginComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
- 
-    closePopup(){     
+
+    closePopup(){
        this.closeLoginPopup.emit(false);
     }
-  
-    onSubmit() {
+     
+  onSubmit() {
       this.submitted = true;
       // stop here if form is invalid
       if (this.loginForm.invalid) {
           return;
       }
-  
+
       this.loading = true;
       this.authenticationService.getLogin(this.f.email.value, this.f.password.value)
               .pipe(first())
