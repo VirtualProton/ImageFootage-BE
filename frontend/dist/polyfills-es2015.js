@@ -6377,3 +6377,4 @@ module.exports = __webpack_require__(/*! C:\xampp\htdocs\imagefootagenew\fronten
 /***/ })
 
 },[[2,"runtime"]]]);
+//# sourceMappingURL=polyfills-es2015.js.map
