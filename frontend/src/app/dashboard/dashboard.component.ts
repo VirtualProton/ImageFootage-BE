@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   randomNumber:number =0;
   searchBoxLabel:number= 1;
   page:number = 1;
-  pageSize:number = 40;
+  pageSize:number = 30;
   aosSliderSizes:any=[];
   
 

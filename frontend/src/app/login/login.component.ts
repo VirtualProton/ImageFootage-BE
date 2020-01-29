@@ -53,8 +53,11 @@ export class LoginComponent implements OnInit {
 
 
     closePopup(){
-       this.closeLoginPopup.emit(false);
+        this.closeLoginPopup.emit(false);
     }
+	/* closeLoginPopupForReg(){
+	 	this.closeLoginPopup.emit(false);
+	} */
      
   onSubmit() {
       this.submitted = true;

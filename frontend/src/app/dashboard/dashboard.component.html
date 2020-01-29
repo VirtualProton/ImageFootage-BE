@@ -2,7 +2,7 @@
 <div class="video-background-holder">
   <div class="video-background-overlay"></div>
   <video playsinline="playsinline" autoplay  loop [muted]="'muted'" poster="https://imagefootage.com/video/Screenshot.png" >
-        <source src="https://imagefootage.com/video/VIDEO_2_25MB_home_compressed.mp4" type="video/mp4" >
+        <source src="https://imagefootage.com/video/cpw-converted and-taken 27 sec.mp4" type="video/mp4" >
     </video>
   <div class="video-background-content container h-100">
     <div class="d-flex h-100 text-center align-items-center">
@@ -127,8 +127,8 @@
                       </div>
                     </a>
                     <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
-                         <video  width="400" height="300" [muted]="'muted'" controls autoplay onmouseover="this.play()">
-                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4">
+                         <video  width="400" height="300" [muted]="'muted'" controls autoplay onmouseover="this.play()" style="width: 100% !important;    background: #7d494957;">
+                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
