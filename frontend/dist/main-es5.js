@@ -2590,7 +2590,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.randomNumber = 0;
         this.searchBoxLabel = 1;
         this.page = 1;
-        this.pageSize = 30;
+        this.pageSize = 32;
         this.aosSliderSizes = [];
 
         this.onPageChange = function (pageNumber) {
@@ -2670,7 +2670,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getClassName",
         value: function getClassName(ele) {
-          return 'col-6 col-md-' + ele.eleClass + ' col-lg-' + ele.eleClass;
+          //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+          return 'col-6 col-md-3 col-lg-3';
         }
       }, {
         key: "searchAosData",

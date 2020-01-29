@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   randomNumber:number =0;
   searchBoxLabel:number= 1;
   page:number = 1;
-  pageSize:number = 30;
+  pageSize:number = 32;
   aosSliderSizes:any=[];
   
 
@@ -101,7 +101,8 @@ ngOnInit() {
 
 
   getClassName(ele){
-    return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+    //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+	return 'col-6 col-md-3 col-lg-3';
   }
 
   searchAosData(search){

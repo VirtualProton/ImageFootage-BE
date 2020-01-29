@@ -1470,7 +1470,7 @@ let DashboardComponent = class DashboardComponent {
         this.randomNumber = 0;
         this.searchBoxLabel = 1;
         this.page = 1;
-        this.pageSize = 30;
+        this.pageSize = 32;
         this.aosSliderSizes = [];
         this.onPageChange = (pageNumber) => {
             let el = this.myElement.nativeElement.querySelector('ngb-carousel');
@@ -1533,7 +1533,8 @@ let DashboardComponent = class DashboardComponent {
         });
     }
     getClassName(ele) {
-        return 'col-6 col-md-' + ele.eleClass + ' col-lg-' + ele.eleClass;
+        //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+        return 'col-6 col-md-3 col-lg-3';
     }
     searchAosData(search) {
         // debounceTime(400),
