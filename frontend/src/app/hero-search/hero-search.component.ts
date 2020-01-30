@@ -287,7 +287,8 @@ export class HeroSearchComponent implements OnInit {
       }
 
       getClassName(ele){
-        return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+       // return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+	   return 'col-6 col-md-3 col-lg-3';
       }
       onPageChange = (pageNumber) => {
         let el = this.myElement.nativeElement.querySelector('main');
