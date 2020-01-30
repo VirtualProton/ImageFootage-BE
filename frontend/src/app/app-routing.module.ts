@@ -17,6 +17,7 @@ import { ContributorSignUpComponent } from './contributor-sign-up/contributor-si
 import { PricingComponent } from './pricing/pricing.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'heroes', component: HeroesComponent },
   { path: 'aboutUs', component: AboutUsComponent },
   { path: 'signUp', component: SignUpComponent },
-  { path: 'wishlist', component: WishlistComponent },
+  { path: 'cart', component: WishlistComponent },
   { path: 'contactUs', component: ContactUsComponent },
   { path: 'license', component: LicenceAgreementComponent },
   { path: 'terms', component: TermsAndConditionsComponent },
@@ -38,7 +39,7 @@ const routes: Routes = [
   { path: 'contributor-sign-up', component: ContributorSignUpComponent },
   { path: 'orderConfirmation/:id', component: OrderConfirmationComponent },
   { path: 'user-profile', component: UserProfileComponent },
-
+  { path: 'user-reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({

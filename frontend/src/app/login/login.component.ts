@@ -79,5 +79,9 @@ export class LoginComponent implements OnInit {
                       this.loading = false;
                   });
       }
+  resetPassword(){
+      this.closePopup();
+      this.router.navigate(['/user-reset-password']);
+  }
 
 }

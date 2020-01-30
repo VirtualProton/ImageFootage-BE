@@ -31,6 +31,7 @@ import { OrderConfirmationComponent } from './order-confirmation/order-confirmat
 import { PricingComponent } from './pricing/pricing.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TabModule } from 'angular-tabs-component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -76,7 +77,8 @@ import { TabModule } from 'angular-tabs-component';
     ContributorSignUpComponent,
     OrderConfirmationComponent,
     PricingComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ResetPasswordComponent
   ],
   exports:[LoginComponent],
   bootstrap: [ AppComponent ]

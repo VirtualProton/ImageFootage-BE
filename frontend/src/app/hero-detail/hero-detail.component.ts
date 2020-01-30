@@ -174,7 +174,7 @@ export class HeroDetailComponent implements OnInit {
                 if(data["status"]=='1'){
                     this.loadingData =false;
                     localStorage.setItem('checkoutAray', this.checkoutArray);
-                    this.router.navigate(['/wishlist']);
+                    this.router.navigate(['/cart']);
                 }else{
                     this.loadingData =false;
                     alert(data["message"]);

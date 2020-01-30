@@ -18,8 +18,15 @@ export class WishlistComponent implements OnInit {
     priceArray: any = [];
     loadingData:boolean=false;
     promocodeflag:boolean=false;
-
+    public currentUser: any;
     constructor(private heroService: HeroService, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
+        this.authenticationService.currentUser.subscribe(x => {
+            this.currentUser = x;
+            if(!this.currentUser){
+                this.router.navigate(['/']);
+            }
+
+        });
     }
 
     ngOnInit() {

@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 export class HeroService {
    //https://imagefootage.com/backend/api/ For Live
   //http://localhost/imagefootagenew/backend/api/ For Local
-  private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -444,6 +444,21 @@ removeCartItemsData(product:any): Observable<userData> {
             'Authorization': 'Bearer '+tokenData.access_token });
         let options = { headers: headers };
         return this.http.post<any>(url,{id},options).pipe(
+            map(orderDetails => {
+                console.log(orderDetails);
+
+                //this.currentUserSubject.next(cart);
+                return orderDetails;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
+
+    getUserprofileData():Observable<any>{
+        //let params = new HttpParams();
+        let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+        const url = `${this.heroesUrl}userprofile/`+tokenData.Utype;
+        return this.http.get<any>(url).pipe(
             map(orderDetails => {
                 console.log(orderDetails);
 

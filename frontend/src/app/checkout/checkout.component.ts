@@ -30,7 +30,16 @@ export class CheckoutComponent implements OnInit {
   payuData:any ='';
   payuForm: FormGroup;
   hash:any='';
-  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) { }
+  public currentUser: any;
+  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
+      this.authenticationService.currentUser.subscribe(x => {
+          this.currentUser = x;
+          if(!this.currentUser){
+              this.router.navigate(['/']);
+          }
+
+      });
+  }
 
   ngOnInit() {
       //this.spinner.show();
@@ -137,7 +146,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   goToWishList(){
-    this.router.navigate(['/wishlist']);
+    this.router.navigate(['/cart']);
   }
 
   onSubmitPayment(paymentgatway){
