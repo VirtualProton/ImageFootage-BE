@@ -16,13 +16,13 @@
             <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
              <span *ngIf='searchBoxLabel == 1'>Photos Only</span>
              <span *ngIf='searchBoxLabel == 2'>Videos Only</span>
-             <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
+             <!--<span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>-->
 
 
             </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="top:-192px !important;min-width: 200px;">
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="top:-162px !important;min-width: 200px;">
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem style="padding: 15px 10px;"><i class=""></i> Photos Only</a>
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>
+              <!--<a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>-->
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem style="padding: 15px 10px;">Videos Only</a>
                </div>
           </div>
@@ -127,7 +127,7 @@
                       </div>
                     </a>
                     <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
-                         <video  width="400" height="300" [muted]="'muted'" controls autoplay onmouseover="this.play()" style="width: 100% !important;    background: #7d494957;">
+                         <video  width="400" height="300" [muted]="'muted'" controls onmouseover="this.play()" style="width: 100% !important;    background: #7d494957;">
                             <source src="{{aosimges.product_thumbnail}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>

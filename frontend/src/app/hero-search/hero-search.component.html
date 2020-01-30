@@ -212,7 +212,7 @@
                         </div>
                       </a>
                       <a  *ngIf="aosimges.product_main_type != 'Image'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
-                          <video  width="400" height="300" controls onmouseover="this.play()" onmouseout="this.pause()">
+                          <video  width="400" height="300" controls onmouseover="this.play()" onmouseout="this.pause()" style="width: 100% !important;    background: #7d494957;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
