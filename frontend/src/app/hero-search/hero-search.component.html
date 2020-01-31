@@ -28,12 +28,12 @@
         </div>
         <div class="sidebar-header"> 
             <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
-                <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'">
+                <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)">
                     <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
                     <p class="mb-0"> <i class="fa fa-camera"></i> </p>
                     <p class="mb-0">PHOTOS</p> 
                   </label>
-                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'">
+                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)">
                     <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">
                     <p class="mb-0"> <i class="fa fa-video"></i> </p>
                     <p class="mb-0">  VIDEOS </p>

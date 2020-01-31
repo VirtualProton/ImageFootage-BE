@@ -94,7 +94,9 @@ export class HeroSearchComponent implements OnInit {
       }
 
       searchDropDownClick(type){
+        this.loadingData=true;
         this.searchData.productType=type;
+        this.searchAPIRequest();
       }
 
       searchAPIRequest(){

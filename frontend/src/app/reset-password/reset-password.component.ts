@@ -1,8 +1,11 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { HeroService } from '../hero.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cartItemData } from '../hero';
 import { Router } from '@angular/router';
 import {NgxSpinnerService} from "ngx-spinner";
+import {first} from "rxjs/operators";
+
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +16,12 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class ResetPasswordComponent implements OnInit {
 
   public currentUser: any;
-  constructor(private heroService: HeroService, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
+  loadingData:boolean = false;
+  resetpasswordForm: FormGroup;
+  submitted = false;
+  loading = false;
+  passwordotpForm:FormGroup;
+  constructor(private heroService: HeroService,private formBuilder: FormBuilder, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
     this.authenticationService.currentUser.subscribe(x => {
       this.currentUser = x;
       if(this.currentUser){
@@ -24,6 +32,43 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.resetpasswordForm = this.formBuilder.group({
+      user_email: ['', Validators.required],
+    });
   }
 
+  get f() { return this.resetpasswordForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.resetpasswordForm.invalid) {
+      console.log('at invalid');
+      console.log(this.resetpasswordForm);
+      return;
+    }
+    this.loadingData = true;
+
+    this.authenticationService.resetPassword(this.resetpasswordForm.value)
+        .pipe(first())
+        .subscribe(
+            data2 => {
+              console.log(data2);
+              this.loadingData = false;
+              if(data2.status=='1'){
+                // this.otp = true;
+                // this.error_message = null;
+                // this.success_message = data2.message;
+              }else{
+                // this.otp = false;
+                // this.success_message = null;
+                // this.error_message = data2.message;
+              }
+
+            },
+            error => {
+              this.loading = false;
+            });
+
+  }
 }

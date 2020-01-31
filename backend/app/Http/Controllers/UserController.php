@@ -42,4 +42,16 @@ class UserController extends Controller
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   } 
    }
+
+    public function validUser(Request $request){
+        $count = User::where('email','=',$request['user_email'])
+            ->count();
+        if($count>0){
+            $result = ['status'=>1,'message'=>'success'];
+        }else{
+            $result = ['status'=>0,'message'=>'Email Not Found.'];
+        }
+        return \GuzzleHttp\json_encode($result);
+    }
+
 }

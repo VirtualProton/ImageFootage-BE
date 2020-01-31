@@ -60,6 +60,8 @@ Route::group([
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
     Route::get('categoryListApi', 'MediaController@categoryListApi');
     Route::post('payUResponse', 'PaymentController@payUResponse');
+    Route::post('validUser', 'UserController@validUser');
+
 
 
 });

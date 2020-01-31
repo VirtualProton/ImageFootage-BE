@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 export class HeroService {
    //https://imagefootage.com/backend/api/ For Live
   //http://localhost/imagefootagenew/backend/api/ For Local
-  private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -468,6 +468,22 @@ removeCartItemsData(product:any): Observable<userData> {
             catchError(this.handleError<userData>(`unable to get data`))
         );
     }
+     resetPassword(email):Observable<any>{
+         const url = `${this.heroesUrl}validUser`;
+         var headers = new HttpHeaders({
+             'Content-Type': 'application/json'
+             });
+         let options = { headers: headers };
+         return this.http.post(url, {email}, options).pipe(
+             map(userInfo => {
+                 return userInfo;
+                 //console.log(JSON.stringify(userInfo));
+                 //return JSON.stringify(userInfo);
+             }),
+             catchError(this.handleError<any>(`unable to register data`))
+         );
+    }
+
 
 }
 

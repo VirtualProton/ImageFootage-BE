@@ -15,12 +15,12 @@
           <div class="input-group search-bar">
               <div class="input-group-btn" ngbDropdown >
                   <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
-                    <span *ngIf='productType == 3'>Photos + Videos</span>
+<!--                    <span *ngIf='productType == 3'>Photos + Videos</span>-->
                     <span *ngIf='productType == 1'>Photos Only</span>
                     <span *ngIf='productType == 2'>Videos Only</span>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>
+<!--                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
                     <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Photos Only</a>
                     <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Videos Only</a>
                   </div>
@@ -51,7 +51,7 @@
         </li>
 
         <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" routerLink="/wishlist"><i class="fa fa-shopping-cart"></i></a>
+          <a class="nav-link js-scroll-trigger" routerLink="/cart"><i class="fa fa-shopping-cart"></i></a>
         </li>
         <li class="nav-item" *ngIf="!currentUser">
           <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><i class="fa fa-shopping-cart"></i></a>
