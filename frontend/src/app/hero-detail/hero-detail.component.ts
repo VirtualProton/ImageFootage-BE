@@ -170,6 +170,11 @@ export class HeroDetailComponent implements OnInit {
       this.heroService.addcartItemsData(cartval)
             .subscribe(data => {
                 console.log(data);
+				if(total==0){
+					this.loadingData =false;
+					alert('select type of product');
+					return false;
+				}
                 this.checkoutArray.push(cartval);
                 if(data["status"]=='1'){
                     this.loadingData =false;

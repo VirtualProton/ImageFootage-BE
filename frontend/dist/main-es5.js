@@ -3324,6 +3324,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.heroService.addcartItemsData(cartval).subscribe(function (data) {
               console.log(data);
 
+              if (total == 0) {
+                _this21.loadingData = false;
+                alert('select type of product');
+                return false;
+              }
+
               _this21.checkoutArray.push(cartval);
 
               if (data["status"] == '1') {
