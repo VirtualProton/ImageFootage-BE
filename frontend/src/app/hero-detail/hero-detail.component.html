@@ -62,7 +62,7 @@
                                     	<label class="btn btn-dark col-md-3" *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
                                         <p class="f-12">{{cost.description}}</p>
-                                        <p class="f-30 mb-0"> <i class="fa fa-inr"></i>{{cost.price*80}}</p>
+                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80}}</p>
                                     </label>
                                     </div>
                                 </div>
