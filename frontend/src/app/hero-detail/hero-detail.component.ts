@@ -7,6 +7,9 @@ import { HeroService }  from '../hero.service';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { isNullOrUndefined } from 'util';
 import { element } from 'protractor';
+import {DomSanitizer} from '@angular/platform-browser';
+
+
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -43,10 +46,13 @@ export class HeroDetailComponent implements OnInit {
   extendedTab:boolean =false;
   keyword:any=[];
   loadingData:boolean=false;
+  imagefootId:any ='';
+  fileName: string;
+  filePreview: string
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router,private spinner: NgxSpinnerService
+    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router,private sanitizer: DomSanitizer
   ) {
     this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
@@ -97,11 +103,15 @@ export class HeroDetailComponent implements OnInit {
     this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
          console.log(data);
-         this.detailPageInfo = data;
          if(this.webtype==2){
+             this.detailPageInfo = data[0];
+             this.imagefootId = data[1];
              let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
              this.keyword = keywords.split(",").map(item => item.trim());
+             this.filePreview = data[2];
+             //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
          }else if(this.webtype==3){
+             this.detailPageInfo = data;
              let keywords  = this.detailPageInfo[0].items[0].kw;
              this.keyword = keywords.split(",").map(item => item.trim());
          }
@@ -253,5 +263,22 @@ export class HeroDetailComponent implements OnInit {
           this.extendedTab = true;
       }
 
+    }
+  base64changefunction(fileUrl){
+    let reader = new FileReader();
+    if (fileUrl) {
+        let file = fileUrl;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            alert((<string>reader.result).split(',')[1]);
+            this.fileName = file.name + " " + file.type;
+            this.filePreview = 'data:image/png' + ';base64,' + (<string>reader.result).split(',')[1];
+        };
+    }
+}
+
+    sanitize(url: string) {
+        //return url;
+        return this.sanitizer.bypassSecurityTrustUrl(url);
     }
 }

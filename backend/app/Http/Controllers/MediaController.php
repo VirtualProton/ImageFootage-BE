@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,13 +21,19 @@ class MediaController extends Controller
      */
     public function __construct()
     {
-
+        $this->product = new Product();
     }
 
     public function index($media_id,$origin,$type){
        if($origin=='2'){
            $imageMedia = new ImageApi();
-           $product_details = $imageMedia->get_media_info($media_id);
+           $product_details_data = $imageMedia->get_media_info($media_id);
+           $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
+           $downlaod_image= 'data:image/jpg;base64,'.$b64image;
+           if (count($product_details_data) > 0) {
+               $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
+           }
+           $product_details= array($product_details_data,$imagefootage_id,$downlaod_image);
         }else if($origin=='3'){
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
@@ -39,8 +46,13 @@ class MediaController extends Controller
                        $pond_id_withprefix = "0" . $pond_id_withprefix;
                    }
                }
+
+               if (count($product_details_data) > 0) {
+                      $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+               }
+
            }
-           $product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4');
+           $product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg',$imagefootage_id);
         }else{
             $product = new Product();
             $product_details = $product->getProductDetail($media_id,$type);

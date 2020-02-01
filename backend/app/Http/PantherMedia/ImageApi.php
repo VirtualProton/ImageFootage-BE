@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\PantherMedia;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\BadResponseException;
+
 use GuzzleHttp\Client;
 class ImageApi {
 
@@ -19,21 +22,29 @@ class ImageApi {
       // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
        // $client->setDefaultOption('headers', array('Content-Type' => 'application/x-www-form-urlencoded','Accept-Version'=>'1.0'));
-        $result = $client->post('http://rest.panthermedia.net/v1.0/host-info', [
-            'headers'=>[
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Accept-Version'=>'1.0'
-            ],
-            'form_params' => [
-                'api_key' => $this->api_key,
-                'access_key' => $this->access_key,
-                'timestamp' => $this->timestamp,
-                'nonce' => $this->nonce,
-                'algo' => $this->algo,
-                'content_type'=>'application/json'
-            ]
-        ]);
-        print_r($result); die;
+         try {
+             $result = $client->post('http://rest.panthermedia.net/v1.0/host-info', [
+                 'headers' => [
+                     'Content-Type' => 'application/x-www-form-urlencoded',
+                     'Accept-Version' => '1.0'
+                 ],
+                 'form_params' => [
+                     'api_key' => $this->api_key,
+                     'access_key' => $this->access_key,
+                     'timestamp' => $this->timestamp,
+                     'nonce' => $this->nonce,
+                     'algo' => $this->algo,
+                     'content_type' => 'application/json'
+                 ]
+             ]);
+         }catch (GuzzleHttp\Exception\BadResponseException  $e){
+             //echo Psr7\str($e->getResponse());
+             //echo $e->getCode();
+             //echo $response = $e->getResponse();
+            // echo $responseBodyAsString = $response->getBody()->getContents();
+             //die;
+         }
+        //print_r($result); die;
      }
 
 

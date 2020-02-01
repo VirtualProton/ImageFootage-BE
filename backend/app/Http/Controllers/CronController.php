@@ -114,6 +114,8 @@ class CronController extends Controller
             $common = new Common();
             $category_id = $common->checkCategory($percategory);
             if (count($pondfootageMediaData) > 0) {
+                //echo "<pre>";
+                //print_r($pondfootageMediaData); die;
                 $this->product->savePond5Image($pondfootageMediaData, $category_id);
             }
         }

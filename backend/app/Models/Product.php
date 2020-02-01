@@ -33,13 +33,26 @@ class Product extends Model
                 'product_peoples'=>'product_peoples',
                 'product_locations'=>'product_locations',
                 'product_sorttype'=>'product_sort_types');
+            //DB::enableQueryLog();
             $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')
-                    ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+                    //->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
                 ->where(function ($query) use ($type){
-                $query->where('product_web','=',1)->where('product_main_type','=',$type);
+                $query->whereIn('product_web',[1,2,3])->where('product_main_type','=',$type);
             })->Where(function($query) use ($serach) {
                     $query->orWhere('product_id','=',$serach)->orWhere('product_title','LIKE', '%'. $serach .'%')->orWhere('product_keywords','LIKE','%'. $serach .'%');
             })->get()->toArray();
+            if(count($data)>0){
+                if($serach==$data[0]['product_id']){
+                   //if($data[0]['product_web']=='2'){
+                        $url = 'detail/'.$data[0]['api_product_id'].'/'.$data[0]['product_web']."/".$data[0]['product_main_type'];
+                        $data = array('code'=>1,'url'=>$url);
+                   //}else{
+
+                   //}
+                }
+            }
+
+            //dd(DB::getQueryLog());
 //            if($getKeyword['product_colors']){
 //
 //            }
@@ -66,6 +79,7 @@ class Product extends Model
 	}
     
     public function savePantherImage($data,$category_id){
+
         foreach($data['items']['media'] as $eachmedia){
             if(isset($eachmedia['id'])) {
                 $media = array(
@@ -87,19 +101,22 @@ class Product extends Model
 
                 );
                 // print_r($media); die;
-                $count = DB::table('imagefootage_products')
+                $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $eachmedia['id'])
-                    ->count();
+                    ->get()
+                    ->toArray();
 
-                if ($count == 0) {
+                if (count($data2) == 0) {
                     DB::table('imagefootage_products')->insert($media);
                     $id = DB::getPdo()->lastInsertId();
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => 'IMGFT' . $id]);
-                    echo "Inserted" . $id;
+                    return 'IMGFT' . $id;
+                   // echo "Inserted" . $id;
                 }else{
-                    echo "hello";
+
+                    //echo "hello";
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $eachmedia['id'])
                         ->update(['product_thumbnail' =>$eachmedia['preview_no_wm'],
@@ -108,7 +125,8 @@ class Product extends Model
                                   'product_title' => $eachmedia['title'],
                                   'updated_at' => date('Y-m-d H:i:s')
                             ]);
-                    echo "Updated". $eachmedia['id'];
+                     return $data2[0]->product_id;
+                    //echo "Updated". $eachmedia['id'];
                 }
             }
          }
@@ -157,7 +175,7 @@ class Product extends Model
                     'api_product_id' => $eachmedia['id'],
                     'product_category' => $category_id,
                     'product_title' => $eachmedia['n'],
-                    'product_thumbnail' => $data['icon_base'].$pond_id_withprefix."_main_l.mp4",
+                    'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/".$pond_id_withprefix."_iconl.jpeg",
                     'product_main_image' => $data['icon_base'].$pond_id_withprefix."_main_l.mp4",
                     'product_description' => $eachmedia['desc'],
                     'product_size' => '',
@@ -171,17 +189,21 @@ class Product extends Model
 
                 );
                 // print_r($media); die;
-                $count = DB::table('imagefootage_products')
+                $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $eachmedia['id'])
-                    ->count();
+                    ->get()
+                    ->toArray() ;
 
-                if ($count == 0) {
+                if (count($data)==0) {
                     DB::table('imagefootage_products')->insert($media);
                     $id = DB::getPdo()->lastInsertId();
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => 'IMGFT' . $id]);
-                    echo "Inserted" . $id;
+                    //echo "Inserted" . $id;
+                    return 'IMGFT' . $id;
+                }else{
+                    return $data2[0]->product_id;
                 }
             }
         }
@@ -194,7 +216,7 @@ class Product extends Model
        return   DB::table('imagefootage_products as pr')
             //->where('pr.product_web','2')
             //->where('pr.width_thumb','<>',NULL)
-            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_web','category_name','product_main_type','width_thumb','height_thumb')
+            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','product_main_type','width_thumb','height_thumb')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             ->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
                 'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
@@ -211,4 +233,59 @@ class Product extends Model
 //            }
             //return $final_data;
    }
+
+    public function savePantherImagedetail($data,$category_id){
+
+        if($data['stat']=='ok'){
+            if(isset($data['media']['id'])) {
+                $media = array(
+                    'product_id' => "",
+                    'api_product_id' => $data['media']['id'],
+                    'product_category' => $category_id,
+                    'product_title' => $data['metadata']['title'],
+                    'product_thumbnail' => $data['media']['preview_url_no_wm'],
+                    'product_main_image' => $data['media']['preview_url'],
+                    'product_description' => $data['metadata']['description'],
+                    'product_size' => $data['media']['width'] . "X" . $data['media']['height'],
+                    "product_keywords" => $data['metadata']['keywords'],
+                    'product_status' => "Active",
+                    'product_main_type' => "Image",
+                    'product_sub_type' => "Photo",
+                    'product_added_on' => date("Y-m-d H:i:s", strtotime($data['metadata']['date'])),
+                    'product_web' => '2',
+                    'product_vertical' => 'Royalty Free'
+
+                );
+                // print_r($media); die;
+                $data2 = DB::table('imagefootage_products')
+                    ->where('api_product_id', $data['media']['id'])
+                    ->get()
+                    ->toArray();
+
+                if (count($data2) == 0) {
+                    DB::table('imagefootage_products')->insert($media);
+                    $id = DB::getPdo()->lastInsertId();
+                    DB::table('imagefootage_products')
+                        ->where('id', '=', $id)
+                        ->update(['product_id' => 'IMGFT' . $id]);
+                    return 'IMGFT' . $id;
+                    // echo "Inserted" . $id;
+                }else{
+
+                    //echo "hello";
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $data['media']['id'])
+                        ->update(['product_thumbnail' =>$data['media']['preview_url_no_wm'],
+                            'product_main_image'=>$data['media']['preview_url'],
+                            'product_description' => $data['metadata']['description'],
+                            'product_title' => $data['metadata']['title'],
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+                    return $data2[0]->product_id;
+                    //echo "Updated". $eachmedia['id'];
+                }
+            }
+        }
+
+    }
 }

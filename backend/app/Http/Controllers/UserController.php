@@ -51,7 +51,7 @@ class UserController extends Controller
         }else{
             $result = ['status'=>0,'message'=>'Email Not Found.'];
         }
-        return \GuzzleHttp\json_encode($result);
+        return response()->json($result);
     }
 
 }

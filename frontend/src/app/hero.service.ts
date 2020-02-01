@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 export class HeroService {
    //https://imagefootage.com/backend/api/ For Live
   //http://localhost/imagefootagenew/backend/api/ For Local
-  private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+  private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
   private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
   private carouselImagesUrl = 'api/carouselImages';
   private aosImagesUrl = 'api/aosImages';
@@ -485,6 +485,20 @@ removeCartItemsData(product:any): Observable<userData> {
     }
 
 
+
+
+    getBase64Image(img: HTMLImageElement) {
+        // We create a HTML canvas object that will create a 2d image
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        // This will draw image
+        ctx.drawImage(img, 0, 0);
+        // Convert the drawn image to Data URL
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
 }
 
 

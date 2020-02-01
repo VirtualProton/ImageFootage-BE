@@ -139,5 +139,17 @@ ngOnInit() {
     this.searchBoxLabel=type;
     }
 
+    returnonposter(footage){
+        console.log('hello');
+        console.log(footage);
+        //let posterUrl = footage.getAttribute('poster');
+        //console.log(posterUrl);
+
+        footage.load();
+
+        //let posterUrl = footage.getAttribute('poster');
+       // footage.getAttribute('poster','');
+       // footage.setAttribute('poster',posterUrl);
+    }
     
 }

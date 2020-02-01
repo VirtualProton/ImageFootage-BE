@@ -112,15 +112,26 @@ export class HeroSearchComponent implements OnInit {
 
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
-                              this.aoslSliderImages = aoslSliderImages;
-                              let type = this.aoslSliderImages["0"].product_keywords;
-                              this.keyword = type.split(',',9);
-                              console.log(this.keyword);
-                              this.maintainAosSlider();
-                            //  this.spinner.hide();
-                            this.loadingData=false;
+                             if(typeof(aoslSliderImages['code']) !== undefined) {
+                                      window.location.href = aoslSliderImages['url']
+                              }else {
+                                 this.aoslSliderImages = aoslSliderImages;
+                                 let type = this.aoslSliderImages["0"].product_keywords;
+                                 this.keyword = type.split(',', 9);
+                                 console.log(this.keyword);
+                                 this.maintainAosSlider();
+                                 //  this.spinner.hide();
+                                 this.loadingData = false;
+                             }
                               // this.maintainSearchData(aoslSliderImages);
-                          });
+                          },
+                              error => {
+                                  this.loadingData=false;
+                                  console.log(error);
+                                  alert('No data found ....');
+                              }
+
+                          );
       }
 
       getSideBarClassName(type,id){

@@ -127,8 +127,8 @@
                       </div>
                     </a>
                     <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
-                         <video  width="400" height="300" [muted]="'muted'" controls onmouseover="this.play()" onmouseout="this.pause()" style="width: 100% !important;    background: #7d494957;">
-                            <source src="{{aosimges.product_thumbnail}}" type="video/mp4" >
+                         <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controls onmouseover="this.play()" (mouseout)="returnonposter(htmlVideoElement)" style="width: 100% !important;background: #7d494957; object-fit: cover;">
+                            <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->

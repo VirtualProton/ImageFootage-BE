@@ -56,26 +56,32 @@ class SearchController extends Controller
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
+        //print_r($keyword); die;
         $all_products = $product->getProducts($keyword);
-        $pantherMediaImages = new ImageApi();
-        $pantharmediaData = $pantherMediaImages->search($keyword,$getKeyword);
-        if(count($pantharmediaData)>0){
-            foreach($pantharmediaData['items']['media'] as $eachmedia){
-                if(isset($eachmedia['id'])) {
-                    $media = array(
-                        'product_id' => $eachmedia['id'],
-                        'api_product_id' => $eachmedia['id'],
-                        'product_title' => $eachmedia['title'],
-                        'product_main_image' => $eachmedia['preview_high'],
-                        'product_thumbnail' => $eachmedia['preview_no_wm'],
-                        'product_description' => $eachmedia['description'],
-                        'product_keywords' => $eachmedia['keywords'],
-                        'product_main_type' => "Image",
-                        'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
-                        'product_web' => '2',
-                     );
-                  }
-                array_push($all_products,$media);
+       // print_r($all_products); die;
+        if(count($all_products)>0 && $all_products['code']=='1'){
+            $all_products = $all_products;
+        }else {
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
+            if (count($pantharmediaData) > 0) {
+                foreach ($pantharmediaData['items']['media'] as $eachmedia) {
+                    if (isset($eachmedia['id'])) {
+                        $media = array(
+                            'product_id' => $eachmedia['id'],
+                            'api_product_id' => $eachmedia['id'],
+                            'product_title' => $eachmedia['title'],
+                            'product_main_image' => $eachmedia['preview_high'],
+                            'product_thumbnail' => $eachmedia['preview_no_wm'],
+                            'product_description' => $eachmedia['description'],
+                            'product_keywords' => $eachmedia['keywords'],
+                            'product_main_type' => "Image",
+                            'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
+                            'product_web' => '2',
+                        );
+                    }
+                    array_push($all_products, $media);
+                }
             }
         }
         return array('imgfootage'=>$all_products);
@@ -85,34 +91,38 @@ class SearchController extends Controller
         $product = new Product();
         $all_products =[];
         $all_products = $product->getProducts($keyword);
-        $footageMedia = new FootageApi();
-        $pondfootageMediaData = $footageMedia->search($keyword);
+        if(count($all_products)>0 && $all_products['code']=='1'){
+            $all_products = $all_products;
+        }else {
+            $footageMedia = new FootageApi();
+            $pondfootageMediaData = $footageMedia->search($keyword);
 
-        if(count($pondfootageMediaData)>0) {
-            foreach ($pondfootageMediaData['items'] as $eachmedia) {
-                if (isset($eachmedia['id'])) {
-                    $pond_id_withprefix = $eachmedia['id'];
-                    if (strlen($eachmedia['id']) < 9) {
-                        $add_zero = 9 - (strlen($eachmedia['id']));
-                        for ($i = 0; $i < $add_zero; $i++) {
-                            $pond_id_withprefix = "0" . $pond_id_withprefix;
+            if (count($pondfootageMediaData) > 0) {
+                foreach ($pondfootageMediaData['items'] as $eachmedia) {
+                    if (isset($eachmedia['id'])) {
+                        $pond_id_withprefix = $eachmedia['id'];
+                        if (strlen($eachmedia['id']) < 9) {
+                            $add_zero = 9 - (strlen($eachmedia['id']));
+                            for ($i = 0; $i < $add_zero; $i++) {
+                                $pond_id_withprefix = "0" . $pond_id_withprefix;
+                            }
                         }
-                    }
-                    $media = array(
-                        'product_id' => $eachmedia['id'],
-                        'api_product_id' => $eachmedia['id'],
-                        'product_title' => $eachmedia['n'],
-                        'product_thumbnail' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
-                        'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
-                        'product_description' => $eachmedia['desc'],
-                        'product_main_type' => "Footage",
-                        'product_added_on' => date("Y-m-d H:i:s"),
-                        'product_web' => '3',
-                        'product_keywords'=> $eachmedia['kw']
-                    );
+                        $media = array(
+                            'product_id' => $eachmedia['id'],
+                            'api_product_id' => $eachmedia['id'],
+                            'product_title' => $eachmedia['n'],
+                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
+                            'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
+                            'product_description' => $eachmedia['desc'],
+                            'product_main_type' => "Footage",
+                            'product_added_on' => date("Y-m-d H:i:s"),
+                            'product_web' => '3',
+                            'product_keywords' => $eachmedia['kw']
+                        );
 
+                    }
+                    array_push($all_products, $media);
                 }
-                array_push($all_products, $media);
             }
         }
         return array('imgfootage'=>$all_products);
