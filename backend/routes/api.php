@@ -53,7 +53,7 @@ Route::group([
     Route::post('atomPayResponse', 'PaymentController@atomPayResponse');
 	Route::post('contributorSignup', 'UserContactusController@contributorSignup');
 	Route::get('packages','PackageApiController@packageList');
-	Route::get('userprofile/{id}','UserController@userProfile');
+
 	Route::get('contributorprofile/{id}','UserController@contributorProfile');
     Route::post('resendOtp', 'UserContactusController@resendOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
@@ -78,5 +78,6 @@ Route::group([
     Route::post('wishlistlist', 'FrontuserController@productList');
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');
-
+    Route::get('userprofile/{id}','UserController@userProfile');
+    Route::get('userOrders/{id}', 'UserController@userOrders');
 });

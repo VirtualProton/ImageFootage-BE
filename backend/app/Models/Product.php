@@ -34,18 +34,20 @@ class Product extends Model
                 'product_locations'=>'product_locations',
                 'product_sorttype'=>'product_sort_types');
             //DB::enableQueryLog();
-            $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on')
+            $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
                     //->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
                 ->where(function ($query) use ($type){
                 $query->whereIn('product_web',[1,2,3])->where('product_main_type','=',$type);
             })->Where(function($query) use ($serach) {
-                    $query->orWhere('product_id','=',$serach)->orWhere('product_title','LIKE', '%'. $serach .'%')->orWhere('product_keywords','LIKE','%'. $serach .'%');
+                    $query->orWhere('product_id','=',$serach);
+                        //->orWhere('product_title','LIKE', ''. $serach .'%')
+                        //->orWhere('product_keywords','LIKE',''. $serach .'%');
             })->get()->toArray();
             if(count($data)>0){
-                if($serach==$data[0]['product_id']){
+                if($serach==$data[0]['product_id'] && count($data)==1){
                    //if($data[0]['product_web']=='2'){
                         $url = 'detail/'.$data[0]['api_product_id'].'/'.$data[0]['product_web']."/".$data[0]['product_main_type'];
-                        $data = array('code'=>1,'url'=>$url);
+                        $data = array('code'=>1,'url'=>$url,'data'=>$data);
                    //}else{
 
                    //}

@@ -459,11 +459,11 @@ removeCartItemsData(product:any): Observable<userData> {
         let tokenData =JSON.parse( localStorage.getItem('currentUser'));
         const url = `${this.heroesUrl}userprofile/`+tokenData.Utype;
         return this.http.get<any>(url).pipe(
-            map(orderDetails => {
-                console.log(orderDetails);
+            map(UserProfile => {
+                //console.log(UserProfile);
 
                 //this.currentUserSubject.next(cart);
-                return orderDetails;
+                return UserProfile;
             }),
             catchError(this.handleError<userData>(`unable to get data`))
         );
@@ -484,21 +484,23 @@ removeCartItemsData(product:any): Observable<userData> {
          );
     }
 
+    getUserOrderData():Observable<any>{
+        //let params = new HttpParams();
+        let tokenData =JSON.parse( localStorage.getItem('currentUser'));
+        const url = `${this.heroesUrl}userOrders/`+tokenData.Utype;
+        return this.http.get<any>(url).pipe(
+            map(orders => {
+                console.log(orders);
 
-
-
-    getBase64Image(img: HTMLImageElement) {
-        // We create a HTML canvas object that will create a 2d image
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        // This will draw image
-        ctx.drawImage(img, 0, 0);
-        // Convert the drawn image to Data URL
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                //this.currentUserSubject.next(cart);
+                return orders;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
     }
+
+
+
 }
 
 

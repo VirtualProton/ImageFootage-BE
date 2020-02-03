@@ -58,10 +58,15 @@ class SearchController extends Controller
         $product = new Product();
         //print_r($keyword); die;
         $all_products = $product->getProducts($keyword);
+        $flag =0;
        // print_r($all_products); die;
-        if(count($all_products)>0 && $all_products['code']=='1'){
-            $all_products = $all_products;
-        }else {
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
+                $all_products = $all_products['data'];
+                $flag =1;
+            }
+        }
+        if($flag=='0'){
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             if (count($pantharmediaData) > 0) {
@@ -84,6 +89,7 @@ class SearchController extends Controller
                 }
             }
         }
+
         return array('imgfootage'=>$all_products);
     }
 
@@ -91,9 +97,15 @@ class SearchController extends Controller
         $product = new Product();
         $all_products =[];
         $all_products = $product->getProducts($keyword);
-        if(count($all_products)>0 && $all_products['code']=='1'){
-            $all_products = $all_products;
-        }else {
+        $flag =0;
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
+                $all_products = $all_products['data'];
+                $flag =1;
+            }
+        }
+        if($flag=='1'){
+
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword);
 

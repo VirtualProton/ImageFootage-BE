@@ -19,6 +19,8 @@ export class UserProfileComponent implements OnInit {
   purchaseTab:boolean=false;
   loadingData:boolean=false;
   profileData:any ='';
+  orderData:any ='';
+  order_items:any='';
   public currentUser: any;
   constructor(
       private route: ActivatedRoute,
@@ -44,11 +46,21 @@ export class UserProfileComponent implements OnInit {
             error => {
 
             });
+    this.authenticationService.getUserOrderData()
+        .subscribe(
+            orders => {
+              this.orderData = orders.data;
+              this.loadingData = false;
+            },
+            error => {
+
+            });
   }
 
 
   tabshow(type){
     if(type=='profile'){
+      this.location.go('user-profile')
       this.profileTab = true;
       this.plansTab = false;
       this.billingTab = false;
@@ -64,12 +76,17 @@ export class UserProfileComponent implements OnInit {
       this.billingTab = true;
       this.purchaseTab = false;
     }else if(type=='purchase'){
+      this.location.go('purchase')
       this.profileTab = false;
       this.plansTab = false;
       this.billingTab = false;
       this.purchaseTab = true;
     }
 
+  }
+
+  orderDetails(dataid){
+    this.order_items = this.orderData[dataid]['items']
   }
 
 }

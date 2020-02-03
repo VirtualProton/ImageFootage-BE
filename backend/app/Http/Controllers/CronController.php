@@ -48,11 +48,13 @@ class CronController extends Controller
     }
         //return array('api'=>$pantharmediaData);
     }
+
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
-
-        $products = Product::where('width_thumb','=',NULL)->where('product_web','=','2')->get()->toArray();
-
+        DB::enableQueryLog();
+        $products = Product::where('product_web','=','2')->whereRaw("date(updated_at) < '2020-02-01'")->get()->toArray();
+        //dd(DB::getQueryLog());
+       // print_r($products); die;
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];
             $pantherMediaImages = new ImageApi();
@@ -65,6 +67,7 @@ class CronController extends Controller
             //print_r($pantharmediaData); die;
 
         }
+
         //return array('api'=>$pantharmediaData);
     }
     // public function index(SearchRequest $request){

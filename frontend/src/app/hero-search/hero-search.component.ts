@@ -112,9 +112,9 @@ export class HeroSearchComponent implements OnInit {
 
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
-                             if(typeof(aoslSliderImages['code']) !== undefined) {
-                                      window.location.href = aoslSliderImages['url']
-                              }else {
+                           //  if(aoslSliderImages.hasOwnProperty('code')) {
+                                  //   window.location.href = aoslSliderImages['url']
+                              //}else {
                                  this.aoslSliderImages = aoslSliderImages;
                                  let type = this.aoslSliderImages["0"].product_keywords;
                                  this.keyword = type.split(',', 9);
@@ -122,7 +122,7 @@ export class HeroSearchComponent implements OnInit {
                                  this.maintainAosSlider();
                                  //  this.spinner.hide();
                                  this.loadingData = false;
-                             }
+                            // }
                               // this.maintainSearchData(aoslSliderImages);
                           },
                               error => {

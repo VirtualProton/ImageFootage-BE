@@ -38,6 +38,7 @@ class ImageApi {
                  ]
              ]);
          }catch (GuzzleHttp\Exception\BadResponseException  $e){
+            // echo "heelo"; die;
              //echo Psr7\str($e->getResponse());
              //echo $e->getCode();
              //echo $response = $e->getResponse();

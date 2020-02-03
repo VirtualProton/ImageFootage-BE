@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Orders;
 use Illuminate\Http\Request;
 use App\Models\Usercontactus;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,20 @@ class UserController extends Controller
             $result = ['status'=>0,'message'=>'Email Not Found.'];
         }
         return response()->json($result);
+    }
+
+    public function userOrders($id){
+        if($id>0){
+            $OrderData = Orders::with('items')
+                ->where('user_id','=',$id)
+                ->whereIn('order_status',['Completed','Transction Success'])
+                ->orderBy('id','desc')
+                ->get()->toArray();
+            echo json_encode(['status'=>"success",'data'=>$OrderData]);
+        }else{
+            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+        }
+
     }
 
 }
