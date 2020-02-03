@@ -127,17 +127,18 @@
                       </div>
                     </a>
                     <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item ">
-                         <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controls onmouseover="this.play()" (mouseout)="returnonposter(htmlVideoElement)" style="width: 100% !important;background: #7d494957; object-fit: cover;">
+                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controls onmouseover="this.play()" (mouseout)="returnonposter(htmlVideoElement)" style="width: 100% !important;background: #7d494957; object-fit: cover;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
-                        <div class="photo-text-more">
+                        <div class="photo-text-more"  >
                       
                         <div class="photo-text-more">
                         <h3 class="heading">{{aosimges.product_title}}</h3>
                         <span class="meta">{{aosimges.product_description}}</span>
-                        <p class="icons_thum">
+                        <br />
+                        <p class="icons_thum" >
                             <span><i class="fa fa-image"></i></span>
                             <span><i class="fa fa-heart"></i></span>
                             <span><i class="fa fa-plus"></i></span>
