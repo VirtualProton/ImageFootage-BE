@@ -91,7 +91,6 @@ ngOnInit() {
         // console.log(aoslSliderImages);
         this.aoslSliderImages = aoslSliderImages;
         this.aoslSliderImagesData = aoslSliderImages;
-
         this.maintainAosSlider();   
       });
 
@@ -141,15 +140,19 @@ ngOnInit() {
 
     returnonposter(footage){
         console.log('hello');
-        console.log(footage);
+        //console.log(footage);
         //let posterUrl = footage.getAttribute('poster');
         //console.log(posterUrl);
 
         footage.load();
+		footage.play();
 
         //let posterUrl = footage.getAttribute('poster');
        // footage.getAttribute('poster','');
        // footage.setAttribute('poster',posterUrl);
+    }
+	returnonposterpause(footage){
+ 		footage.load();
     }
     
 }
