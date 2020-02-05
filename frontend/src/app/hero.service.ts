@@ -145,11 +145,21 @@ export class HeroService {
 
   }
 
-
-
   getLogin(email: any, password: string): Observable<userData> {
     const url = `${this.heroesUrl}login`;
     return this.http.post<any>(url, { email, password }, this.httpOptions).pipe(
+      map(user => {
+        console.log(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
+      }),
+      catchError(this.handleError<userData>(`unable to get data`))
+    );
+  }
+  fbLogin(email: any): Observable<userData> {
+    const url = `${this.heroesUrl}fbLogin`;
+    return this.http.post<any>(url, { email}, this.httpOptions).pipe(
       map(user => {
         console.log(user);
         localStorage.setItem('currentUser', JSON.stringify(user));

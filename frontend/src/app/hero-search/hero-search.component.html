@@ -29,12 +29,12 @@
       		<form class="search_m header_serach mt-3 mb-3">
               <div class="input-group search-bar">
                   <div class="input-group-btn" ngbDropdown >
-                      <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
+                      <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
     <!--                    <span *ngIf='productType == 3'>Photos + Videos</span>-->
                         <span *ngIf='productType == 1'>Photos Only</span>
                         <span *ngIf='productType == 2'>Videos Only</span>
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:100px;">
     <!--                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
                         <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Photos Only</a>
                         <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Videos Only</a>

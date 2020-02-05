@@ -21,9 +21,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','fbLogin']]);
     }
-
     /**
      * Get a JWT via given credentials.
      *
@@ -73,6 +72,16 @@ class AuthController extends Controller
             return response()->json(['status'=>'0','message' => 'User has been already registered'], 200);
         }
     }
+	public function fbLogin(Request $request){
+		$count = User::where('email','=',$request->input('email'))->count();
+		if($count >0){
+			$res = User::where('email','=',$request->input('email'))->first()->toArray();
+		 	return $res;
+		}else{
+			return response()->json(['error' => 'Please register to login.'], 401);
+		}
+       
+	}
 	public function contactUs(Request $request){
 	}
 

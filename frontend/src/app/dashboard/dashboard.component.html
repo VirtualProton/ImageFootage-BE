@@ -1,9 +1,8 @@
-
 <div class="video-background-holder">
   <div class="video-background-overlay"></div>
   <video playsinline="playsinline" autoplay  loop [muted]="'muted'" poster="https://imagefootage.com/video/Screenshot.png" >
         <source src="https://imagefootage.com/video/cpw-converted and-taken 27 sec.mp4" type="video/mp4" >
-    </video>
+  </video>
   <div class="video-background-content container h-100">
     <div class="d-flex h-100 text-center align-items-center">
       <div class="col-md-10 col-sm-10 col-lg-10 m-auto">
@@ -112,7 +111,7 @@
 
                       <img  src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
 
-                        <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                        <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe> (mouseover)="returnonposter(htmlVideoElement)" -->
                       <div class="photo-text-more">
                       
                         <div class="photo-text-more">
@@ -126,16 +125,16 @@
                       </div>
                       </div>
                     </a>
-                    <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item ">
+                    <a  *ngIf="aosimges.product_web == '3'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
                     <span style="position:absolute;margin-left:10px;margin-top:5px;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement   (mouseover)="returnonposter(htmlVideoElement)"  style="width: 100% !important;background: #7d494957; object-fit: cover;">
+                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()"  style="width: 100% !important;background: #7d494957; object-fit: cover;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                         <div class="photo-text-more">
                       
-                        <div class="photo-text-more">
+                        <!--<div class="photo-text-more">
                         <h3 class="heading">{{aosimges.product_title}}</h3>
                         <span class="meta">{{aosimges.product_description}}</span>
                         <br />
@@ -145,7 +144,7 @@
                             <span><i class="fa fa-heart"></i></span>
                             <span><i class="fa fa-plus"></i></span>
                         </p>
-                      </div>
+                      </div>-->
                       </div>
                  </a>
                 </div>

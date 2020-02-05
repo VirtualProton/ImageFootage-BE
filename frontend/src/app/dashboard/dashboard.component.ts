@@ -143,7 +143,6 @@ ngOnInit() {
         //console.log(footage);
         //let posterUrl = footage.getAttribute('poster');
         //console.log(posterUrl);
-
         footage.load();
 		footage.play();
 
@@ -152,7 +151,8 @@ ngOnInit() {
        // footage.setAttribute('poster',posterUrl);
     }
 	returnonposterpause(footage){
- 		footage.load();
+ 		footage.pause();
+		//alert ('hi');
     }
     
 }
