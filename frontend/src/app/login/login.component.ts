@@ -3,8 +3,12 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { HeroService } from '../hero.service';
+import {
+    AuthService,
+    FacebookLoginProvider,
+    GoogleLoginProvider
+} from 'angular-6-social-login';
 
-.3
 
 @Component({
   selector: 'app-login',
@@ -22,13 +26,10 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
 
-
-
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: HeroService,
-
-
+	private socialAuthService: AuthService
     ) {
       if (this.authenticationService.currentUserValue) {
         this.router.navigate(['/']);
@@ -47,6 +48,46 @@ export class LoginComponent implements OnInit {
       });
 
   }
+  
+  /* sign in with social media */ 
+   public socialSignIn(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform == "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    }else if(socialPlatform == "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    }/* else if (socialPlatform == "linkedin") {
+      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+    }*/
+    
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(socialPlatform+" sign in data : " , userData);
+        // Now sign-in with userData
+        console.log(userData.name);
+		console.log(userData.email);
+		//fbLogin
+		  this.authenticationService.fbLogin(userData.email)
+              .pipe(first())
+              .subscribe(
+                  data => {
+                    console.log(data);
+                     if(data==undefined){
+                         alert("You are non registered user");
+                     }else{
+                         this.closeLoginPopup.emit(true);
+                     }
+                    },
+                  error => {
+                      this.loading = false;
+                  });
+            
+      }
+    );
+  }
+  /* end signin with social media */
+  
+ 
 
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }

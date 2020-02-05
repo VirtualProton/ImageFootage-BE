@@ -40,5 +40,8 @@ ul.search-result {
   margin-top: 0;
   padding-left: 0;
 }
+.bg-dark search_menu_l{
+	z-index:-1 !important;
+}
 
 

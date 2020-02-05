@@ -24,7 +24,7 @@ export class HeroDetailComponent implements OnInit {
   hero:Hero;
   aoslSliderImagesData: aosSlider[] =[];
   page:number = 1;
-  pageSize:number = 12;
+  pageSize:number = 5;
   marketDetails:market;
   detailPageInfo:detailPageInfo;
   public currentUser: any;

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import {NgxSpinnerService} from "ngx-spinner";
 import { isNullOrUndefined } from 'util';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-hero-search',
@@ -15,6 +16,8 @@ import { isNullOrUndefined } from 'util';
 
 })
 export class HeroSearchComponent implements OnInit {
+  productType:any;
+  keywordEle:any=' ';
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
   sub:Subscription;
@@ -66,9 +69,12 @@ export class HeroSearchComponent implements OnInit {
       }
 
       ngOnInit(): void {
-          this.sub = this.route
+	  AOS.init();
+	  this.sub = this.route
                     .queryParams
                     .subscribe(params => {
+					  this.productType=params.type;
+                      this.keywordEle=params.keyword; 
                       this.loadingData=true;
                     //  this.spinner.show();
                       this.searchData.productType=params.type;

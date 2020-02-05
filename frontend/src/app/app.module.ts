@@ -32,8 +32,29 @@ import { PricingComponent } from './pricing/pricing.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TabModule } from 'angular-tabs-component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-
-
+import {
+    SocialLoginModule,
+    AuthServiceConfig,
+    GoogleLoginProvider,
+    FacebookLoginProvider,
+} from "angular-6-social-login";
+// Configs 
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig( [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider("396074584437141")
+		  // live 509349303296309
+		  // test 396074584437141
+        },
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider("167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com")
+        }
+      ]
+  );
+  return config;
+}
 
 @NgModule({
   imports: [
@@ -46,7 +67,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ReactiveFormsModule,
     NgxSpinnerModule,
 	TabModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+	SocialLoginModule
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -81,6 +103,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ResetPasswordComponent
   ],
   exports:[LoginComponent],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
+  ],
   bootstrap: [ AppComponent ]
 })
 

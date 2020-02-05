@@ -61,6 +61,7 @@ Route::group([
     Route::get('categoryListApi', 'MediaController@categoryListApi');
     Route::post('payUResponse', 'PaymentController@payUResponse');
     Route::post('validUser', 'UserController@validUser');
+	Route::post('fbLogin','AuthController@fbLogin');
 
 
 

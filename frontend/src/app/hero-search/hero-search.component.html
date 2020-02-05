@@ -4,9 +4,8 @@
         <span></span>
     </div>
 </div>
-
-<div class="bg-dark search_menu_l"  style="background: #151414 !important; position: fixed; width: 100%; z-index:9999;">
-    <ul class="search_menu search_menu col-md-6 m-auto col-sm-6">
+<div class="bg-dark search_menu_l"  style="background: #151414 !important; position: fixed; width: 100%;z-index:9999;">
+    <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
         <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
        <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
        <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
@@ -26,6 +25,28 @@
             <i class="fas fa-times"></i>
           </div>
         </div>
+       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">
+      		<form class="search_m header_serach mt-3 mb-3">
+              <div class="input-group search-bar">
+                  <div class="input-group-btn" ngbDropdown >
+                      <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
+    <!--                    <span *ngIf='productType == 3'>Photos + Videos</span>-->
+                        <span *ngIf='productType == 1'>Photos Only</span>
+                        <span *ngIf='productType == 2'>Videos Only</span>
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:100px;">
+    <!--                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Photos Only</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Videos Only</a>
+                      </div>
+                  </div>
+                  
+                  <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">
+                  <i class="fa fa-search" (click)="onKeydown($event)"  style="cursor:pointer;"></i>
+            </div>
+      		</form>
+    </div>
+    
         <div class="sidebar-header"> 
             <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
                 <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)">
