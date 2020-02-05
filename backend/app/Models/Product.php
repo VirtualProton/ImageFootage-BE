@@ -136,26 +136,26 @@ class Product extends Model
     }
     public function updatePantherImage($data){
 
-            if(isset($data['items']['media']['id'])) {
+            if(isset($data['media']['id'])) {
                 // print_r($media); die;
                 $count = DB::table('imagefootage_products')
-                    ->where('api_product_id', $data['items']['media']['id'])
+                    ->where('api_product_id', $data['media']['id'])
                     ->count();
 
                 if ($count > 0) {
-                    $imgData = getimagesize($data['items']['media']['preview_no_wm']);
+                    $imgData = getimagesize($data['media']['preview_url_no_wm']);
 
                     DB::table('imagefootage_products')
-                        ->where('api_product_id', '=', $data['items']['media']['id'])
-                        ->update(['product_thumbnail' =>$data['items']['media']['preview_no_wm'],
-                            'product_main_image'=>$data['items']['media']['preview_high'],
-                            'product_description' => $data['items']['media']['description'],
-                            'product_title' => $data['items']['media']['title'],
+                        ->where('api_product_id', '=', $data['media']['id'])
+                        ->update(['product_thumbnail' =>$data['media']['preview_url_no_wm'],
+                            'product_main_image'=>$data['media']['preview_url'],
+                            'product_description' => $data['metadata']['description'],
+                            'product_title' => $data['metadata']['title'],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'width_thumb' => $imgData[0],
                             'height_thumb' => $imgData[1]
                         ]);
-                    echo "Updated". $data['items']['media']['id'];
+                    echo "Updated". $data['media']['id'];
                 }
             }
 

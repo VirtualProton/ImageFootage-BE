@@ -57,11 +57,13 @@ class CronController extends Controller
        // print_r($products); die;
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];
+            //echo $keyword['search'];
             $pantherMediaImages = new ImageApi();
-            $pantharmediaData = $pantherMediaImages->search($keyword);
-            //print_r($pantharmediaData);
+            $pantharmediaData = $pantherMediaImages->get_media_info($keyword['search']);
+            //echo "<pre>";
+            //print_r($pantharmediaData); die;
             if(count($pantharmediaData) > 0){
-                $this->product->updatePantherImage($pantharmediaData,$perproduct['product_category']);
+                $this->product->updatePantherImage($pantharmediaData);
               }
 
             //print_r($pantharmediaData); die;

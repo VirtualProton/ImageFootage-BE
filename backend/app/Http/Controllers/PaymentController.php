@@ -31,10 +31,14 @@ class PaymentController extends Controller
     public function payment(Request $request){
         ini_set('max_execution_time', 0);
         date_default_timezone_set('Asia/Calcutta');
-        $datenow = date("d/m/Y h:m:s");
-        $transactionDate = str_replace(" ", "%20", $datenow);
-        $transactionId = rand(1,1000000);
         $allFields = $request->all();
+        if ($allFields['type'] == 'atom') {
+            $datenow = date("d/m/Y h:m:s");
+            $transactionDate = str_replace(" ", "%20", $datenow);
+        }else{
+            $datenow = date('Y-m-d');
+        }
+        $transactionId = rand(1,1000000);
         //echo "<pre>"; print_r($allFields); die;
         $userData = User::with('country')
                  ->with('city')
@@ -59,6 +63,7 @@ class PaymentController extends Controller
         $orders->bill_country = $allFields['usrData']['country'];
         $orders->bill_zip = $allFields['usrData']['pincode'];
         $orders->paymentgatway = $allFields['type'];
+        $orders->created_at = date('Y-m-d H:i:s');
         $orders->save();
         $order_id = $orders->id;
         if(count($userData)>0){
