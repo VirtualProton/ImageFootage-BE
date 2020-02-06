@@ -4,7 +4,7 @@
         <span></span>
     </div>
 </div>
-<div class="bg-dark search_menu_l"  style="background: #151414 !important; position: fixed; width: 100%;z-index:9999;">
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#60048b !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;">
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
         <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
        <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
@@ -17,6 +17,11 @@
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="sideBarEle=!sideBarEle">
       <i class="fas fa-bars"></i>
     </a>
+    
+
+    
+    
+    
     <nav id="sidebar" class="sidebar-wrapper"  style="background: #151414 !important;" >
       <div class="sidebar-content">
         <div class="sidebar-brand">
@@ -202,8 +207,8 @@
           </a>
         </div>
     </nav>
-
-    <main class="page-content mt-5">
+<!-- mt-5 -->
+    <main class="page-content mt-3">
         <main class="main-content">
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
