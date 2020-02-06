@@ -13,7 +13,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class WishlistComponent implements OnInit {
 
-
     wishListDataItems: Array<cartItemData> = [];
     priceArray: any = [];
     loadingData:boolean=false;
@@ -92,5 +91,30 @@ export class WishlistComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    addtolightbox(productinfo){
+        console.log(productinfo);
+        this.loadingData =true;
+        this.heroService.addWishListItemsData(productinfo.cart_product_id)
+            .subscribe(data => {
+                if(data["status"]=='1'){
+                    this.loadingData =false;
+                    this.heroService.removeCartItemsData(productinfo)
+                        .subscribe(data => {
+                            if (data["status"] == '1') {
+                                this.priceArray=[];
+                           } else {
+                                alert(data["message"]);
+                            }
+
+                        });
+                    this.router.navigate(['/lightbox']);
+                }else{
+                    this.loadingData =false;
+                    alert(data["message"]);
+                }
+
+            });
     }
 }

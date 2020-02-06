@@ -43,18 +43,34 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
       //this.spinner.show();
-       this.loadingData = true;
- this.checkoutForm = this.formBuilder.group({
-          first_name: ['', Validators.required],
-          last_name: ['', Validators.required],
-          address:['', Validators.required],
-          country: ['', Validators.required],
-          state: ['', Validators.required],
-          city: ['', Validators.required],
-          pincode:['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-          //paymentGatway :['', Validators.required],
+        this.loadingData = true;
+      let billing_address = localStorage.getItem('billing_address');
+      if(billing_address){
+          let billdata = JSON.parse(billing_address);
+          this.onChangeCountry(billdata.country);
+          this.onChangeState(billdata.state);
+          this.checkoutForm = this.formBuilder.group({
+              first_name: [billdata.first_name, Validators.required],
+              last_name: [billdata.last_name, Validators.required],
+              address: [billdata.address, Validators.required],
+              country: [billdata.country, Validators.required],
+              state: [billdata.state, Validators.required],
+              city: [billdata.city, Validators.required],
+              pincode: [billdata.pincode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+            });
+      }else {
+          this.checkoutForm = this.formBuilder.group({
+              first_name: ['', Validators.required],
+              last_name: ['', Validators.required],
+              address: ['', Validators.required],
+              country: ['', Validators.required],
+              state: ['', Validators.required],
+              city: ['', Validators.required],
+              pincode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+              //paymentGatway :['', Validators.required],
 
-    });
+          });
+      }
     this.getCountries();
     this.authenticationService.getcartItemsData()
               .subscribe(
@@ -70,6 +86,7 @@ export class CheckoutComponent implements OnInit {
                   error => {
                      
                   });
+
   }
     get f() { return this.checkoutForm.controls; }
     getCountries(){
@@ -139,6 +156,7 @@ export class CheckoutComponent implements OnInit {
         }
         this.paymentShow  =true;
         this.loadingData = false;
+        localStorage.setItem('billing_address', JSON.stringify(this.checkoutForm.value));
     }
     showTotalPrice(){
 

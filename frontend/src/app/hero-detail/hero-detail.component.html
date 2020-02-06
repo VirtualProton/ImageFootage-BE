@@ -29,9 +29,11 @@
                             </div>
 
                             <div class="p-3">
-                                <p><a   href="{{filePreview}}" download="{{imagefootId+'.jpg'}}">Download</a></p>
+                                <div style="float: right;">
+                                 <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
+                                 <a (click)="addtolightbox(imagefootId)"><i class="fas fa-heart"></i></a>
+                                </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
-
                                 <div class="related_key">
                                     <a href="/search?type=1&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
                                 </div>
@@ -198,11 +200,11 @@
                         <br />
                        
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-4">Restrictions</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">Contact your local office for all commercial or promotional uses.</div>
-                            </div>
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-4">Restrictions</div>-->
+<!--                                <div class="col-md-1">:</div>-->
+<!--                                <div class="col-md-7">Contact your local office for all commercial or promotional uses.</div>-->
+<!--                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">Credit</div>
                                 <div class="col-md-1">:</div>

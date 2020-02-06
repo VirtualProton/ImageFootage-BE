@@ -38,6 +38,7 @@ import {
     GoogleLoginProvider,
     FacebookLoginProvider,
 } from "angular-6-social-login";
+import { LightboxComponent } from './lightbox/lightbox.component';
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
@@ -100,7 +101,8 @@ export function getAuthServiceConfigs() {
     OrderConfirmationComponent,
     PricingComponent,
     UserProfileComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LightboxComponent
   ],
   exports:[LoginComponent],
   providers: [

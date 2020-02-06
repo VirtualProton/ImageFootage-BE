@@ -104,14 +104,18 @@ class FrontuserController extends Controller {
 			echo '{"status":"0","message":"Some problem occured."}';
 		}
 	}
-	public function addtoWishlist($id,$product_addedby){
+	public function addtoWishlist(Request $request){
+        //print_r($request->all()); die;
 		$UserWishlist=new UserWishlist;
-		$product_id=$id;
-		$product_addedby=$product_addedby;
-		$cart_list=$UserWishlist->where('wishlist_product',$product_id)->where('wishlist_user_id',$product_addedby)->get()->toArray();
+		$product_id=$request['product'];
+		$product_addedby=$request['tokenData']['Utype'];
+		$productId = Product::orWhere('product_id',$product_id)
+                           ->orWhere('api_product_id',$product_id)
+                          ->first()->id;
+        $cart_list=$UserWishlist->where('wishlist_product',$productId)->where('wishlist_user_id',$product_addedby)->get()->toArray();
 		if(empty($cart_list)){
 			$UserWishlist=new UserWishlist;
-			$UserWishlist->wishlist_product=$product_id;
+			$UserWishlist->wishlist_product=$productId;
 			$UserWishlist->wishlist_user_id=$product_addedby;
 			$UserWishlist->wishlist_added_on=date('Y-m-d H:i:s');
 			$result=$UserWishlist->save();
@@ -125,19 +129,20 @@ class FrontuserController extends Controller {
 		}
 		
 	}
-	public function deleteWishlistItom($id){
-		$del_result=UserWishlist::find($id)->delete();
+	public function deleteWishlistItem(Request $request){
+        $del_result=UserWishlist::where('wishlist_user_id',$request['tokenData']['Utype'])->where('wishlist_product',$request['product']['id'])->delete();
 		if($del_result){
 			echo '{"status":"1","message":"Wishlist itom deleted successfully"}';
 		}else{
 			echo '{"status":"0","message":"Some problem occured."}';
 		}
 	}
-	public function productList(Request $request){
-		$user_id=$request->user_id;
-		$UserWishlist=new UserWishlist;
+	public function wishlist(Request $request){
+        //print_r($request->all());
+		$user_id = $request['Utype'];
+        $UserWishlist=new UserWishlist;
 		$products=new Product;
-		$cart_list=$UserWishlist->select('wishlist_product')->where('wishlist_user_id',$user_id)->get()->toArray();
+		$cart_list= $UserWishlist->select('wishlist_product')->where('wishlist_user_id',$user_id)->get()->toArray();
 		if(isset($cart_list) && !empty($cart_list)){
 			$wishlist_products=array();
 			foreach($cart_list as $key=>$wish){

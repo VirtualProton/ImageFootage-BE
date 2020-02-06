@@ -4,13 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-
+use App\Models\Api;
 class Product extends Model
 {
     protected $table = 'imagefootage_products';
 	protected $primaryKey = 'id';
 	protected $fillable = ['product_id','product_category','product_subcategory','product_owner','product_title','product_vertical','product_keywords','product_thumbnail','product_main_image','product_release_details','product_price_small','product_price_medium','product_price_large','product_price_extralarge','product_status','product_main_type','product_sub_type','product_added_on','updated_at','product_added_by','product_size','product_verification','product_rejectod_reason','product_editedby'];
     const HomeLimit = '32';
+
+    public function api(){
+        return $this->hasOne(Api::class,'api_id', 'product_web');
+    }
 
     public function getProducts($keyword){
         //dd($getKeyword);
@@ -197,13 +201,15 @@ class Product extends Model
                     ->toArray() ;
 
                 if (count($data)==0) {
+                    $flag = $this->get_api_flag('2','api_flag');
+                    $key  = $this->randomkey();
                     DB::table('imagefootage_products')->insert($media);
                     $id = DB::getPdo()->lastInsertId();
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
-                        ->update(['product_id' => 'IMGFT' . $id]);
+                        ->update(['product_id' => $flag.$key]);
                     //echo "Inserted" . $id;
-                    return 'IMGFT' . $id;
+                    return $flag.$key;
                 }else{
                     return $data2[0]->product_id;
                 }
@@ -265,12 +271,14 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
+                    $flag = $this->get_api_flag('2','api_flag');
+                    $key  = $this->randomkey();
                     DB::table('imagefootage_products')->insert($media);
                     $id = DB::getPdo()->lastInsertId();
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
-                        ->update(['product_id' => 'IMGFT' . $id]);
-                    return 'IMGFT' . $id;
+                        ->update(['product_id' => $flag.$key]);
+                    return $flag.$key;
                     // echo "Inserted" . $id;
                 }else{
 
@@ -289,5 +297,14 @@ class Product extends Model
             }
         }
 
+    }
+
+    public function get_api_flag($flag,$field){
+        return Api::where('api_id',$flag)->first()->$field;
+    }
+
+    public function randomkey(){
+         $digits = 5;
+         return random_int( 10 ** ( $digits - 1 ), ( 10 ** $digits ) - 1);
     }
 }

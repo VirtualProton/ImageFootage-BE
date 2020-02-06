@@ -74,9 +74,9 @@ Route::group([
     Route::post('add_to_cart', 'FrontuserController@addtocart');
     Route::post('user_cart_list', 'FrontuserController@userCartList');
     Route::post('delete_cart_item', 'FrontuserController@deleteCartItem');
-    Route::post('addto_wishlist/{id}/{added_by}', 'FrontuserController@addtoWishlist');
-    Route::post('deleate_wishlist_itom/{id}', 'FrontuserController@deleteWishlistItom');
-    Route::post('wishlistlist', 'FrontuserController@productList');
+    Route::post('addto_wishlist', 'FrontuserController@addtoWishlist');
+    Route::post('delete_wishlist_product', 'FrontuserController@deleteWishlistItem');
+    Route::post('wishlist', 'FrontuserController@wishlist');
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}','UserController@userProfile');

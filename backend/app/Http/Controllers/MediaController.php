@@ -10,6 +10,7 @@ use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Api;
 use CORS;
 
 class MediaController extends Controller

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
@@ -6,9 +6,10 @@ import { HeroService } from '../hero.service';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+   selector: 'app-sign-up',
+   templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SignUpComponent implements OnInit {
     registerForm: FormGroup;
@@ -18,6 +19,9 @@ export class SignUpComponent implements OnInit {
     stateInfo: any[] = [];
     countryInfo: any[] = [];
     cityInfo: any[] = [];
+    token:any ;
+    checkoutArray:any=[];
+    loadingData:boolean=false;
 
   constructor( private formBuilder: FormBuilder,
       private authenticationService: HeroService,
@@ -112,6 +116,7 @@ export class SignUpComponent implements OnInit {
       // console.log('at invalid');      console.log(this.registerForm);
         return;
     }
+      this.loadingData =true;
     // console.log(this.registerForm.value);
     this.authenticationService.register(this.registerForm.value)
             .pipe(first())
@@ -121,9 +126,44 @@ export class SignUpComponent implements OnInit {
                    // this.router.navigate(['/']);
                   if(data2.status=='1'){
                     alert(data2.message);
-                    this.router.navigate(['/']);
+                      let cartData = localStorage.getItem('beforeLoginCart');
+                      if(cartData.length >0){
+                          let finalData =  JSON.parse(cartData);
+                          this.token = localStorage.getItem('currentUser');
+                          //console.log(finalData);
+                         // console.log(finalData.productinfo);
+                          let cartval = {
+                              "product_info":finalData.productinfo,
+                              "selected_product":finalData.cartproduct,
+                              "total":finalData.total,
+                              "extended":finalData.extended,
+                              "token":this.token,
+                              "type":finalData.type
+                          };
+                          this.authenticationService.addcartItemsData(cartval)
+                              .subscribe(data => {
+                                  console.log(data);
+                                  this.checkoutArray.push(cartval);
+                                  if(data["status"]=='1'){
+                                      this.loadingData =false;
+                                      localStorage.setItem('checkoutAray', this.checkoutArray);
+                                      localStorage.removeItem("beforeLoginCart");
+                                      this.router.navigate(['/cart']);
+                                  }else{
+                                      this.loadingData =false;
+                                      alert(data["message"]);
+                                  }
+
+                              });
+                      }else{
+                          this.loadingData =false;
+                          this.router.navigate(['/']);
+                      }
+
                   }else{
+                      this.loadingData =false;
                     alert(data2.message);
+
                   }
 
                 },

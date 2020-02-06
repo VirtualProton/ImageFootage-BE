@@ -164,11 +164,17 @@ export class HeroDetailComponent implements OnInit {
   addToCheckoutItem(productinfo,cartproduct,total,extended,type){
     if (!this.currentUser) {
       this.showloginPopup = true;
+      localStorage.setItem('beforeLoginCart', JSON.stringify({productinfo,cartproduct,total,extended,type}));
     }else{
+         if(cartproduct.length==0){
+            alert("Please select size of product !!");
+            return false;
+        }
         this.loadingData = true;
-      this.addedCartItem = !this.addedCartItem;
+        this.addedCartItem = !this.addedCartItem;
         this.token = localStorage.getItem('currentUser');
-       let cartval = {
+
+        let cartval = {
            "product_info":productinfo,
            "selected_product":cartproduct,
            "total":total,
@@ -180,12 +186,7 @@ export class HeroDetailComponent implements OnInit {
       this.heroService.addcartItemsData(cartval)
             .subscribe(data => {
                 console.log(data);
-				if(total==0){
-					this.loadingData =false;
-					alert('select type of product');
-					return false;
-				}
-                this.checkoutArray.push(cartval);
+				this.checkoutArray.push(cartval);
                 if(data["status"]=='1'){
                     this.loadingData =false;
                     localStorage.setItem('checkoutAray', this.checkoutArray);
@@ -280,5 +281,21 @@ export class HeroDetailComponent implements OnInit {
     sanitize(url: string) {
         //return url;
         return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
+
+    addtolightbox(id){
+        console.log(id);
+        this.loadingData =true;
+        this.heroService.addWishListItemsData(id)
+            .subscribe(data => {
+                if(data["status"]=='1'){
+                    this.loadingData =false;
+                    this.router.navigate(['/lightbox']);
+                }else{
+                    this.loadingData =false;
+                    alert(data["message"]);
+                }
+
+            });
     }
 }

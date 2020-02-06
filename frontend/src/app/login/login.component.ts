@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         console.log(userData.name);
 		console.log(userData.email);
 		//fbLogin
-		  this.authenticationService.fbLogin(userData.email)
+		  this.authenticationService.fbLogin(userData)
               .pipe(first())
               .subscribe(
                   data => {

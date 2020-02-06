@@ -64,7 +64,15 @@ class AuthController extends Controller
             $result = $save_data->save();
             //User::create($request->all());
             if ($result) {
-                return response()->json(['status'=>'1','message' => 'Successfully registered'], 200);
+                $credentials = ['email'=>$request->input('email'),'password'=>$request->input('password')];
+                $token = auth()->attempt($credentials);
+                $usercredentials = ['access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60,
+                    'user' => auth()->user()->first_name,
+                    'Utype' => auth()->user()->id
+                ];
+                 return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
             }
@@ -73,12 +81,34 @@ class AuthController extends Controller
         }
     }
 	public function fbLogin(Request $request){
-		$count = User::where('email','=',$request->input('email'))->count();
+        $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
-			$res = User::where('email','=',$request->input('email'))->first()->toArray();
-		 	return $res;
+			//$res = User::where('email','=',$request->input('email'))->first()->toArray();
+		 	//return $res;
+            $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+            $token = auth()->attempt($credentials);
+            return $this->respondWithToken($token);
 		}else{
-			return response()->json(['error' => 'Please register to login.'], 401);
+		    if($request['userData']['provider']=='google'){
+                $save_data = new User();
+                //$save_data->user_name = $request['userData']['name'];
+                $save_data->email = $request['userData']['email'];
+                $save_data->first_name = $request['userData']['name'];
+                $save_data->password = Hash::make('123456');
+                $save_data->gmail_idtoken = $request['userData']['idToken'];
+                $save_data->profile_photo = $request['userData']['image'];
+                $save_data->provider = $request['userData']['provider'];
+                $save_data->type = 'U';
+                $result = $save_data->save();
+                if($result){
+                    $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+                    $token = auth()->attempt($credentials);
+                    return $this->respondWithToken($token);
+                }
+            }
+
+
+			//return response()->json(['error' => 'Please register to login.'], 401);
 		}
        
 	}

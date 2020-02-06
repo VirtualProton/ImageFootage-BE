@@ -104,7 +104,7 @@ class SearchController extends Controller
                 $flag =1;
             }
         }
-        if($flag=='1'){
+        if($flag=='0'){
 
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword);
