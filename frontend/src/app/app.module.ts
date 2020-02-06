@@ -39,6 +39,13 @@ import {
     FacebookLoginProvider,
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
+import { MainSideNavComponent } from './main-side-nav/main-side-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
@@ -50,7 +57,9 @@ export function getAuthServiceConfigs() {
         },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider("167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com")
+          provider: new GoogleLoginProvider("1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com")
+		  // amit 167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com
+		  // aksrinivas 1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com
         }
       ]
   );
@@ -69,7 +78,13 @@ export function getAuthServiceConfigs() {
     NgxSpinnerModule,
 	TabModule,
     NoopAnimationsModule,
-	SocialLoginModule
+	SocialLoginModule,
+	LayoutModule,
+	MatToolbarModule,
+	MatButtonModule,
+	MatSidenavModule,
+	MatIconModule,
+	MatListModule
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -102,7 +117,8 @@ export function getAuthServiceConfigs() {
     PricingComponent,
     UserProfileComponent,
     ResetPasswordComponent,
-    LightboxComponent
+    LightboxComponent,
+    MainSideNavComponent
   ],
   exports:[LoginComponent],
   providers: [

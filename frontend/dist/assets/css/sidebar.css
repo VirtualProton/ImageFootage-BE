@@ -81,7 +81,7 @@ body {
 
 .page-wrapper.toggled .sidebar-wrapper {
   left: 0px;
-  top:136px;
+  top:93px;
 }
 
 @media screen and (min-width: 768px) {
