@@ -39,6 +39,13 @@ import {
     FacebookLoginProvider,
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
+import { MainSideNavComponent } from './main-side-nav/main-side-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
@@ -71,7 +78,13 @@ export function getAuthServiceConfigs() {
     NgxSpinnerModule,
 	TabModule,
     NoopAnimationsModule,
-	SocialLoginModule
+	SocialLoginModule,
+	LayoutModule,
+	MatToolbarModule,
+	MatButtonModule,
+	MatSidenavModule,
+	MatIconModule,
+	MatListModule
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -104,7 +117,8 @@ export function getAuthServiceConfigs() {
     PricingComponent,
     UserProfileComponent,
     ResetPasswordComponent,
-    LightboxComponent
+    LightboxComponent,
+    MainSideNavComponent
   ],
   exports:[LoginComponent],
   providers: [
