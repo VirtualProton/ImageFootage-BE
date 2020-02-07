@@ -5,27 +5,58 @@
     </div>
 </div>
 <div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#60048b !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;">
+
+
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
         <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVENCE</a></li>
        <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
        <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
     </ul>
+    
+    
+    
 </div>
 
-<div class="site-wrap">
-  <div  [ngClass]="sideBarEle == true ? 'page-wrapper chiller-theme toggled' : 'page-wrapper chiller-theme'">
-    <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="sideBarEle=!sideBarEle">
+<div class="site-wrap" >
+  <div  [ngClass]="show == true ? 'page-wrapper chiller-theme toggled' : 'page-wrapper chiller-theme'">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="show=!show" style="font-size: 17px;color:#fff;">
+      <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+    </a>
+ 
+        <!-- Sidebar -->
+ 
+        <nav id="sidebar" class="sidebar" *ngIf="show">
+        
+        
+  <div class="sidebar-content">
+    <perfect-scrollbar>
+      <div class="sidebar-header">
+      <div class="col-md-12">
+      <div class="row">
+      <div class="col-md-10"><a>FILTERS</a></div>
+        <div class="col-md-2"><a (click)="toggle()" class="" style="cursor:pointer;color:#fff;font-size: 17px;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a></div>
+        </div>
+        </div>
+      </div>
+     <div class="sidebar-profile" >
+       <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" >
       <i class="fas fa-bars"></i>
     </a>
-     <nav id="sidebar" class="sidebar-wrapper"  style="background: #151414 !important;" >
-      <div class="sidebar-content">
-        <div class="sidebar-brand">
-          <a href="javascript:void(0)">FILTERS</a>
-          <div id="close-sidebar" (click)="sideBarEle=!sideBarEle"> 
-            <i class="fas fa-times"></i>
-          </div>
+       <!-- <div class="user-pic">
+          <img class="img-responsive img-rounded" src="assets/img/user.jpg" alt="User picture">
+        </div>-->
+        <div class="user-info" *ngIf="currentUser">
+         <!-- <span class="user-name">Jhon
+            <strong>Smith</strong>
+          </span>
+          <span class="user-role">Administrator</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>-->
         </div>
-       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">
       		<form class="search_m header_serach mt-3 mb-3">
               <div class="input-group search-bar">
                   <div class="input-group-btn" ngbDropdown >
@@ -46,8 +77,9 @@
             </div>
       		</form>
     </div>
-    
-        <div class="sidebar-header"> 
+      
+      <div class="sidebar-menu">
+      <div class="sidebar-header"> 
             <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
                 <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)">
                     <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
@@ -61,12 +93,10 @@
                   </label>  
             </div>
         </div>
-
-        <div class="sidebar-menu">
           <ul>
               <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  
-                    <i class="fa fa-tachometer-alt"></i>
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                     <span> People</span>              
                   </a>  
                    <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">
@@ -182,28 +212,158 @@
                 </li>
           </ul>
         </div>
+    </perfect-scrollbar>
+  </div>
+  <!--<div class="sidebar-footer">
+    <div class="dropdown" dropdown>
+
+      <a href="#" dropdownToggle>
+        <i class="fa fa-bell"></i>
+        <span class="badge badge-pill badge-warning notification">5</span>
+      </a>
+      <div class="dropdown-menu notifications" *dropdownMenu>
+        <div class="notifications-header">
+          <i class="fa fa-bell"></i>
+          Notifications
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-check text-success border border-success"></i>
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                6 minutes ago
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-exclamation text-info border border-info"></i>
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                Today
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-exclamation-triangle text-warning border border-warning"></i>
+
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                Yesterday
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center" href="#">View all notifications</a>
+      </div>
+    </div>
+    <div class="dropdown" dropdown>
+      <a href="#" dropdownToggle>
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
+      </a>
+      <div class="dropdown-menu messages" *dropdownMenu>
+        <div class="messages-header">
+          <i class="fa fa-envelope"></i>
+          Messages
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center" href="#">View all messages</a>
 
       </div>
-      <div class="sidebar-footer">
-          <a href="javascript:void(0)">
-            <i class="fa fa-bell"></i>
-            <span class="badge badge-pill badge-warning notification">3</span>
-          </a>
-          <a href="javascript:void(0)">
-            <i class="fa fa-envelope"></i>
-            <span class="badge badge-pill badge-success notification">7</span>
-          </a>
-          <a href="javascript:void(0)">
-            <i class="fa fa-cog"></i>
-            <span class="badge-sonar"></span>
-          </a>
-          <a href="javascript:void(0)">
-            <i class="fa fa-power-off"></i>
-          </a>
-        </div>
-    </nav>
+    </div>
+    <div class="dropdown" dropdown>
+      <a href="#" dropdownToggle>
+        <i class="fa fa-cog"></i>
+        <span class="badge-sonar"></span>
+      </a>
+      <div class="dropdown-menu" *dropdownMenu>
+        <a class="dropdown-item" href="#">My profile</a>
+        <a class="dropdown-item" href="#">Help</a>
+        <a class="dropdown-item" href="#">Setting</a>
+      </div>
+    </div>
+    <div>
+      <a href="#">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+  </div>-->
+</nav>
+
+ 
+        <!-- /#sidebar-wrapper -->
+    
+    
+    
+    
+    
+    
 <!-- mt-5 -->
     <main class="page-content mt-3">
+       
         <main class="main-content">
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
@@ -247,6 +407,8 @@
                   <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"
                   [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"
                   [boundaryLinks]="true"></ngb-pagination>
+                  
+                  
 
               </div>
           </div>
