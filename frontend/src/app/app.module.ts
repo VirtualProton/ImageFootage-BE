@@ -39,13 +39,18 @@ import {
     FacebookLoginProvider,
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
-import { MainSideNavComponent } from './main-side-nav/main-side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+//sidebar
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+//sidebar end
+
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
@@ -65,6 +70,11 @@ export function getAuthServiceConfigs() {
   );
   return config;
 }
+//sidebar
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+//sidebar end
 
 @NgModule({
   imports: [
@@ -84,7 +94,8 @@ export function getAuthServiceConfigs() {
 	MatButtonModule,
 	MatSidenavModule,
 	MatIconModule,
-	MatListModule
+	MatListModule,
+	PerfectScrollbarModule
     
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -117,14 +128,17 @@ export function getAuthServiceConfigs() {
     PricingComponent,
     UserProfileComponent,
     ResetPasswordComponent,
-    LightboxComponent,
-    MainSideNavComponent
+    LightboxComponent
   ],
   exports:[LoginComponent],
   providers: [
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
+    },
+	{
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     }
   ],
   bootstrap: [ AppComponent ]

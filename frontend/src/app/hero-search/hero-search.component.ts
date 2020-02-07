@@ -7,13 +7,21 @@ import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import {NgxSpinnerService} from "ngx-spinner";
 import { isNullOrUndefined } from 'util';
 import * as AOS from 'aos';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css' ],
-  encapsulation: ViewEncapsulation.None
-
+  styleUrls: [ './hero-search.component.css','./sidebar.component.scss' ],
+ 
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('slide', [
+      state('up', style({ height: 0 })),
+      state('down', style({ height: '*' })),
+      transition('up <=> down', animate(200))
+    ])
+  ]
 })
 export class HeroSearchComponent implements OnInit {
   productType:any;
@@ -53,7 +61,10 @@ export class HeroSearchComponent implements OnInit {
   sideBarEle:boolean=true;
   loadingData:boolean=false;
   keyword = [];
-
+  isMenuOpen = true;
+  public show:boolean = true;
+  public buttonName:any = 'Show';
+ 
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -62,6 +73,10 @@ export class HeroSearchComponent implements OnInit {
     private spinner: NgxSpinnerService) {
     this.searchData = new Search();
   }
+  
+  
+  
+  
 
       // Push a search term into the observable stream.
       search(term: string): void {
@@ -357,5 +372,15 @@ export class HeroSearchComponent implements OnInit {
             }
           })
       }
+	  toggle() {
+    this.show = !this.show;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if(this.show)  
+      this.buttonName = "Hide";
+    else
+      this.buttonName = "Show";
+  }
+
 
 }
