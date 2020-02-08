@@ -47,13 +47,14 @@ class MediaController extends Controller
                        $pond_id_withprefix = "0" . $pond_id_withprefix;
                    }
                }
-
+               $b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
+               $downlaod_image= 'data:video/mp4;base64,'.$b64image;
                if (count($product_details_data) > 0) {
                       $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                }
 
            }
-           $product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg',$imagefootage_id);
+           $product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg',$imagefootage_id,$downlaod_image);
         }else{
             $product = new Product();
             $product_details = $product->getProductDetail($media_id,$type);

@@ -73,7 +73,8 @@ class FrontuserController extends Controller {
                 $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
                 $Usercart->product_desc= $request['product']['product_info'][0]['items'][0]['desc'];
                 $Usercart->product_web= $request['product']['type'];
-                $Usercart->product_json= json_encode($request['product']['product_info']);
+                $Usercart->product_main_footage = $request['product']['product_info'][2];
+                $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                 $result=$Usercart->save();
                 if($result){
                     echo '{"status":"1","message":"Product added to cart successfully"}';

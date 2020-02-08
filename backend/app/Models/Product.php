@@ -199,8 +199,7 @@ class Product extends Model
                     ->where('api_product_id', $eachmedia['id'])
                     ->get()
                     ->toArray() ;
-
-                if (count($data)==0) {
+                if (count($data2)==0) {
                     $flag = $this->get_api_flag('2','api_flag');
                     $key  = $this->randomkey();
                     DB::table('imagefootage_products')->insert($media);

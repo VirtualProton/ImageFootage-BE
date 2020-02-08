@@ -74,26 +74,29 @@ export class HeroDetailComponent implements OnInit {
      //  .subscribe(data => {
      //    this.marketDetails = data;
      //  });
-      
-     this.heroService.getAosSliderImages()
-        .subscribe(aoslSliderImages => {
-           this.aoslSliderImagesData = aoslSliderImages;
-          //let tempCarouselSlider= this.chunkArray(aoslSliderImages, 4);
-         // this.aoslSliderImagesData = JSON.parse(JSON.stringify(aoslSliderImages));
-          let randArr = [4, 3, 2,3];
-          let i =4,j=0;
-          this.aoslSliderImagesData.forEach(ele=>{
-            if( i > j){ 
-              ele.eleClass = randArr[j];
-              j=j+1;
-              if(j == i){
-                  this.dataHelper.shuffleArray(randArr);
-                  j=0;
+      let id = +this.route.snapshot.paramMap.get('id');
+      let webtype = +this.route.snapshot.paramMap.get('webtype');
+      let type = this.route.snapshot.paramMap.get('type');
+      this.heroService.getDetailPagedetails(id,webtype,type)
+          .subscribe(data => {
+              console.log(data);
+              if(webtype==2){
+                  // this.detailPageInfo = data[0];
+                  // this.imagefootId = data[1];
+                  // let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
+                  // this.keyword = keywords.split(",").map(item => item.trim());
+                  // this.filePreview = data[2];
+                  //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
+              }else if(webtype==3){
+                  // this.detailPageInfo = data;
+                  // let keywords  = this.detailPageInfo[0].items[0].kw;
+                  // this.keyword = keywords.split(",").map(item => item.trim());
               }
-            }
-          })
-          // console.log(this.aoslSliderImagesData);
-        });
+
+              //this.keyword = keywords.split(',',10);
+              //this.spinner.hide();
+              this.loadingData =false;
+          });
   }
 
   getDetailinfo(){

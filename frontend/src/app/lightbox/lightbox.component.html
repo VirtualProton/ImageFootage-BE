@@ -23,8 +23,8 @@
                                         <img src="{{wishList.product_thumbnail}}" alt="product-img"  style="width:200px;height: 200px;" />
                                     </a>
                                     <a href="javascript:void(0)" *ngIf="wishList.product_web=='3'" >
-                                        <video  width="200" height="150" controls onmouseover="this.play()" onmouseout="this.pause()">
-                                            <source src="{{wishList.product_thumbnail}}" type="video/mp4">
+                                        <video  width="200" height="150" [poster]="wishList.product_thumbnail" controls controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()">
+                                            <source src="{{wishList.product_main_image}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
                                     </a>
