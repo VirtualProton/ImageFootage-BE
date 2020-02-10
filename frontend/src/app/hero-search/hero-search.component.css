@@ -45,4 +45,23 @@ ul.search-result {
 .bg-dark search_menu_l{
 	z-index:-1 !important;
 }
+/* for advanced search */
+		.custom-control{
+    font-weight: normal;
+}
+.dropdown-toggle{
+    padding-left: 10px;
+    border-radius: 0px !important;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    padding: 15px;
+}
+
+.dropdown.dropdown-lg .dropdown-menu{
+    min-width: 500px;
+}
+.dropdown-menu{
+    box-shadow: 1px 4px 8px -1px #c1c1c1;
+}
+/* end advanced search */
 
