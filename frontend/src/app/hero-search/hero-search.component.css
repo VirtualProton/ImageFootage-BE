@@ -45,6 +45,9 @@ ul.search-result {
 .bg-dark search_menu_l{
 	z-index:-1 !important;
 }
+.search_menu>li>a{
+    padding: 12px;
+}
 /* for advanced search */
 		.custom-control{
     font-weight: normal;
@@ -63,5 +66,17 @@ ul.search-result {
 .dropdown-menu{
     box-shadow: 1px 4px 8px -1px #c1c1c1;
 }
+.dropdown-menu {
+    top: 46px !important;
+}
+/*@media (min-width: 979px) {
+  .dropdown-toggle:hover > .dropdown.dropdown-lg .dropdown-menu {
+    display: block;
+  }
+  body{
+	  display:none;
+  }
+}*/
+
 /* end advanced search */
 

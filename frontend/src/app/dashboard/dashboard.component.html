@@ -7,22 +7,22 @@
     <div class="d-flex h-100 text-center align-items-center">
       <div class="col-md-10 col-sm-10 col-lg-10 m-auto">
       <div class="w-100 text-white vedio_text">
-        <h1 class="display-4" style="font-size: 2rem"><strong>As Real as it Gets…<br>Bring to Life Your Vision.</strong></h1>
+        <h1 class="display-4" style="font-size: 2rem"><strong>As Real as it Gets…<br>Bring Life to Your Vision.</strong></h1>
            
           <form class="search_m">
     <div class="input-group search-bar">
           <div class="input-group-btn" ngbDropdown >
             <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
-             <span *ngIf='searchBoxLabel == 1'>Photos Only</span>
-             <span *ngIf='searchBoxLabel == 2'>Videos Only</span>
+             <span *ngIf='searchBoxLabel == 1'>Images Only</span>
+             <span *ngIf='searchBoxLabel == 2'>Footages Only</span>
              <!--<span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>-->
 
 
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="top:-162px !important;min-width: 200px;">
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem style="padding: 15px 10px;"><i class=""></i> Photos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem style="padding: 15px 10px;"><i class=""></i> Images Only</a>
               <!--<a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>-->
-              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem style="padding: 15px 10px;">Videos Only</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem style="padding: 15px 10px;">Footages Only</a>
                </div>
           </div>
           <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button" (keyup.enter)="searchAosData(searchBoxEle.value)">
@@ -115,8 +115,8 @@
                       <div class="photo-text-more">
                       
                         <div class="photo-text-more">
-                        <h3 class="heading">{{aosimges.product_title}}</h3>
-                        <span class="meta">{{aosimges.product_description}}</span>
+                        <!--<h3 class="heading">{{aosimges.product_title}}</h3>
+                        <span class="meta">{{aosimges.product_description}}</span>-->
                         <p class="icons_thum">
                             <span><i class="fa fa-image"></i></span>
                             <span><i class="fa fa-heart"></i></span>
