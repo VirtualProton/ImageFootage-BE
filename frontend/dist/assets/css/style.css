@@ -1,10 +1,14 @@
+*, *::before, *::after {
+	/*font-family: Open Sans,Helvetica,Arial,sans-serif !important;*/
+}
 body {
   line-height: 1.7;
   color: #a6a6a6;
   font-weight: 400;
   font-size: 1rem;
   background: #000;
-  font-family: 'Poppins', sans-serif !important;
+  /*font-family: 'Poppins', sans-serif !important;*/
+  font-family: Open Sans,Helvetica,Arial,sans-serif !important;
    }
 ::-moz-selection {
   background: #000;
@@ -19,7 +23,7 @@ a {
   a:hover {
     text-decoration: none; }
 h1, h2, h3, h4, h5,
-.h1, .h2, .h3, .h4, .h5 {font-family: 'Poppins', sans-serif !important;}
+.h1, .h2, .h3, .h4, .h5 {/*font-family: 'Poppins', sans-serif !important;*/ font-family:Open Sans,Helvetica,Arial,sans-serif !important;}
 .f-8{font-size:8px !important}
 .f-10{font-size:10px !important}
 .f-11{font-size:11px !important}
@@ -969,7 +973,7 @@ iframe{border:none;}
 .fw-8{font-weight: 800 !important;}
 .text-underline{text-decoration: underline;}
 .search-bar{position: relative;}
-.search-bar .fa-search{position: absolute; top: 18px; right:16px; font-size: 22px; z-index:99999}
+.search-bar .fa-search{position: absolute; top: 12px; right:16px; font-size: 22px; z-index:99999}
 .search-bar input.form-control,.search-bar .btn{height:60px !important}
 .text-gray{color:#a6a6a6;}
 
