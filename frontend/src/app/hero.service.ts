@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -270,11 +270,18 @@ export class HeroService {
     }
 
     addcartItemsData(product: any): Observable<userData> {
-        const url = `${this.heroesUrl}add_to_cart`;
+
         let tokenData = JSON.parse(product.token);
+        const url = `${this.heroesUrl}add_to_cart?token=`+tokenData.access_token;
+        // var options = {
+        //     headers: new HttpHeaders()
+        //         .set('Authorization',  `Bearer ${tokenData.access_token}`)
+        //         .set('Content-Type',  `application/json`)
+        // }
+
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + tokenData.token
+            'Authorization': 'Bearer ' + tokenData.access_token
         });
         let options = {headers: headers};
 

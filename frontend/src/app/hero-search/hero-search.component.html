@@ -33,7 +33,7 @@
       <div class="sidebar-header">
       <div class="col-md-12">
       <div class="row">
-      <div class="col-md-10"><a>FILTERS</a></div>
+      <div class="col-md-10"><a style="color:#fff;">FILTERS</a></div>
         <div class="col-md-2"><a (click)="toggle()" class="" style="cursor:pointer;color:#fff;font-size: 17px;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a></div>
         </div>
         </div>
@@ -83,13 +83,13 @@
             <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
                 <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)">
                     <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
-                    <p class="mb-0"> <i class="fa fa-camera"></i> </p>
-                    <p class="mb-0">PHOTOS</p> 
+                    <p class="mb-0"> <i class="fa fa-camera"></i>&nbsp; PHOTOS </p>
+                    <p class="mb-0"></p> 
                   </label>
                   <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)">
                     <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">
-                    <p class="mb-0"> <i class="fa fa-video"></i> </p>
-                    <p class="mb-0">  VIDEOS </p>
+                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; VIDEOS </p>
+                    <p class="mb-0">   </p>
                   </label>  
             </div>
         </div>
@@ -365,6 +365,155 @@
     <main class="page-content mt-3">
        
         <main class="main-content">
+        <!-- advanched search -->
+       
+        
+         <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
+          
+          <div class="input-group" id="adv-search">
+          <form class="col-md-12">
+          <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-search" placeholder="Search for snippets" style="height: 48px;color: #fff;" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" aria-label="Text input with dropdown button" />
+            </div>
+            <div class="col-md-6" style="margin-left: -10px;">
+            <div class="input-group-btn">
+              <div class="btn-group" role="group">
+                <div class="dropdown dropdown-lg">
+                  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </button>  
+                  <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    
+                    
+                    
+                    <div class="form-group">
+                        <select class="form-control" id="category">
+                        <!--*ngIf='productType == 1' *ngIf='productType == 2'-->
+                          <option >Images Only</option>
+                          <option >Footages Only</option>
+                        </select>
+                      </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <!-- *ngIf="sidebarSubmenu1" -->
+                    <div class="form-group" >
+                     <label for="category" class="text-dark">People</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let peoples of leftsideData.product_peoples" class="text-dark"> 
+                    <input type="checkbox" value="{{peoples.people_id}}" class=""> {{peoples.people_name}}  &nbsp;
+                    </label>
+                    
+                  </div>
+                    
+                    
+                     <div class="form-group" >
+                     <label for="category" class="text-dark">Gender</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let gender of leftsideData.product_gender" class="text-dark"> 
+                    <input type="checkbox" value="{{gender.gender_id}}" class=""> {{gender.gender_name}}  &nbsp;
+                    </label>
+                  
+                 
+                  </div>
+                    
+                    <div class="form-group" >
+                     <label for="category" class="text-dark">Ethnicity</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class="text-dark"> 
+                    <input type="checkbox" value="{{ethinicities.ethinicity_id}}" class=""> {{ethinicities.ethinicity_name}}  &nbsp;
+                    </label>
+                  
+                  
+               
+                  </div>
+                    
+                    <div class="form-group" >
+                     <label for="category" class="text-dark">Orientations</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let orientation of leftsideData.product_orientations" class="text-dark"> 
+                    <input type="checkbox" value="{{orientation.orientation_id}}" class=""> {{orientation.orientation_name}}  &nbsp;
+                    </label>
+                  </div>
+                  <div class="form-group" >
+                     <label for="category" class="text-dark">Location</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let locations of leftsideData.product_locations" class="text-dark"> 
+                    <input type="checkbox" value="{{locations.location_id}}" class=""> {{locations.location_name}}  &nbsp;
+                    </label>
+                    
+                  </div>
+                  <div class="form-group" >
+                     <label for="category" class="text-dark">Color</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let colors of leftsideData.product_colors" class="text-dark"> 
+                    <input type="checkbox" value="{{colors.pcolor_id}}" class=""> {{colors.pcolor_name}}  &nbsp;
+                    </label>
+                                        
+                  </div>
+                  <div class="form-group" >
+                     <label for="category" class="text-dark">Image Types</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class="text-dark"> 
+                    <input type="checkbox" value="{{imageTypes.imagetype_id}}" class=""> {{imageTypes.imagetype_name}}  &nbsp;
+                    </label>
+                                                           
+                  </div>
+                  
+                  
+                  
+                  <div class="form-group" >
+                     <label for="category" class="text-dark">Image Sizes</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="text-dark"> 
+                    <input type="checkbox" value="{{imagesizes.imagesize_id}}" class=""> {{imagesizes.imagesize_name}}  &nbsp;
+                    </label>
+                    
+                                        
+                  </div>
+                  <div class="form-group" >
+                     <label for="category" class="text-dark">Sort Types</label><br />
+                     &nbsp;
+                    <label for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="text-dark"> 
+                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;
+                    </label>
+                    
+                                        
+                  </div>
+                  
+                  
+                      
+                    
+                      <hr>
+                      <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button class="btn btn-primary">Clear</button>
+                      </div>
+                                              
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary"><span class="fa fa-search" aria-hidden="true"></span></button>
+              </div>
+            </div>
+            </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- end advanced search -->
+        
+        
+        
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small>290154 Exclusive Royalty-Free stock photos and videos for beauty</small></p>     
             <span class="f-12">Related:</span> 

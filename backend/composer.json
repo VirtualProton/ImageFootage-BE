@@ -21,7 +21,7 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "razorpay/razorpay": "2.*",
         "riazxrazor/payumoney": "^1.0",
-        "tymon/jwt-auth": "^1.0.0-rc.2",
+        "tymon/jwt-auth": "dev-develop",
         "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {

@@ -40,12 +40,15 @@ class PaymentController extends Controller
         }
         $transactionId = rand(1,1000000);
         //echo "<pre>"; print_r($allFields); die;
+        DB::enableQueryLog();
         $userData = User::with('country')
                  ->with('city')
                  ->with('state')
                  ->with('cart')
                  ->where('id','=',$allFields['tokenData']['Utype'])
                  ->get()->toArray();
+        dd(DB::getQueryLog());
+        print_r($userData); die;
         $tax = $allFields['cartval'][0]*8/100;
         $final_tax=round($tax,2);
         $orders = new Orders();

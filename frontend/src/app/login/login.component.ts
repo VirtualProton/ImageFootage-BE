@@ -114,6 +114,7 @@ export class LoginComponent implements OnInit {
                   data => {
                     console.log(data);
                      if(data==undefined){
+                         this.loading = false;
                          alert("Please enter correct username or password");
                      }else{
                          this.closeLoginPopup.emit(true);

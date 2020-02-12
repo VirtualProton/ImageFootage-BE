@@ -68,7 +68,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['api','CORS','ApiLogin'],
+    'middleware' => ['api','CORS','jwt.verify'],
 
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');

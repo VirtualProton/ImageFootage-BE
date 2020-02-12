@@ -70,7 +70,7 @@
     position: relative;
 
     .sidebar-header {
-      padding: 10px 20px;
+      padding: 10px 2px;
       display: flex;
       align-items: center;
 
@@ -169,9 +169,9 @@
           i {
             margin-right: 10px;
             font-size: 12px;
-            width: 30px;
+           /* width: 30px;
             height: 30px;
-            line-height: 30px;
+            line-height: 30px;*/
             text-align: center;
             border-radius: 4px;
           }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a8189b6ff16db711d8bc2c006d3db6e",
+    "content-hash": "6128b9c6a9f345d6676a0f890ef3a2ed",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -4477,7 +4477,7 @@
         },
         {
             "name": "tymon/jwt-auth",
-            "version": "1.0.0-rc.5.1",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth.git",
@@ -6425,7 +6425,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "tymon/jwt-auth": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

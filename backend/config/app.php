@@ -180,6 +180,7 @@ return [
         Unisharp\Ckeditor\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
@@ -236,7 +237,9 @@ return [
         'AWS' => Aws\Laravel\AwsFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Payumoney' => Riazxrazor\Payumoney\PayumoneyFacade::class
+        'Payumoney' => Riazxrazor\Payumoney\PayumoneyFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];
