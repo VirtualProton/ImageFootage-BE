@@ -60,16 +60,20 @@
       		<form class="search_m header_serach mt-3 mb-3">
               <div class="input-group search-bar">
                   <div class="input-group-btn" ngbDropdown >
-                      <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
-    <!--                    <span *ngIf='productType == 3'>Photos + Videos</span>-->
+                  <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
+                  	<option [selected]="productType == 1" value="1"><br />Images Only<br /></option>
+                    <option [selected]="productType == 2" value="2">Footages Only<br /></option>
+                  </select>
+                     <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
+                        <span *ngIf='productType == 3'>Photos + Videos</span>
                         <span *ngIf='productType == 1'>Images Only</span>
                         <span *ngIf='productType == 2'>Footages Only</span>
                       </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:100px;">
-    <!--                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:90px;">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>
                         <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Images Only</a>
                         <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Footages Only</a>
-                      </div>
+                      </div>-->
                   </div>
                   
                   <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">
@@ -79,7 +83,7 @@
     </div>
       
       <div class="sidebar-menu">
-      <div class="sidebar-header"> 
+      <!--<div class="sidebar-header"> 
             <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
                 <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)" style="font-size:15px;">
                     <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
@@ -88,11 +92,11 @@
                   </label>
                   <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)" style="font-size:15px;">
                     <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">
-                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; fOOTAGES </p>
+                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; FOOTAGES </p>
                     <p class="mb-0">   </p>
                   </label>  
             </div>
-        </div>
+        </div>-->
           <ul>
               <li class="sidebar-dropdown">
                   <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  
@@ -368,7 +372,7 @@
         <!-- advanched search -->
        
         
-         <div class="container" >
+         <!--<div class="container" >
       <div class="row">
         <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
           
@@ -390,122 +394,120 @@
                     
                     
                     <div class="form-group">
-                        <select class="form-control" id="category" style="color:#fff;background:#000;">
-                        <!--*ngIf='productType == 1' *ngIf='productType == 2'-->
-                          <option >Images Only</option>
-                          <option >Footages Only</option>
+                        <select class="form-control" id="category" style="color:#fff;background:#1d1d1d;">
+                 
+                          <option   [selected]="productType == 1" value="1">Images Only</option>
+                          <option [selected]="productType == 2" value="2">Footages Only</option>
                         </select>
                       </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                     
                     <div class="row">
-                        <div class="col-md-6">
-                        <!-- *ngIf="sidebarSubmenu1" -->
+                        <div class="col-md-4">
+                       
                         <div class="form-group" style="color:#fff;" >
                          <label for="category" class="" >People</label><br />
                          &nbsp;
-                         <!-- class="text-dark"-->
-                        <label for="category"  *ngFor="let peoples of leftsideData.product_peoples" class="" > 
+                         
+                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   > 
                         <input type="checkbox" value="{{peoples.people_id}}" class=""> {{peoples.people_name}}  &nbsp;
-                        </label>
+                        </div>
                         
                       </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                          <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Gender</label><br />
                          &nbsp;
-                        <label for="category"  *ngFor="let gender of leftsideData.product_gender" class=""> 
+                        <div for="category"  *ngFor="let gender of leftsideData.product_gender" class=""> 
                         <input type="checkbox" value="{{gender.gender_id}}" class=""> {{gender.gender_name}}  &nbsp;
-                        </label>
+                        </div>
                       
                      
                       </div>
                         </div>
-                   </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                         <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Ethnicity</label><br />
                          &nbsp;
-                        <label for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class=""> 
+                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class=""> 
                         <input type="checkbox" value="{{ethinicities.ethinicity_id}}" class=""> {{ethinicities.ethinicity_name}}  &nbsp;
-                        </label>
+                        </div>
                       
                       
                    
                       </div>
                         </div>
-                        <div class="col-md-6">
+                   </div>
+                    <div class="row">
+                        
+                        <div class="col-md-4">
                         <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Orientations</label><br />
                          &nbsp;
-                        <label for="category"  *ngFor="let orientation of leftsideData.product_orientations" class=""> 
+                        <div for="category"  *ngFor="let orientation of leftsideData.product_orientations" class=""> 
                         <input type="checkbox" value="{{orientation.orientation_id}}" class=""> {{orientation.orientation_name}}  &nbsp;
-                        </label>
+                        </div>
                       </div>
                         </div>
-                    </div>
-                    <div class="row" style="color:#fff;">
-                    	<div class="col-md-6" >
-                          <div class="form-group" >
+                        <div class="col-md-4" >
+                          <div class="form-group" style="color:#fff;" >
                              <label for="category" class="" >Location</label><br />
                              &nbsp;
-                            <label for="category"  *ngFor="let locations of leftsideData.product_locations" class=""> 
+                            <div for="category"  *ngFor="let locations of leftsideData.product_locations" class=""> 
                             <input type="checkbox" value="{{locations.location_id}}" class=""> {{locations.location_name}}  &nbsp;
-                            </label>
+                            </div>
                             
                           </div>
                         </div>
-                        <div class="col-md-6">
-                          <div class="form-group" >
+                        <div class="col-md-4">
+                          <div class="form-group" style="color:#fff;" >
                              <label for="category" class="" >Color</label><br />
                              &nbsp;
-                            <label for="category"  *ngFor="let colors of leftsideData.product_colors" class=""> 
+                            <div for="category"  *ngFor="let colors of leftsideData.product_colors" class=""> 
                             <input type="checkbox" value="{{colors.pcolor_id}}" class=""> {{colors.pcolor_name}}  &nbsp;
-                            </label>
+                            </div>
                                                 
                           </div>
                         </div>
+                        
                     </div>
+
                     <div class="row" style="color:#fff;">
-                    	<div class="col-md-6">
+                    	<div class="col-md-4">
                   			<div class="form-group" >
                      <label for="category" class="" >Image Types</label><br />
                      &nbsp;
-                    <label for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class=""> 
+                    <div for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class=""> 
                     <input type="checkbox" value="{{imageTypes.imagetype_id}}" class=""> {{imageTypes.imagetype_name}}  &nbsp;
-                    </label>
+                    </div>
                                                            
                   </div>
                         </div>
-                  		<div class="col-md-6">
+                  		<div class="col-md-4">
                   			<div class="form-group" >
                      <label for="category" class="" >Image Sizes</label><br />
                      &nbsp;
-                    <label for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" > 
+                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" > 
                     <input type="checkbox" value="{{imagesizes.imagesize_id}}" class=""> {{imagesizes.imagesize_name}}  &nbsp;
-                    </label>
+                    </div>
                     
                                         
                   </div>
                   		</div>
-                     </div>
+                        <div class="col-md-4">
                   <div class="form-group" style="color:#fff;">
                      <label for="category" class="" >Sort Types</label><br />
                      &nbsp;
-                    <label for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" > 
+                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" > 
                     <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;
-                    </label>
+                    </div>
                     
                                         
                   </div>
+                  </div>
+                     </div>
+                     
                   
                   
                       
@@ -528,7 +530,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     
     <!-- end advanced search -->
         
@@ -551,8 +553,8 @@
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
 
                             <div class="photo-text-more">
-                          <h3 class="heading">{{aosimges.product_title}}</h3>
-                          <span class="meta">{{aosimges.description}} Photos</span>
+                          <!--<h3 class="heading">{{aosimges.product_title}}</h3>
+                          <span class="meta">{{aosimges.description}} Photos</span>-->
                           <p class="icons_thum">
                             <span><i class="fa fa-image"></i></span>
                             <span><i class="fa fa-heart"></i></span>
@@ -562,7 +564,8 @@
                         </div>
                       </a>
                       <a  *ngIf="aosimges.product_main_type != 'Image'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
-                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controls controlsList="nodownload"  onmouseover="this.play()"
+                      <span style="position:absolute;margin-left:10px;margin-top:5px;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()"
                                   onmouseout="this.load()" style="width: 100% !important;background: #7d494957;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.

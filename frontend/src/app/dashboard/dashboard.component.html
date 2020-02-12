@@ -12,18 +12,24 @@
           <form class="search_m">
     <div class="input-group search-bar">
           <div class="input-group-btn" ngbDropdown >
-            <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
+          
+          <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
+                  	<option value="1">Images Only</option>
+                    <option value="2">Footages Only</option>
+           </select>
+          
+           <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
              <span *ngIf='searchBoxLabel == 1'>Images Only</span>
              <span *ngIf='searchBoxLabel == 2'>Footages Only</span>
-             <!--<span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>-->
+             <span *ngIf='searchBoxLabel == 3'>Photos + Videos</span>
 
 
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="top:-162px !important;min-width: 200px;">
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('1')" ngbDropdownItem style="padding: 15px 10px;"><i class=""></i> Images Only</a>
-              <!--<a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>-->
+              <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('3')" ngbDropdownItem style="padding: 15px 10px;">Photos + Videos</a>
               <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick('2')" ngbDropdownItem style="padding: 15px 10px;">Footages Only</a>
-               </div>
+               </div>-->
           </div>
           <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button" (keyup.enter)="searchAosData(searchBoxEle.value)">
           <a href="javascript:void(0)" class="iconSearch" (click)="searchAosData(searchBoxEle.value)"><span class="fa fa-search text-gray"></span></a>

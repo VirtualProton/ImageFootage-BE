@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use CORS;
 
 class SearchController extends Controller
