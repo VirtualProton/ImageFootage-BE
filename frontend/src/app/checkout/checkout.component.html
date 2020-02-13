@@ -82,8 +82,7 @@
                         </div>
 
                         <div class="form-group pt-3">
-                            <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Enter Address
-                            </strong></button>
+                           <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Proceed to Payment </strong></button>
                         </div>
                     </form>
                 </div>
@@ -106,12 +105,12 @@
 
                                 <td width="25%" align="center" *ngIf="checkout.product_web=='2'">
                                     <div class="product-info">
-                                        <img src="{{checkout.product_thumb}}" alt="product-img" height="100">
+                                        <img src="{{checkout.product_thumb}}" alt="product-img"  style="object-fit: cover;width: 100%;">
                                     </div>
                                 </td>
                                 <td width="25%" align="center" *ngIf="checkout.product_web=='3'">
                                     <div class="product-info">
-                                        <video  width="200" height="150" [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+checkout.product_main_footage" controls controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()">
+                                        <video   [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+checkout.product_main_footage" controls controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()" style="object-fit: cover;width: 100%;">
                                             <source src="{{checkout.product_thumb}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>

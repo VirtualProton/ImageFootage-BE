@@ -381,6 +381,10 @@ export class HeroSearchComponent implements OnInit {
     else
       this.buttonName = "Show";
   }
-
+  onNavigate(link,pid,pweb,prod_type){
+		//for redirect
+		//alert(link+pid+'/'+pweb+'/'+prod_type);
+		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
+  }
 
 }

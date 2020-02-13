@@ -10,7 +10,7 @@
 .mytabs{background: none;}
 .mytabs>li>.nav-link{padding:1rem;}
 .mytabs>li{margin-bottom: 10px;}
-.mytabs>li>.nav-link{background-color: #e9ecef; color:#aaa; font-weight: 600;}
+.mytabs>li>.nav-link{/*background-color: #e9ecef; */color:#aaa; font-weight: 600; cursor:pointer;}
 .mytabs>li>.nav-link.active{background: #000; color:#fed136;}
 .sticky {
     position: -webkit-sticky;
