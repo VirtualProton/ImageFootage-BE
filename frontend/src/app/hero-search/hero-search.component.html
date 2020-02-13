@@ -548,7 +548,8 @@
           <div class="photos"><!-- pt-5 mt-5 -->
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                      <a routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block photo-item">
+                  <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}"-->
+                      <span  class="d-block photo-item" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
                         <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
 
@@ -556,22 +557,32 @@
                           <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>-->
                           <p class="icons_thum">
-                            <span><i class="fa fa-image"></i></span>
-                            <span><i class="fa fa-heart"></i></span>
-                            <span><i class="fa fa-plus"></i></span>
+                            <span><a href=""><i class="fa fa-image"></i></a></span>
+                            <span><a href=""><i class="fa fa-heart"></i></a></span>
+                            <span><a href=""><i class="fa fa-plus"></i></a></span>
                         </p>
                         </div>
                         </div>
-                      </a>
-                      <a  *ngIf="aosimges.product_main_type != 'Image'" routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" class="d-block ">
+                      </span>
+                      <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}"-->
+                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="d-block ">
                       <span style="position:absolute;margin-left:10px;margin-top:5px;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()"
-                                  onmouseout="this.load()" style="width: 100% !important;background: #7d494957;object-fit: cover;">
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
                           <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
-                      </a>
+                          <div class="photo-text-more" >
+                       
+                        <br />
+                        <p class="icons_thum1" >
+                        	<span><a href=""><i class="fa fa-image"></i></a></span>
+                            <span><a href=""><i class="fa fa-heart"></i></a></span>
+                            <span><a href=""><i class="fa fa-plus"></i></a></span>
+                        </p>
+                      
+                      </div>
+                      </span>
                   </div>
               </div>
               <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0">

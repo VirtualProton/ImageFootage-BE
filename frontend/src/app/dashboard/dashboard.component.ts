@@ -154,5 +154,11 @@ ngOnInit() {
  		footage.pause();
 		//alert ('hi');
     }
+	
+	onNavigate(link,pid,pweb,prod_type){
+		//for redirect
+		//alert(link+pid+'/'+pweb+'/'+prod_type);
+		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
+	}
     
 }

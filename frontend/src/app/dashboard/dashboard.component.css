@@ -81,3 +81,54 @@
 .dropdown-menu{
 	        top: -232px !important;
 }
+/* for video */
+.d-block {
+    cursor: pointer;
+}
+.icons_thum a{
+	color: #fed136 !important;
+}
+.icons_thum1 a{
+	color: #fed136 !important;
+}
+.icons_thum1>span {
+    width: 24px;
+    height: 24px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    color: #fff;
+    padding: 10px;
+}
+.icons_thum1 {
+    position: fixed;
+    right: 0px;
+    right: 20px;
+    top: 100px;
+}
+.main-content .photos .photo-item:hover .photo-text-more .icons_thum1 {
+    position: fixed;
+    top: 100px;
+}
+.main-content .photos .photo-text-more {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+}
+.main-content .photos .d-block:hover .photo-text-more {
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+}
+/* for video end  */
