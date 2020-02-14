@@ -56,7 +56,7 @@ export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider("396074584437141")
+          provider: new FacebookLoginProvider("509349303296309")
 		  // live 509349303296309
 		  // test 396074584437141
         },
