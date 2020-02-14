@@ -57,6 +57,7 @@ export class CheckoutComponent implements OnInit {
               state: [billdata.state, Validators.required],
               city: [billdata.city, Validators.required],
               pincode: [billdata.pincode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+              terms: [false, Validators.requiredTrue]
             });
       }else {
           this.checkoutForm = this.formBuilder.group({
@@ -68,6 +69,7 @@ export class CheckoutComponent implements OnInit {
               city: ['', Validators.required],
               pincode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
               //paymentGatway :['', Validators.required],
+              terms: [false, Validators.requiredTrue]
 
           });
       }
@@ -157,6 +159,7 @@ export class CheckoutComponent implements OnInit {
         this.paymentShow  =true;
         this.loadingData = false;
         localStorage.setItem('billing_address', JSON.stringify(this.checkoutForm.value));
+        window.scrollTo(0, 0)
     }
     showTotalPrice(){
 
@@ -177,11 +180,12 @@ export class CheckoutComponent implements OnInit {
               data2 => {
 
                   // alert("Sucessfully Registered");
-                  console.log(data2);
+                  console.log(data2.url);
                   console.log(paymentgatway);
                   this.loadingData = false;
                   if(paymentgatway=='atom')  {
-                      window.location.href = data2.url;
+                      //window.location.href = data2.url;
+
                   }else if(paymentgatway=='payu'){
                     console.log(data2);
                      //this.hash = data2.hash;
@@ -205,6 +209,10 @@ export class CheckoutComponent implements OnInit {
               error => {
                   this.loading = false;
               });
+    }
+
+    editAddress(){
+      this.paymentShow = false;
     }
 
 

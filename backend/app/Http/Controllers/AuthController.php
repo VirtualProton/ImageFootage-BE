@@ -164,7 +164,7 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' =>  20,
             'user' => auth()->user()->first_name,
-            //'Utype' => auth()->user()->id
+            'Utype' => auth()->user()->id
         ]);
     }
 

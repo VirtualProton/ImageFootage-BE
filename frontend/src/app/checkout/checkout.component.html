@@ -12,8 +12,8 @@
 
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-6">
-                <div class="card shadow">
-                    <form class="loignForm p-5" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                <div class="card shadow" *ngIf="!paymentShow">
+                    <form class="loignForm p-5" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" >
                         <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -80,11 +80,57 @@
                                 <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>
                             </div>
                         </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" formControlName="terms" id="termscond" value="1"  [ngClass]="{ 'is-invalid': submitted && f.terms.errors }">
+                            <label class="custom-control-label" for="termscond"><a routerLink="/terms">Terms and Condition</a></label>
+                            <div *ngIf="submitted && f.terms.errors" class="invalid-feedback" >
+                                <div *ngIf="f.terms.errors.required"></div>
+                           </div>
+                        </div>
 
                         <div class="form-group pt-3">
                            <button type="submit" [disabled]="loading"  class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Proceed to Payment </strong></button>
                         </div>
                     </form>
+                </div>
+                <div class="card shadow" *ngIf="paymentShow">
+                <h3 class="f-20 ml-3 mb-6 mt-35" >PAYMENT INFORMATION</h3>
+                <!--                <form  [formGroup]="checkoutForm">-->
+                <div class="" *ngIf="paymentShow">
+                    <div class="row bt-5 mr-3 float-right">
+                       <a (click)="editAddress()"><i class="fa fa-edit"></i></a>
+                    </div>
+                    <div class="row ml-4 mb-10">
+                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('atom')">
+                            <label class="mb-0"  style="cursor: pointer" >
+                                <!--                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">-->
+                                <img src="/assets/images/atom.png" alt="atom">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row ml-4 mb-10">
+                        <div class="card shadow-sm text-center p-2"  (click)="onSubmitPayment('payu')">
+                            <label class="mb-0" style="cursor: pointer">
+                                <!--                                <input type="radio"    name="paymentGatway" value="payu" >-->
+                                <img src="/assets/images/payu.png" alt="payumoney">
+                            </label>
+                        </div>
+
+                        <!--                        <div [innerHTML]="payuData"></div>-->
+                    </div>
+
+                    <div class="row ml-4 mb-10">
+                        <div class="card shadow-sm text-center p-2"  (click)="onSubmitPayment('rozerpay')">
+                            <label class="mb-0" style="cursor: pointer">
+                                <!--                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">-->
+                                <img src="/assets/images/rozorpay.png" alt="Rozorpay">
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <!--                </form>-->
                 </div>
             </div>
 
@@ -166,41 +212,6 @@
                 <div class="clearfix"></div>
 
 
-                <h3 class="f-20 mb-4 mt-35" *ngIf="paymentShow">PAYMENT INFORMATION</h3>
-<!--                <form  [formGroup]="checkoutForm">-->
-                <div class="row" *ngIf="paymentShow">
-
-                    <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('atom')">
-                            <label class="mb-0">
-<!--                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">-->
-                                <img src="/assets/images/atom.png" alt="atom">
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('payu')">
-                            <label class="mb-0">
-<!--                                <input type="radio"    name="paymentGatway" value="payu" >-->
-                                <img src="/assets/images/payu.png" alt="payumoney">
-                            </label>
-                        </div>
-
-<!--                        <div [innerHTML]="payuData"></div>-->
-                   </div>
-
-                    <div class="col-xl-4 col-lg-4 col-md-4">
-                        <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('rozerpay')">
-                            <label class="mb-0">
-<!--                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">-->
-                                <img src="/assets/images/rozorpay.png" alt="Rozorpay">
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
-<!--                </form>-->
 
 
 
