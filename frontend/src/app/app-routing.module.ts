@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'orderConfirmation/:id', component: OrderConfirmationComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'user-reset-password', component: ResetPasswordComponent },
-  { path: 'lightbox', component: LightboxComponent },
+  { path: 'wishlist', component: LightboxComponent },
 ];
 
 @NgModule({
