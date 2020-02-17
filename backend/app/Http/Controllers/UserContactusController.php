@@ -34,6 +34,10 @@ class UserContactusController extends Controller
         $Usercontactus->cart_added_on=date('Y-m-d H:i:s');
         $result=$Usercontactus->save();
         if($result){
+			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'message'=>$user_message);
+				 Mail::send('contactusmailbody', $data, function($message) use($data) {
+				 $message->to('info@imagefootage.com','Image Footage')->subject('Contact us request from Image Footage');
+			 });
             echo '{"status":"1","message":"Contact us subbmitted successfully"}';
         }else{
             echo '{"status":"0","message":"Some problem occured."}';

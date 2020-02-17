@@ -109,7 +109,7 @@ export class WishlistComponent implements OnInit {
                             }
 
                         });
-                    this.router.navigate(['/lightbox']);
+                    this.router.navigate(['/wishlist']);
                 }else{
                     this.loadingData =false;
                     alert(data["message"]);

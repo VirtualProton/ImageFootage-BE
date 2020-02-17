@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" [ngClass]="{ 'navbar-shrink': scrollEle }" id="mainNav">
   <div class="container-fluid">
    
-    <a class="navbar-brand js-scroll-trigger" href="">Image Footage</a>
+    <a class="navbar-brand js-scroll-trigger" href=""><!--Image Footage--><img src="assets/images/logoimage_new.png" width="200px" /></a>
    
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
     (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" 
@@ -50,7 +50,7 @@
           <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
         </li>
          <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" routerLink="/lightbox">Wishlist<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
+          <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Wishlist<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
         </li>
 
         <li class="nav-item" *ngIf="currentUser">

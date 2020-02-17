@@ -49,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { FailOrderComponent } from './fail-order/fail-order.component';
 //sidebar end
 
 // Configs 
@@ -56,7 +57,7 @@ export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider("396074584437141")
+          provider: new FacebookLoginProvider("509349303296309")
 		  // live 509349303296309
 		  // test 396074584437141
         },
@@ -128,7 +129,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PricingComponent,
     UserProfileComponent,
     ResetPasswordComponent,
-    LightboxComponent
+    LightboxComponent,
+    FailOrderComponent
   ],
   exports:[LoginComponent],
   providers: [

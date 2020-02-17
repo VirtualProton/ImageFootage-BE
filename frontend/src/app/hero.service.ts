@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -160,8 +160,9 @@ export class HeroService {
         const url = `${this.heroesUrl}login`;
         return this.http.post<any>(url, {email, password}, this.httpOptions).pipe(
             map(user => {
-                console.log(user);
+               	 console.log(user);
                 localStorage.setItem('currentUser', JSON.stringify(user));
+				console.log(localStorage.getItem('currentUser.utype'))
                 this.currentUserSubject.next(user);
                 return user;
             }),

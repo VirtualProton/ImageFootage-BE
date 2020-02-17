@@ -19,6 +19,7 @@ import { OrderConfirmationComponent } from './order-confirmation/order-confirmat
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LightboxComponent } from './lightbox/lightbox.component';
+import { FailOrderComponent } from './fail-order/fail-order.component';
 
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
@@ -40,7 +41,8 @@ const routes: Routes = [
   { path: 'orderConfirmation/:id', component: OrderConfirmationComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'user-reset-password', component: ResetPasswordComponent },
-  { path: 'lightbox', component: LightboxComponent },
+  { path: 'wishlist', component: LightboxComponent },
+  { path: 'orderFailed/:id', component: FailOrderComponent }
 ];
 
 @NgModule({
