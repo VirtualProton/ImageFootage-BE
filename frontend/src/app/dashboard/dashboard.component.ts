@@ -15,21 +15,27 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
+  priceArray: any = [];
   carouselSliderImages: carouselSlider[] =[];
   aoslSliderImages: aosSlider[] =[];
   aoslSliderImagesData: aosSlider[] =[];
-
+  showloginPopup:boolean=false;
+  public currentUser: any;
   randomNumber:number =0;
   searchBoxLabel:number= 1;
   page:number = 1;
   pageSize:number = 32;
   aosSliderSizes:any=[];
-  
+   loadingData:boolean=false;
 
   constructor(private heroService: HeroService,
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
-    private router: Router) {
+    private router: Router, 
+    private authenticationService: HeroService) {
+	this.authenticationService.currentUser.subscribe(x => {
+        this.currentUser = x;
+    });  
    }
 ngOnInit() {
  
@@ -160,5 +166,38 @@ ngOnInit() {
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
 		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
 	}
+	clickLoginPopup(){
+		this.showloginPopup = true;
+		return false;
+  	}
+    hideLoginPopup(event){
+		this.showloginPopup = false;
+		this.router.navigate(['/']);
+  	}
+	addtolightbox(productinfo){
+        console.log(productinfo);
+		//return false;
+        this.loadingData =true;
+        this.heroService.addWishListItemsData(productinfo.api_product_id)
+            .subscribe(data => {
+                if(data["status"]=='1'){
+                    this.loadingData =false;
+                    this.heroService.removeCartItemsData(productinfo)
+                        .subscribe(data => {
+                            if (data["status"] == '1') {
+                                this.priceArray=[];
+                           } else {
+                                alert(data["message"]);
+                            }
+
+                        });
+                    this.router.navigate(['/wishlist']);
+                }else{
+                    this.loadingData =false;
+                    alert(data["message"]);
+                }
+
+            });
+    }
     
 }

@@ -8,6 +8,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import { isNullOrUndefined } from 'util';
 import * as AOS from 'aos';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-hero-search',
@@ -26,12 +27,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class HeroSearchComponent implements OnInit {
   productType:any;
   keywordEle:any=' ';
+  priceArray: any = [];
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
   sub:Subscription;
   randomNumber:number =0;
   searchBoxLabel:string='all';
   page:number = 1;
+  public currentUser: any;
   pageSize:number = 40;
   sidebarSubmenu1:boolean = false;
   slidebarPeopleMenu:any=[];
@@ -51,7 +54,7 @@ export class HeroSearchComponent implements OnInit {
   slidebarImageSizeMenu:any=[];
   sidebarSubmenu9:boolean=false;
   sliderSortTypeMenu:any=[];
-
+  showloginPopup:boolean=false;
   name: string = '';
   carouselSliderImages: carouselSlider[] =[];
   aoslSliderImages: aosSlider[] =[];
@@ -70,8 +73,12 @@ export class HeroSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
-    private spinner: NgxSpinnerService) {
+	private router: Router,
+    private spinner: NgxSpinnerService,private authenticationService: HeroService) {
     this.searchData = new Search();
+	this.authenticationService.currentUser.subscribe(x => {
+        this.currentUser = x;
+    });
   }
   
   
@@ -386,5 +393,38 @@ export class HeroSearchComponent implements OnInit {
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
 		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
   }
+  clickLoginPopup(){
+		this.showloginPopup = true;
+		return false;
+  	}
+    hideLoginPopup(event){
+		this.showloginPopup = false;
+		this.router.navigate(['/']);
+  	}
+	addtolightbox(productinfo){
+        console.log(productinfo);
+		//return false;
+        this.loadingData =true;
+        this.heroService.addWishListItemsData(productinfo.api_product_id)
+            .subscribe(data => {
+                if(data["status"]=='1'){
+                    this.loadingData =false;
+                    this.heroService.removeCartItemsData(productinfo)
+                        .subscribe(data => {
+                            if (data["status"] == '1') {
+                                this.priceArray=[];
+                           } else {
+                                alert(data["message"]);
+                            }
+
+                        });
+                    this.router.navigate(['/wishlist']);
+                }else{
+                    this.loadingData =false;
+                    alert(data["message"]);
+                }
+
+            });
+    }
 
 }

@@ -548,39 +548,43 @@
           <div class="photos"><!-- pt-5 mt-5 -->
               <div class="row align-items-stretch">
                   <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                  <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}"-->
-                      <span  class="d-block photo-item" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
+                  <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                      <span  class=" photo-item" >
                         <div class="">
-                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
 
                             <div class="photo-text-more">
                           <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>-->
                           <p class="icons_thum">
                             <span><a href=""><i class="fa fa-image"></i></a></span>
-                            <span><a href=""><i class="fa fa-heart"></i></a></span>
-                            <span><a href=""><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
                         </p>
                         </div>
                         </div>
                       </span>
-                      <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}"-->
-                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="d-block ">
-                      <span style="position:absolute;margin-left:10px;margin-top:5px;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                      <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                      <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
                           <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
                           <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                           <div class="photo-text-more" >
-                       
+                       	  <div class="photo-text-more" >
                         <br />
                         <p class="icons_thum1" >
                         	<span><a href=""><i class="fa fa-image"></i></a></span>
-                            <span><a href=""><i class="fa fa-heart"></i></a></span>
-                            <span><a href=""><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
                         </p>
-                      
+                      </div>
                       </div>
                       </span>
                   </div>
@@ -599,3 +603,6 @@
 
   </div>
 </div>
+<ng-container *ngIf="showloginPopup">
+  <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>

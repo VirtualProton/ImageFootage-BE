@@ -113,27 +113,31 @@
             <div class="row align-items-stretch">
 <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" -->
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                    <span *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'"  class="d-block photo-item" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
+                <!-- d-block -->
+                    <span *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'"  class=" photo-item" >
 
-                      <img  src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid">
+                      <img  src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
 
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe> (mouseover)="returnonposter(htmlVideoElement)" -->
                       <div class="photo-text-more">
-                      
-                        <div class="photo-text-more">
+                      <div class="photo-text-more">
                         <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                         <span class="meta">{{aosimges.product_description}}</span>-->
                         <p class="icons_thum">
                             <span><a href=""><i class="fa fa-image"></i></a></span>
-                            <span><a href=""><i class="fa fa-heart"></i></a></span>
-                            <span><a href=""><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
+                        
                       </div>
+                      
                     </span>
-                    <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" -->
-                    <span  *ngIf="aosimges.product_web == '3'"  class="d-block" >
-                    <span style="position:absolute;margin-left:10px;margin-top:5px;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                    <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block -->
+                    <span  *ngIf="aosimges.product_web == '3'"  class=" photo-item" >
+                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
                          <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957; object-fit: cover;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
@@ -142,15 +146,18 @@
                         
                       
                         <div class="photo-text-more" >
+                        <div class="photo-text-more">
                         <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                         <span class="meta">{{aosimges.product_description}}</span>-->
                         <br />
                         <p class="icons_thum1" >
                         	<span><a href=""><i class="fa fa-image"></i></a></span>
-                            <span><a href=""><i class="fa fa-heart"></i></a></span>
-                            <span><a href=""><i class="fa fa-plus"></i></a></span>
+                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
                         </p>
-                      
+                      </div>
                       </div>
                  </span>
                 </div>
@@ -172,3 +179,6 @@
 
     </div>
 <!-- <app-hero-search></app-hero-search> -->
+<ng-container *ngIf="showloginPopup">
+  <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>

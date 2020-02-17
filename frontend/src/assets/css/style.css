@@ -692,7 +692,7 @@ h1, h2, h3, h4, h5,
         padding-left: 15px;
         padding-right: 15px; } }
   .main-content .photos .photo-item {
-    position: relative; }
+   /* position: relative;*/ }
     .main-content .photos .photo-item:after {
       position: absolute;
       content: "";
@@ -739,7 +739,7 @@ h1, h2, h3, h4, h5,
       -o-object-fit: cover;
       object-fit: cover;
       height: 300px;
-      margin-bottom: 20px; }
+      margin-bottom: 20px;     cursor: pointer; }
 	  
 	    .main-content .photos .cartItem .photo-item img {
       width: 100%;
@@ -763,7 +763,7 @@ h1, h2, h3, h4, h5,
           height: 200px; } }
     .main-content .photos .photo-item:hover:after {
       opacity: 1;
-      visibility: visible; }
+      /*visibility: visible;*/ }
     .main-content .photos .photo-item:hover .photo-text-more {
       margin-top: 0;
       opacity: 1;
