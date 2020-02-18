@@ -63,6 +63,7 @@
                   <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
                   	<option [selected]="productType == 1" value="1"><br />Images Only<br /></option>
                     <option [selected]="productType == 2" value="2">Footages Only<br /></option>
+                    <option [selected]="productType == 3" value="3">Editorial<br /></option>
                   </select>
                      <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
                         <span *ngIf='productType == 3'>Photos + Videos</span>
@@ -557,7 +558,7 @@
                           <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>-->
                           <p class="icons_thum">
-                            <span><a href=""><i class="fa fa-image"></i></a></span>
+                            <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -578,7 +579,7 @@
                        	  <div class="photo-text-more" >
                         <br />
                         <p class="icons_thum1" >
-                        	<span><a href=""><i class="fa fa-image"></i></a></span>
+                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>

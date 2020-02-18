@@ -4,7 +4,8 @@
         <span></span>
     </div>
 </div>
-<div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='2'">
+<!-- pt-5 -->
+<div class="site-wrap mt-5  bg-dark" *ngIf="webtype=='2'">
     <main class="main-content p-0">
         <div class="container-fluid photos">
             <div class="row mr-2">
@@ -13,11 +14,12 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
 
                         <div class="p-3">
-                            <p class="text-white f-20 mb-0 pt-3">{{detailPageInfo.metadata.title}}</p>
+                            <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}}</p>
                             <p>{{detailPageInfo.metadata.description}}</p>
-
-                            <div data-aos="fade-up">
-                                <a  class="d-block photo-item">
+							<!-- data-aos="fade-up" -->
+                            <div >
+                            <!-- photo-item -->
+                                <a  class="d-block " style="text-align: center;">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image" class="img-fluid">
                                     <!--<div class="photo-text-more">
                                         <div class="photo-text-more">
@@ -66,11 +68,12 @@
                                     	<label class="btn btn-dark col-md-3" *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
                                         <p class="f-12">{{cost.description}}</p>
-                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80}}</p>
+                                        <!-- | currency:'INR'-->
+                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
                                     </label>
                                     </div>
                                 </div>
-<!--                                <p><small><span class="text-warning"> Small</span> 866x578px | 12.03x8.03" 72dpi</small></p>-->
+                                <p><small><span class="text-warning">Standard Licence Only</span> <span style="cursor:pointer;" (click)="open(content)">Learn More</span></small></p>
                             </div>
                             <div id="extlic" *ngIf="extendedTab" class="tab-pane active">
 
@@ -83,11 +86,12 @@
                                                 <p class="f-14  fw-6 pt-2" >{{license.name}}</p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-lg-3">
-                                                <p class="mb-0"><strong><i class="fa fa-inr"></i>{{license.price*80}}</strong></p>
+                                                <p class="mb-0"><strong><i class="fa fa-inr"></i> {{license.price*80 | number}}</strong></p>
                                             </div>
                                         </div>
 
                                     </label>
+                                    <p><small><span class="text-warning">Extended Licence Only</span> <span style="cursor:pointer;" (click)="open(content1)">Learn More</span></small></p>
                                  </div>
 
                             </div>
@@ -114,14 +118,14 @@
 
                         <div class="row mt-5" *ngIf="total>0">
                             <div class="col-12">
-                               <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
-                               <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
+                               <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price | number}} </p>
+                               <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price | number}}</p>
                              </div>
                             <div class="col-4">
                                 <p class="text-white"><strong>TOTAL</strong></p>
                             </div>
                             <div class="col-8 text-right">
-                                <h2 class="text-warning f-24 fw-6">{{total}} INR</h2>
+                                <h2 class="text-warning f-24 fw-6">{{total | number}} INR</h2>
                             </div>
                         </div>
 <!--                        <div class="row mt-5">-->
@@ -363,7 +367,7 @@
 
             </div>
 
-<div class="site-wrap mt-5 pt-5 bg-dark" *ngIf="webtype=='3'">
+<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype=='3'">
 
     <main class="main-content p-0">
         <div class="container-fluid photos">
@@ -371,14 +375,15 @@
 
                 <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
                     <div class="cartItem" *ngIf="detailPageInfo">
-
-                        <div class="p-3">
-                            <p class="text-white f-20 mb-0 pt-3">{{detailPageInfo[0].items[0].n}}</p>
-                            <p>{{detailPageInfo[0].items[0].desc}}</p>
-
-                            <div data-aos="fade-up">
+						<!-- p-3 -->
+                        <div class="">
+                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}}</p>
+                            <p class="pl-3">{{detailPageInfo[0].items[0].desc}}</p>
+<!-- data-aos="fade-up" -->
+                            <div >
                                 <a  class="d-block">
-                                    <div class="embed-responsive embed-responsive-16by9">
+                                <!-- class="embed-responsive embed-responsive-16by9"-->
+                                    <div  style="text-align:center;">
                                     <video controls [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]" controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()" >
                                         <source src="{{detailPageInfo[0].flv_base+detailPageInfo[1]}}" type="video/mp4">
                                         Your browser does not support the video tag.
@@ -427,10 +432,10 @@
                                     <label class="btn btn-dark" *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">
                                         <p class="f-12">{{cost.size}}</p>
-                                        <p class="f-30 mb-0"> <i class="fa fa-inr"></i>{{cost.pr*80}}</p>
+                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.pr*80 | number}}</p>
                                     </label>
                                 </div>
-                                <!--                                <p><small><span class="text-warning"> Small</span> 866x578px | 12.03x8.03" 72dpi</small></p>-->
+                               <p><small><span class="text-warning">Standard Licence Only</span> <span style="cursor:pointer;" (click)="open(content)">Learn More</span></small></p>
                             </div>
                         </div>
 
@@ -454,14 +459,14 @@
 
                         <div class="row mt-5" *ngIf="total>0">
                             <div class="col-12">
-                                <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price}} </p>
-                                <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price}}</p>
+                                <p class="text-white" *ngIf="currunt_selected_price>0">Selected Price:-  {{currunt_selected_price | number}} </p>
+                                <p class="text-white" *ngIf="extended_price>0">Selected Extended Price :-  {{extended_price | number}}</p>
                             </div>
                             <div class="col-4">
                                 <p class="text-white"><strong>TOTAL</strong></p>
                             </div>
                             <div class="col-8 text-right">
-                                <h2 class="text-warning f-24 fw-6">{{total}} INR</h2>
+                                <h2 class="text-warning f-24 fw-6">{{total |number }} INR</h2>
                             </div>
                         </div>
 
@@ -692,3 +697,38 @@
 <ng-container *ngIf="showloginPopup">
     <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
 </ng-container>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Standard Licence</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ 
+ 
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Extended Licence</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div>
+</ng-template>

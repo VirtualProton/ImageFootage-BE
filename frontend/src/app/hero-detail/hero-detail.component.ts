@@ -8,6 +8,7 @@ import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { isNullOrUndefined } from 'util';
 import { element } from 'protractor';
 import {DomSanitizer} from '@angular/platform-browser';
+import {NgbModalConfig,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 import { NgxSpinnerService } from "ngx-spinner";
@@ -16,7 +17,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
   styleUrls: [ './hero-detail.component.css' ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers:[NgbModalConfig,NgbModal]
 
 })
 export class HeroDetailComponent implements OnInit {
@@ -52,12 +54,12 @@ export class HeroDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router,private sanitizer: DomSanitizer
-  ) {
+    private location: Location,private dataHelper:imageFooterHelper, private authenticationService: HeroService,private router: Router,private sanitizer: DomSanitizer,config: NgbModalConfig, private modalService: NgbModal ) {
     this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
-    });  
-
+    });
+	config.backdrop = 'static';
+    config.keyboard = false;
   }
 
   ngOnInit(): void {
@@ -300,5 +302,8 @@ export class HeroDetailComponent implements OnInit {
                 }
 
             });
+    }
+	open(content) {
+    	this.modalService.open(content);
     }
 }
