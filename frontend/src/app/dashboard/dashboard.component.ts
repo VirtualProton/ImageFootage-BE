@@ -182,21 +182,38 @@ ngOnInit() {
             .subscribe(data => {
                 if(data["status"]=='1'){
                     this.loadingData =false;
-                    this.heroService.removeCartItemsData(productinfo)
-                        .subscribe(data => {
-                            if (data["status"] == '1') {
-                                this.priceArray=[];
-                           } else {
-                                alert(data["message"]);
-                            }
-
-                        });
                     this.router.navigate(['/wishlist']);
                 }else{
                     this.loadingData =false;
                     alert(data["message"]);
                 }
 
+            });
+    }
+
+    getPrice(api_id,webtype,mainType){
+        console.log(api_id);
+        console.log(webtype);
+        console.log(mainType);
+        this.heroService.getDetailPagedetails(api_id,webtype,mainType)
+            .subscribe(data => {
+                console.log(data);
+                // if(this.webtype==2){
+                //     this.detailPageInfo = data[0];
+                //     this.imagefootId = data[1];
+                //     let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
+                //     this.keyword = keywords.split(",").map(item => item.trim());
+                //     this.filePreview = data[2];
+                //     //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
+                // }else if(this.webtype==3){
+                //     this.detailPageInfo = data;
+                //     let keywords  = this.detailPageInfo[0].items[0].kw;
+                //     this.keyword = keywords.split(",").map(item => item.trim());
+                // }
+
+                //this.keyword = keywords.split(',',10);
+                //this.spinner.hide();
+                this.loadingData =false;
             });
     }
     

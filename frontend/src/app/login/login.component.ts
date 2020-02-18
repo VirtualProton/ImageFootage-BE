@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
                          this.loading = false;
                          alert("Please enter correct username or password");
                      }else{
-					 alert("Login Successful");
+					      alert("Login Successful");
                          this.closeLoginPopup.emit(true);
                      }
                     },

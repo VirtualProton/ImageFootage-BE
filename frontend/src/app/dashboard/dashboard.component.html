@@ -150,7 +150,7 @@
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                         
@@ -177,7 +177,7 @@
                              <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;'  (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>

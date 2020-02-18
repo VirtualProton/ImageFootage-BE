@@ -6,7 +6,7 @@
 </div>
 <section>
     <div class="container">
-        <div class="card pb-3 shadow-sm" *ngIf="lightBoxListDataItems">
+        <div class="card pb-3 shadow-sm" *ngIf="lightBoxListDataItems.length>0">
             <form method="#">
                 <div class="table-responsive">
                     <table class="table cart-table">
@@ -57,7 +57,7 @@
 
             </form>
         </div>
-        <div class="card pb-3 shadow-sm" *ngIf="!lightBoxListDataItems">
+        <div class="card pb-3 shadow-sm" *ngIf="lightBoxListDataItems.length==0">
             Your Wishlist is Empty.
         </div>
     </div>
