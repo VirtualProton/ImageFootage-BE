@@ -142,6 +142,15 @@ export class HeroService {
             catchError(this.handleError<any>(`unable to get data`))
         );
     }
+	getRelatedProductData(searchData: any): Observable<any> {
+        let url = `${this.heroesUrl}relatedsearch`;
+        return this.http.post<any>(url, searchData, this.httpOptions).pipe(
+            map(searchResultSet => {
+                return searchResultSet.imgfootage;
+            }),
+            catchError(this.handleError<any>(`unable to get data`))
+        );
+    }
 
     getSearchLeftFilter(): Observable<any> {
         const url = `${this.heroesUrl}get_side_filtes`

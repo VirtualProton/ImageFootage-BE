@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Hero, carouselSliderImages, aosSlider, market, detailPageInfo }         from '../hero';
+import { Hero, carouselSliderImages, aosSlider, market, detailPageInfo,Search }         from '../hero';
 import { HeroService }  from '../hero.service';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { isNullOrUndefined } from 'util';
@@ -25,8 +25,10 @@ export class HeroDetailComponent implements OnInit {
   carouselSliderImages: carouselSliderImages;
   hero:Hero;
   aoslSliderImagesData: aosSlider[] =[];
+  searchData : Search;
   page:number = 1;
-  pageSize:number = 5;
+  pageSize:number = 12;
+  relatedData:any=[];
   marketDetails:market;
   detailPageInfo:detailPageInfo;
   public currentUser: any;
@@ -67,7 +69,6 @@ export class HeroDetailComponent implements OnInit {
       this.loadingData =true;
      //this.getcategoryCarouselImages();
      this.getDetailinfo();
-
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
@@ -81,7 +82,12 @@ export class HeroDetailComponent implements OnInit {
       let type = this.route.snapshot.paramMap.get('type');
       this.heroService.getDetailPagedetails(id,webtype,type)
           .subscribe(data => {
-              console.log(data);
+              //console.log(data); 
+			  let sent= data[0].metadata.title.split(" "); 
+			  //sent=sent.remove('in').remove('of');
+			  //console.log(sent);
+			  this.grtRelatedProducts(data[0].metadata.title);
+			  
               if(webtype==2){
                   // this.detailPageInfo = data[0];
                   // this.imagefootId = data[1];
@@ -98,7 +104,17 @@ export class HeroDetailComponent implements OnInit {
               //this.keyword = keywords.split(',',10);
               //this.spinner.hide();
               this.loadingData =false;
+			   
           });
+		  
+  }
+  grtRelatedProducts(keyword){
+ 	 this.heroService.getRelatedProductData(keyword).subscribe(relatedData => {
+       //console.log(relatedData);
+	   this.relatedData=relatedData;
+         
+      });
+	
   }
 
   getDetailinfo(){
@@ -107,7 +123,7 @@ export class HeroDetailComponent implements OnInit {
     this.type = this.route.snapshot.paramMap.get('type');
     this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
-         console.log(data);
+         //console.log(data);
          if(this.webtype==2){
              this.detailPageInfo = data[0];
              this.imagefootId = data[1];
@@ -138,7 +154,6 @@ export class HeroDetailComponent implements OnInit {
       .subscribe(aoslSliderImages => {
           if(!isNullOrUndefined(aoslSliderImages)){
               this.carouselSliderImages = aoslSliderImages;
-
               let randArr = [4, 3, 2,3];
               let tempCarouselSlider= this.chunkArray(this.carouselSliderImages.categoryImages, 4);
               this.carouselSliderImages.categoryImages = JSON.parse(JSON.stringify(tempCarouselSlider));
@@ -162,9 +177,9 @@ export class HeroDetailComponent implements OnInit {
       
   }
 
-  getClassName(ele){
+  /*getClassName(ele){
     return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
-  }
+  }*/
 
   addToCheckoutItem(productinfo,cartproduct,total,extended,type){
     if (!this.currentUser) {
@@ -306,4 +321,13 @@ export class HeroDetailComponent implements OnInit {
 	open(content) {
     	this.modalService.open(content);
     }
+	getClassName(ele){
+       // return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+	   return 'col-6 col-md-3 col-lg-3';
+    }
+	onNavigate(link,pid,pweb,prod_type){
+		//for redirect
+		//alert(link+pid+'/'+pweb+'/'+prod_type);
+		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
+  }
 }

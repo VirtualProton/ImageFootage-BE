@@ -111,7 +111,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<style>\r\n  body{background-color: #fff !important;}\r\n  .text-black{color:#000 !important;}\r\n  </style>\r\n  \r\n<section class=\"banner-area relative\">\r\n    <div class=\"overlay overlay-bg\"></div>\r\n    <div class=\"banner-content text-center\">\r\n      <h1>Contact Us</h1>\r\n      <p>\r\n        Elementum libero hac leo integer. Risus hac parturient feugiat litora\r\n        <br />\r\n        cursus hendrerit bibendum per\r\n      </p>\r\n    </div>\r\n  </section>\r\n  <section class=\"contact-page-area section-gap bg-white\">\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n       \r\n        <div class=\"col-lg-4 col-md-4 d-flex flex-column address-wrap text-black f-3\">\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\"><span class=\"icon-home2 mr-1\"></span></div>\r\n            <div class=\"contact-details\">\r\n                <h5> PO Box 390667 Dubai - UAE</h5>\r\n                <!--<p>Hyderabad , Telangana,India,Zip Code: 5000029</p>-->\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\">\r\n              <span class=\"icon-phone2 mr-1\"></span>\r\n            </div>\r\n            <div class=\"contact-details\">\r\n              <h5>18004198123</h5>\r\n              <p>Mon to Fri 10am to 6 pm</p>\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\"><span class=\"icon-envelope-o mr-1\"></span></div>\r\n            <div class=\"contact-details\">\r\n              <h5>info@imagefootage.com</h5>\r\n              <p>Send us your query anytime!</p>\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n           \r\n            <div class=\"contact-details\">\r\n              <p>Contributors are invited to email content to info@imagefootage.com until such time our uploading feature becomes functional soon. </p>\r\n            </div>\r\n          </div>\r\n          \r\n        </div>\r\n        <div class=\"col-lg-8\">\r\n          <form class=\"form-area contact-form text-right\"  id=\"myForm\" [formGroup]=\"contactForm\" (ngSubmit)=\"onContactSubmit()\">\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6 form-group\">\r\n                <input name=\"name\" formControlName=\"user_name\" [ngClass]=\"{ 'is-invalid': submitted && f.user_name.errors }\"   placeholder=\"Enter your name\"  class=\"common-input mb-20 form-control\"   type=\"text\" />\r\n                <div *ngIf=\"submitted && f.user_name.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_name.errors.required\">Name is required</div>\r\n                </div>\r\n                <input name=\"email\" type=\"text\" placeholder=\"Enter email address\" class=\"common-input mb-20 form-control\" formControlName=\"user_email\" [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\"/>\r\n                <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\r\n                    <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\r\n                </div>\r\n                <input  name=\"subject\" placeholder=\"Enter subject\"  class=\"common-input mb-20 form-control\" type=\"text\"  formControlName=\"user_subject\" [ngClass]=\"{ 'is-invalid': submitted && f.user_subject.errors }\"/>\r\n                <div *ngIf=\"submitted && f.user_subject.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_subject.errors.required\">Subject is required</div>\r\n                </div>\r\n                <input placeholder=\"Enter mobile number\"  class=\"common-input mb-20 form-control\" pattern=\"[0-9]*\"  type=\"text\" id=\"mbnum\" formControlName=\"mobile_number\" [ngClass]=\"{ 'is-invalid': submitted && f.mobile_number.errors }\" class=\"form-control \">\r\n                <div *ngIf=\"submitted && f.mobile_number.errors\" class=\"invalid-feedback\">\r\n                  <div *ngIf=\"f.mobile_number.errors.required\">Mobile Number is required</div>\r\n                  <div *ngIf=\"f.mobile_number.errors.minlength || f.mobile_number.errors.maxlength\">Mobile number should be 10 digits</div>\r\n                  <div *ngIf=\"f.mobile_number.errors.pattern\">Mobile numberr should be only numbers</div>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-lg-6 form-group\">\r\n                <textarea  class=\"common-textarea form-control\"  name=\"message\" formControlName=\"user_message\" [ngClass]=\"{ 'is-invalid': submitted && f.user_message.errors }\" placeholder=\"Enter Messege\"  ></textarea>\r\n                <div *ngIf=\"submitted && f.user_message.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_message.errors.required\">Message is required</div>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-lg-12\">\r\n                <div class=\"alert-msg\" style=\"text-align: left;\"></div>\r\n                <button  [disabled]=\"loading\" type=\"submit\" class=\"primary-btn text-uppercase\"   style=\"float: right;\">Send Message </button>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n      \r\n       <!--<div class=\"row pt-5\">\r\n       <iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.6762131588266!2d55.116284314478484!3d24.90902374944515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f0c9e12ebbfeb%3A0xf712e81682699f46!2sDubai%20South%20Business%20Centre!5e0!3m2!1sen!2sin!4v1580188294475!5m2!1sen!2sin\" width=\"100%\" height=\"450\" frameborder=\"0\" style=\"border:0;\" allowfullscreen=\"\"></iframe>\r\n       </div>-->\r\n    </div>\r\n  </section>\r\n";
+    __webpack_exports__["default"] = "<style>\r\n  body{background-color: #fff !important;}\r\n  .text-black{color:#000 !important;}\r\n  </style>\r\n  \r\n<section class=\"banner-area relative\">\r\n    <div class=\"overlay overlay-bg\"></div>\r\n    <div class=\"banner-content text-center\">\r\n      <h1>Contact Us</h1>\r\n      <!--<p>\r\n        Elementum libero hac leo integer. Risus hac parturient feugiat litora\r\n        <br />\r\n        cursus hendrerit bibendum per\r\n      </p>-->\r\n    </div>\r\n  </section>\r\n  <section class=\"contact-page-area section-gap bg-white\">\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n       \r\n        <div class=\"col-lg-4 col-md-4 d-flex flex-column address-wrap text-black f-3\">\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\"><span class=\"icon-home2 mr-1\"></span></div>\r\n            <div class=\"contact-details\">\r\n                <h5> PO Box 390667 Dubai - UAE</h5>\r\n                <!--<p>Hyderabad , Telangana,India,Zip Code: 5000029</p>-->\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\">\r\n              <span class=\"icon-phone2 mr-1\"></span>\r\n            </div>\r\n            <div class=\"contact-details\">\r\n              <h5>1800 419 8123</h5>\r\n              <p>Mon to Fri 10:00 AM to 06:00 PM</p>\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n            <div class=\"icon f-22\"><span class=\"icon-envelope-o mr-1\"></span></div>\r\n            <div class=\"contact-details\">\r\n              <h5><a href=\"mailto:info@imagefootage.com\">info@imagefootage.com</a></h5>\r\n              <p>Send us your query anytime!</p>\r\n            </div>\r\n          </div>\r\n          <div class=\"single-contact-address d-flex flex-row\">\r\n           \r\n            <div class=\"contact-details\">\r\n              <p>Contributors are invited to email content to <a href=\"mailto:info@imagefootage.com\">info@imagefootage.com</a> until such time our uploading feature becomes functional soon. </p>\r\n            </div>\r\n          </div>\r\n          \r\n        </div>\r\n        <div class=\"col-lg-8\">\r\n          <form class=\"form-area contact-form text-right\"  id=\"myForm\" [formGroup]=\"contactForm\" (ngSubmit)=\"onContactSubmit()\">\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6 form-group\">\r\n                <input name=\"name\" formControlName=\"user_name\" [ngClass]=\"{ 'is-invalid': submitted && f.user_name.errors }\"   placeholder=\"Your Name\"  class=\"common-input mb-20 form-control\"   type=\"text\" />\r\n                <div *ngIf=\"submitted && f.user_name.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_name.errors.required\">Name is required</div>\r\n                </div>\r\n                <input name=\"email\" type=\"text\" placeholder=\"Email Address\" class=\"common-input mb-20 form-control\" formControlName=\"user_email\" [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\"/>\r\n                <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\r\n                    <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\r\n                </div>\r\n                <input  name=\"subject\" placeholder=\"Subject\"  class=\"common-input mb-20 form-control\" type=\"text\"  formControlName=\"user_subject\" [ngClass]=\"{ 'is-invalid': submitted && f.user_subject.errors }\"/>\r\n                <div *ngIf=\"submitted && f.user_subject.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_subject.errors.required\">Subject is required</div>\r\n                </div>\r\n                <input placeholder=\"Mobile Number\"  class=\"common-input mb-20 form-control\" pattern=\"[0-9]*\"  type=\"text\" id=\"mbnum\" formControlName=\"mobile_number\" [ngClass]=\"{ 'is-invalid': submitted && f.mobile_number.errors }\" class=\"form-control \">\r\n                <div *ngIf=\"submitted && f.mobile_number.errors\" class=\"invalid-feedback\">\r\n                  <div *ngIf=\"f.mobile_number.errors.required\">Mobile Number is required</div>\r\n                  <div *ngIf=\"f.mobile_number.errors.minlength || f.mobile_number.errors.maxlength\">Mobile number should be 10 digits</div>\r\n                  <div *ngIf=\"f.mobile_number.errors.pattern\">Mobile numberr should be only numbers</div>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-lg-6 form-group\">\r\n                <textarea  class=\"common-textarea form-control\"  name=\"message\" formControlName=\"user_message\" [ngClass]=\"{ 'is-invalid': submitted && f.user_message.errors }\" placeholder=\"Your Messege\"  ></textarea>\r\n                <div *ngIf=\"submitted && f.user_message.errors\" class=\"invalid-feedback\">\r\n                    <div *ngIf=\"f.user_message.errors.required\">Message is required</div>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-lg-12\">\r\n                <div class=\"alert-msg\" style=\"text-align: left;\"></div>\r\n                <button  [disabled]=\"loading\" type=\"submit\" class=\"primary-btn text-uppercase\"   style=\"float: right;\">Send Message </button>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n      \r\n       <!--<div class=\"row pt-5\">\r\n       <iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.6762131588266!2d55.116284314478484!3d24.90902374944515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f0c9e12ebbfeb%3A0xf712e81682699f46!2sDubai%20South%20Business%20Centre!5e0!3m2!1sen!2sin!4v1580188294475!5m2!1sen!2sin\" width=\"100%\" height=\"450\" frameborder=\"0\" style=\"border:0;\" allowfullscreen=\"\"></iframe>\r\n       </div>-->\r\n    </div>\r\n  </section>\r\n";
     /***/
   },
 
@@ -231,7 +231,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<!-- pt-5 -->\r\n<div class=\"site-wrap mt-5  bg-dark\" *ngIf=\"webtype=='2'\">\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\r\n                        <div class=\"p-3\">\r\n                            <p class=\"text-white f-20 mb-0 pt-1\">{{detailPageInfo.metadata.title}}</p>\r\n                            <p>{{detailPageInfo.metadata.description}}</p>\r\n\t\t\t\t\t\t\t<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                            <!-- photo-item -->\r\n                                <a  class=\"d-block \" style=\"text-align: center;\">\r\n                                    <img src=\"{{detailPageInfo.media.preview_url_no_wm}}\" #element alt=\"Image\" class=\"img-fluid\">\r\n                                    <!--<div class=\"photo-text-more\">\r\n                                        <div class=\"photo-text-more\">\r\n                                            <h3 class=\"heading\">{{detailPageInfo.metadata.title}}</h3>\r\n                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>\r\n                                        </div>\r\n                                    </div>-->\r\n                                </a>\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                 <a href=\"{{filePreview}}\" download=\"{{imagefootId+'.jpg'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                 <a (click)=\"addtolightbox(imagefootId)\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=1&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                             <a class=\"nav-link \"  [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard Licence</a>\r\n                            </li>\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link\" [ngClass]=\"[ extendedTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('2')\">Extended Licence</a>\r\n                            </li>\r\n\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1 col-md-12\" data-toggle=\"buttons\">\r\n                                \t<div class=\"row\">\r\n                                    \t<label class=\"btn btn-dark col-md-3\" *ngFor=\"let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotal(cost)\" style=\"display:none;\">\r\n                                        <p class=\"f-12\">{{cost.description}}</p>\r\n                                        <!-- | currency:'INR'-->\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.price*80  | number }}</p>\r\n                                    </label>\r\n                                    </div>\r\n                                </div>\r\n                                <p><small><span class=\"text-warning\">Standard Licence Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span></small></p>\r\n                            </div>\r\n                            <div id=\"extlic\" *ngIf=\"extendedTab\" class=\"tab-pane active\">\r\n\r\n                                <p class=\"text-white lsp-1 f-14 text-uppercase pt-3\">Extended Licenses</p>\r\n                                <div class=\"btn-group btn-group-toggle mb-4  d-block\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark text-left border-0\" *ngFor=\"let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{j}}\" autocomplete=\"off\" [class]=\"j==0 ? 'checked' : ''\" (click)=\"addExtendedPriceTotal(license)\">\r\n                                        <div class=\"row align-items-center\">\r\n                                            <div class=\"col-md-9 col-sm-9 col-lg-9\" >\r\n                                                <p class=\"f-14  fw-6 pt-2\" >{{license.name}}</p>\r\n                                            </div>\r\n                                            <div class=\"col-md-3 col-sm-3 col-lg-3\">\r\n                                                <p class=\"mb-0\"><strong><i class=\"fa fa-inr\"></i> {{license.price*80 | number}}</strong></p>\r\n                                            </div>\r\n                                        </div>\r\n\r\n                                    </label>\r\n                                    <p><small><span class=\"text-warning\">Extended Licence Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content1)\">Learn More</span></small></p>\r\n                                 </div>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                               <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                               <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                             </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total | number}} INR</h2>\r\n                            </div>\r\n                        </div>\r\n<!--                        <div class=\"row mt-5\">-->\r\n<!--                            <div class=\"col-4\">-->\r\n<!--                                <p class=\"text-white\"><strong>TOTAL</strong></p>-->\r\n<!--                            </div>-->\r\n<!--                            <div class=\"col-8 text-right\">-->\r\n<!--                                <h2 class=\"text-warning f-24 fw-6\">$100.00 USD</h2>-->\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'2')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                                <!--<p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n<!--\r\n                        <p class=\"\">DETAILS</p>\r\n                        <table class=\"f-12\">\r\n                            <tbody>\r\n                            <tr>\r\n                                <td width=\"20%\">Restrictions :</td>\r\n                                <td>Contact your local office for all commercial or promotional uses.</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Credit :</td>\r\n                                <td>{{detailPageInfo.metadata.author_realname}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Product ID :</td>\r\n                                <td>{{imagefootId}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Editorial # :</td>\r\n                                <td>{{detailPageInfo.metadata.editorial}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Collection :</td>\r\n                                <td>Getty Images News</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Date created :</td>\r\n                                <td>{{detailPageInfo.metadata.date}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Licence type :</td>\r\n                                <td *ngIf=\"detailPageInfo.options.extended=='yes'\">Extended</td>\r\n                                <td *ngIf=\"detailPageInfo.options.rights_managed=='yes'\">Right Managed</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Release info :</td>\r\n                                <td>Not released. More information</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Source :</td>\r\n                                <td>Getty Images AsiaPac</td>\r\n                            </tr>\r\n\r\n\r\n\r\n                            <tr>\r\n                                <td>Max file size :</td>\r\n                                <td>{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</td>\r\n                            </tr>\r\n                            </tbody>\r\n\r\n                        </table>\r\n                        \r\n                        \r\n                        \r\n                        -->\r\n                        \r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                       \r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_realname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{imagefootId}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Editorial #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.editorial}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Licence type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\"><p *ngIf=\"detailPageInfo.options.extended=='yes'\">Extended</p>\r\n                                <p *ngIf=\"detailPageInfo.options.rights_managed=='yes'\">Right Managed</p></div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>\r\n                            </div>\r\n                        </div>\r\n                     </div>\r\n                </div>\r\n            </div>\r\n\r\n    <div class=\"bg-black p-3\">\r\n        <div class=\"row align-items-stretch\">\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n            <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n              <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n              <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n              <div class=\"photo-text-more\">\r\n\r\n                <div class=\"photo-text-more\">\r\n                <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n              </div>\r\n              </div>\r\n            </a>\r\n          </div>\r\n        </div>\r\n            </div>\r\n         <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n               <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n      </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n            </div>\r\n\r\n<div class=\"site-wrap mt-5 pt-1 bg-dark\" *ngIf=\"webtype=='3'\">\r\n\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\t\t\t\t\t\t<!-- p-3 -->\r\n                        <div class=\"\">\r\n                            <p class=\"text-white f-20 mb-0 pt-3 pl-3\">{{detailPageInfo[0].items[0].n}}</p>\r\n                            <p class=\"pl-3\">{{detailPageInfo[0].items[0].desc}}</p>\r\n<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                                <a  class=\"d-block\">\r\n                                <!-- class=\"embed-responsive embed-responsive-16by9\"-->\r\n                                    <div  style=\"text-align:center;\">\r\n                                    <video controls [poster]=\"'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]\" controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\" >\r\n                                        <source src=\"{{detailPageInfo[0].flv_base+detailPageInfo[1]}}\" type=\"video/mp4\">\r\n                                        Your browser does not support the video tag.\r\n                                    </video>\r\n                                    </div>\r\n                                </a>\r\n<!--                                    <div class=\"photo-text-more\">-->\r\n<!--                                        <div class=\"photo-text-more\">-->\r\n<!--                                            <h3 class=\"heading\">{{detailPageInfo[0].items[0].pf}}</h3>-->\r\n<!--&lt;!&ndash;                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->\r\n<!--                                        </div>-->\r\n<!--                                    </div>-->\r\n\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                    <a href=\"{{detailPageInfo[4]}}\" download=\"{{detailPageInfo[3]+'.mp4'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                    <a (click)=\"addtolightbox(detailPageInfo[3])\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=2&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link \" [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard Licence</a>\r\n                            </li>\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark\" *ngFor=\"let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotalFootage(cost)\">\r\n                                        <p class=\"f-12\">{{cost.size}}</p>\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.pr*80 | number}}</p>\r\n                                    </label>\r\n                                </div>\r\n                               <p><small><span class=\"text-warning\">Standard Licence Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span></small></p>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                                <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                                <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                            </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total |number }} INR</h2>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'3')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                               <!-- <p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                        <!--<table class=\"f-12\">\r\n                            <tbody>\r\n                            <tr>\r\n                                <td width=\"20%\">Restrictions :</td>\r\n                                <td>Contact your local office for all commercial or promotional uses.</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Credit :</td>\r\n                                <td>{{detailPageInfo[0].items[0].artistname}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Product ID :</td>\r\n                                <td>{{detailPageInfo[3]}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Duration # :</td>\r\n                                <td>{{detailPageInfo[0].items[0].dur}}</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Collection :</td>\r\n                                                            <td>Getty Images News</td>\r\n                                                        </tr>\r\n                            <tr>\r\n                                <td>Date created :</td>\r\n                                <td>{{detailPageInfo[0].items[0].date}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Licence type :</td>\r\n                                <td>Standard</td>\r\n\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Release info :</td>\r\n                                <td>Not released. More information</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Source :</td>\r\n                                                            <td>Getty Images AsiaPac</td>\r\n                                                        </tr>\r\n\r\n\r\n\r\n                            <tr>\r\n                                <td>Max file size :</td>\r\n                                <td>{{detailPageInfo[0].items[0].filesize}}</td>\r\n                            </tr>\r\n                            </tbody>\r\n\r\n                        </table>-->\r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].artistname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[3]}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Duration #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].dur}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Licence type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">Standard</div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].filesize}}</div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <div class=\"bg-black p-3\">\r\n                <div class=\"row align-items-stretch\">\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                        <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n                            <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                            <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                            <div class=\"photo-text-more\">\r\n\r\n                                <div class=\"photo-text-more\">\r\n                                    <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                                    <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n                                </div>\r\n                            </div>\r\n                        </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n                <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n            </div>\r\n\r\n        </div>\r\n    </main>\r\n\r\n</div>\r\n\r\n<ng-container *ngIf=\"showloginPopup\">\r\n    <app-login [openLoginPopup]=\"showloginPopup\" (closeLoginPopup)=\"hideLoginPopup($event)\"></app-login>\r\n</ng-container>\r\n\r\n\r\n\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Standard Licence</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n \r\n \r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>\r\n</ng-template>\r\n\r\n<ng-template #content1 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Extended Licence</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    \r\n    \r\n    \r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>\r\n</ng-template>\r\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<!-- pt-5 -->\r\n<div class=\"site-wrap mt-5  bg-dark\" *ngIf=\"webtype=='2'\">\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\r\n                        <div class=\"p-3\">\r\n                            <p class=\"text-white f-20 mb-0 pt-1\">{{detailPageInfo.metadata.title}}</p>\r\n                            <p>{{detailPageInfo.metadata.description}}</p>\r\n\t\t\t\t\t\t\t<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                            <!-- photo-item -->\r\n                                <a  class=\"d-block \" style=\"text-align: center;\">\r\n                                    <img src=\"{{detailPageInfo.media.preview_url_no_wm}}\" #element alt=\"Image\" class=\"img-fluid\">\r\n                                    <!--<div class=\"photo-text-more\">\r\n                                        <div class=\"photo-text-more\">\r\n                                            <h3 class=\"heading\">{{detailPageInfo.metadata.title}}</h3>\r\n                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>\r\n                                        </div>\r\n                                    </div>-->\r\n                                </a>\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                 <a href=\"{{filePreview}}\" download=\"{{imagefootId+'.jpg'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                 <a (click)=\"addtolightbox(imagefootId)\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=1&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                             <a class=\"nav-link \"  [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard Licence</a>\r\n                            </li>\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link\" [ngClass]=\"[ extendedTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('2')\">Extended Licence</a>\r\n                            </li>\r\n\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1 col-md-12\" data-toggle=\"buttons\">\r\n                                \t<div class=\"row\">\r\n                                    \t<label class=\"btn btn-dark col-md-3\" *ngFor=\"let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotal(cost)\" style=\"display:none;\">\r\n                                        <p class=\"f-12\">{{cost.description}}</p>\r\n                                        <!-- | currency:'INR'-->\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.price*80  | number }}</p>\r\n                                    </label>\r\n                                    </div>\r\n                                </div>\r\n                                <p><small><span class=\"text-warning\">Standard Licence Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                            <div id=\"extlic\" *ngIf=\"extendedTab\" class=\"tab-pane active\">\r\n\r\n                                <p class=\"text-white lsp-1 f-14 text-uppercase pt-3\">Extended Licenses</p>\r\n                                <div class=\"btn-group btn-group-toggle mb-4  d-block\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark text-left border-0\" *ngFor=\"let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{j}}\" autocomplete=\"off\" [class]=\"j==0 ? 'checked' : ''\" (click)=\"addExtendedPriceTotal(license)\">\r\n                                        <div class=\"row align-items-center\">\r\n                                            <div class=\"col-md-9 col-sm-9 col-lg-9\" >\r\n                                                <p class=\"f-14  fw-6 pt-2\" >{{license.name}}</p>\r\n                                            </div>\r\n                                            <div class=\"col-md-3 col-sm-3 col-lg-3\">\r\n                                                <p class=\"mb-0\"><strong><i class=\"fa fa-inr\"></i> {{license.price*80 | number}}</strong></p>\r\n                                            </div>\r\n                                        </div>\r\n\r\n                                    </label>\r\n                                    <p><small><span class=\"text-warning\">Extended Licence Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content1)\">Learn More</span></small></p>\r\n                                 </div>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                               <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                               <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                             </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total | number}} INR</h2>\r\n                            </div>\r\n                        </div>\r\n<!--                        <div class=\"row mt-5\">-->\r\n<!--                            <div class=\"col-4\">-->\r\n<!--                                <p class=\"text-white\"><strong>TOTAL</strong></p>-->\r\n<!--                            </div>-->\r\n<!--                            <div class=\"col-8 text-right\">-->\r\n<!--                                <h2 class=\"text-warning f-24 fw-6\">$100.00 USD</h2>-->\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'2')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                                <!--<p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                       \r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_realname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{imagefootId}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Editorial #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.editorial}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Licence type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\"><p *ngIf=\"detailPageInfo.options.extended=='yes'\">Extended</p>\r\n                                <p *ngIf=\"detailPageInfo.options.rights_managed=='yes'\">Right Managed</p></div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>\r\n                            </div>\r\n                        </div>\r\n                     </div>\r\n                </div>\r\n            </div>\r\n\r\n    <div class=\"bg-black p-3\">\r\n        <div class=\"row align-items-stretch\">\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            \r\n            \r\n            \r\n            \r\n            <div class=\"row align-items-stretch\">\r\n                  <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                  <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  class=\" photo-item\" >\r\n                        <div class=\"\">\r\n                            <img *ngIf=\"aosimges.product_main_type == 'Image'\" src=\"{{aosimges.product_thumbnail}}\" alt=\"Image\" class=\"img-fluid\" (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\">\r\n\r\n                            <div class=\"photo-text-more\">\r\n                          <!--<h3 class=\"heading\">{{aosimges.product_title}}</h3>\r\n                          <span class=\"meta\">{{aosimges.description}} Photos</span>-->\r\n                          <!--<p class=\"icons_thum\">\r\n                           \r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>-->\r\n                        </div>\r\n                        </div>\r\n                      </span>\r\n                      <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  *ngIf=\"aosimges.product_main_type != 'Image'\"  class=\"photo-item \">\r\n                      <span style=\"position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;\"><i class=\"fa fa-video-camera\" aria-hidden=\"true\"></i></span>\r\n                          <video  width=\"400\" height=\"300\" [muted]=\"'muted'\" [poster]=\"aosimges.product_thumbnail\" #htmlVideoElement controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\"  (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\" style=\"width: 100% !important;background: #7d494957;object-fit: cover;\">\r\n                              <source src=\"{{aosimges.product_main_image}}\" type=\"video/mp4\">\r\n                              Your browser does not support the video tag.\r\n                          </video>\r\n                          <!-- <iframe  *ngIf=\"aosimges.mimetype != 'image/jpeg'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>  -->\r\n                          <div class=\"photo-text-more\" >\r\n                       \t  <div class=\"photo-text-more\" >\r\n                        <br />\r\n                        <p class=\"icons_thum1\" >\r\n                        \t<!--<span><a href=\"\"><i class=\"fa fa-image\"></i></a></span>-->\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>\r\n                      </div>\r\n                      </div>\r\n                      </span>\r\n                  </div>\r\n              </div>\r\n            \r\n            \r\n            \r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n            <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n              <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n              <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n              <div class=\"photo-text-more\">\r\n\r\n                <div class=\"photo-text-more\">\r\n                <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n              </div>\r\n              </div>\r\n            </a>\r\n          </div>\r\n        </div>\r\n            </div>\r\n         <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n               <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n      </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n            </div>\r\n\r\n<div class=\"site-wrap mt-5 pt-1 bg-dark\" *ngIf=\"webtype=='3'\">\r\n\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\t\t\t\t\t\t<!-- p-3 -->\r\n                        <div class=\"\">\r\n                            <p class=\"text-white f-20 mb-0 pt-3 pl-3\">{{detailPageInfo[0].items[0].n}}</p>\r\n                            <p class=\"pl-3\">{{detailPageInfo[0].items[0].desc}}</p>\r\n<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                                <a  class=\"d-block\">\r\n                                <!-- class=\"embed-responsive embed-responsive-16by9\"-->\r\n                                    <div  style=\"text-align:center;\">\r\n                                    <video controls [poster]=\"'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]\" controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\" >\r\n                                        <source src=\"{{detailPageInfo[0].flv_base+detailPageInfo[1]}}\" type=\"video/mp4\">\r\n                                        Your browser does not support the video tag.\r\n                                    </video>\r\n                                    </div>\r\n                                </a>\r\n<!--                                    <div class=\"photo-text-more\">-->\r\n<!--                                        <div class=\"photo-text-more\">-->\r\n<!--                                            <h3 class=\"heading\">{{detailPageInfo[0].items[0].pf}}</h3>-->\r\n<!--&lt;!&ndash;                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->\r\n<!--                                        </div>-->\r\n<!--                                    </div>-->\r\n\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                    <a href=\"{{detailPageInfo[4]}}\" download=\"{{detailPageInfo[3]+'.mp4'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                    <a (click)=\"addtolightbox(detailPageInfo[3])\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=2&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link \" [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard Licence</a>\r\n                            </li>\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark\" *ngFor=\"let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotalFootage(cost)\">\r\n                                        <p class=\"f-12\">{{cost.size}}</p>\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.pr*80 | number}}</p>\r\n                                    </label>\r\n                                </div>\r\n                               <p><small><span class=\"text-warning\">Standard Licence Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                                <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                                <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                            </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total |number }} INR</h2>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'3')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                               <!-- <p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                        <!--<table class=\"f-12\">\r\n                            <tbody>\r\n                            <tr>\r\n                                <td width=\"20%\">Restrictions :</td>\r\n                                <td>Contact your local office for all commercial or promotional uses.</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Credit :</td>\r\n                                <td>{{detailPageInfo[0].items[0].artistname}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Product ID :</td>\r\n                                <td>{{detailPageInfo[3]}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Duration # :</td>\r\n                                <td>{{detailPageInfo[0].items[0].dur}}</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Collection :</td>\r\n                                                            <td>Getty Images News</td>\r\n                                                        </tr>\r\n                            <tr>\r\n                                <td>Date created :</td>\r\n                                <td>{{detailPageInfo[0].items[0].date}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Licence type :</td>\r\n                                <td>Standard</td>\r\n\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Release info :</td>\r\n                                <td>Not released. More information</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Source :</td>\r\n                                                            <td>Getty Images AsiaPac</td>\r\n                                                        </tr>\r\n\r\n\r\n\r\n                            <tr>\r\n                                <td>Max file size :</td>\r\n                                <td>{{detailPageInfo[0].items[0].filesize}}</td>\r\n                            </tr>\r\n                            </tbody>\r\n\r\n                        </table>-->\r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].artistname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[3]}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Duration #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].dur}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Licence type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">Standard</div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].filesize}}</div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <div class=\"bg-black p-3\">\r\n          \r\n                <div class=\"row align-items-stretch\">\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                        <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n                            <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                            <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                            <div class=\"photo-text-more\">\r\n\r\n                                <div class=\"photo-text-more\">\r\n                                    <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                                    <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n                                </div>\r\n                            </div>\r\n                        </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n                <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n            </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n</div>\r\n\r\n<ng-container *ngIf=\"showloginPopup\">\r\n    <app-login [openLoginPopup]=\"showloginPopup\" (closeLoginPopup)=\"hideLoginPopup($event)\"></app-login>\r\n</ng-container>\r\n\r\n\r\n\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Standard Licence</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n \r\n \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n\r\n<ng-template #content1 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Extended Licence</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n  <ul>\r\n   <li> Unlimited web distribution</li>\r\n<li>Unlimited print copies</li>\r\n<li>Unlimited packaging copies</li>\r\n<li>Unlimited out of home advertising impressions</li>\r\n<li>Allowed in merchandising</li>\r\n<li>Allowed on web templates</li>\r\n<li>Video production of any budget</li>\r\n<li>Decoration in personal and commercial spaces</li>\r\n    </ul>\r\n    \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n";
     /***/
   },
 
@@ -3585,7 +3585,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.modalService = modalService;
         this.aoslSliderImagesData = [];
         this.page = 1;
-        this.pageSize = 5;
+        this.pageSize = 12;
+        this.relatedData = [];
         this.checkoutArray = [];
         this.showloginPopup = false;
         this.id = 0;
@@ -3632,7 +3633,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var webtype = +this.route.snapshot.paramMap.get('webtype');
           var type = this.route.snapshot.paramMap.get('type');
           this.heroService.getDetailPagedetails(id, webtype, type).subscribe(function (data) {
-            console.log(data);
+            //console.log(data); 
+            var sent = data[0].metadata.title.split(" "); //sent=sent.remove('in').remove('of');
+            //console.log(sent);
+
+            _this21.grtRelatedProducts(data[0].metadata.title);
 
             if (webtype == 2) {// this.detailPageInfo = data[0];
               // this.imagefootId = data[1];
@@ -3651,35 +3656,44 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           });
         }
       }, {
+        key: "grtRelatedProducts",
+        value: function grtRelatedProducts(keyword) {
+          var _this22 = this;
+
+          this.heroService.getRelatedProductData(keyword).subscribe(function (relatedData) {
+            //console.log(relatedData);
+            _this22.relatedData = relatedData;
+          });
+        }
+      }, {
         key: "getDetailinfo",
         value: function getDetailinfo() {
-          var _this22 = this;
+          var _this23 = this;
 
           this.id = +this.route.snapshot.paramMap.get('id');
           this.webtype = +this.route.snapshot.paramMap.get('webtype');
           this.type = this.route.snapshot.paramMap.get('type');
           this.heroService.getDetailPagedetails(this.id, this.webtype, this.type).subscribe(function (data) {
-            console.log(data);
-
-            if (_this22.webtype == 2) {
-              _this22.detailPageInfo = data[0];
-              _this22.imagefootId = data[1];
-              var keywords = _this22.detailPageInfo['metadata']['keywords_top10'];
-              _this22.keyword = keywords.split(",").map(function (item) {
+            //console.log(data);
+            if (_this23.webtype == 2) {
+              _this23.detailPageInfo = data[0];
+              _this23.imagefootId = data[1];
+              var keywords = _this23.detailPageInfo['metadata']['keywords_top10'];
+              _this23.keyword = keywords.split(",").map(function (item) {
                 return item.trim();
               });
-              _this22.filePreview = data[2]; //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
-            } else if (_this22.webtype == 3) {
-              _this22.detailPageInfo = data;
-              var _keywords = _this22.detailPageInfo[0].items[0].kw;
-              _this22.keyword = _keywords.split(",").map(function (item) {
+              _this23.filePreview = data[2]; //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
+            } else if (_this23.webtype == 3) {
+              _this23.detailPageInfo = data;
+              var _keywords = _this23.detailPageInfo[0].items[0].kw;
+              _this23.keyword = _keywords.split(",").map(function (item) {
                 return item.trim();
               });
             } //this.keyword = keywords.split(',',10);
             //this.spinner.hide();
 
 
-            _this22.loadingData = false;
+            _this23.loadingData = false;
           });
         }
       }, {
@@ -3690,30 +3704,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getcategoryCarouselImages",
         value: function getcategoryCarouselImages() {
-          var _this23 = this;
+          var _this24 = this;
 
           var id = +this.route.snapshot.paramMap.get('id');
           this.heroService.getAosSliderImages().subscribe(function (aoslSliderImages) {
             if (!Object(util__WEBPACK_IMPORTED_MODULE_6__["isNullOrUndefined"])(aoslSliderImages)) {
-              _this23.carouselSliderImages = aoslSliderImages;
+              _this24.carouselSliderImages = aoslSliderImages;
               var randArr = [4, 3, 2, 3];
 
-              var tempCarouselSlider = _this23.chunkArray(_this23.carouselSliderImages.categoryImages, 4);
+              var tempCarouselSlider = _this24.chunkArray(_this24.carouselSliderImages.categoryImages, 4);
 
-              _this23.carouselSliderImages.categoryImages = JSON.parse(JSON.stringify(tempCarouselSlider));
+              _this24.carouselSliderImages.categoryImages = JSON.parse(JSON.stringify(tempCarouselSlider));
 
-              for (var i = 0; i < _this23.carouselSliderImages.categoryImages.length; i++) {
-                if (_this23.carouselSliderImages.categoryImages[i].length < 4) {
-                  var lessItem = 4 - _this23.carouselSliderImages.categoryImages[i].length;
+              for (var i = 0; i < _this24.carouselSliderImages.categoryImages.length; i++) {
+                if (_this24.carouselSliderImages.categoryImages[i].length < 4) {
+                  var lessItem = 4 - _this24.carouselSliderImages.categoryImages[i].length;
                   var newArray = tempCarouselSlider[0].splice(0, lessItem);
-                  _this23.carouselSliderImages.categoryImages[i] = _this23.carouselSliderImages.categoryImages[i].concat(newArray);
+                  _this24.carouselSliderImages.categoryImages[i] = _this24.carouselSliderImages.categoryImages[i].concat(newArray);
                 }
               }
 
-              _this23.carouselSliderImages.categoryImages.forEach(function (element) {
+              _this24.carouselSliderImages.categoryImages.forEach(function (element) {
                 var temp = 0;
 
-                _this23.dataHelper.shuffleArray(randArr);
+                _this24.dataHelper.shuffleArray(randArr);
 
                 element.forEach(function (ele) {
                   ele.eleClass = randArr[temp];
@@ -3723,15 +3737,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             }
           });
         }
-      }, {
-        key: "getClassName",
-        value: function getClassName(ele) {
-          return 'col-6 col-md-' + ele.eleClass + ' col-lg-' + ele.eleClass;
-        }
+        /*getClassName(ele){
+          return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+        }*/
+
       }, {
         key: "addToCheckoutItem",
         value: function addToCheckoutItem(productinfo, cartproduct, total, extended, type) {
-          var _this24 = this;
+          var _this25 = this;
 
           if (!this.currentUser) {
             this.showloginPopup = true;
@@ -3762,15 +3775,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.heroService.addcartItemsData(cartval).subscribe(function (data) {
               console.log(data);
 
-              _this24.checkoutArray.push(cartval);
+              _this25.checkoutArray.push(cartval);
 
               if (data["status"] == '1') {
-                _this24.loadingData = false;
-                localStorage.setItem('checkoutAray', _this24.checkoutArray);
+                _this25.loadingData = false;
+                localStorage.setItem('checkoutAray', _this25.checkoutArray);
 
-                _this24.router.navigate(['/cart']);
+                _this25.router.navigate(['/cart']);
               } else {
-                _this24.loadingData = false;
+                _this25.loadingData = false;
                 alert(data["message"]);
               }
             }); // this.checkoutArray.push(2);this.checkoutArray.push(3); //remove the line when api integrated
@@ -3843,7 +3856,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "base64changefunction",
         value: function base64changefunction(fileUrl) {
-          var _this25 = this;
+          var _this26 = this;
 
           var reader = new FileReader();
 
@@ -3853,8 +3866,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             reader.onload = function () {
               alert(reader.result.split(',')[1]);
-              _this25.fileName = file.name + " " + file.type;
-              _this25.filePreview = 'data:image/png' + ';base64,' + reader.result.split(',')[1];
+              _this26.fileName = file.name + " " + file.type;
+              _this26.filePreview = 'data:image/png' + ';base64,' + reader.result.split(',')[1];
             };
           }
         }
@@ -3867,17 +3880,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(id) {
-          var _this26 = this;
+          var _this27 = this;
 
           console.log(id);
           this.loadingData = true;
           this.heroService.addWishListItemsData(id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this26.loadingData = false;
+              _this27.loadingData = false;
 
-              _this26.router.navigate(['/lightbox']);
+              _this27.router.navigate(['/lightbox']);
             } else {
-              _this26.loadingData = false;
+              _this27.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -3886,6 +3899,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "open",
         value: function open(content) {
           this.modalService.open(content);
+        }
+      }, {
+        key: "getClassName",
+        value: function getClassName(ele) {
+          // return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+          return 'col-6 col-md-3 col-lg-3';
+        }
+      }, {
+        key: "onNavigate",
+        value: function onNavigate(link, pid, pweb, prod_type) {
+          //for redirect
+          //alert(link+pid+'/'+pweb+'/'+prod_type);
+          window.location.href = link + pid + '/' + pweb + '/' + prod_type;
         }
       }]);
 
@@ -4050,7 +4076,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function HeroSearchComponent(heroService, route, dataHelper, myElement, router, spinner, authenticationService) {
-        var _this27 = this;
+        var _this28 = this;
 
         _classCallCheck(this, HeroSearchComponent);
 
@@ -4099,14 +4125,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.buttonName = 'Show';
 
         this.onPageChange = function (pageNumber) {
-          var el = _this27.myElement.nativeElement.querySelector('main');
+          var el = _this28.myElement.nativeElement.querySelector('main');
 
           el.scrollIntoView();
         };
 
         this.searchData = new _hero__WEBPACK_IMPORTED_MODULE_3__["Search"]();
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this27.currentUser = x;
+          _this28.currentUser = x;
         });
       } // Push a search term into the observable stream.
 
@@ -4119,31 +4145,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this28 = this;
+          var _this29 = this;
 
           aos__WEBPACK_IMPORTED_MODULE_9__["init"]();
           this.sub = this.route.queryParams.subscribe(function (params) {
-            _this28.productType = params.type;
-            _this28.keywordEle = params.keyword;
-            _this28.loadingData = true; //  this.spinner.show();
+            _this29.productType = params.type;
+            _this29.keywordEle = params.keyword;
+            _this29.loadingData = true; //  this.spinner.show();
 
-            _this28.searchData.productType = params.type;
-            _this28.searchData.search = params.keyword;
+            _this29.searchData.productType = params.type;
+            _this29.searchData.search = params.keyword;
 
             if (!Object(util__WEBPACK_IMPORTED_MODULE_8__["isNullOrUndefined"])(params.sideBar)) {
-              _this28.sideBarEle = params.sideBar;
+              _this29.sideBarEle = params.sideBar;
             }
 
-            _this28.searchData.letest = 0;
-            _this28.searchData.curated = 1;
-            _this28.searchData.populer = 0;
+            _this29.searchData.letest = 0;
+            _this29.searchData.curated = 1;
+            _this29.searchData.populer = 0;
 
-            _this28.searchAPIRequest();
+            _this29.searchAPIRequest();
           });
           this.heroService.getSearchLeftFilter().subscribe(function (leftsideData) {
             // this.carouselSliderImages = carouselSliderImages; 
             console.log(leftsideData);
-            _this28.leftsideData = leftsideData;
+            _this29.leftsideData = leftsideData;
           });
         }
       }, {
@@ -4156,7 +4182,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchAPIRequest",
         value: function searchAPIRequest() {
-          var _this29 = this;
+          var _this30 = this;
 
           this.searchData.product_people = this.slidebarPeopleMenu.join();
           this.searchData.product_gender = this.slidebarGenderMenu.join();
@@ -4171,18 +4197,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             //  if(aoslSliderImages.hasOwnProperty('code')) {
             //   window.location.href = aoslSliderImages['url']
             //}else {
-            _this29.aoslSliderImages = aoslSliderImages;
-            var type = _this29.aoslSliderImages["0"].product_keywords;
-            _this29.keyword = type.split(',', 9);
-            console.log(_this29.keyword);
+            _this30.aoslSliderImages = aoslSliderImages;
+            var type = _this30.aoslSliderImages["0"].product_keywords;
+            _this30.keyword = type.split(',', 9);
+            console.log(_this30.keyword);
 
-            _this29.maintainAosSlider(); //  this.spinner.hide();
+            _this30.maintainAosSlider(); //  this.spinner.hide();
 
 
-            _this29.loadingData = false; // }
+            _this30.loadingData = false; // }
             // this.maintainSearchData(aoslSliderImages);
           }, function (error) {
-            _this29.loadingData = false;
+            _this30.loadingData = false;
             console.log(error);
             alert('No data found ....');
           });
@@ -4395,7 +4421,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainSearchData",
         value: function maintainSearchData(aoslSliderImages) {
-          var _this30 = this;
+          var _this31 = this;
 
           this.aoslSliderImagesData = aoslSliderImages;
 
@@ -4413,7 +4439,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (this.searchData.search.length > 2) {
             this.aoslSliderImagesData = this.aoslSliderImagesData.filter(function (ele) {
-              return ele.product_title.includes(_this30.name.trim());
+              return ele.product_title.includes(_this31.name.trim());
             });
           }
 
@@ -4422,7 +4448,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainAosSlider",
         value: function maintainAosSlider() {
-          var _this31 = this;
+          var _this32 = this;
 
           var i = 4,
               j = 0;
@@ -4435,7 +4461,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               j = j + 1;
 
               if (j == i) {
-                _this31.dataHelper.shuffleArray(randArr);
+                _this32.dataHelper.shuffleArray(randArr);
 
                 j = 0;
                 mathRandom = Math.floor(Math.random() * 10);
@@ -4472,26 +4498,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this32 = this;
+          var _this33 = this;
 
           console.log(productinfo); //return false;
 
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.api_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this32.loadingData = false;
+              _this33.loadingData = false;
 
-              _this32.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this33.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this32.priceArray = [];
+                  _this33.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this32.router.navigate(['/wishlist']);
+              _this33.router.navigate(['/wishlist']);
             } else {
-              _this32.loadingData = false;
+              _this33.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -4750,6 +4776,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
         }
       }, {
+        key: "getRelatedProductData",
+        value: function getRelatedProductData(searchData) {
+          var url = "".concat(this.heroesUrl, "relatedsearch");
+          return this.http.post(url, searchData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (searchResultSet) {
+            return searchResultSet.imgfootage;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
+        }
+      }, {
         key: "getSearchLeftFilter",
         value: function getSearchLeftFilter() {
           var url = "".concat(this.heroesUrl, "get_side_filtes");
@@ -4760,7 +4794,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getLogin",
         value: function getLogin(email, password) {
-          var _this33 = this;
+          var _this34 = this;
 
           var url = "".concat(this.heroesUrl, "login");
           return this.http.post(url, {
@@ -4771,7 +4805,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             localStorage.setItem('currentUser', JSON.stringify(user));
             console.log(localStorage.getItem('currentUser.utype'));
 
-            _this33.currentUserSubject.next(user);
+            _this34.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -4779,7 +4813,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "fbLogin",
         value: function fbLogin(userData) {
-          var _this34 = this;
+          var _this35 = this;
 
           var url = "".concat(this.heroesUrl, "fbLogin");
           return this.http.post(url, {
@@ -4788,7 +4822,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
 
-            _this34.currentUserSubject.next(user);
+            _this35.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -4796,7 +4830,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "register",
         value: function register(usrData) {
-          var _this35 = this;
+          var _this36 = this;
 
           var url = "".concat(this.heroesUrl, "signup");
           return this.http.post(url, usrData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
@@ -4805,7 +4839,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             if (userInfo['status'] == '1') {
               localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
 
-              _this35.currentUserSubject.next(userInfo['userdata']);
+              _this36.currentUserSubject.next(userInfo['userdata']);
             }
 
             return userInfo;
@@ -4868,23 +4902,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getcategoryCarouselImages",
         value: function getcategoryCarouselImages(categoryId) {
-          var _this36 = this;
+          var _this37 = this;
 
           var url = "api/detailPageCarouselImages/?".concat(categoryId);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this36.log("fetched CarouselImages id=".concat(categoryId));
+            return _this37.log("fetched CarouselImages id=".concat(categoryId));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(categoryId))));
         }
       }, {
         key: "getDetailPagedetails",
         value: function getDetailPagedetails(id, webtype, type) {
-          var _this37 = this;
+          var _this38 = this;
 
           console.log(id); //const url = `api/detailPageInfo/?${id}`;
 
           var url = "".concat(this.heroesUrl, "details/").concat(id, "/").concat(webtype, "/").concat(type);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this37.log("fetched detail Page Info id=".concat(id));
+            return _this38.log("fetched detail Page Info id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
       }, {
@@ -4953,11 +4987,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getMarketdeatils",
         value: function getMarketdeatils() {
-          var _this38 = this;
+          var _this39 = this;
 
           var url = "api/marketFreeze";
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this38.log("fetched market Info id");
+            return _this39.log("fetched market Info id");
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id")));
         }
         /** GET heroes from the server */
@@ -4965,10 +4999,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this39 = this;
+          var _this40 = this;
 
           return this.http.get(this.heroesUrl).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this39.log('fetched heroes');
+            return _this40.log('fetched heroes');
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getHeroes', [])));
         }
         /** GET hero by id. Return `undefined` when id not found */
@@ -4976,7 +5010,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroNo404",
         value: function getHeroNo404(id) {
-          var _this40 = this;
+          var _this41 = this;
 
           var url = "".concat(this.heroesUrl, "/?id=").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (heroes) {
@@ -4985,7 +5019,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (h) {
             var outcome = h ? "fetched" : "did not find";
 
-            _this40.log("".concat(outcome, " hero id=").concat(id));
+            _this41.log("".concat(outcome, " hero id=").concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /** GET hero by id. Will 404 if id not found */
@@ -4993,11 +5027,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHero",
         value: function getHero(id) {
-          var _this41 = this;
+          var _this42 = this;
 
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this41.log("fetched hero id=".concat(id));
+            return _this42.log("fetched hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /* GET heroes whose name contains search term */
@@ -5005,7 +5039,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchHeroes",
         value: function searchHeroes(term) {
-          var _this42 = this;
+          var _this43 = this;
 
           if (!term.trim()) {
             // if not search term, return empty hero array.
@@ -5013,7 +5047,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           return this.http.get("".concat(this.heroesUrl, "/?name=").concat(term)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this42.log("found heroes matching \"".concat(term, "\""));
+            return _this43.log("found heroes matching \"".concat(term, "\""));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('searchHeroes', [])));
         } //////// Save methods //////////
 
@@ -5022,10 +5056,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addHero",
         value: function addHero(hero) {
-          var _this43 = this;
+          var _this44 = this;
 
           return this.http.post(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (newHero) {
-            return _this43.log("added hero w/ id=".concat(newHero.id));
+            return _this44.log("added hero w/ id=".concat(newHero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('addHero')));
         }
         /** DELETE: delete the hero from the server */
@@ -5033,12 +5067,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteHero",
         value: function deleteHero(hero) {
-          var _this44 = this;
+          var _this45 = this;
 
           var id = typeof hero === 'number' ? hero : hero.id;
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.delete(url, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this44.log("deleted hero id=".concat(id));
+            return _this45.log("deleted hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('deleteHero')));
         }
         /** PUT: update the hero on the server */
@@ -5046,10 +5080,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "updateHero",
         value: function updateHero(hero) {
-          var _this45 = this;
+          var _this46 = this;
 
           return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this45.log("updated hero id=".concat(hero.id));
+            return _this46.log("updated hero id=".concat(hero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('updateHero')));
         }
         /**
@@ -5062,7 +5096,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "handleError",
         value: function handleError() {
-          var _this46 = this;
+          var _this47 = this;
 
           var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'operation';
           var result = arguments.length > 1 ? arguments[1] : undefined;
@@ -5071,7 +5105,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.error(error); // log to console instead
             // TODO: better job of transforming error for user consumption
 
-            _this46.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
+            _this47.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
 
 
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(result);
@@ -5471,16 +5505,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this47 = this;
+          var _this48 = this;
 
           this.heroService.getHeroes().subscribe(function (heroes) {
-            return _this47.heroes = heroes;
+            return _this48.heroes = heroes;
           });
         }
       }, {
         key: "add",
         value: function add(name) {
-          var _this48 = this;
+          var _this49 = this;
 
           name = name.trim();
 
@@ -5491,7 +5525,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.heroService.addHero({
             name: name
           }).subscribe(function (hero) {
-            _this48.heroes.push(hero);
+            _this49.heroes.push(hero);
           });
         }
       }, {
@@ -5672,7 +5706,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LightboxComponent(heroService, authenticationService, router) {
-        var _this49 = this;
+        var _this50 = this;
 
         _classCallCheck(this, LightboxComponent);
 
@@ -5684,10 +5718,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this49.currentUser = x;
+          _this50.currentUser = x;
 
-          if (!_this49.currentUser) {
-            _this49.router.navigate(['/']);
+          if (!_this50.currentUser) {
+            _this50.router.navigate(['/']);
           }
         });
       }
@@ -5703,13 +5737,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loaddata",
         value: function loaddata() {
-          var _this50 = this;
+          var _this51 = this;
 
           this.authenticationService.getLightboxItemsData().subscribe(function (data) {
-            _this50.loadingData = false;
+            _this51.loadingData = false;
 
             if (data.status == '1') {
-              _this50.lightBoxListDataItems = data.data;
+              _this51.lightBoxListDataItems = data.data;
             } else {
               alert(data.message);
             } // this.lightBoxListDataItems.forEach(element => {
@@ -5722,17 +5756,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromWishlist",
         value: function removeProductFromWishlist(productinfo) {
-          var _this51 = this;
+          var _this52 = this;
 
           if (confirm('Are you sure?') == true) {
             this.loadingData = true;
             this.authenticationService.removeDataFromWishlist(productinfo).subscribe(function (data) {
-              _this51.loadingData = false;
+              _this52.loadingData = false;
 
               if (data["status"] == '1') {
                 alert(data["message"]);
 
-                _this51.loaddata();
+                _this52.loaddata();
               } else {
                 alert(data["message"]);
               }
@@ -5889,7 +5923,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "socialSignIn",
         value: function socialSignIn(socialPlatform) {
-          var _this52 = this;
+          var _this53 = this;
 
           var socialPlatformProvider;
 
@@ -5909,16 +5943,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(userData.name);
             console.log(userData.email); //fbLogin
 
-            _this52.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
+            _this53.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
               console.log(data);
 
               if (data == undefined) {
                 alert("You are non registered user");
               } else {
-                _this52.closeLoginPopup.emit(true);
+                _this53.closeLoginPopup.emit(true);
               }
             }, function (error) {
-              _this52.loading = false;
+              _this53.loading = false;
             });
           });
         }
@@ -5937,7 +5971,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this53 = this;
+          var _this54 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -5950,15 +5984,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(data);
 
             if (data == undefined) {
-              _this53.loading = false;
+              _this54.loading = false;
               alert("Please enter correct username or password");
             } else {
               alert("Login Successful");
 
-              _this53.closeLoginPopup.emit(true);
+              _this54.closeLoginPopup.emit(true);
             }
           }, function (error) {
-            _this53.loading = false;
+            _this54.loading = false;
           });
         }
       }, {
@@ -6248,17 +6282,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(OrderConfirmationComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this54 = this;
+          var _this55 = this;
 
           this.loadingData = true;
           this.id = +this.route.snapshot.paramMap.get('id');
           this.authenticationService.getOrderDetails(this.id).subscribe(function (data) {
             if (data.status == 'success') {
-              _this54.OrderDetailData = data.data[0];
-              _this54.loadingData = false;
+              _this55.OrderDetailData = data.data[0];
+              _this55.loadingData = false;
             } else {
               //this.OrderDetailData = data;
-              _this54.loadingData = false;
+              _this55.loadingData = false;
               alert(data.message);
             } //this.spinner.hide();
 
@@ -6541,7 +6575,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function ResetPasswordComponent(heroService, formBuilder, authenticationService, router, spinner) {
-        var _this55 = this;
+        var _this56 = this;
 
         _classCallCheck(this, ResetPasswordComponent);
 
@@ -6554,10 +6588,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.submitted = false;
         this.loading = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this55.currentUser = x;
+          _this56.currentUser = x;
 
-          if (_this55.currentUser) {
-            _this55.router.navigate(['/']);
+          if (_this56.currentUser) {
+            _this56.router.navigate(['/']);
           }
         });
       }
@@ -6572,7 +6606,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this56 = this;
+          var _this57 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6585,7 +6619,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.loadingData = true;
           this.authenticationService.resetPassword(this.resetpasswordForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this56.loadingData = false;
+            _this57.loadingData = false;
 
             if (data2.status == '1') {// this.otp = true;
               // this.error_message = null;
@@ -6595,7 +6629,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                 // this.error_message = data2.message;
               }
           }, function (error) {
-            _this56.loading = false;
+            _this57.loading = false;
           });
         }
       }, {
@@ -6764,11 +6798,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getCountries",
         value: function getCountries() {
-          var _this57 = this;
+          var _this58 = this;
 
           this.authenticationService.allCountries().subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this57.countryInfo = data2; //console.log('Data:', this.countryInfo);
+            _this58.countryInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -6778,12 +6812,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeCountry",
         value: function onChangeCountry(countryValue) {
-          var _this58 = this;
+          var _this59 = this;
 
           //  console.log(this.countryInfo[countryValue]);
           this.authenticationService.allstates(countryValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this58.stateInfo = data2; //console.log('Data:', this.countryInfo);
+            _this59.stateInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -6796,12 +6830,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeState",
         value: function onChangeState(stateValue) {
-          var _this59 = this;
+          var _this60 = this;
 
           // console.log(this.stateInfo[stateValue]);
           this.authenticationService.allCities(stateValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this59.cityInfo = data2; //console.log('Data:', this.countryInfo);
+            _this60.cityInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -6818,7 +6852,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this60 = this;
+          var _this61 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6838,7 +6872,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
               if (cartData.length > 0) {
                 var finalData = JSON.parse(cartData);
-                _this60.token = localStorage.getItem('currentUser'); //console.log(finalData);
+                _this61.token = localStorage.getItem('currentUser'); //console.log(finalData);
                 // console.log(finalData.productinfo);
 
                 var cartval = {
@@ -6846,37 +6880,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                   "selected_product": finalData.cartproduct,
                   "total": finalData.total,
                   "extended": finalData.extended,
-                  "token": _this60.token,
+                  "token": _this61.token,
                   "type": finalData.type
                 };
 
-                _this60.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
+                _this61.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
                   console.log(data);
 
-                  _this60.checkoutArray.push(cartval);
+                  _this61.checkoutArray.push(cartval);
 
                   if (data["status"] == '1') {
-                    _this60.loadingData = false;
-                    localStorage.setItem('checkoutAray', _this60.checkoutArray);
+                    _this61.loadingData = false;
+                    localStorage.setItem('checkoutAray', _this61.checkoutArray);
                     localStorage.removeItem("beforeLoginCart");
 
-                    _this60.router.navigate(['/cart']);
+                    _this61.router.navigate(['/cart']);
                   } else {
-                    _this60.loadingData = false;
+                    _this61.loadingData = false;
                     alert(data["message"]);
                   }
                 });
               } else {
-                _this60.loadingData = false;
+                _this61.loadingData = false;
 
-                _this60.router.navigate(['/']);
+                _this61.router.navigate(['/']);
               }
             } else {
-              _this60.loadingData = false;
+              _this61.loadingData = false;
               alert(data2.message);
             }
           }, function (error) {
-            _this60.loading = false;
+            _this61.loading = false;
           });
         }
       }, {
@@ -7094,7 +7128,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserProfileComponent(route, heroService, location, dataHelper, authenticationService, router, spinner) {
-        var _this61 = this;
+        var _this62 = this;
 
         _classCallCheck(this, UserProfileComponent);
 
@@ -7114,10 +7148,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.orderData = '';
         this.order_items = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this61.currentUser = x;
+          _this62.currentUser = x;
 
-          if (!_this61.currentUser) {
-            _this61.router.navigate(['/']);
+          if (!_this62.currentUser) {
+            _this62.router.navigate(['/']);
           }
         });
       }
@@ -7125,16 +7159,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(UserProfileComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this62 = this;
+          var _this63 = this;
 
           this.loadingData = true;
           this.authenticationService.getUserprofileData().subscribe(function (data) {
-            _this62.profileData = data.data[0];
-            _this62.loadingData = false;
+            _this63.profileData = data.data[0];
+            _this63.loadingData = false;
           }, function (error) {});
           this.authenticationService.getUserOrderData().subscribe(function (orders) {
-            _this62.orderData = orders.data;
-            _this62.loadingData = false;
+            _this63.orderData = orders.data;
+            _this63.loadingData = false;
           }, function (error) {});
         }
       }, {
@@ -7279,7 +7313,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WishlistComponent(heroService, authenticationService, router, spinner) {
-        var _this63 = this;
+        var _this64 = this;
 
         _classCallCheck(this, WishlistComponent);
 
@@ -7292,10 +7326,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this63.currentUser = x;
+          _this64.currentUser = x;
 
-          if (!_this63.currentUser) {
-            _this63.router.navigate(['/']);
+          if (!_this64.currentUser) {
+            _this64.router.navigate(['/']);
           }
         });
       }
@@ -7303,19 +7337,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(WishlistComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this64 = this;
+          var _this65 = this;
 
           //this.spinner.show();
           this.loadingData = true; // console.log(localStorage.getItem('checkoutAray'));
 
           this.authenticationService.getcartItemsData().subscribe(function (data) {
-            _this64.wishListDataItems = data;
+            _this65.wishListDataItems = data;
 
-            _this64.wishListDataItems.forEach(function (element) {
-              _this64.priceArray.push(element["total"]);
+            _this65.wishListDataItems.forEach(function (element) {
+              _this65.priceArray.push(element["total"]);
             });
 
-            _this64.loadingData = false; //this.spinner.hide();
+            _this65.loadingData = false; //this.spinner.hide();
           }, function (error) {});
         }
       }, {
@@ -7338,7 +7372,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromCart",
         value: function removeProductFromCart(productinfo) {
-          var _this65 = this;
+          var _this66 = this;
 
           console.log(productinfo);
 
@@ -7346,16 +7380,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingData = true;
             this.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
               if (data["status"] == '1') {
-                _this65.priceArray = [];
+                _this66.priceArray = [];
 
-                _this65.authenticationService.getcartItemsData().subscribe(function (data) {
-                  _this65.wishListDataItems = data;
+                _this66.authenticationService.getcartItemsData().subscribe(function (data) {
+                  _this66.wishListDataItems = data;
 
-                  _this65.wishListDataItems.forEach(function (element) {
-                    _this65.priceArray.push(element["total"]);
+                  _this66.wishListDataItems.forEach(function (element) {
+                    _this66.priceArray.push(element["total"]);
                   });
 
-                  _this65.loadingData = false;
+                  _this66.loadingData = false;
                 }, function (error) {});
               } else {
                 alert(data["message"]);
@@ -7368,25 +7402,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this66 = this;
+          var _this67 = this;
 
           console.log(productinfo);
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.cart_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this66.loadingData = false;
+              _this67.loadingData = false;
 
-              _this66.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this67.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this66.priceArray = [];
+                  _this67.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this66.router.navigate(['/wishlist']);
+              _this67.router.navigate(['/wishlist']);
             } else {
-              _this66.loadingData = false;
+              _this67.loadingData = false;
               alert(data["message"]);
             }
           });
