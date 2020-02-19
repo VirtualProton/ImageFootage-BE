@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -135,6 +135,15 @@ export class HeroService {
            url = `${this.localhostUrl}search`;
          }*/
 
+        return this.http.post<any>(url, searchData, this.httpOptions).pipe(
+            map(searchResultSet => {
+                return searchResultSet.imgfootage;
+            }),
+            catchError(this.handleError<any>(`unable to get data`))
+        );
+    }
+	getRelatedProductData(searchData: any): Observable<any> {
+        let url = `${this.heroesUrl}relatedsearch`;
         return this.http.post<any>(url, searchData, this.httpOptions).pipe(
             map(searchResultSet => {
                 return searchResultSet.imgfootage;

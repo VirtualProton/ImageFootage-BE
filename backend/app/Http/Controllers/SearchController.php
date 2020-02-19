@@ -53,6 +53,15 @@ class SearchController extends Controller
 
         return response()->json($all_products);
     }
+	public function relatedProductList(Request $request){
+		ini_set('max_execution_time', 0);
+		$getKeyword = $request->all();
+		$keyword = array();
+		$keyword['search'] = $getKeyword;
+		$keyword['productType']['id']=1;
+		$all_products = $this->getImagesData($keyword,$getKeyword);
+		return response()->json($all_products);
+	}
 
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];

@@ -16,6 +16,7 @@
           <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
                   	<option value="1">Images Only</option>
                     <option value="2">Footages Only</option>
+                    <option value="3">Editorial</option>
            </select>
           
            <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
@@ -32,12 +33,13 @@
                </div>-->
           </div>
           
-          <div class="d-block d-md-none" ngbDropdown  style="height: 60px; width: 20px;">
+          <div class="d-block d-md-none" ngbDropdown  style="height: 60px; width: 24px;">
           
-          <select class="" (change)="searchDropDownClick($event.target.value)" style="display: block;height: 60px !important;width:20px;background: #fed136;
+          <select class="" (change)="searchDropDownClick($event.target.value)" style="display: block;height: 60px !important;width:24px;background: #fed136;
     color: #fff;">
                   	<option value="1">Images Only</option>
                     <option value="2">Footages Only</option>
+                    <option value="3">Editorial</option>
            </select>
           
            <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
@@ -54,7 +56,7 @@
                </div>-->
           </div>
           <input type="text" class="form-control" #searchBoxEle  aria-label="Text input with dropdown button" (keyup.enter)="searchAosData(searchBoxEle.value)">
-          <a href="javascript:void(0)" class="iconSearch" (click)="searchAosData(searchBoxEle.value)" ><span class="fa fa-search " style="color: #fed136;"></span></a>
+          <a href="javascript:void(0)" class="iconSearch" (click)="searchAosData(searchBoxEle.value)" ><span class="fa fa-search " style="color: #000;"></span></a>
         </div>
   </form>
       </div>
@@ -146,7 +148,7 @@
                         <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                         <span class="meta">{{aosimges.product_description}}</span>-->
                         <p class="icons_thum">
-                            <span><a href=""><i class="fa fa-image"></i></a></span>
+                            <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -159,8 +161,8 @@
                     </span>
                     <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block -->
                     <span  *ngIf="aosimges.product_web == '3'"  class=" photo-item" >
-                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957; object-fit: cover;">
+                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957; object-fit: cover;cursor:pointer;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
@@ -173,7 +175,7 @@
                         <span class="meta">{{aosimges.product_description}}</span>-->
                         <br />
                         <p class="icons_thum1" >
-                        	<span><a href=""><i class="fa fa-image"></i></a></span>
+                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                              <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
