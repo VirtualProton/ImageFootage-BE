@@ -184,7 +184,7 @@ export class CheckoutComponent implements OnInit {
                   console.log(paymentgatway);
                   this.loadingData = false;
                   if(paymentgatway=='atom')  {
-                      window.location.href = data2.url;
+                      //window.location.href = data2.url;
 
                   }else if(paymentgatway=='payu'){
                     console.log(data2);

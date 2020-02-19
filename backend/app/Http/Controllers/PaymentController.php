@@ -40,15 +40,15 @@ class PaymentController extends Controller
         }
         $transactionId = rand(1,1000000);
         //echo "<pre>"; print_r($allFields); die;
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $userData = User::with('country')
                  ->with('city')
                  ->with('state')
                  ->with('cart')
                  ->where('id','=',$allFields['tokenData']['Utype'])
                  ->get()->toArray();
-        dd(DB::getQueryLog());
-        print_r($userData); die;
+        //dd(DB::getQueryLog());
+        //print_r($userData); die;
         $tax = $allFields['cartval'][0]*8/100;
         $final_tax=round($tax,2);
         $orders = new Orders();
@@ -100,7 +100,7 @@ class PaymentController extends Controller
             $transactionRequest->setMode("test");
             $transactionRequest->setLogin(197);
             $transactionRequest->setPassword("Test@123");
-            $transactionRequest->setProductId("NSE");
+            $transactionRequest->setProductId('NSE');
             if(!empty($allFields['cartval'][0])){
 
                 $transactionRequest->setAmount($allFields['cartval'][0]+$final_tax);
@@ -108,13 +108,13 @@ class PaymentController extends Controller
                 $transactionRequest->setTransactionAmount($allFields['cartval'][0]+$final_tax);
             }
             $transactionRequest->setReturnUrl(url('/api/atomPayResponse'));
-            $transactionRequest->setClientCode(123);
+            $transactionRequest->setClientCode(007);
             $transactionRequest->setTransactionId($transactionId);
             $transactionRequest->setTransactionDate($transactionDate);
             $transactionRequest->setCustomerName($allFields['usrData']['first_name']);
             $transactionRequest->setCustomerEmailId($userData[0]['email']);
             $transactionRequest->setCustomerMobile($userData[0]['phone']);
-            $transactionRequest->setCustomerBillingAddress($allFields['usrData']['address']);
+            $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey("KEY123657234");
 
@@ -168,7 +168,7 @@ class PaymentController extends Controller
         $transactionResponse = new TransactionResponse();
         $transactionResponse->setRespHashKey("KEYRESP123657234");
         if($transactionResponse->validateResponse($_POST)){
-           // echo "Transaction Processed <br/>";
+            //echo "Transaction Processed <br/>";
            // print_r($_POST);die;
             if(count($_POST)>0){
                 if($_POST['f_code']=='Ok'){
@@ -177,12 +177,15 @@ class PaymentController extends Controller
                                 'order_status'=>$_POST['desc'],'response_payment'=>json_encode($_POST)]);
                     $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
                     Usercart::where('cart_added_by',$orders->user_id)->delete();
-                 }
+                    return redirect('/orderConfirmation/'.$_POST['mer_txn']);
+                 }else{
+                    return redirect('/orderFailed/'.$_POST['mer_txn']);
+                }
               //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
-                return redirect('/orderConfirmation/'.$_POST['mer_txn']);
+
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('/orderFailed');
+                return redirect('/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";
