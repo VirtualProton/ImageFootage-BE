@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Api;
 use CORS;
+use Image;
 
 class MediaController extends Controller
 {
@@ -30,7 +31,16 @@ class MediaController extends Controller
            $imageMedia = new ImageApi();
            $product_details_data = $imageMedia->get_media_info($media_id);
            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
-           $downlaod_image= 'data:image/jpg;base64,'.$b64image;
+
+		   $img = Image::make($product_details_data['media']['preview_url_no_wm']);
+    		// insert watermark at bottom-right corner with 10px offset 
+    		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
+			$time=time();
+			$img->save(public_path('images/dump/'.$time.'.jpg'));
+			$img->encode('jpg');
+			$type = 'jpg';
+			$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
+			unlink(public_path('images/dump/'.$time.'.jpg'));
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
            }
