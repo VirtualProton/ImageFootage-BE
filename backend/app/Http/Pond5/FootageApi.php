@@ -18,14 +18,14 @@ class FootageApi {
         }
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
-    public function search($keyword){
+    public function search($keyword,$limit=100){
         $serach = $keyword['search'];
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $serach;
         $search_cmd['bm'] = '4095';
         $search_cmd['sb'] = '1';
-        $search_cmd['no'] = '100';
+        $search_cmd['no'] = $limit;
         $search_cmd['p'] = '0';
         $search_cmd['col'] = '2047';
         $search_cmd["secret"] = $this->api_secret;

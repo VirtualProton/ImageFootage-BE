@@ -72,44 +72,17 @@ export class HeroDetailComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
-      
+      let category = this.route.snapshot.paramMap.get('cat');
+      let imgtype =  this.route.snapshot.paramMap.get('webtype');
+      this.getRelatedProducts(category,imgtype);
      // this.heroService.getMarketdeatils()
      //  .subscribe(data => {
      //    this.marketDetails = data;
      //  });
-      let id = +this.route.snapshot.paramMap.get('id');
-      let webtype = +this.route.snapshot.paramMap.get('webtype');
-      let type = this.route.snapshot.paramMap.get('type');
-      this.heroService.getDetailPagedetails(id,webtype,type)
-          .subscribe(data => {
-              //console.log(data); 
-			  let sent= data[0].metadata.title.split(" "); 
-			  //sent=sent.remove('in').remove('of');
-			  //console.log(sent);
-			  this.grtRelatedProducts(data[0].metadata.title);
-			  
-              if(webtype==2){
-                  // this.detailPageInfo = data[0];
-                  // this.imagefootId = data[1];
-                  // let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
-                  // this.keyword = keywords.split(",").map(item => item.trim());
-                  // this.filePreview = data[2];
-                  //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
-              }else if(webtype==3){
-                  // this.detailPageInfo = data;
-                  // let keywords  = this.detailPageInfo[0].items[0].kw;
-                  // this.keyword = keywords.split(",").map(item => item.trim());
-              }
 
-              //this.keyword = keywords.split(',',10);
-              //this.spinner.hide();
-              this.loadingData =false;
-			   
-          });
-		  
   }
-  grtRelatedProducts(keyword){
- 	 this.heroService.getRelatedProductData(keyword).subscribe(relatedData => {
+  getRelatedProducts(keyword,prodtype){
+ 	 this.heroService.getRelatedProductData(keyword,prodtype).subscribe(relatedData => {
        //console.log(relatedData);
 	   this.relatedData=relatedData;
          
@@ -130,6 +103,7 @@ export class HeroDetailComponent implements OnInit {
              let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
              this.keyword = keywords.split(",").map(item => item.trim());
              this.filePreview = data[2];
+            // this.getRelatedProducts(this.keyword[0]);
              //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
          }else if(this.webtype==3){
              this.detailPageInfo = data;
@@ -325,9 +299,10 @@ export class HeroDetailComponent implements OnInit {
        // return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
 	   return 'col-6 col-md-3 col-lg-3';
     }
-	onNavigate(link,pid,pweb,prod_type){
-		//for redirect
-		//alert(link+pid+'/'+pweb+'/'+prod_type);
-		window.location.href=link+pid+'/'+pweb+'/'+prod_type;
-  }
+    onNavigate(link,pid,pweb,prod_type){
+        //for redirect
+        //alert(link+pid+'/'+pweb+'/'+prod_type);
+        let category = this.route.snapshot.paramMap.get('cat');
+        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'/'+category.toLowerCase();
+    }
 }

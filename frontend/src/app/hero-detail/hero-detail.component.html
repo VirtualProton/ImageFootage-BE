@@ -154,6 +154,11 @@
 <!--                                <div class="col-md-7">Contact your local office for all commercial or promotional uses.</div>-->
 <!--                            </div>-->
                             <div class="row">
+                                <div class="col-md-4">Title</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.metadata.title}}</div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">Credit</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.author_realname}}</div>
@@ -164,9 +169,49 @@
                                 <div class="col-md-7">{{imagefootId}}</div>
                             </div>
                             <div class="row">
+                                <div class="col-md-4">Width</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.media.width}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Height</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.media.height}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Mime_type</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.media.mime_type}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Author ID</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.metadata.author_id}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Model-release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Property release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">Editorial #</div>
                                 <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo.metadata.editorial}}</div>
+                                <div class="col-md-7">{{detailPageInfo.metadata.editorial.toUpperCase()}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Premium</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.options.premium.toUpperCase()}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">Rights managed </div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Date created</div>
@@ -176,18 +221,18 @@
                             <div class="row">
                                 <div class="col-md-4">Licence type</div>
                                 <div class="col-md-1">:</div>
-                                <div class="col-md-7"><p *ngIf="detailPageInfo.options.extended=='yes'">Extended</p>
-                                <p *ngIf="detailPageInfo.options.rights_managed=='yes'">Right Managed</p></div>
+                                <div class="col-md-7"><p  *ngIf="detailPageInfo.options.extended=='yes' && extendedTab">Extended</p>
+                                <p *ngIf="!extendedTab">Standard</p></div>
                             </div>
                             <!--<div class="row">
                                 <div class="col-md-3">Release info :</div>
                                 <div class="col-md-9">Not released. More information</div>
                             </div>-->
-                            <div class="row">
-                                <div class="col-md-4">Max file size</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>
-                            </div>
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-4">Max file size</div>-->
+<!--                                <div class="col-md-1">:</div>-->
+<!--                                <div class="col-md-7">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>-->
+<!--                            </div>-->
                         </div>
                      </div>
                 </div>
@@ -543,37 +588,58 @@
 
 
             <div class="bg-black p-3">
-          
                 <div class="row align-items-stretch">
                     <div class="row mx-auto my-auto mb-5">
-                        <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
-                            <h3 class="text-white f-18 mb-3 float-left">{{carouselSliderImages.categoryLabel}}</h3>
-                            <a href="javascript:void(0)" class="text-warning float-right"><strong>See All</strong></a>
-                            <div class="carousel-inner" role="listbox">
-                                <ngb-carousel *ngIf="carouselSliderImages" [showNavigationArrows]="true" [showNavigationIndicators]="false" [interval]="1000" [pauseOnHover]="true">
-                                    <div class="carousel-item">
-                                        <ng-template ngbSlide *ngFor="let carouseimges of carouselSliderImages.categoryImages;let i= index">
-                                            <div class="row">
-                                                <div [ngClass]="getClassName(images)" *ngFor="let images of carouseimges">
-                                                    <a href="javascript:void(0)" class="d-block photo-item">
-                                                        <img *ngIf="images.type == 'photo'" src="assets/images/{{images.imageName}}" alt="Image" class="img-fluid">
-                                                        <iframe  *ngIf="images.type == 'video'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>
-                                                        <div class="photo-text-more">
-                                                            <div class="photo-text-more">
-                                                                <h3 class="heading">{{images.name}}</h3>
-                                                                <span class="meta">{{images.count}} Photos</span>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                </ngb-carousel>
 
 
+
+
+                        <div class="row align-items-stretch">
+                            <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+                                <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                                <span  class=" photo-item" >
+                        <div class="">
+
+                            <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;">
+                              <source src="{{aosimges.product_main_image}}" type="video/mp4">
+                              Your browser does not support the video tag.
+                          </video>
+                            <div class="photo-text-more">
+                          <!--<h3 class="heading">{{aosimges.product_title}}</h3>
+                          <span class="meta">{{aosimges.description}} Photos</span>-->
+                                <!--<p class="icons_thum">
+
+                                  <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                                  <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                                  <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                                  <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                              </p>-->
+                        </div>
+                        </div>
+                      </span>
+                                <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                      <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+
+                                    <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                          <div class="photo-text-more" >
+                       	  <div class="photo-text-more" >
+                        <br />
+                        <p class="icons_thum1" >
+                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                        </p>
+                      </div>
+                      </div>
+                      </span>
                             </div>
                         </div>
+
+
+
                     </div>
                     <div class="row mx-auto my-auto mb-5">
                         <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
