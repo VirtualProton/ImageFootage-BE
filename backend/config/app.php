@@ -182,6 +182,7 @@ return [
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+		Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
 
     ],
 
@@ -242,6 +243,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 		'Image' => Intervention\Image\Facades\Image::class,
+		'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
     ],
 
 ];
