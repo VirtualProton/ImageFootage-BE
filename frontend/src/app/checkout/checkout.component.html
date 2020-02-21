@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label>Country</label>
                             <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
-                                <option value="">Select</option>
+                                <option value="">--Select Country--</option>
                                 <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
                             </select>
                             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <label>State/province</label>
                                 <select class="form-control" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
-                                    <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                                    <option  value="" selected>--Select State--</option>
                                     <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
                                 </select>
                             <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label>City</label>
                             <select class="form-control" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
-                                <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                                <option  value="" selected>--Select City--</option>
                                 <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
                             </select>
                             <div *ngIf="submitted && f.city.errors" class="invalid-feedback">

@@ -106,6 +106,13 @@ export class CheckoutComponent implements OnInit {
 
     onChangeCountry(countryValue) {
         this.loadingData = true;
+        let billing_address = localStorage.getItem('billing_address');
+        if(billing_address) {
+            var billing_state = JSON.parse(billing_address);
+            billing_state['state'] = '';
+            billing_state['city'] = '';
+            localStorage.setItem('billing_address', JSON.stringify(billing_state));
+        }
         //  console.log(this.countryInfo[countryValue]);
         this.authenticationService.allstates(countryValue).
         subscribe(
@@ -118,6 +125,7 @@ export class CheckoutComponent implements OnInit {
             err => console.log(err),
             () => console.log('complete')
         )
+
         // this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
         // this.stateInfo=this.countryInfo[countryValue].States;
         // this.cityInfo=this.stateInfo[0].Cities;
@@ -129,6 +137,12 @@ export class CheckoutComponent implements OnInit {
     }
     onChangeState(stateValue) {
         this.loadingData = true;
+        let billing_address = localStorage.getItem('billing_address');
+        if(billing_address) {
+            var billing_state = JSON.parse(billing_address);
+            billing_state['city'] = '';
+            localStorage.setItem('billing_address', JSON.stringify(billing_state));
+        }
         // console.log(this.stateInfo[stateValue]);
         this.authenticationService.allCities(stateValue).
         subscribe(
@@ -141,6 +155,7 @@ export class CheckoutComponent implements OnInit {
             err => console.log(err),
             () => console.log('complete')
         )
+
         // this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
         // this.cityInfo=this.stateInfo[stateValue].Cities;
         // console.log(this.cityInfo);j
@@ -184,8 +199,7 @@ export class CheckoutComponent implements OnInit {
                   console.log(paymentgatway);
                   this.loadingData = false;
                   if(paymentgatway=='atom')  {
-                      //window.location.href = data2.url;
-
+                      window.location.href = data2.url;
                   }else if(paymentgatway=='payu'){
                     console.log(data2);
                      //this.hash = data2.hash;
