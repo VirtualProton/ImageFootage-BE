@@ -4,3 +4,10 @@ p{
 li{
 	font-family: Open Sans,Helvetica,Arial,sans-serif !important;
 }
+#mainNav {
+    background: #000;
+}
+body {
+    font-weight: normal;
+    background: #f1f5f6 !important;
+}

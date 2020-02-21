@@ -50,10 +50,10 @@
                     <div class="p-3">
                         <ul class="nav nav-tabs mytabs">
                             <li class="nav-item">
-                             <a class="nav-link "  [ngClass]="[ standardTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('1')">Standard Licence</a>
+                             <a class="nav-link "  [ngClass]="[ standardTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('1')">Standard License</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" [ngClass]="[ extendedTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('2')">Extended Licence</a>
+                                <a class="nav-link" [ngClass]="[ extendedTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('2')">Extended License</a>
                             </li>
 
                         </ul>
@@ -73,7 +73,7 @@
                                     </label>
                                     </div>
                                 </div>
-                                <p><small><span class="text-warning">Standard Licence Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
+                                <p><small><span class="text-warning">Standard Use Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
                             </div>
                             <div id="extlic" *ngIf="extendedTab" class="tab-pane active">
 
@@ -91,10 +91,11 @@
                                         </div>
 
                                     </label>
-                                    <p><small><span class="text-warning">Extended Licence Only</span> <span style="cursor:pointer;" (click)="open(content1)">Learn More</span></small></p>
+                                    <p><small><span class="text-warning">Extended Use Only</span> <span style="cursor:pointer;" (click)="open(content1)">Learn More</span></small></p>
                                  </div>
 
                             </div>
+                            <p *ngIf="detailPageInfo.metadata.editorial != 'no'"><small><span class="text-warning">Editorial Use Only</span> <span style="cursor:pointer;" (click)="open(content)">Learn More</span></small></p>
 
                         </div>
 
@@ -219,7 +220,7 @@
                                 <div class="col-md-7">{{detailPageInfo.metadata.date}}</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">Licence type</div>
+                                <div class="col-md-4">License type</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7"><p  *ngIf="detailPageInfo.options.extended=='yes' && extendedTab">Extended</p>
                                 <p *ngIf="!extendedTab">Standard</p></div>
@@ -242,7 +243,7 @@
         <div class="row align-items-stretch">
           <div class="row mx-auto my-auto mb-5">
             
-            
+            <h3 class="col-md-12" style="color: #fcbe11;">Related Images<hr /></h3>
             
             
             <div class="row align-items-stretch">
@@ -430,7 +431,7 @@
                     <div class="p-3">
                         <ul class="nav nav-tabs mytabs">
                             <li class="nav-item">
-                                <a class="nav-link " [ngClass]="[ standardTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('1')">Standard Licence</a>
+                                <a class="nav-link " [ngClass]="[ standardTab ? 'active' : '']" data-toggle="tab"  (click)="tabshow('1')">Standard License</a>
                             </li>
                         </ul>
 
@@ -446,14 +447,9 @@
                                         <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.pr*80 | number}}</p>
                                     </label>
                                 </div>
-                               <p><small><span class="text-warning">Standard Licence Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
+                               <p><small><span class="text-warning">Standard Use Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
                             </div>
                         </div>
-
-
-
-
-
                         <!-- <p class="text-white">Use This Image Exclusively</p>
                         <div class="btn-group" role="group" aria-label="Basic example">
                           <button type="button" class="btn btn-dark">Market Freeze</button>
@@ -518,7 +514,7 @@
                                 <td>{{detailPageInfo[0].items[0].date}}</td>
                             </tr>
                             <tr>
-                                <td>Licence type :</td>
+                                <td>License type :</td>
                                 <td>Standard</td>
 
                             </tr>
@@ -567,7 +563,7 @@
                                 <div class="col-md-7">{{detailPageInfo[0].items[0].date}}</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">Licence type</div>
+                                <div class="col-md-4">License type</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">Standard</div>
                             </div>
@@ -592,14 +588,30 @@
                     <div class="row mx-auto my-auto mb-5">
 
 
-
+ <h3 class="col-md-12" style="color: #fcbe11;">Related Footages<hr /></h3>
 
                         <div class="row align-items-stretch">
                             <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                                 <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                                 <span  class=" photo-item" >
                         <div class="">
+<span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                      <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
 
+                                    <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                          <div class="photo-text-more" >
+                       	  <div class="photo-text-more" >
+                        <br />
+                        <p class="icons_thum1" >
+                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
+                            <!--<span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>-->
+                        </p>
+                      </div>
+                      </div>
+                      </span>
                             <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
@@ -618,23 +630,7 @@
                         </div>
                       </span>
                                 <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
-                      <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-
-                                    <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
-                          <div class="photo-text-more" >
-                       	  <div class="photo-text-more" >
-                        <br />
-                        <p class="icons_thum1" >
-                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
-                        </p>
-                      </div>
-                      </div>
-                      </span>
+                      
                             </div>
                         </div>
 
@@ -735,13 +731,15 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Standard Licence</h4>
+    <h4 class="modal-title" id="modal-basic-title"> Editorial</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
- 
+<p>For editorial use only. This image cannot be used for advertising or promotional purposes. Allows use in all media, excluding broadcast and print covers. This image is for single-use in context only. For additional use, please relicense.</p>
+<p>Learn more on our <a href="https://imagefootage.com/terms." target="_blank">https://imagefootage.com/terms.</a></p>
+<p>Need additional rights or interested in commercial use? For enterprise access, Contact us:<a href="https://imagefootage.com/contactUs" target="_blank">https://imagefootage.com/contactUs</a></p>
  
   </div>
   <!--<div class="modal-footer">
@@ -751,7 +749,7 @@
 
 <ng-template #content1 let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Extended Licence</h4>
+    <h4 class="modal-title" id="modal-basic-title">Extended License</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
