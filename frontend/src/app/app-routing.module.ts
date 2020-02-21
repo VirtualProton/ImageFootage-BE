@@ -20,6 +20,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LightboxComponent } from './lightbox/lightbox.component';
 import { FailOrderComponent } from './fail-order/fail-order.component';
+import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
+
 
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
@@ -42,7 +44,9 @@ const routes: Routes = [
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'user-reset-password', component: ResetPasswordComponent },
   { path: 'wishlist', component: LightboxComponent },
-  { path: 'orderFailed/:id', component: FailOrderComponent }
+  { path: 'orderFailed/:id', component: FailOrderComponent },
+  { path: 'resetpassword/:otp/:email', component: ChangeResetPasswordComponent },
+
 ];
 
 @NgModule({

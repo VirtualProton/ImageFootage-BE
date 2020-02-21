@@ -58,12 +58,13 @@ class UserController extends Controller
         $count = User::where('email','=',$request['email']['user_email'])->count();
 		if($count>0){
 			$randnum=rand(1000,10000);
+			$sm=$request['email']['user_email'];
 			$update_array=array('otp'=>$randnum);
 		    $result = User::where('email',$request['email']['user_email'])->update($update_array);
-			$url=url('resetpassword').'?ran='.$randnum.'&em='.$request['email']['user_email'];
+			$url='https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
 			$data = array('url'=>$url,'email'=>$request['email']['user_email']);
-				 Mail::send('forgotpassword', $data, function($message) use($data,$request['email']['user_email']) {
-				 	$message->to($request['email']['user_email'],'Image Footage')->subject('Image Footage Forgot Password');
+				 Mail::send('forgotpassword', $data, function($message) use($data,$sm) {
+				 	$message->to($sm,'Image Footage')->subject('Image Footage Forgot Password');
 				  });
             $result = ['status'=>1,'message'=>'success'];
         }else{
