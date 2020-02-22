@@ -44,6 +44,7 @@
     "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "validator": "^12.2.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.9.1"
   },

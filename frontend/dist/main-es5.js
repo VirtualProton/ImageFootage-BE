@@ -76,6 +76,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html":
+  /*!******************************************************************************************************************!*\
+    !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html ***!
+    \******************************************************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function node_modulesRawLoaderDistCjsJsSrcAppChangeResetPasswordChangeResetPasswordComponentHtml(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "<!--<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>-->\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\"  [formGroup]=\"changeresetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                                \r\n                               \t\t <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"otp\" class=\"form-control\" placeholder=\"otp\" value=\"{{ otp }}\">\r\n                                    </div>\r\n                                     <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"email\" class=\"form-control\" placeholder=\"email\" value=\"{{ email }}\">\r\n                                    </div>\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n";
+    /***/
+  },
+
+  /***/
   "./node_modules/raw-loader/dist/cjs.js!./src/app/checkout/checkout.component.html":
   /*!****************************************************************************************!*\
     !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/checkout/checkout.component.html ***!
@@ -1395,6 +1415,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
     /*! ./fail-order/fail-order.component */
     "./src/app/fail-order/fail-order.component.ts");
+    /* harmony import */
+
+
+    var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    /*! ./change-reset-password/change-reset-password.component */
+    "./src/app/change-reset-password/change-reset-password.component.ts");
 
     var routes = [// { path: '/', redirectTo: '', pathMatch: 'full' },
     {
@@ -1457,6 +1483,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       path: 'orderFailed/:id',
       component: _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_21__["FailOrderComponent"]
+    }, {
+      path: 'resetpassword/:otp/:email',
+      component: _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__["ChangeResetPasswordComponent"]
     }];
 
     var AppRoutingModule = function AppRoutingModule() {
@@ -1920,7 +1949,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
     /*! ./fail-order/fail-order.component */
-    "./src/app/fail-order/fail-order.component.ts"); //sidebar
+    "./src/app/fail-order/fail-order.component.ts");
+    /* harmony import */
+
+
+    var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
+    /*! ./change-reset-password/change-reset-password.component */
+    "./src/app/change-reset-password/change-reset-password.component.ts"); //sidebar
     //sidebar end
     // Configs 
 
@@ -1957,7 +1992,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       //   InMemoryDataService, { dataEncapsulation: false }
       // )
       ],
-      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"]],
+      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"], _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"]],
       exports: [_login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"]],
       providers: [{
         provide: angular_6_social_login__WEBPACK_IMPORTED_MODULE_33__["AuthServiceConfig"],
@@ -1968,6 +2003,148 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }],
       bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
     })], AppModule);
+    /***/
+  },
+
+  /***/
+  "./src/app/change-reset-password/change-reset-password.component.css":
+  /*!***************************************************************************!*\
+    !*** ./src/app/change-reset-password/change-reset-password.component.css ***!
+    \***************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppChangeResetPasswordChangeResetPasswordComponentCss(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NoYW5nZS1yZXNldC1wYXNzd29yZC9jaGFuZ2UtcmVzZXQtcGFzc3dvcmQuY29tcG9uZW50LmNzcyJ9 */";
+    /***/
+  },
+
+  /***/
+  "./src/app/change-reset-password/change-reset-password.component.ts":
+  /*!**************************************************************************!*\
+    !*** ./src/app/change-reset-password/change-reset-password.component.ts ***!
+    \**************************************************************************/
+
+  /*! exports provided: ChangeResetPasswordComponent */
+
+  /***/
+  function srcAppChangeResetPasswordChangeResetPasswordComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ChangeResetPasswordComponent", function () {
+      return ChangeResetPasswordComponent;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/fesm2015/forms.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js"); //import { MustMatch } from './_helpers/must-match.validator';
+
+
+    var ChangeResetPasswordComponent =
+    /*#__PURE__*/
+    function () {
+      function ChangeResetPasswordComponent(route, formBuilder) {
+        _classCallCheck(this, ChangeResetPasswordComponent);
+
+        this.route = route;
+        this.formBuilder = formBuilder;
+        this.otp = 0;
+        this.email = '';
+        this.submitted = false;
+      }
+
+      _createClass(ChangeResetPasswordComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          this.otp = this.route.snapshot.paramMap.get("otp");
+          this.email = this.route.snapshot.paramMap.get("email");
+          this.changeresetpasswordForm = this.formBuilder.group({
+            otp: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            confirm_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+          }, {//validator: MustMatch('password', 'confirm_password')
+          });
+        } // convenience getter for easy access to form fields
+
+      }, {
+        key: "onSubmit",
+        value: function onSubmit() {
+          this.submitted = true;
+          console.log(this.changeresetpasswordForm.value); // stop here if form is invalid
+
+          if (this.changeresetpasswordForm.invalid) {
+            return;
+          } // display form values on success
+
+
+          alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.changeresetpasswordForm.value, null, 4));
+        }
+      }, {
+        key: "onReset",
+        value: function onReset() {
+          this.submitted = false;
+          this.changeresetpasswordForm.reset();
+        }
+      }, {
+        key: "f",
+        get: function get() {
+          return this.changeresetpasswordForm.controls;
+        }
+      }]);
+
+      return ChangeResetPasswordComponent;
+    }();
+
+    ChangeResetPasswordComponent.ctorParameters = function () {
+      return [{
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]
+      }, {
+        type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]
+      }];
+    };
+
+    ChangeResetPasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+      selector: 'app-change-reset-password',
+      template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! raw-loader!./change-reset-password.component.html */
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html")).default,
+      styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! ./change-reset-password.component.css */
+      "./src/app/change-reset-password/change-reset-password.component.css")).default]
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])], ChangeResetPasswordComponent);
     /***/
   },
 
@@ -4653,7 +4830,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.messageService = messageService; //https://imagefootage.com/backend/api/ For Live
         //http://localhost/imagefootagenew/backend/api/ For Local
 
-        this.heroesUrl = 'http://localhost/imagefootagenew/backend/api/'; // URL to web api
+        this.heroesUrl = 'https://imagefootage.com/backend/api/'; // URL to web api
 
         this.localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
         this.carouselImagesUrl = 'api/carouselImages';
