@@ -88,7 +88,8 @@ class AuthController extends Controller
 		if($count >0){
 			//$res = User::where('email','=',$request->input('email'))->first()->toArray();
 		 	//return $res;
-            $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+           // $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+		   	$credentials = ['email'=> $request['userData']['email']];
             $token = auth()->attempt($credentials);
             return $this->respondWithToken($token);
 		}else{

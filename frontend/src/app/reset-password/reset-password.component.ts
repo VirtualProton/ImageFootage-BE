@@ -48,7 +48,6 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     this.loadingData = true;
-
     this.authenticationService.resetPassword(this.resetpasswordForm.value)
         .pipe(first())
         .subscribe(

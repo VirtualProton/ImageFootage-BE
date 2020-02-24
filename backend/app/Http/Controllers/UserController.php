@@ -43,11 +43,29 @@ class UserController extends Controller
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   } 
    }
-
-    public function validUser(Request $request){
+   
+	/*public function validUser(Request $request){
         $count = User::where('email','=',$request['user_email'])
             ->count();
         if($count>0){
+            $result = ['status'=>1,'message'=>'success'];
+        }else{
+            $result = ['status'=>0,'message'=>'Email Not Found.'];
+        }
+        return response()->json($result);
+    }*/
+    public function validUser(Request $request){
+        $count = User::where('email','=',$request['email']['user_email'])->count();
+		if($count>0){
+			$randnum=rand(1000,10000);
+			$sm=$request['email']['user_email'];
+			$update_array=array('otp'=>$randnum);
+		    $result = User::where('email',$request['email']['user_email'])->update($update_array);
+			$url='https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
+			$data = array('url'=>$url,'email'=>$request['email']['user_email']);
+				 Mail::send('forgotpassword', $data, function($message) use($data,$sm) {
+				 	$message->to($sm,'Image Footage')->subject('Image Footage Forgot Password');
+				  });
             $result = ['status'=>1,'message'=>'success'];
         }else{
             $result = ['status'=>0,'message'=>'Email Not Found.'];
