@@ -76,6 +76,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html":
+  /*!******************************************************************************************************!*\
+    !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html ***!
+    \******************************************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function node_modulesRawLoaderDistCjsJsSrcAppChangePasswordChangePasswordComponentHtml(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Change Password</b></p>\r\n                                <!--<p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>-->\r\n                                <form class=\"loignForm\"  [formGroup]=\"changepasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                               \t\t <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Old Password</label>\r\n                                        <input type=\"password\" formControlName=\"old_password\" class=\"form-control\" placeholder=\"Old Password\" [ngClass]=\"{ 'is-invalid': submitted && f.old_password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.old_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.old_password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                                                       \r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">New Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"New Password\" [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">New Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                     \r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n";
+    /***/
+  },
+
+  /***/
   "./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html":
   /*!******************************************************************************************************************!*\
     !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html ***!
@@ -91,7 +111,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<!--<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>-->\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\"  [formGroup]=\"changeresetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                                \r\n                               \t\t <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"otp\" class=\"form-control\" placeholder=\"otp\" value=\"{{ otp }}\">\r\n                                    </div>\r\n                                     <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"email\" class=\"form-control\" placeholder=\"email\" value=\"{{ email }}\">\r\n                                    </div>\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n";
+    __webpack_exports__["default"] = "<!--<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>-->\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\"  [formGroup]=\"changeresetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                               \t\t                                    \r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"Password\" [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                     \r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n";
     /***/
   },
 
@@ -191,7 +211,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-5\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"p-5 text-center\">\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\n                            <img src=\"assets/images/fail.png\" style=\"width:200px;\">\n                            <div class=\"clearfix\"></div>\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER Failed</h3>\n<!--                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>-->\n\n                            <div class=\"mt-5 pt-5\">\n<!--                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order-->\n<!--                                </strong></button>-->\n                            </div>\n                        </div>\n                    </div>\n\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-light\">\n                            <div class=\"p-3\">\n\n                                <!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\n                                <!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\n\n                                <ul class=\"pt-3\">\n<!--                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>-->\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\n                                </ul>\n                            </div>\n\n                            <table class=\"table mb-0\">\n\n                                <tbody>\n                                <!--                                <tr>-->\n                                <!--                                    <td>-->\n                                <!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\n                                <!--                                    </td>-->\n                                <!--                                    <td>$36.00</td>-->\n                                <!--                                </tr>-->\n                                <tr>\n                                    <td>\n                                        <p><b>Sub Total</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\n                                </tr>\n\n                                <tr>\n                                    <td>\n                                        <p><b>Charges</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        <h4><b>Total</b></h4>\n                                    </td>\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\n                                </tr>\n                                </tbody>\n                            </table>\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n            <div class=\"card z-depth-0 mt-3\">\n                <div class=\"row\">\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\n                        <div class=\"p-5\">\n\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/fail.png\" style=\"width:200px;\"> ORDER Failed</h3>\n<!--                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>-->\n\n\n                            <p class=\"f-20\"><b>Cart Details</b> </p>\n\n                            <div class=\"thumbnail border-1\">\n\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\n\n                                    <tbody>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product  :</span>\n                                        </td>\n                                        <td>{{itemdata.product_name}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product ID :</span>\n                                        </td>\n                                        <td>{{itemdata.product_id}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Size:</span>\n                                        </td>\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Quantity :</span>\n                                        </td>\n                                        <td>1</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Price :</span>\n                                        </td>\n                                        <td>{{itemdata.standard_price}} INR</td>\n                                    </tr>\n                                    </tbody>\n                                </table>\n\n                            </div>\n\n                        </div>\n                    </div>\n\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n\n        </div>\n\n        <div class=\"clearfix\"></div>\n\n\n\n\n    </div>\n</section>\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-5\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"p-5 text-center\">\r\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\r\n                            <img src=\"assets/images/fail.png\" style=\"width:200px;\">\r\n                            <div class=\"clearfix\"></div>\r\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER Failed</h3>\r\n<!--                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>-->\r\n\r\n                            <div class=\"mt-5 pt-5\">\r\n<!--                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order-->\r\n<!--                                </strong></button>-->\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-light\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\r\n                                <!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\r\n\r\n                                <ul class=\"pt-3\">\r\n<!--                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>-->\r\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\r\n                                </ul>\r\n                            </div>\r\n\r\n                            <table class=\"table mb-0\">\r\n\r\n                                <tbody>\r\n                                <!--                                <tr>-->\r\n                                <!--                                    <td>-->\r\n                                <!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\r\n                                <!--                                    </td>-->\r\n                                <!--                                    <td>$36.00</td>-->\r\n                                <!--                                </tr>-->\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Sub Total</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Charges</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <h4><b>Total</b></h4>\r\n                                    </td>\r\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\r\n                                </tr>\r\n                                </tbody>\r\n                            </table>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n            <div class=\"card z-depth-0 mt-3\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n                        <div class=\"p-5\">\r\n\r\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/fail.png\" style=\"width:200px;\"> ORDER Failed</h3>\r\n<!--                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>-->\r\n\r\n\r\n                            <p class=\"f-20\"><b>Cart Details</b> </p>\r\n\r\n                            <div class=\"thumbnail border-1\">\r\n\r\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\r\n\r\n                                    <tbody>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product  :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_name}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product ID :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_id}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Size:</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Quantity :</span>\r\n                                        </td>\r\n                                        <td>1</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Price :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_price}} INR</td>\r\n                                    </tr>\r\n                                    </tbody>\r\n                                </table>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n        <div class=\"clearfix\"></div>\r\n\r\n\r\n\r\n\r\n    </div>\r\n</section>\r\n";
     /***/
   },
 
@@ -291,7 +311,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<h2>My Heroes</h2>\n\n<div>\n  <label>Hero name:\n    <input #heroName />\n  </label>\n  <!-- (click) passes input value to add() and then clears the input -->\n  <button (click)=\"add(heroName.value); heroName.value=''\">\n    add\n  </button>\n</div>\n\n<ul class=\"heroes\">\n  <li *ngFor=\"let hero of heroes\">\n    <a routerLink=\"/detail/{{hero.id}}\">\n      <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\n    </a>\n    <button class=\"delete\" title=\"delete hero\"\n      (click)=\"delete(hero)\">x</button>\n  </li>\n</ul>\n";
+    __webpack_exports__["default"] = "<h2>My Heroes</h2>\r\n\r\n<div>\r\n  <label>Hero name:\r\n    <input #heroName />\r\n  </label>\r\n  <!-- (click) passes input value to add() and then clears the input -->\r\n  <button (click)=\"add(heroName.value); heroName.value=''\">\r\n    add\r\n  </button>\r\n</div>\r\n\r\n<ul class=\"heroes\">\r\n  <li *ngFor=\"let hero of heroes\">\r\n    <a routerLink=\"/detail/{{hero.id}}\">\r\n      <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\r\n    </a>\r\n    <button class=\"delete\" title=\"delete hero\"\r\n      (click)=\"delete(hero)\">x</button>\r\n  </li>\r\n</ul>\r\n";
     /***/
   },
 
@@ -371,7 +391,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div *ngIf=\"messageService.messages.length\">\n\n  <h2>Messages</h2>\n  <button class=\"clear\"\n          (click)=\"messageService.clear()\">clear</button>\n  <div *ngFor='let message of messageService.messages'> {{message}} </div>\n\n</div>\n";
+    __webpack_exports__["default"] = "<div *ngIf=\"messageService.messages.length\">\r\n\r\n  <h2>Messages</h2>\r\n  <button class=\"clear\"\r\n          (click)=\"messageService.clear()\">clear</button>\r\n  <div *ngFor='let message of messageService.messages'> {{message}} </div>\r\n\r\n</div>\r\n";
     /***/
   },
 
@@ -391,7 +411,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-5\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"p-5 text-center\">\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\n                            <img src=\"assets/images/check.png\">\n                            <div class=\"clearfix\"></div>\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER CONFIRMED</h3>\n                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>\n\n                            <div class=\"mt-5 pt-5\">\n                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order\n                                </strong></button>\n                            </div>\n                        </div>\n                    </div>\n\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-light\">\n                            <div class=\"p-3\">\n\n<!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\n<!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\n\n                                <ul class=\"pt-3\">\n                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\n                                </ul>\n                            </div>\n\n                            <table class=\"table mb-0\">\n\n                                <tbody>\n<!--                                <tr>-->\n<!--                                    <td>-->\n<!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\n<!--                                    </td>-->\n<!--                                    <td>$36.00</td>-->\n<!--                                </tr>-->\n                                <tr>\n                                    <td>\n                                        <p><b>Sub Total</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\n                                </tr>\n\n                                <tr>\n                                    <td>\n                                        <p><b>Charges</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        <h4><b>Total</b></h4>\n                                    </td>\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\n                                </tr>\n                                </tbody>\n                            </table>\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n            <div class=\"card z-depth-0 mt-3\">\n                <div class=\"row\">\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\n                        <div class=\"p-5\">\n\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/check.png\"> ORDER CONFIRMED</h3>\n                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>\n\n\n                            <p class=\"f-20\"><b>Order Details</b> </p>\n\n                            <div class=\"thumbnail border-1\">\n\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\n\n                                    <tbody>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product  :</span>\n                                        </td>\n                                        <td>{{itemdata.product_name}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product ID :</span>\n                                        </td>\n                                        <td>{{itemdata.product_id}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Size:</span>\n                                        </td>\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Quantity :</span>\n                                        </td>\n                                        <td>1</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Price :</span>\n                                        </td>\n                                        <td>{{itemdata.standard_price}} INR</td>\n                                    </tr>\n                                 </tbody>\n                                </table>\n\n                            </div>\n\n                        </div>\n                    </div>\n\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n\n        </div>\n\n        <div class=\"clearfix\"></div>\n\n\n\n\n    </div>\n</section>\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-5\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"p-5 text-center\">\r\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\r\n                            <img src=\"assets/images/check.png\">\r\n                            <div class=\"clearfix\"></div>\r\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER CONFIRMED</h3>\r\n                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>\r\n\r\n                            <div class=\"mt-5 pt-5\">\r\n                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order\r\n                                </strong></button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-light\">\r\n                            <div class=\"p-3\">\r\n\r\n<!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\r\n<!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\r\n\r\n                                <ul class=\"pt-3\">\r\n                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>\r\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\r\n                                </ul>\r\n                            </div>\r\n\r\n                            <table class=\"table mb-0\">\r\n\r\n                                <tbody>\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n<!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\r\n<!--                                    </td>-->\r\n<!--                                    <td>$36.00</td>-->\r\n<!--                                </tr>-->\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Sub Total</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Charges</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <h4><b>Total</b></h4>\r\n                                    </td>\r\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\r\n                                </tr>\r\n                                </tbody>\r\n                            </table>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n            <div class=\"card z-depth-0 mt-3\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n                        <div class=\"p-5\">\r\n\r\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/check.png\"> ORDER CONFIRMED</h3>\r\n                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>\r\n\r\n\r\n                            <p class=\"f-20\"><b>Order Details</b> </p>\r\n\r\n                            <div class=\"thumbnail border-1\">\r\n\r\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\r\n\r\n                                    <tbody>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product  :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_name}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product ID :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_id}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Size:</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Quantity :</span>\r\n                                        </td>\r\n                                        <td>1</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Price :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_price}} INR</td>\r\n                                    </tr>\r\n                                 </tbody>\r\n                                </table>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n        <div class=\"clearfix\"></div>\r\n\r\n\r\n\r\n\r\n    </div>\r\n</section>\r\n";
     /***/
   },
 
@@ -451,7 +471,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-1\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\n                        <!--  <div class=\"layer\">  </div>   -->\n\n\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\n\n                    </div>\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-white p-5\">\n                            <div class=\"p-3\">\n\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\n                                <form class=\"loignForm\" [formGroup]=\"resetpasswordForm\" (ngSubmit)=\"onSubmit()\">\n                                <div class=\"form-group mt-5\">\n                                        <label class=\"text-uppercase f-12 text-black\">Email </label>\n\n                                    <input type=\"email\"  formControlName=\"user_email\" class=\"form-control\"  [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\">\n                                    <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\n                                        <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\n                                        <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\n                                    </div>\n                                    </div>\n<!--                                    <div class=\"form-group mt-4\">-->\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Password</label>-->\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\n<!--                                    </div>-->\n\n\n<!--                                    <div class=\"form-group mt-4\">-->\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>-->\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\n<!--                                    </div>-->\n\n\n\n                                    <div class=\"form-group mt-5\">\n\n                                        <button type=\"submit\" [disabled]=\"loading\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\n\n                                    </div>\n\n                                </form>\n                            </div>\n\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n        </div>\n\n\n    </div>\n\n</section>\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\" [formGroup]=\"resetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                                <div class=\"form-group mt-5\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Email </label>\r\n\r\n                                    <input type=\"email\"  formControlName=\"user_email\" class=\"form-control\"  [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\">\r\n                                    <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\r\n                                        <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\r\n                                        <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\r\n                                    </div>\r\n                                    </div>\r\n<!--                                    <div class=\"form-group mt-4\">-->\r\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Password</label>-->\r\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\r\n<!--                                    </div>-->\r\n\r\n\r\n<!--                                    <div class=\"form-group mt-4\">-->\r\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>-->\r\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\r\n<!--                                    </div>-->\r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\" [disabled]=\"loading\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n";
     /***/
   },
 
@@ -1421,6 +1441,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
     /*! ./change-reset-password/change-reset-password.component */
     "./src/app/change-reset-password/change-reset-password.component.ts");
+    /* harmony import */
+
+
+    var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    /*! ./change-password/change-password.component */
+    "./src/app/change-password/change-password.component.ts");
 
     var routes = [// { path: '/', redirectTo: '', pathMatch: 'full' },
     {
@@ -1486,6 +1512,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       path: 'resetpassword/:otp/:email',
       component: _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__["ChangeResetPasswordComponent"]
+    }, {
+      path: 'change-password',
+      component: _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__["ChangePasswordComponent"]
     }];
 
     var AppRoutingModule = function AppRoutingModule() {
@@ -1955,7 +1984,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
     /*! ./change-reset-password/change-reset-password.component */
-    "./src/app/change-reset-password/change-reset-password.component.ts"); //sidebar
+    "./src/app/change-reset-password/change-reset-password.component.ts");
+    /* harmony import */
+
+
+    var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
+    /*! ./change-password/change-password.component */
+    "./src/app/change-password/change-password.component.ts"); //sidebar
     //sidebar end
     // Configs 
 
@@ -1992,7 +2027,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       //   InMemoryDataService, { dataEncapsulation: false }
       // )
       ],
-      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"], _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"]],
+      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"], _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"], _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__["ChangePasswordComponent"]],
       exports: [_login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"]],
       providers: [{
         provide: angular_6_social_login__WEBPACK_IMPORTED_MODULE_33__["AuthServiceConfig"],
@@ -2003,6 +2038,193 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }],
       bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
     })], AppModule);
+    /***/
+  },
+
+  /***/
+  "./src/app/change-password/change-password.component.css":
+  /*!***************************************************************!*\
+    !*** ./src/app/change-password/change-password.component.css ***!
+    \***************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppChangePasswordChangePasswordComponentCss(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NoYW5nZS1wYXNzd29yZC9jaGFuZ2UtcGFzc3dvcmQuY29tcG9uZW50LmNzcyJ9 */";
+    /***/
+  },
+
+  /***/
+  "./src/app/change-password/change-password.component.ts":
+  /*!**************************************************************!*\
+    !*** ./src/app/change-password/change-password.component.ts ***!
+    \**************************************************************/
+
+  /*! exports provided: ChangePasswordComponent */
+
+  /***/
+  function srcAppChangePasswordChangePasswordComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ChangePasswordComponent", function () {
+      return ChangePasswordComponent;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/fesm2015/forms.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _hero_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../hero.service */
+    "./src/app/hero.service.ts");
+    /* harmony import */
+
+
+    var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-spinner */
+    "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+
+    var ChangePasswordComponent =
+    /*#__PURE__*/
+    function () {
+      function ChangePasswordComponent(route, formBuilder, authenticationService, spinner, router) {
+        var _this2 = this;
+
+        _classCallCheck(this, ChangePasswordComponent);
+
+        this.route = route;
+        this.formBuilder = formBuilder;
+        this.authenticationService = authenticationService;
+        this.spinner = spinner;
+        this.router = router;
+        this.submitted = false;
+        this.loadingData = false;
+        this.authenticationService.currentUser.subscribe(function (x) {
+          _this2.currentUser = x;
+
+          if (!_this2.currentUser) {
+            _this2.router.navigate(['/']);
+          }
+        });
+      }
+
+      _createClass(ChangePasswordComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          console.log(this.currentUser.Utype);
+          this.changepasswordForm = this.formBuilder.group({
+            old_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            confirm_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+          }, {//validator: MustMatch('password', 'confirm_password')
+          });
+        } // convenience getter for easy access to form fields
+
+      }, {
+        key: "onSubmit",
+        value: function onSubmit() {
+          var _this3 = this;
+
+          this.submitted = true;
+          this.loadingData = true; // stop here if form is invalid
+
+          /* if (this.changepasswordForm.invalid) {
+               return;
+           }*/
+
+          this.loadingData = true;
+          this.authenticationService.userchangepassword(this.changepasswordForm.value, this.currentUser.Utype).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
+            if (data2.status == 1) {
+              alert(data2.message);
+
+              _this3.router.navigate(['/']);
+            } else if (data2.status == 0) {
+              alert(data2.message);
+            }
+
+            _this3.loadingData = false;
+          }, function (error) {
+            _this3.loadingData = false;
+          }); // display form values on success
+        }
+      }, {
+        key: "onReset",
+        value: function onReset() {
+          this.submitted = false;
+          this.changepasswordForm.reset();
+        }
+      }, {
+        key: "f",
+        get: function get() {
+          return this.changepasswordForm.controls;
+        }
+      }]);
+
+      return ChangePasswordComponent;
+    }();
+
+    ChangePasswordComponent.ctorParameters = function () {
+      return [{
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]
+      }, {
+        type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]
+      }, {
+        type: _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"]
+      }, {
+        type: ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
+      }];
+    };
+
+    ChangePasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+      selector: 'app-change-password',
+      template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! raw-loader!./change-password.component.html */
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html")).default,
+      styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! ./change-password.component.css */
+      "./src/app/change-password/change-password.component.css")).default]
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"], ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])], ChangePasswordComponent);
     /***/
   },
 
@@ -2068,20 +2290,42 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/router */
-    "./node_modules/@angular/router/fesm2015/router.js"); //import { MustMatch } from './_helpers/must-match.validator';
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _hero_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../hero.service */
+    "./src/app/hero.service.ts");
+    /* harmony import */
+
+
+    var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-spinner */
+    "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js"); //import { MustMatch } from './_helpers/must-match.validator';
 
 
     var ChangeResetPasswordComponent =
     /*#__PURE__*/
     function () {
-      function ChangeResetPasswordComponent(route, formBuilder) {
+      function ChangeResetPasswordComponent(route, formBuilder, authenticationService, spinner, router) {
         _classCallCheck(this, ChangeResetPasswordComponent);
 
         this.route = route;
         this.formBuilder = formBuilder;
+        this.authenticationService = authenticationService;
+        this.spinner = spinner;
+        this.router = router;
         this.otp = 0;
         this.email = '';
         this.submitted = false;
+        this.loadingData = false;
       }
 
       _createClass(ChangeResetPasswordComponent, [{
@@ -2090,9 +2334,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.otp = this.route.snapshot.paramMap.get("otp");
           this.email = this.route.snapshot.paramMap.get("email");
           this.changeresetpasswordForm = this.formBuilder.group({
-            otp: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             confirm_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
           }, {//validator: MustMatch('password', 'confirm_password')
@@ -2102,15 +2343,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
+          var _this4 = this;
+
           this.submitted = true;
-          console.log(this.changeresetpasswordForm.value); // stop here if form is invalid
+          this.loadingData = true; // stop here if form is invalid
 
-          if (this.changeresetpasswordForm.invalid) {
-            return;
-          } // display form values on success
+          /* if (this.changeresetpasswordForm.invalid) {
+               return;
+           }*/
 
+          this.loadingData = true;
+          this.authenticationService.changeResetPassword(this.changeresetpasswordForm.value, this.otp, this.email).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
+            if (data2.status == 1) {
+              alert(data2.message);
 
-          alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.changeresetpasswordForm.value, null, 4));
+              _this4.router.navigate(['/']);
+            } else if (data2.status == 0) {
+              alert(data2.message);
+            }
+
+            _this4.loadingData = false;
+          }, function (error) {
+            _this4.loadingData = false;
+          }); // display form values on success
         }
       }, {
         key: "onReset",
@@ -2133,6 +2388,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]
       }, {
         type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]
+      }, {
+        type: _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"]
+      }, {
+        type: ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
       }];
     };
 
@@ -2144,7 +2405,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./change-reset-password.component.css */
       "./src/app/change-reset-password/change-reset-password.component.css")).default]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])], ChangeResetPasswordComponent);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"], ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])], ChangeResetPasswordComponent);
     /***/
   },
 
@@ -2234,7 +2495,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CheckoutComponent(authenticationService, router, formBuilder, dataHelper, spinner) {
-        var _this2 = this;
+        var _this5 = this;
 
         _classCallCheck(this, CheckoutComponent);
 
@@ -2256,10 +2517,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.payuData = '';
         this.hash = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this2.currentUser = x;
+          _this5.currentUser = x;
 
-          if (!_this2.currentUser) {
-            _this2.router.navigate(['/']);
+          if (!_this5.currentUser) {
+            _this5.router.navigate(['/']);
           }
         });
       }
@@ -2267,7 +2528,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(CheckoutComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this3 = this;
+          var _this6 = this;
 
           //this.spinner.show();
           this.loadingData = true;
@@ -2303,26 +2564,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this.getCountries();
           this.authenticationService.getcartItemsData().subscribe(function (data) {
-            _this3.wishListDataItems = data;
+            _this6.wishListDataItems = data;
 
-            _this3.wishListDataItems.forEach(function (element) {
+            _this6.wishListDataItems.forEach(function (element) {
               console.log(element);
 
-              _this3.priceArray.push(element["total"]);
+              _this6.priceArray.push(element["total"]);
             }); // this.spinner.hide();
 
 
-            _this3.loadingData = false;
+            _this6.loadingData = false;
           }, function (error) {});
         }
       }, {
         key: "getCountries",
         value: function getCountries() {
-          var _this4 = this;
+          var _this7 = this;
 
           this.authenticationService.allCountries().subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this4.countryInfo = data2; //console.log('Data:', this.countryInfo);
+            _this7.countryInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -2332,7 +2593,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeCountry",
         value: function onChangeCountry(countryValue) {
-          var _this5 = this;
+          var _this8 = this;
 
           this.loadingData = true;
           var billing_address = localStorage.getItem('billing_address');
@@ -2347,8 +2608,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this.authenticationService.allstates(countryValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this5.stateInfo = data2;
-            _this5.loadingData = false; //console.log('Data:', this.countryInfo);
+            _this8.stateInfo = data2;
+            _this8.loadingData = false; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -2366,7 +2627,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeState",
         value: function onChangeState(stateValue) {
-          var _this6 = this;
+          var _this9 = this;
 
           this.loadingData = true;
           var billing_address = localStorage.getItem('billing_address');
@@ -2380,8 +2641,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this.authenticationService.allCities(stateValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this6.cityInfo = data2;
-            _this6.loadingData = false; //console.log('Data:', this.countryInfo);
+            _this9.cityInfo = data2;
+            _this9.loadingData = false; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -2424,7 +2685,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmitPayment",
         value: function onSubmitPayment(paymentgatway) {
-          var _this7 = this;
+          var _this10 = this;
 
           this.loadingData = true;
           console.log(paymentgatway);
@@ -2433,7 +2694,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             // alert("Sucessfully Registered");
             console.log(data2.url);
             console.log(paymentgatway);
-            _this7.loadingData = false;
+            _this10.loadingData = false;
 
             if (paymentgatway == 'atom') {
               window.location.href = data2.url;
@@ -2454,7 +2715,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             // }
 
           }, function (error) {
-            _this7.loading = false;
+            _this10.loading = false;
           });
         }
       }, {
@@ -2602,7 +2863,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onContactSubmit",
         value: function onContactSubmit() {
-          var _this8 = this;
+          var _this11 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -2613,9 +2874,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
           this.authenticationService.contactUs(this.contactForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])()).subscribe(function (data) {
-            _this8.router.navigate(['/']);
+            if (data.status == 1) {
+              alert(data.message);
+
+              _this11.router.navigate(['/']);
+            } else if (data.status == 1) {
+              alert(data.message);
+            }
           }, function (error) {
-            _this8.loading = false;
+            _this11.loading = false;
           });
         }
       }, {
@@ -2791,7 +3058,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this9 = this;
+          var _this12 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -2807,48 +3074,48 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this.authenticationService.contributorRegister(this.form).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this9.loadingData = false;
+            _this12.loadingData = false;
 
             if (data2.status == '1') {
-              _this9.otp = true;
-              _this9.error_message = null;
-              _this9.success_message = data2.message;
+              _this12.otp = true;
+              _this12.error_message = null;
+              _this12.success_message = data2.message;
             } else {
-              _this9.otp = false;
-              _this9.success_message = null;
-              _this9.error_message = data2.message;
+              _this12.otp = false;
+              _this12.success_message = null;
+              _this12.error_message = data2.message;
             }
           }, function (error) {
-            _this9.loading = false;
+            _this12.loading = false;
           });
         }
       }, {
         key: "resend_otp",
         value: function resend_otp() {
-          var _this10 = this;
+          var _this13 = this;
 
           this.loadingData = true;
           var email = this.contributorForm.controls['contributor_email'].value;
           var mobile = this.contributorForm.controls['contributor_mobile'].value;
           this.authenticationService.resendOtp(email, mobile).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this10.loadingData = false;
+            _this13.loadingData = false;
 
             if (data2.status == '1') {
-              _this10.error_message = null;
-              _this10.success_message = data2.message;
+              _this13.error_message = null;
+              _this13.success_message = data2.message;
             } else {
-              _this10.success_message = null;
-              _this10.error_message = data2.message;
+              _this13.success_message = null;
+              _this13.error_message = data2.message;
             }
           }, function (error) {
-            _this10.loading = false;
+            _this13.loading = false;
           });
         }
       }, {
         key: "onSubmitotp",
         value: function onSubmitotp() {
-          var _this11 = this;
+          var _this14 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -2863,21 +3130,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var mobile = this.contributorForm.controls['contributor_mobile'].value;
           this.authenticationService.verifyOtp(email, mobile, this.contributorotpForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this11.loadingData = false;
+            _this14.loadingData = false;
 
             if (data2.status == '1') {
-              _this11.error_message = null;
+              _this14.error_message = null;
 
-              _this11.contributorotpForm.reset();
+              _this14.contributorotpForm.reset();
 
-              _this11.completflag = true;
-              _this11.success_message = data2.message;
+              _this14.completflag = true;
+              _this14.success_message = data2.message;
             } else {
-              _this11.success_message = null;
-              _this11.error_message = data2.message;
+              _this14.success_message = null;
+              _this14.error_message = data2.message;
             }
           }, function (error) {
-            _this11.loading = false;
+            _this14.loading = false;
           });
         }
       }, {
@@ -3006,7 +3273,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function DashboardComponent(heroService, dataHelper, myElement, router, authenticationService) {
-        var _this12 = this;
+        var _this15 = this;
 
         _classCallCheck(this, DashboardComponent);
 
@@ -3029,20 +3296,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
 
         this.onPageChange = function (pageNumber) {
-          var el = _this12.myElement.nativeElement.querySelector('ngb-carousel');
+          var el = _this15.myElement.nativeElement.querySelector('ngb-carousel');
 
           el.scrollIntoView();
         };
 
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this12.currentUser = x;
+          _this15.currentUser = x;
         });
       }
 
       _createClass(DashboardComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this13 = this;
+          var _this16 = this;
 
           this.heroService.getcarouselSliderImages().subscribe(function (data) {
             var _carouselSlider = new _hero__WEBPACK_IMPORTED_MODULE_2__["carouselSlider"]();
@@ -3090,7 +3357,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             _carouselSliderArray.push(_carouselSlider3);
 
-            _this13.carouselSliderImages = _carouselSliderArray;
+            _this16.carouselSliderImages = _carouselSliderArray;
             ;
           }); //console.log( this.carouselSliderImages);
           // .subscribe(carouselSliderImages => {
@@ -3100,10 +3367,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           this.heroService.getAosSliderImages().subscribe(function (aoslSliderImages) {
             // console.log(aoslSliderImages);
-            _this13.aoslSliderImages = aoslSliderImages;
-            _this13.aoslSliderImagesData = aoslSliderImages;
+            _this16.aoslSliderImages = aoslSliderImages;
+            _this16.aoslSliderImagesData = aoslSliderImages;
 
-            _this13.maintainAosSlider();
+            _this16.maintainAosSlider();
           });
         }
       }, {
@@ -3128,7 +3395,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainAosSlider",
         value: function maintainAosSlider() {
-          var _this14 = this;
+          var _this17 = this;
 
           var i = 4,
               j = 0;
@@ -3141,7 +3408,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               j = j + 1;
 
               if (j == i) {
-                _this14.dataHelper.shuffleArray(randArr);
+                _this17.dataHelper.shuffleArray(randArr);
 
                 j = 0;
                 mathRandom = Math.floor(Math.random() * 10);
@@ -3193,18 +3460,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this15 = this;
+          var _this18 = this;
 
           console.log(productinfo); //return false;
 
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.api_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this15.loadingData = false;
+              _this18.loadingData = false;
 
-              _this15.router.navigate(['/wishlist']);
+              _this18.router.navigate(['/wishlist']);
             } else {
-              _this15.loadingData = false;
+              _this18.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -3212,7 +3479,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getPrice",
         value: function getPrice(api_id, webtype, mainType) {
-          var _this16 = this;
+          var _this19 = this;
 
           console.log(api_id);
           console.log(webtype);
@@ -3233,7 +3500,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             //this.keyword = keywords.split(',',10);
             //this.spinner.hide();
 
-            _this16.loadingData = false;
+            _this19.loadingData = false;
           });
         }
       }]);
@@ -3350,17 +3617,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(FailOrderComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this17 = this;
+          var _this20 = this;
 
           this.loadingData = true;
           this.id = +this.route.snapshot.paramMap.get('id');
           this.authenticationService.getOrderDetails(this.id).subscribe(function (data) {
             if (data.status == 'success') {
-              _this17.OrderDetailData = data.data[0];
-              _this17.loadingData = false;
+              _this20.OrderDetailData = data.data[0];
+              _this20.loadingData = false;
             } else {
               //this.OrderDetailData = data;
-              _this17.loadingData = false;
+              _this20.loadingData = false;
               alert(data.message);
             } //this.spinner.hide();
 
@@ -3557,7 +3824,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       function HeaderComponent( //  private window:Window,
       //  private document: Document,
       router, route, authenticationService) {
-        var _this18 = this;
+        var _this21 = this;
 
         _classCallCheck(this, HeaderComponent);
 
@@ -3568,7 +3835,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.isCollapsed = true;
         this.keywordEle = ' ';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this18.currentUser = x;
+          _this21.currentUser = x;
         });
       }
       /*
@@ -3587,12 +3854,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(HeaderComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this19 = this;
+          var _this22 = this;
 
           aos__WEBPACK_IMPORTED_MODULE_4__["init"]();
           this.sub = this.route.queryParams.subscribe(function (params) {
-            _this19.productType = params.type;
-            _this19.keywordEle = params.keyword;
+            _this22.productType = params.type;
+            _this22.keywordEle = params.keyword;
           });
         }
       }, {
@@ -3765,7 +4032,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function HeroDetailComponent(route, heroService, location, dataHelper, authenticationService, router, sanitizer, config, modalService) {
-        var _this20 = this;
+        var _this23 = this;
 
         _classCallCheck(this, HeroDetailComponent);
 
@@ -3801,7 +4068,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.imagefootId = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this20.currentUser = x;
+          _this23.currentUser = x;
         });
         config.backdrop = 'static';
         config.keyboard = false;
@@ -3810,14 +4077,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(HeroDetailComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this21 = this;
+          var _this24 = this;
 
           //this.spinner.show();
           this.loadingData = true; //this.getcategoryCarouselImages();
 
           this.getDetailinfo();
           this.authenticationService.currentUser.subscribe(function (x) {
-            _this21.currentUser = x;
+            _this24.currentUser = x;
           });
           var category = this.route.snapshot.paramMap.get('cat');
           var imgtype = this.route.snapshot.paramMap.get('webtype');
@@ -3829,43 +4096,43 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getRelatedProducts",
         value: function getRelatedProducts(keyword, prodtype) {
-          var _this22 = this;
+          var _this25 = this;
 
           this.heroService.getRelatedProductData(keyword, prodtype).subscribe(function (relatedData) {
             //console.log(relatedData);
-            _this22.relatedData = relatedData;
+            _this25.relatedData = relatedData;
           });
         }
       }, {
         key: "getDetailinfo",
         value: function getDetailinfo() {
-          var _this23 = this;
+          var _this26 = this;
 
           this.id = +this.route.snapshot.paramMap.get('id');
           this.webtype = +this.route.snapshot.paramMap.get('webtype');
           this.type = this.route.snapshot.paramMap.get('type');
           this.heroService.getDetailPagedetails(this.id, this.webtype, this.type).subscribe(function (data) {
             //console.log(data);
-            if (_this23.webtype == 2) {
-              _this23.detailPageInfo = data[0];
-              _this23.imagefootId = data[1];
-              var keywords = _this23.detailPageInfo['metadata']['keywords_top10'];
-              _this23.keyword = keywords.split(",").map(function (item) {
+            if (_this26.webtype == 2) {
+              _this26.detailPageInfo = data[0];
+              _this26.imagefootId = data[1];
+              var keywords = _this26.detailPageInfo['metadata']['keywords_top10'];
+              _this26.keyword = keywords.split(",").map(function (item) {
                 return item.trim();
               });
-              _this23.filePreview = data[2]; // this.getRelatedProducts(this.keyword[0]);
+              _this26.filePreview = data[2]; // this.getRelatedProducts(this.keyword[0]);
               //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
-            } else if (_this23.webtype == 3) {
-              _this23.detailPageInfo = data;
-              var _keywords = _this23.detailPageInfo[0].items[0].kw;
-              _this23.keyword = _keywords.split(",").map(function (item) {
+            } else if (_this26.webtype == 3) {
+              _this26.detailPageInfo = data;
+              var _keywords = _this26.detailPageInfo[0].items[0].kw;
+              _this26.keyword = _keywords.split(",").map(function (item) {
                 return item.trim();
               });
             } //this.keyword = keywords.split(',',10);
             //this.spinner.hide();
 
 
-            _this23.loadingData = false;
+            _this26.loadingData = false;
           });
         }
       }, {
@@ -3876,30 +4143,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getcategoryCarouselImages",
         value: function getcategoryCarouselImages() {
-          var _this24 = this;
+          var _this27 = this;
 
           var id = +this.route.snapshot.paramMap.get('id');
           this.heroService.getAosSliderImages().subscribe(function (aoslSliderImages) {
             if (!Object(util__WEBPACK_IMPORTED_MODULE_6__["isNullOrUndefined"])(aoslSliderImages)) {
-              _this24.carouselSliderImages = aoslSliderImages;
+              _this27.carouselSliderImages = aoslSliderImages;
               var randArr = [4, 3, 2, 3];
 
-              var tempCarouselSlider = _this24.chunkArray(_this24.carouselSliderImages.categoryImages, 4);
+              var tempCarouselSlider = _this27.chunkArray(_this27.carouselSliderImages.categoryImages, 4);
 
-              _this24.carouselSliderImages.categoryImages = JSON.parse(JSON.stringify(tempCarouselSlider));
+              _this27.carouselSliderImages.categoryImages = JSON.parse(JSON.stringify(tempCarouselSlider));
 
-              for (var i = 0; i < _this24.carouselSliderImages.categoryImages.length; i++) {
-                if (_this24.carouselSliderImages.categoryImages[i].length < 4) {
-                  var lessItem = 4 - _this24.carouselSliderImages.categoryImages[i].length;
+              for (var i = 0; i < _this27.carouselSliderImages.categoryImages.length; i++) {
+                if (_this27.carouselSliderImages.categoryImages[i].length < 4) {
+                  var lessItem = 4 - _this27.carouselSliderImages.categoryImages[i].length;
                   var newArray = tempCarouselSlider[0].splice(0, lessItem);
-                  _this24.carouselSliderImages.categoryImages[i] = _this24.carouselSliderImages.categoryImages[i].concat(newArray);
+                  _this27.carouselSliderImages.categoryImages[i] = _this27.carouselSliderImages.categoryImages[i].concat(newArray);
                 }
               }
 
-              _this24.carouselSliderImages.categoryImages.forEach(function (element) {
+              _this27.carouselSliderImages.categoryImages.forEach(function (element) {
                 var temp = 0;
 
-                _this24.dataHelper.shuffleArray(randArr);
+                _this27.dataHelper.shuffleArray(randArr);
 
                 element.forEach(function (ele) {
                   ele.eleClass = randArr[temp];
@@ -3916,7 +4183,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addToCheckoutItem",
         value: function addToCheckoutItem(productinfo, cartproduct, total, extended, type) {
-          var _this25 = this;
+          var _this28 = this;
 
           if (!this.currentUser) {
             this.showloginPopup = true;
@@ -3947,15 +4214,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.heroService.addcartItemsData(cartval).subscribe(function (data) {
               console.log(data);
 
-              _this25.checkoutArray.push(cartval);
+              _this28.checkoutArray.push(cartval);
 
               if (data["status"] == '1') {
-                _this25.loadingData = false;
-                localStorage.setItem('checkoutAray', _this25.checkoutArray);
+                _this28.loadingData = false;
+                localStorage.setItem('checkoutAray', _this28.checkoutArray);
 
-                _this25.router.navigate(['/cart']);
+                _this28.router.navigate(['/cart']);
               } else {
-                _this25.loadingData = false;
+                _this28.loadingData = false;
                 alert(data["message"]);
               }
             }); // this.checkoutArray.push(2);this.checkoutArray.push(3); //remove the line when api integrated
@@ -4028,7 +4295,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "base64changefunction",
         value: function base64changefunction(fileUrl) {
-          var _this26 = this;
+          var _this29 = this;
 
           var reader = new FileReader();
 
@@ -4038,8 +4305,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             reader.onload = function () {
               alert(reader.result.split(',')[1]);
-              _this26.fileName = file.name + " " + file.type;
-              _this26.filePreview = 'data:image/png' + ';base64,' + reader.result.split(',')[1];
+              _this29.fileName = file.name + " " + file.type;
+              _this29.filePreview = 'data:image/png' + ';base64,' + reader.result.split(',')[1];
             };
           }
         }
@@ -4052,17 +4319,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(id) {
-          var _this27 = this;
+          var _this30 = this;
 
           console.log(id);
           this.loadingData = true;
           this.heroService.addWishListItemsData(id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this27.loadingData = false;
+              _this30.loadingData = false;
 
-              _this27.router.navigate(['/lightbox']);
+              _this30.router.navigate(['/lightbox']);
             } else {
-              _this27.loadingData = false;
+              _this30.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -4249,7 +4516,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function HeroSearchComponent(heroService, route, dataHelper, myElement, router, spinner, authenticationService) {
-        var _this28 = this;
+        var _this31 = this;
 
         _classCallCheck(this, HeroSearchComponent);
 
@@ -4298,14 +4565,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.buttonName = 'Show';
 
         this.onPageChange = function (pageNumber) {
-          var el = _this28.myElement.nativeElement.querySelector('main');
+          var el = _this31.myElement.nativeElement.querySelector('main');
 
           el.scrollIntoView();
         };
 
         this.searchData = new _hero__WEBPACK_IMPORTED_MODULE_3__["Search"]();
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this28.currentUser = x;
+          _this31.currentUser = x;
         });
       } // Push a search term into the observable stream.
 
@@ -4318,31 +4585,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this29 = this;
+          var _this32 = this;
 
           aos__WEBPACK_IMPORTED_MODULE_9__["init"]();
           this.sub = this.route.queryParams.subscribe(function (params) {
-            _this29.productType = params.type;
-            _this29.keywordEle = params.keyword;
-            _this29.loadingData = true; //  this.spinner.show();
+            _this32.productType = params.type;
+            _this32.keywordEle = params.keyword;
+            _this32.loadingData = true; //  this.spinner.show();
 
-            _this29.searchData.productType = params.type;
-            _this29.searchData.search = params.keyword;
+            _this32.searchData.productType = params.type;
+            _this32.searchData.search = params.keyword;
 
             if (!Object(util__WEBPACK_IMPORTED_MODULE_8__["isNullOrUndefined"])(params.sideBar)) {
-              _this29.sideBarEle = params.sideBar;
+              _this32.sideBarEle = params.sideBar;
             }
 
-            _this29.searchData.letest = 0;
-            _this29.searchData.curated = 1;
-            _this29.searchData.populer = 0;
+            _this32.searchData.letest = 0;
+            _this32.searchData.curated = 1;
+            _this32.searchData.populer = 0;
 
-            _this29.searchAPIRequest();
+            _this32.searchAPIRequest();
           });
           this.heroService.getSearchLeftFilter().subscribe(function (leftsideData) {
             // this.carouselSliderImages = carouselSliderImages; 
             console.log(leftsideData);
-            _this29.leftsideData = leftsideData;
+            _this32.leftsideData = leftsideData;
           });
         }
       }, {
@@ -4355,7 +4622,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchAPIRequest",
         value: function searchAPIRequest() {
-          var _this30 = this;
+          var _this33 = this;
 
           this.searchData.product_people = this.slidebarPeopleMenu.join();
           this.searchData.product_gender = this.slidebarGenderMenu.join();
@@ -4370,18 +4637,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             //  if(aoslSliderImages.hasOwnProperty('code')) {
             //   window.location.href = aoslSliderImages['url']
             //}else {
-            _this30.aoslSliderImages = aoslSliderImages;
-            var type = _this30.aoslSliderImages["0"].product_keywords;
-            _this30.keyword = type.split(',', 9);
-            console.log(_this30.keyword);
+            _this33.aoslSliderImages = aoslSliderImages;
+            var type = _this33.aoslSliderImages["0"].product_keywords;
+            _this33.keyword = type.split(',', 9);
+            console.log(_this33.keyword);
 
-            _this30.maintainAosSlider(); //  this.spinner.hide();
+            _this33.maintainAosSlider(); //  this.spinner.hide();
 
 
-            _this30.loadingData = false; // }
+            _this33.loadingData = false; // }
             // this.maintainSearchData(aoslSliderImages);
           }, function (error) {
-            _this30.loadingData = false;
+            _this33.loadingData = false;
             console.log(error);
             alert('No data found ....');
           });
@@ -4594,7 +4861,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainSearchData",
         value: function maintainSearchData(aoslSliderImages) {
-          var _this31 = this;
+          var _this34 = this;
 
           this.aoslSliderImagesData = aoslSliderImages;
 
@@ -4612,7 +4879,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (this.searchData.search.length > 2) {
             this.aoslSliderImagesData = this.aoslSliderImagesData.filter(function (ele) {
-              return ele.product_title.includes(_this31.name.trim());
+              return ele.product_title.includes(_this34.name.trim());
             });
           }
 
@@ -4621,7 +4888,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainAosSlider",
         value: function maintainAosSlider() {
-          var _this32 = this;
+          var _this35 = this;
 
           var i = 4,
               j = 0;
@@ -4634,7 +4901,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               j = j + 1;
 
               if (j == i) {
-                _this32.dataHelper.shuffleArray(randArr);
+                _this35.dataHelper.shuffleArray(randArr);
 
                 j = 0;
                 mathRandom = Math.floor(Math.random() * 10);
@@ -4671,26 +4938,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this33 = this;
+          var _this36 = this;
 
           console.log(productinfo); //return false;
 
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.api_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this33.loadingData = false;
+              _this36.loadingData = false;
 
-              _this33.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this36.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this33.priceArray = [];
+                  _this36.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this33.router.navigate(['/wishlist']);
+              _this36.router.navigate(['/wishlist']);
             } else {
-              _this33.loadingData = false;
+              _this36.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -4970,7 +5237,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getLogin",
         value: function getLogin(email, password) {
-          var _this34 = this;
+          var _this37 = this;
 
           var url = "".concat(this.heroesUrl, "login");
           return this.http.post(url, {
@@ -4981,7 +5248,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             localStorage.setItem('currentUser', JSON.stringify(user));
             console.log(localStorage.getItem('currentUser.utype'));
 
-            _this34.currentUserSubject.next(user);
+            _this37.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -4989,7 +5256,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "fbLogin",
         value: function fbLogin(userData) {
-          var _this35 = this;
+          var _this38 = this;
 
           var url = "".concat(this.heroesUrl, "fbLogin");
           return this.http.post(url, {
@@ -4998,7 +5265,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
 
-            _this35.currentUserSubject.next(user);
+            _this38.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -5006,7 +5273,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "register",
         value: function register(usrData) {
-          var _this36 = this;
+          var _this39 = this;
 
           var url = "".concat(this.heroesUrl, "signup");
           return this.http.post(url, usrData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
@@ -5015,7 +5282,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             if (userInfo['status'] == '1') {
               localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
 
-              _this36.currentUserSubject.next(userInfo['userdata']);
+              _this39.currentUserSubject.next(userInfo['userdata']);
             }
 
             return userInfo;
@@ -5065,9 +5332,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function contactUs(contactData) {
           var url = "".concat(this.heroesUrl, "user_contactus");
           return this.http.post(url, contactData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
-            return true;
+            return userInfo;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to user_contactus data")));
-          ;
         }
       }, {
         key: "logout",
@@ -5078,23 +5344,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getcategoryCarouselImages",
         value: function getcategoryCarouselImages(categoryId) {
-          var _this37 = this;
+          var _this40 = this;
 
           var url = "api/detailPageCarouselImages/?".concat(categoryId);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this37.log("fetched CarouselImages id=".concat(categoryId));
+            return _this40.log("fetched CarouselImages id=".concat(categoryId));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(categoryId))));
         }
       }, {
         key: "getDetailPagedetails",
         value: function getDetailPagedetails(id, webtype, type) {
-          var _this38 = this;
+          var _this41 = this;
 
           console.log(id); //const url = `api/detailPageInfo/?${id}`;
 
           var url = "".concat(this.heroesUrl, "details/").concat(id, "/").concat(webtype, "/").concat(type);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this38.log("fetched detail Page Info id=".concat(id));
+            return _this41.log("fetched detail Page Info id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
       }, {
@@ -5163,11 +5429,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getMarketdeatils",
         value: function getMarketdeatils() {
-          var _this39 = this;
+          var _this42 = this;
 
           var url = "api/marketFreeze";
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this39.log("fetched market Info id");
+            return _this42.log("fetched market Info id");
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id")));
         }
         /** GET heroes from the server */
@@ -5175,10 +5441,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this40 = this;
+          var _this43 = this;
 
           return this.http.get(this.heroesUrl).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this40.log('fetched heroes');
+            return _this43.log('fetched heroes');
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getHeroes', [])));
         }
         /** GET hero by id. Return `undefined` when id not found */
@@ -5186,7 +5452,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroNo404",
         value: function getHeroNo404(id) {
-          var _this41 = this;
+          var _this44 = this;
 
           var url = "".concat(this.heroesUrl, "/?id=").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (heroes) {
@@ -5195,7 +5461,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (h) {
             var outcome = h ? "fetched" : "did not find";
 
-            _this41.log("".concat(outcome, " hero id=").concat(id));
+            _this44.log("".concat(outcome, " hero id=").concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /** GET hero by id. Will 404 if id not found */
@@ -5203,11 +5469,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHero",
         value: function getHero(id) {
-          var _this42 = this;
+          var _this45 = this;
 
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this42.log("fetched hero id=".concat(id));
+            return _this45.log("fetched hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /* GET heroes whose name contains search term */
@@ -5215,7 +5481,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchHeroes",
         value: function searchHeroes(term) {
-          var _this43 = this;
+          var _this46 = this;
 
           if (!term.trim()) {
             // if not search term, return empty hero array.
@@ -5223,7 +5489,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           return this.http.get("".concat(this.heroesUrl, "/?name=").concat(term)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this43.log("found heroes matching \"".concat(term, "\""));
+            return _this46.log("found heroes matching \"".concat(term, "\""));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('searchHeroes', [])));
         } //////// Save methods //////////
 
@@ -5232,10 +5498,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addHero",
         value: function addHero(hero) {
-          var _this44 = this;
+          var _this47 = this;
 
           return this.http.post(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (newHero) {
-            return _this44.log("added hero w/ id=".concat(newHero.id));
+            return _this47.log("added hero w/ id=".concat(newHero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('addHero')));
         }
         /** DELETE: delete the hero from the server */
@@ -5243,12 +5509,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteHero",
         value: function deleteHero(hero) {
-          var _this45 = this;
+          var _this48 = this;
 
           var id = typeof hero === 'number' ? hero : hero.id;
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.delete(url, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this45.log("deleted hero id=".concat(id));
+            return _this48.log("deleted hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('deleteHero')));
         }
         /** PUT: update the hero on the server */
@@ -5256,10 +5522,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "updateHero",
         value: function updateHero(hero) {
-          var _this46 = this;
+          var _this49 = this;
 
           return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this46.log("updated hero id=".concat(hero.id));
+            return _this49.log("updated hero id=".concat(hero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('updateHero')));
         }
         /**
@@ -5272,7 +5538,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "handleError",
         value: function handleError() {
-          var _this47 = this;
+          var _this50 = this;
 
           var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'operation';
           var result = arguments.length > 1 ? arguments[1] : undefined;
@@ -5281,7 +5547,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.error(error); // log to console instead
             // TODO: better job of transforming error for user consumption
 
-            _this47.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
+            _this50.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
 
 
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(result);
@@ -5384,6 +5650,41 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
             return userInfo; //console.log(JSON.stringify(userInfo));
             //return JSON.stringify(userInfo);
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to register data")));
+        }
+      }, {
+        key: "changeResetPassword",
+        value: function changeResetPassword(usrData, otp, email) {
+          var url = "".concat(this.heroesUrl, "forgotResetPassword");
+          var passdata = {
+            "otp": otp,
+            "email": email,
+            "password": usrData.password,
+            "cpassword": usrData.confirm_password
+          };
+          return this.http.post(url, passdata, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
+            console.log(userInfo);
+            /*if (userInfo['status'] == '1') {
+                localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
+                this.currentUserSubject.next(userInfo['userdata']);
+            }*/
+
+            return userInfo;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to register data")));
+        }
+      }, {
+        key: "userchangepassword",
+        value: function userchangepassword(usrData, userid) {
+          var url = "".concat(this.heroesUrl, "userchangepassword");
+          var pasdata = {
+            "old_pass": usrData.old_password,
+            "password": usrData.password,
+            "cpassword": usrData.confirm_password,
+            "userid": userid
+          };
+          return this.http.post(url, pasdata, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
+            console.log(userInfo);
+            return userInfo;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to register data")));
         }
       }, {
@@ -5632,7 +5933,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "/* HeroesComponent's private CSS styles */\n.heroes {\n  margin: 0 0 2em 0;\n  list-style-type: none;\n  padding: 0;\n  width: 15em;\n}\n.heroes li {\n  position: relative;\n  cursor: pointer;\n  background-color: #EEE;\n  margin: .5em;\n  padding: .3em 0;\n  height: 1.6em;\n  border-radius: 4px;\n}\n.heroes li:hover {\n  color: #607D8B;\n  background-color: #DDD;\n  left: .1em;\n}\n.heroes a {\n  color: #333;\n  text-decoration: none;\n  position: relative;\n  display: block;\n  width: 250px;\n}\n.heroes a:hover {\n  color:#607D8B;\n}\n.heroes .badge {\n  display: inline-block;\n  font-size: small;\n  color: white;\n  padding: 0.8em 0.7em 0 0.7em;\n  background-color:#405061;\n  line-height: 1em;\n  position: relative;\n  left: -1px;\n  top: -4px;\n  height: 1.8em;\n  min-width: 16px;\n  text-align: right;\n  margin-right: .8em;\n  border-radius: 4px 0 0 4px;\n}\nbutton {\n  background-color: #eee;\n  border: none;\n  padding: 5px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  cursor: hand;\n  font-family: Arial;\n}\nbutton:hover {\n  background-color: #cfd8dc;\n}\nbutton.delete {\n  position: relative;\n  left: 194px;\n  top: -32px;\n  background-color: gray !important;\n  color: white;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVyb2VzL2hlcm9lcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHlDQUF5QztBQUN6QztFQUNFLGlCQUFpQjtFQUNqQixxQkFBcUI7RUFDckIsVUFBVTtFQUNWLFdBQVc7QUFDYjtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGVBQWU7RUFDZixhQUFhO0VBQ2Isa0JBQWtCO0FBQ3BCO0FBRUE7RUFDRSxjQUFjO0VBQ2Qsc0JBQXNCO0VBQ3RCLFVBQVU7QUFDWjtBQUVBO0VBQ0UsV0FBVztFQUNYLHFCQUFxQjtFQUNyQixrQkFBa0I7RUFDbEIsY0FBYztFQUNkLFlBQVk7QUFDZDtBQUVBO0VBQ0UsYUFBYTtBQUNmO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWiw0QkFBNEI7RUFDNUIsd0JBQXdCO0VBQ3hCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsVUFBVTtFQUNWLFNBQVM7RUFDVCxhQUFhO0VBQ2IsZUFBZTtFQUNmLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsMEJBQTBCO0FBQzVCO0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0I7QUFDcEI7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUVBO0VBQ0Usa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxVQUFVO0VBQ1YsaUNBQWlDO0VBQ2pDLFlBQVk7QUFDZCIsImZpbGUiOiJzcmMvYXBwL2hlcm9lcy9oZXJvZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIEhlcm9lc0NvbXBvbmVudCdzIHByaXZhdGUgQ1NTIHN0eWxlcyAqL1xuLmhlcm9lcyB7XG4gIG1hcmdpbjogMCAwIDJlbSAwO1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIHBhZGRpbmc6IDA7XG4gIHdpZHRoOiAxNWVtO1xufVxuLmhlcm9lcyBsaSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjRUVFO1xuICBtYXJnaW46IC41ZW07XG4gIHBhZGRpbmc6IC4zZW0gMDtcbiAgaGVpZ2h0OiAxLjZlbTtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xufVxuXG4uaGVyb2VzIGxpOmhvdmVyIHtcbiAgY29sb3I6ICM2MDdEOEI7XG4gIGJhY2tncm91bmQtY29sb3I6ICNEREQ7XG4gIGxlZnQ6IC4xZW07XG59XG5cbi5oZXJvZXMgYSB7XG4gIGNvbG9yOiAjMzMzO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogYmxvY2s7XG4gIHdpZHRoOiAyNTBweDtcbn1cblxuLmhlcm9lcyBhOmhvdmVyIHtcbiAgY29sb3I6IzYwN0Q4Qjtcbn1cblxuLmhlcm9lcyAuYmFkZ2Uge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIGZvbnQtc2l6ZTogc21hbGw7XG4gIGNvbG9yOiB3aGl0ZTtcbiAgcGFkZGluZzogMC44ZW0gMC43ZW0gMCAwLjdlbTtcbiAgYmFja2dyb3VuZC1jb2xvcjojNDA1MDYxO1xuICBsaW5lLWhlaWdodDogMWVtO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IC0xcHg7XG4gIHRvcDogLTRweDtcbiAgaGVpZ2h0OiAxLjhlbTtcbiAgbWluLXdpZHRoOiAxNnB4O1xuICB0ZXh0LWFsaWduOiByaWdodDtcbiAgbWFyZ2luLXJpZ2h0OiAuOGVtO1xuICBib3JkZXItcmFkaXVzOiA0cHggMCAwIDRweDtcbn1cblxuYnV0dG9uIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2VlZTtcbiAgYm9yZGVyOiBub25lO1xuICBwYWRkaW5nOiA1cHggMTBweDtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGN1cnNvcjogaGFuZDtcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xufVxuXG5idXR0b246aG92ZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2ZkOGRjO1xufVxuXG5idXR0b24uZGVsZXRlIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBsZWZ0OiAxOTRweDtcbiAgdG9wOiAtMzJweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JheSAhaW1wb3J0YW50O1xuICBjb2xvcjogd2hpdGU7XG59XG5cbiJdfQ== */";
+    __webpack_exports__["default"] = "/* HeroesComponent's private CSS styles */\r\n.heroes {\r\n  margin: 0 0 2em 0;\r\n  list-style-type: none;\r\n  padding: 0;\r\n  width: 15em;\r\n}\r\n.heroes li {\r\n  position: relative;\r\n  cursor: pointer;\r\n  background-color: #EEE;\r\n  margin: .5em;\r\n  padding: .3em 0;\r\n  height: 1.6em;\r\n  border-radius: 4px;\r\n}\r\n.heroes li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n.heroes a {\r\n  color: #333;\r\n  text-decoration: none;\r\n  position: relative;\r\n  display: block;\r\n  width: 250px;\r\n}\r\n.heroes a:hover {\r\n  color:#607D8B;\r\n}\r\n.heroes .badge {\r\n  display: inline-block;\r\n  font-size: small;\r\n  color: white;\r\n  padding: 0.8em 0.7em 0 0.7em;\r\n  background-color:#405061;\r\n  line-height: 1em;\r\n  position: relative;\r\n  left: -1px;\r\n  top: -4px;\r\n  height: 1.8em;\r\n  min-width: 16px;\r\n  text-align: right;\r\n  margin-right: .8em;\r\n  border-radius: 4px 0 0 4px;\r\n}\r\nbutton {\r\n  background-color: #eee;\r\n  border: none;\r\n  padding: 5px 10px;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  cursor: hand;\r\n  font-family: Arial;\r\n}\r\nbutton:hover {\r\n  background-color: #cfd8dc;\r\n}\r\nbutton.delete {\r\n  position: relative;\r\n  left: 194px;\r\n  top: -32px;\r\n  background-color: gray !important;\r\n  color: white;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVyb2VzL2hlcm9lcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHlDQUF5QztBQUN6QztFQUNFLGlCQUFpQjtFQUNqQixxQkFBcUI7RUFDckIsVUFBVTtFQUNWLFdBQVc7QUFDYjtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGVBQWU7RUFDZixhQUFhO0VBQ2Isa0JBQWtCO0FBQ3BCO0FBRUE7RUFDRSxjQUFjO0VBQ2Qsc0JBQXNCO0VBQ3RCLFVBQVU7QUFDWjtBQUVBO0VBQ0UsV0FBVztFQUNYLHFCQUFxQjtFQUNyQixrQkFBa0I7RUFDbEIsY0FBYztFQUNkLFlBQVk7QUFDZDtBQUVBO0VBQ0UsYUFBYTtBQUNmO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWiw0QkFBNEI7RUFDNUIsd0JBQXdCO0VBQ3hCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsVUFBVTtFQUNWLFNBQVM7RUFDVCxhQUFhO0VBQ2IsZUFBZTtFQUNmLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsMEJBQTBCO0FBQzVCO0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0I7QUFDcEI7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUVBO0VBQ0Usa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxVQUFVO0VBQ1YsaUNBQWlDO0VBQ2pDLFlBQVk7QUFDZCIsImZpbGUiOiJzcmMvYXBwL2hlcm9lcy9oZXJvZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIEhlcm9lc0NvbXBvbmVudCdzIHByaXZhdGUgQ1NTIHN0eWxlcyAqL1xyXG4uaGVyb2VzIHtcclxuICBtYXJnaW46IDAgMCAyZW0gMDtcclxuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XHJcbiAgcGFkZGluZzogMDtcclxuICB3aWR0aDogMTVlbTtcclxufVxyXG4uaGVyb2VzIGxpIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNFRUU7XHJcbiAgbWFyZ2luOiAuNWVtO1xyXG4gIHBhZGRpbmc6IC4zZW0gMDtcclxuICBoZWlnaHQ6IDEuNmVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxufVxyXG5cclxuLmhlcm9lcyBsaTpob3ZlciB7XHJcbiAgY29sb3I6ICM2MDdEOEI7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI0RERDtcclxuICBsZWZ0OiAuMWVtO1xyXG59XHJcblxyXG4uaGVyb2VzIGEge1xyXG4gIGNvbG9yOiAjMzMzO1xyXG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgd2lkdGg6IDI1MHB4O1xyXG59XHJcblxyXG4uaGVyb2VzIGE6aG92ZXIge1xyXG4gIGNvbG9yOiM2MDdEOEI7XHJcbn1cclxuXHJcbi5oZXJvZXMgLmJhZGdlIHtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgZm9udC1zaXplOiBzbWFsbDtcclxuICBjb2xvcjogd2hpdGU7XHJcbiAgcGFkZGluZzogMC44ZW0gMC43ZW0gMCAwLjdlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiM0MDUwNjE7XHJcbiAgbGluZS1oZWlnaHQ6IDFlbTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogLTFweDtcclxuICB0b3A6IC00cHg7XHJcbiAgaGVpZ2h0OiAxLjhlbTtcclxuICBtaW4td2lkdGg6IDE2cHg7XHJcbiAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbiAgbWFyZ2luLXJpZ2h0OiAuOGVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweCAwIDAgNHB4O1xyXG59XHJcblxyXG5idXR0b24ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgYm9yZGVyOiBub25lO1xyXG4gIHBhZGRpbmc6IDVweCAxMHB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgY3Vyc29yOiBoYW5kO1xyXG4gIGZvbnQtZmFtaWx5OiBBcmlhbDtcclxufVxyXG5cclxuYnV0dG9uOmhvdmVyIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2ZkOGRjO1xyXG59XHJcblxyXG5idXR0b24uZGVsZXRlIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogMTk0cHg7XHJcbiAgdG9wOiAtMzJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5ICFpbXBvcnRhbnQ7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG59XHJcblxyXG4iXX0= */";
     /***/
   },
 
@@ -5691,16 +5992,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this48 = this;
+          var _this51 = this;
 
           this.heroService.getHeroes().subscribe(function (heroes) {
-            return _this48.heroes = heroes;
+            return _this51.heroes = heroes;
           });
         }
       }, {
         key: "add",
         value: function add(name) {
-          var _this49 = this;
+          var _this52 = this;
 
           name = name.trim();
 
@@ -5711,7 +6012,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.heroService.addHero({
             name: name
           }).subscribe(function (hero) {
-            _this49.heroes.push(hero);
+            _this52.heroes.push(hero);
           });
         }
       }, {
@@ -5892,7 +6193,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LightboxComponent(heroService, authenticationService, router) {
-        var _this50 = this;
+        var _this53 = this;
 
         _classCallCheck(this, LightboxComponent);
 
@@ -5904,10 +6205,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this50.currentUser = x;
+          _this53.currentUser = x;
 
-          if (!_this50.currentUser) {
-            _this50.router.navigate(['/']);
+          if (!_this53.currentUser) {
+            _this53.router.navigate(['/']);
           }
         });
       }
@@ -5923,13 +6224,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loaddata",
         value: function loaddata() {
-          var _this51 = this;
+          var _this54 = this;
 
           this.authenticationService.getLightboxItemsData().subscribe(function (data) {
-            _this51.loadingData = false;
+            _this54.loadingData = false;
 
             if (data.status == '1') {
-              _this51.lightBoxListDataItems = data.data;
+              _this54.lightBoxListDataItems = data.data;
             } else {
               alert(data.message);
             } // this.lightBoxListDataItems.forEach(element => {
@@ -5942,17 +6243,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromWishlist",
         value: function removeProductFromWishlist(productinfo) {
-          var _this52 = this;
+          var _this55 = this;
 
           if (confirm('Are you sure?') == true) {
             this.loadingData = true;
             this.authenticationService.removeDataFromWishlist(productinfo).subscribe(function (data) {
-              _this52.loadingData = false;
+              _this55.loadingData = false;
 
               if (data["status"] == '1') {
                 alert(data["message"]);
 
-                _this52.loaddata();
+                _this55.loaddata();
               } else {
                 alert(data["message"]);
               }
@@ -6109,7 +6410,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "socialSignIn",
         value: function socialSignIn(socialPlatform) {
-          var _this53 = this;
+          var _this56 = this;
 
           var socialPlatformProvider;
 
@@ -6129,16 +6430,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(userData.name);
             console.log(userData.email); //fbLogin
 
-            _this53.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
+            _this56.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
               console.log(data);
 
               if (data == undefined) {
                 alert("You are non registered user");
               } else {
-                _this53.closeLoginPopup.emit(true);
+                _this56.closeLoginPopup.emit(true);
               }
             }, function (error) {
-              _this53.loading = false;
+              _this56.loading = false;
             });
           });
         }
@@ -6157,7 +6458,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this54 = this;
+          var _this57 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6170,15 +6471,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(data);
 
             if (data == undefined) {
-              _this54.loading = false;
+              _this57.loading = false;
               alert("Please enter correct username or password");
             } else {
               alert("Login Successful");
 
-              _this54.closeLoginPopup.emit(true);
+              _this57.closeLoginPopup.emit(true);
             }
           }, function (error) {
-            _this54.loading = false;
+            _this57.loading = false;
           });
         }
       }, {
@@ -6302,7 +6603,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "/* MessagesComponent's private CSS styles */\nh2 {\n  color: red;\n  font-family: Arial, Helvetica, sans-serif;\n  font-weight: lighter;\n}\nbody {\n  margin: 2em;\n}\nbody, input[text], button {\n  color: crimson;\n  font-family: Cambria, Georgia;\n}\nbutton.clear {\n  font-family: Arial;\n  background-color: #eee;\n  border: none;\n  padding: 5px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  cursor: hand;\n}\nbutton:hover {\n  background-color: #cfd8dc;\n}\nbutton:disabled {\n  background-color: #eee;\n  color: #aaa;\n  cursor: auto;\n}\nbutton.clear {\n  color: #333;\n  margin-bottom: 12px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZXMvbWVzc2FnZXMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwyQ0FBMkM7QUFDM0M7RUFDRSxVQUFVO0VBQ1YseUNBQXlDO0VBQ3pDLG9CQUFvQjtBQUN0QjtBQUNBO0VBQ0UsV0FBVztBQUNiO0FBQ0E7RUFDRSxjQUFjO0VBQ2QsNkJBQTZCO0FBQy9CO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLFlBQVk7RUFDWixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixZQUFZO0FBQ2Q7QUFDQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0Usc0JBQXNCO0VBQ3RCLFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLFdBQVc7RUFDWCxtQkFBbUI7QUFDckIiLCJmaWxlIjoic3JjL2FwcC9tZXNzYWdlcy9tZXNzYWdlcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogTWVzc2FnZXNDb21wb25lbnQncyBwcml2YXRlIENTUyBzdHlsZXMgKi9cbmgyIHtcbiAgY29sb3I6IHJlZDtcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGZvbnQtd2VpZ2h0OiBsaWdodGVyO1xufVxuYm9keSB7XG4gIG1hcmdpbjogMmVtO1xufVxuYm9keSwgaW5wdXRbdGV4dF0sIGJ1dHRvbiB7XG4gIGNvbG9yOiBjcmltc29uO1xuICBmb250LWZhbWlseTogQ2FtYnJpYSwgR2VvcmdpYTtcbn1cblxuYnV0dG9uLmNsZWFyIHtcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDVweCAxMHB4O1xuICBib3JkZXItcmFkaXVzOiA0cHg7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgY3Vyc29yOiBoYW5kO1xufVxuYnV0dG9uOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NmZDhkYztcbn1cbmJ1dHRvbjpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XG4gIGNvbG9yOiAjYWFhO1xuICBjdXJzb3I6IGF1dG87XG59XG5idXR0b24uY2xlYXIge1xuICBjb2xvcjogIzMzMztcbiAgbWFyZ2luLWJvdHRvbTogMTJweDtcbn1cbiJdfQ== */";
+    __webpack_exports__["default"] = "/* MessagesComponent's private CSS styles */\r\nh2 {\r\n  color: red;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  font-weight: lighter;\r\n}\r\nbody {\r\n  margin: 2em;\r\n}\r\nbody, input[text], button {\r\n  color: crimson;\r\n  font-family: Cambria, Georgia;\r\n}\r\nbutton.clear {\r\n  font-family: Arial;\r\n  background-color: #eee;\r\n  border: none;\r\n  padding: 5px 10px;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  cursor: hand;\r\n}\r\nbutton:hover {\r\n  background-color: #cfd8dc;\r\n}\r\nbutton:disabled {\r\n  background-color: #eee;\r\n  color: #aaa;\r\n  cursor: auto;\r\n}\r\nbutton.clear {\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZXMvbWVzc2FnZXMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwyQ0FBMkM7QUFDM0M7RUFDRSxVQUFVO0VBQ1YseUNBQXlDO0VBQ3pDLG9CQUFvQjtBQUN0QjtBQUNBO0VBQ0UsV0FBVztBQUNiO0FBQ0E7RUFDRSxjQUFjO0VBQ2QsNkJBQTZCO0FBQy9CO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLFlBQVk7RUFDWixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixZQUFZO0FBQ2Q7QUFDQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0Usc0JBQXNCO0VBQ3RCLFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLFdBQVc7RUFDWCxtQkFBbUI7QUFDckIiLCJmaWxlIjoic3JjL2FwcC9tZXNzYWdlcy9tZXNzYWdlcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogTWVzc2FnZXNDb21wb25lbnQncyBwcml2YXRlIENTUyBzdHlsZXMgKi9cclxuaDIge1xyXG4gIGNvbG9yOiByZWQ7XHJcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgZm9udC13ZWlnaHQ6IGxpZ2h0ZXI7XHJcbn1cclxuYm9keSB7XHJcbiAgbWFyZ2luOiAyZW07XHJcbn1cclxuYm9keSwgaW5wdXRbdGV4dF0sIGJ1dHRvbiB7XHJcbiAgY29sb3I6IGNyaW1zb247XHJcbiAgZm9udC1mYW1pbHk6IENhbWJyaWEsIEdlb3JnaWE7XHJcbn1cclxuXHJcbmJ1dHRvbi5jbGVhciB7XHJcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgYm9yZGVyOiBub25lO1xyXG4gIHBhZGRpbmc6IDVweCAxMHB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgY3Vyc29yOiBoYW5kO1xyXG59XHJcbmJ1dHRvbjpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NmZDhkYztcclxufVxyXG5idXR0b246ZGlzYWJsZWQge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgY29sb3I6ICNhYWE7XHJcbiAgY3Vyc29yOiBhdXRvO1xyXG59XHJcbmJ1dHRvbi5jbGVhciB7XHJcbiAgY29sb3I6ICMzMzM7XHJcbiAgbWFyZ2luLWJvdHRvbTogMTJweDtcclxufVxyXG4iXX0= */";
     /***/
   },
 
@@ -6468,17 +6769,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(OrderConfirmationComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this55 = this;
+          var _this58 = this;
 
           this.loadingData = true;
           this.id = +this.route.snapshot.paramMap.get('id');
           this.authenticationService.getOrderDetails(this.id).subscribe(function (data) {
             if (data.status == 'success') {
-              _this55.OrderDetailData = data.data[0];
-              _this55.loadingData = false;
+              _this58.OrderDetailData = data.data[0];
+              _this58.loadingData = false;
             } else {
               //this.OrderDetailData = data;
-              _this55.loadingData = false;
+              _this58.loadingData = false;
               alert(data.message);
             } //this.spinner.hide();
 
@@ -6610,15 +6911,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(PricingComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this56 = this;
+          var _this59 = this;
 
           this.loadingData = true;
           this.authenticationService.getSubscriptionData().subscribe(function (data) {
-            _this56.loadingData = false;
+            _this59.loadingData = false;
 
             if (data.status == 'success') {
-              _this56.plansData = data.data;
-              _this56.loadingData = false;
+              _this59.plansData = data.data;
+              _this59.loadingData = false;
             } else {
               alert(data.message);
             } //this.spinner.hide();
@@ -6899,7 +7200,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function ResetPasswordComponent(heroService, formBuilder, authenticationService, router, spinner) {
-        var _this57 = this;
+        var _this60 = this;
 
         _classCallCheck(this, ResetPasswordComponent);
 
@@ -6912,10 +7213,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.submitted = false;
         this.loading = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this57.currentUser = x;
+          _this60.currentUser = x;
 
-          if (_this57.currentUser) {
-            _this57.router.navigate(['/']);
+          if (_this60.currentUser) {
+            _this60.router.navigate(['/']);
           }
         });
       }
@@ -6930,7 +7231,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this58 = this;
+          var _this61 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6943,17 +7244,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.loadingData = true;
           this.authenticationService.resetPassword(this.resetpasswordForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this58.loadingData = false;
+            _this61.loadingData = false;
 
-            if (data2.status == '1') {// this.otp = true;
+            if (data2.status == '1') {
+              // this.otp = true;
               // this.error_message = null;
               // this.success_message = data2.message;
-            } else {// this.otp = false;
-                // this.success_message = null;
-                // this.error_message = data2.message;
-              }
+              alert(data2.message);
+
+              _this61.router.navigate(['/']);
+            } else {
+              // this.otp = false;
+              // this.success_message = null;
+              // this.error_message = data2.message;
+              alert(data2.message);
+            }
           }, function (error) {
-            _this58.loading = false;
+            _this61.loading = false;
           });
         }
       }, {
@@ -7122,11 +7429,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getCountries",
         value: function getCountries() {
-          var _this59 = this;
+          var _this62 = this;
 
           this.authenticationService.allCountries().subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this59.countryInfo = data2; //console.log('Data:', this.countryInfo);
+            _this62.countryInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7136,12 +7443,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeCountry",
         value: function onChangeCountry(countryValue) {
-          var _this60 = this;
+          var _this63 = this;
 
           //  console.log(this.countryInfo[countryValue]);
           this.authenticationService.allstates(countryValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this60.stateInfo = data2; //console.log('Data:', this.countryInfo);
+            _this63.stateInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7154,12 +7461,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeState",
         value: function onChangeState(stateValue) {
-          var _this61 = this;
+          var _this64 = this;
 
           // console.log(this.stateInfo[stateValue]);
           this.authenticationService.allCities(stateValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this61.cityInfo = data2; //console.log('Data:', this.countryInfo);
+            _this64.cityInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7176,7 +7483,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this62 = this;
+          var _this65 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -7196,7 +7503,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
               if (cartData.length > 0) {
                 var finalData = JSON.parse(cartData);
-                _this62.token = localStorage.getItem('currentUser'); //console.log(finalData);
+                _this65.token = localStorage.getItem('currentUser'); //console.log(finalData);
                 // console.log(finalData.productinfo);
 
                 var cartval = {
@@ -7204,37 +7511,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                   "selected_product": finalData.cartproduct,
                   "total": finalData.total,
                   "extended": finalData.extended,
-                  "token": _this62.token,
+                  "token": _this65.token,
                   "type": finalData.type
                 };
 
-                _this62.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
+                _this65.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
                   console.log(data);
 
-                  _this62.checkoutArray.push(cartval);
+                  _this65.checkoutArray.push(cartval);
 
                   if (data["status"] == '1') {
-                    _this62.loadingData = false;
-                    localStorage.setItem('checkoutAray', _this62.checkoutArray);
+                    _this65.loadingData = false;
+                    localStorage.setItem('checkoutAray', _this65.checkoutArray);
                     localStorage.removeItem("beforeLoginCart");
 
-                    _this62.router.navigate(['/cart']);
+                    _this65.router.navigate(['/cart']);
                   } else {
-                    _this62.loadingData = false;
+                    _this65.loadingData = false;
                     alert(data["message"]);
                   }
                 });
               } else {
-                _this62.loadingData = false;
+                _this65.loadingData = false;
 
-                _this62.router.navigate(['/']);
+                _this65.router.navigate(['/']);
               }
             } else {
-              _this62.loadingData = false;
+              _this65.loadingData = false;
               alert(data2.message);
             }
           }, function (error) {
-            _this62.loading = false;
+            _this65.loading = false;
           });
         }
       }, {
@@ -7452,7 +7759,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserProfileComponent(route, heroService, location, dataHelper, authenticationService, router, spinner) {
-        var _this63 = this;
+        var _this66 = this;
 
         _classCallCheck(this, UserProfileComponent);
 
@@ -7472,10 +7779,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.orderData = '';
         this.order_items = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this63.currentUser = x;
+          _this66.currentUser = x;
 
-          if (!_this63.currentUser) {
-            _this63.router.navigate(['/']);
+          if (!_this66.currentUser) {
+            _this66.router.navigate(['/']);
           }
         });
       }
@@ -7483,16 +7790,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(UserProfileComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this64 = this;
+          var _this67 = this;
 
           this.loadingData = true;
           this.authenticationService.getUserprofileData().subscribe(function (data) {
-            _this64.profileData = data.data[0];
-            _this64.loadingData = false;
+            _this67.profileData = data.data[0];
+            _this67.loadingData = false;
           }, function (error) {});
           this.authenticationService.getUserOrderData().subscribe(function (orders) {
-            _this64.orderData = orders.data;
-            _this64.loadingData = false;
+            _this67.orderData = orders.data;
+            _this67.loadingData = false;
           }, function (error) {});
         }
       }, {
@@ -7637,7 +7944,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WishlistComponent(heroService, authenticationService, router, spinner) {
-        var _this65 = this;
+        var _this68 = this;
 
         _classCallCheck(this, WishlistComponent);
 
@@ -7650,10 +7957,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this65.currentUser = x;
+          _this68.currentUser = x;
 
-          if (!_this65.currentUser) {
-            _this65.router.navigate(['/']);
+          if (!_this68.currentUser) {
+            _this68.router.navigate(['/']);
           }
         });
       }
@@ -7661,19 +7968,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(WishlistComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this66 = this;
+          var _this69 = this;
 
           //this.spinner.show();
           this.loadingData = true; // console.log(localStorage.getItem('checkoutAray'));
 
           this.authenticationService.getcartItemsData().subscribe(function (data) {
-            _this66.wishListDataItems = data;
+            _this69.wishListDataItems = data;
 
-            _this66.wishListDataItems.forEach(function (element) {
-              _this66.priceArray.push(element["total"]);
+            _this69.wishListDataItems.forEach(function (element) {
+              _this69.priceArray.push(element["total"]);
             });
 
-            _this66.loadingData = false; //this.spinner.hide();
+            _this69.loadingData = false; //this.spinner.hide();
           }, function (error) {});
         }
       }, {
@@ -7696,7 +8003,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromCart",
         value: function removeProductFromCart(productinfo) {
-          var _this67 = this;
+          var _this70 = this;
 
           console.log(productinfo);
 
@@ -7704,16 +8011,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingData = true;
             this.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
               if (data["status"] == '1') {
-                _this67.priceArray = [];
+                _this70.priceArray = [];
 
-                _this67.authenticationService.getcartItemsData().subscribe(function (data) {
-                  _this67.wishListDataItems = data;
+                _this70.authenticationService.getcartItemsData().subscribe(function (data) {
+                  _this70.wishListDataItems = data;
 
-                  _this67.wishListDataItems.forEach(function (element) {
-                    _this67.priceArray.push(element["total"]);
+                  _this70.wishListDataItems.forEach(function (element) {
+                    _this70.priceArray.push(element["total"]);
                   });
 
-                  _this67.loadingData = false;
+                  _this70.loadingData = false;
                 }, function (error) {});
               } else {
                 alert(data["message"]);
@@ -7726,25 +8033,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this68 = this;
+          var _this71 = this;
 
           console.log(productinfo);
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.cart_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this68.loadingData = false;
+              _this71.loadingData = false;
 
-              _this68.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this71.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this68.priceArray = [];
+                  _this71.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this68.router.navigate(['/wishlist']);
+              _this71.router.navigate(['/wishlist']);
             } else {
-              _this68.loadingData = false;
+              _this71.loadingData = false;
               alert(data["message"]);
             }
           });

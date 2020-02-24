@@ -4,45 +4,50 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HeroService }  from '../hero.service';
 import {NgxSpinnerService} from "ngx-spinner";
 import {first} from "rxjs/operators";
-//import { MustMatch } from './_helpers/must-match.validator';
+
 @Component({
-  selector: 'app-change-reset-password',
-  templateUrl: './change-reset-password.component.html',
-  styleUrls: ['./change-reset-password.component.css']
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
 })
-export class ChangeResetPasswordComponent implements OnInit {
-	otp:any=0;
-	email:any='';
-	 changeresetpasswordForm: FormGroup;
+export class ChangePasswordComponent implements OnInit {
+ 	changepasswordForm: FormGroup;
     submitted = false;
 	loadingData:boolean = false;
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private authenticationService: HeroService,private spinner: NgxSpinnerService,private router: Router) {
-  	
-  }
-  ngOnInit() {
-	  this.otp = this.route.snapshot.paramMap.get("otp");
-	  this.email = this.route.snapshot.paramMap.get("email");
+	public currentUser: any;
+  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private authenticationService: HeroService,private spinner: NgxSpinnerService,private router: Router) { 
+  this.authenticationService.currentUser.subscribe(x => {
+          this.currentUser = x;
+          if(!this.currentUser){
+              this.router.navigate(['/']);
+          }
 
-	  this.changeresetpasswordForm = this.formBuilder.group({
+      });
+  }
+
+  ngOnInit() {
+  console.log(this.currentUser.Utype);
+  this.changepasswordForm = this.formBuilder.group({
+  			old_password: ['', Validators.required],
             password: ['', Validators.required],
             confirm_password: ['', Validators.required]
         }, {
             //validator: MustMatch('password', 'confirm_password')
         });
   }
-   // convenience getter for easy access to form fields
-    get f() { return this.changeresetpasswordForm.controls; }
+  // convenience getter for easy access to form fields
+    get f() { return this.changepasswordForm.controls; }
 	onSubmit() {
         this.submitted = true;
 		this.loadingData = true;
 		
         // stop here if form is invalid
-       /* if (this.changeresetpasswordForm.invalid) {
+       /* if (this.changepasswordForm.invalid) {
             return;
         }*/
 		 this.loadingData = true;
 
-    this.authenticationService.changeResetPassword(this.changeresetpasswordForm.value,this.otp,this.email)
+    this.authenticationService.userchangepassword(this.changepasswordForm.value,this.currentUser.Utype)
         .pipe(first())
         .subscribe(
             data2 => {
@@ -61,7 +66,7 @@ export class ChangeResetPasswordComponent implements OnInit {
     }
   onReset() {
         this.submitted = false;
-        this.changeresetpasswordForm.reset();
+        this.changepasswordForm.reset();
   }
 
 }

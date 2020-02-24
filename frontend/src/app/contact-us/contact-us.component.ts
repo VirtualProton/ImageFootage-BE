@@ -42,7 +42,12 @@ export class ContactUsComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
+				if(data.status==1){
+					alert(data.message);
                     this.router.navigate(['/']);
+				}else if(data.status==1){
+					alert(data.message);
+				}
                 },
                 error => {
                     this.loading = false;

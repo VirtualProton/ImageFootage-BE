@@ -63,6 +63,9 @@ Route::group([
     Route::post('payUResponse', 'PaymentController@payUResponse');
     Route::post('validUser', 'UserController@validUser');
 	Route::post('fbLogin','AuthController@fbLogin');
+	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
+	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
+	
 
 
 

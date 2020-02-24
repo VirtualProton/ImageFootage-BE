@@ -49,6 +49,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Change Password</b></p>\r\n                                <!--<p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>-->\r\n                                <form class=\"loignForm\"  [formGroup]=\"changepasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                               \t\t <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Old Password</label>\r\n                                        <input type=\"password\" formControlName=\"old_password\" class=\"form-control\" placeholder=\"Old Password\" [ngClass]=\"{ 'is-invalid': submitted && f.old_password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.old_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.old_password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                                                       \r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">New Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"New Password\" [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">New Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                     \r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html":
 /*!******************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html ***!
@@ -58,7 +71,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!--<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>-->\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\"  [formGroup]=\"changeresetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                                \r\n                               \t\t <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"otp\" class=\"form-control\" placeholder=\"otp\" value=\"{{ otp }}\">\r\n                                    </div>\r\n                                     <div class=\"form-group mt-4\">\r\n                                    <input type=\"hidden\" formControlName=\"email\" class=\"form-control\" placeholder=\"email\" value=\"{{ email }}\">\r\n                                    </div>\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!--<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>-->\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\"  [formGroup]=\"changeresetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                               \t\t                                    \r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Password</label>\r\n                                        <input type=\"password\" formControlName=\"password\" class=\"form-control\" placeholder=\"Password\" [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\">\r\n                                        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.password.errors.required\">Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n\r\n\r\n                                    <div class=\"form-group mt-4\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>\r\n                                        <input type=\"password\" formControlName=\"confirm_password\" class=\"form-control\" placeholder=\"Confirm Password\" [ngClass]=\"{ 'is-invalid': submitted && f.title.errors }\">\r\n                                        <div *ngIf=\"submitted && f.confirm_password.errors\" class=\"invalid-feedback\">\r\n                        <div *ngIf=\"f.confirm_password.errors.required\">Confirm Password is required</div>\r\n                    </div>\r\n                                    </div>\r\n                                     \r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\"  class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n");
 
 /***/ }),
 
@@ -123,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-5\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"p-5 text-center\">\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\n                            <img src=\"assets/images/fail.png\" style=\"width:200px;\">\n                            <div class=\"clearfix\"></div>\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER Failed</h3>\n<!--                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>-->\n\n                            <div class=\"mt-5 pt-5\">\n<!--                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order-->\n<!--                                </strong></button>-->\n                            </div>\n                        </div>\n                    </div>\n\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-light\">\n                            <div class=\"p-3\">\n\n                                <!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\n                                <!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\n\n                                <ul class=\"pt-3\">\n<!--                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>-->\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\n                                </ul>\n                            </div>\n\n                            <table class=\"table mb-0\">\n\n                                <tbody>\n                                <!--                                <tr>-->\n                                <!--                                    <td>-->\n                                <!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\n                                <!--                                    </td>-->\n                                <!--                                    <td>$36.00</td>-->\n                                <!--                                </tr>-->\n                                <tr>\n                                    <td>\n                                        <p><b>Sub Total</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\n                                </tr>\n\n                                <tr>\n                                    <td>\n                                        <p><b>Charges</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        <h4><b>Total</b></h4>\n                                    </td>\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\n                                </tr>\n                                </tbody>\n                            </table>\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n            <div class=\"card z-depth-0 mt-3\">\n                <div class=\"row\">\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\n                        <div class=\"p-5\">\n\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/fail.png\" style=\"width:200px;\"> ORDER Failed</h3>\n<!--                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>-->\n\n\n                            <p class=\"f-20\"><b>Cart Details</b> </p>\n\n                            <div class=\"thumbnail border-1\">\n\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\n\n                                    <tbody>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product  :</span>\n                                        </td>\n                                        <td>{{itemdata.product_name}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product ID :</span>\n                                        </td>\n                                        <td>{{itemdata.product_id}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Size:</span>\n                                        </td>\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Quantity :</span>\n                                        </td>\n                                        <td>1</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Price :</span>\n                                        </td>\n                                        <td>{{itemdata.standard_price}} INR</td>\n                                    </tr>\n                                    </tbody>\n                                </table>\n\n                            </div>\n\n                        </div>\n                    </div>\n\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n\n        </div>\n\n        <div class=\"clearfix\"></div>\n\n\n\n\n    </div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-5\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"p-5 text-center\">\r\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\r\n                            <img src=\"assets/images/fail.png\" style=\"width:200px;\">\r\n                            <div class=\"clearfix\"></div>\r\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER Failed</h3>\r\n<!--                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>-->\r\n\r\n                            <div class=\"mt-5 pt-5\">\r\n<!--                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order-->\r\n<!--                                </strong></button>-->\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-light\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\r\n                                <!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\r\n\r\n                                <ul class=\"pt-3\">\r\n<!--                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>-->\r\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\r\n                                </ul>\r\n                            </div>\r\n\r\n                            <table class=\"table mb-0\">\r\n\r\n                                <tbody>\r\n                                <!--                                <tr>-->\r\n                                <!--                                    <td>-->\r\n                                <!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\r\n                                <!--                                    </td>-->\r\n                                <!--                                    <td>$36.00</td>-->\r\n                                <!--                                </tr>-->\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Sub Total</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Charges</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <h4><b>Total</b></h4>\r\n                                    </td>\r\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\r\n                                </tr>\r\n                                </tbody>\r\n                            </table>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n            <div class=\"card z-depth-0 mt-3\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n                        <div class=\"p-5\">\r\n\r\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/fail.png\" style=\"width:200px;\"> ORDER Failed</h3>\r\n<!--                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>-->\r\n\r\n\r\n                            <p class=\"f-20\"><b>Cart Details</b> </p>\r\n\r\n                            <div class=\"thumbnail border-1\">\r\n\r\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\r\n\r\n                                    <tbody>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product  :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_name}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product ID :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_id}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Size:</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Quantity :</span>\r\n                                        </td>\r\n                                        <td>1</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Price :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_price}} INR</td>\r\n                                    </tr>\r\n                                    </tbody>\r\n                                </table>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n        <div class=\"clearfix\"></div>\r\n\r\n\r\n\r\n\r\n    </div>\r\n</section>\r\n");
 
 /***/ }),
 
@@ -188,7 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h2>My Heroes</h2>\n\n<div>\n  <label>Hero name:\n    <input #heroName />\n  </label>\n  <!-- (click) passes input value to add() and then clears the input -->\n  <button (click)=\"add(heroName.value); heroName.value=''\">\n    add\n  </button>\n</div>\n\n<ul class=\"heroes\">\n  <li *ngFor=\"let hero of heroes\">\n    <a routerLink=\"/detail/{{hero.id}}\">\n      <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\n    </a>\n    <button class=\"delete\" title=\"delete hero\"\n      (click)=\"delete(hero)\">x</button>\n  </li>\n</ul>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h2>My Heroes</h2>\r\n\r\n<div>\r\n  <label>Hero name:\r\n    <input #heroName />\r\n  </label>\r\n  <!-- (click) passes input value to add() and then clears the input -->\r\n  <button (click)=\"add(heroName.value); heroName.value=''\">\r\n    add\r\n  </button>\r\n</div>\r\n\r\n<ul class=\"heroes\">\r\n  <li *ngFor=\"let hero of heroes\">\r\n    <a routerLink=\"/detail/{{hero.id}}\">\r\n      <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\r\n    </a>\r\n    <button class=\"delete\" title=\"delete hero\"\r\n      (click)=\"delete(hero)\">x</button>\r\n  </li>\r\n</ul>\r\n");
 
 /***/ }),
 
@@ -240,7 +253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"messageService.messages.length\">\n\n  <h2>Messages</h2>\n  <button class=\"clear\"\n          (click)=\"messageService.clear()\">clear</button>\n  <div *ngFor='let message of messageService.messages'> {{message}} </div>\n\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"messageService.messages.length\">\r\n\r\n  <h2>Messages</h2>\r\n  <button class=\"clear\"\r\n          (click)=\"messageService.clear()\">clear</button>\r\n  <div *ngFor='let message of messageService.messages'> {{message}} </div>\r\n\r\n</div>\r\n");
 
 /***/ }),
 
@@ -253,7 +266,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-5\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"p-5 text-center\">\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\n                            <img src=\"assets/images/check.png\">\n                            <div class=\"clearfix\"></div>\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER CONFIRMED</h3>\n                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>\n\n                            <div class=\"mt-5 pt-5\">\n                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order\n                                </strong></button>\n                            </div>\n                        </div>\n                    </div>\n\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-light\">\n                            <div class=\"p-3\">\n\n<!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\n<!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\n\n                                <ul class=\"pt-3\">\n                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\n                                </ul>\n                            </div>\n\n                            <table class=\"table mb-0\">\n\n                                <tbody>\n<!--                                <tr>-->\n<!--                                    <td>-->\n<!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\n<!--                                    </td>-->\n<!--                                    <td>$36.00</td>-->\n<!--                                </tr>-->\n                                <tr>\n                                    <td>\n                                        <p><b>Sub Total</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\n                                </tr>\n\n                                <tr>\n                                    <td>\n                                        <p><b>Charges</b></p>\n                                    </td>\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\n                                </tr>\n                                <tr>\n                                    <td>\n                                        <h4><b>Total</b></h4>\n                                    </td>\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\n                                </tr>\n                                </tbody>\n                            </table>\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n            <div class=\"card z-depth-0 mt-3\">\n                <div class=\"row\">\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\n                        <div class=\"p-5\">\n\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/check.png\"> ORDER CONFIRMED</h3>\n                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>\n\n\n                            <p class=\"f-20\"><b>Order Details</b> </p>\n\n                            <div class=\"thumbnail border-1\">\n\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\n\n                                    <tbody>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product  :</span>\n                                        </td>\n                                        <td>{{itemdata.product_name}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product ID :</span>\n                                        </td>\n                                        <td>{{itemdata.product_id}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Size:</span>\n                                        </td>\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Quantity :</span>\n                                        </td>\n                                        <td>1</td>\n                                    </tr>\n                                    <tr>\n                                        <td class=\"text-right\">\n                                            <span class=\"text-success\">Product Price :</span>\n                                        </td>\n                                        <td>{{itemdata.standard_price}} INR</td>\n                                    </tr>\n                                 </tbody>\n                                </table>\n\n                            </div>\n\n                        </div>\n                    </div>\n\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n\n        </div>\n\n        <div class=\"clearfix\"></div>\n\n\n\n\n    </div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-5\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"p-5 text-center\">\r\n                            <i class=\"fa fa-chek-circle-o text-success\" aria-hidden=\"true\"></i>\r\n                            <img src=\"assets/images/check.png\">\r\n                            <div class=\"clearfix\"></div>\r\n                            <h3 class=\"f-20 mb-3 text-success\">ORDER CONFIRMED</h3>\r\n                            <p>Thank you,your confirmation has been successful and your booking is now confirmed.</p>\r\n\r\n                            <div class=\"mt-5 pt-5\">\r\n                                <button type=\"button\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\"><strong>Go to your Order\r\n                                </strong></button>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-light\">\r\n                            <div class=\"p-3\">\r\n\r\n<!--                                <p class=\"f-20 mb-0\"><b>Illustration in Sketch or AI</b></p>-->\r\n<!--                                <p><small>Includes: Sketch,PSD,PNG,PDF,SVG,AI</small></p>-->\r\n\r\n                                <ul class=\"pt-3\">\r\n                                    <li class=\"mb-3\">Order ID : IMG-0000{{OrderDetailData.id}}</li>\r\n                                    <li class=\"mb-3\">Transaction ID : {{OrderDetailData.txn_id}}</li>\r\n                                </ul>\r\n                            </div>\r\n\r\n                            <table class=\"table mb-0\">\r\n\r\n                                <tbody>\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n<!--                                        <button class=\"btn btn-default pl-5 pr-5\">Subtotal</button>-->\r\n<!--                                    </td>-->\r\n<!--                                    <td>$36.00</td>-->\r\n<!--                                </tr>-->\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Sub Total</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n\r\n                                <tr>\r\n                                    <td>\r\n                                        <p><b>Charges</b></p>\r\n                                    </td>\r\n                                    <td><b>{{OrderDetailData.tax}} INR</b></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <h4><b>Total</b></h4>\r\n                                    </td>\r\n                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>\r\n                                </tr>\r\n                                </tbody>\r\n                            </table>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n            <div class=\"card z-depth-0 mt-3\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-12 col-md-12 col-sm-12\">\r\n                        <div class=\"p-5\">\r\n\r\n                            <h3 class=\"f-20 mb-3 text-success\"><img src=\"assets/images/check.png\"> ORDER CONFIRMED</h3>\r\n                            <p class=\"text-success\">Thank you,your confirmation has been successful and your booking is now confirmed.A confirmation email has been sent to <b class=\"text-success\">{{OrderDetailData.order_email}}</b></p>\r\n\r\n\r\n                            <p class=\"f-20\"><b>Order Details</b> </p>\r\n\r\n                            <div class=\"thumbnail border-1\">\r\n\r\n                                <table class=\"table mb-0 border-0\" *ngFor=\"let itemdata of OrderDetailData.items;let i= index\">\r\n\r\n                                    <tbody>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product  :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_name}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product ID :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.product_id}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Size:</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_type}} {{itemdata.standard_size}}</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Quantity :</span>\r\n                                        </td>\r\n                                        <td>1</td>\r\n                                    </tr>\r\n                                    <tr>\r\n                                        <td class=\"text-right\">\r\n                                            <span class=\"text-success\">Product Price :</span>\r\n                                        </td>\r\n                                        <td>{{itemdata.standard_price}} INR</td>\r\n                                    </tr>\r\n                                 </tbody>\r\n                                </table>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n        <div class=\"clearfix\"></div>\r\n\r\n\r\n\r\n\r\n    </div>\r\n</section>\r\n");
 
 /***/ }),
 
@@ -292,7 +305,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\n    <div class=\"loader\">\n        Loading\n        <span></span>\n    </div>\n</div>\n<section class=\"mt-1\">\n\n    <div class=\"container\">\n\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\n\n            <div class=\"card z-depth-0\">\n                <div class=\"row\">\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\n                        <!--  <div class=\"layer\">  </div>   -->\n\n\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\n\n                    </div>\n\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\n                        <div class=\"bg-white p-5\">\n                            <div class=\"p-3\">\n\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\n                                <form class=\"loignForm\" [formGroup]=\"resetpasswordForm\" (ngSubmit)=\"onSubmit()\">\n                                <div class=\"form-group mt-5\">\n                                        <label class=\"text-uppercase f-12 text-black\">Email </label>\n\n                                    <input type=\"email\"  formControlName=\"user_email\" class=\"form-control\"  [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\">\n                                    <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\n                                        <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\n                                        <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\n                                    </div>\n                                    </div>\n<!--                                    <div class=\"form-group mt-4\">-->\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Password</label>-->\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\n<!--                                    </div>-->\n\n\n<!--                                    <div class=\"form-group mt-4\">-->\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>-->\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\n<!--                                    </div>-->\n\n\n\n                                    <div class=\"form-group mt-5\">\n\n                                        <button type=\"submit\" [disabled]=\"loading\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\n\n                                    </div>\n\n                                </form>\n                            </div>\n\n\n                        </div>\n                    </div>\n\n\n                </div>\n\n\n            </div>\n\n\n\n\n\n        </div>\n\n\n    </div>\n\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"mt-1\">\r\n\r\n    <div class=\"container\">\r\n\r\n        <div class=\"col-lg-8 col-md-8 col-sm-10 m-auto\">\r\n\r\n            <div class=\"card z-depth-0\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6 hidden-xs\" style=\"background: #ffcac6\">\r\n                        <!--  <div class=\"layer\">  </div>   -->\r\n\r\n\r\n                        <img src=\"/assets/images/resetpassword.png\" class=\"img-fluid\">\r\n\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                        <div class=\"bg-white p-5\">\r\n                            <div class=\"p-3\">\r\n\r\n                                <p class=\"f-20 mb-0\"><b>Reset Password</b></p>\r\n                                <p><small>Enter the email associated with your account and we'll send an email with instructions to reaet your passowrd.</small></p>\r\n                                <form class=\"loignForm\" [formGroup]=\"resetpasswordForm\" (ngSubmit)=\"onSubmit()\">\r\n                                <div class=\"form-group mt-5\">\r\n                                        <label class=\"text-uppercase f-12 text-black\">Email </label>\r\n\r\n                                    <input type=\"email\"  formControlName=\"user_email\" class=\"form-control\"  [ngClass]=\"{ 'is-invalid': submitted && f.user_email.errors }\">\r\n                                    <div *ngIf=\"submitted && f.user_email.errors\" class=\"invalid-feedback\">\r\n                                        <div *ngIf=\"f.user_email.errors.required\">Email is required</div>\r\n                                        <div *ngIf=\"f.user_email.errors.email\">Email must be a valid email address</div>\r\n                                    </div>\r\n                                    </div>\r\n<!--                                    <div class=\"form-group mt-4\">-->\r\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Password</label>-->\r\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\r\n<!--                                    </div>-->\r\n\r\n\r\n<!--                                    <div class=\"form-group mt-4\">-->\r\n<!--                                        <label class=\"text-uppercase f-12 text-black\">Confirm Password</label>-->\r\n<!--                                        <input type=\"Password\" class=\"form-control\" placeholder=\"\">-->\r\n<!--                                    </div>-->\r\n\r\n\r\n\r\n                                    <div class=\"form-group mt-5\">\r\n\r\n                                        <button type=\"submit\" [disabled]=\"loading\" class=\"btn btn-success btn-block text-white  p-3 text-uppercase\">SUBMIT</button>\r\n\r\n                                    </div>\r\n\r\n                                </form>\r\n                            </div>\r\n\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n\r\n\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n\r\n\r\n    </div>\r\n\r\n</section>\r\n");
 
 /***/ }),
 
@@ -711,6 +724,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lightbox/lightbox.component */ "./src/app/lightbox/lightbox.component.ts");
 /* harmony import */ var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./fail-order/fail-order.component */ "./src/app/fail-order/fail-order.component.ts");
 /* harmony import */ var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./change-reset-password/change-reset-password.component */ "./src/app/change-reset-password/change-reset-password.component.ts");
+/* harmony import */ var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./change-password/change-password.component */ "./src/app/change-password/change-password.component.ts");
+
 
 
 
@@ -757,6 +772,7 @@ const routes = [
     { path: 'wishlist', component: _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_20__["LightboxComponent"] },
     { path: 'orderFailed/:id', component: _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_21__["FailOrderComponent"] },
     { path: 'resetpassword/:otp/:email', component: _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_22__["ChangeResetPasswordComponent"] },
+    { path: 'change-password', component: _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__["ChangePasswordComponent"] },
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -935,6 +951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
 /* harmony import */ var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./fail-order/fail-order.component */ "./src/app/fail-order/fail-order.component.ts");
 /* harmony import */ var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./change-reset-password/change-reset-password.component */ "./src/app/change-reset-password/change-reset-password.component.ts");
+/* harmony import */ var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./change-password/change-password.component */ "./src/app/change-password/change-password.component.ts");
 
 
 
@@ -977,6 +994,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 //sidebar
+
 
 
 
@@ -1060,7 +1078,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"],
             _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"],
             _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"],
-            _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"]
+            _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"],
+            _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__["ChangePasswordComponent"]
         ],
         exports: [_login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"]],
         providers: [
@@ -1076,6 +1095,120 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
     })
 ], AppModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/change-password/change-password.component.css":
+/*!***************************************************************!*\
+  !*** ./src/app/change-password/change-password.component.css ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NoYW5nZS1wYXNzd29yZC9jaGFuZ2UtcGFzc3dvcmQuY29tcG9uZW50LmNzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/change-password/change-password.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/change-password/change-password.component.ts ***!
+  \**************************************************************/
+/*! exports provided: ChangePasswordComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChangePasswordComponent", function() { return ChangePasswordComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _hero_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hero.service */ "./src/app/hero.service.ts");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
+
+
+
+
+let ChangePasswordComponent = class ChangePasswordComponent {
+    constructor(route, formBuilder, authenticationService, spinner, router) {
+        this.route = route;
+        this.formBuilder = formBuilder;
+        this.authenticationService = authenticationService;
+        this.spinner = spinner;
+        this.router = router;
+        this.submitted = false;
+        this.loadingData = false;
+        this.authenticationService.currentUser.subscribe(x => {
+            this.currentUser = x;
+            if (!this.currentUser) {
+                this.router.navigate(['/']);
+            }
+        });
+    }
+    ngOnInit() {
+        console.log(this.currentUser.Utype);
+        this.changepasswordForm = this.formBuilder.group({
+            old_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            confirm_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+        }, {
+        //validator: MustMatch('password', 'confirm_password')
+        });
+    }
+    // convenience getter for easy access to form fields
+    get f() { return this.changepasswordForm.controls; }
+    onSubmit() {
+        this.submitted = true;
+        this.loadingData = true;
+        // stop here if form is invalid
+        /* if (this.changepasswordForm.invalid) {
+             return;
+         }*/
+        this.loadingData = true;
+        this.authenticationService.userchangepassword(this.changepasswordForm.value, this.currentUser.Utype)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])())
+            .subscribe(data2 => {
+            if (data2.status == 1) {
+                alert(data2.message);
+                this.router.navigate(['/']);
+            }
+            else if (data2.status == 0) {
+                alert(data2.message);
+            }
+            this.loadingData = false;
+        }, error => {
+            this.loadingData = false;
+        });
+        // display form values on success
+    }
+    onReset() {
+        this.submitted = false;
+        this.changepasswordForm.reset();
+    }
+};
+ChangePasswordComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"] },
+    { type: _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"] },
+    { type: ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+];
+ChangePasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-change-password',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./change-password.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/change-password/change-password.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./change-password.component.css */ "./src/app/change-password/change-password.component.css")).default]
+    }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"], ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+], ChangePasswordComponent);
 
 
 
@@ -1108,26 +1241,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _hero_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hero.service */ "./src/app/hero.service.ts");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
 
 
 
 
 //import { MustMatch } from './_helpers/must-match.validator';
 let ChangeResetPasswordComponent = class ChangeResetPasswordComponent {
-    constructor(route, formBuilder) {
+    constructor(route, formBuilder, authenticationService, spinner, router) {
         this.route = route;
         this.formBuilder = formBuilder;
+        this.authenticationService = authenticationService;
+        this.spinner = spinner;
+        this.router = router;
         this.otp = 0;
         this.email = '';
         this.submitted = false;
+        this.loadingData = false;
     }
     ngOnInit() {
         this.otp = this.route.snapshot.paramMap.get("otp");
         this.email = this.route.snapshot.paramMap.get("email");
         this.changeresetpasswordForm = this.formBuilder.group({
-            otp: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             confirm_password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         }, {
@@ -1138,13 +1278,27 @@ let ChangeResetPasswordComponent = class ChangeResetPasswordComponent {
     get f() { return this.changeresetpasswordForm.controls; }
     onSubmit() {
         this.submitted = true;
-        console.log(this.changeresetpasswordForm.value);
+        this.loadingData = true;
         // stop here if form is invalid
-        if (this.changeresetpasswordForm.invalid) {
-            return;
-        }
+        /* if (this.changeresetpasswordForm.invalid) {
+             return;
+         }*/
+        this.loadingData = true;
+        this.authenticationService.changeResetPassword(this.changeresetpasswordForm.value, this.otp, this.email)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])())
+            .subscribe(data2 => {
+            if (data2.status == 1) {
+                alert(data2.message);
+                this.router.navigate(['/']);
+            }
+            else if (data2.status == 0) {
+                alert(data2.message);
+            }
+            this.loadingData = false;
+        }, error => {
+            this.loadingData = false;
+        });
         // display form values on success
-        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.changeresetpasswordForm.value, null, 4));
     }
     onReset() {
         this.submitted = false;
@@ -1153,7 +1307,10 @@ let ChangeResetPasswordComponent = class ChangeResetPasswordComponent {
 };
 ChangeResetPasswordComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"] }
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"] },
+    { type: _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"] },
+    { type: ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
 ];
 ChangeResetPasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1161,7 +1318,7 @@ ChangeResetPasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./change-reset-password.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/change-reset-password/change-reset-password.component.html")).default,
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./change-reset-password.component.css */ "./src/app/change-reset-password/change-reset-password.component.css")).default]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _hero_service__WEBPACK_IMPORTED_MODULE_4__["HeroService"], ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
 ], ChangeResetPasswordComponent);
 
 
@@ -1476,7 +1633,13 @@ let ContactUsComponent = class ContactUsComponent {
         this.authenticationService.contactUs(this.contactForm.value)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
             .subscribe(data => {
-            this.router.navigate(['/']);
+            if (data.status == 1) {
+                alert(data.message);
+                this.router.navigate(['/']);
+            }
+            else if (data.status == 1) {
+                alert(data.message);
+            }
         }, error => {
             this.loading = false;
         });
@@ -3207,9 +3370,8 @@ let HeroService = class HeroService {
     contactUs(contactData) {
         const url = `${this.heroesUrl}user_contactus`;
         return this.http.post(url, contactData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(userInfo => {
-            return true;
+            return userInfo;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to user_contactus data`)));
-        ;
     }
     logout() {
         localStorage.removeItem('currentUser');
@@ -3403,6 +3565,26 @@ let HeroService = class HeroService {
             //return JSON.stringify(userInfo);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to register data`)));
     }
+    changeResetPassword(usrData, otp, email) {
+        const url = `${this.heroesUrl}forgotResetPassword`;
+        var passdata = { "otp": otp, "email": email, "password": usrData.password, "cpassword": usrData.confirm_password };
+        return this.http.post(url, passdata, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(userInfo => {
+            console.log(userInfo);
+            /*if (userInfo['status'] == '1') {
+                localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
+                this.currentUserSubject.next(userInfo['userdata']);
+            }*/
+            return userInfo;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to register data`)));
+    }
+    userchangepassword(usrData, userid) {
+        const url = `${this.heroesUrl}userchangepassword`;
+        var pasdata = { "old_pass": usrData.old_password, "password": usrData.password, "cpassword": usrData.confirm_password, "userid": userid };
+        return this.http.post(url, pasdata, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(userInfo => {
+            console.log(userInfo);
+            return userInfo;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError(`unable to register data`)));
+    }
     getUserOrderData() {
         //let params = new HttpParams();
         let tokenData = JSON.parse(localStorage.getItem('currentUser'));
@@ -3533,7 +3715,7 @@ class cartItemData {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("/* HeroesComponent's private CSS styles */\n.heroes {\n  margin: 0 0 2em 0;\n  list-style-type: none;\n  padding: 0;\n  width: 15em;\n}\n.heroes li {\n  position: relative;\n  cursor: pointer;\n  background-color: #EEE;\n  margin: .5em;\n  padding: .3em 0;\n  height: 1.6em;\n  border-radius: 4px;\n}\n.heroes li:hover {\n  color: #607D8B;\n  background-color: #DDD;\n  left: .1em;\n}\n.heroes a {\n  color: #333;\n  text-decoration: none;\n  position: relative;\n  display: block;\n  width: 250px;\n}\n.heroes a:hover {\n  color:#607D8B;\n}\n.heroes .badge {\n  display: inline-block;\n  font-size: small;\n  color: white;\n  padding: 0.8em 0.7em 0 0.7em;\n  background-color:#405061;\n  line-height: 1em;\n  position: relative;\n  left: -1px;\n  top: -4px;\n  height: 1.8em;\n  min-width: 16px;\n  text-align: right;\n  margin-right: .8em;\n  border-radius: 4px 0 0 4px;\n}\nbutton {\n  background-color: #eee;\n  border: none;\n  padding: 5px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  cursor: hand;\n  font-family: Arial;\n}\nbutton:hover {\n  background-color: #cfd8dc;\n}\nbutton.delete {\n  position: relative;\n  left: 194px;\n  top: -32px;\n  background-color: gray !important;\n  color: white;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVyb2VzL2hlcm9lcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHlDQUF5QztBQUN6QztFQUNFLGlCQUFpQjtFQUNqQixxQkFBcUI7RUFDckIsVUFBVTtFQUNWLFdBQVc7QUFDYjtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGVBQWU7RUFDZixhQUFhO0VBQ2Isa0JBQWtCO0FBQ3BCO0FBRUE7RUFDRSxjQUFjO0VBQ2Qsc0JBQXNCO0VBQ3RCLFVBQVU7QUFDWjtBQUVBO0VBQ0UsV0FBVztFQUNYLHFCQUFxQjtFQUNyQixrQkFBa0I7RUFDbEIsY0FBYztFQUNkLFlBQVk7QUFDZDtBQUVBO0VBQ0UsYUFBYTtBQUNmO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWiw0QkFBNEI7RUFDNUIsd0JBQXdCO0VBQ3hCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsVUFBVTtFQUNWLFNBQVM7RUFDVCxhQUFhO0VBQ2IsZUFBZTtFQUNmLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsMEJBQTBCO0FBQzVCO0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0I7QUFDcEI7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUVBO0VBQ0Usa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxVQUFVO0VBQ1YsaUNBQWlDO0VBQ2pDLFlBQVk7QUFDZCIsImZpbGUiOiJzcmMvYXBwL2hlcm9lcy9oZXJvZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIEhlcm9lc0NvbXBvbmVudCdzIHByaXZhdGUgQ1NTIHN0eWxlcyAqL1xuLmhlcm9lcyB7XG4gIG1hcmdpbjogMCAwIDJlbSAwO1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIHBhZGRpbmc6IDA7XG4gIHdpZHRoOiAxNWVtO1xufVxuLmhlcm9lcyBsaSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjRUVFO1xuICBtYXJnaW46IC41ZW07XG4gIHBhZGRpbmc6IC4zZW0gMDtcbiAgaGVpZ2h0OiAxLjZlbTtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xufVxuXG4uaGVyb2VzIGxpOmhvdmVyIHtcbiAgY29sb3I6ICM2MDdEOEI7XG4gIGJhY2tncm91bmQtY29sb3I6ICNEREQ7XG4gIGxlZnQ6IC4xZW07XG59XG5cbi5oZXJvZXMgYSB7XG4gIGNvbG9yOiAjMzMzO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogYmxvY2s7XG4gIHdpZHRoOiAyNTBweDtcbn1cblxuLmhlcm9lcyBhOmhvdmVyIHtcbiAgY29sb3I6IzYwN0Q4Qjtcbn1cblxuLmhlcm9lcyAuYmFkZ2Uge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIGZvbnQtc2l6ZTogc21hbGw7XG4gIGNvbG9yOiB3aGl0ZTtcbiAgcGFkZGluZzogMC44ZW0gMC43ZW0gMCAwLjdlbTtcbiAgYmFja2dyb3VuZC1jb2xvcjojNDA1MDYxO1xuICBsaW5lLWhlaWdodDogMWVtO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IC0xcHg7XG4gIHRvcDogLTRweDtcbiAgaGVpZ2h0OiAxLjhlbTtcbiAgbWluLXdpZHRoOiAxNnB4O1xuICB0ZXh0LWFsaWduOiByaWdodDtcbiAgbWFyZ2luLXJpZ2h0OiAuOGVtO1xuICBib3JkZXItcmFkaXVzOiA0cHggMCAwIDRweDtcbn1cblxuYnV0dG9uIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2VlZTtcbiAgYm9yZGVyOiBub25lO1xuICBwYWRkaW5nOiA1cHggMTBweDtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGN1cnNvcjogaGFuZDtcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xufVxuXG5idXR0b246aG92ZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2ZkOGRjO1xufVxuXG5idXR0b24uZGVsZXRlIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBsZWZ0OiAxOTRweDtcbiAgdG9wOiAtMzJweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JheSAhaW1wb3J0YW50O1xuICBjb2xvcjogd2hpdGU7XG59XG5cbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("/* HeroesComponent's private CSS styles */\r\n.heroes {\r\n  margin: 0 0 2em 0;\r\n  list-style-type: none;\r\n  padding: 0;\r\n  width: 15em;\r\n}\r\n.heroes li {\r\n  position: relative;\r\n  cursor: pointer;\r\n  background-color: #EEE;\r\n  margin: .5em;\r\n  padding: .3em 0;\r\n  height: 1.6em;\r\n  border-radius: 4px;\r\n}\r\n.heroes li:hover {\r\n  color: #607D8B;\r\n  background-color: #DDD;\r\n  left: .1em;\r\n}\r\n.heroes a {\r\n  color: #333;\r\n  text-decoration: none;\r\n  position: relative;\r\n  display: block;\r\n  width: 250px;\r\n}\r\n.heroes a:hover {\r\n  color:#607D8B;\r\n}\r\n.heroes .badge {\r\n  display: inline-block;\r\n  font-size: small;\r\n  color: white;\r\n  padding: 0.8em 0.7em 0 0.7em;\r\n  background-color:#405061;\r\n  line-height: 1em;\r\n  position: relative;\r\n  left: -1px;\r\n  top: -4px;\r\n  height: 1.8em;\r\n  min-width: 16px;\r\n  text-align: right;\r\n  margin-right: .8em;\r\n  border-radius: 4px 0 0 4px;\r\n}\r\nbutton {\r\n  background-color: #eee;\r\n  border: none;\r\n  padding: 5px 10px;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  cursor: hand;\r\n  font-family: Arial;\r\n}\r\nbutton:hover {\r\n  background-color: #cfd8dc;\r\n}\r\nbutton.delete {\r\n  position: relative;\r\n  left: 194px;\r\n  top: -32px;\r\n  background-color: gray !important;\r\n  color: white;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaGVyb2VzL2hlcm9lcy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHlDQUF5QztBQUN6QztFQUNFLGlCQUFpQjtFQUNqQixxQkFBcUI7RUFDckIsVUFBVTtFQUNWLFdBQVc7QUFDYjtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGVBQWU7RUFDZixhQUFhO0VBQ2Isa0JBQWtCO0FBQ3BCO0FBRUE7RUFDRSxjQUFjO0VBQ2Qsc0JBQXNCO0VBQ3RCLFVBQVU7QUFDWjtBQUVBO0VBQ0UsV0FBVztFQUNYLHFCQUFxQjtFQUNyQixrQkFBa0I7RUFDbEIsY0FBYztFQUNkLFlBQVk7QUFDZDtBQUVBO0VBQ0UsYUFBYTtBQUNmO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsZ0JBQWdCO0VBQ2hCLFlBQVk7RUFDWiw0QkFBNEI7RUFDNUIsd0JBQXdCO0VBQ3hCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsVUFBVTtFQUNWLFNBQVM7RUFDVCxhQUFhO0VBQ2IsZUFBZTtFQUNmLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsMEJBQTBCO0FBQzVCO0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0I7QUFDcEI7QUFFQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUVBO0VBQ0Usa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxVQUFVO0VBQ1YsaUNBQWlDO0VBQ2pDLFlBQVk7QUFDZCIsImZpbGUiOiJzcmMvYXBwL2hlcm9lcy9oZXJvZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIEhlcm9lc0NvbXBvbmVudCdzIHByaXZhdGUgQ1NTIHN0eWxlcyAqL1xyXG4uaGVyb2VzIHtcclxuICBtYXJnaW46IDAgMCAyZW0gMDtcclxuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XHJcbiAgcGFkZGluZzogMDtcclxuICB3aWR0aDogMTVlbTtcclxufVxyXG4uaGVyb2VzIGxpIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNFRUU7XHJcbiAgbWFyZ2luOiAuNWVtO1xyXG4gIHBhZGRpbmc6IC4zZW0gMDtcclxuICBoZWlnaHQ6IDEuNmVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxufVxyXG5cclxuLmhlcm9lcyBsaTpob3ZlciB7XHJcbiAgY29sb3I6ICM2MDdEOEI7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI0RERDtcclxuICBsZWZ0OiAuMWVtO1xyXG59XHJcblxyXG4uaGVyb2VzIGEge1xyXG4gIGNvbG9yOiAjMzMzO1xyXG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgd2lkdGg6IDI1MHB4O1xyXG59XHJcblxyXG4uaGVyb2VzIGE6aG92ZXIge1xyXG4gIGNvbG9yOiM2MDdEOEI7XHJcbn1cclxuXHJcbi5oZXJvZXMgLmJhZGdlIHtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgZm9udC1zaXplOiBzbWFsbDtcclxuICBjb2xvcjogd2hpdGU7XHJcbiAgcGFkZGluZzogMC44ZW0gMC43ZW0gMCAwLjdlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiM0MDUwNjE7XHJcbiAgbGluZS1oZWlnaHQ6IDFlbTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogLTFweDtcclxuICB0b3A6IC00cHg7XHJcbiAgaGVpZ2h0OiAxLjhlbTtcclxuICBtaW4td2lkdGg6IDE2cHg7XHJcbiAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbiAgbWFyZ2luLXJpZ2h0OiAuOGVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweCAwIDAgNHB4O1xyXG59XHJcblxyXG5idXR0b24ge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgYm9yZGVyOiBub25lO1xyXG4gIHBhZGRpbmc6IDVweCAxMHB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgY3Vyc29yOiBoYW5kO1xyXG4gIGZvbnQtZmFtaWx5OiBBcmlhbDtcclxufVxyXG5cclxuYnV0dG9uOmhvdmVyIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2ZkOGRjO1xyXG59XHJcblxyXG5idXR0b24uZGVsZXRlIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbGVmdDogMTk0cHg7XHJcbiAgdG9wOiAtMzJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5ICFpbXBvcnRhbnQ7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG59XHJcblxyXG4iXX0= */");
 
 /***/ }),
 
@@ -3954,7 +4136,7 @@ MessageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("/* MessagesComponent's private CSS styles */\nh2 {\n  color: red;\n  font-family: Arial, Helvetica, sans-serif;\n  font-weight: lighter;\n}\nbody {\n  margin: 2em;\n}\nbody, input[text], button {\n  color: crimson;\n  font-family: Cambria, Georgia;\n}\nbutton.clear {\n  font-family: Arial;\n  background-color: #eee;\n  border: none;\n  padding: 5px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  cursor: hand;\n}\nbutton:hover {\n  background-color: #cfd8dc;\n}\nbutton:disabled {\n  background-color: #eee;\n  color: #aaa;\n  cursor: auto;\n}\nbutton.clear {\n  color: #333;\n  margin-bottom: 12px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZXMvbWVzc2FnZXMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwyQ0FBMkM7QUFDM0M7RUFDRSxVQUFVO0VBQ1YseUNBQXlDO0VBQ3pDLG9CQUFvQjtBQUN0QjtBQUNBO0VBQ0UsV0FBVztBQUNiO0FBQ0E7RUFDRSxjQUFjO0VBQ2QsNkJBQTZCO0FBQy9CO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLFlBQVk7RUFDWixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixZQUFZO0FBQ2Q7QUFDQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0Usc0JBQXNCO0VBQ3RCLFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLFdBQVc7RUFDWCxtQkFBbUI7QUFDckIiLCJmaWxlIjoic3JjL2FwcC9tZXNzYWdlcy9tZXNzYWdlcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogTWVzc2FnZXNDb21wb25lbnQncyBwcml2YXRlIENTUyBzdHlsZXMgKi9cbmgyIHtcbiAgY29sb3I6IHJlZDtcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGZvbnQtd2VpZ2h0OiBsaWdodGVyO1xufVxuYm9keSB7XG4gIG1hcmdpbjogMmVtO1xufVxuYm9keSwgaW5wdXRbdGV4dF0sIGJ1dHRvbiB7XG4gIGNvbG9yOiBjcmltc29uO1xuICBmb250LWZhbWlseTogQ2FtYnJpYSwgR2VvcmdpYTtcbn1cblxuYnV0dG9uLmNsZWFyIHtcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDVweCAxMHB4O1xuICBib3JkZXItcmFkaXVzOiA0cHg7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgY3Vyc29yOiBoYW5kO1xufVxuYnV0dG9uOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NmZDhkYztcbn1cbmJ1dHRvbjpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XG4gIGNvbG9yOiAjYWFhO1xuICBjdXJzb3I6IGF1dG87XG59XG5idXR0b24uY2xlYXIge1xuICBjb2xvcjogIzMzMztcbiAgbWFyZ2luLWJvdHRvbTogMTJweDtcbn1cbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("/* MessagesComponent's private CSS styles */\r\nh2 {\r\n  color: red;\r\n  font-family: Arial, Helvetica, sans-serif;\r\n  font-weight: lighter;\r\n}\r\nbody {\r\n  margin: 2em;\r\n}\r\nbody, input[text], button {\r\n  color: crimson;\r\n  font-family: Cambria, Georgia;\r\n}\r\nbutton.clear {\r\n  font-family: Arial;\r\n  background-color: #eee;\r\n  border: none;\r\n  padding: 5px 10px;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  cursor: hand;\r\n}\r\nbutton:hover {\r\n  background-color: #cfd8dc;\r\n}\r\nbutton:disabled {\r\n  background-color: #eee;\r\n  color: #aaa;\r\n  cursor: auto;\r\n}\r\nbutton.clear {\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZXMvbWVzc2FnZXMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwyQ0FBMkM7QUFDM0M7RUFDRSxVQUFVO0VBQ1YseUNBQXlDO0VBQ3pDLG9CQUFvQjtBQUN0QjtBQUNBO0VBQ0UsV0FBVztBQUNiO0FBQ0E7RUFDRSxjQUFjO0VBQ2QsNkJBQTZCO0FBQy9CO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLFlBQVk7RUFDWixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixZQUFZO0FBQ2Q7QUFDQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0Usc0JBQXNCO0VBQ3RCLFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLFdBQVc7RUFDWCxtQkFBbUI7QUFDckIiLCJmaWxlIjoic3JjL2FwcC9tZXNzYWdlcy9tZXNzYWdlcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogTWVzc2FnZXNDb21wb25lbnQncyBwcml2YXRlIENTUyBzdHlsZXMgKi9cclxuaDIge1xyXG4gIGNvbG9yOiByZWQ7XHJcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgZm9udC13ZWlnaHQ6IGxpZ2h0ZXI7XHJcbn1cclxuYm9keSB7XHJcbiAgbWFyZ2luOiAyZW07XHJcbn1cclxuYm9keSwgaW5wdXRbdGV4dF0sIGJ1dHRvbiB7XHJcbiAgY29sb3I6IGNyaW1zb247XHJcbiAgZm9udC1mYW1pbHk6IENhbWJyaWEsIEdlb3JnaWE7XHJcbn1cclxuXHJcbmJ1dHRvbi5jbGVhciB7XHJcbiAgZm9udC1mYW1pbHk6IEFyaWFsO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgYm9yZGVyOiBub25lO1xyXG4gIHBhZGRpbmc6IDVweCAxMHB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgY3Vyc29yOiBoYW5kO1xyXG59XHJcbmJ1dHRvbjpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NmZDhkYztcclxufVxyXG5idXR0b246ZGlzYWJsZWQge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNlZWU7XHJcbiAgY29sb3I6ICNhYWE7XHJcbiAgY3Vyc29yOiBhdXRvO1xyXG59XHJcbmJ1dHRvbi5jbGVhciB7XHJcbiAgY29sb3I6ICMzMzM7XHJcbiAgbWFyZ2luLWJvdHRvbTogMTJweDtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -4351,11 +4533,14 @@ let ResetPasswordComponent = class ResetPasswordComponent {
                 // this.otp = true;
                 // this.error_message = null;
                 // this.success_message = data2.message;
+                alert(data2.message);
+                this.router.navigate(['/']);
             }
             else {
                 // this.otp = false;
                 // this.success_message = null;
                 // this.error_message = data2.message;
+                alert(data2.message);
             }
         }, error => {
             this.loading = false;

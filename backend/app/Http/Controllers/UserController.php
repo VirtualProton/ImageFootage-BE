@@ -66,7 +66,7 @@ class UserController extends Controller
 				 Mail::send('forgotpassword', $data, function($message) use($data,$sm) {
 				 	$message->to($sm,'Image Footage')->subject('Image Footage Forgot Password');
 				  });
-            $result = ['status'=>1,'message'=>'success'];
+            $result = ['status'=>1,'message'=>'Check your email for reset password link.'];
         }else{
             $result = ['status'=>0,'message'=>'Email Not Found.'];
         }

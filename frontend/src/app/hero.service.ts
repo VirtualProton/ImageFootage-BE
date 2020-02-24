@@ -248,11 +248,11 @@ export class HeroService {
         const url = `${this.heroesUrl}user_contactus`
         return this.http.post(url, contactData, this.httpOptions).pipe(
             map(userInfo => {
-                return true;
+                return userInfo;
             }),
             catchError(this.handleError<userData>(`unable to user_contactus data`))
         );
-        ;
+        
     }
 
     logout() {
@@ -532,6 +532,33 @@ export class HeroService {
                 return userInfo;
                 //console.log(JSON.stringify(userInfo));
                 //return JSON.stringify(userInfo);
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+    }
+	changeResetPassword(usrData: any,otp:any,email:any): Observable<any> {
+        const url = `${this.heroesUrl}forgotResetPassword`;
+		var passdata={"otp":otp,"email":email,"password":usrData.password,"cpassword":usrData.confirm_password}
+        return this.http.post(url, passdata, this.httpOptions).pipe(
+            map(userInfo => {
+                console.log(userInfo);
+                /*if (userInfo['status'] == '1') {
+                    localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
+                    this.currentUserSubject.next(userInfo['userdata']);
+                }*/
+                return userInfo;
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+    }
+
+	userchangepassword(usrData: any,userid: any): Observable<any> {
+        const url = `${this.heroesUrl}userchangepassword`;
+		var pasdata={"old_pass":usrData.old_password,"password":usrData.password,"cpassword":usrData.confirm_password,"userid":userid};
+        return this.http.post(url, pasdata, this.httpOptions).pipe(
+            map(userInfo => {
+                console.log(userInfo);
+                return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
         );
