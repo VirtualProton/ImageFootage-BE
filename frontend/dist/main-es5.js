@@ -411,7 +411,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<section class=\"banner-area relative\">\r\n        <div class=\"overlay overlay-bg\"></div>\r\n        <div class=\"banner-content text-center\">\r\n          <h1>Pricing, made simple.</h1>\r\n          <p>We are a privately owned group offering a variety of services that include,\r\n            <br />\r\n             stock imagery,stock footage, photography\r\n          </p>\r\n        </div>\r\n      </section>\r\n    \r\n    <section class=\"pt-5 pb-0\">\r\n      <div class=\"container\">\r\n        <div class=\"btn-group  nav nav-tabs justify-content-center border-0\">  \r\n            <a href=\"#imagesTab\" data-toggle=\"tab\" class=\"btn btn-secondary btn-rounded active pt-2 pb-2 pl-4 pr-4\"><i class=\"icon-image\"></i> Images\r\n            </a>\r\n           <a href=\"#videoTab\" data-toggle=\"tab\" class=\"btn btn-secondary btn-rounded pt-2 pb-2 pl-4 pr-4\"><i class=\"icon-camera\"></i> Videos\r\n          </a>  \r\n      </div>  \r\n  </div>\r\n  \r\n  \r\n    <div class=\"pricing1\">\r\n      <div class=\"tab-content\">\r\n        <div class=\"tab-pane active\" id=\"imagesTab\">\r\n                      <div class=\"container\">\r\n                          <div class=\"row mt-40\">\r\n                              <!-- Column -->\r\n                              <div class=\"col-lg-3 col-md-6 pl-1 pr-1\">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">BASIC</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">28</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                         \r\n                                          <p class=\"mb-0 pt-5\"> <strong>0.5MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                             <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                               <div class=\"col-lg-3 col-md-6 pl-1 pr-1\">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">MEDIUM</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">50</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>0.5MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                              <div class=\"col-lg-3 col-md-6 pl-1 pr-1\">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">LARGE</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">85</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>5.7MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                               <div class=\"col-lg-3 col-md-6 pl-1 pr-1\">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">X-LARGE</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">120</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>12MP+</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                          </div>\r\n  \r\n                          <div class=\"pt-5 pb-5\">\r\n                            \r\n                            <h2 class=\"pb-4\">Image Licenses at Imagefootage</h2>\r\n                              <p class=\"f-16\">All of our images fall under the Standard Royalty-Free License. The license covers commercial use including:</p>\r\n                              <ul class=\"f-16\">\r\n                                <li><i class=\"icon-check\"> </i> Advertising, blog posts, inclusion in websites, annual reports, editorial, design elements, book covers, product packaging, etc.</li>\r\n                              <li><i class=\"icon-check\"> </i> Up to 500,000 copies in print</li>\r\n                              <li><i class=\"icon-check\"> </i> Unlimited electronic impressions (web, ebook, etc.)</li>\r\n                              <li><i class=\"icon-check\"> </i> Worldwide, all media, unlimited time</li>\r\n                              </ul>\r\n                          </div>\r\n                      </div>\r\n                    </div>\r\n  \r\n                     <div class=\"tab-pane\" id=\"videoTab\">\r\n                      <div class=\"columnFive\">\r\n                          <div class=\"row mt-40\">\r\n                              <!-- Column -->\r\n                              <div class=\"col-lg-2 col-md-6 col-half-offset pl-1 pr-1\">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">720P H.264</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">28</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                         \r\n                                          <p class=\"mb-0 pt-5\"> <strong>0.5MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                             <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                               <div class=\"col-lg-2 col-md-6 pl-1 pr-1 col-half-offset \">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">1080P H.264</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">50</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>0.5MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                              <div class=\"col-lg-2 col-md-6 pl-1 pr-1 col-half-offset \">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">1080P UNGRADED</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">85</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>5.7MP</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                              <!-- Column -->\r\n                               <div class=\"col-lg-2 col-md-6 pl-1 pr-1 col-half-offset \">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">4K H.264</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">120</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>12MP+</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n  \r\n                              <div class=\"col-lg-2 col-md-6 pl-1 pr-1 col-half-offset \">\r\n                                  <div class=\"card text-center card-shadow\">\r\n                                      <div class=\"card-body font-14\">\r\n                                          <h5 class=\"title\">4K UNGRADED</h5>\r\n                                          <h6 class=\"subtitle\">For Team of 3-5 Members</h6>\r\n                                          <div class=\"pricing\">\r\n                                              <sup>$</sup>\r\n                                              <span class=\"monthly display-5\">120</span>                                         \r\n                                              <small class=\"monthly\">USD</small>\r\n                                            <div class=\"clearfix\"></div>\r\n                                              \r\n                                          </div>\r\n                                          <ul class=\"list-inline\">\r\n                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>\r\n                                              <li>Unlimited Invoices</li>\r\n                                              <li>Project Management</li>\r\n                                              \r\n                                          </ul>\r\n                                            <p class=\"mb-0 pt-5\"> <strong>12MP+</strong></p>\r\n                                           <p>815 x 614px | 11.3 x 8.5\" @ 72dpi</p>\r\n                                          <div class=\"bottom-btn\">\r\n                                              <a class=\"btn btn-success-gradiant btn-md btn-arrow btn-block text-white\" data-toggle=\"collapse\" href=\"#f1\">Choose Plan</a>\r\n                                          </div>\r\n                                      </div>\r\n                                  </div>\r\n                              </div>\r\n                          </div>\r\n  \r\n                          <div class=\"pt-5 pb-5\">\r\n                            \r\n                            <h2 class=\"pb-4\">Video Licenses at Imagefootage</h2>\r\n                              <p class=\"f-16\">All of our images fall under the Standard Royalty-Free License. The license covers commercial use including:</p>\r\n                              <ul class=\"f-16\">\r\n                                <li><i class=\"icon-check\"> </i> Advertising, blog posts, inclusion in websites, annual reports, editorial, design elements, book covers, product packaging, etc.</li>\r\n                              <li><i class=\"icon-check\"> </i> Up to 500,000 copies in print</li>\r\n                              <li><i class=\"icon-check\"> </i> Unlimited electronic impressions (web, ebook, etc.)</li>\r\n                              <li><i class=\"icon-check\"> </i> Worldwide, all media, unlimited time</li>\r\n                              </ul>\r\n                          </div>\r\n                      </div>\r\n                    </div>\r\n  \r\n                  </div>\r\n                   </div>\r\n  \r\n  \r\n  </section>\r\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"purple-gradient\">\r\n\r\n    <div class=\"container\">\r\n        <div class=\"text-white text-center\">\r\n            <h1 class=\"text-white\">Images for every project, plans for every budget</h1>\r\n            <p>Access over 320 million images with 1,65,000 new images added every day.</p>\r\n        </div>\r\n\r\n        <h3 class=\"text-white pt-5 pb-3\">Plans for individuals</h3>\r\n\r\n        <div class=\"row\" *ngIf=\"!paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"yearly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center\" >Value priced annual plans</h3>\r\n\r\n                        <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                    </div>\r\n\r\n                    <div class=\"card-body\">\r\n                        <div class=\"row\">\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                            </div>\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <table class=\"table table-hover\">\r\n\r\n                                    <tbody>\r\n                                    <tr *ngFor=\"let pack of plansData.yearly_pack;let i= index\">\r\n                                        <td class=\"border-top-0\">\r\n\r\n                                            <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                <span class=\"checkmark\"></span>\r\n                                            </label>\r\n                                        </td>\r\n\r\n                                    </tr>\r\n                                    <tr><td class=\"border-top-0\">\r\n                                        <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                        <!--                                   <label class=\"custmLable\">-->\r\n                                        <!--                                   <span class=\"invalid-feedback\">-->\r\n                                        <!--                                    <span > </span>-->\r\n\r\n                                        <!--                                </span>-->\r\n                                        <!--                                   </label>-->\r\n                                    </td>\r\n\r\n                                    </tbody>\r\n                                </table>\r\n                            </div>\r\n\r\n\r\n                            <div class=\"form-group pt-3 m-auto\">\r\n                                <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                <p class=\"pt-3\"><a (click)=\"showprice()\">See Monthly Pricing</a></p>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                </form>\r\n\r\n            </div>\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"monthly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\">Value priced monthly plans</h3>\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n\r\n                                    <table class=\"table table-hover\"  >\r\n\r\n                                        <tbody>\r\n                                        <tr *ngFor=\"let pack of plansData.monthly_pack;let i= index\">\r\n                                            <td class=\"border-top-0\">\r\n\r\n                                                <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                                    <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                    <span class=\"checkmark\"></span>\r\n                                                </label>\r\n                                            </td>\r\n\r\n                                        </tr>\r\n                                        <tr><td class=\"border-top-0\">\r\n                                            <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                            <!--                                   <label class=\"custmLable\">-->\r\n                                            <!--                                   <span class=\"invalid-feedback\">-->\r\n                                            <!--                                    <span > </span>-->\r\n\r\n                                            <!--                                </span>-->\r\n                                            <!--                                   </label>-->\r\n                                        </td>\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n\r\n                                </div>\r\n\r\n\r\n                                <div class=\"form-group pt-3 m-auto\">\r\n                                    <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                     <p class=\"pt-3\"><a (click)=\"showprice()\">See Annual Pricing</a></p>\r\n                                </div>\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </form>\r\n\r\n            </div>\r\n\r\n\r\n            <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                    <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">Get images on demand.</p><p class=\"mb-0\"> Download within a year.</p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <form [formGroup]=\"planform\" (ngSubmit)=\"onSubmit()\">\r\n                        <div class=\"row\">\r\n                         <table class=\"table table-hover\">\r\n                                <tbody>\r\n                                <tr *ngFor=\"let pack of plansData.download_pack;let i= index\">\r\n                                    <td class=\"border-top-0\">\r\n                                        <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/within year</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                            <input type=\"radio\" name=\"plan\" formControlName=\"plan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && f.plan.errors }\">\r\n                                            <span class=\"checkmark\"></span>\r\n                                        </label>\r\n                                    </td>\r\n\r\n                                </tr>\r\n                               <tr><td class=\"border-top-0\">\r\n                                   <span style=\"color:red;\" *ngIf=\"submitted && f.plan.errors\" >Please select a plan</span>\r\n<!--                                   <label class=\"custmLable\">-->\r\n<!--                                   <span class=\"invalid-feedback\">-->\r\n<!--                                    <span > </span>-->\r\n\r\n<!--                                </span>-->\r\n<!--                                   </label>-->\r\n                               </td>\r\n                               </tr>\r\n                                </tbody>\r\n\r\n                            </table>\r\n                            <div class=\"m-auto pt-5\">\r\n                                <button type=\"submit\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Buy Now</button>\r\n                            </div>\r\n\r\n                        </div>\r\n                        </form>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\" *ngIf=\"paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\">\r\n\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\" >Plan You have choosed.</h3>\r\n\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <table class=\"table table-hover\">\r\n\r\n                                        <tbody>\r\n                                        <tr>\r\n                                            <td class=\"border-top-0\">\r\n                                                plan\r\n\r\n<!--                                                <label class=\"custmLable\">-->\r\n<!--                                            <span class=\"float-left\">-->\r\n<!--                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>-->\r\n<!--                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>-->\r\n<!--                                                    <span class=\"float-right\">-->\r\n<!--                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>-->\r\n<!--                                                 <p class=\"f-12 mb-0\"> per image</p>-->\r\n<!--                                            </span>-->\r\n<!--                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">-->\r\n<!--                                                    <span class=\"checkmark\"></span>-->\r\n<!--                                                </label>-->\r\n                                            </td>\r\n\r\n                                        </tr>\r\n\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n                                </div>\r\n\r\n\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n            </div>\r\n           <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">PAYMENT INFORMATION</p><p class=\"mb-0\"></p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <div class=\"text-center m-auto\">\r\n                        <img src=\"/assets/images/atom.png\" alt=\"atom\" class=\"mb-3 img-fluid\">\r\n                        </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/payu.png\" alt=\"payumoney\" class=\"mb-3 img-fluid\">\r\n                         </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/rozorpay.png\" alt=\"Rozorpay\" class=\"mb-3 img-fluid\">\r\n                       </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n\r\n\r\n\r\n<!--<section class=\"pt-5 pb-0\">-->\r\n<!--    <div class=\"container\">-->\r\n\r\n<!--        <h3>Plans for multiple users</h3>-->\r\n<!--        <p>Give your team the workflow tools and legal coverage they need to create their best work.</p>-->\r\n\r\n\r\n<!--        <div class=\"row\">-->\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6\">-->\r\n\r\n<!--                <div class=\"card  card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center\">Teams</h3>-->\r\n<!--                        <p class=\"mb-1\">Share 750 images with your team each month and get tools to enable collaboration.</p>-->\r\n<!--                        <p class=\"mb-1\"><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n<!--                        <div class=\"row\">-->\r\n\r\n\r\n<!--                            <table class=\"table table-hover\">-->\r\n<!--                                <tbody>-->\r\n<!--                                <tr>-->\r\n<!--                                    <td class=\"border-top-0\">-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                </tbody>-->\r\n<!--                            </table>-->\r\n\r\n\r\n\r\n<!--                            <div class=\"form-group pt-3 m-auto\">-->\r\n<!--                                <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>-->\r\n\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n\r\n\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6 pl-0 pr-0\">-->\r\n\r\n<!--                <div class=\"card card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center f-20\">Enterprise</h3>-->\r\n<!--                        <p class=\"mb-1\">For large organizations needing an enterprise workflow, specific licenses, and VIP service.</p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n\r\n\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n\r\n<!--                            <img src=\"./Image Footage_files/atom.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/payu.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/rozorpay.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n\r\n<!--                        <div class=\"clearfix\"></div>-->\r\n\r\n<!--                        <div class=\"m-auto pt-5 text-center\">-->\r\n<!--                            <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Learn More</button>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</section>-->\r\n\r\n\r\n<!--<div class=\"bg-light pt-5 pb-5\">-->\r\n<!--    <div class=\"container\">-->\r\n<!--        <h2 class=\"f-24\">A simple guide to our plans</h2>-->\r\n<!--        <table class=\"table\">-->\r\n<!--            <tbody>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td></td>-->\r\n<!--                <td class=\"text-center\"><h5>Individual</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Teams</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Enterprise</h5></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Full access to millions of images  </td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create and share collections <i class=\"fa fa-question-circle-o f-16\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Create and share collections\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Free plugins for your most used programs</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\">With subscription plans</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n<!--            </tbody>-->\r\n\r\n<!--        </table>-->\r\n\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"License-bg pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container \">-->\r\n\r\n<!--        <h3 class=\"text-white pb-4\">Our licenses protect over 1.5 million customers worldwide.</h3>-->\r\n\r\n<!--        <ul class=\"text-white\">-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Unlimited digital reproduction</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Worldwide usage</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Extended rights with enhanced and enterprise licenses</b></li>-->\r\n<!--        </ul>-->\r\n<!--        <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 text-white p-3 text-uppercase\">Compare License</button>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container\">-->\r\n<!--        <h3>Still have questions? We're here to help.</h3>-->\r\n<!--        <div class=\"row mt-3\">-->\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-question-circle-o f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">FAQ</h3>-->\r\n<!--                    <p>Explore our frequently asked questions section.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">View FAQ</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-headphones f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Give us a call</h3>-->\r\n<!--                    <p>EYour local phone number: 000 111 1234 388</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Call Us</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-envelope f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Send us a message</h3>-->\r\n<!--                    <p>We'll get back to you.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Email Usxxxx</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n";
     /***/
   },
 
@@ -5460,6 +5460,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
         }
       }, {
+        key: "getSubscriptionData",
+        value: function getSubscriptionData() {
+          var url = "".concat(this.heroesUrl, "get_subscription_plan");
+          return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (subscriptionplan) {
+            // console.log(lightBox);
+            //this.currentUserSubject.next(cart);
+            return subscriptionplan;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
+        }
+      }, {
         key: "currentUserValue",
         get: function get() {
           return this.currentUserSubject.value;
@@ -6522,7 +6532,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3ByaWNpbmcvcHJpY2luZy5jb21wb25lbnQuY3NzIn0= */";
+    __webpack_exports__["default"] = "body{ font-weight:normal;background: #f1f5f6;}\r\n#mainNav{background:#000;}\r\na {\r\n    cursor:pointer;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJpY2luZy9wcmljaW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxrQkFBa0IsQ0FBQyxtQkFBbUIsQ0FBQztBQUM3QyxTQUFTLGVBQWUsQ0FBQztBQUN6QjtJQUNJLGNBQWM7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC9wcmljaW5nL3ByaWNpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImJvZHl7IGZvbnQtd2VpZ2h0Om5vcm1hbDtiYWNrZ3JvdW5kOiAjZjFmNWY2O31cclxuI21haW5OYXZ7YmFja2dyb3VuZDojMDAwO31cclxuYSB7XHJcbiAgICBjdXJzb3I6cG9pbnRlcjtcclxufVxyXG4iXX0= */";
     /***/
   },
 
@@ -6557,31 +6567,169 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _hero_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../hero.service */
+    "./src/app/hero.service.ts");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/fesm2015/forms.js");
 
     var PricingComponent =
     /*#__PURE__*/
     function () {
-      function PricingComponent() {
+      function PricingComponent(route, heroService, authenticationService, router, formBuilder) {
         _classCallCheck(this, PricingComponent);
+
+        this.route = route;
+        this.heroService = heroService;
+        this.authenticationService = authenticationService;
+        this.router = router;
+        this.formBuilder = formBuilder;
+        this.loadingData = false;
+        this.plansData = [];
+        this.yearly = true;
+        this.monthly = false;
+        this.submitted = false;
+        this.submitted2 = false;
+        this.paymentShow = false;
+        this.selectedData = [];
       }
 
       _createClass(PricingComponent, [{
         key: "ngOnInit",
-        value: function ngOnInit() {}
+        value: function ngOnInit() {
+          var _this56 = this;
+
+          this.loadingData = true;
+          this.authenticationService.getSubscriptionData().subscribe(function (data) {
+            _this56.loadingData = false;
+
+            if (data.status == 'success') {
+              _this56.plansData = data.data;
+              _this56.loadingData = false;
+            } else {
+              alert(data.message);
+            } //this.spinner.hide();
+
+          }, function (error) {});
+          this.planform = this.formBuilder.group({
+            plan: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]]
+          });
+          this.subscriptionform = this.formBuilder.group({
+            subplan: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]]
+          });
+        }
+      }, {
+        key: "showperImgPrice",
+        value: function showperImgPrice(pack) {
+          if (pack.package_expiry_yearly == 1 && pack.package_plan == 2) {
+            var perprice = pack.package_price / (12 * pack.package_products_count);
+          } else if (pack.package_expiry_yearly == 0 && pack.package_plan == 2) {
+            var perprice = pack.package_price / pack.package_products_count;
+          } else {
+            var perprice = pack.package_price / pack.package_products_count;
+          }
+
+          return perprice;
+        }
+      }, {
+        key: "showprice",
+        value: function showprice() {
+          this.yearly = !this.yearly;
+          this.monthly = !this.monthly;
+        }
+      }, {
+        key: "onSubmit",
+        value: function onSubmit() {
+          this.loadingData = true;
+          this.submitted = true; //console.log(this.checkoutForm);
+          // stop here if form is invalid
+
+          if (this.planform.invalid) {
+            console.log('at invalid');
+            this.loadingData = false; //console.log(this.checkoutForm);
+
+            return;
+          }
+
+          this.paymentShow = true;
+          this.loadingData = false;
+          console.log(this.planform.value);
+          this.selectedData; //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+
+          window.scrollTo(0, 0);
+        }
+      }, {
+        key: "onSubmitsubscription",
+        value: function onSubmitsubscription() {
+          this.loadingData = true;
+          this.submitted2 = true; //console.log(this.checkoutForm);
+          // stop here if form is invalid
+
+          if (this.subscriptionform.invalid) {
+            console.log('at invalid');
+            this.loadingData = false; //console.log(this.checkoutForm);
+
+            return;
+          }
+
+          this.paymentShow = true;
+          this.loadingData = false;
+          console.log(this.subscriptionform.value); //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+
+          window.scrollTo(0, 0);
+        }
+      }, {
+        key: "f",
+        get: function get() {
+          return this.planform.controls;
+        }
+      }, {
+        key: "g",
+        get: function get() {
+          return this.subscriptionform.controls;
+        }
       }]);
 
       return PricingComponent;
     }();
+
+    PricingComponent.ctorParameters = function () {
+      return [{
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]
+      }, {
+        type: _hero_service__WEBPACK_IMPORTED_MODULE_2__["HeroService"]
+      }, {
+        type: _hero_service__WEBPACK_IMPORTED_MODULE_2__["HeroService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
+      }, {
+        type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]
+      }];
+    };
 
     PricingComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
       selector: 'pricing',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./pricing.component.html */
       "./node_modules/raw-loader/dist/cjs.js!./src/app/pricing/pricing.component.html")).default,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./pricing.component.css */
       "./src/app/pricing/pricing.component.css")).default]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])], PricingComponent);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _hero_service__WEBPACK_IMPORTED_MODULE_2__["HeroService"], _hero_service__WEBPACK_IMPORTED_MODULE_2__["HeroService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]])], PricingComponent);
     /***/
   },
 
@@ -6751,7 +6899,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function ResetPasswordComponent(heroService, formBuilder, authenticationService, router, spinner) {
-        var _this56 = this;
+        var _this57 = this;
 
         _classCallCheck(this, ResetPasswordComponent);
 
@@ -6764,10 +6912,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.submitted = false;
         this.loading = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this56.currentUser = x;
+          _this57.currentUser = x;
 
-          if (_this56.currentUser) {
-            _this56.router.navigate(['/']);
+          if (_this57.currentUser) {
+            _this57.router.navigate(['/']);
           }
         });
       }
@@ -6782,7 +6930,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this57 = this;
+          var _this58 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6795,7 +6943,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.loadingData = true;
           this.authenticationService.resetPassword(this.resetpasswordForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this57.loadingData = false;
+            _this58.loadingData = false;
 
             if (data2.status == '1') {// this.otp = true;
               // this.error_message = null;
@@ -6805,7 +6953,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                 // this.error_message = data2.message;
               }
           }, function (error) {
-            _this57.loading = false;
+            _this58.loading = false;
           });
         }
       }, {
@@ -6974,11 +7122,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getCountries",
         value: function getCountries() {
-          var _this58 = this;
+          var _this59 = this;
 
           this.authenticationService.allCountries().subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this58.countryInfo = data2; //console.log('Data:', this.countryInfo);
+            _this59.countryInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -6988,12 +7136,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeCountry",
         value: function onChangeCountry(countryValue) {
-          var _this59 = this;
+          var _this60 = this;
 
           //  console.log(this.countryInfo[countryValue]);
           this.authenticationService.allstates(countryValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this59.stateInfo = data2; //console.log('Data:', this.countryInfo);
+            _this60.stateInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7006,12 +7154,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeState",
         value: function onChangeState(stateValue) {
-          var _this60 = this;
+          var _this61 = this;
 
           // console.log(this.stateInfo[stateValue]);
           this.authenticationService.allCities(stateValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this60.cityInfo = data2; //console.log('Data:', this.countryInfo);
+            _this61.cityInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7028,7 +7176,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this61 = this;
+          var _this62 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -7048,7 +7196,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
               if (cartData.length > 0) {
                 var finalData = JSON.parse(cartData);
-                _this61.token = localStorage.getItem('currentUser'); //console.log(finalData);
+                _this62.token = localStorage.getItem('currentUser'); //console.log(finalData);
                 // console.log(finalData.productinfo);
 
                 var cartval = {
@@ -7056,37 +7204,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                   "selected_product": finalData.cartproduct,
                   "total": finalData.total,
                   "extended": finalData.extended,
-                  "token": _this61.token,
+                  "token": _this62.token,
                   "type": finalData.type
                 };
 
-                _this61.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
+                _this62.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
                   console.log(data);
 
-                  _this61.checkoutArray.push(cartval);
+                  _this62.checkoutArray.push(cartval);
 
                   if (data["status"] == '1') {
-                    _this61.loadingData = false;
-                    localStorage.setItem('checkoutAray', _this61.checkoutArray);
+                    _this62.loadingData = false;
+                    localStorage.setItem('checkoutAray', _this62.checkoutArray);
                     localStorage.removeItem("beforeLoginCart");
 
-                    _this61.router.navigate(['/cart']);
+                    _this62.router.navigate(['/cart']);
                   } else {
-                    _this61.loadingData = false;
+                    _this62.loadingData = false;
                     alert(data["message"]);
                   }
                 });
               } else {
-                _this61.loadingData = false;
+                _this62.loadingData = false;
 
-                _this61.router.navigate(['/']);
+                _this62.router.navigate(['/']);
               }
             } else {
-              _this61.loadingData = false;
+              _this62.loadingData = false;
               alert(data2.message);
             }
           }, function (error) {
-            _this61.loading = false;
+            _this62.loading = false;
           });
         }
       }, {
@@ -7304,7 +7452,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserProfileComponent(route, heroService, location, dataHelper, authenticationService, router, spinner) {
-        var _this62 = this;
+        var _this63 = this;
 
         _classCallCheck(this, UserProfileComponent);
 
@@ -7324,10 +7472,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.orderData = '';
         this.order_items = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this62.currentUser = x;
+          _this63.currentUser = x;
 
-          if (!_this62.currentUser) {
-            _this62.router.navigate(['/']);
+          if (!_this63.currentUser) {
+            _this63.router.navigate(['/']);
           }
         });
       }
@@ -7335,16 +7483,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(UserProfileComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this63 = this;
+          var _this64 = this;
 
           this.loadingData = true;
           this.authenticationService.getUserprofileData().subscribe(function (data) {
-            _this63.profileData = data.data[0];
-            _this63.loadingData = false;
+            _this64.profileData = data.data[0];
+            _this64.loadingData = false;
           }, function (error) {});
           this.authenticationService.getUserOrderData().subscribe(function (orders) {
-            _this63.orderData = orders.data;
-            _this63.loadingData = false;
+            _this64.orderData = orders.data;
+            _this64.loadingData = false;
           }, function (error) {});
         }
       }, {
@@ -7489,7 +7637,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WishlistComponent(heroService, authenticationService, router, spinner) {
-        var _this64 = this;
+        var _this65 = this;
 
         _classCallCheck(this, WishlistComponent);
 
@@ -7502,10 +7650,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this64.currentUser = x;
+          _this65.currentUser = x;
 
-          if (!_this64.currentUser) {
-            _this64.router.navigate(['/']);
+          if (!_this65.currentUser) {
+            _this65.router.navigate(['/']);
           }
         });
       }
@@ -7513,19 +7661,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(WishlistComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this65 = this;
+          var _this66 = this;
 
           //this.spinner.show();
           this.loadingData = true; // console.log(localStorage.getItem('checkoutAray'));
 
           this.authenticationService.getcartItemsData().subscribe(function (data) {
-            _this65.wishListDataItems = data;
+            _this66.wishListDataItems = data;
 
-            _this65.wishListDataItems.forEach(function (element) {
-              _this65.priceArray.push(element["total"]);
+            _this66.wishListDataItems.forEach(function (element) {
+              _this66.priceArray.push(element["total"]);
             });
 
-            _this65.loadingData = false; //this.spinner.hide();
+            _this66.loadingData = false; //this.spinner.hide();
           }, function (error) {});
         }
       }, {
@@ -7548,7 +7696,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromCart",
         value: function removeProductFromCart(productinfo) {
-          var _this66 = this;
+          var _this67 = this;
 
           console.log(productinfo);
 
@@ -7556,16 +7704,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingData = true;
             this.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
               if (data["status"] == '1') {
-                _this66.priceArray = [];
+                _this67.priceArray = [];
 
-                _this66.authenticationService.getcartItemsData().subscribe(function (data) {
-                  _this66.wishListDataItems = data;
+                _this67.authenticationService.getcartItemsData().subscribe(function (data) {
+                  _this67.wishListDataItems = data;
 
-                  _this66.wishListDataItems.forEach(function (element) {
-                    _this66.priceArray.push(element["total"]);
+                  _this67.wishListDataItems.forEach(function (element) {
+                    _this67.priceArray.push(element["total"]);
                   });
 
-                  _this66.loadingData = false;
+                  _this67.loadingData = false;
                 }, function (error) {});
               } else {
                 alert(data["message"]);
@@ -7578,25 +7726,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this67 = this;
+          var _this68 = this;
 
           console.log(productinfo);
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.cart_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this67.loadingData = false;
+              _this68.loadingData = false;
 
-              _this67.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this68.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this67.priceArray = [];
+                  _this68.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this67.router.navigate(['/wishlist']);
+              _this68.router.navigate(['/wishlist']);
             } else {
-              _this67.loadingData = false;
+              _this68.loadingData = false;
               alert(data["message"]);
             }
           });
