@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -532,6 +532,20 @@ export class HeroService {
                 return userInfo;
                 //console.log(JSON.stringify(userInfo));
                 //return JSON.stringify(userInfo);
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+    }
+	changeResetPassword(usrData: any,otp:any,email:any): Observable<any> {
+        const url = `${this.heroesUrl}forgotResetPassword`;
+        return this.http.post(url, usrData, this.httpOptions).pipe(
+            map(userInfo => {
+                console.log(userInfo);
+                /*if (userInfo['status'] == '1') {
+                    localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
+                    this.currentUserSubject.next(userInfo['userdata']);
+                }*/
+                return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
         );

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeroService }  from '../hero.service';
 import {NgxSpinnerService} from "ngx-spinner";
+import {first} from "rxjs/operators";
 //import { MustMatch } from './_helpers/must-match.validator';
 @Component({
   selector: 'app-change-reset-password',
@@ -14,7 +15,8 @@ export class ChangeResetPasswordComponent implements OnInit {
 	email:any='';
 	 changeresetpasswordForm: FormGroup;
     submitted = false;
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder) {
+	loadingData:boolean = false;
+  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private authenticationService: HeroService,private spinner: NgxSpinnerService) {
   	
   }
   ngOnInit() {
@@ -33,15 +35,27 @@ export class ChangeResetPasswordComponent implements OnInit {
    // convenience getter for easy access to form fields
     get f() { return this.changeresetpasswordForm.controls; }
 	onSubmit() {
-	
         this.submitted = true;
-console.log(this.changeresetpasswordForm.value);
+		this.loadingData = true;
+		
         // stop here if form is invalid
-        if (this.changeresetpasswordForm.invalid) {
+       /* if (this.changeresetpasswordForm.invalid) {
             return;
-        }
+        }*/
+		 this.loadingData = true;
+    this.authenticationService.changeResetPassword(this.changeresetpasswordForm.value,this.otp,this.email)
+        .pipe(first())
+        .subscribe(
+            data2 => {
+              console.log(data2);
+              this.loadingData = false;
+             
+
+            },
+            error => {
+              this.loadingData = false;
+            });
 		      // display form values on success
-        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.changeresetpasswordForm.value, null, 4));
     }
   onReset() {
         this.submitted = false;

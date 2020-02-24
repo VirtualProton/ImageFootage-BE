@@ -199,4 +199,7 @@ class UserContactusController extends Controller
         }
 
     }
+	public function forResetPassword(Request $request){
+		 echo 'here';
+	}
 }
