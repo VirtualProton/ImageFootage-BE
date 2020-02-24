@@ -51,14 +51,27 @@
                      @foreach($package as $packages)
                     <tr>
   <td>{{ $packages['package_id'] }} </td>
-  <td>{{ $packages['package_plan'] }} </td>
+  <td>@if($packages['package_plan']==1)
+       Download
+     @else
+        Subscription
+    @endif
+  </td>
   <td>{{ $packages['package_name'] }} </td>
   <td>{{ $packages['package_price'] }} </td>
   <td>{{ $packages['package_description'] }} </td>
   <td>{{ $packages['package_products_count'] }} </td>
   <td>{{ $packages['package_type'] }} </td>
   <td>{{  date('Y-m-d',strtotime($packages['package_added_on'])) }} </td>
-  <td>{{ $packages['package_expiry'] }} </td>
+  <td>
+      @if($packages['package_expiry']==1 && $packages['package_plan']==2)
+          Expire in 1 month
+      @elseif($packages['package_expiry_yearly']==1 && $packages['package_plan']==2)
+          Expire limit per month till 1 year.
+       @elseif($packages['package_plan']==1)
+          Expire in 1 year.
+      @endif
+      </td>
   <td>{{ $packages['package_permonth_download'] }}</td>
   <td>{{ $packages['package_pcarry_forward'] }}</td>
   <td>  @if($packages['package_status'] =='Active')

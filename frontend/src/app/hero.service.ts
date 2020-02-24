@@ -625,6 +625,18 @@ export class HeroService {
         );
     }
 
+    getSubscriptionData(): Observable<any>{
+        const url = `${this.heroesUrl}get_subscription_plan`;
+        return this.http.get<any>(url).pipe(
+            map(subscriptionplan => {
+               // console.log(lightBox);
+
+                //this.currentUserSubject.next(cart);
+                return subscriptionplan;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
 }
 
 

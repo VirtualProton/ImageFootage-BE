@@ -84,4 +84,6 @@ Route::group([
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}','UserController@userProfile');
     Route::get('userOrders/{id}', 'UserController@userOrders');
+    Route::get('get_subscription_plan', 'PackageApiController@packageList');
+
 });

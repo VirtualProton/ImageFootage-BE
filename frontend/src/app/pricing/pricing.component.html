@@ -1,312 +1,578 @@
-<section class="banner-area relative">
-        <div class="overlay overlay-bg"></div>
-        <div class="banner-content text-center">
-          <h1>Pricing, made simple.</h1>
-          <p>We are a privately owned group offering a variety of services that include,
-            <br />
-             stock imagery,stock footage, photography
-          </p>
+<div class="loader-bg" *ngIf="loadingData">
+    <div class="loader">
+        Loading
+        <span></span>
+    </div>
+</div>
+<section class="purple-gradient">
+
+    <div class="container">
+        <div class="text-white text-center">
+            <h1 class="text-white">Images for every project, plans for every budget</h1>
+            <p>Access over 320 million images with 1,65,000 new images added every day.</p>
         </div>
-      </section>
-    
-    <section class="pt-5 pb-0">
-      <div class="container">
-        <div class="btn-group  nav nav-tabs justify-content-center border-0">  
-            <a href="#imagesTab" data-toggle="tab" class="btn btn-secondary btn-rounded active pt-2 pb-2 pl-4 pr-4"><i class="icon-image"></i> Images
-            </a>
-           <a href="#videoTab" data-toggle="tab" class="btn btn-secondary btn-rounded pt-2 pb-2 pl-4 pr-4"><i class="icon-camera"></i> Videos
-          </a>  
-      </div>  
-  </div>
-  
-  
-    <div class="pricing1">
-      <div class="tab-content">
-        <div class="tab-pane active" id="imagesTab">
-                      <div class="container">
-                          <div class="row mt-40">
-                              <!-- Column -->
-                              <div class="col-lg-3 col-md-6 pl-1 pr-1">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">BASIC</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">28</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                         
-                                          <p class="mb-0 pt-5"> <strong>0.5MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                             <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                               <div class="col-lg-3 col-md-6 pl-1 pr-1">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">MEDIUM</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">50</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>0.5MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                              <div class="col-lg-3 col-md-6 pl-1 pr-1">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">LARGE</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">85</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>5.7MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                               <div class="col-lg-3 col-md-6 pl-1 pr-1">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">X-LARGE</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">120</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>12MP+</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-  
-                          <div class="pt-5 pb-5">
-                            
-                            <h2 class="pb-4">Image Licenses at Imagefootage</h2>
-                              <p class="f-16">All of our images fall under the Standard Royalty-Free License. The license covers commercial use including:</p>
-                              <ul class="f-16">
-                                <li><i class="icon-check"> </i> Advertising, blog posts, inclusion in websites, annual reports, editorial, design elements, book covers, product packaging, etc.</li>
-                              <li><i class="icon-check"> </i> Up to 500,000 copies in print</li>
-                              <li><i class="icon-check"> </i> Unlimited electronic impressions (web, ebook, etc.)</li>
-                              <li><i class="icon-check"> </i> Worldwide, all media, unlimited time</li>
-                              </ul>
-                          </div>
-                      </div>
+
+        <h3 class="text-white pt-5 pb-3">Plans for individuals</h3>
+
+        <div class="row" *ngIf="!paymentShow">
+
+            <div class="col-lg-9 col-md-8 col-sm-8" *ngIf="yearly">
+                <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="text-center" >Value priced annual plans</h3>
+
+                        <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>
                     </div>
-  
-                     <div class="tab-pane" id="videoTab">
-                      <div class="columnFive">
-                          <div class="row mt-40">
-                              <!-- Column -->
-                              <div class="col-lg-2 col-md-6 col-half-offset pl-1 pr-1">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">720P H.264</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">28</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                         
-                                          <p class="mb-0 pt-5"> <strong>0.5MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                             <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                               <div class="col-lg-2 col-md-6 pl-1 pr-1 col-half-offset ">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">1080P H.264</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">50</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>0.5MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                              <div class="col-lg-2 col-md-6 pl-1 pr-1 col-half-offset ">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">1080P UNGRADED</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">85</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>5.7MP</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Column -->
-                               <div class="col-lg-2 col-md-6 pl-1 pr-1 col-half-offset ">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">4K H.264</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">120</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>12MP+</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-  
-                              <div class="col-lg-2 col-md-6 pl-1 pr-1 col-half-offset ">
-                                  <div class="card text-center card-shadow">
-                                      <div class="card-body font-14">
-                                          <h5 class="title">4K UNGRADED</h5>
-                                          <h6 class="subtitle">For Team of 3-5 Members</h6>
-                                          <div class="pricing">
-                                              <sup>$</sup>
-                                              <span class="monthly display-5">120</span>                                         
-                                              <small class="monthly">USD</small>
-                                            <div class="clearfix"></div>
-                                              
-                                          </div>
-                                          <ul class="list-inline">
-                                              <li>Ideal for basic web use such as blogs, articles, or brochure sites.</li>
-                                              <li>Unlimited Invoices</li>
-                                              <li>Project Management</li>
-                                              
-                                          </ul>
-                                            <p class="mb-0 pt-5"> <strong>12MP+</strong></p>
-                                           <p>815 x 614px | 11.3 x 8.5" @ 72dpi</p>
-                                          <div class="bottom-btn">
-                                              <a class="btn btn-success-gradiant btn-md btn-arrow btn-block text-white" data-toggle="collapse" href="#f1">Choose Plan</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-  
-                          <div class="pt-5 pb-5">
-                            
-                            <h2 class="pb-4">Video Licenses at Imagefootage</h2>
-                              <p class="f-16">All of our images fall under the Standard Royalty-Free License. The license covers commercial use including:</p>
-                              <ul class="f-16">
-                                <li><i class="icon-check"> </i> Advertising, blog posts, inclusion in websites, annual reports, editorial, design elements, book covers, product packaging, etc.</li>
-                              <li><i class="icon-check"> </i> Up to 500,000 copies in print</li>
-                              <li><i class="icon-check"> </i> Unlimited electronic impressions (web, ebook, etc.)</li>
-                              <li><i class="icon-check"> </i> Worldwide, all media, unlimited time</li>
-                              </ul>
-                          </div>
-                      </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <p>Includes <b>ImageFootage Editor Pro</b></p>
+
+                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>
+                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>
+                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>
+
+                                <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>
+
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <table class="table table-hover">
+
+                                    <tbody>
+                                    <tr *ngFor="let pack of plansData.yearly_pack;let i= index">
+                                        <td class="border-top-0">
+
+                                            <label class="custmLable">
+                                            <span class="float-left">
+                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>
+                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>
+                                            <span class="float-right">
+                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>
+                                                 <p class="f-12 mb-0"> per image</p>
+                                            </span>
+                                                <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+
+                                    </tr>
+                                    <tr><td class="border-top-0">
+                                        <span style="color:red;" *ngIf="submitted2 && g.subplan.errors && g.subplan.errors.required" >Please select a plan</span>
+                                        <!--                                   <label class="custmLable">-->
+                                        <!--                                   <span class="invalid-feedback">-->
+                                        <!--                                    <span > </span>-->
+
+                                        <!--                                </span>-->
+                                        <!--                                   </label>-->
+                                    </td>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="form-group pt-3 m-auto">
+                                <button type="submit" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>
+                                <p class="pt-3"><a (click)="showprice()">See Monthly Pricing</a></p>
+
+                            </div>
+
+                        </div>
                     </div>
-  
-                  </div>
-                   </div>
-  
-  
-  </section>
+                </div>
+                </form>
+
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-8" *ngIf="monthly">
+                <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h3 class="text-center">Value priced monthly plans</h3>
+                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <p>Includes <b>ImageFootage Editor Pro</b></p>
+
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>
+
+                                    <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>
+
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                    <table class="table table-hover"  >
+
+                                        <tbody>
+                                        <tr *ngFor="let pack of plansData.monthly_pack;let i= index">
+                                            <td class="border-top-0">
+
+                                                <label class="custmLable">
+                                            <span class="float-left">
+                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>
+                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>
+                                                    <span class="float-right">
+                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>
+                                                 <p class="f-12 mb-0"> per image</p>
+                                            </span>
+                                                    <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+
+                                        </tr>
+                                        <tr><td class="border-top-0">
+                                            <span style="color:red;" *ngIf="submitted2 && g.subplan.errors && g.subplan.errors.required" >Please select a plan</span>
+                                            <!--                                   <label class="custmLable">-->
+                                            <!--                                   <span class="invalid-feedback">-->
+                                            <!--                                    <span > </span>-->
+
+                                            <!--                                </span>-->
+                                            <!--                                   </label>-->
+                                        </td>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+
+                                <div class="form-group pt-3 m-auto">
+                                    <button type="submit" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>
+                                     <p class="pt-3"><a (click)="showprice()">See Annual Pricing</a></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 col-sm-4 pl-0 pr-0">
+                    <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="text-center f-20">Prepaid image pack</h3>
+                        <p class="mb-1">Get images on demand.</p><p class="mb-0"> Download within a year.</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="planform" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                         <table class="table table-hover">
+                                <tbody>
+                                <tr *ngFor="let pack of plansData.download_pack;let i= index">
+                                    <td class="border-top-0">
+                                        <label class="custmLable">
+                                            <span class="float-left">
+                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/within year</span>
+                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>
+                                            <span class="float-right">
+                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>
+                                                 <p class="f-12 mb-0"> per image</p>
+                                            </span>
+                                            <input type="radio" name="plan" formControlName="plan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                               <tr><td class="border-top-0">
+                                   <span style="color:red;" *ngIf="submitted && f.plan.errors" >Please select a plan</span>
+<!--                                   <label class="custmLable">-->
+<!--                                   <span class="invalid-feedback">-->
+<!--                                    <span > </span>-->
+
+<!--                                </span>-->
+<!--                                   </label>-->
+                               </td>
+                               </tr>
+                                </tbody>
+
+                            </table>
+                            <div class="m-auto pt-5">
+                                <button type="submit" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Buy Now</button>
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="paymentShow">
+
+            <div class="col-lg-9 col-md-8 col-sm-8">
+
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h3 class="text-center" >Plan You have choosed.</h3>
+
+                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <p>Includes <b>ImageFootage Editor Pro</b></p>
+
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>
+                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>
+
+                                    <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>
+
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <table class="table table-hover">
+
+                                        <tbody>
+                                        <tr>
+                                            <td class="border-top-0">
+                                                plan
+
+<!--                                                <label class="custmLable">-->
+<!--                                            <span class="float-left">-->
+<!--                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>-->
+<!--                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>-->
+<!--                                                    <span class="float-right">-->
+<!--                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>-->
+<!--                                                 <p class="f-12 mb-0"> per image</p>-->
+<!--                                            </span>-->
+<!--                                                    <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">-->
+<!--                                                    <span class="checkmark"></span>-->
+<!--                                                </label>-->
+                                            </td>
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+           <div class="col-lg-3 col-md-4 col-sm-4 pl-0 pr-0">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="text-center f-20">Prepaid image pack</h3>
+                        <p class="mb-1">PAYMENT INFORMATION</p><p class="mb-0"></p>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center m-auto">
+                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid">
+                        </div>
+                        <div class="text-center m-auto">
+                         <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid">
+                         </div>
+                        <div class="text-center m-auto">
+                         <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid">
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--<section class="pt-5 pb-0">-->
+<!--    <div class="container">-->
+
+<!--        <h3>Plans for multiple users</h3>-->
+<!--        <p>Give your team the workflow tools and legal coverage they need to create their best work.</p>-->
+
+
+<!--        <div class="row">-->
+<!--            <div class="col-lg-6 col-md-6 col-sm-6">-->
+
+<!--                <div class="card  card-shadow">-->
+<!--                    <div class="card-header text-center">-->
+<!--                        <h3 class="text-center">Teams</h3>-->
+<!--                        <p class="mb-1">Share 750 images with your team each month and get tools to enable collaboration.</p>-->
+<!--                        <p class="mb-1"><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>-->
+<!--                    </div>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <div class="row">-->
+
+
+<!--                            <table class="table table-hover">-->
+<!--                                <tbody>-->
+<!--                                <tr>-->
+<!--                                    <td class="border-top-0">-->
+
+<!--                                        <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
+<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
+
+<!--                                            <span class="float-right">-->
+
+<!--<b class="f-14">US$ 0.27</b>-->
+<!--<p class="f-12 mb-0"> per image</p>-->
+
+<!--</span>-->
+<!--                                            <input type="radio" name="radio">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+
+<!--                                </tr>-->
+
+<!--                                <tr>-->
+<!--                                    <td>-->
+
+<!--                                        <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
+<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
+
+<!--                                            <span class="float-right">-->
+
+<!--<b class="f-14">US$ 0.27</b>-->
+<!--<p class="f-12 mb-0"> per image</p>-->
+
+<!--</span>-->
+<!--                                            <input type="radio" name="radio">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+
+<!--                                </tr>-->
+
+<!--                                <tr>-->
+<!--                                    <td>-->
+
+<!--                                        <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
+<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
+
+<!--                                            <span class="float-right">-->
+
+<!--<b class="f-14">US$ 0.27</b>-->
+<!--<p class="f-12 mb-0"> per image</p>-->
+
+<!--</span>-->
+<!--                                            <input type="radio" name="radio">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+
+<!--                                </tr>-->
+
+<!--                                <tr>-->
+<!--                                    <td>-->
+
+<!--                                        <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
+<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
+
+<!--                                            <span class="float-right">-->
+
+<!--<b class="f-14">US$ 0.27</b>-->
+<!--<p class="f-12 mb-0"> per image</p>-->
+
+<!--</span>-->
+<!--                                            <input type="radio" name="radio">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+
+<!--                                </tr>-->
+
+<!--                                </tbody>-->
+<!--                            </table>-->
+
+
+
+<!--                            <div class="form-group pt-3 m-auto">-->
+<!--                                <button type="button" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+
+<!--            <div class="col-lg-6 col-md-6 col-sm-6 pl-0 pr-0">-->
+
+<!--                <div class="card card-shadow">-->
+<!--                    <div class="card-header text-center">-->
+<!--                        <h3 class="text-center f-20">Enterprise</h3>-->
+<!--                        <p class="mb-1">For large organizations needing an enterprise workflow, specific licenses, and VIP service.</p>-->
+<!--                    </div>-->
+
+<!--                    <div class="card-body">-->
+
+
+<!--                        <div class="text-center m-auto">-->
+
+<!--                            <img src="./Image Footage_files/atom.png" class="mb-3 img-fluid">-->
+<!--                        </div>-->
+<!--                        <div class="text-center m-auto">-->
+<!--                            <img src="./Image Footage_files/payu.png" class="mb-3 img-fluid">-->
+<!--                        </div>-->
+<!--                        <div class="text-center m-auto">-->
+<!--                            <img src="./Image Footage_files/rozorpay.png" class="mb-3 img-fluid">-->
+<!--                        </div>-->
+
+<!--                        <div class="clearfix"></div>-->
+
+<!--                        <div class="m-auto pt-5 text-center">-->
+<!--                            <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Learn More</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+
+<!--<div class="bg-light pt-5 pb-5">-->
+<!--    <div class="container">-->
+<!--        <h2 class="f-24">A simple guide to our plans</h2>-->
+<!--        <table class="table">-->
+<!--            <tbody>-->
+
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td class="text-center"><h5>Individual</h5></td>-->
+<!--                <td class="text-center"><h5>Teams</h5></td>-->
+<!--                <td class="text-center"><h5>Enterprise</h5></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Full access to millions of images  </td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Create and share collections <i class="fa fa-question-circle-o f-16" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create and share collections"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Free plugins for your most used programs</td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Create designs with basic editing features</td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Create designs with basic editing features</td>-->
+<!--                <td class="text-center">With subscription plans</td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Create designs with basic editing features</td>-->
+<!--                <td class="text-center"></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td>Create designs with basic editing features</td>-->
+<!--                <td class="text-center"></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+
+<!--        </table>-->
+
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<div class="License-bg pt-5 pb-5">-->
+
+<!--    <div class="container ">-->
+
+<!--        <h3 class="text-white pb-4">Our licenses protect over 1.5 million customers worldwide.</h3>-->
+
+<!--        <ul class="text-white">-->
+<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Unlimited digital reproduction</b></li>-->
+<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Worldwide usage</b></li>-->
+<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Extended rights with enhanced and enterprise licenses</b></li>-->
+<!--        </ul>-->
+<!--        <button type="button" class="btn btn-danger btn-rounded pl-5 pr-5 text-white p-3 text-uppercase">Compare License</button>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<div class="pt-5 pb-5">-->
+
+<!--    <div class="container">-->
+<!--        <h3>Still have questions? We're here to help.</h3>-->
+<!--        <div class="row mt-3">-->
+<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
+<!--                <div class="card text-center p-3">-->
+<!--                    <i class="fa fa-question-circle-o f-46"></i>-->
+<!--                    <h3 class="pt-5">FAQ</h3>-->
+<!--                    <p>Explore our frequently asked questions section.</p>-->
+<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">View FAQ</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
+<!--                <div class="card text-center p-3">-->
+<!--                    <i class="fa fa-headphones f-46"></i>-->
+<!--                    <h3 class="pt-5">Give us a call</h3>-->
+<!--                    <p>EYour local phone number: 000 111 1234 388</p>-->
+<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Call Us</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
+<!--                <div class="card text-center p-3">-->
+<!--                    <i class="fa fa-envelope f-46"></i>-->
+<!--                    <h3 class="pt-5">Send us a message</h3>-->
+<!--                    <p>We'll get back to you.</p>-->
+<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Email Usxxxx</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
