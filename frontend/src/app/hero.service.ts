@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -248,11 +248,11 @@ export class HeroService {
         const url = `${this.heroesUrl}user_contactus`
         return this.http.post(url, contactData, this.httpOptions).pipe(
             map(userInfo => {
-                return true;
+                return userInfo;
             }),
             catchError(this.handleError<userData>(`unable to user_contactus data`))
         );
-        ;
+        
     }
 
     logout() {
@@ -538,13 +538,26 @@ export class HeroService {
     }
 	changeResetPassword(usrData: any,otp:any,email:any): Observable<any> {
         const url = `${this.heroesUrl}forgotResetPassword`;
-        return this.http.post(url, usrData, this.httpOptions).pipe(
+		var passdata={"otp":otp,"email":email,"password":usrData.password,"cpassword":usrData.confirm_password}
+        return this.http.post(url, passdata, this.httpOptions).pipe(
             map(userInfo => {
                 console.log(userInfo);
                 /*if (userInfo['status'] == '1') {
                     localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
                     this.currentUserSubject.next(userInfo['userdata']);
                 }*/
+                return userInfo;
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+    }
+
+	userchangepassword(usrData: any,userid: any): Observable<any> {
+        const url = `${this.heroesUrl}userchangepassword`;
+		var pasdata={"old_pass":usrData.old_password,"password":usrData.password,"cpassword":usrData.confirm_password,"userid":userid};
+        return this.http.post(url, pasdata, this.httpOptions).pipe(
+            map(userInfo => {
+                console.log(userInfo);
                 return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))

@@ -58,10 +58,13 @@ export class ResetPasswordComponent implements OnInit {
                 // this.otp = true;
                 // this.error_message = null;
                 // this.success_message = data2.message;
+				alert(data2.message);
+				this.router.navigate(['/']);
               }else{
                 // this.otp = false;
                 // this.success_message = null;
                 // this.error_message = data2.message;
+				alert(data2.message);
               }
 
             },

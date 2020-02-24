@@ -51,6 +51,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { FailOrderComponent } from './fail-order/fail-order.component';
 import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 //sidebar end
 
 // Configs 
@@ -132,7 +133,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResetPasswordComponent,
     LightboxComponent,
     FailOrderComponent,
-    ChangeResetPasswordComponent
+    ChangeResetPasswordComponent,
+    ChangePasswordComponent
   ],
   exports:[LoginComponent],
   providers: [
