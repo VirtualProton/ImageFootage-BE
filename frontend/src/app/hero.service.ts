@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -611,6 +611,18 @@ export class HeroService {
         );
     }
 
+    getSubscriptionData(): Observable<any>{
+        const url = `${this.heroesUrl}get_subscription_plan`;
+        return this.http.get<any>(url).pipe(
+            map(subscriptionplan => {
+               // console.log(lightBox);
+
+                //this.currentUserSubject.next(cart);
+                return subscriptionplan;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
 }
 
 

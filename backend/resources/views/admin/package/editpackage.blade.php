@@ -34,8 +34,8 @@
                   <div class="form-group">
                       <label for="exampleInputEmail1">Package Plan </label>
                       <select class="form-control" name="package_plan" id="package_plan">
-                      <option value="Normal" @if($package[0]['package_plan']=='Normal') selected="selected" @endif >Normal</option>
-                      <option value="Pro" @if($package[0]['package_plan']=='Pro') selected="selected" @endif >Pro</option>
+                      <option value="Normal" @if($package[0]['package_plan']=='1') selected="selected" @endif >Download Pack</option>
+                      <option value="Pro" @if($package[0]['package_plan']=='2') selected="selected" @endif >Subscription</option>
                       </select>
                        @if ($errors->has('package_plan'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
@@ -218,7 +218,7 @@ $(document).ready(function ($) {
 });
 $("#package_plan").change(function(){
 	var pack_type=$(this).val();
-	if(pack_type =='Normal'){
+	if(pack_type =='1'){
 		$("#package_month_count").val("");
 		$('#for_pro').css('display','none');
 	}else{
