@@ -22,6 +22,7 @@ import { LightboxComponent } from './lightbox/lightbox.component';
 import { FailOrderComponent } from './fail-order/fail-order.component';
 import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProductPricingComponent } from './product-pricing/product-pricing.component';
 
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
@@ -46,7 +47,8 @@ const routes: Routes = [
   { path: 'wishlist', component: LightboxComponent },
   { path: 'orderFailed/:id', component: FailOrderComponent },
   { path: 'resetpassword/:otp/:email', component: ChangeResetPasswordComponent },
-   { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'product-pricing', component: ProductPricingComponent },
 
 ];
 

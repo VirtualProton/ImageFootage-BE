@@ -39,12 +39,7 @@ import {
     FacebookLoginProvider,
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+
 //sidebar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -52,6 +47,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { FailOrderComponent } from './fail-order/fail-order.component';
 import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProductPricingComponent } from './product-pricing/product-pricing.component';
 //sidebar end
 
 // Configs 
@@ -92,12 +88,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	TabModule,
     NoopAnimationsModule,
 	SocialLoginModule,
-	LayoutModule,
-	MatToolbarModule,
-	MatButtonModule,
-	MatSidenavModule,
-	MatIconModule,
-	MatListModule,
 	PerfectScrollbarModule
     
 
@@ -134,7 +124,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LightboxComponent,
     FailOrderComponent,
     ChangeResetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProductPricingComponent
   ],
   exports:[LoginComponent],
   providers: [
