@@ -23,6 +23,7 @@ class UserController extends Controller
 	   $userlist= User::with('country')
                         ->with('state')
                         ->with('city')
+                        ->with('plans')
                         ->where('id',$id)
                         //->select()
                         ->get()->toArray();

@@ -23,6 +23,7 @@ export class PricingComponent implements OnInit {
   submitted2 = false;
   paymentShow:boolean  =false;
   selectedData:any = [];
+  selectedPlanType:string ='';
   constructor(private route: ActivatedRoute,private heroService: HeroService, private authenticationService: HeroService, private router: Router,private formBuilder: FormBuilder) {
   }
 
@@ -85,8 +86,15 @@ export class PricingComponent implements OnInit {
     }
     this.paymentShow  =true;
     this.loadingData = false;
+    this.plansData["download_pack"].forEach(element => {
+
+      if(element["package_id"]==this.planform.value.plan){
+        this.selectedData = element;
+        this.selectedPlanType = 'Download Plan for 1 Year';
+      }
+    });
     console.log(this.planform.value);
-    this.selectedData ;
+
     //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
     window.scrollTo(0, 0)
   }
@@ -104,9 +112,62 @@ export class PricingComponent implements OnInit {
     }
     this.paymentShow  =true;
     this.loadingData = false;
-    console.log(this.subscriptionform.value);
+    this.plansData["yearly_pack"].forEach(element => {
+       if(element["package_id"]==this.subscriptionform.value.subplan){
+          this.selectedData = element;
+          this.selectedPlanType = 'Anuual Plan';
+        }
+    });
+    this.plansData["monthly_pack"].forEach(element => {
+
+      if(element["package_id"]==this.subscriptionform.value.subplan){
+        this.selectedData = element;
+        this.selectedPlanType = 'Monthly Plan';
+      }
+    });
+    console.log(this.selectedData);
     //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
      window.scrollTo(0, 0)
+  }
+
+  purchagePlanPayment(paymentgatway){
+    this.loadingData = true;
+    console.log(paymentgatway);
+
+    this.authenticationService.paymentplan(this.selectedData,paymentgatway)
+    // .pipe(first())
+        .subscribe(
+            data2 => {
+
+              // alert("Sucessfully Registered");
+              console.log(data2.url);
+              console.log(paymentgatway);
+              this.loadingData = false;
+              if(paymentgatway=='atom')  {
+                window.location.href = data2.url;
+              }else if(paymentgatway=='payu'){
+                console.log(data2);
+                //this.hash = data2.hash;
+                window.location.href = data2.url;
+                //document.getElementById('payuform').onsubmit;
+                //this.payuData = data2;
+              }
+
+              //this.router.navigate([data2.url]);
+              // console.log(data2);
+              // console.log(data2.message);
+              // console.log(data2["message"]);
+              // if(data2.status=='1'){
+              //   alert(data2.message);
+              //   this.router.navigate(['/']);
+              // }else{
+              //   alert(data2.message);
+              // }
+
+            },
+            error => {
+              this.loadingData = false;
+            });
   }
 
 }

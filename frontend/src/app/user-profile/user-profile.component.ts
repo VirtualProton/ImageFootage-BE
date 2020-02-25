@@ -37,6 +37,8 @@ export class UserProfileComponent implements OnInit {
   }
   ngOnInit() {
     this.loadingData = true;
+    let tab = this.route.snapshot.queryParamMap.get("tab");
+
     this.authenticationService.getUserprofileData()
         .subscribe(
             data => {
@@ -55,6 +57,7 @@ export class UserProfileComponent implements OnInit {
             error => {
 
             });
+    this.tabshow(tab);
   }
 
 
@@ -66,6 +69,7 @@ export class UserProfileComponent implements OnInit {
       this.billingTab = false;
       this.purchaseTab = false;
     }else if(type=='plans'){
+      this.location.go('plans')
       this.profileTab = false;
       this.plansTab = true;
       this.billingTab = false;

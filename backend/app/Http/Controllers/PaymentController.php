@@ -13,8 +13,10 @@ use App\Models\Product;
 use App\Models\Orders;
 use App\Models\OrderItem;
 use App\Models\Usercart;
+use App\Models\UserPackage;
 use CORS;
 use Payumoney;
+
 
 class PaymentController extends Controller
 {
@@ -255,6 +257,142 @@ class PaymentController extends Controller
     public function payUResponsefail(){
 
     }
-    
+
+    public function paymentPlan(Request $request){
+        ini_set('max_execution_time', 0);
+        date_default_timezone_set('Asia/Calcutta');
+        $allFields = $request->all();
+        //print_r($allFields); die;
+        if ($allFields['type'] == 'atom') {
+            $datenow = date("d/m/Y h:m:s");
+            $transactionDate = str_replace(" ", "%20", $datenow);
+        }else{
+            $datenow = date('Y-m-d');
+        }
+        $transactionId = rand(1,1000000);
+        //echo "<pre>"; print_r($allFields); die;
+        //DB::enableQueryLog();
+        $userData = User::where('id','=',$allFields['tokenData']['Utype'])->get()->toArray();
+        //dd(DB::getQueryLog());
+        //print_r($userData); die;
+        //$tax = $allFields['cartval'][0]*8/100;
+        //$final_tax=round($tax,2);
+        $packge = new UserPackage();
+        $packge->user_id = $allFields['tokenData']['Utype'];
+        $packge->transaction_id = $transactionId;
+        //$orders->tax = $final_tax;
+        $packge->package_id = $allFields['plan']['package_id'];
+        $packge->package_name = $allFields['plan']['package_name'];
+        $packge->package_price = $allFields['plan']['package_price'];
+        $packge->package_description = $allFields['plan']['package_description'];
+        $packge->package_products_count = $allFields['plan']['package_products_count'];
+        $packge->package_type = $allFields['plan']['package_type'];
+        $packge->package_permonth_download = $allFields['plan']['package_permonth_download'];
+        $packge->package_expiry = $allFields['plan']['package_expiry'];
+        $packge->package_plan = $allFields['plan']['package_plan'];
+        $packge->package_pcarry_forward = $allFields['plan']['package_pcarry_forward'];
+        $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
+        $packge->payment_gatway_provider = $allFields['type'];
+        $packge->created_at = date('Y-m-d H:i:s');
+        $packge->save();
+        $packge_order_id = $packge->id;
+
+        //dd($userData);
+        if($allFields['type']=='atom'){
+            $transactionRequest = new TransactionRequest();
+            //Setting all values here
+            $transactionRequest->setMode("test");
+            $transactionRequest->setLogin(197);
+            $transactionRequest->setPassword("Test@123");
+            $transactionRequest->setProductId('NSE');
+            if(!empty($allFields['plan']['package_price'])){
+
+                $transactionRequest->setAmount($allFields['plan']['package_price']);
+                $transactionRequest->setTransactionCurrency("INR");
+                $transactionRequest->setTransactionAmount($allFields['plan']['package_price']);
+            }
+            $transactionRequest->setReturnUrl(url('/api/atomPayPlanResponse'));
+            $transactionRequest->setClientCode(007);
+            $transactionRequest->setTransactionId($transactionId);
+            $transactionRequest->setTransactionDate($transactionDate);
+            $transactionRequest->setCustomerName($userData[0]['first_name']);
+            $transactionRequest->setCustomerEmailId($userData[0]['email']);
+            $transactionRequest->setCustomerMobile($userData[0]['phone']);
+            $transactionRequest->setCustomerBillingAddress("India");
+            $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
+            $transactionRequest->setReqHashKey("KEY123657234");
+
+
+            $url = $transactionRequest->getPGUrl();
+            echo json_encode(['url'=>$url]);
+            //return Redirect::to($url);
+            //header("Location: $url");
+        }else if($allFields['type']=='payu'){
+
+            $hash=hash('sha512', 'moyhzpcW|46464|100|123456|amit pathak|amitpathak.bansal@gmail.com|||||6578||||||k5fBBBjPVs');
+//            $strReqst = "https://sandboxsecure.payu.in/_payment";
+//            $strReqst .= "&key=moyhzpcW";
+//            $strReqst .= "&productinfo=123456";
+//            $strReqst .= "&amount=100";
+//            $strReqst .= "&txnid=46464";
+//            $strReqst .= "&firstname=amit pathak";
+//            $strReqst .= "&email=amitpathak.bansal@gmail.com";
+//            $strReqst .= "&phone=987706301";
+//            $strReqst .= "&surl=http://localhost/imagefootage/payment";
+//            $strReqst .= "&furl=http://localhost/imagefootage/fpayment";
+//            $strReqst .= "&udf5=6578";
+//            $strReqst .= "&hash=".$hash;
+//            echo json_encode(['url'=>$strReqst]);
+
+
+//             Payumoney::pay([
+//                'txnid'       => $transactionId,
+//                'amount'      => 10.50,
+//                'productinfo' => 'A book',
+//                'firstname'   => 'Peter',
+//                'email'       => 'abc@example.com',
+//                'phone'       => '1234567890',
+//                'surl'        => url('payumoney-test/return'),
+//                'furl'        => url('payumoney-test/return'),
+//            ])->send();
+
+            //return view('payu');
+            $url = url('/payu/'.$transactionId);
+            echo json_encode(['url'=>$url]);
+            //return redirect('/payu/'.$transactionId);
+            //return 1;
+            // echo json_encode(['hash'=>$hash]);
+        }
+        //print_r($allFields); die;
+
+        //  return response()->json($all_products);
+    }
+
+    public function atomPayPlanResponse(Request $request){
+        $transactionResponse = new TransactionResponse();
+        $transactionResponse->setRespHashKey("KEYRESP123657234");
+        if($transactionResponse->validateResponse($_POST)){
+            //echo "Transaction Processed <br/>";
+            // print_r($_POST);die;
+            if(count($_POST)>0){
+                if($_POST['f_code']=='Ok'){
+                    UserPackage::where('transaction_id',$_POST['mer_txn'])
+                        ->update(['payment_mode'=>$_POST['discriminator'],
+                            'payment_status'=>$_POST['desc'],'response_payment'=>json_encode($_POST)]);
+                     return redirect('http://localhost:4200/user-profile');
+                }else{
+                    return redirect('http://localhost:4200/orderFailed/'.$_POST['mer_txn']);
+                }
+                //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
+
+            }else{
+                //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
+                return redirect('/orderFailed/'.$_POST['mer_txn']);
+            }
+        } else {
+            echo "Invalid Signature";
+        }
+
+    }
 
 }

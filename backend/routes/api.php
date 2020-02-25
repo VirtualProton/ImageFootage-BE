@@ -65,8 +65,8 @@ Route::group([
 	Route::post('fbLogin','AuthController@fbLogin');
 	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
 	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
+    Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
 	
-
 
 
 });
@@ -86,5 +86,7 @@ Route::group([
     Route::get('userprofile/{id}','UserController@userProfile');
     Route::get('userOrders/{id}', 'UserController@userOrders');
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
+    Route::post('paymentPlan', 'PaymentController@paymentPlan');
+
 
 });

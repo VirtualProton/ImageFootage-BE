@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -486,6 +486,8 @@ export class HeroService {
 
     }
 
+
+
     getOrderDetails(id: any): Observable<any> {
         //let params = new HttpParams();
         const url = `${this.heroesUrl}orderDetails`;
@@ -649,6 +651,40 @@ export class HeroService {
             }),
             catchError(this.handleError<userData>(`unable to get data`))
         );
+    }
+
+    paymentplan(plan:any, type: any):Observable<any>{
+        const url = `${this.heroesUrl}paymentPlan`
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        if (type == 'atom') {
+            var headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + tokenData.access_token
+            });
+            let options = {headers: headers};
+
+            return this.http.post(url, {plan, type, tokenData}, options).pipe(
+                map(userInfo => {
+                    return userInfo;
+                }),
+                catchError(this.handleError<any>(`unable to register data`))
+            );
+            ;
+        } else if (type == 'payu') {
+            var headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + tokenData.access_token
+            });
+            let options = {headers: headers};
+            return this.http.post(url, {plan, type, tokenData}, options).pipe(
+                map(userInfo => {
+                    return userInfo;
+                    //console.log(JSON.stringify(userInfo));
+                    //return JSON.stringify(userInfo);
+                }),
+                catchError(this.handleError<any>(`unable to register data`))
+            );
+        }
     }
 }
 

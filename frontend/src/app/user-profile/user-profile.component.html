@@ -14,9 +14,9 @@
                         <li class="nav-item active"><i class="flaticon-user-1 f-24"></i><a  [ngClass]="[profileTab ? 'active' : '']"   (click)="tabshow('profile')" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
                             <i class="mdi mdi-help-circle"></i> Profile
                         </a></li>
-<!--                        <li class="nav-item"><i class="flaticon-review f-24"></i>  <a  [ngClass]="[plansTab ? 'active' : '']"   (click)="tabshow('plans')"  data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">-->
-<!--                            <i class="mdi mdi-account"></i>  Plans-->
-<!--                        </a></li>-->
+                        <li class="nav-item"><i class="flaticon-review f-24"></i>  <a  [ngClass]="[plansTab ? 'active' : '']"   (click)="tabshow('plans')"  data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">
+                            <i class="mdi mdi-account"></i> Plans
+                        </a></li>
 
 <!--                        <li class="nav-item"><i class="flaticon-wallet-1 f-24"></i> <a  [ngClass]="[billingTab ? 'active' : '']"   (click)="tabshow('billing')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">-->
 <!--                            <i class="mdi mdi-account-settings"></i> Billing-->
@@ -220,51 +220,32 @@
                     <div  [ngClass]="[plansTab ? 'tab-pane show active' : '']" id="plans" *ngIf="plansTab" role="tabpanel" aria-labelledby="tab2">
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
-                                <p class="f-18 pl-5 pr-5"><b>My Plans</b></p>
-                                <hr>
                                 <div class="pl-5 pr-5">
-                                    <div class="row">
-                                        <div class="col-md-5 col-sm-5 col-lg-5">
-                                            <span class="text-black fw-6 pull-left"><b>On Demand</b></span>
-                                            <span class="text-black fw-6 pull-right f-12"><a href="#"> Add Credits</a></span>
-                                            <div class="clearfix"></div>
-                                            <hr>
-                                            <table class="table border-0">
-                                                <tbody>
-                                                <tr>
-                                                    <td><span class="text-muted"> Credits Remaining :</span> </td>
-                                                    <td><span class="text-black"><b> 0</b></span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><span class="text-muted"> Last Purchased On : </span> </td>
-                                                    <td><span class="text-black"> </span></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div class="col-md-5 col-sm-5 col-lg-5 offset-md-1 offset-sm-1 offset-lg-1">
-             <span class="text-black fw-6 pull-left"><b>Subscription Plan
-</b></span>
-                                            <span class="text-black fw-6 pull-right f-12"><a href="#">Purchase Plans</a></span>
-                                            <div class="clearfix"></div>
-                                            <hr>
-                                            <table class="table border-0">
-                                                <tbody>
-                                                <tr>
-                                                    <td><span class="text-muted"> You do not have any active subscription plan.</span> </td>
-
-                                                </tr>
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
-                                    </div>
-
+                                    <p class="text-black fw-6"><b>Your Plans</b></p>
+                                    <table class="table table-hover cart-table">
+                                        <tr>
+                                            <th>Sn.</th>
+                                            <th>Plan Name</th>
+                                            <th>Plan Price</th>
+                                            <th>Plan Type</th>
+                                            <th>Plan count</th>
+                                            <th>Transaction ID</th>
+                                            <th>Plan Created Date</th>
+                                            <th>Plan Expired Date</th>
+                                        </tr>
+                                        <tr *ngFor="let plan of profileData.plans;let i= index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{plan.package_name}}</td>
+                                            <td>{{plan.package_price}}</td>
+                                            <td>{{plan.package_type}}</td>
+                                            <td>{{plan.package_products_count}}</td>
+                                            <td>{{plan.transaction_id}}</td>
+                                            <td>{{plan.updated_at}}</td>
+                                            <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
+                                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
+                                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
+                                        </tr>
+                                    </table>
 
 
                                 </div>

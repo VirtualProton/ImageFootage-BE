@@ -242,19 +242,18 @@
                                         <tbody>
                                         <tr>
                                             <td class="border-top-0">
-                                                plan
-
-<!--                                                <label class="custmLable">-->
-<!--                                            <span class="float-left">-->
-<!--                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>-->
-<!--                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>-->
-<!--                                                    <span class="float-right">-->
-<!--                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>-->
-<!--                                                 <p class="f-12 mb-0"> per image</p>-->
-<!--                                            </span>-->
+                                                {{selectedPlanType}}
+                                           <label class="custmLable">
+                                            <span class="float-left">
+                                                <b class="f-14">{{selectedData.package_name}}</b><span class="f-12">/month</span>
+                                                 <p class="f-12 mb-0"><b>INR {{selectedData.package_price}}</b></p></span>
+                                                    <span class="float-right">
+                                                 <b class="f-14">INR {{showperImgPrice(selectedData)}}</b>
+                                                 <p class="f-12 mb-0"> per image</p>
+                                            </span>
 <!--                                                    <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">-->
 <!--                                                    <span class="checkmark"></span>-->
-<!--                                                </label>-->
+                                                </label>
                                             </td>
 
                                         </tr>
@@ -280,13 +279,13 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center m-auto">
-                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid">
+                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
                         </div>
                         <div class="text-center m-auto">
-                         <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid">
+                         <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
                          </div>
                         <div class="text-center m-auto">
-                         <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid">
+                         <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
                        </div>
                     </div>
                 </div>
