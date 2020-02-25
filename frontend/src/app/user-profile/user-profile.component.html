@@ -24,6 +24,8 @@
                         <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a  [ngClass]="[purchaseTab ? 'active' : '']"   (click)="tabshow('purchase')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false" style='cursor:pointer;'>
                             <i class="mdi mdi-account-settings"></i> Purchase History
                         </a></li>
+                        <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a  [ngClass]="[purchaseTab ? 'active' : '']" routerLink="/change-password" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false" style='cursor:pointer;color:#a6a6a6;'>
+                            <i class="mdi mdi-account-settings"></i> Change Password </a></li>
                     </div>
                 </div>
             </div>
@@ -268,7 +270,7 @@
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
-                                    <p class="text-black fw-6"><b>Your Orders</b></p>
+                                    <p class="text-black fw-6"><b>Your Orders</b><span class="pull-right" *ngIf="orderData != null"><a href="/License Agreement.pdf" download>Download liseance aggriment</a></span></p>
                                     <table class="table table-hover cart-table">
                                         <tr>
                                             <th>Sn.</th>

@@ -86,12 +86,13 @@ class AuthController extends Controller
 	public function fbLogin(Request $request){
         $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
-			//$res = User::where('email','=',$request->input('email'))->first()->toArray();
-		 	//return $res;
+			
+			$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
+		 	return $res;
            // $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
-		   	$credentials = ['email'=> $request['userData']['email']];
-            $token = auth()->attempt($credentials);
-            return $this->respondWithToken($token);
+		   	//$credentials = ['email'=> $request['userData']['email']];
+            //$token = auth()->attempt($credentials);
+            //return $this->respondWithToken($token);
 		}else{
 		    if($request['userData']['provider']=='google'){
                 $save_data = new User();
@@ -109,7 +110,23 @@ class AuthController extends Controller
                     $token = auth()->attempt($credentials);
                     return $this->respondWithToken($token);
                 }
-            }
+            }else  if($request['userData']['provider']=='facebook'){
+				 $save_data = new User();
+                //$save_data->user_name = $request['userData']['name'];
+                $save_data->email = $request['userData']['email'];
+                $save_data->first_name = $request['userData']['name'];
+               
+                $save_data->fb_token = $request['userData']['idToken'];
+                $save_data->profile_photo = $request['userData']['image'];
+                $save_data->provider = $request['userData']['provider'];
+                $save_data->type = 'U';
+                $result = $save_data->save();
+                if($result){
+                   $res = User::where('email','=',$request['userData']['email'])->first()->toArray();
+                   return $res;
+                }
+				
+			}
 
 
 			//return response()->json(['error' => 'Please register to login.'], 401);

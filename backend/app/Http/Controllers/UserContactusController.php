@@ -38,7 +38,7 @@ class UserContactusController extends Controller
         if($result){
 			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message);
 				 Mail::send('contactusmailbody',$data,function($message) use($data,$sm) {
-				 $message->to($sm,'Image Footage')->subject('Contact us request from Image Footage');
+				 $message->to('srinivask@conceptualpictures.com','Image Footage')->subject('Contact us request from Image Footage');
 			 });
             echo '{"status":"1","message":"Your message has been sent successfully"}';
         }else{
@@ -46,7 +46,6 @@ class UserContactusController extends Controller
         }
     }
 	public function uchangepassword(Request $request){
-		
 		$old_pass=$request->old_pass;
 		 $password=$request->password;
 		 $cpassword=$request->cpassword;

@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+.clear {clear:both;}
+
+
+
+/*Klaus Structure*/
+
+.pricing {
+	background:#fff;
+	height:570px;
+	text-align:center;
+	font-family: 'Titillium Web', sans-serif;
+	cursor:default;
+	padding:0;
+	margin-bottom:30px;
+	border-right:1px solid #f0f0f0;
+	margin-right: 13px;
+}
+
+.klausheader {height:236px;border-bottom:1px solid #f0f0f0;}
+.pricing h5 {color:#2d2f37;font-size:30px;font-weight:700;text-transform:uppercase;float:left;width:100%;margin:0;padding-top:40px;padding-bottom:10px;}
+.pricing p {color:#9fa5ae;font-size:16px;font-weight:300;float:left;width:100%;margin-top:-10px}
+.klaus_package {color:#2d2f37;font-size:16px;font-weight:300;text-transform:uppercase;float:left;width:100%;}
+.klaus_price {font-size:46px;font-weight:300;float:left;width:100%;margin-top:10px;}
+.klaus_featured {
+	width:130px;
+	height:25px;
+	position:absolute;
+	top:0;
+	left:50%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+	background:#ccc;
+	border-radius:0px 0px 5px 5px;
+	font-size:15px;
+	padding-top:1px;
+	text-transform:uppercase;
+	color:#fff;
+	letter-spacing:0.8px;
+}
+
+.klaus_features {
+	border-bottom:1px solid #f0f0f0;
+}
+
+.klaus_features li {
+	height:40px;
+	list-style:none;
+	text-align:left;
+	font-size:14px;
+	color:#54565b;
+	font-weight:400;
+	padding-top:10px;
+	padding-left:10px;
+}
+.klaus_features li i {
+	padding-right:10px;
+	font-size:16px;
+}
+.klaus_plancolor {background:#f4f4f4;}
+.klaus_getaquote {width:180px;height:36px;margin-left:auto;margin-right:auto;}
+.klaus_getaquote li {list-style:none;height:36px;margin-top:28px;}
+.klaus_getaquote li a {color:#fff;float:left;width:100%;height:36px;padding-top:8px;border-radius:5px;-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;transition: all 0.3s ease;}
+.klaus_getaquote li a:hover{text-decoration:none;}
+
+
+/*Skin v1*/
+
+.skinonecolor {color:#38b880;}
+.skinonebg {background:#38b880;}
+.skinoneklaus_features i {color:#38b880;}
+.skinonegetquote li a {background:#38b880;}
+.skinonegetquote li a:hover{background:#47cc92;}
+.skinoneultimate {background:#38b880;border:0;color:#fff;}
+.skinoneucolor {border-bottom:1px solid #33ab77;}
+.skinoneucolor h5 {color:#fff;}
+.skinoneucolor span {color:#fff;}
+.skinoneucolor p {color:#fff;}
+.skinoneucolor li {color:#fff;}
+.skinoneucolor i {color:#fff;}
+.skinoneklaus_plancolor {background:#33ab77;}
+.skinoneucolorget li a {background:#fff;color:#3db983;}
+.skinoneucolorget li a:hover {background:#65ebb1;color:#fff;}
+
+
