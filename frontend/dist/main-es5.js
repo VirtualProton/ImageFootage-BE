@@ -271,7 +271,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<!-- pt-5 -->\r\n<div class=\"site-wrap mt-5  bg-dark\" *ngIf=\"webtype=='2'\">\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\r\n                        <div class=\"p-3\">\r\n                            <p class=\"text-white f-20 mb-0 pt-1\">{{detailPageInfo.metadata.title}}</p>\r\n                            <p>{{detailPageInfo.metadata.description}}</p>\r\n\t\t\t\t\t\t\t<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                            <!-- photo-item -->\r\n                                <a  class=\"d-block \" style=\"text-align: center;\">\r\n                                    <img src=\"{{detailPageInfo.media.preview_url_no_wm}}\" #element alt=\"Image\" class=\"img-fluid\">\r\n                                    <!--<div class=\"photo-text-more\">\r\n                                        <div class=\"photo-text-more\">\r\n                                            <h3 class=\"heading\">{{detailPageInfo.metadata.title}}</h3>\r\n                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>\r\n                                        </div>\r\n                                    </div>-->\r\n                                </a>\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                 <a href=\"{{filePreview}}\" download=\"{{imagefootId+'.jpg'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                 <a (click)=\"addtolightbox(imagefootId)\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=1&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                             <a class=\"nav-link \"  [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard License</a>\r\n                            </li>\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link\" [ngClass]=\"[ extendedTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('2')\">Extended License</a>\r\n                            </li>\r\n\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1 col-md-12\" data-toggle=\"buttons\">\r\n                                \t<div class=\"row\">\r\n                                    \t<label class=\"btn btn-dark col-md-3\" *ngFor=\"let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotal(cost)\" style=\"display:none;\">\r\n                                        <p class=\"f-12\">{{cost.description}}</p>\r\n                                        <!-- | currency:'INR'-->\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.price*80  | number }}</p>\r\n                                    </label>\r\n                                    </div>\r\n                                </div>\r\n                                <p><small><span class=\"text-warning\">Standard Use Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                            <div id=\"extlic\" *ngIf=\"extendedTab\" class=\"tab-pane active\">\r\n\r\n                                <p class=\"text-white lsp-1 f-14 text-uppercase pt-3\">Extended Licenses</p>\r\n                                <div class=\"btn-group btn-group-toggle mb-4  d-block\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark text-left border-0\" *ngFor=\"let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{j}}\" autocomplete=\"off\" [class]=\"j==0 ? 'checked' : ''\" (click)=\"addExtendedPriceTotal(license)\">\r\n                                        <div class=\"row align-items-center\">\r\n                                            <div class=\"col-md-9 col-sm-9 col-lg-9\" >\r\n                                                <p class=\"f-14  fw-6 pt-2\" >{{license.name}}</p>\r\n                                            </div>\r\n                                            <div class=\"col-md-3 col-sm-3 col-lg-3\">\r\n                                                <p class=\"mb-0\"><strong><i class=\"fa fa-inr\"></i> {{license.price*80 | number}}</strong></p>\r\n                                            </div>\r\n                                        </div>\r\n\r\n                                    </label>\r\n                                    <p><small><span class=\"text-warning\">Extended Use Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content1)\">Learn More</span></small></p>\r\n                                 </div>\r\n\r\n                            </div>\r\n                            <p *ngIf=\"detailPageInfo.metadata.editorial != 'no'\"><small><span class=\"text-warning\">Editorial Use Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span></small></p>\r\n\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                               <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                               <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                             </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total | number}} INR</h2>\r\n                            </div>\r\n                        </div>\r\n<!--                        <div class=\"row mt-5\">-->\r\n<!--                            <div class=\"col-4\">-->\r\n<!--                                <p class=\"text-white\"><strong>TOTAL</strong></p>-->\r\n<!--                            </div>-->\r\n<!--                            <div class=\"col-8 text-right\">-->\r\n<!--                                <h2 class=\"text-warning f-24 fw-6\">$100.00 USD</h2>-->\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'2')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                                <!--<p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                       \r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Title</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.title}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_realname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{imagefootId}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Width</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.width}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Height</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.height}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Mime_type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.mime_type}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Author ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_id}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Model-release</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Property release</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Editorial #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.editorial.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Premium</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.options.premium.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Rights managed </div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">License type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\"><p  *ngIf=\"detailPageInfo.options.extended=='yes' && extendedTab\">Extended</p>\r\n                                <p *ngIf=\"!extendedTab\">Standard</p></div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Max file size</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>-->\r\n<!--                            </div>-->\r\n                        </div>\r\n                     </div>\r\n                </div>\r\n            </div>\r\n\r\n    <div class=\"bg-black p-3\">\r\n        <div class=\"row align-items-stretch\">\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            \r\n            <h3 class=\"col-md-12\" style=\"color: #fcbe11;\">Related Images<hr /></h3>\r\n            \r\n            \r\n            <div class=\"row align-items-stretch\">\r\n                  <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                  <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  class=\" photo-item\" >\r\n                        <div class=\"\">\r\n                            <img *ngIf=\"aosimges.product_main_type == 'Image'\" src=\"{{aosimges.product_thumbnail}}\" alt=\"Image\" class=\"img-fluid\" (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\">\r\n\r\n                            <div class=\"photo-text-more\">\r\n                          <!--<h3 class=\"heading\">{{aosimges.product_title}}</h3>\r\n                          <span class=\"meta\">{{aosimges.description}} Photos</span>-->\r\n                          <!--<p class=\"icons_thum\">\r\n                           \r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>-->\r\n                        </div>\r\n                        </div>\r\n                      </span>\r\n                      <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  *ngIf=\"aosimges.product_main_type != 'Image'\"  class=\"photo-item \">\r\n                      <span style=\"position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;\"><i class=\"fa fa-video-camera\" aria-hidden=\"true\"></i></span>\r\n                          <video  width=\"400\" height=\"300\" [muted]=\"'muted'\" [poster]=\"aosimges.product_thumbnail\" #htmlVideoElement controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\"  (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\" style=\"width: 100% !important;background: #7d494957;object-fit: cover;\">\r\n                              <source src=\"{{aosimges.product_main_image}}\" type=\"video/mp4\">\r\n                              Your browser does not support the video tag.\r\n                          </video>\r\n                          <!-- <iframe  *ngIf=\"aosimges.mimetype != 'image/jpeg'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>  -->\r\n                          <div class=\"photo-text-more\" >\r\n                       \t  <div class=\"photo-text-more\" >\r\n                        <br />\r\n                        <p class=\"icons_thum1\" >\r\n                        \t<!--<span><a href=\"\"><i class=\"fa fa-image\"></i></a></span>-->\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>\r\n                      </div>\r\n                      </div>\r\n                      </span>\r\n                  </div>\r\n              </div>\r\n            \r\n            \r\n            \r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n            <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n              <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n              <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n              <div class=\"photo-text-more\">\r\n\r\n                <div class=\"photo-text-more\">\r\n                <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n              </div>\r\n              </div>\r\n            </a>\r\n          </div>\r\n        </div>\r\n            </div>\r\n         <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n               <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n      </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n            </div>\r\n\r\n<div class=\"site-wrap mt-5 pt-1 bg-dark\" *ngIf=\"webtype=='3'\">\r\n\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\t\t\t\t\t\t<!-- p-3 -->\r\n                        <div class=\"\">\r\n                            <p class=\"text-white f-20 mb-0 pt-3 pl-3\">{{detailPageInfo[0].items[0].n}}</p>\r\n                            <p class=\"pl-3\">{{detailPageInfo[0].items[0].desc}}</p>\r\n<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                                <a  class=\"d-block\">\r\n                                <!-- class=\"embed-responsive embed-responsive-16by9\"-->\r\n                                    <div  style=\"text-align:center;\">\r\n                                    <video controls [poster]=\"'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]\" controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\" >\r\n                                        <source src=\"{{detailPageInfo[0].flv_base+detailPageInfo[1]}}\" type=\"video/mp4\">\r\n                                        Your browser does not support the video tag.\r\n                                    </video>\r\n                                    </div>\r\n                                </a>\r\n<!--                                    <div class=\"photo-text-more\">-->\r\n<!--                                        <div class=\"photo-text-more\">-->\r\n<!--                                            <h3 class=\"heading\">{{detailPageInfo[0].items[0].pf}}</h3>-->\r\n<!--&lt;!&ndash;                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->\r\n<!--                                        </div>-->\r\n<!--                                    </div>-->\r\n\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                    <a href=\"{{detailPageInfo[4]}}\" download=\"{{detailPageInfo[3]+'.mp4'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                    <a (click)=\"addtolightbox(detailPageInfo[3])\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=2&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link \" [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard License</a>\r\n                            </li>\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark\" *ngFor=\"let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotalFootage(cost)\">\r\n                                        <p class=\"f-12\">{{cost.size}}</p>\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.pr*80 | number}}</p>\r\n                                    </label>\r\n                                </div>\r\n                               <p><small><span class=\"text-warning\">Standard Use Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                        </div>\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                                <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                                <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                            </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total |number }} INR</h2>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'3')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                               <!-- <p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                        <!--<table class=\"f-12\">\r\n                            <tbody>\r\n                            <tr>\r\n                                <td width=\"20%\">Restrictions :</td>\r\n                                <td>Contact your local office for all commercial or promotional uses.</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Credit :</td>\r\n                                <td>{{detailPageInfo[0].items[0].artistname}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Product ID :</td>\r\n                                <td>{{detailPageInfo[3]}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Duration # :</td>\r\n                                <td>{{detailPageInfo[0].items[0].dur}}</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Collection :</td>\r\n                                                            <td>Getty Images News</td>\r\n                                                        </tr>\r\n                            <tr>\r\n                                <td>Date created :</td>\r\n                                <td>{{detailPageInfo[0].items[0].date}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>License type :</td>\r\n                                <td>Standard</td>\r\n\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Release info :</td>\r\n                                <td>Not released. More information</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Source :</td>\r\n                                                            <td>Getty Images AsiaPac</td>\r\n                                                        </tr>\r\n\r\n\r\n\r\n                            <tr>\r\n                                <td>Max file size :</td>\r\n                                <td>{{detailPageInfo[0].items[0].filesize}}</td>\r\n                            </tr>\r\n                            </tbody>\r\n\r\n                        </table>-->\r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].artistname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[3]}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Duration #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].dur}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">License type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">Standard</div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].filesize}}</div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <div class=\"bg-black p-3\">\r\n                <div class=\"row align-items-stretch\">\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n\r\n\r\n <h3 class=\"col-md-12\" style=\"color: #fcbe11;\">Related Footages<hr /></h3>\r\n\r\n                        <div class=\"row align-items-stretch\">\r\n                            <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                                <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                                <span  class=\" photo-item\" >\r\n                        <div class=\"\">\r\n<span  *ngIf=\"aosimges.product_main_type != 'Image'\"  class=\"photo-item \">\r\n                      <span style=\"position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;\"><i class=\"fa fa-video-camera\" aria-hidden=\"true\"></i></span>\r\n\r\n                                    <!-- <iframe  *ngIf=\"aosimges.mimetype != 'image/jpeg'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>  -->\r\n                          <div class=\"photo-text-more\" >\r\n                       \t  <div class=\"photo-text-more\" >\r\n                        <br />\r\n                        <p class=\"icons_thum1\" >\r\n                        \t<!--<span><a href=\"\"><i class=\"fa fa-image\"></i></a></span>-->\r\n                            <!--<span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>-->\r\n                        </p>\r\n                      </div>\r\n                      </div>\r\n                      </span>\r\n                            <video  width=\"400\" height=\"300\" [muted]=\"'muted'\" [poster]=\"aosimges.product_thumbnail\" #htmlVideoElement controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\"  (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\" style=\"width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;\">\r\n                              <source src=\"{{aosimges.product_main_image}}\" type=\"video/mp4\">\r\n                              Your browser does not support the video tag.\r\n                          </video>\r\n                            <div class=\"photo-text-more\">\r\n                          <!--<h3 class=\"heading\">{{aosimges.product_title}}</h3>\r\n                          <span class=\"meta\">{{aosimges.description}} Photos</span>-->\r\n                                <!--<p class=\"icons_thum\">\r\n\r\n                                  <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                                  <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                                  <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                                  <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                              </p>-->\r\n                        </div>\r\n                        </div>\r\n                      </span>\r\n                                <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      \r\n                            </div>\r\n                        </div>\r\n\r\n\r\n\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                        <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n                            <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                            <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                            <div class=\"photo-text-more\">\r\n\r\n                                <div class=\"photo-text-more\">\r\n                                    <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                                    <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n                                </div>\r\n                            </div>\r\n                        </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n                <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n            </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n</div>\r\n\r\n<ng-container *ngIf=\"showloginPopup\">\r\n    <app-login [openLoginPopup]=\"showloginPopup\" (closeLoginPopup)=\"hideLoginPopup($event)\"></app-login>\r\n</ng-container>\r\n\r\n\r\n\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\"> Editorial</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n<p>For editorial use only. This image cannot be used for advertising or promotional purposes. Allows use in all media, excluding broadcast and print covers. This image is for single-use in context only. For additional use, please relicense.</p>\r\n<p>Learn more on our <a href=\"https://imagefootage.com/terms.\" target=\"_blank\">https://imagefootage.com/terms.</a></p>\r\n<p>Need additional rights or interested in commercial use? For enterprise access, Contact us:<a href=\"https://imagefootage.com/contactUs\" target=\"_blank\">https://imagefootage.com/contactUs</a></p>\r\n \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n\r\n<ng-template #content1 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Extended License</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n  <ul>\r\n   <li> Unlimited web distribution</li>\r\n<li>Unlimited print copies</li>\r\n<li>Unlimited packaging copies</li>\r\n<li>Unlimited out of home advertising impressions</li>\r\n<li>Allowed in merchandising</li>\r\n<li>Allowed on web templates</li>\r\n<li>Video production of any budget</li>\r\n<li>Decoration in personal and commercial spaces</li>\r\n    </ul>\r\n    \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<!-- pt-5 -->\r\n<div class=\"site-wrap mt-5  bg-dark\" *ngIf=\"webtype=='2'\">\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\r\n                        <div class=\"p-3\">\r\n                            <p class=\"text-white f-20 mb-0 pt-1\">{{detailPageInfo.metadata.title}}</p>\r\n                            <p>{{detailPageInfo.metadata.description}}</p>\r\n\t\t\t\t\t\t\t<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                            <!-- photo-item -->\r\n                                <a  class=\"d-block \" style=\"text-align: center;\">\r\n                                    <img src=\"{{detailPageInfo.media.preview_url_no_wm}}\" #element alt=\"Image\" class=\"img-fluid\">\r\n                                    <!--<div class=\"photo-text-more\">\r\n                                        <div class=\"photo-text-more\">\r\n                                            <h3 class=\"heading\">{{detailPageInfo.metadata.title}}</h3>\r\n                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>\r\n                                        </div>\r\n                                    </div>-->\r\n                                </a>\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                 <a href=\"{{filePreview}}\" download=\"{{imagefootId+'.jpg'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                 <a (click)=\"addtolightbox(imagefootId)\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=1&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                             <a class=\"nav-link \"  [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard License</a>\r\n                            </li>\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link\" [ngClass]=\"[ extendedTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('2')\">Extended License</a>\r\n                            </li>\r\n\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1 col-md-12\" data-toggle=\"buttons\">\r\n                                \t<div class=\"row\">\r\n                                    \t<label class=\"btn btn-dark col-md-3\" *ngFor=\"let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotal(cost)\" style=\"display:none;\">\r\n                                        <p class=\"f-12\">{{cost.description}}</p>\r\n                                        <!-- | currency:'INR'-->\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.price*80  | number }}</p>\r\n                                    </label>\r\n                                    </div>\r\n                                </div>\r\n                                <p><small><span class=\"text-warning\">Standard Use Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                            <div id=\"extlic\" *ngIf=\"extendedTab\" class=\"tab-pane active\">\r\n\r\n                                <p class=\"text-white lsp-1 f-14 text-uppercase pt-3\">Extended Licenses</p>\r\n                                <div class=\"btn-group btn-group-toggle mb-4  d-block\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark text-left border-0\" *ngFor=\"let license of detailPageInfo.articles.singlebuy_list.singlebuy[0].extended_rights.article;let j=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{j}}\" autocomplete=\"off\" [class]=\"j==0 ? 'checked' : ''\" (click)=\"addExtendedPriceTotal(license)\">\r\n                                        <div class=\"row align-items-center\">\r\n                                            <div class=\"col-md-9 col-sm-9 col-lg-9\" >\r\n                                                <p class=\"f-14  fw-6 pt-2\" >{{license.name}}</p>\r\n                                            </div>\r\n                                            <div class=\"col-md-3 col-sm-3 col-lg-3\">\r\n                                                <p class=\"mb-0\"><strong><i class=\"fa fa-inr\"></i> {{license.price*80 | number}}</strong></p>\r\n                                            </div>\r\n                                        </div>\r\n\r\n                                    </label>\r\n                                    <p><small><span class=\"text-warning\">Extended Use Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content1)\">Learn More</span></small></p>\r\n                                 </div>\r\n\r\n                            </div>\r\n                            <p *ngIf=\"detailPageInfo.metadata.editorial != 'no'\"><small><span class=\"text-warning\">Editorial Use Only</span> <span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span></small></p>\r\n\r\n                        </div>\r\n\r\n\r\n\r\n\r\n\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                               <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                               <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                             </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total | number}} INR</h2>\r\n                            </div>\r\n                        </div>\r\n<!--                        <div class=\"row mt-5\">-->\r\n<!--                            <div class=\"col-4\">-->\r\n<!--                                <p class=\"text-white\"><strong>TOTAL</strong></p>-->\r\n<!--                            </div>-->\r\n<!--                            <div class=\"col-8 text-right\">-->\r\n<!--                                <h2 class=\"text-warning f-24 fw-6\">$100.00 USD</h2>-->\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'2')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                                <br/><button type=\"button\" *ngIf=\"showloginPopup==false\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"download(detailPageInfo,standard,total,extended,'2')\">Download</button>\r\n\r\n                                <!--<p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                       \r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Title</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.title}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_realname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{imagefootId}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Width</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.width}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Height</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.height}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Mime_type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.media.mime_type}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Author ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.author_id}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Model-release</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Property release</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Editorial #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.editorial.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Premium</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.options.premium.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Rights managed </div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo.metadata.date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">License type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\"><p  *ngIf=\"detailPageInfo.options.extended=='yes' && extendedTab\">Extended</p>\r\n                                <p *ngIf=\"!extendedTab\">Standard</p></div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Max file size</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">{{detailPageInfo.media.width}} x {{detailPageInfo.media.height}}</div>-->\r\n<!--                            </div>-->\r\n                        </div>\r\n                     </div>\r\n                </div>\r\n            </div>\r\n\r\n    <div class=\"bg-black p-3\">\r\n        <div class=\"row align-items-stretch\">\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            \r\n            <h3 class=\"col-md-12\" style=\"color: #fcbe11;\">Related Images<hr /></h3>\r\n            \r\n            \r\n            <div class=\"row align-items-stretch\">\r\n                  <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                  <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  class=\" photo-item\" >\r\n                        <div class=\"\">\r\n                            <img *ngIf=\"aosimges.product_main_type == 'Image'\" src=\"{{aosimges.product_thumbnail}}\" alt=\"Image\" class=\"img-fluid\" (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\">\r\n\r\n                            <div class=\"photo-text-more\">\r\n                          <!--<h3 class=\"heading\">{{aosimges.product_title}}</h3>\r\n                          <span class=\"meta\">{{aosimges.description}} Photos</span>-->\r\n                          <!--<p class=\"icons_thum\">\r\n                           \r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>-->\r\n                        </div>\r\n                        </div>\r\n                      </span>\r\n                      <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      <span  *ngIf=\"aosimges.product_main_type != 'Image'\"  class=\"photo-item \">\r\n                      <span style=\"position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;\"><i class=\"fa fa-video-camera\" aria-hidden=\"true\"></i></span>\r\n                          <video  width=\"400\" height=\"300\" [muted]=\"'muted'\" [poster]=\"aosimges.product_thumbnail\" #htmlVideoElement controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\"  (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\" style=\"width: 100% !important;background: #7d494957;object-fit: cover;\">\r\n                              <source src=\"{{aosimges.product_main_image}}\" type=\"video/mp4\">\r\n                              Your browser does not support the video tag.\r\n                          </video>\r\n                          <!-- <iframe  *ngIf=\"aosimges.mimetype != 'image/jpeg'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>  -->\r\n                          <div class=\"photo-text-more\" >\r\n                       \t  <div class=\"photo-text-more\" >\r\n                        <br />\r\n                        <p class=\"icons_thum1\" >\r\n                        \t<!--<span><a href=\"\"><i class=\"fa fa-image\"></i></a></span>-->\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                        </p>\r\n                      </div>\r\n                      </div>\r\n                      </span>\r\n                  </div>\r\n              </div>\r\n            \r\n            \r\n            \r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row mx-auto my-auto mb-5\">\r\n            <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                <div class=\"carousel-inner\" role=\"listbox\">\r\n                    <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                        <div class=\"carousel-item\">\r\n                            <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                              <div class=\"row\">\r\n                                  <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                      <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                          <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                          <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                          <div class=\"photo-text-more\">\r\n                                              <div class=\"photo-text-more\">\r\n                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                              </div>\r\n                                          </div>\r\n                                      </a>\r\n                                  </div>\r\n                              </div>\r\n                            </ng-template>\r\n                        </div>\r\n                    </ngb-carousel>\r\n\r\n\r\n                </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n            <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n              <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n              <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n              <div class=\"photo-text-more\">\r\n\r\n                <div class=\"photo-text-more\">\r\n                <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n              </div>\r\n              </div>\r\n            </a>\r\n          </div>\r\n        </div>\r\n            </div>\r\n         <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n               <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n      </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n            </div>\r\n\r\n<div class=\"site-wrap mt-5 pt-1 bg-dark\" *ngIf=\"webtype=='3'\">\r\n\r\n    <main class=\"main-content p-0\">\r\n        <div class=\"container-fluid photos\">\r\n            <div class=\"row mr-2\">\r\n\r\n                <div class=\"col-md-8 col-sm-8 col-xl-8 col-lg-8\">\r\n                    <div class=\"cartItem\" *ngIf=\"detailPageInfo\">\r\n\t\t\t\t\t\t<!-- p-3 -->\r\n                        <div class=\"\">\r\n                            <p class=\"text-white f-20 mb-0 pt-3 pl-3\">{{detailPageInfo[0].items[0].n}}</p>\r\n                            <p class=\"pl-3\">{{detailPageInfo[0].items[0].desc}}</p>\r\n<!-- data-aos=\"fade-up\" -->\r\n                            <div >\r\n                                <a  class=\"d-block\">\r\n                                <!-- class=\"embed-responsive embed-responsive-16by9\"-->\r\n                                    <div  style=\"text-align:center;\">\r\n                                    <video controls [poster]=\"'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]\" controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\" >\r\n                                        <source src=\"{{detailPageInfo[0].flv_base+detailPageInfo[1]}}\" type=\"video/mp4\">\r\n                                        Your browser does not support the video tag.\r\n                                    </video>\r\n                                    </div>\r\n                                </a>\r\n<!--                                    <div class=\"photo-text-more\">-->\r\n<!--                                        <div class=\"photo-text-more\">-->\r\n<!--                                            <h3 class=\"heading\">{{detailPageInfo[0].items[0].pf}}</h3>-->\r\n<!--&lt;!&ndash;                                            <span class=\"meta\">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->\r\n<!--                                        </div>-->\r\n<!--                                    </div>-->\r\n\r\n                            </div>\r\n\r\n                            <div class=\"p-3\">\r\n                                <div style=\"float: right;\">\r\n                                    <a href=\"{{detailPageInfo[4]}}\" download=\"{{detailPageInfo[3]+'.mp4'}}\"><i class=\"fas fa-download\"></i></a> &nbsp;&nbsp;\r\n                                    <a (click)=\"addtolightbox(detailPageInfo[3])\"><i class=\"fas fa-heart\"></i></a>\r\n                                </div>\r\n                                <p class=\"text-white text-uppercase\"><strong>Related Keywords</strong></p>\r\n                                <div class=\"related_key\">\r\n                                    <a href=\"/search?type=2&keyword={{keys}}\" class=\"btn btn-outline-light btn-sm f-12\" title=\"underwater\" *ngFor=\"let keys of keyword\">{{keys}}</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3\" *ngIf=\"detailPageInfo\">\r\n\r\n                    <div class=\"p-3\">\r\n                        <ul class=\"nav nav-tabs mytabs\">\r\n                            <li class=\"nav-item\">\r\n                                <a class=\"nav-link \" [ngClass]=\"[ standardTab ? 'active' : '']\" data-toggle=\"tab\"  (click)=\"tabshow('1')\">Standard License</a>\r\n                            </li>\r\n                        </ul>\r\n\r\n                        <!-- Tab panes -->\r\n                        <div class=\"tab-content pt-3\" >\r\n                            <div id=\"stalic\" *ngIf=\"standardTab\" class=\"tab-pane active\">\r\n                                <p class=\"text-white text-uppercase lsp-1 f-14 pt-3\">standard Royalty Free Licenses</p>\r\n\r\n                                <div class=\"btn-group btn-group-toggle mb-1\" data-toggle=\"buttons\">\r\n                                    <label class=\"btn btn-dark\" *ngFor=\"let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;\">\r\n                                        <input type=\"radio\" name=\"options\" id=\"option{{i}}\" autocomplete=\"off\" [class]=\"i==0 ? 'checked' : ''\" (click)=\"checkPriceTotalFootage(cost)\">\r\n                                        <p class=\"f-12\">{{cost.size}}</p>\r\n                                        <p class=\"f-15 mb-0\"> <i class=\"fa fa-inr\"></i> {{cost.pr*80 | number}}</p>\r\n                                    </label>\r\n                                </div>\r\n                               <p><small><span class=\"text-warning\">Standard Use Only</span> <!--<span style=\"cursor:pointer;\" (click)=\"open(content)\">Learn More</span>--></small></p>\r\n                            </div>\r\n                        </div>\r\n                        <!-- <p class=\"text-white\">Use This Image Exclusively</p>\r\n                        <div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n                          <button type=\"button\" class=\"btn btn-dark\">Market Freeze</button>\r\n                          <button type=\"button\" class=\"btn btn-dark dropdown-toggle exclus\" data-toggle=\"dropdown\">Select a Duration</button>\r\n                          <ul class=\"dropdown-menu selctDura\">\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item I</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item II</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item III</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item IV</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Item V</a></li>\r\n                              <li class=\"dropdown-item\"><a href=\"#\">Other</a></li>\r\n                            </ul>\r\n                        </div> -->\r\n\r\n                        <div class=\"row mt-5\" *ngIf=\"total>0\">\r\n                            <div class=\"col-12\">\r\n                                <p class=\"text-white\" *ngIf=\"currunt_selected_price>0\">Selected Price:-  {{currunt_selected_price | number}} </p>\r\n                                <p class=\"text-white\" *ngIf=\"extended_price>0\">Selected Extended Price :-  {{extended_price | number}}</p>\r\n                            </div>\r\n                            <div class=\"col-4\">\r\n                                <p class=\"text-white\"><strong>TOTAL</strong></p>\r\n                            </div>\r\n                            <div class=\"col-8 text-right\">\r\n                                <h2 class=\"text-warning f-24 fw-6\">{{total |number }} INR</h2>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row mt-2 mb-5\">\r\n                            <div class=\"col-12\">\r\n                                <button type=\"button\" *ngIf=\"!addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"addToCheckoutItem(detailPageInfo,standard,total,extended,'3')\">ADD TO CART</button>\r\n                                <button type=\"button\" *ngIf=\"addedCartItem\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"checkout()\">Checkout</button>\r\n                                <br/><button type=\"button\" *ngIf=\"showloginPopup==false\" class=\"btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100\" (click)=\"download(detailPageInfo,standard,total,extended,'3')\">Download</button>\r\n                                <!-- <p>This image is exclusive to Image Footage</p>-->\r\n                            </div>\r\n                        </div>\r\n\r\n                        <h6 class=\"text-center\" style=\"color:#ffffffa8;\">DETAILS</h6>\r\n                        <br />\r\n                        <!--<table class=\"f-12\">\r\n                            <tbody>\r\n                            <tr>\r\n                                <td width=\"20%\">Restrictions :</td>\r\n                                <td>Contact your local office for all commercial or promotional uses.</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Credit :</td>\r\n                                <td>{{detailPageInfo[0].items[0].artistname}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Product ID :</td>\r\n                                <td>{{detailPageInfo[3]}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Duration # :</td>\r\n                                <td>{{detailPageInfo[0].items[0].dur}}</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Collection :</td>\r\n                                                            <td>Getty Images News</td>\r\n                                                        </tr>\r\n                            <tr>\r\n                                <td>Date created :</td>\r\n                                <td>{{detailPageInfo[0].items[0].date}}</td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>License type :</td>\r\n                                <td>Standard</td>\r\n\r\n                            </tr>\r\n                            <tr>\r\n                                <td>Release info :</td>\r\n                                <td>Not released. More information</td>\r\n                            </tr>\r\n                                                        <tr>\r\n                                                            <td>Source :</td>\r\n                                                            <td>Getty Images AsiaPac</td>\r\n                                                        </tr>\r\n\r\n\r\n\r\n                            <tr>\r\n                                <td>Max file size :</td>\r\n                                <td>{{detailPageInfo[0].items[0].filesize}}</td>\r\n                            </tr>\r\n                            </tbody>\r\n\r\n                        </table>-->\r\n                        <div class=\"col-md-12\">\r\n<!--                            <div class=\"row\">-->\r\n<!--                                <div class=\"col-md-4\">Restrictions</div>-->\r\n<!--                                <div class=\"col-md-1\">:</div>-->\r\n<!--                                <div class=\"col-md-7\">Contact your local office for all commercial or promotional uses.</div>-->\r\n<!--                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Credit</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].artistname}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Product ID</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[3]}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Duration #</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].dur}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Date created</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].date}}</div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">License type</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">Standard</div>\r\n                            </div>\r\n                            <!--<div class=\"row\">\r\n                                <div class=\"col-md-3\">Release info :</div>\r\n                                <div class=\"col-md-9\">Not released. More information</div>\r\n                            </div>-->\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-4\">Max file size</div>\r\n                                <div class=\"col-md-1\">:</div>\r\n                                <div class=\"col-md-7\">{{detailPageInfo[0].items[0].filesize}}</div>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n            <div class=\"bg-black p-3\">\r\n                <div class=\"row align-items-stretch\">\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n\r\n\r\n <h3 class=\"col-md-12\" style=\"color: #fcbe11;\">Related Footages<hr /></h3>\r\n\r\n                        <div class=\"row align-items-stretch\">\r\n                            <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                                <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                                <span  class=\" photo-item\" >\r\n                        <div class=\"\">\r\n<span  *ngIf=\"aosimges.product_main_type != 'Image'\"  class=\"photo-item \">\r\n                      <span style=\"position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;\"><i class=\"fa fa-video-camera\" aria-hidden=\"true\"></i></span>\r\n\r\n                                    <!-- <iframe  *ngIf=\"aosimges.mimetype != 'image/jpeg'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>  -->\r\n                          <div class=\"photo-text-more\" >\r\n                       \t  <div class=\"photo-text-more\" >\r\n                        <br />\r\n                        <p class=\"icons_thum1\" >\r\n                        \t<!--<span><a href=\"\"><i class=\"fa fa-image\"></i></a></span>-->\r\n                            <!--<span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                            <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                            <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>-->\r\n                        </p>\r\n                      </div>\r\n                      </div>\r\n                      </span>\r\n                            <video  width=\"400\" height=\"300\" [muted]=\"'muted'\" [poster]=\"aosimges.product_thumbnail\" #htmlVideoElement controlsList=\"nodownload\"  onmouseover=\"this.play()\" onmouseout=\"this.load()\"  (click)=\"onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)\" style=\"width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;\">\r\n                              <source src=\"{{aosimges.product_main_image}}\" type=\"video/mp4\">\r\n                              Your browser does not support the video tag.\r\n                          </video>\r\n                            <div class=\"photo-text-more\">\r\n                          <!--<h3 class=\"heading\">{{aosimges.product_title}}</h3>\r\n                          <span class=\"meta\">{{aosimges.description}} Photos</span>-->\r\n                                <!--<p class=\"icons_thum\">\r\n\r\n                                  <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-heart\"></i></a></span>\r\n                                  <span *ngIf=\"currentUser\"><a style='cursor:pointer;'  (click)=\"addtolightbox(aosimges)\"><i class=\"fa fa-heart\"></i></a></span>\r\n                                  <span *ngIf=\"!currentUser\"><a href=\"#\" style='cursor:pointer;' (click)=\"clickLoginPopup()\"><i class=\"fa fa-plus\"></i></a></span>\r\n                                  <span *ngIf=\"currentUser\"><a href=\"#\" style='cursor:pointer;'  ><i class=\"fa fa-plus\"></i></a></span>\r\n                              </p>-->\r\n                        </div>\r\n                        </div>\r\n                      </span>\r\n                                <!--routerLink=\"/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}\" d-block-->\r\n                      \r\n                            </div>\r\n                        </div>\r\n\r\n\r\n\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel *ngIf=\"carouselSliderImages\" [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mx-auto my-auto mb-5\">\r\n                        <div id=\"recipeCarousel\" class=\"carousel slide w-100 related_slider\" *ngIf=\"carouselSliderImages\">\r\n                            <h3 class=\"text-white f-18 mb-3 float-left\">{{carouselSliderImages.categoryLabel}}</h3>\r\n                            <a href=\"javascript:void(0)\" class=\"text-warning float-right\"><strong>See All</strong></a>\r\n                            <div class=\"carousel-inner\" role=\"listbox\">\r\n                                <ngb-carousel  [showNavigationArrows]=\"true\" [showNavigationIndicators]=\"false\" [interval]=\"1000\" [pauseOnHover]=\"true\">\r\n                                    <div class=\"carousel-item\">\r\n                                        <ng-template ngbSlide *ngFor=\"let carouseimges of carouselSliderImages.categoryImages;let i= index\">\r\n                                            <div class=\"row\">\r\n                                                <div [ngClass]=\"getClassName(images)\" *ngFor=\"let images of carouseimges\">\r\n                                                    <a href=\"javascript:void(0)\" class=\"d-block photo-item\">\r\n                                                        <img *ngIf=\"images.type == 'photo'\" src=\"assets/images/{{images.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                                                        <iframe  *ngIf=\"images.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                                                        <div class=\"photo-text-more\">\r\n                                                            <div class=\"photo-text-more\">\r\n                                                                <h3 class=\"heading\">{{images.name}}</h3>\r\n                                                                <span class=\"meta\">{{images.count}} Photos</span>\r\n                                                            </div>\r\n                                                        </div>\r\n                                                    </a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </ng-template>\r\n                                    </div>\r\n                                </ngb-carousel>\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div [ngClass]=\"getClassName(aosimges)\" data-aos=\"fade-up\" data-aos-delay=\"200\"  *ngFor=\"let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index\">\r\n                        <a routerLink=\"/detail/{{aosimges.id}}\" class=\"d-block photo-item\">\r\n                            <img *ngIf=\"aosimges.type == 'photo'\" src=\"assets/images/{{aosimges.imageName}}\" alt=\"Image\" class=\"img-fluid\">\r\n                            <iframe  *ngIf=\"aosimges.type == 'video'\" src=\"https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1\" webkitallowfullscreen mozallowfullscreen allowfullscreen height=\"300\" width=\"100%\"></iframe>\r\n                            <div class=\"photo-text-more\">\r\n\r\n                                <div class=\"photo-text-more\">\r\n                                    <h3 class=\"heading\">{{aosimges.name}}</h3>\r\n                                    <span class=\"meta\">{{aosimges.count}} Photos</span>\r\n                                </div>\r\n                            </div>\r\n                        </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <!--<div class=\"col-md-5 col-sm-6 col-12 m-auto\">\r\n\r\n                <ngb-pagination [collectionSize]=\"aoslSliderImagesData.length\"  [pageSize]=\"pageSize\" [(page)]=\"page\" [maxSize]=\"5\" [rotate]=\"true\" [ellipses]=\"false\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n            </div>-->\r\n\r\n        </div>\r\n    </main>\r\n\r\n</div>\r\n\r\n<ng-container *ngIf=\"showloginPopup\">\r\n    <app-login [openLoginPopup]=\"showloginPopup\" (closeLoginPopup)=\"hideLoginPopup($event)\"></app-login>\r\n</ng-container>\r\n\r\n\r\n\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\"> Editorial</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n<p>For editorial use only. This image cannot be used for advertising or promotional purposes. Allows use in all media, excluding broadcast and print covers. This image is for single-use in context only. For additional use, please relicense.</p>\r\n<p>Learn more on our <a href=\"https://imagefootage.com/terms.\" target=\"_blank\">https://imagefootage.com/terms.</a></p>\r\n<p>Need additional rights or interested in commercial use? For enterprise access, Contact us:<a href=\"https://imagefootage.com/contactUs\" target=\"_blank\">https://imagefootage.com/contactUs</a></p>\r\n \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n\r\n<ng-template #content1 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Extended License</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n  <ul>\r\n   <li> Unlimited web distribution</li>\r\n<li>Unlimited print copies</li>\r\n<li>Unlimited packaging copies</li>\r\n<li>Unlimited out of home advertising impressions</li>\r\n<li>Allowed in merchandising</li>\r\n<li>Allowed on web templates</li>\r\n<li>Video production of any budget</li>\r\n<li>Decoration in personal and commercial spaces</li>\r\n    </ul>\r\n    \r\n  </div>\r\n  <!--<div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"c('Save click')\">Save</button>\r\n  </div>-->\r\n</ng-template>\r\n";
     /***/
   },
 
@@ -431,7 +431,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"purple-gradient\">\r\n\r\n    <div class=\"container\">\r\n        <div class=\"text-white text-center\">\r\n            <h1 class=\"text-white\">Images for every project, plans for every budget</h1>\r\n            <p>Access over 320 million images with 1,65,000 new images added every day.</p>\r\n        </div>\r\n\r\n        <h3 class=\"text-white pt-5 pb-3\">Plans for individuals</h3>\r\n\r\n        <div class=\"row\" *ngIf=\"!paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"yearly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center\" >Value priced annual plans</h3>\r\n\r\n                        <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                    </div>\r\n\r\n                    <div class=\"card-body\">\r\n                        <div class=\"row\">\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                            </div>\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <table class=\"table table-hover\">\r\n\r\n                                    <tbody>\r\n                                    <tr *ngFor=\"let pack of plansData.yearly_pack;let i= index\">\r\n                                        <td class=\"border-top-0\">\r\n\r\n                                            <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                <span class=\"checkmark\"></span>\r\n                                            </label>\r\n                                        </td>\r\n\r\n                                    </tr>\r\n                                    <tr><td class=\"border-top-0\">\r\n                                        <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                        <!--                                   <label class=\"custmLable\">-->\r\n                                        <!--                                   <span class=\"invalid-feedback\">-->\r\n                                        <!--                                    <span > </span>-->\r\n\r\n                                        <!--                                </span>-->\r\n                                        <!--                                   </label>-->\r\n                                    </td>\r\n\r\n                                    </tbody>\r\n                                </table>\r\n                            </div>\r\n\r\n\r\n                            <div class=\"form-group pt-3 m-auto\">\r\n                                <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                <p class=\"pt-3\"><a (click)=\"showprice()\">See Monthly Pricing</a></p>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                </form>\r\n\r\n            </div>\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"monthly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\">Value priced monthly plans</h3>\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n\r\n                                    <table class=\"table table-hover\"  >\r\n\r\n                                        <tbody>\r\n                                        <tr *ngFor=\"let pack of plansData.monthly_pack;let i= index\">\r\n                                            <td class=\"border-top-0\">\r\n\r\n                                                <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                                    <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                    <span class=\"checkmark\"></span>\r\n                                                </label>\r\n                                            </td>\r\n\r\n                                        </tr>\r\n                                        <tr><td class=\"border-top-0\">\r\n                                            <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                            <!--                                   <label class=\"custmLable\">-->\r\n                                            <!--                                   <span class=\"invalid-feedback\">-->\r\n                                            <!--                                    <span > </span>-->\r\n\r\n                                            <!--                                </span>-->\r\n                                            <!--                                   </label>-->\r\n                                        </td>\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n\r\n                                </div>\r\n\r\n\r\n                                <div class=\"form-group pt-3 m-auto\">\r\n                                    <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                     <p class=\"pt-3\"><a (click)=\"showprice()\">See Annual Pricing</a></p>\r\n                                </div>\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </form>\r\n\r\n            </div>\r\n\r\n\r\n            <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                    <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">Get images on demand.</p><p class=\"mb-0\"> Download within a year.</p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <form [formGroup]=\"planform\" (ngSubmit)=\"onSubmit()\">\r\n                        <div class=\"row\">\r\n                         <table class=\"table table-hover\">\r\n                                <tbody>\r\n                                <tr *ngFor=\"let pack of plansData.download_pack;let i= index\">\r\n                                    <td class=\"border-top-0\">\r\n                                        <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/within year</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                            <input type=\"radio\" name=\"plan\" formControlName=\"plan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && f.plan.errors }\">\r\n                                            <span class=\"checkmark\"></span>\r\n                                        </label>\r\n                                    </td>\r\n\r\n                                </tr>\r\n                               <tr><td class=\"border-top-0\">\r\n                                   <span style=\"color:red;\" *ngIf=\"submitted && f.plan.errors\" >Please select a plan</span>\r\n<!--                                   <label class=\"custmLable\">-->\r\n<!--                                   <span class=\"invalid-feedback\">-->\r\n<!--                                    <span > </span>-->\r\n\r\n<!--                                </span>-->\r\n<!--                                   </label>-->\r\n                               </td>\r\n                               </tr>\r\n                                </tbody>\r\n\r\n                            </table>\r\n                            <div class=\"m-auto pt-5\">\r\n                                <button type=\"submit\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Buy Now</button>\r\n                            </div>\r\n\r\n                        </div>\r\n                        </form>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\" *ngIf=\"paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\">\r\n\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\" >Plan You have choosed.</h3>\r\n\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <table class=\"table table-hover\">\r\n\r\n                                        <tbody>\r\n                                        <tr>\r\n                                            <td class=\"border-top-0\">\r\n                                                {{selectedPlanType}}\r\n                                           <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{selectedData.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{selectedData.package_price}}</b></p></span>\r\n                                                    <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(selectedData)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n<!--                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">-->\r\n<!--                                                    <span class=\"checkmark\"></span>-->\r\n                                                </label>\r\n                                            </td>\r\n\r\n                                        </tr>\r\n\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n                                </div>\r\n\r\n\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n            </div>\r\n           <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">PAYMENT INFORMATION</p><p class=\"mb-0\"></p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <div class=\"text-center m-auto\">\r\n                        <img src=\"/assets/images/atom.png\" alt=\"atom\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                        </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/payu.png\" alt=\"payumoney\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                         </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/rozorpay.png\" alt=\"Rozorpay\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                       </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n\r\n\r\n\r\n<!--<section class=\"pt-5 pb-0\">-->\r\n<!--    <div class=\"container\">-->\r\n\r\n<!--        <h3>Plans for multiple users</h3>-->\r\n<!--        <p>Give your team the workflow tools and legal coverage they need to create their best work.</p>-->\r\n\r\n\r\n<!--        <div class=\"row\">-->\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6\">-->\r\n\r\n<!--                <div class=\"card  card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center\">Teams</h3>-->\r\n<!--                        <p class=\"mb-1\">Share 750 images with your team each month and get tools to enable collaboration.</p>-->\r\n<!--                        <p class=\"mb-1\"><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n<!--                        <div class=\"row\">-->\r\n\r\n\r\n<!--                            <table class=\"table table-hover\">-->\r\n<!--                                <tbody>-->\r\n<!--                                <tr>-->\r\n<!--                                    <td class=\"border-top-0\">-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                </tbody>-->\r\n<!--                            </table>-->\r\n\r\n\r\n\r\n<!--                            <div class=\"form-group pt-3 m-auto\">-->\r\n<!--                                <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>-->\r\n\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n\r\n\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6 pl-0 pr-0\">-->\r\n\r\n<!--                <div class=\"card card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center f-20\">Enterprise</h3>-->\r\n<!--                        <p class=\"mb-1\">For large organizations needing an enterprise workflow, specific licenses, and VIP service.</p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n\r\n\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n\r\n<!--                            <img src=\"./Image Footage_files/atom.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/payu.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/rozorpay.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n\r\n<!--                        <div class=\"clearfix\"></div>-->\r\n\r\n<!--                        <div class=\"m-auto pt-5 text-center\">-->\r\n<!--                            <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Learn More</button>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</section>-->\r\n\r\n\r\n<!--<div class=\"bg-light pt-5 pb-5\">-->\r\n<!--    <div class=\"container\">-->\r\n<!--        <h2 class=\"f-24\">A simple guide to our plans</h2>-->\r\n<!--        <table class=\"table\">-->\r\n<!--            <tbody>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td></td>-->\r\n<!--                <td class=\"text-center\"><h5>Individual</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Teams</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Enterprise</h5></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Full access to millions of images  </td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create and share collections <i class=\"fa fa-question-circle-o f-16\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Create and share collections\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Free plugins for your most used programs</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\">With subscription plans</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n<!--            </tbody>-->\r\n\r\n<!--        </table>-->\r\n\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"License-bg pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container \">-->\r\n\r\n<!--        <h3 class=\"text-white pb-4\">Our licenses protect over 1.5 million customers worldwide.</h3>-->\r\n\r\n<!--        <ul class=\"text-white\">-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Unlimited digital reproduction</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Worldwide usage</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Extended rights with enhanced and enterprise licenses</b></li>-->\r\n<!--        </ul>-->\r\n<!--        <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 text-white p-3 text-uppercase\">Compare License</button>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container\">-->\r\n<!--        <h3>Still have questions? We're here to help.</h3>-->\r\n<!--        <div class=\"row mt-3\">-->\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-question-circle-o f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">FAQ</h3>-->\r\n<!--                    <p>Explore our frequently asked questions section.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">View FAQ</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-headphones f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Give us a call</h3>-->\r\n<!--                    <p>EYour local phone number: 000 111 1234 388</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Call Us</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-envelope f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Send us a message</h3>-->\r\n<!--                    <p>We'll get back to you.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Email Usxxxx</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n";
+    __webpack_exports__["default"] = "<div class=\"loader-bg\" *ngIf=\"loadingData\">\r\n    <div class=\"loader\">\r\n        Loading\r\n        <span></span>\r\n    </div>\r\n</div>\r\n<section class=\"purple-gradient\">\r\n\r\n    <div class=\"container\">\r\n        <div class=\"text-white text-center\">\r\n            <h1 class=\"text-white\">Images for every project, plans for every budget</h1>\r\n            <p>Access over 320 million images with 1,65,000 new images added every day.</p>\r\n        </div>\r\n\r\n        <h3 class=\"text-white pt-5 pb-3\">Plans for individuals</h3>\r\n\r\n        <div class=\"row\" *ngIf=\"!paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"yearly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center\" >Value priced annual plans</h3>\r\n\r\n                        <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                    </div>\r\n\r\n                    <div class=\"card-body\">\r\n                        <div class=\"row\">\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                            </div>\r\n\r\n                            <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                <table class=\"table table-hover\">\r\n\r\n                                    <tbody>\r\n                                    <tr *ngFor=\"let pack of plansData.yearly_pack;let i= index\">\r\n                                        <td class=\"border-top-0\">\r\n\r\n                                            <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                <span class=\"checkmark\"></span>\r\n                                            </label>\r\n                                        </td>\r\n\r\n                                    </tr>\r\n                                    <tr><td class=\"border-top-0\">\r\n                                        <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                        <!--                                   <label class=\"custmLable\">-->\r\n                                        <!--                                   <span class=\"invalid-feedback\">-->\r\n                                        <!--                                    <span > </span>-->\r\n\r\n                                        <!--                                </span>-->\r\n                                        <!--                                   </label>-->\r\n                                    </td>\r\n\r\n                                    </tbody>\r\n                                </table>\r\n                            </div>\r\n\r\n\r\n                            <div class=\"form-group pt-3 m-auto\">\r\n                                <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                <p class=\"pt-3\"><a (click)=\"showprice()\">See Monthly Pricing</a></p>\r\n\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                </form>\r\n\r\n            </div>\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\" *ngIf=\"monthly\">\r\n                <form [formGroup]=\"subscriptionform\" (ngSubmit)=\"onSubmitsubscription()\">\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\">Value priced monthly plans</h3>\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n\r\n                                    <table class=\"table table-hover\"  >\r\n\r\n                                        <tbody>\r\n                                        <tr *ngFor=\"let pack of plansData.monthly_pack;let i= index\">\r\n                                            <td class=\"border-top-0\">\r\n\r\n                                                <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                                    <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">\r\n                                                    <span class=\"checkmark\"></span>\r\n                                                </label>\r\n                                            </td>\r\n\r\n                                        </tr>\r\n                                        <tr><td class=\"border-top-0\">\r\n                                            <span style=\"color:red;\" *ngIf=\"submitted2 && g.subplan.errors && g.subplan.errors.required\" >Please select a plan</span>\r\n                                            <!--                                   <label class=\"custmLable\">-->\r\n                                            <!--                                   <span class=\"invalid-feedback\">-->\r\n                                            <!--                                    <span > </span>-->\r\n\r\n                                            <!--                                </span>-->\r\n                                            <!--                                   </label>-->\r\n                                        </td>\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n\r\n                                </div>\r\n\r\n\r\n                                <div class=\"form-group pt-3 m-auto\">\r\n                                    <button type=\"submit\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>\r\n                                     <p class=\"pt-3\"><a (click)=\"showprice()\">See Annual Pricing</a></p>\r\n                                </div>\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </form>\r\n\r\n            </div>\r\n\r\n\r\n            <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                    <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">Get images on demand.</p><p class=\"mb-0\"> Download within a year.</p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <form [formGroup]=\"planform\" (ngSubmit)=\"onSubmit()\">\r\n                        <div class=\"row\">\r\n                         <table class=\"table table-hover\">\r\n                                <tbody>\r\n                                <tr *ngFor=\"let pack of plansData.download_pack;let i= index\">\r\n                                    <td class=\"border-top-0\">\r\n                                        <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{pack.package_name}}</b><span class=\"f-12\">/within year</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{pack.package_price}}</b></p></span>\r\n                                            <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(pack)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n                                            <input type=\"radio\" name=\"plan\" formControlName=\"plan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && f.plan.errors }\">\r\n                                            <span class=\"checkmark\"></span>\r\n                                        </label>\r\n                                    </td>\r\n\r\n                                </tr>\r\n                               <tr><td class=\"border-top-0\">\r\n                                   <span style=\"color:red;\" *ngIf=\"submitted && f.plan.errors\" >Please select a plan</span>\r\n<!--                                   <label class=\"custmLable\">-->\r\n<!--                                   <span class=\"invalid-feedback\">-->\r\n<!--                                    <span > </span>-->\r\n\r\n<!--                                </span>-->\r\n<!--                                   </label>-->\r\n                               </td>\r\n                               </tr>\r\n                                </tbody>\r\n\r\n                            </table>\r\n                            <div class=\"m-auto pt-5\">\r\n                                <button type=\"submit\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Buy Now</button>\r\n                            </div>\r\n\r\n                        </div>\r\n                        </form>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\" *ngIf=\"paymentShow\">\r\n\r\n            <div class=\"col-lg-9 col-md-8 col-sm-8\">\r\n\r\n                    <div class=\"card\">\r\n                        <div class=\"card-header text-center\">\r\n                            <h3 class=\"text-center\" >Plan You have choosed.</h3>\r\n\r\n                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>\r\n                        </div>\r\n\r\n                        <div class=\"card-body\">\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <p>Includes <b>ImageFootage Editor Pro</b></p>\r\n\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Create social media posts, promotions, and more in minutes</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i>  Choose from hundreds of templates or customize an image</p>\r\n                                    <p class=\"d-flex items-center\"><i class=\"icon-check pr-3\"> </i> Access professional design elements and time-saving features</p>\r\n\r\n                                    <p><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>\r\n\r\n                                </div>\r\n\r\n                                <div class=\"col-lg-6 col-md-6 col-sm-6\">\r\n                                    <table class=\"table table-hover\">\r\n\r\n                                        <tbody>\r\n                                        <tr>\r\n                                            <td class=\"border-top-0\">\r\n                                                {{selectedPlanType}}\r\n                                           <label class=\"custmLable\">\r\n                                            <span class=\"float-left\">\r\n                                                <b class=\"f-14\">{{selectedData.package_name}}</b><span class=\"f-12\">/month</span>\r\n                                                 <p class=\"f-12 mb-0\"><b>INR {{selectedData.package_price}}</b></p></span>\r\n                                                    <span class=\"float-right\">\r\n                                                 <b class=\"f-14\">INR {{showperImgPrice(selectedData)}}</b>\r\n                                                 <p class=\"f-12 mb-0\"> per image</p>\r\n                                            </span>\r\n<!--                                                    <input type=\"radio\" name=\"subplan\"  formControlName=\"subplan\" value=\"{{pack.package_id}}\"  class=\"form-control rounded-0\"  [ngClass]=\"{ 'is-invalid': submitted && g.subplan.errors }\">-->\r\n<!--                                                    <span class=\"checkmark\"></span>-->\r\n                                                </label>\r\n                                            </td>\r\n\r\n                                        </tr>\r\n\r\n\r\n                                        </tbody>\r\n                                    </table>\r\n                                </div>\r\n\r\n\r\n\r\n\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n            </div>\r\n           <div class=\"col-lg-3 col-md-4 col-sm-4 pl-0 pr-0\">\r\n                <div class=\"card\">\r\n                    <div class=\"card-header text-center\">\r\n                        <h3 class=\"text-center f-20\">Prepaid image pack</h3>\r\n                        <p class=\"mb-1\">PAYMENT INFORMATION</p><p class=\"mb-0\"></p>\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <div class=\"text-center m-auto\">\r\n                        <img src=\"/assets/images/atom.png\" alt=\"atom\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                        </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/payu.png\" alt=\"payumoney\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                         </div>\r\n                        <div class=\"text-center m-auto\">\r\n                         <img src=\"/assets/images/rozorpay.png\" alt=\"Rozorpay\" class=\"mb-3 img-fluid\" (click)=\"purchagePlanPayment('atom')\">\r\n                       </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<ng-container *ngIf=\"showloginPopup\">\r\n    <app-login [openLoginPopup]=\"showloginPopup\" (closeLoginPopup)=\"hideLoginPopup($event)\"></app-login>\r\n</ng-container>\r\n\r\n\r\n\r\n<!--<section class=\"pt-5 pb-0\">-->\r\n<!--    <div class=\"container\">-->\r\n\r\n<!--        <h3>Plans for multiple users</h3>-->\r\n<!--        <p>Give your team the workflow tools and legal coverage they need to create their best work.</p>-->\r\n\r\n\r\n<!--        <div class=\"row\">-->\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6\">-->\r\n\r\n<!--                <div class=\"card  card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center\">Teams</h3>-->\r\n<!--                        <p class=\"mb-1\">Share 750 images with your team each month and get tools to enable collaboration.</p>-->\r\n<!--                        <p class=\"mb-1\"><a href=\"http://webtechssolutions.com/imgfootage/individual-plans.html#\">Learn more</a></p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n<!--                        <div class=\"row\">-->\r\n\r\n\r\n<!--                            <table class=\"table table-hover\">-->\r\n<!--                                <tbody>-->\r\n<!--                                <tr>-->\r\n<!--                                    <td class=\"border-top-0\">-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                <tr>-->\r\n<!--                                    <td>-->\r\n\r\n<!--                                        <label class=\"custmLable\">-->\r\n<!--                <span class=\"float-left\">-->\r\n<!--<b class=\"f-14\">750 images</b><span class=\"f-12\">/mo</span>-->\r\n<!--<p class=\"f-12 mb-0\"><b>US$ 199</b>/mo</p></span>-->\r\n\r\n<!--                                            <span class=\"float-right\">-->\r\n\r\n<!--<b class=\"f-14\">US$ 0.27</b>-->\r\n<!--<p class=\"f-12 mb-0\"> per image</p>-->\r\n\r\n<!--</span>-->\r\n<!--                                            <input type=\"radio\" name=\"radio\">-->\r\n<!--                                            <span class=\"checkmark\"></span>-->\r\n<!--                                        </label>-->\r\n<!--                                    </td>-->\r\n\r\n<!--                                </tr>-->\r\n\r\n<!--                                </tbody>-->\r\n<!--                            </table>-->\r\n\r\n\r\n\r\n<!--                            <div class=\"form-group pt-3 m-auto\">-->\r\n<!--                                <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase\">Buy Now</button>-->\r\n\r\n<!--                            </div>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n\r\n\r\n<!--            <div class=\"col-lg-6 col-md-6 col-sm-6 pl-0 pr-0\">-->\r\n\r\n<!--                <div class=\"card card-shadow\">-->\r\n<!--                    <div class=\"card-header text-center\">-->\r\n<!--                        <h3 class=\"text-center f-20\">Enterprise</h3>-->\r\n<!--                        <p class=\"mb-1\">For large organizations needing an enterprise workflow, specific licenses, and VIP service.</p>-->\r\n<!--                    </div>-->\r\n\r\n<!--                    <div class=\"card-body\">-->\r\n\r\n\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n\r\n<!--                            <img src=\"./Image Footage_files/atom.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/payu.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n<!--                        <div class=\"text-center m-auto\">-->\r\n<!--                            <img src=\"./Image Footage_files/rozorpay.png\" class=\"mb-3 img-fluid\">-->\r\n<!--                        </div>-->\r\n\r\n<!--                        <div class=\"clearfix\"></div>-->\r\n\r\n<!--                        <div class=\"m-auto pt-5 text-center\">-->\r\n<!--                            <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Learn More</button>-->\r\n<!--                        </div>-->\r\n<!--                    </div>-->\r\n\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</section>-->\r\n\r\n\r\n<!--<div class=\"bg-light pt-5 pb-5\">-->\r\n<!--    <div class=\"container\">-->\r\n<!--        <h2 class=\"f-24\">A simple guide to our plans</h2>-->\r\n<!--        <table class=\"table\">-->\r\n<!--            <tbody>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td></td>-->\r\n<!--                <td class=\"text-center\"><h5>Individual</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Teams</h5></td>-->\r\n<!--                <td class=\"text-center\"><h5>Enterprise</h5></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Full access to millions of images  </td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create and share collections <i class=\"fa fa-question-circle-o f-16\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Create and share collections\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Free plugins for your most used programs</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\">With subscription plans</td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n\r\n<!--            <tr>-->\r\n<!--                <td>Create designs with basic editing features</td>-->\r\n<!--                <td class=\"text-center\"></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--                <td class=\"text-center\"><i class=\"flaticon-checked\"></i></td>-->\r\n<!--            </tr>-->\r\n<!--            </tbody>-->\r\n\r\n<!--        </table>-->\r\n\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"License-bg pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container \">-->\r\n\r\n<!--        <h3 class=\"text-white pb-4\">Our licenses protect over 1.5 million customers worldwide.</h3>-->\r\n\r\n<!--        <ul class=\"text-white\">-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Unlimited digital reproduction</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Worldwide usage</b></li>-->\r\n<!--            <li class=\"pb-3\"><i class=\"flaticon-checked\"></i> <b class=\"text-white\">Extended rights with enhanced and enterprise licenses</b></li>-->\r\n<!--        </ul>-->\r\n<!--        <button type=\"button\" class=\"btn btn-danger btn-rounded pl-5 pr-5 text-white p-3 text-uppercase\">Compare License</button>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n\r\n\r\n<!--<div class=\"pt-5 pb-5\">-->\r\n\r\n<!--    <div class=\"container\">-->\r\n<!--        <h3>Still have questions? We're here to help.</h3>-->\r\n<!--        <div class=\"row mt-3\">-->\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-question-circle-o f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">FAQ</h3>-->\r\n<!--                    <p>Explore our frequently asked questions section.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">View FAQ</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-headphones f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Give us a call</h3>-->\r\n<!--                    <p>EYour local phone number: 000 111 1234 388</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Call Us</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n\r\n<!--            <div class=\"col-lg-4 col-md-4 col-sm-4\">-->\r\n<!--                <div class=\"card text-center p-3\">-->\r\n<!--                    <i class=\"fa fa-envelope f-46\"></i>-->\r\n<!--                    <h3 class=\"pt-5\">Send us a message</h3>-->\r\n<!--                    <p>We'll get back to you.</p>-->\r\n<!--                    <button type=\"button\" class=\"btn btn-outline-dark btn-rounded pl-4 pr-4\">Email Usxxxx</button>-->\r\n<!--                </div>-->\r\n<!--            </div>-->\r\n<!--        </div>-->\r\n<!--    </div>-->\r\n<!--</div>-->\r\n";
     /***/
   },
 
@@ -452,6 +452,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
     __webpack_exports__["default"] = "<section class=\"banner-area relative\">\r\n        <div class=\"overlay overlay-bg\"></div>\r\n        <div class=\"banner-content text-center\">\r\n          <h1>Privacy Policy</h1>\r\n          \r\n        </div>\r\n      </section>\r\n    \r\n    <section class=\"pt-5 bg-white text-black f-3 l-space\">\r\n    \r\n      <div class=\"container\">\r\n  \r\n    <div class=\"static-wrapper\">\r\n  <div class=\"section-title text-left pb-2\">\r\n  <span style='float: right;'>Effective Date:_____2018</span>\r\n  <h3  class=\"f-18 pt-3 pb-3\">1. INTRODUCTION</h3>\r\n  <!--<p>Last Updated: November 2016</p>-->\r\n  </div>\r\n  <p>A.\tYou (\"you\") are required to read and accept all of the terms and conditions laid down in this Privacy Policy Statement (“Policy”) and the linked Terms and Conditions, before you use the website and content (“Content”)made available to you by _____________________ (hereinafter referred to as “we” or “our”). </p>\r\n<p>B.\tWe are committed to maintaining your privacy. Our privacy policy statement is given below.  If we make changes to this Policy, we will notify you by updating this Policy statement on our Website (“Website”). This Policy outlines the manner your data is collected and used by us. You are advised to please read the Policy carefully. By accessing the Content provided by the Site, you agree to the collection and use of your data by us in the manner provided in this Policy. </p>  \r\n<p>C.\tThe Policy does not apply to the procedures and practices followed by entities that are not managed, owned or controlled by us or to the people that are not engaged, employed or managed by us. Through this document, we wish to make you:</p>\r\n<p>\r\n(i)\t    Feel at ease while using our Website;</p>\r\n<p>(ii)\tFeel confident while sharing information with us;</p>\r\n<p>(iii)\tAware that you may contact us with your questions or concerns about privacy on our Website;</p>\r\n<p>(iv)\tAware that by using our website you are agreeing to the collection of certain data.</p>\r\n<p>D. For purposes of this Policy:</p>\r\n<p>(i)\t“Business partners” means all Owner - Licensors, subcontractors, vendors or other entities with which we have a relationship for constant commercial supplies, Content or information;</p>\r\n<p>(ii)\t“Information” shall include data, message, text, images, sound, voice, codes, computer programmes, software and data bases.</p>\r\n<p>(iii)\t“Personal Information” means any information which is capable of identifying you (either directly or indirectly, in combination with other information available or likely to be available with us), such as your name, phone number and email address;</p>\r\n<p>(iv)\t“Privacy Rules” means Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 updated from time to time;</p>\r\n<p>(v)\t“Sensitive Personal Data or Information” shall have the meaning ascribed to such term under the Privacy Rules.</p>\r\n<p>2.\tINFORMATION COLLECTED</p>\r\n<p>(i)\tWe collect the details provided by you together with information we learn about you from your use of our Content and your visits to our Website and other websites accessible from them.</p>\r\n<p>(ii)\tWe may collect additional information in connection with your participation in any promotions or contests offered by us and information you provide when giving us feedback or completing profile forms. We also monitor customer traffic patterns and website use, which enables us to improve the service we provide. We will collect only such information as is necessary and relevant to us to provide you with the Content available on the Website.</p>\r\n<p>(iii)\tWhile you use our website, we may have automatic access to (receive and collect) certain anonymous information in standard usage logs through our web server, obtained from “cookies” sent to your browser from web server cookies stored on your hard drive, including but not limited to:</p>\r\n<p>(a)\tComputer-identification information;</p>\r\n<p>(b)\tIP address, assigned to the computer/mobile phone which you use;</p>\r\n<p>(c)\tThe domain server through which you access our service;</p>\r\n<p>(d)\tThe type of mobile phone/computer you're using;</p>\r\n<p>(e)\tThe type of web/mobile browser you're using.</p>\r\n<p>(v)\tWe may also collect the following information about:</p>\r\n<p>(a)\tThe pages you visit/access;</p>\r\n<p>(b)\tThe links you click on our website;</p>\r\n<p>(c)\tThe number of times you access the page/app mobile screen;</p>\r\n<p>(d)\tThings you view, add to bag, add to wish list;</p>\r\n<p>(e)\tOther websites you open simultaneously while browsing on ours.</p>\r\n\r\n <p>3.\tWHEN / HOW WE COLLECT THE INFORMATION</p>\r\n <p>(i)\tWe may collect anonymous traffic information from you when you visit our Website.</p>\r\n\r\n<p>(ii)\tWe collect the Personal Information from you when you register with us or you transact as a guest. During registration you are required to give us your contact information (such as name, email address, date of birth, gender, address, pin code, mobile number etc.) Upon registration you may receive communications from us (e.g. emails, newsletters, updates). Even when you transact as a guest we collect identifiable information (such as name, email address, date of birth, gender, billing address, delivery address, pin code, mobile number etc.).</p>\r\n\r\n<p>(iii)\tAny Information including Sensitive Personal Data or Information collected by us from you may be stored and processed in India or any other country in which we or our corporate affiliates, subsidiaries or agents maintain facilities that ensure the same level of data protection that is adhered to by us. You shall be deemed to have consented for transfer of your Information including Sensitive Personal Data or Information outside your country if you provide us your consent for collection and use of your Sensitive Personal Data of Information by us in the manner as specified in this Privacy Statement.</p>\r\n\r\n<p>(iv)\tWe assure you that any Sensitive Personal Data or Information provided by you is collected when the collection of such information is necessary and used by us for a lawful purpose connected with our function or activity. </p>\r\n\r\n<p>(v)\tWe shall be permitted to use this information to contact you about the Content you are using on our Website and Content in which you have expressed interest.</p>\r\n\r\n<p>(vi)\tWe are the sole owners of your information collected by us at different points on our Website/.</p>\r\n\r\n<p>(xii)   We will collect Personal Information about you only as part of on-line survey, or contest or any combination thereof.</p>\r\n\r\n<p>(vii)\tThe Website contains links to other websites. We are not responsible for the privacy practices of such websites which we do not own, manage or control.</p>\r\n\r\n<p>(viii)\tWe may at certain times make chat rooms, forums, instant messenger and message boards and other Content available to you. Please understand that any information that is disclosed in these areas becomes public information. We have no control over its use and you should exercise caution when disclosing your personal information to anyone.</p>\r\n\r\n<p>(ix)\tIf you use a bulletin board or chat room on our Websites, you should be aware that any Personal Information you submit there can be read, collected, or used by other users of these forums, and could be used to send you unsolicited messages. We are not responsible for the Personal Information you choose to submit in these forums.</p>\r\n  \r\n  <p>4.\tDISCLOSING PERSONAL INFORMATION</p>\r\n  <p>You agree that we may share or disclose your Information including Sensitive Personal Data or Information with corporate affiliates and business partners (a) to carry out transactions you request or to make our business or that of our corporate affiliates more responsive to your needs; (b) if we reasonably consider it necessary to protect ourselves, its customers, or the public; (c) who help us to perform transactions you request or who help us to customize, evaluate, process, analyse, and/or improve our communication or relationship with you. We impose an obligation on our corporate affiliates and business partners who receive your Sensitive Personal Data or Information to keep such information secure in accordance with the Privacy Rules and to not disclose it further to third parties. You shall be deemed to have consented to sharing and disclosure of your Information including Sensitive Personal Data or Information by us with our corporate affiliates and business partners if you give your consent to provide us with your Sensitive Personal Data of Information in the manner as specified in this Policy. We may also disclose any Information provided by you (which may include your Personal Information and Sensitive Personal Data or Information) (a) in connection with law enforcement, fraud prevention, or other legal actions or legal obligations; or (b) if required to do so under applicable law or regulation in your country or by an order under the law for the time being in force; or (c) to government agencies mandated under the law of your country to obtain such information for the purpose of verification of identity, or for prevention, detection, investigation including any real or suspected adverse event in relation to cyber security that violates any applicable security policy. No consent will be required to be obtained by us from you for any of the aforesaid disclosures. In addition, you agree that we may share your Information with business partners that help us carry out transactions you request or that help us to customize, process, evaluate, analyse, and/or improve our communication or relationship with you, and who share our commitment to protecting your Information. Except as described above, we will not disclose your Personal Information including your Sensitive Personal Data or Information to third parties for their own marketing purposes, unless you consent for the same.</p>\r\n  <p>5.\tHOW IS THE INFORMATION USED?</p>\r\n  <p>We shall use your contact information to send you Special offers; Changes in the policies or terms of use; or event based communications such as invites, reminders etc. We use your personal information to improve personalized features on our Website; or to preserve social history as governed by existing law or policy. We use anonymous traffic information to recognize your usage privileges to our Website; or track your session and activities so that we can understand better how people use our Website. </p>\r\n  <p>6.\tWHO DO WE SHARE YOUR INFORMATION WITH?</p>\r\n  <p>(i)\tWe do not share or rent your information with third parties.</p>\r\n  <p>(ii)\tWe do not rent, sell or share your Personal Information or Sensitive Personal Information and we will not disclose any of your Personal Information to any other third parties unless: </p>\r\n  <p>(a)\tRequired by special circumstances such as compliance with subpoenas, court orders, requests/order from legal authorities or law enforcement agencies requiring such disclosure; </p>\r\n  <p>(b)\tTo help investigate, prevent or take action regarding unlawful and illegal activities, suspected fraud, potential threat to the safety or security of any person, violations of terms of use or to defend against legal claims; </p>\r\n  <p>(c)\tWe have your permission; or</p>\r\n  <p>(d)\tTo provide Content requested by you.</p>\r\n  <p>(iv)\tWe reserve the right to disclose your Personal Information or Sensitive Personal Information and email address information as required by law and when we believe that disclosure is necessary to protect our rights and/or comply with a judicial proceeding, court order, or legal process served on our Website.</p>\r\n  <p>(v)\tIf we do share your information with advertisers it will strictly be on an aggregate basis only.</p>\r\n  <p>(vi)\tThe security of your personal information and email address is important to us. When you enter sensitive information (such as credit / debit card number) on our acquiring bank’s system or order forms, they encrypt that information using secure socket layer technology (SSL). To learn more about SSL, follow this link http://www.verisign.com/.  </p>\r\n  <p>(vi)\tThe security of your personal information and email address is important to us. When you enter sensitive information (such as credit / debit card number) on our acquiring bank’s system or order forms, they encrypt that information using secure socket layer technology (SSL). To learn more about SSL, follow this link http://www.verisign.com/.  </p>\r\n  <p>(vii)\tWe follow generally accepted industry standards to protect the personal information and email address submitted to us, both during transmission and once we receive it. No method of transmission over the Internet, or method of electronic storage, is 100% secure, however. Therefore, while we strive to use commercially acceptable means to protect your Personal Information and email address, we cannot guarantee its absolute security.</p>\r\n  <p>(viii)\tIf you have any questions about security on our Website you can email us at: ____________________.</p>\r\n  <p>7.\tHOW YOU CAN ACCESS YOUR INFORMATION</p>\r\n  <p>We want to maintain the Information including Personal Information and Sensitive Personal Data or Information provided by you accurately.</p>\r\n  <p><b>WE SHALL NOT BE RESPONSIBLE FOR THE AUTHENTICITY OF THE INFORMATION OR SENSITIVE PERSONAL DATA OR INFORMATION SUPPLIED BY YOU AND ALL LIABILITIES IN RESPECT OF THE LOSSES WHICH MAY OCCUR DUE TO SUCH INCORRECT PERSONAL INFORMATION OR SENSITIVE PERSONAL DATA OR INFORMATION WILL BE SOLELY ATTRIBUTABLE TO YOU.</b></p>\r\n  <p>8.\tSELECTING YOUR COMMUNICATION PREFERENCES</p>\r\n  <p>(i)\tYou may choose to receive or not receive marketing communications from us by indicating your preferences through an email at _______________________for the website. All marketing by us or any third party on behalf of us, will be conducted in accordance with applicable laws of your country.</p>\r\n  <p>(ii)\tPlease allow up to 10 business days for your email preferences to become effective.</p>\r\n  <p>(iii)\tAs some promotions, such as direct catalogues, are developed in advance, you may receive marketing communication after receiving your request preference.</p>\r\n  <p>9.\tHOW WE SECURE YOUR INFORMATION </p>\r\n  <p>We are committed to protecting the security of your Information including Personal Information and Sensitive Personal Data or Information. We use a variety of security technologies and procedures to help protect your Information, Personal Information and Sensitive Personal Data or Information from unauthorized access, usage and disclosure, such as encryption, passwords, physical security, etc. While we strive to protect such information, we cannot ensure or warrant or guarantee that your Information or private communications you transmit to us will always remain private or confidential, and you do so at your own risk. </p>\r\n  <p>10.\tCOLLECTION AND USE OF CHILDREN'S INFORMATION</p>\r\n  <p>We seriously consider the privacy of children. If you are under 18 years of age, please do not submit any Personal Information and Sensitive Personal Data or Information through our websites without the consent and / or participation of a parent or guardian. We cannot ensure, warrant or guarantee that your Information or private communications or information directly transmitted/ submitted by a child under 18 years of age, will always remain private or confidential, and you do so at your own risk. </p>\r\n  <p>11.\tCHOICES AVAILABLE REGARDING COLLECTION, USE AND DISTRIBUTION OF INFORMATION</p>\r\n  <p>(i)\tYou can accept or decline the cookies. All websites that are customizable require that you accept cookies. For information on how to set your browser to alert you to cookies, or to reject cookies, go to http://www.cookiecentral.com/</p>\r\n  <p>(ii)\tCookies: A cookie is a small text file that is stored on a user's computer for record-keeping purposes. We use cookies on this Website. We do link the information we store in cookies to any Personal Information you submit while on our Website.</p>\r\n  <p>(iii)\tWe use both session ID cookies and persistent cookies. We use session cookies to make it easier and secure for you to navigate our Website. A session ID cookie expires when you close your browser. A persistent cookie remains on your hard drive for an extended period of time. You can remove persistent cookies by following directions provided in your Internet browsers “help” file. Reference for cookies can be found at http://www.cookiecentral.com/</p>\r\n  <p>(iv)\tWe use session cookies to store the secure session and browsing preferences of the user. We set a persistent cookie to store your username and interests so you don't have to enter it more than once. Persistent cookies also enable us to track and target the interests of our users to enhance the experience on our Website.</p>\r\n  <p>(v)\tIf you reject cookies, you may still use our website, but your ability to use some areas of our website, will be limited. </p>\r\n  <p>(vi)\tUnless you voluntarily identify yourself (through registration or social sign-up, for example), we will have no way of knowing who you are, even if we assign a cookie to your computer. The only personal information a cookie can contain is information you supply. A cookie cannot read data off your hard drive.</p>\r\n  <p> (vii)\tSome of our business partners (e.g., advertisers) set cookies while delivering banners on our Website. We have no access to or control over these cookies. .</p>\r\n  <p>(vii)\tWe do use cookies on point of collection pages of email address but we do not use them in emails.</p>\r\n  <p>(viii)\tOur web servers automatically collect limited information about your computer's/mobile phone’s connection to the Internet, including your IP address/Android or iOS token , when you visit or use our Website. (Your IP address is a number that lets computers attached to the Internet know where to send you data such as the web pages you view.) Your IP address does not identify you personally. We use this information to deliver our web pages to you upon request, to tailor our Website to the interests of our customers, to measure traffic within our website and let advertisers know the geographic locations from where our visitors come.</p>\r\n  <p>(ix)\tOur Website may include links to other websites. Such websites are governed by their respective privacy policies, which are beyond our control. Once you leave our servers (you can know where you are by checking the URL in the location bar on your browser), use of any information you provide is governed by the privacy policy of the operator of the website you are visiting. That policy may differ from ours. If you can't find the privacy policy of any of these websites via a link from the website's homepage, you should contact the website directly for more information.</p>\r\n  <p>12.\tVOLUNTARY DISCLOSURE OF INFORMATION</p>\r\n  <p>(i)\tProviding us with Personal Information is entirely voluntary. </p>\r\n  <p>(ii)\tYou may change your interests at any time and may opt-in or opt-out of any marketing / promotional / newsletters mailings. </p>\r\n  <p>(iii)\tUpon request, we will remove / block your Personal Information from our database, thereby cancelling your registration. However, your Information may remain stored in archive on our servers even after the deletion or the termination of your account.</p>\r\n  <p>(v)\tIf we plan to use your Personal Information for any commercial purposes, we will notify you at the time we collect that information and allow you to opt-out of having your information used for those purposes. </p>\r\n  <p>13.\tSECURITY PROCEDURES TO PROTECT INFORMATION FROM LOSS, MISUSE OR ALTERATION</p>\r\n  <p>(i)\tTo protect your privacy and security, we will verify your identity, to the best of our abilities, beforegranting access or making changes to your Personal Information. </p>\r\n  <p>(ii)\tTo protect against the loss, misuse and alteration of the information under our control, we have in place appropriate physical, electronic and managerial procedures. For example, our servers are accessible only to authorized personnel and your information is shared with respective personnel on need to know basis to complete the transaction and to provide the Content requested by you. </p>\r\n  <p>(iii)\tAlthough we will endeavour to safeguard the confidentiality of your Personal Information, transmissions made by means of the Internet cannot be made absolutely secure. By using our  Website, you agree that we will have no liability for disclosure of your information due to errors in transmission or unauthorized acts of third parties.</p>\r\n  <p>(iv)\tWe follow generally accepted industry standards to protect the Personal Information and email addresses submitted to us, both during transmission and once we receive it. No method of transmission over the Internet, or method of electronic storage, is 100% secure, however. Therefore, while we strive to use commercially acceptable means to protect your personal information and email address, we cannot guarantee its absolute security.</p>\r\n  <p>(v)\tIf you have any questions about security on our Website, you can send email us at _____________________.</p>\r\n  <p>(vi)\tAll information gathered on the Site is securely stored within a controlled database. The database is stored on servers secured behind a firewall; access to the servers is password-protected and is strictly limited. However, as effective as our security measures are, no security system is impenetrable. We cannot guarantee the security of our database, nor can we guarantee that information you supply will not be intercepted while being transmitted to us over the Internet and, of course, any information you include in a posting to the discussion areas is available to anyone with internet access.</p>\r\n  <p>(vii)\tHowever, the internet is an ever evolving medium. We may revise our Policy from time to time to incorporate necessary changes. Of course, our use of any information we gather will always be consistent with the policy under which the information was collected, regardless of what the new policy may be.  </p>\r\n  <p>(viii)\tWe use third-party advertising companies to serve ads when you visit our website. These companies may use information (not including your name, address, email address or telephone number) about your visits to this and other websites in order to provide advertisements about goods and Content of interest to you.</p>\r\n  <p>14.\tTHIRD-PARTY WEBSITES AND CONTENT</p>\r\n  <p>Be aware that other websites that can be accessed through our website may collect your Information, Personal Information and Sensitive Personal Data or Information. The information practices of those third-party websites are not covered by this Privacy Statement. We will not be responsible for any breach of your privacy or any other loss arising to you as a result of collection of you Information, Personal Information and Sensitive Personal Data or Information by such websites. </p>\r\n  <p>Please be aware that, in providing Content on our behalf, our business partners may collect information about you to provide Content on behalf of us.</p>\r\n  <p>15.\tPOLICY UPDATES</p>\r\n  <p>(i)\tWe reserve the right to change or update this Policy at any time by placing a prominent notice on our website. Such changes shall be effective immediately upon posting to this website. </p>\r\n  <p>(ii)\tIf we make changes to this Privacy Statement or we make any material changes to the way we will use your Information including Personal Information and Sensitive Personal Data or Information, we will review the Privacy Statement to reflect such changes and also the effective date of the declaration, included at the end of this section. We reserve the right to modify this privacy statement at any time, so please review it frequently. If we make material changes to this policy, we will notify you on our homepage. </p>\r\n  <p>If we decide to make changes in our email practices, we will post those changes to this privacy policy, the homepage, and other places we deem appropriate so that you are aware of what information we collect, how we use it, and under what circumstances, if any, we disclose it.</p>\r\n  <p>We encourage you to periodically review this Privacy Statement to stay informed about how we are protecting your Information including Personal Information and Sensitive Personal Data or Information.</p>\r\n  <p>16.\tCONTACT INFORMATION</p>\r\n  <p>If you have any questions about this Site or our privacy policies, visit the front page of our website, scroll to the bottom, click 'contact us' and send an email.</p>\r\n \r\n \r\n \r\n \r\n  \r\n  \r\n  </div>\r\n      </div>\r\n    </section>";
+    /***/
+  },
+
+  /***/
+  "./node_modules/raw-loader/dist/cjs.js!./src/app/product-pricing/product-pricing.component.html":
+  /*!******************************************************************************************************!*\
+    !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/product-pricing/product-pricing.component.html ***!
+    \******************************************************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function node_modulesRawLoaderDistCjsJsSrcAppProductPricingProductPricingComponentHtml(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "<section class=\"contact-page-area section-gap\">\r\n    \r\n        <tabs >\r\n          <tab tabTitle=\"Images\" >\r\n          \t<!-- Start Container -->\t\t\t\r\n          \t\t<div class=\"container\" >\r\n          <div class=\"row justify-content-center\">\r\n\t<!--Monthly packs!-->\r\n\t<div class=\"col-md-3 pricing hvr-float\">\r\n\t\t<div class=\"klausheader\">\r\n        <span class=\"sub_plans\">Subscriptions Plans</span>\r\n\t\t<h5>Monthly Packs</h5>\r\n\t\t<span class=\"klaus_package\">Royalty Free Images</span>\r\n\t\t<!--<span class=\"klaus_price skinonecolor\">19,95 $</span>\r\n\t\t<p>/per month</p>-->\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"klaus_features skinoneklaus_features\">\r\n\t\t<li><input type=\"radio\" /> 10 images => INR 2000.00 </li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 25 images => INR 3750.00</li>\r\n\t\t<li><input type=\"radio\" /> 50 images => INR 6000.00</li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 100 images => INR 9000.00</li>\r\n\t\t<li><input type=\"radio\" /> 200 images => INR 8000.00</li>\r\n        <li class=\"klaus_plancolor\"><input type=\"radio\" /> 780 images => INR 15,600.00</li>\r\n\t\t</div>\t\r\n\t\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Monthly Packs!-->\r\n\t\r\n\t<!--Annual Packs!-->\r\n\t<div class=\"col-md-3 pricing hvr-float\">\r\n\t\t<div class=\"klausheader\">\r\n        <span class=\"sub_plans\">Subscriptions Plans</span>\r\n\t\t<h5>Annual Packs</h5>\r\n\t\t<span class=\"klaus_package\">Royalty Free Images</span>\r\n\t\t<!--<span class=\"klaus_price skinonecolor\">29,95 $</span>\r\n\t\t<p>/per month</p>-->\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"klaus_features skinoneklaus_features\">\r\n\t\t<li><input type=\"radio\" /> 10 images => INR 19200.00 </li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 25 images => INR 33,750.00</li>\r\n\t\t<li><input type=\"radio\" /> 50 images => INR 50,400.00</li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 100 images => INR 70,200.00</li>\r\n\t\t<li><input type=\"radio\" /> 200 images => INR 57600.00</li>\r\n        <li class=\"klaus_plancolor\"><input type=\"radio\" /> 780 images => INR 1,12,320.00</li>\r\n\t\t</div>\t\r\n\t\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Annual Packs!-->\r\n\t\r\n\t<!--Begin Plan Business!-->\r\n\t<!--<div class=\"col-md-3 pricing hvr-float\">\r\n\t\t<div class=\"klausheader\">\r\n\t\t<div class=\"klaus_featured skinonebg\">Featured</div>\r\n\t\t<h5>Business</h5>\r\n\t\t<span class=\"klaus_package\">package</span>\r\n\t\t<span class=\"klaus_price skinonecolor\">39,95 $</span>\r\n\t\t<p>/per month</p>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"klaus_features skinoneklaus_features\">\r\n\t\t<li><i class=\"fa fa-check-circle\"></i> Design + HTML5 </li>\r\n\t\t<li class=\"klaus_plancolor\"><i class=\"fa fa-check-circle\"></i> One Page Scroll-down Layout</li>\r\n\t\t<li><i class=\"fa fa-check-circle\"></i> Pricing is for 5 vert. sections</li>\r\n\t\t<li class=\"klaus_plancolor\"><i class=\"fa fa-times-circle\"></i> Responsive / Mobile Ready</li>\r\n\t\t<li><i class=\"fa fa-times-circle\"></i> Bootstrap Framework</li>\r\n\t\t<li class=\"klaus_plancolor\"><i class=\"fa fa-times-circle\"></i> CSS3 &amp; jQuery Powered</li>\r\n\t\t</div>\t\r\n\t\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote\"><li><a href=\"http://bryanmaxim.com/envato/klaus/preview/klaus-v1.html#\">GET A QUOTE</a></li></div>\r\n\t</div>-->\r\n\t<!--End Plan Business!-->\r\n\t\r\n\t<!--Download Within a Year!-->\r\n\t<div class=\"col-md-3 pricing skinoneultimate hvr-float\">\r\n\t\t<div class=\"klausheader skinoneucolor\">\r\n        <span class=\"down_plans\">Download Packs</span>\r\n\t\t<h5>Download Within a Year</h5>\r\n\t\t<span class=\"klaus_package\">Royalty Free Images</span>\r\n\t\t<!--<span class=\"klaus_price skinonecolor\">49,95 $</span>\r\n\t\t<p>/per month</p>-->\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"klaus_features skinoneklaus_features skinoneucolor\">\r\n\t\t<li><input type=\"radio\" /> 10 images => INR 3550.00 </li>\r\n\t\t<li class=\"skinoneklaus_plancolor\"><input type=\"radio\" /> 25 images => INR 16,500.00</li>\r\n\t\t<li><input type=\"radio\" /> 50 images => INR 31,500.00</li>\r\n\t\t<li class=\"skinoneklaus_plancolor\"><input type=\"radio\" /> 100 images => INR 56,800.00</li>\r\n\t\t<li><input type=\"radio\" /> 200 images => INR 99,400.00</li>\r\n        <li class=\"skinoneklaus_plancolor\"><input type=\"radio\" /> 500 images => INR 1,95,500.00</li>\r\n\t\t</div>\t\r\n\t\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote skinoneucolorget\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Download Within a Year!-->\r\n    </div>\r\n\t\r\n</div>\r\n\t\t\t<!--End Container!-->\r\n           </tab>\r\n          <tab tabTitle=\"Footages\">\r\n          \t<!-- Start Container -->\t\t\r\n          \t\t<div class=\"container\" >\r\n          <div class=\"row justify-content-center\">\r\n\t<!--Monthly packs!-->\r\n\t<div class=\"col-md-3 pricing hvr-float\" style=\"height: 365px;\">\r\n\t\t<div class=\"klausheader\" style=\"height: 110px;\">\r\n\t\t<h5>HD(1080) Footages</h5>\r\n\t\t</div>\r\n\t\t<div class=\"klaus_features skinoneklaus_features\">\r\n\t\t<li><input type=\"radio\" /> 5 Footages => INR 37,500.00 </li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 10 Footages => INR 67,000.00</li>\r\n\t\t<li><input type=\"radio\" /> 25 Footages => INR 1,40,000.00</li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 50 Footages => INR 2,50,000.00</li>\r\n\t\t</div>\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Monthly Packs!-->\r\n\t\r\n\t<!--Annual Packs!-->\r\n\t<div class=\"col-md-3 pricing hvr-float\" style=\"height: 365px;\">\r\n\t\t<div class=\"klausheader\" style=\"height: 110px;\">\r\n\t\t<h5>4K Footages</h5>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"klaus_features skinoneklaus_features\">\r\n\t\t<li><input type=\"radio\" /> 5 Footages => INR 66,000.00 </li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 10 Footages => INR 1,24,000.00</li>\r\n\t\t<li><input type=\"radio\" /> 25 Footages => INR 2,67,500.00</li>\r\n\t\t<li class=\"klaus_plancolor\"><input type=\"radio\" /> 50 Footages => INR 5,00,000.00</li>\r\n\t\t</div>\r\n\t\t<div class=\"klaus_getaquote skinonegetquote\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Annual Packs!-->\r\n\t<!--Download Within a Year!-->\r\n\t<div class=\"col-md-3 pricing skinoneultimate hvr-float\" style=\"height: 365px;\">\r\n\t\t<div class=\"klausheader skinoneucolor\" style=\"height: 110px;\">\r\n\t\t<h5>Single Purchase</h5>\r\n\t\t</div>\r\n\t\t<div class=\"klaus_features skinoneklaus_features skinoneucolor\">\r\n\t\t<li><input type=\"radio\" /> HD Footage => INR 11,500.00 </li>\r\n\t\t<li class=\"skinoneklaus_plancolor\"><input type=\"radio\" /> 4K Footage => INR 16,500.00</li>\r\n        <li></li>\r\n        <li></li>\r\n\t\t</div>\t\r\n\t\t\r\n\t\t<div class=\"klaus_getaquote skinonegetquote skinoneucolorget\"><li><a href=\"\">BUY NOW</a></li></div>\r\n\t</div>\r\n\t<!--End Download Within a Year!-->\r\n    </div>\r\n\t\r\n</div>\r\n\t\t\t<!--End Container!-->\r\n          </tab>\r\n        </tabs>\r\n\t\r\n</section>";
     /***/
   },
 
@@ -1447,6 +1467,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
     /*! ./change-password/change-password.component */
     "./src/app/change-password/change-password.component.ts");
+    /* harmony import */
+
+
+    var _product_pricing_product_pricing_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! ./product-pricing/product-pricing.component */
+    "./src/app/product-pricing/product-pricing.component.ts");
 
     var routes = [// { path: '/', redirectTo: '', pathMatch: 'full' },
     {
@@ -1515,6 +1541,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       path: 'change-password',
       component: _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_23__["ChangePasswordComponent"]
+    }, {
+      path: 'product-pricing',
+      component: _product_pricing_product_pricing_component__WEBPACK_IMPORTED_MODULE_24__["ProductPricingComponent"]
     }];
 
     var AppRoutingModule = function AppRoutingModule() {
@@ -1934,63 +1963,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
-    /*! @angular/cdk/layout */
-    "./node_modules/@angular/cdk/esm2015/layout.js");
-    /* harmony import */
-
-
-    var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
-    /*! @angular/material/toolbar */
-    "./node_modules/@angular/material/esm2015/toolbar.js");
-    /* harmony import */
-
-
-    var _angular_material_button__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
-    /*! @angular/material/button */
-    "./node_modules/@angular/material/esm2015/button.js");
-    /* harmony import */
-
-
-    var _angular_material_sidenav__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
-    /*! @angular/material/sidenav */
-    "./node_modules/@angular/material/esm2015/sidenav.js");
-    /* harmony import */
-
-
-    var _angular_material_icon__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
-    /*! @angular/material/icon */
-    "./node_modules/@angular/material/esm2015/icon.js");
-    /* harmony import */
-
-
-    var _angular_material_list__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(
-    /*! @angular/material/list */
-    "./node_modules/@angular/material/esm2015/list.js");
-    /* harmony import */
-
-
-    var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(
+    var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
     /*! ngx-perfect-scrollbar */
     "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
     /* harmony import */
 
 
-    var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
+    var _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
     /*! ./fail-order/fail-order.component */
     "./src/app/fail-order/fail-order.component.ts");
     /* harmony import */
 
 
-    var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
+    var _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
     /*! ./change-reset-password/change-reset-password.component */
     "./src/app/change-reset-password/change-reset-password.component.ts");
     /* harmony import */
 
 
-    var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
+    var _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
     /*! ./change-password/change-password.component */
-    "./src/app/change-password/change-password.component.ts"); //sidebar
+    "./src/app/change-password/change-password.component.ts");
+    /* harmony import */
+
+
+    var _product_pricing_product_pricing_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
+    /*! ./product-pricing/product-pricing.component */
+    "./src/app/product-pricing/product-pricing.component.ts"); //sidebar
     //sidebar end
     // Configs 
 
@@ -2020,20 +2019,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     };
 
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"], _angular_http__WEBPACK_IMPORTED_MODULE_5__["HttpModule"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__["NgbModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], ngx_spinner__WEBPACK_IMPORTED_MODULE_26__["NgxSpinnerModule"], angular_tabs_component__WEBPACK_IMPORTED_MODULE_31__["TabModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_27__["NoopAnimationsModule"], angular_6_social_login__WEBPACK_IMPORTED_MODULE_33__["SocialLoginModule"], _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_35__["LayoutModule"], _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_36__["MatToolbarModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_37__["MatButtonModule"], _angular_material_sidenav__WEBPACK_IMPORTED_MODULE_38__["MatSidenavModule"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_39__["MatIconModule"], _angular_material_list__WEBPACK_IMPORTED_MODULE_40__["MatListModule"], ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_41__["PerfectScrollbarModule"] // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"], _angular_http__WEBPACK_IMPORTED_MODULE_5__["HttpModule"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__["NgbModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], ngx_spinner__WEBPACK_IMPORTED_MODULE_26__["NgxSpinnerModule"], angular_tabs_component__WEBPACK_IMPORTED_MODULE_31__["TabModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_27__["NoopAnimationsModule"], angular_6_social_login__WEBPACK_IMPORTED_MODULE_33__["SocialLoginModule"], ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_35__["PerfectScrollbarModule"] // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
       // and returns simulated server responses.
       // Remove it when a real server is ready to receive requests.
       // HttpClientInMemoryWebApiModule.forRoot(
       //   InMemoryDataService, { dataEncapsulation: false }
       // )
       ],
-      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_42__["FailOrderComponent"], _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_43__["ChangeResetPasswordComponent"], _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_44__["ChangePasswordComponent"]],
+      declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"], _heroes_heroes_component__WEBPACK_IMPORTED_MODULE_10__["HeroesComponent"], _hero_detail_hero_detail_component__WEBPACK_IMPORTED_MODULE_9__["HeroDetailComponent"], _messages_messages_component__WEBPACK_IMPORTED_MODULE_12__["MessagesComponent"], _hero_search_hero_search_component__WEBPACK_IMPORTED_MODULE_11__["HeroSearchComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"], _header_header_component__WEBPACK_IMPORTED_MODULE_14__["HeaderComponent"], _about_us_about_us_component__WEBPACK_IMPORTED_MODULE_15__["AboutUsComponent"], _sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_16__["SignUpComponent"], _wishlist_wishlist_component__WEBPACK_IMPORTED_MODULE_17__["WishlistComponent"], _contact_us_contact_us_component__WEBPACK_IMPORTED_MODULE_19__["ContactUsComponent"], _terms_and_conditions_terms_and_conditions_component__WEBPACK_IMPORTED_MODULE_20__["TermsAndConditionsComponent"], _privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_21__["PrivacyPolicyComponent"], _licence_agreement_licence_agreement_component__WEBPACK_IMPORTED_MODULE_22__["LicenceAgreementComponent"], _login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"], _checkout_checkout_component__WEBPACK_IMPORTED_MODULE_24__["CheckoutComponent"], _contributor_sign_up_contributor_sign_up_component__WEBPACK_IMPORTED_MODULE_25__["ContributorSignUpComponent"], _order_confirmation_order_confirmation_component__WEBPACK_IMPORTED_MODULE_28__["OrderConfirmationComponent"], _pricing_pricing_component__WEBPACK_IMPORTED_MODULE_29__["PricingComponent"], _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_30__["UserProfileComponent"], _reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"], _lightbox_lightbox_component__WEBPACK_IMPORTED_MODULE_34__["LightboxComponent"], _fail_order_fail_order_component__WEBPACK_IMPORTED_MODULE_36__["FailOrderComponent"], _change_reset_password_change_reset_password_component__WEBPACK_IMPORTED_MODULE_37__["ChangeResetPasswordComponent"], _change_password_change_password_component__WEBPACK_IMPORTED_MODULE_38__["ChangePasswordComponent"], _product_pricing_product_pricing_component__WEBPACK_IMPORTED_MODULE_39__["ProductPricingComponent"]],
       exports: [_login_login_component__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"]],
       providers: [{
         provide: angular_6_social_login__WEBPACK_IMPORTED_MODULE_33__["AuthServiceConfig"],
         useFactory: getAuthServiceConfigs
       }, {
-        provide: ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_41__["PERFECT_SCROLLBAR_CONFIG"],
+        provide: ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_35__["PERFECT_SCROLLBAR_CONFIG"],
         useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
       }],
       bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
@@ -4353,6 +4352,42 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var category = this.route.snapshot.paramMap.get('cat');
           window.location.href = link + pid + '/' + pweb + '/' + prod_type.toLowerCase() + '/' + category.toLowerCase();
         }
+      }, {
+        key: "download",
+        value: function download(productinfo, cartproduct, total, extended, type) {
+          var _this31 = this;
+
+          if (cartproduct.length == 0) {
+            alert("Please select size of product !!");
+            return false;
+          }
+
+          this.loadingData = true;
+          this.token = localStorage.getItem('currentUser');
+          var cartval = {
+            "product_info": productinfo,
+            "selected_product": cartproduct,
+            "total": total,
+            "extended": extended,
+            "token": this.token,
+            "type": type
+          };
+          this.heroService.download(cartval).subscribe(function (data) {
+            console.log(data);
+
+            _this31.checkoutArray.push(cartval);
+
+            if (data["status"] == '1') {
+              _this31.loadingData = false;
+              localStorage.setItem('checkoutAray', _this31.checkoutArray);
+
+              _this31.router.navigate(['/cart']);
+            } else {
+              _this31.loadingData = false;
+              alert(data["message"]);
+            }
+          });
+        }
       }]);
 
       return HeroDetailComponent;
@@ -4516,7 +4551,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function HeroSearchComponent(heroService, route, dataHelper, myElement, router, spinner, authenticationService) {
-        var _this31 = this;
+        var _this32 = this;
 
         _classCallCheck(this, HeroSearchComponent);
 
@@ -4565,14 +4600,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.buttonName = 'Show';
 
         this.onPageChange = function (pageNumber) {
-          var el = _this31.myElement.nativeElement.querySelector('main');
+          var el = _this32.myElement.nativeElement.querySelector('main');
 
           el.scrollIntoView();
         };
 
         this.searchData = new _hero__WEBPACK_IMPORTED_MODULE_3__["Search"]();
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this31.currentUser = x;
+          _this32.currentUser = x;
         });
       } // Push a search term into the observable stream.
 
@@ -4585,31 +4620,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this32 = this;
+          var _this33 = this;
 
           aos__WEBPACK_IMPORTED_MODULE_9__["init"]();
           this.sub = this.route.queryParams.subscribe(function (params) {
-            _this32.productType = params.type;
-            _this32.keywordEle = params.keyword;
-            _this32.loadingData = true; //  this.spinner.show();
+            _this33.productType = params.type;
+            _this33.keywordEle = params.keyword;
+            _this33.loadingData = true; //  this.spinner.show();
 
-            _this32.searchData.productType = params.type;
-            _this32.searchData.search = params.keyword;
+            _this33.searchData.productType = params.type;
+            _this33.searchData.search = params.keyword;
 
             if (!Object(util__WEBPACK_IMPORTED_MODULE_8__["isNullOrUndefined"])(params.sideBar)) {
-              _this32.sideBarEle = params.sideBar;
+              _this33.sideBarEle = params.sideBar;
             }
 
-            _this32.searchData.letest = 0;
-            _this32.searchData.curated = 1;
-            _this32.searchData.populer = 0;
+            _this33.searchData.letest = 0;
+            _this33.searchData.curated = 1;
+            _this33.searchData.populer = 0;
 
-            _this32.searchAPIRequest();
+            _this33.searchAPIRequest();
           });
           this.heroService.getSearchLeftFilter().subscribe(function (leftsideData) {
             // this.carouselSliderImages = carouselSliderImages; 
             console.log(leftsideData);
-            _this32.leftsideData = leftsideData;
+            _this33.leftsideData = leftsideData;
           });
         }
       }, {
@@ -4622,7 +4657,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchAPIRequest",
         value: function searchAPIRequest() {
-          var _this33 = this;
+          var _this34 = this;
 
           this.searchData.product_people = this.slidebarPeopleMenu.join();
           this.searchData.product_gender = this.slidebarGenderMenu.join();
@@ -4637,18 +4672,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             //  if(aoslSliderImages.hasOwnProperty('code')) {
             //   window.location.href = aoslSliderImages['url']
             //}else {
-            _this33.aoslSliderImages = aoslSliderImages;
-            var type = _this33.aoslSliderImages["0"].product_keywords;
-            _this33.keyword = type.split(',', 9);
-            console.log(_this33.keyword);
+            _this34.aoslSliderImages = aoslSliderImages;
+            var type = _this34.aoslSliderImages["0"].product_keywords;
+            _this34.keyword = type.split(',', 9);
+            console.log(_this34.keyword);
 
-            _this33.maintainAosSlider(); //  this.spinner.hide();
+            _this34.maintainAosSlider(); //  this.spinner.hide();
 
 
-            _this33.loadingData = false; // }
+            _this34.loadingData = false; // }
             // this.maintainSearchData(aoslSliderImages);
           }, function (error) {
-            _this33.loadingData = false;
+            _this34.loadingData = false;
             console.log(error);
             alert('No data found ....');
           });
@@ -4861,7 +4896,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainSearchData",
         value: function maintainSearchData(aoslSliderImages) {
-          var _this34 = this;
+          var _this35 = this;
 
           this.aoslSliderImagesData = aoslSliderImages;
 
@@ -4879,7 +4914,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (this.searchData.search.length > 2) {
             this.aoslSliderImagesData = this.aoslSliderImagesData.filter(function (ele) {
-              return ele.product_title.includes(_this34.name.trim());
+              return ele.product_title.includes(_this35.name.trim());
             });
           }
 
@@ -4888,7 +4923,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "maintainAosSlider",
         value: function maintainAosSlider() {
-          var _this35 = this;
+          var _this36 = this;
 
           var i = 4,
               j = 0;
@@ -4901,7 +4936,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               j = j + 1;
 
               if (j == i) {
-                _this35.dataHelper.shuffleArray(randArr);
+                _this36.dataHelper.shuffleArray(randArr);
 
                 j = 0;
                 mathRandom = Math.floor(Math.random() * 10);
@@ -4938,26 +4973,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this36 = this;
+          var _this37 = this;
 
           console.log(productinfo); //return false;
 
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.api_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this36.loadingData = false;
+              _this37.loadingData = false;
 
-              _this36.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this37.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this36.priceArray = [];
+                  _this37.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this36.router.navigate(['/wishlist']);
+              _this37.router.navigate(['/wishlist']);
             } else {
-              _this36.loadingData = false;
+              _this37.loadingData = false;
               alert(data["message"]);
             }
           });
@@ -5237,7 +5272,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getLogin",
         value: function getLogin(email, password) {
-          var _this37 = this;
+          var _this38 = this;
 
           var url = "".concat(this.heroesUrl, "login");
           return this.http.post(url, {
@@ -5248,7 +5283,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             localStorage.setItem('currentUser', JSON.stringify(user));
             console.log(localStorage.getItem('currentUser.utype'));
 
-            _this37.currentUserSubject.next(user);
+            _this38.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -5256,7 +5291,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "fbLogin",
         value: function fbLogin(userData) {
-          var _this38 = this;
+          var _this39 = this;
 
           var url = "".concat(this.heroesUrl, "fbLogin");
           return this.http.post(url, {
@@ -5265,7 +5300,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
 
-            _this38.currentUserSubject.next(user);
+            _this39.currentUserSubject.next(user);
 
             return user;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
@@ -5273,7 +5308,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "register",
         value: function register(usrData) {
-          var _this39 = this;
+          var _this40 = this;
 
           var url = "".concat(this.heroesUrl, "signup");
           return this.http.post(url, usrData, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (userInfo) {
@@ -5282,7 +5317,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             if (userInfo['status'] == '1') {
               localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
 
-              _this39.currentUserSubject.next(userInfo['userdata']);
+              _this40.currentUserSubject.next(userInfo['userdata']);
             }
 
             return userInfo;
@@ -5344,23 +5379,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getcategoryCarouselImages",
         value: function getcategoryCarouselImages(categoryId) {
-          var _this40 = this;
+          var _this41 = this;
 
           var url = "api/detailPageCarouselImages/?".concat(categoryId);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this40.log("fetched CarouselImages id=".concat(categoryId));
+            return _this41.log("fetched CarouselImages id=".concat(categoryId));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(categoryId))));
         }
       }, {
         key: "getDetailPagedetails",
         value: function getDetailPagedetails(id, webtype, type) {
-          var _this41 = this;
+          var _this42 = this;
 
           console.log(id); //const url = `api/detailPageInfo/?${id}`;
 
           var url = "".concat(this.heroesUrl, "details/").concat(id, "/").concat(webtype, "/").concat(type);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this41.log("fetched detail Page Info id=".concat(id));
+            return _this42.log("fetched detail Page Info id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
       }, {
@@ -5429,11 +5464,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getMarketdeatils",
         value: function getMarketdeatils() {
-          var _this42 = this;
+          var _this43 = this;
 
           var url = "api/marketFreeze";
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this42.log("fetched market Info id");
+            return _this43.log("fetched market Info id");
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id")));
         }
         /** GET heroes from the server */
@@ -5441,10 +5476,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this43 = this;
+          var _this44 = this;
 
           return this.http.get(this.heroesUrl).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this43.log('fetched heroes');
+            return _this44.log('fetched heroes');
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('getHeroes', [])));
         }
         /** GET hero by id. Return `undefined` when id not found */
@@ -5452,7 +5487,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroNo404",
         value: function getHeroNo404(id) {
-          var _this44 = this;
+          var _this45 = this;
 
           var url = "".concat(this.heroesUrl, "/?id=").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (heroes) {
@@ -5461,7 +5496,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (h) {
             var outcome = h ? "fetched" : "did not find";
 
-            _this44.log("".concat(outcome, " hero id=").concat(id));
+            _this45.log("".concat(outcome, " hero id=").concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /** GET hero by id. Will 404 if id not found */
@@ -5469,11 +5504,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHero",
         value: function getHero(id) {
-          var _this45 = this;
+          var _this46 = this;
 
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this45.log("fetched hero id=".concat(id));
+            return _this46.log("fetched hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("getHero id=".concat(id))));
         }
         /* GET heroes whose name contains search term */
@@ -5481,7 +5516,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchHeroes",
         value: function searchHeroes(term) {
-          var _this46 = this;
+          var _this47 = this;
 
           if (!term.trim()) {
             // if not search term, return empty hero array.
@@ -5489,7 +5524,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           return this.http.get("".concat(this.heroesUrl, "/?name=").concat(term)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this46.log("found heroes matching \"".concat(term, "\""));
+            return _this47.log("found heroes matching \"".concat(term, "\""));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('searchHeroes', [])));
         } //////// Save methods //////////
 
@@ -5498,10 +5533,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addHero",
         value: function addHero(hero) {
-          var _this47 = this;
+          var _this48 = this;
 
           return this.http.post(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (newHero) {
-            return _this47.log("added hero w/ id=".concat(newHero.id));
+            return _this48.log("added hero w/ id=".concat(newHero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('addHero')));
         }
         /** DELETE: delete the hero from the server */
@@ -5509,12 +5544,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteHero",
         value: function deleteHero(hero) {
-          var _this48 = this;
+          var _this49 = this;
 
           var id = typeof hero === 'number' ? hero : hero.id;
           var url = "".concat(this.heroesUrl, "/").concat(id);
           return this.http.delete(url, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this48.log("deleted hero id=".concat(id));
+            return _this49.log("deleted hero id=".concat(id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('deleteHero')));
         }
         /** PUT: update the hero on the server */
@@ -5522,10 +5557,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "updateHero",
         value: function updateHero(hero) {
-          var _this49 = this;
+          var _this50 = this;
 
           return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (_) {
-            return _this49.log("updated hero id=".concat(hero.id));
+            return _this50.log("updated hero id=".concat(hero.id));
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError('updateHero')));
         }
         /**
@@ -5538,7 +5573,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "handleError",
         value: function handleError() {
-          var _this50 = this;
+          var _this51 = this;
 
           var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'operation';
           var result = arguments.length > 1 ? arguments[1] : undefined;
@@ -5547,7 +5582,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.error(error); // log to console instead
             // TODO: better job of transforming error for user consumption
 
-            _this50.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
+            _this51.log("".concat(operation, " failed: ").concat(error.message)); // Let the app keep running by returning an empty result.
 
 
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(result);
@@ -5811,6 +5846,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
         }
       }, {
+        key: "download",
+        value: function download(product) {
+          var tokenData = JSON.parse(product.token);
+          var url = "".concat(this.heroesUrl, "download"); // var options = {
+          //     headers: new HttpHeaders()
+          //         .set('Authorization',  `Bearer ${tokenData.access_token}`)
+          //         .set('Content-Type',  `application/json`)
+          // }
+
+          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+          });
+          var options = {
+            headers: headers
+          };
+          return this.http.post(url, {
+            product: product
+          }, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (download) {
+            console.log(download); //this.currentUserSubject.next(cart);
+
+            return download;
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError("unable to get data")));
+        }
+      }, {
         key: "currentUserValue",
         get: function get() {
           return this.currentUserSubject.value;
@@ -6032,16 +6092,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getHeroes",
         value: function getHeroes() {
-          var _this51 = this;
+          var _this52 = this;
 
           this.heroService.getHeroes().subscribe(function (heroes) {
-            return _this51.heroes = heroes;
+            return _this52.heroes = heroes;
           });
         }
       }, {
         key: "add",
         value: function add(name) {
-          var _this52 = this;
+          var _this53 = this;
 
           name = name.trim();
 
@@ -6052,7 +6112,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.heroService.addHero({
             name: name
           }).subscribe(function (hero) {
-            _this52.heroes.push(hero);
+            _this53.heroes.push(hero);
           });
         }
       }, {
@@ -6233,7 +6293,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LightboxComponent(heroService, authenticationService, router) {
-        var _this53 = this;
+        var _this54 = this;
 
         _classCallCheck(this, LightboxComponent);
 
@@ -6245,10 +6305,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this53.currentUser = x;
+          _this54.currentUser = x;
 
-          if (!_this53.currentUser) {
-            _this53.router.navigate(['/']);
+          if (!_this54.currentUser) {
+            _this54.router.navigate(['/']);
           }
         });
       }
@@ -6264,13 +6324,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loaddata",
         value: function loaddata() {
-          var _this54 = this;
+          var _this55 = this;
 
           this.authenticationService.getLightboxItemsData().subscribe(function (data) {
-            _this54.loadingData = false;
+            _this55.loadingData = false;
 
             if (data.status == '1') {
-              _this54.lightBoxListDataItems = data.data;
+              _this55.lightBoxListDataItems = data.data;
             } else {
               alert(data.message);
             } // this.lightBoxListDataItems.forEach(element => {
@@ -6283,17 +6343,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromWishlist",
         value: function removeProductFromWishlist(productinfo) {
-          var _this55 = this;
+          var _this56 = this;
 
           if (confirm('Are you sure?') == true) {
             this.loadingData = true;
             this.authenticationService.removeDataFromWishlist(productinfo).subscribe(function (data) {
-              _this55.loadingData = false;
+              _this56.loadingData = false;
 
               if (data["status"] == '1') {
                 alert(data["message"]);
 
-                _this55.loaddata();
+                _this56.loaddata();
               } else {
                 alert(data["message"]);
               }
@@ -6450,7 +6510,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "socialSignIn",
         value: function socialSignIn(socialPlatform) {
-          var _this56 = this;
+          var _this57 = this;
 
           var socialPlatformProvider;
 
@@ -6470,16 +6530,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(userData.name);
             console.log(userData.email); //fbLogin
 
-            _this56.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
+            _this57.authenticationService.fbLogin(userData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["first"])()).subscribe(function (data) {
               console.log(data);
 
               if (data == undefined) {
                 alert("You are non registered user");
               } else {
-                _this56.closeLoginPopup.emit(true);
+                _this57.closeLoginPopup.emit(true);
               }
             }, function (error) {
-              _this56.loading = false;
+              _this57.loading = false;
             });
           });
         }
@@ -6498,7 +6558,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this57 = this;
+          var _this58 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -6511,15 +6571,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log(data);
 
             if (data == undefined) {
-              _this57.loading = false;
+              _this58.loading = false;
               alert("Please enter correct username or password");
             } else {
               alert("Login Successful");
 
-              _this57.closeLoginPopup.emit(true);
+              _this58.closeLoginPopup.emit(true);
             }
           }, function (error) {
-            _this57.loading = false;
+            _this58.loading = false;
           });
         }
       }, {
@@ -6809,17 +6869,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(OrderConfirmationComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this58 = this;
+          var _this59 = this;
 
           this.loadingData = true;
           this.id = +this.route.snapshot.paramMap.get('id');
           this.authenticationService.getOrderDetails(this.id).subscribe(function (data) {
             if (data.status == 'success') {
-              _this58.OrderDetailData = data.data[0];
-              _this58.loadingData = false;
+              _this59.OrderDetailData = data.data[0];
+              _this59.loadingData = false;
             } else {
               //this.OrderDetailData = data;
-              _this58.loadingData = false;
+              _this59.loadingData = false;
               alert(data.message);
             } //this.spinner.hide();
 
@@ -6931,6 +6991,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function PricingComponent(route, heroService, authenticationService, router, formBuilder) {
+        var _this60 = this;
+
         _classCallCheck(this, PricingComponent);
 
         this.route = route;
@@ -6947,20 +7009,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.paymentShow = false;
         this.selectedData = [];
         this.selectedPlanType = '';
+        this.showloginPopup = false;
+        this.authenticationService.currentUser.subscribe(function (x) {
+          _this60.currentUser = x;
+        });
       }
 
       _createClass(PricingComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this59 = this;
+          var _this61 = this;
 
           this.loadingData = true;
           this.authenticationService.getSubscriptionData().subscribe(function (data) {
-            _this59.loadingData = false;
+            _this61.loadingData = false;
 
             if (data.status == 'success') {
-              _this59.plansData = data.data;
-              _this59.loadingData = false;
+              _this61.plansData = data.data;
+              _this61.loadingData = false;
             } else {
               alert(data.message);
             } //this.spinner.hide();
@@ -6995,69 +7061,77 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this60 = this;
+          var _this62 = this;
 
-          this.loadingData = true;
-          this.submitted = true; //console.log(this.checkoutForm);
-          // stop here if form is invalid
+          if (!this.currentUser) {
+            this.showloginPopup = true;
+          } else {
+            this.loadingData = true;
+            this.submitted = true; //console.log(this.checkoutForm);
+            // stop here if form is invalid
 
-          if (this.planform.invalid) {
-            console.log('at invalid');
-            this.loadingData = false; //console.log(this.checkoutForm);
+            if (this.planform.invalid) {
+              console.log('at invalid');
+              this.loadingData = false; //console.log(this.checkoutForm);
 
-            return;
-          }
-
-          this.paymentShow = true;
-          this.loadingData = false;
-          this.plansData["download_pack"].forEach(function (element) {
-            if (element["package_id"] == _this60.planform.value.plan) {
-              _this60.selectedData = element;
-              _this60.selectedPlanType = 'Download Plan for 1 Year';
+              return;
             }
-          });
-          console.log(this.planform.value); //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
 
-          window.scrollTo(0, 0);
+            this.paymentShow = true;
+            this.loadingData = false;
+            this.plansData["download_pack"].forEach(function (element) {
+              if (element["package_id"] == _this62.planform.value.plan) {
+                _this62.selectedData = element;
+                _this62.selectedPlanType = 'Download Plan for 1 Year';
+              }
+            });
+            console.log(this.planform.value); //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+
+            window.scrollTo(0, 0);
+          }
         }
       }, {
         key: "onSubmitsubscription",
         value: function onSubmitsubscription() {
-          var _this61 = this;
+          var _this63 = this;
 
-          this.loadingData = true;
-          this.submitted2 = true; //console.log(this.checkoutForm);
-          // stop here if form is invalid
+          if (!this.currentUser) {
+            this.showloginPopup = true;
+          } else {
+            this.loadingData = true;
+            this.submitted2 = true; //console.log(this.checkoutForm);
+            // stop here if form is invalid
 
-          if (this.subscriptionform.invalid) {
-            console.log('at invalid');
-            this.loadingData = false; //console.log(this.checkoutForm);
+            if (this.subscriptionform.invalid) {
+              console.log('at invalid');
+              this.loadingData = false; //console.log(this.checkoutForm);
 
-            return;
+              return;
+            }
+
+            this.paymentShow = true;
+            this.loadingData = false;
+            this.plansData["yearly_pack"].forEach(function (element) {
+              if (element["package_id"] == _this63.subscriptionform.value.subplan) {
+                _this63.selectedData = element;
+                _this63.selectedPlanType = 'Anuual Plan';
+              }
+            });
+            this.plansData["monthly_pack"].forEach(function (element) {
+              if (element["package_id"] == _this63.subscriptionform.value.subplan) {
+                _this63.selectedData = element;
+                _this63.selectedPlanType = 'Monthly Plan';
+              }
+            });
+            console.log(this.selectedData); //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+
+            window.scrollTo(0, 0);
           }
-
-          this.paymentShow = true;
-          this.loadingData = false;
-          this.plansData["yearly_pack"].forEach(function (element) {
-            if (element["package_id"] == _this61.subscriptionform.value.subplan) {
-              _this61.selectedData = element;
-              _this61.selectedPlanType = 'Anuual Plan';
-            }
-          });
-          this.plansData["monthly_pack"].forEach(function (element) {
-            if (element["package_id"] == _this61.subscriptionform.value.subplan) {
-              _this61.selectedData = element;
-              _this61.selectedPlanType = 'Monthly Plan';
-            }
-          });
-          console.log(this.selectedData); //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
-
-          window.scrollTo(0, 0);
         }
       }, {
         key: "purchagePlanPayment",
         value: function purchagePlanPayment(paymentgatway) {
-          var _this62 = this;
+          var _this64 = this;
 
           this.loadingData = true;
           console.log(paymentgatway);
@@ -7066,7 +7140,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             // alert("Sucessfully Registered");
             console.log(data2.url);
             console.log(paymentgatway);
-            _this62.loadingData = false;
+            _this64.loadingData = false;
 
             if (paymentgatway == 'atom') {
               window.location.href = data2.url;
@@ -7087,8 +7161,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             // }
 
           }, function (error) {
-            _this62.loadingData = false;
+            _this64.loadingData = false;
           });
+        }
+      }, {
+        key: "hideLoginPopup",
+        value: function hideLoginPopup(event) {
+          this.showloginPopup = false;
+
+          if (event) {}
         }
       }, {
         key: "f",
@@ -7213,6 +7294,85 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/product-pricing/product-pricing.component.css":
+  /*!***************************************************************!*\
+    !*** ./src/app/product-pricing/product-pricing.component.css ***!
+    \***************************************************************/
+
+  /*! exports provided: default */
+
+  /***/
+  function srcAppProductPricingProductPricingComponentCss(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony default export */
+
+
+    __webpack_exports__["default"] = "@charset \"utf-8\";\r\n\r\n.clear {clear:both;}\r\n\r\n/*Klaus Structure*/\r\n\r\n.sub_plans{\r\n\tline-height: 36px;\r\n    width: 100%;\r\n    height: 40px;\r\n    background-color: #fdbf14;\r\n    display: block;\r\n    color: #fff;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n}\r\n\r\n.down_plans{\r\n\tline-height: 36px;\r\n    width: 100%;\r\n    height: 40px;\r\n    background-color: #ffff;\r\n    display: block;\r\n    color: #38b880 !important;\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n}\r\n\r\n.pricing {\r\n\tbackground:#fff;\r\n\theight:570px;\r\n\ttext-align:center;\r\n\tfont-family: 'Titillium Web', sans-serif;\r\n\tcursor:default;\r\n\tpadding:0;\r\n\tmargin-bottom:30px;\r\n\tborder-right:1px solid #f0f0f0;\r\n\tmargin-right: 13px;\r\n}\r\n\r\n.klausheader {height:213px;border-bottom:1px solid #f0f0f0;}\r\n\r\n.pricing h5 {color:#2d2f37;font-size:25px;font-weight:700;text-transform:uppercase;float:left;width:100%;margin:0;padding-top:40px;padding-bottom:10px;}\r\n\r\n.pricing p {color:#9fa5ae;font-size:16px;font-weight:300;float:left;width:100%;margin-top:-10px}\r\n\r\n.klaus_package {color:#2d2f37;font-size:11px;font-weight:300;text-transform:uppercase;float:left;width:100%;text-align:right;}\r\n\r\n.klaus_price {font-size:46px;font-weight:300;float:left;width:100%;margin-top:10px;}\r\n\r\n.klaus_featured {\r\n\twidth:130px;\r\n\theight:25px;\r\n\tposition:absolute;\r\n\ttop:0;\r\n\tleft:50%;\r\n\t-webkit-transform: translateX(-50%);\r\n\t-ms-transform: translateX(-50%);\r\n\t    transform: translateX(-50%);\r\n\tbackground:#ccc;\r\n\tborder-radius:0px 0px 5px 5px;\r\n\tfont-size:15px;\r\n\tpadding-top:1px;\r\n\ttext-transform:uppercase;\r\n\tcolor:#fff;\r\n\tletter-spacing:0.8px;\r\n}\r\n\r\n.klaus_features {\r\n\tborder-bottom:1px solid #f0f0f0;\r\n}\r\n\r\n.klaus_features li {\r\n\theight:40px;\r\n\tlist-style:none;\r\n\ttext-align:left;\r\n\tfont-size:14px;\r\n\tcolor:#54565b;\r\n\tfont-weight:400;\r\n\tpadding-top:10px;\r\n\tpadding-left:10px;\r\n}\r\n\r\n.klaus_features li i {\r\n\tpadding-right:10px;\r\n\tfont-size:16px;\r\n}\r\n\r\n.klaus_plancolor {background:#f4f4f4;}\r\n\r\n.klaus_getaquote {width:180px;height:36px;margin-left:auto;margin-right:auto;}\r\n\r\n.klaus_getaquote li {list-style:none;height:36px;margin-top:28px;}\r\n\r\n.klaus_getaquote li a {color:#fff;float:left;width:100%;height:36px;padding-top:8px;border-radius:5px;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;}\r\n\r\n.klaus_getaquote li a:hover{text-decoration:none;}\r\n\r\n/*Skin v1*/\r\n\r\n.skinonecolor {color:#38b880;}\r\n\r\n.skinonebg {background:#38b880;}\r\n\r\n.skinoneklaus_features i {color:#38b880;}\r\n\r\n.skinonegetquote li a {background:#38b880;}\r\n\r\n.skinonegetquote li a:hover{background:#47cc92;}\r\n\r\n.skinoneultimate {background:#38b880;border:0;color:#fff;}\r\n\r\n.skinoneucolor {border-bottom:1px solid #33ab77;}\r\n\r\n.skinoneucolor h5 {color:#fff;}\r\n\r\n.skinoneucolor span {color:#fff;}\r\n\r\n.skinoneucolor p {color:#fff;}\r\n\r\n.skinoneucolor li {color:#fff;}\r\n\r\n.skinoneucolor i {color:#fff;}\r\n\r\n.skinoneklaus_plancolor {background:#33ab77;}\r\n\r\n.skinoneucolorget li a {background:#fff;color:#3db983;}\r\n\r\n.skinoneucolorget li a:hover {background:#65ebb1;color:#fff;}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJvZHVjdC1wcmljaW5nL3Byb2R1Y3QtcHJpY2luZy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjs7QUFFaEIsUUFBUSxVQUFVLENBQUM7O0FBQ25CLGtCQUFrQjs7QUFDbEI7Q0FDQyxpQkFBaUI7SUFDZCxXQUFXO0lBQ1gsWUFBWTtJQUNaLHlCQUF5QjtJQUN6QixjQUFjO0lBQ2QsV0FBVztJQUNYLGVBQWU7SUFDZixnQkFBZ0I7QUFDcEI7O0FBQ0E7Q0FDQyxpQkFBaUI7SUFDZCxXQUFXO0lBQ1gsWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixjQUFjO0lBQ2QseUJBQXlCO0lBQ3pCLGVBQWU7SUFDZixnQkFBZ0I7QUFDcEI7O0FBQ0E7Q0FDQyxlQUFlO0NBQ2YsWUFBWTtDQUNaLGlCQUFpQjtDQUNqQix3Q0FBd0M7Q0FDeEMsY0FBYztDQUNkLFNBQVM7Q0FDVCxrQkFBa0I7Q0FDbEIsOEJBQThCO0NBQzlCLGtCQUFrQjtBQUNuQjs7QUFFQSxjQUFjLFlBQVksQ0FBQywrQkFBK0IsQ0FBQzs7QUFDM0QsYUFBYSxhQUFhLENBQUMsY0FBYyxDQUFDLGVBQWUsQ0FBQyx3QkFBd0IsQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxnQkFBZ0IsQ0FBQyxtQkFBbUIsQ0FBQzs7QUFDdkosWUFBWSxhQUFhLENBQUMsY0FBYyxDQUFDLGVBQWUsQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLGdCQUFnQjs7QUFDL0YsZ0JBQWdCLGFBQWEsQ0FBQyxjQUFjLENBQUMsZUFBZSxDQUFDLHdCQUF3QixDQUFDLFVBQVUsQ0FBQyxVQUFVLENBQUMsZ0JBQWdCLENBQUM7O0FBQzdILGNBQWMsY0FBYyxDQUFDLGVBQWUsQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLGVBQWUsQ0FBQzs7QUFDbkY7Q0FDQyxXQUFXO0NBQ1gsV0FBVztDQUNYLGlCQUFpQjtDQUNqQixLQUFLO0NBQ0wsUUFBUTtDQUNSLG1DQUFtQztDQUVuQywrQkFBMkI7S0FBM0IsMkJBQTJCO0NBQzNCLGVBQWU7Q0FDZiw2QkFBNkI7Q0FDN0IsY0FBYztDQUNkLGVBQWU7Q0FDZix3QkFBd0I7Q0FDeEIsVUFBVTtDQUNWLG9CQUFvQjtBQUNyQjs7QUFFQTtDQUNDLCtCQUErQjtBQUNoQzs7QUFFQTtDQUNDLFdBQVc7Q0FDWCxlQUFlO0NBQ2YsZUFBZTtDQUNmLGNBQWM7Q0FDZCxhQUFhO0NBQ2IsZUFBZTtDQUNmLGdCQUFnQjtDQUNoQixpQkFBaUI7QUFDbEI7O0FBQ0E7Q0FDQyxrQkFBa0I7Q0FDbEIsY0FBYztBQUNmOztBQUNBLGtCQUFrQixrQkFBa0IsQ0FBQzs7QUFDckMsa0JBQWtCLFdBQVcsQ0FBQyxXQUFXLENBQUMsZ0JBQWdCLENBQUMsaUJBQWlCLENBQUM7O0FBQzdFLHFCQUFxQixlQUFlLENBQUMsV0FBVyxDQUFDLGVBQWUsQ0FBQzs7QUFDakUsdUJBQXVCLFVBQVUsQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLFdBQVcsQ0FBQyxlQUFlLENBQUMsaUJBQWlCLENBQUMsaUNBQWlDLENBQWdDLHlCQUF5QixDQUFDOztBQUNqTSw0QkFBNEIsb0JBQW9CLENBQUM7O0FBR2pELFVBQVU7O0FBRVYsZUFBZSxhQUFhLENBQUM7O0FBQzdCLFlBQVksa0JBQWtCLENBQUM7O0FBQy9CLDBCQUEwQixhQUFhLENBQUM7O0FBQ3hDLHVCQUF1QixrQkFBa0IsQ0FBQzs7QUFDMUMsNEJBQTRCLGtCQUFrQixDQUFDOztBQUMvQyxrQkFBa0Isa0JBQWtCLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQzs7QUFDekQsZ0JBQWdCLCtCQUErQixDQUFDOztBQUNoRCxtQkFBbUIsVUFBVSxDQUFDOztBQUM5QixxQkFBcUIsVUFBVSxDQUFDOztBQUNoQyxrQkFBa0IsVUFBVSxDQUFDOztBQUM3QixtQkFBbUIsVUFBVSxDQUFDOztBQUM5QixrQkFBa0IsVUFBVSxDQUFDOztBQUM3Qix5QkFBeUIsa0JBQWtCLENBQUM7O0FBQzVDLHdCQUF3QixlQUFlLENBQUMsYUFBYSxDQUFDOztBQUN0RCw4QkFBOEIsa0JBQWtCLENBQUMsVUFBVSxDQUFDIiwiZmlsZSI6InNyYy9hcHAvcHJvZHVjdC1wcmljaW5nL3Byb2R1Y3QtcHJpY2luZy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGNoYXJzZXQgXCJ1dGYtOFwiO1xyXG5cclxuLmNsZWFyIHtjbGVhcjpib3RoO31cclxuLypLbGF1cyBTdHJ1Y3R1cmUqL1xyXG4uc3ViX3BsYW5ze1xyXG5cdGxpbmUtaGVpZ2h0OiAzNnB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmRiZjE0O1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBjb2xvcjogI2ZmZjtcclxuICAgIGZvbnQtc2l6ZTogMThweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbn1cclxuLmRvd25fcGxhbnN7XHJcblx0bGluZS1oZWlnaHQ6IDM2cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGhlaWdodDogNDBweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmZmO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBjb2xvcjogIzM4Yjg4MCAhaW1wb3J0YW50O1xyXG4gICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IDYwMDtcclxufVxyXG4ucHJpY2luZyB7XHJcblx0YmFja2dyb3VuZDojZmZmO1xyXG5cdGhlaWdodDo1NzBweDtcclxuXHR0ZXh0LWFsaWduOmNlbnRlcjtcclxuXHRmb250LWZhbWlseTogJ1RpdGlsbGl1bSBXZWInLCBzYW5zLXNlcmlmO1xyXG5cdGN1cnNvcjpkZWZhdWx0O1xyXG5cdHBhZGRpbmc6MDtcclxuXHRtYXJnaW4tYm90dG9tOjMwcHg7XHJcblx0Ym9yZGVyLXJpZ2h0OjFweCBzb2xpZCAjZjBmMGYwO1xyXG5cdG1hcmdpbi1yaWdodDogMTNweDtcclxufVxyXG5cclxuLmtsYXVzaGVhZGVyIHtoZWlnaHQ6MjEzcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2YwZjBmMDt9XHJcbi5wcmljaW5nIGg1IHtjb2xvcjojMmQyZjM3O2ZvbnQtc2l6ZToyNXB4O2ZvbnQtd2VpZ2h0OjcwMDt0ZXh0LXRyYW5zZm9ybTp1cHBlcmNhc2U7ZmxvYXQ6bGVmdDt3aWR0aDoxMDAlO21hcmdpbjowO3BhZGRpbmctdG9wOjQwcHg7cGFkZGluZy1ib3R0b206MTBweDt9XHJcbi5wcmljaW5nIHAge2NvbG9yOiM5ZmE1YWU7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6MzAwO2Zsb2F0OmxlZnQ7d2lkdGg6MTAwJTttYXJnaW4tdG9wOi0xMHB4fVxyXG4ua2xhdXNfcGFja2FnZSB7Y29sb3I6IzJkMmYzNztmb250LXNpemU6MTFweDtmb250LXdlaWdodDozMDA7dGV4dC10cmFuc2Zvcm06dXBwZXJjYXNlO2Zsb2F0OmxlZnQ7d2lkdGg6MTAwJTt0ZXh0LWFsaWduOnJpZ2h0O31cclxuLmtsYXVzX3ByaWNlIHtmb250LXNpemU6NDZweDtmb250LXdlaWdodDozMDA7ZmxvYXQ6bGVmdDt3aWR0aDoxMDAlO21hcmdpbi10b3A6MTBweDt9XHJcbi5rbGF1c19mZWF0dXJlZCB7XHJcblx0d2lkdGg6MTMwcHg7XHJcblx0aGVpZ2h0OjI1cHg7XHJcblx0cG9zaXRpb246YWJzb2x1dGU7XHJcblx0dG9wOjA7XHJcblx0bGVmdDo1MCU7XHJcblx0LXdlYmtpdC10cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTUwJSk7XHJcblx0LW1vei10cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTUwJSk7XHJcblx0dHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01MCUpO1xyXG5cdGJhY2tncm91bmQ6I2NjYztcclxuXHRib3JkZXItcmFkaXVzOjBweCAwcHggNXB4IDVweDtcclxuXHRmb250LXNpemU6MTVweDtcclxuXHRwYWRkaW5nLXRvcDoxcHg7XHJcblx0dGV4dC10cmFuc2Zvcm06dXBwZXJjYXNlO1xyXG5cdGNvbG9yOiNmZmY7XHJcblx0bGV0dGVyLXNwYWNpbmc6MC44cHg7XHJcbn1cclxuXHJcbi5rbGF1c19mZWF0dXJlcyB7XHJcblx0Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2YwZjBmMDtcclxufVxyXG5cclxuLmtsYXVzX2ZlYXR1cmVzIGxpIHtcclxuXHRoZWlnaHQ6NDBweDtcclxuXHRsaXN0LXN0eWxlOm5vbmU7XHJcblx0dGV4dC1hbGlnbjpsZWZ0O1xyXG5cdGZvbnQtc2l6ZToxNHB4O1xyXG5cdGNvbG9yOiM1NDU2NWI7XHJcblx0Zm9udC13ZWlnaHQ6NDAwO1xyXG5cdHBhZGRpbmctdG9wOjEwcHg7XHJcblx0cGFkZGluZy1sZWZ0OjEwcHg7XHJcbn1cclxuLmtsYXVzX2ZlYXR1cmVzIGxpIGkge1xyXG5cdHBhZGRpbmctcmlnaHQ6MTBweDtcclxuXHRmb250LXNpemU6MTZweDtcclxufVxyXG4ua2xhdXNfcGxhbmNvbG9yIHtiYWNrZ3JvdW5kOiNmNGY0ZjQ7fVxyXG4ua2xhdXNfZ2V0YXF1b3RlIHt3aWR0aDoxODBweDtoZWlnaHQ6MzZweDttYXJnaW4tbGVmdDphdXRvO21hcmdpbi1yaWdodDphdXRvO31cclxuLmtsYXVzX2dldGFxdW90ZSBsaSB7bGlzdC1zdHlsZTpub25lO2hlaWdodDozNnB4O21hcmdpbi10b3A6MjhweDt9XHJcbi5rbGF1c19nZXRhcXVvdGUgbGkgYSB7Y29sb3I6I2ZmZjtmbG9hdDpsZWZ0O3dpZHRoOjEwMCU7aGVpZ2h0OjM2cHg7cGFkZGluZy10b3A6OHB4O2JvcmRlci1yYWRpdXM6NXB4Oy13ZWJraXQtdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTstbW96LXRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7dHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTt9XHJcbi5rbGF1c19nZXRhcXVvdGUgbGkgYTpob3Zlcnt0ZXh0LWRlY29yYXRpb246bm9uZTt9XHJcblxyXG5cclxuLypTa2luIHYxKi9cclxuXHJcbi5za2lub25lY29sb3Ige2NvbG9yOiMzOGI4ODA7fVxyXG4uc2tpbm9uZWJnIHtiYWNrZ3JvdW5kOiMzOGI4ODA7fVxyXG4uc2tpbm9uZWtsYXVzX2ZlYXR1cmVzIGkge2NvbG9yOiMzOGI4ODA7fVxyXG4uc2tpbm9uZWdldHF1b3RlIGxpIGEge2JhY2tncm91bmQ6IzM4Yjg4MDt9XHJcbi5za2lub25lZ2V0cXVvdGUgbGkgYTpob3ZlcntiYWNrZ3JvdW5kOiM0N2NjOTI7fVxyXG4uc2tpbm9uZXVsdGltYXRlIHtiYWNrZ3JvdW5kOiMzOGI4ODA7Ym9yZGVyOjA7Y29sb3I6I2ZmZjt9XHJcbi5za2lub25ldWNvbG9yIHtib3JkZXItYm90dG9tOjFweCBzb2xpZCAjMzNhYjc3O31cclxuLnNraW5vbmV1Y29sb3IgaDUge2NvbG9yOiNmZmY7fVxyXG4uc2tpbm9uZXVjb2xvciBzcGFuIHtjb2xvcjojZmZmO31cclxuLnNraW5vbmV1Y29sb3IgcCB7Y29sb3I6I2ZmZjt9XHJcbi5za2lub25ldWNvbG9yIGxpIHtjb2xvcjojZmZmO31cclxuLnNraW5vbmV1Y29sb3IgaSB7Y29sb3I6I2ZmZjt9XHJcbi5za2lub25la2xhdXNfcGxhbmNvbG9yIHtiYWNrZ3JvdW5kOiMzM2FiNzc7fVxyXG4uc2tpbm9uZXVjb2xvcmdldCBsaSBhIHtiYWNrZ3JvdW5kOiNmZmY7Y29sb3I6IzNkYjk4Mzt9XHJcbi5za2lub25ldWNvbG9yZ2V0IGxpIGE6aG92ZXIge2JhY2tncm91bmQ6IzY1ZWJiMTtjb2xvcjojZmZmO31cclxuXHJcblxyXG4iXX0= */";
+    /***/
+  },
+
+  /***/
+  "./src/app/product-pricing/product-pricing.component.ts":
+  /*!**************************************************************!*\
+    !*** ./src/app/product-pricing/product-pricing.component.ts ***!
+    \**************************************************************/
+
+  /*! exports provided: ProductPricingComponent */
+
+  /***/
+  function srcAppProductPricingProductPricingComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ProductPricingComponent", function () {
+      return ProductPricingComponent;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+
+    var ProductPricingComponent =
+    /*#__PURE__*/
+    function () {
+      function ProductPricingComponent() {
+        _classCallCheck(this, ProductPricingComponent);
+      }
+
+      _createClass(ProductPricingComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {}
+      }]);
+
+      return ProductPricingComponent;
+    }();
+
+    ProductPricingComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+      selector: 'app-product-pricing',
+      template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! raw-loader!./product-pricing.component.html */
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/product-pricing/product-pricing.component.html")).default,
+      styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      /*! ./product-pricing.component.css */
+      "./src/app/product-pricing/product-pricing.component.css")).default]
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])], ProductPricingComponent);
+    /***/
+  },
+
+  /***/
   "./src/app/reset-password/reset-password.component.css":
   /*!*************************************************************!*\
     !*** ./src/app/reset-password/reset-password.component.css ***!
@@ -7298,7 +7458,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function ResetPasswordComponent(heroService, formBuilder, authenticationService, router, spinner) {
-        var _this63 = this;
+        var _this65 = this;
 
         _classCallCheck(this, ResetPasswordComponent);
 
@@ -7311,10 +7471,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.submitted = false;
         this.loading = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this63.currentUser = x;
+          _this65.currentUser = x;
 
-          if (_this63.currentUser) {
-            _this63.router.navigate(['/']);
+          if (_this65.currentUser) {
+            _this65.router.navigate(['/']);
           }
         });
       }
@@ -7329,7 +7489,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this64 = this;
+          var _this66 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -7342,7 +7502,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.loadingData = true;
           this.authenticationService.resetPassword(this.resetpasswordForm.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["first"])()).subscribe(function (data2) {
             console.log(data2);
-            _this64.loadingData = false;
+            _this66.loadingData = false;
 
             if (data2.status == '1') {
               // this.otp = true;
@@ -7350,7 +7510,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               // this.success_message = data2.message;
               alert(data2.message);
 
-              _this64.router.navigate(['/']);
+              _this66.router.navigate(['/']);
             } else {
               // this.otp = false;
               // this.success_message = null;
@@ -7358,7 +7518,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               alert(data2.message);
             }
           }, function (error) {
-            _this64.loading = false;
+            _this66.loading = false;
           });
         }
       }, {
@@ -7527,11 +7687,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getCountries",
         value: function getCountries() {
-          var _this65 = this;
+          var _this67 = this;
 
           this.authenticationService.allCountries().subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this65.countryInfo = data2; //console.log('Data:', this.countryInfo);
+            _this67.countryInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7541,12 +7701,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeCountry",
         value: function onChangeCountry(countryValue) {
-          var _this66 = this;
+          var _this68 = this;
 
           //  console.log(this.countryInfo[countryValue]);
           this.authenticationService.allstates(countryValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this66.stateInfo = data2; //console.log('Data:', this.countryInfo);
+            _this68.stateInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7559,12 +7719,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onChangeState",
         value: function onChangeState(stateValue) {
-          var _this67 = this;
+          var _this69 = this;
 
           // console.log(this.stateInfo[stateValue]);
           this.authenticationService.allCities(stateValue).subscribe(function (data2) {
             //this.countryInfo=data2.Countries;
-            _this67.cityInfo = data2; //console.log('Data:', this.countryInfo);
+            _this69.cityInfo = data2; //console.log('Data:', this.countryInfo);
           }, function (err) {
             return console.log(err);
           }, function () {
@@ -7581,7 +7741,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this68 = this;
+          var _this70 = this;
 
           this.submitted = true; // stop here if form is invalid
 
@@ -7599,47 +7759,57 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               alert(data2.message);
               var cartData = localStorage.getItem('beforeLoginCart');
 
-              if (cartData.length > 0) {
-                var finalData = JSON.parse(cartData);
-                _this68.token = localStorage.getItem('currentUser'); //console.log(finalData);
-                // console.log(finalData.productinfo);
+              if (cartData != null) {
+                if (cartData.length > 0) {
+                  var finalData = JSON.parse(cartData);
+                  _this70.token = localStorage.getItem('currentUser'); //console.log(finalData);
+                  // console.log(finalData.productinfo);
 
-                var cartval = {
-                  "product_info": finalData.productinfo,
-                  "selected_product": finalData.cartproduct,
-                  "total": finalData.total,
-                  "extended": finalData.extended,
-                  "token": _this68.token,
-                  "type": finalData.type
-                };
+                  var cartval = {
+                    "product_info": finalData.productinfo,
+                    "selected_product": finalData.cartproduct,
+                    "total": finalData.total,
+                    "extended": finalData.extended,
+                    "token": _this70.token,
+                    "type": finalData.type
+                  };
 
-                _this68.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
-                  console.log(data);
+                  _this70.authenticationService.addcartItemsData(cartval).subscribe(function (data) {
+                    console.log(data);
 
-                  _this68.checkoutArray.push(cartval);
+                    _this70.checkoutArray.push(cartval);
 
-                  if (data["status"] == '1') {
-                    _this68.loadingData = false;
-                    localStorage.setItem('checkoutAray', _this68.checkoutArray);
-                    localStorage.removeItem("beforeLoginCart");
+                    if (data["status"] == '1') {
+                      _this70.loadingData = false;
+                      localStorage.setItem('checkoutAray', _this70.checkoutArray);
+                      localStorage.removeItem("beforeLoginCart");
 
-                    _this68.router.navigate(['/cart']);
-                  } else {
-                    _this68.loadingData = false;
-                    alert(data["message"]);
-                  }
-                });
+                      _this70.router.navigate(['/cart']);
+                    } else {
+                      _this70.loadingData = false;
+                      alert(data["message"]);
+                    }
+                  });
+                } else {
+                  _this70.loadingData = false;
+
+                  _this70.router.navigate(['/']);
+                }
               } else {
-                _this68.loadingData = false;
+                _this70.loadingData = false;
 
-                _this68.router.navigate(['/']);
+                _this70.router.navigate(['/']);
               }
             } else {
-              _this68.loadingData = false;
+              _this70.loadingData = false;
               alert(data2.message);
+
+              if (data2.message == 'User have been already registered') {
+                _this70.router.navigate(['/']);
+              }
             }
           }, function (error) {
-            _this68.loading = false;
+            _this70.loading = false;
           });
         }
       }, {
@@ -7857,7 +8027,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserProfileComponent(route, heroService, location, dataHelper, authenticationService, router, spinner) {
-        var _this69 = this;
+        var _this71 = this;
 
         _classCallCheck(this, UserProfileComponent);
 
@@ -7877,10 +8047,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.orderData = '';
         this.order_items = '';
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this69.currentUser = x;
+          _this71.currentUser = x;
 
-          if (!_this69.currentUser) {
-            _this69.router.navigate(['/']);
+          if (!_this71.currentUser) {
+            _this71.router.navigate(['/']);
           }
         });
       }
@@ -7888,17 +8058,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(UserProfileComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this70 = this;
+          var _this72 = this;
 
           this.loadingData = true;
           var tab = this.route.snapshot.queryParamMap.get("tab");
           this.authenticationService.getUserprofileData().subscribe(function (data) {
-            _this70.profileData = data.data[0];
-            _this70.loadingData = false;
+            _this72.profileData = data.data[0];
+            _this72.loadingData = false;
           }, function (error) {});
           this.authenticationService.getUserOrderData().subscribe(function (orders) {
-            _this70.orderData = orders.data;
-            _this70.loadingData = false;
+            _this72.orderData = orders.data;
+            _this72.loadingData = false;
           }, function (error) {});
           this.tabshow(tab);
         }
@@ -8045,7 +8215,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WishlistComponent(heroService, authenticationService, router, spinner) {
-        var _this71 = this;
+        var _this73 = this;
 
         _classCallCheck(this, WishlistComponent);
 
@@ -8058,10 +8228,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.loadingData = false;
         this.promocodeflag = false;
         this.authenticationService.currentUser.subscribe(function (x) {
-          _this71.currentUser = x;
+          _this73.currentUser = x;
 
-          if (!_this71.currentUser) {
-            _this71.router.navigate(['/']);
+          if (!_this73.currentUser) {
+            _this73.router.navigate(['/']);
           }
         });
       }
@@ -8069,19 +8239,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(WishlistComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this72 = this;
+          var _this74 = this;
 
           //this.spinner.show();
           this.loadingData = true; // console.log(localStorage.getItem('checkoutAray'));
 
           this.authenticationService.getcartItemsData().subscribe(function (data) {
-            _this72.wishListDataItems = data;
+            _this74.wishListDataItems = data;
 
-            _this72.wishListDataItems.forEach(function (element) {
-              _this72.priceArray.push(element["total"]);
+            _this74.wishListDataItems.forEach(function (element) {
+              _this74.priceArray.push(element["total"]);
             });
 
-            _this72.loadingData = false; //this.spinner.hide();
+            _this74.loadingData = false; //this.spinner.hide();
           }, function (error) {});
         }
       }, {
@@ -8104,7 +8274,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "removeProductFromCart",
         value: function removeProductFromCart(productinfo) {
-          var _this73 = this;
+          var _this75 = this;
 
           console.log(productinfo);
 
@@ -8112,16 +8282,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingData = true;
             this.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
               if (data["status"] == '1') {
-                _this73.priceArray = [];
+                _this75.priceArray = [];
 
-                _this73.authenticationService.getcartItemsData().subscribe(function (data) {
-                  _this73.wishListDataItems = data;
+                _this75.authenticationService.getcartItemsData().subscribe(function (data) {
+                  _this75.wishListDataItems = data;
 
-                  _this73.wishListDataItems.forEach(function (element) {
-                    _this73.priceArray.push(element["total"]);
+                  _this75.wishListDataItems.forEach(function (element) {
+                    _this75.priceArray.push(element["total"]);
                   });
 
-                  _this73.loadingData = false;
+                  _this75.loadingData = false;
                 }, function (error) {});
               } else {
                 alert(data["message"]);
@@ -8134,25 +8304,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addtolightbox",
         value: function addtolightbox(productinfo) {
-          var _this74 = this;
+          var _this76 = this;
 
           console.log(productinfo);
           this.loadingData = true;
           this.heroService.addWishListItemsData(productinfo.cart_product_id).subscribe(function (data) {
             if (data["status"] == '1') {
-              _this74.loadingData = false;
+              _this76.loadingData = false;
 
-              _this74.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
+              _this76.heroService.removeCartItemsData(productinfo).subscribe(function (data) {
                 if (data["status"] == '1') {
-                  _this74.priceArray = [];
+                  _this76.priceArray = [];
                 } else {
                   alert(data["message"]);
                 }
               });
 
-              _this74.router.navigate(['/wishlist']);
+              _this76.router.navigate(['/wishlist']);
             } else {
-              _this74.loadingData = false;
+              _this76.loadingData = false;
               alert(data["message"]);
             }
           });

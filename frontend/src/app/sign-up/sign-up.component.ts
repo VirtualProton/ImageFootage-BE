@@ -127,42 +127,50 @@ export class SignUpComponent implements OnInit {
                   if(data2.status=='1'){
                     alert(data2.message);
                       let cartData = localStorage.getItem('beforeLoginCart');
-                      if(cartData.length >0){
-                          let finalData =  JSON.parse(cartData);
-                          this.token = localStorage.getItem('currentUser');
-                          //console.log(finalData);
-                         // console.log(finalData.productinfo);
-                          let cartval = {
-                              "product_info":finalData.productinfo,
-                              "selected_product":finalData.cartproduct,
-                              "total":finalData.total,
-                              "extended":finalData.extended,
-                              "token":this.token,
-                              "type":finalData.type
-                          };
-                          this.authenticationService.addcartItemsData(cartval)
-                              .subscribe(data => {
-                                  console.log(data);
-                                  this.checkoutArray.push(cartval);
-                                  if(data["status"]=='1'){
-                                      this.loadingData =false;
-                                      localStorage.setItem('checkoutAray', this.checkoutArray);
-                                      localStorage.removeItem("beforeLoginCart");
-                                      this.router.navigate(['/cart']);
-                                  }else{
-                                      this.loadingData =false;
-                                      alert(data["message"]);
-                                  }
-
-                              });
-                      }else{
-                          this.loadingData =false;
-                          this.router.navigate(['/']);
-                      }
+					  if(cartData != null){
+						  if(cartData.length >0){
+							  let finalData =  JSON.parse(cartData);
+							  this.token = localStorage.getItem('currentUser');
+							  //console.log(finalData);
+							 // console.log(finalData.productinfo);
+							  let cartval = {
+								  "product_info":finalData.productinfo,
+								  "selected_product":finalData.cartproduct,
+								  "total":finalData.total,
+								  "extended":finalData.extended,
+								  "token":this.token,
+								  "type":finalData.type
+							  };
+							  this.authenticationService.addcartItemsData(cartval)
+								  .subscribe(data => {
+									  console.log(data);
+									  this.checkoutArray.push(cartval);
+									  if(data["status"]=='1'){
+										  this.loadingData =false;
+										  localStorage.setItem('checkoutAray', this.checkoutArray);
+										  localStorage.removeItem("beforeLoginCart");
+										  this.router.navigate(['/cart']);
+									  }else{
+										  this.loadingData =false;
+										  alert(data["message"]);
+									  }
+	
+								  });
+						  }else{
+							  this.loadingData =false;
+							  this.router.navigate(['/']);
+						  }
+					  }else{
+					  	 	 this.loadingData =false;
+							 this.router.navigate(['/']);
+					  }
 
                   }else{
                       this.loadingData =false;
                     alert(data2.message);
+					if(data2.message=='User have been already registered'){
+						this.router.navigate(['/']);
+					}
 
                   }
 

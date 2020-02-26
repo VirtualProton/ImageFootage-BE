@@ -80,7 +80,7 @@ class AuthController extends Controller
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
             }
         }else{
-            return response()->json(['status'=>'0','message' => 'User has been already registered'], 200);
+            return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
         }
     }
 	public function fbLogin(Request $request){
