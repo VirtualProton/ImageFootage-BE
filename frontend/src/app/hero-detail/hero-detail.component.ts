@@ -305,4 +305,37 @@ export class HeroDetailComponent implements OnInit {
         let category = this.route.snapshot.paramMap.get('cat');
         window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'/'+category.toLowerCase();
     }
+
+    download(productinfo,cartproduct,total,extended,type){
+        if(cartproduct.length==0){
+            alert("Please select size of product !!");
+            return false;
+        }
+        this.loadingData = true;
+        this.token = localStorage.getItem('currentUser');
+
+        let cartval = {
+            "product_info":productinfo,
+            "selected_product":cartproduct,
+            "total":total,
+            "extended":extended,
+            "token":this.token,
+            "type":type
+        };
+
+        this.heroService.download(cartval)
+            .subscribe(data => {
+                console.log(data);
+                this.checkoutArray.push(cartval);
+                if(data["status"]=='1'){
+                    this.loadingData =false;
+                    localStorage.setItem('checkoutAray', this.checkoutArray);
+                    this.router.navigate(['/cart']);
+                }else{
+                    this.loadingData =false;
+                    alert(data["message"]);
+                }
+
+            });
+    }
 }

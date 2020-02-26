@@ -294,6 +294,9 @@
     </div>
 </section>
 
+<ng-container *ngIf="showloginPopup">
+    <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ use App\Http\Pond5\FootageApi;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Api;
+use App\Models\UserPackage;
 use CORS;
 use Image;
 
@@ -36,11 +38,11 @@ class MediaController extends Controller
     		// insert watermark at bottom-right corner with 10px offset 
     		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
 			$time=time();
-			$img->save(public_path('images/dump/'.$time.'.jpg'));
-			$img->encode('jpg');
+			//$img->save(public_path('images/dump/'.$time.'.jpg'));
+			//$img->encode('jpg');
 			$type = 'jpg';
 			$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
-			unlink(public_path('images/dump/'.$time.'.jpg'));
+			//unlink(public_path('images/dump/'.$time.'.jpg'));
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
            }
@@ -109,6 +111,24 @@ class MediaController extends Controller
     }
 
 
-    
+    public function download(Request $request){
+        $allFields = $request->all();
+        //print_r($allFields); die;
+        $tokens=json_decode($allFields['product']['token'],true);
+        $id = $tokens['Utype'];
+        $userlist= User::with('plans')
+            ->where('id','=',$id)
+            //->select()
+            ->get()->toArray();
+      if($allFields['product']['type']==3){
+          $footageMedia = new FootageApi();
+          $product_details_data = $footageMedia->download($allFields['product']['selected_product'],$id);
+          return response()->json($product_details_data);
+        }else if($allFields['product']['type']==2){
+          $imageMedia = new ImageApi();
+          $product_details_data = $imageMedia->download($allFields,$id);
+       }
+    }
+
 
 }

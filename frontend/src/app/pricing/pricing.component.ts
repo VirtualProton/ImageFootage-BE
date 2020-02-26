@@ -24,7 +24,12 @@ export class PricingComponent implements OnInit {
   paymentShow:boolean  =false;
   selectedData:any = [];
   selectedPlanType:string ='';
+  public currentUser: any;
+  showloginPopup:boolean=false;
   constructor(private route: ActivatedRoute,private heroService: HeroService, private authenticationService: HeroService, private router: Router,private formBuilder: FormBuilder) {
+      this.authenticationService.currentUser.subscribe(x => {
+          this.currentUser = x;
+      });
   }
 
 
@@ -74,60 +79,67 @@ export class PricingComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loadingData = true;
-    this.submitted = true;
-    //console.log(this.checkoutForm);
-    // stop here if form is invalid
-    if (this.planform.invalid) {
-      console.log('at invalid');
-      this.loadingData = false;
-      //console.log(this.checkoutForm);
-      return;
-    }
-    this.paymentShow  =true;
-    this.loadingData = false;
-    this.plansData["download_pack"].forEach(element => {
+      if (!this.currentUser) {
+          this.showloginPopup = true;
+     }else {
+          this.loadingData = true;
+          this.submitted = true;
+          //console.log(this.checkoutForm);
+          // stop here if form is invalid
+          if (this.planform.invalid) {
+              console.log('at invalid');
+              this.loadingData = false;
+              //console.log(this.checkoutForm);
+              return;
+          }
+          this.paymentShow = true;
+          this.loadingData = false;
+          this.plansData["download_pack"].forEach(element => {
 
-      if(element["package_id"]==this.planform.value.plan){
-        this.selectedData = element;
-        this.selectedPlanType = 'Download Plan for 1 Year';
+              if (element["package_id"] == this.planform.value.plan) {
+                  this.selectedData = element;
+                  this.selectedPlanType = 'Download Plan for 1 Year';
+              }
+          });
+          console.log(this.planform.value);
+
+          //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+          window.scrollTo(0, 0)
       }
-    });
-    console.log(this.planform.value);
-
-    //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
-    window.scrollTo(0, 0)
   }
 
   onSubmitsubscription(){
-    this.loadingData = true;
-    this.submitted2 = true;
-    //console.log(this.checkoutForm);
-    // stop here if form is invalid
-    if (this.subscriptionform.invalid) {
-      console.log('at invalid');
-      this.loadingData = false;
-      //console.log(this.checkoutForm);
-      return;
-    }
-    this.paymentShow  =true;
-    this.loadingData = false;
-    this.plansData["yearly_pack"].forEach(element => {
-       if(element["package_id"]==this.subscriptionform.value.subplan){
-          this.selectedData = element;
-          this.selectedPlanType = 'Anuual Plan';
-        }
-    });
-    this.plansData["monthly_pack"].forEach(element => {
-
-      if(element["package_id"]==this.subscriptionform.value.subplan){
-        this.selectedData = element;
-        this.selectedPlanType = 'Monthly Plan';
+      if (!this.currentUser) {
+          this.showloginPopup = true;
+      }else {
+          this.loadingData = true;
+          this.submitted2 = true;
+          //console.log(this.checkoutForm);
+          // stop here if form is invalid
+          if (this.subscriptionform.invalid) {
+              console.log('at invalid');
+              this.loadingData = false;
+              //console.log(this.checkoutForm);
+              return;
+          }
+          this.paymentShow = true;
+          this.loadingData = false;
+          this.plansData["yearly_pack"].forEach(element => {
+              if (element["package_id"] == this.subscriptionform.value.subplan) {
+                  this.selectedData = element;
+                  this.selectedPlanType = 'Anuual Plan';
+              }
+          });
+          this.plansData["monthly_pack"].forEach(element => {
+              if (element["package_id"] == this.subscriptionform.value.subplan) {
+                  this.selectedData = element;
+                  this.selectedPlanType = 'Monthly Plan';
+              }
+          });
+          console.log(this.selectedData);
+          //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+          window.scrollTo(0, 0)
       }
-    });
-    console.log(this.selectedData);
-    //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
-     window.scrollTo(0, 0)
   }
 
   purchagePlanPayment(paymentgatway){
@@ -169,5 +181,12 @@ export class PricingComponent implements OnInit {
               this.loadingData = false;
             });
   }
+
+    hideLoginPopup(event){
+        this.showloginPopup = false;
+        if(event){
+
+        }
+    }
 
 }

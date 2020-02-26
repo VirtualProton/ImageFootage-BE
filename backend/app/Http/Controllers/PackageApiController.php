@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Package;
+use App\Models\UserPackage;
 use Auth;
 class PackageApiController extends Controller
 {
@@ -24,5 +25,6 @@ class PackageApiController extends Controller
            echo json_encode(["status"=>"success",'data'=>$packagelist]);
        }
   }
+
 
 }

@@ -49,6 +49,36 @@ class FootageApi {
 
  }
 
+  public function download($data,$id){
+        if(count($data)>0){
+            $search_cmd= array();
+           //$search_cmd['command'] = 'search';
+            $search_cmd['bid'] = $data['id'];
+            $search_cmd['v'] = $data['id'];
+            $search_cmd['vs'] = $data['vs'];
+            $search_cmd['oi'] = $data['offset'];
+            $search_cmd['pr'] = $data['pr'];
+            $search_cmd['tr'] = $id;
+            $search_cmd["secret"] = $this->api_secret;
+            $search_cmd["key"] =  $this->api_key;
+            $data_req = json_encode($search_cmd);
+            $curl = curl_init();
+            // Set some options - we are passing in a useragent too here
+            curl_setopt_array($curl, [
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => "https://reseller-preprod.pond5.com/api//download",
+                CURLOPT_USERAGENT => '',
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => $search_cmd
+            ]);
+            // Send the request & save response to $resp
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $contents = json_decode($response, true);
+            return $contents;
+        }
+  }
+
 
 }
 
