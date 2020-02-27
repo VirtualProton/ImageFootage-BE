@@ -47,39 +47,42 @@ class UserContactusController extends Controller
     }
 	public function uchangepassword(Request $request){
 		$old_pass=$request->old_pass;
-		 $password=$request->password;
-		 $cpassword=$request->cpassword;
-		 $user_id=$request->userid;
-		 if(!isset($old_pass) && empty($old_pass)){
+		$password=$request->password;
+		$cpassword=$request->cpassword;
+		$user_id=$request->userid;
+		  //echo Hash::make($old_pass); exit();
+		
+		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
 			 exit();
-		 }
-		 if(!isset($password) && empty($password)){
+		}
+		if(!isset($password) && empty($password)){
 			 return response()->json(['status'=>'0','message' => 'Password is required.'], 200);
 			 exit();
-		 }
-		 if(!isset($cpassword) && empty($cpassword)){
+		}
+		if(!isset($cpassword) && empty($cpassword)){
 			 return response()->json(['status'=>'0','message' => 'Confirm Password is required.'], 200);
 			 exit();
-		 }
-		 if($password!=$cpassword){
+		}
+		if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 			  exit();
-		 }
-		 $check_otp=User::where('id',$user_id)->where('password',Hash::make($old_pass))->first();
-		 if(isset($check_otp) && !empty($check_otp)){
-			 $result=User::where('email',$email)->update(['password'=>Hash::make($password)]);
-			 if($result){
+		}
+		  $credentials = ['id'=>$user_id, 'password'=>$password];
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Email or password does\'t exist'], 401);
+			 exit();
+        }else{
+		$result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
+		if($result){
 				 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
 				 exit();
-			 }else{
+		}else{
 				 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
 			 	 exit();	
-			 }
-		 }else{
-			 return response()->json(['status'=>'0','message' => 'Wrong Old Password'], 200);
-			 exit();			 
-		 }
+		}
+		}
+		
 
 	}
 

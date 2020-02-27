@@ -397,7 +397,8 @@
 <!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 500 images => INR 1,95,500.00</li>-->
                         </div>
                             <span style="color:red;" *ngIf="submitted && f.plan.errors" >Please select a plan</span>
-                        <div class="klaus_getaquote skinonegetquote skinoneucolorget"><li><button type="submit">Buy Now</button></li></div>
+                        <div class="klaus_getaquote skinonegetquote skinoneucolorget"><li><button type="submit" style="background: #fff;
+                        color: #0f960f !important;">Buy Now</button></li></div>
                         </form>
                     </div>
                     <!--End Download Within a Year!-->
@@ -463,7 +464,7 @@
             <!--End Container!-->
         </tab>
 
-        <tab tabTitle="Payment" *ngIf="paymentShow">
+        <tab tabTitle="Payment" *ngIf="paymentShow" id="payment_tab">
             <!-- Start Container -->
             <div class="container" >
                 <div class="row justify-content-center">

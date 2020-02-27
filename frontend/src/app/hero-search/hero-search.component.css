@@ -1,8 +1,9 @@
-
-
 /* HeroSearch private styles */
 body{padding-top: 70px;}
 #mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}
+input[type="radio"], input[type="checkbox"]{
+	height:10px !important;
+}
 
 .search-result li {
   border-bottom: 1px solid gray;
@@ -61,7 +62,7 @@ ul.search-result {
 }
 
 .dropdown.dropdown-lg .dropdown-menu{
-    min-width: 580px;
+    min-width: 550px;
 }
 .dropdown-menu{
     box-shadow: 1px 4px 8px -1px #c1c1c1;

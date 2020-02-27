@@ -107,6 +107,7 @@ export class PricingComponent implements OnInit {
               }
           });
           console.log(this.planform.value);
+		  
 
           //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
           window.scrollTo(0, 0)
