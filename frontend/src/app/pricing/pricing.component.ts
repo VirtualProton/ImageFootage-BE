@@ -21,10 +21,12 @@ export class PricingComponent implements OnInit {
   monthly:boolean = false;
   submitted = false;
   submitted2 = false;
+  submitted3 = false;
   paymentShow:boolean  =false;
   selectedData:any = [];
   selectedPlanType:string ='';
   public currentUser: any;
+  subscriptionmonthlyform: FormGroup;
   showloginPopup:boolean=false;
   constructor(private route: ActivatedRoute,private heroService: HeroService, private authenticationService: HeroService, private router: Router,private formBuilder: FormBuilder) {
       this.authenticationService.currentUser.subscribe(x => {
@@ -58,11 +60,14 @@ export class PricingComponent implements OnInit {
     this.subscriptionform = this.formBuilder.group({
       subplan: ['', [Validators.required]]
     });
-
+      this.subscriptionmonthlyform = this.formBuilder.group({
+          submplan: ['', [Validators.required]]
+      });
 
   }
   get f() { return this.planform.controls; }
   get g() { return this.subscriptionform.controls; }
+  get h() { return this.subscriptionmonthlyform.controls; }
   showperImgPrice(pack){
       if(pack.package_expiry_yearly==1 && pack.package_plan==2){
          var perprice = pack.package_price/(12*pack.package_products_count);
@@ -130,17 +135,40 @@ export class PricingComponent implements OnInit {
                   this.selectedPlanType = 'Anuual Plan';
               }
           });
-          this.plansData["monthly_pack"].forEach(element => {
-              if (element["package_id"] == this.subscriptionform.value.subplan) {
-                  this.selectedData = element;
-                  this.selectedPlanType = 'Monthly Plan';
-              }
-          });
+
           console.log(this.selectedData);
           //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
           window.scrollTo(0, 0)
       }
   }
+    onSubmitmonthsubscription(){
+        if (!this.currentUser) {
+            this.showloginPopup = true;
+        }else {
+            this.loadingData = true;
+            this.submitted3 = true;
+            //console.log(this.checkoutForm);
+            // stop here if form is invalid
+            if (this.subscriptionmonthlyform.invalid) {
+                console.log('at invalid');
+                this.loadingData = false;
+                //console.log(this.checkoutForm);
+                return;
+            }
+            this.paymentShow = true;
+            this.loadingData = false;
+
+            this.plansData["monthly_pack"].forEach(element => {
+                if (element["package_id"] == this.subscriptionmonthlyform.value.subplan) {
+                    this.selectedData = element;
+                    this.selectedPlanType = 'Monthly Plan';
+                }
+            });
+            console.log(this.selectedData);
+            //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+            window.scrollTo(0, 0)
+        }
+    }
 
   purchagePlanPayment(paymentgatway){
     this.loadingData = true;

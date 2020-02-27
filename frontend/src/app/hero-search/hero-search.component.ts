@@ -8,7 +8,8 @@ import {NgxSpinnerService} from "ngx-spinner";
 import { isNullOrUndefined } from 'util';
 import * as AOS from 'aos';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-hero-search',
@@ -67,7 +68,7 @@ export class HeroSearchComponent implements OnInit {
   isMenuOpen = true;
   public show:boolean = true;
   public buttonName:any = 'Show';
- 
+  category:any ='' ;
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -96,7 +97,7 @@ export class HeroSearchComponent implements OnInit {
                     .queryParams
                     .subscribe(params => {
 					  this.productType=params.type;
-                      this.keywordEle=params.keyword; 
+                      this.keywordEle=params.keyword;
                       this.loadingData=true;
                     //  this.spinner.show();
                       this.searchData.productType=params.type;
@@ -109,7 +110,7 @@ export class HeroSearchComponent implements OnInit {
                       this.searchData.populer=0;
                         this.searchAPIRequest();
                     });
-
+          this.category =1;
           this.heroService.getSearchLeftFilter()
                     .subscribe(leftsideData => {
                       // this.carouselSliderImages = carouselSliderImages; 
@@ -427,5 +428,67 @@ export class HeroSearchComponent implements OnInit {
 
             });
     }
+
+    filters(form: NgForm){
+        console.log('Your form data : ', form.value );
+        this.loadingData = true;
+        this.searchData.productType=form.value.category;
+        this.searchData.search=form.value.search;
+        this.searchData.product_people =form.value.people;
+        this.searchData.product_people =form.value.people;
+        this.searchData.product_gender = form.value.gender;
+        this.searchData.product_ethinicities = form.value.gender;
+        this.searchData.product_locations = form.value.locations;
+        this.searchData.product_colors = form.value.color;
+        this.searchData.product_imagesizes = form.value.image_size;
+        this.searchData.product_imagetypes = form.value.imagetype;
+        this.searchData.product_orientation = form.value.orientation;
+        //this.searchData.product_sortType = this.sliderSortTypeMenu.join();
+        this.changeQueryParams(form.value.search,form.value.category);
+        this.heroService.getAosSliderSearchImages(this.searchData)
+            .subscribe(aoslSliderImages => {
+                    //  if(aoslSliderImages.hasOwnProperty('code')) {
+                    //   window.location.href = aoslSliderImages['url']
+                    //}else {
+                    this.aoslSliderImages = aoslSliderImages;
+                    let type = this.aoslSliderImages["0"].product_keywords;
+                    this.keyword = type.split(',', 9);
+                    console.log(this.keyword);
+                    this.maintainAosSlider();
+                    //  this.spinner.hide();
+                    this.loadingData = false;
+
+                    // }
+                    // this.maintainSearchData(aoslSliderImages);
+                },
+                error => {
+                    this.loadingData=false;
+                    console.log(error);
+                    alert('No data found ....');
+                }
+
+            );
+    }
+    reset(form: NgForm){
+        form.reset();
+        this.route
+            .queryParams
+            .subscribe(params => {
+                form.controls['search'].setValue(params.keyword);
+                form.controls['category'].setValue(params.type);
+
+            });
+    }
+
+    public changeQueryParams(keyword,type) {
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.route,
+                queryParams: { keyword: keyword, type:type },
+                queryParamsHandling: 'merge'
+            });
+    }
+
 
 }

@@ -28,197 +28,197 @@
         <nav id="sidebar" class="sidebar" *ngIf="show">
         
         
-  <div class="sidebar-content">
-    <perfect-scrollbar>
-      <div class="sidebar-header">
-      <div class="col-md-12">
-      <div class="row">
-      <div class="col-md-10"><a style="color:#fff;">FILTERS</a></div>
-        <div class="col-md-2"><a (click)="toggle()" class="" style="cursor:pointer;color:#fff;font-size: 17px;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a></div>
-        </div>
-        </div>
-      </div>
-     <div class="sidebar-profile" >
-       <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" >
-      <i class="fas fa-bars"></i>
-    </a>
-       <!-- <div class="user-pic">
-          <img class="img-responsive img-rounded" src="assets/img/user.jpg" alt="User picture">
-        </div>-->
-        <div class="user-info" *ngIf="currentUser">
-         <!-- <span class="user-name">Jhon
-            <strong>Smith</strong>
-          </span>
-          <span class="user-role">Administrator</span>
-          <span class="user-status">
-            <i class="fa fa-circle"></i>
-            <span>Online</span>
-          </span>-->
-        </div>
-      </div>
-      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">
-      		<form class="search_m header_serach mt-3 mb-3">
-              <div class="input-group search-bar">
-                  <div class="input-group-btn" ngbDropdown >
-                  <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
-                  	<option [selected]="productType == 1" value="1"><br />Images Only<br /></option>
-                    <option [selected]="productType == 2" value="2">Footages Only<br /></option>
-                    <option [selected]="productType == 3" value="3">Editorial<br /></option>
-                  </select>
-                     <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
-                        <span *ngIf='productType == 3'>Photos + Videos</span>
-                        <span *ngIf='productType == 1'>Images Only</span>
-                        <span *ngIf='productType == 2'>Footages Only</span>
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:90px;">
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Images Only</a>
-                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Footages Only</a>
-                      </div>-->
-                  </div>
-                  
-                  <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">
-                  <i class="fa fa-search" (click)="onKeydown($event)"  style="cursor:pointer;"></i>
-            </div>
-      		</form>
-    </div>
-      
-      <div class="sidebar-menu">
-      <!--<div class="sidebar-header"> 
-            <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">
-                <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)" style="font-size:15px;">
-                    <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">
-                    <p class="mb-0"> <i class="fa fa-camera"></i>&nbsp; IMAGES </p>
-                    <p class="mb-0"></p> 
-                  </label>
-                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)" style="font-size:15px;">
-                    <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">
-                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; FOOTAGES </p>
-                    <p class="mb-0">   </p>
-                  </label>  
-            </div>
-        </div>-->
-          <ul>
-              <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    <span> People</span>              
-                  </a>  
-                   <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">
-                    <ul>
-                      <li *ngFor="let peoples of leftsideData.product_peoples">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('people',peoples.people_id) ? 'active' : ' '"  (click)="onSideMenuClick('people',peoples.people_id)">{{peoples.people_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu2=!sidebarSubmenu2">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span>Gender</span>
-                  </a>
-                  <div class="sidebar-submenu sidebar-submenu-btn" *ngIf="sidebarSubmenu2">
-                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('gender',gender.gender_id) ? 'btn btn-dark active' : 'btn btn-dark'"  *ngFor="let gender of leftsideData.product_gender" (click)="onSideMenuClick('gender',gender.gender_id)"> 
-                      {{gender.gender_name}}</a>
-                  </div>
-                </li>
-                <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu3=!sidebarSubmenu3">
-                    <i class="far fa-gem"></i>
-                    <span>Ethnicity</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu3">
-                    <ul>
-                      <li *ngFor="let ethinicities of leftsideData.product_ethinicities">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('ethinicity',ethinicities.ethinicity_id) ? 'active' : ' '"  (click)="onSideMenuClick('ethinicity',ethinicities.ethinicity_id)">{{ethinicities.ethinicity_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">
-                      <i class="fa fa-globe"></i>
-                      <span>Orientations</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">
-                      <ul>
-                          <li *ngFor="let orientation of leftsideData.product_orientations">
-                              <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>
-                          </li>
-                      </ul>
-                  </div>
-              </li>
-                <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">
-                    <i class="fa fa-chart-line"></i>
-                    <span>Location</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu4">
-                    <ul>
-                      <li  *ngFor="let locations of leftsideData.product_locations">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('locations',locations.location_id) ? 'active' : ' '"  (click)="onSideMenuClick('locations',locations.location_id)">{{locations.location_name}}</a>
-                     </li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu5=!sidebarSubmenu5">
-                    <i class="fa fa-globe"></i>
-                    <span>Color</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu5">
-                    <ul>
-                      <li  *ngFor="let colors of leftsideData.product_colors">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('colors',colors.pcolor_id) ? 'active' : ' '"  (click)="onSideMenuClick('colors',colors.pcolor_id)">{{colors.pcolor_name}}</a>
-                      </li>
-                     
-                    </ul>
-                  </div>
-                </li>
+<!--  <div class="sidebar-content">-->
+<!--    <perfect-scrollbar>-->
+<!--      <div class="sidebar-header">-->
+<!--      <div class="col-md-12">-->
+<!--      <div class="row">-->
+<!--      <div class="col-md-10"><a style="color:#fff;">FILTERS</a></div>-->
+<!--        <div class="col-md-2"><a (click)="toggle()" class="" style="cursor:pointer;color:#fff;font-size: 17px;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a></div>-->
+<!--        </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--     <div class="sidebar-profile" >-->
+<!--       <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" >-->
+<!--      <i class="fas fa-bars"></i>-->
+<!--    </a>-->
+<!--       &lt;!&ndash; <div class="user-pic">-->
+<!--          <img class="img-responsive img-rounded" src="assets/img/user.jpg" alt="User picture">-->
+<!--        </div>&ndash;&gt;-->
+<!--        <div class="user-info" *ngIf="currentUser">-->
+<!--         &lt;!&ndash; <span class="user-name">Jhon-->
+<!--            <strong>Smith</strong>-->
+<!--          </span>-->
+<!--          <span class="user-role">Administrator</span>-->
+<!--          <span class="user-status">-->
+<!--            <i class="fa fa-circle"></i>-->
+<!--            <span>Online</span>-->
+<!--          </span>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">-->
+<!--      		<form class="search_m header_serach mt-3 mb-3">-->
+<!--              <div class="input-group search-bar">-->
+<!--                  <div class="input-group-btn" ngbDropdown >-->
+<!--                  <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">-->
+<!--                  	<option [selected]="productType == 1" value="1"><br />Images Only<br /></option>-->
+<!--                    <option [selected]="productType == 2" value="2">Footages Only<br /></option>-->
+<!--                    <option [selected]="productType == 3" value="3">Editorial<br /></option>-->
+<!--                  </select>-->
+<!--                     &lt;!&ndash; <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >-->
+<!--                        <span *ngIf='productType == 3'>Photos + Videos</span>-->
+<!--                        <span *ngIf='productType == 1'>Images Only</span>-->
+<!--                        <span *ngIf='productType == 2'>Footages Only</span>-->
+<!--                      </button>-->
+<!--                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:90px;">-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Images Only</a>-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Footages Only</a>-->
+<!--                      </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                  -->
+<!--                  <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">-->
+<!--                  <i class="fa fa-search" (click)="onKeydown($event)"  style="cursor:pointer;"></i>-->
+<!--            </div>-->
+<!--      		</form>-->
+<!--    </div>-->
+<!--      -->
+<!--&lt;!&ndash;      <div class="sidebar-menu">&ndash;&gt;-->
+<!--&lt;!&ndash;      &lt;!&ndash;<div class="sidebar-header"> &ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)" style="font-size:15px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"> <i class="fa fa-camera"></i>&nbsp; IMAGES </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"></p> &ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)" style="font-size:15px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; FOOTAGES </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0">   </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>  &ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;          <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span> People</span>              &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                   <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let peoples of leftsideData.product_peoples">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('people',peoples.people_id) ? 'active' : ' '"  (click)="onSideMenuClick('people',peoples.people_id)">{{peoples.people_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu2=!sidebarSubmenu2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-shopping-cart"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Gender</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu sidebar-submenu-btn" *ngIf="sidebarSubmenu2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('gender',gender.gender_id) ? 'btn btn-dark active' : 'btn btn-dark'"  *ngFor="let gender of leftsideData.product_gender" (click)="onSideMenuClick('gender',gender.gender_id)"> &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      {{gender.gender_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu3=!sidebarSubmenu3">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="far fa-gem"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Ethnicity</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu3">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let ethinicities of leftsideData.product_ethinicities">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('ethinicity',ethinicities.ethinicity_id) ? 'active' : ' '"  (click)="onSideMenuClick('ethinicity',ethinicities.ethinicity_id)">{{ethinicities.ethinicity_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <span>Orientations</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          <li *ngFor="let orientation of leftsideData.product_orientations">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                              <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-chart-line"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Location</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu4">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li  *ngFor="let locations of leftsideData.product_locations">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('locations',locations.location_id) ? 'active' : ' '"  (click)="onSideMenuClick('locations',locations.location_id)">{{locations.location_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                     </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu5=!sidebarSubmenu5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Color</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li  *ngFor="let colors of leftsideData.product_colors">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('colors',colors.pcolor_id) ? 'active' : ' '"  (click)="onSideMenuClick('colors',colors.pcolor_id)">{{colors.pcolor_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                     &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
 
-                 <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">
-                    <i class="fa fa-globe"></i>
-                    <span>Image Types</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu7">
-                    <ul>
-                      <li *ngFor="let imageTypes of leftsideData.product_imagetypes">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imageTypes',imageTypes.imagetype_id) ? 'active' : ' '"    (click)="onSideMenuClick('imageTypes',imageTypes.imagetype_id)">{{imageTypes.imagetype_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="sidebar-dropdown">
-                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu8=!sidebarSubmenu8">
-                    <i class="fa fa-globe"></i>
-                    <span>Image Sizes</span>
-                  </a>
-                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu8">
-                    <ul>
-                      <li *ngFor="let imagesizes of leftsideData.product_imagesizes">
-                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imagesizes',imagesizes.imagesize_id) ? 'active' : ' '"  (click)="onSideMenuClick('imagesizes',imagesizes.imagesize_id)">{{imagesizes.imagesize_name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu9=!sidebarSubmenu9">
-                      <i class="fa fa-globe"></i>
-                      <span>Sort Types</span>
-                    </a>
-                    <div class="sidebar-submenu" *ngIf="sidebarSubmenu9">
-                      <ul>
-                        <li *ngFor="let sorttype of leftsideData.product_sorttype">
-                          <a href="javascript:void(0)" [ngClass]="getSideBarClassName('sorttype',sorttype.sorttype_id) ? 'active' : ' '" (click)="onSideMenuClick('sorttype',sorttype.sorttype_id)">{{sorttype.sorttype_name}}</a>
-                        </li>
-                      </ul>
-                    </div>
-                </li>
-          </ul>
-        </div>
-    </perfect-scrollbar>
-  </div>
+<!--&lt;!&ndash;&lt;!&ndash;                 <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Image Types</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu7">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let imageTypes of leftsideData.product_imagetypes">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imageTypes',imageTypes.imagetype_id) ? 'active' : ' '"    (click)="onSideMenuClick('imageTypes',imageTypes.imagetype_id)">{{imageTypes.imagetype_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu8=!sidebarSubmenu8">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Image Sizes</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu8">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let imagesizes of leftsideData.product_imagesizes">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imagesizes',imagesizes.imagesize_id) ? 'active' : ' '"  (click)="onSideMenuClick('imagesizes',imagesizes.imagesize_id)">{{imagesizes.imagesize_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu9=!sidebarSubmenu9">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <span>Sort Types</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="sidebar-submenu" *ngIf="sidebarSubmenu9">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <li *ngFor="let sorttype of leftsideData.product_sorttype">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          <a href="javascript:void(0)" [ngClass]="getSideBarClassName('sorttype',sorttype.sorttype_id) ? 'active' : ' '" (click)="onSideMenuClick('sorttype',sorttype.sorttype_id)">{{sorttype.sorttype_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;          </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </perfect-scrollbar>-->
+<!--  </div>-->
   <!--<div class="sidebar-footer">
     <div class="dropdown" dropdown>
 
@@ -373,81 +373,74 @@
         <!-- advanched search -->
        
         
-         <!--<div class="container" >
+        <div class="container" >
       <div class="row">
         <div class="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-12">
-          
+
           <div class="input-group" id="adv-search">
-          <form class="col-md-12">
+          <form class="col-md-12" #myform = "ngForm" (ngSubmit)="filters(myform)">
           <div class="col-md-12">
           <div class="row">
           <div class="col-md-6">
-            <input type="text" class="form-control form-control-search" placeholder="Search for snippets" style="height: 48px;color: #fff;" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" aria-label="Text input with dropdown button" />
+            <input type="text" class="form-control form-control-search" name="search" placeholder="Search for snippets" style="height: 48px;color: #fff;" [(ngModel)]="keywordEle"  aria-label="Text input with dropdown button" />
             </div>
             <div class="col-md-6" style="margin-left: -10px;">
             <div class="input-group-btn">
               <div class="btn-group" role="group">
                 <div class="dropdown dropdown-lg">
                   <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #feaa0c; border: 1px solid #feaa0c;border-right:1px solid #fff;">
-                  </button>  
-                  <div class="dropdown-menu dropdown-menu-right" role="menu" style=" background:#1d1d1d;margin-right:-300px;">
-                    
-                    
-                    
-                    <div class="form-group">
-                        <select class="form-control" id="category" style="color:#fff;background:#1d1d1d;">
-                 
-                          <option   [selected]="productType == 1" value="1">Images Only</option>
-                          <option [selected]="productType == 2" value="2">Footages Only</option>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" role="menu" style=" background:#1d1d1d;margin-right:-300px;" *ngIf="leftsideData">
+                     <div class="form-group">
+                        <select class="form-control" id="category" name="category" style="color:#fff;background:#1d1d1d;" [(ngModel)]="category">
+                            <option   [selected]="productType == 1" value="1">Images Only</option>
+                           <option [selected]="productType == 2" value="2">Footages Only</option>
                         </select>
                       </div>
-                     
+
                     <div class="row">
                         <div class="col-md-4">
-                       
+
                         <div class="form-group" style="color:#fff;" >
                          <label for="category" class="" >People</label><br />
                          &nbsp;
-                         
-                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   > 
-                        <input type="checkbox" value="{{peoples.people_id}}" class=""> {{peoples.people_name}}  &nbsp;
+
+                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                        <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
                         </div>
-                        
+
                       </div>
                         </div>
-                        
+
                         <div class="col-md-4">
                          <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Gender</label><br />
                          &nbsp;
-                        <div for="category"  *ngFor="let gender of leftsideData.product_gender" class=""> 
-                        <input type="checkbox" value="{{gender.gender_id}}" class=""> {{gender.gender_name}}  &nbsp;
+                        <div for="category"  *ngFor="let gender of leftsideData.product_gender" class="">
+                        <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
                         </div>
-                      
-                     
+
+
                       </div>
                         </div>
                         <div class="col-md-4">
                         <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Ethnicity</label><br />
                          &nbsp;
-                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class=""> 
-                        <input type="checkbox" value="{{ethinicities.ethinicity_id}}" class=""> {{ethinicities.ethinicity_name}}  &nbsp;
+                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class="">
+                        <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
                         </div>
-                      
-                      
-                   
-                      </div>
+                         </div>
                         </div>
                    </div>
                     <div class="row">
-                        
+
                         <div class="col-md-4">
                         <div class="form-group" style="color:#fff;">
                          <label for="category" class="" >Orientations</label><br />
                          &nbsp;
-                        <div for="category"  *ngFor="let orientation of leftsideData.product_orientations" class=""> 
-                        <input type="checkbox" value="{{orientation.orientation_id}}" class=""> {{orientation.orientation_name}}  &nbsp;
+                        <div for="category"  *ngFor="let orientation of leftsideData.product_orientations" class="">
+                        <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
                         </div>
                       </div>
                         </div>
@@ -455,23 +448,23 @@
                           <div class="form-group" style="color:#fff;" >
                              <label for="category" class="" >Location</label><br />
                              &nbsp;
-                            <div for="category"  *ngFor="let locations of leftsideData.product_locations" class=""> 
-                            <input type="checkbox" value="{{locations.location_id}}" class=""> {{locations.location_name}}  &nbsp;
+                            <div for="category"  *ngFor="let locations of leftsideData.product_locations" class="">
+                            <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
                             </div>
-                            
+
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group" style="color:#fff;" >
                              <label for="category" class="" >Color</label><br />
                              &nbsp;
-                            <div for="category"  *ngFor="let colors of leftsideData.product_colors" class=""> 
-                            <input type="checkbox" value="{{colors.pcolor_id}}" class=""> {{colors.pcolor_name}}  &nbsp;
+                            <div for="category"  *ngFor="let colors of leftsideData.product_colors" class="">
+                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;
                             </div>
-                                                
+
                           </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="row" style="color:#fff;">
@@ -479,46 +472,41 @@
                   			<div class="form-group" >
                      <label for="category" class="" >Image Types</label><br />
                      &nbsp;
-                    <div for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class=""> 
-                    <input type="checkbox" value="{{imageTypes.imagetype_id}}" class=""> {{imageTypes.imagetype_name}}  &nbsp;
+                    <div for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class="">
+                    <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
                     </div>
-                                                           
+
                   </div>
                         </div>
                   		<div class="col-md-4">
                   			<div class="form-group" >
                      <label for="category" class="" >Image Sizes</label><br />
                      &nbsp;
-                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" > 
-                    <input type="checkbox" value="{{imagesizes.imagesize_id}}" class=""> {{imagesizes.imagesize_name}}  &nbsp;
+                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" >
+                    <input type="radio" name="image_size" value="{{imagesizes.imagesize_id}}" class="" ngModel> {{imagesizes.imagesize_name}}  &nbsp;
                     </div>
-                    
-                                        
+
+
                   </div>
                   		</div>
-                        <div class="col-md-4">
-                  <div class="form-group" style="color:#fff;">
-                     <label for="category" class="" >Sort Types</label><br />
-                     &nbsp;
-                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" > 
-                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;
-                    </div>
-                    
-                                        
-                  </div>
-                  </div>
+<!--                        <div class="col-md-4">-->
+<!--                  <div class="form-group" style="color:#fff;">-->
+<!--                     <label for="category" class="" >Sort Types</label><br />-->
+<!--                     &nbsp;-->
+<!--                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" >-->
+<!--                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;-->
+<!--                    </div>-->
+
+
+<!--                  </div>-->
+<!--                  </div>-->
                      </div>
-                     
-                  
-                  
-                      
-                    
-                      <hr>
+                   <hr>
                       <div class="form-group text-center" style="color:#000;">
                         <button type="submit" class="btn btn-primary">Search</button>
-                        <button class="btn btn-primary">Clear</button>
+                        <button type="button" class="btn btn-primary" (click)="reset(myform)">Clear</button>
                       </div>
-                                              
+
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="background: #feaa0c;border: 1px solid #feaa0c;"><span class="fa fa-search" aria-hidden="true"></span></button>
@@ -531,14 +519,14 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
     
     <!-- end advanced search -->
         
         
         
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock photos and videos for beauty</small></p>
+            <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock photos and videos for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
