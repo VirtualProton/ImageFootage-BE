@@ -66,7 +66,7 @@ class FootageApi {
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, [
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => "https://reseller-preprod.pond5.com/api//download",
+                CURLOPT_URL => "https://reseller-preprod.pond5.com/api/download",
                 CURLOPT_USERAGENT => '',
                 CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS => $search_cmd

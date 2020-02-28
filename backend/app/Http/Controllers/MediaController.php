@@ -127,6 +127,7 @@ class MediaController extends Controller
         }else if($allFields['product']['type']==2){
           $imageMedia = new ImageApi();
           $product_details_data = $imageMedia->download($allFields,$id);
+          return response()->json($product_details_data);
        }
     }
 

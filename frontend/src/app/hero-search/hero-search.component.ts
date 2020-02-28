@@ -393,7 +393,7 @@ export class HeroSearchComponent implements OnInit {
 		//for redirect
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
 
-		window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'/'+this.searchData.search.toLowerCase();
+		window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+this.searchData.search.toLowerCase();
   }
   clickLoginPopup(){
 		this.showloginPopup = true;

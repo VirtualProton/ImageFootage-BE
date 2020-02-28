@@ -164,7 +164,7 @@ ngOnInit() {
 	onNavigate(link,pid,pweb,prod_type,category){
 		//for redirect
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
-        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'/'+category.toLowerCase();
+        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
   }
 	clickLoginPopup(){
 		this.showloginPopup = true;

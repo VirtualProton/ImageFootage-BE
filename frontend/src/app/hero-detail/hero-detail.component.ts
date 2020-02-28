@@ -52,7 +52,9 @@ export class HeroDetailComponent implements OnInit {
   loadingData:boolean=false;
   imagefootId:any ='';
   fileName: string;
-  filePreview: string
+  filePreview: string;
+  category:any ='' ;
+  prodid:any='';
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -72,9 +74,15 @@ export class HeroDetailComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
-      let category = this.route.snapshot.paramMap.get('cat');
+      //let category = this.route.snapshot.paramMap.get('cat');
       let imgtype =  this.route.snapshot.paramMap.get('webtype');
-      this.getRelatedProducts(category,imgtype);
+      this.prodid =  this.route.snapshot.paramMap.get('id');
+      this.route
+          .queryParams
+          .subscribe(params => {
+              this.category = params.cat;
+          });
+      this.getRelatedProducts(this.category,imgtype);
      // this.heroService.getMarketdeatils()
      //  .subscribe(data => {
      //    this.marketDetails = data;
@@ -302,8 +310,8 @@ export class HeroDetailComponent implements OnInit {
     onNavigate(link,pid,pweb,prod_type){
         //for redirect
         //alert(link+pid+'/'+pweb+'/'+prod_type);
-        let category = this.route.snapshot.paramMap.get('cat');
-        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'/'+category.toLowerCase();
+        let category = this.category;
+        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
     }
 
     download(productinfo,cartproduct,total,extended,type){

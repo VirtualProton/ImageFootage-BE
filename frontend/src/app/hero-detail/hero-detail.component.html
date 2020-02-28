@@ -5,7 +5,7 @@
     </div>
 </div>
 <!-- pt-5 -->
-<div class="site-wrap mt-5  bg-dark" *ngIf="webtype=='2'">
+<div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2">
     <main class="main-content p-0">
         <div class="container-fluid photos">
             <div class="row mr-2">
@@ -381,7 +381,7 @@
 
             </div>
 
-<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype=='3'">
+<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype==3">
 
     <main class="main-content p-0">
         <div class="container-fluid photos">
@@ -594,11 +594,12 @@
  <h3 class="col-md-12" style="color: #fcbe11;">Related Footages<hr /></h3>
 
                         <div class="row align-items-stretch">
-                            <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+                            <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index"  >
+
                                 <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                                 <span  class=" photo-item" >
                         <div class="">
-<span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                       <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
 
                                     <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
@@ -615,7 +616,7 @@
                       </div>
                       </div>
                       </span>
-                            <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;">
+                            <video  width="400" height="300"   [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;cursor:pointer;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
@@ -633,8 +634,8 @@
                         </div>
                       </span>
                                 <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                      
                             </div>
+
                         </div>
 
 

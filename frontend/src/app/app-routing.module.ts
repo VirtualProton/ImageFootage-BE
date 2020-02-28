@@ -27,7 +27,7 @@ import { ProductPricingComponent } from './product-pricing/product-pricing.compo
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
   { path: '', component: DashboardComponent },
-  { path: 'detail/:id/:webtype/:type/:cat', component: HeroDetailComponent },
+  { path: 'detail/:id/:webtype/:type', component: HeroDetailComponent },
   { path: 'search', component: HeroSearchComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'aboutUs', component: AboutUsComponent },
