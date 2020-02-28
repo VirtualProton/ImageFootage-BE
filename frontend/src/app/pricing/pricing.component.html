@@ -296,17 +296,30 @@
 
 
 
-<section class="contact-page-area section-gap">
+<section class="contact-page-area section-gap" appNoRightClick>
 
     <tabs >
+    
         <tab tabTitle="Images" *ngIf="!paymentShow">
+        	
             <!-- Start Container -->
             <div class="container" >
+            
                 <div class="row justify-content-center">
+                	<div class='col-md-12' style="    margin-bottom: 15px;">
+    			<div class="row">
+                    <div class="col-md-6" style="text-align:center;">
+                       <span class="fordesk_plan sub_plans"> Subscriptions Plans </span>
+                    </div>
+                    <div class="col-md-6 " style="text-align:center;">
+                        <span class="down_plans dpm">Download Packs</span>
+                    </div>
+     			</div>
+    		</div>
                     <!--Monthly packs!-->
                     <div class="col-md-3 pricing hvr-float">
                         <div class="klausheader">
-                            <span class="sub_plans">Subscriptions Plans</span>
+                            <!--<span class="sub_plans">Subscriptions Plans</span>-->
                             <h5>Monthly Packs</h5>
                             <span class="klaus_package">Royalty Free Images</span>
                             <!--<span class="klaus_price skinonecolor">19,95 $</span>
@@ -334,7 +347,7 @@
                     <!--Annual Packs!-->
                     <div class="col-md-3 pricing hvr-float">
                         <div class="klausheader">
-                            <span class="sub_plans">Subscriptions Plans</span>
+                            <!--<span class="sub_plans">Subscriptions Plans</span>-->
                             <h5>Annual Packs</h5>
                             <span class="klaus_package">Royalty Free Images</span>
                             <!--<span class="klaus_price skinonecolor">29,95 $</span>
@@ -381,7 +394,7 @@
                     <!--Download Within a Year!-->
                     <div class="col-md-3 pricing skinoneultimate hvr-float">
                         <div class="klausheader skinoneucolor">
-                            <span class="down_plans">Download Packs</span>
+                            <!--<span class="down_plans">Download Packs</span>-->
                             <h5>Download Within a Year</h5>
                             <span class="klaus_package">Royalty Free Images</span>
                             <!--<span class="klaus_price skinonecolor">49,95 $</span>
@@ -464,7 +477,7 @@
             <!--End Container!-->
         </tab>
 
-        <tab tabTitle="Payment" *ngIf="paymentShow" id="payment_tab">
+        <tab tabTitle="Payment" *ngIf="paymentShow" class='ng-star-inserted' >
             <!-- Start Container -->
             <div class="container" >
                 <div class="row justify-content-center">

@@ -48,6 +48,7 @@ import { FailOrderComponent } from './fail-order/fail-order.component';
 import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProductPricingComponent } from './product-pricing/product-pricing.component';
+import { NoRightClickDirective } from './no-right-click.directive';
 //sidebar end
 
 // Configs 
@@ -125,7 +126,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FailOrderComponent,
     ChangeResetPasswordComponent,
     ChangePasswordComponent,
-    ProductPricingComponent
+    ProductPricingComponent,
+    NoRightClickDirective
   ],
   exports:[LoginComponent],
   providers: [
