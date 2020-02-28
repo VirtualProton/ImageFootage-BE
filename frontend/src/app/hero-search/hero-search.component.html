@@ -4,7 +4,7 @@
         <span></span>
     </div>
 </div>
-<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#60048b !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;">
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#60048b !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;" appNoRightClick>
 
 
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
@@ -17,7 +17,7 @@
     
 </div>
 
-<div class="site-wrap" >
+<div class="site-wrap" appNoRightClick>
   <div  [ngClass]="show == true ? 'page-wrapper chiller-theme toggled' : 'page-wrapper chiller-theme'">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="show=!show" style="font-size: 17px;color:#fff;">
       <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
@@ -601,6 +601,6 @@
 
   </div>
 </div>
-<ng-container *ngIf="showloginPopup">
+<ng-container *ngIf="showloginPopup" >
   <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
 </ng-container>
