@@ -296,11 +296,12 @@
 
 
 
-<section class="contact-page-area section-gap" appNoRightClick>
+<section class="contact-page-area section-gap" >
+<!--    appNoRightClick-->
 
-    <tabs >
+    <tabs>
     
-        <tab tabTitle="Images" *ngIf="!paymentShow">
+        <tab tabTitle="Images">
         	
             <!-- Start Container -->
             <div class="container" >
@@ -337,7 +338,7 @@
                             <span style="color:red;" *ngIf="submitted3 && h.submplan.errors && h.submplan.errors.required" >Please select a plan</span>
                         <div class="klaus_getaquote skinonegetquote">
                             <li>
-                                <button type="submit" >Buy Now</button>
+                                <button type="submit" [disabled]="submitted3 && h.submplan.errors && h.submplan.errors.required" >Buy Now</button>
                             </li>
                         </div>
                         </form>
@@ -422,23 +423,24 @@
             </div>
             <!--End Container!-->
         </tab>
-        <tab tabTitle="Footages" *ngIf="!paymentShow">
+        <tab tabTitle="Footages">
             <!-- Start Container -->
             <div class="container" >
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" *ngIf="footageplansData!=[]">
                     <!--Monthly packs!-->
                     <div class="col-md-3 pricing hvr-float" style="height: 365px;">
                         <div class="klausheader" style="height: 110px;">
                             <h5>HD(1080) Footages</h5>
                         </div>
-                        <div class="klaus_features skinoneklaus_features">
-                            <li><input type="radio" /> 5 Footages => INR 37,500.00 </li>
-                            <li class="klaus_plancolor"><input type="radio" /> 10 Footages => INR 67,000.00</li>
-                            <li><input type="radio" /> 25 Footages => INR 1,40,000.00</li>
-                            <li class="klaus_plancolor"><input type="radio" /> 50 Footages => INR 2,50,000.00</li>
-                        </div>
-                        <div class="klaus_getaquote skinonegetquote"><li><a href="">BUY NOW</a></li></div>
+                        <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
+                            <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
+                            <li><input type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" /> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                             </div>
+                            <span style="color:red;" *ngIf="submitted4 && i.hdfplan.errors && i.hdfplan.errors.required" >Please select a plan</span>
+                          <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
+                        </form>
                     </div>
+
                     <!--End Monthly Packs!-->
 
                     <!--Annual Packs!-->
@@ -446,30 +448,30 @@
                         <div class="klausheader" style="height: 110px;">
                             <h5>4K Footages</h5>
                         </div>
+                        <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()">
+                        <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
+                            <li><input type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted5 && j.kfplan.errors }" /> {{pack.package_name}} => INR {{pack.package_price}}  </li>
 
-                        <div class="klaus_features skinoneklaus_features">
-                            <li><input type="radio" /> 5 Footages => INR 66,000.00 </li>
-                            <li class="klaus_plancolor"><input type="radio" /> 10 Footages => INR 1,24,000.00</li>
-                            <li><input type="radio" /> 25 Footages => INR 2,67,500.00</li>
-                            <li class="klaus_plancolor"><input type="radio" /> 50 Footages => INR 5,00,000.00</li>
                         </div>
-                        <div class="klaus_getaquote skinonegetquote"><li><a href="">BUY NOW</a></li></div>
+                            <span style="color:red;" *ngIf="submitted5 && j.kfplan.errors && j.kfplan.errors.required" >Please select a plan</span>
+                        <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
+                        </form>
                     </div>
                     <!--End Annual Packs!-->
                     <!--Download Within a Year!-->
-                    <div class="col-md-3 pricing skinoneultimate hvr-float" style="height: 365px;">
-                        <div class="klausheader skinoneucolor" style="height: 110px;">
-                            <h5>Single Purchase</h5>
-                        </div>
-                        <div class="klaus_features skinoneklaus_features skinoneucolor">
-                            <li><input type="radio" /> HD Footage => INR 11,500.00 </li>
-                            <li class="skinoneklaus_plancolor"><input type="radio" /> 4K Footage => INR 16,500.00</li>
-                            <li></li>
-                            <li></li>
-                        </div>
+<!--                    <div class="col-md-3 pricing skinoneultimate hvr-float" style="height: 365px;">-->
+<!--                        <div class="klausheader skinoneucolor" style="height: 110px;">-->
+<!--                            <h5>Single Purchase</h5>-->
+<!--                        </div>-->
+<!--                        <div class="klaus_features skinoneklaus_features skinoneucolor">-->
+<!--                            <li><input type="radio" /> HD Footage => INR 11,500.00 </li>-->
+<!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 4K Footage => INR 16,500.00</li>-->
+<!--                            <li></li>-->
+<!--                            <li></li>-->
+<!--                        </div>-->
 
-                        <div class="klaus_getaquote skinonegetquote skinoneucolorget"><li><a href="">BUY NOW</a></li></div>
-                    </div>
+<!--                        <div class="klaus_getaquote skinonegetquote skinoneucolorget"><li><a href="">BUY NOW</a></li></div>-->
+<!--                    </div>-->
                     <!--End Download Within a Year!-->
                 </div>
 

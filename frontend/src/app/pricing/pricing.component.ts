@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
+
 @Component({
   selector: 'pricing',
   templateUrl: './pricing.component.html',
@@ -17,18 +18,24 @@ export class PricingComponent implements OnInit {
   planform: FormGroup;
   subscriptionform: FormGroup;
   plansData:any =[];
+  footageplansData:any =[];
   yearly:boolean = true;
   monthly:boolean = false;
   submitted = false;
   submitted2 = false;
   submitted3 = false;
+  submitted4= false;
+  submitted5=false;
   paymentShow:boolean  =false;
   selectedData:any = [];
   selectedPlanType:string ='';
   public currentUser: any;
   subscriptionmonthlyform: FormGroup;
-  showloginPopup:boolean=false;
-  constructor(private route: ActivatedRoute,private heroService: HeroService, private authenticationService: HeroService, private router: Router,private formBuilder: FormBuilder) {
+  footagehdform:FormGroup;
+  footagekform:FormGroup;
+ showloginPopup:boolean=false;
+
+  constructor(private route: ActivatedRoute,private heroService: HeroService,private authenticationService: HeroService, private router: Router,private formBuilder: FormBuilder) {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
@@ -37,12 +44,14 @@ export class PricingComponent implements OnInit {
 
   ngOnInit() {
     this.loadingData = true;
+
     this.authenticationService.getSubscriptionData()
         .subscribe(
             data => {
               this.loadingData = false;
               if(data.status=='success'){
-                this.plansData = data.data;
+                 this.plansData = data.data.Image;
+                 this.footageplansData = data.data.Footage;
                 this.loadingData = false;
               }else{
                 alert(data.message);
@@ -64,10 +73,18 @@ export class PricingComponent implements OnInit {
           submplan: ['', [Validators.required]]
       });
 
+      this.footagehdform = this.formBuilder.group({
+          hdfplan: ['', [Validators.required]]
+      });
+      this.footagekform = this.formBuilder.group({
+          kfplan: ['', [Validators.required]]
+      });
   }
   get f() { return this.planform.controls; }
   get g() { return this.subscriptionform.controls; }
   get h() { return this.subscriptionmonthlyform.controls; }
+  get i() { return this.footagehdform.controls; }
+  get j() { return this.footagekform.controls; }
   showperImgPrice(pack){
       if(pack.package_expiry_yearly==1 && pack.package_plan==2){
          var perprice = pack.package_price/(12*pack.package_products_count);
@@ -160,7 +177,7 @@ export class PricingComponent implements OnInit {
             this.loadingData = false;
 
             this.plansData["monthly_pack"].forEach(element => {
-                if (element["package_id"] == this.subscriptionmonthlyform.value.subplan) {
+                if (element["package_id"] == this.subscriptionmonthlyform.value.submplan) {
                     this.selectedData = element;
                     this.selectedPlanType = 'Monthly Plan';
                 }
@@ -171,6 +188,63 @@ export class PricingComponent implements OnInit {
         }
     }
 
+    onSubmitfoothd(){
+        if (!this.currentUser) {
+            this.showloginPopup = true;
+        }else {
+            this.loadingData = true;
+            this.submitted4 = true;
+            //console.log(this.checkoutForm);
+            // stop here if form is invalid
+            if (this.footagehdform.invalid) {
+                console.log('at invalid');
+                this.loadingData = false;
+                //console.log(this.checkoutForm);
+                return;
+            }
+            this.paymentShow = true;
+            this.loadingData = false;
+
+            this.footageplansData.download_pack['HD'].forEach(element => {
+                if (element["package_id"] == this.footagehdform.value.hdfplan) {
+                    this.selectedData = element;
+                    this.selectedPlanType = 'HD Footage Plan';
+                }
+            });
+            console.log(this.selectedData);
+            //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+            window.scrollTo(0, 0)
+        }
+    }
+
+    onSubmitfk(){
+        if (!this.currentUser) {
+            this.showloginPopup = true;
+        }else {
+            this.loadingData = true;
+            this.submitted5 = true;
+            //console.log(this.checkoutForm);
+            // stop here if form is invalid
+            if (this.footagekform.invalid) {
+                console.log('at invalid');
+                this.loadingData = false;
+                //console.log(this.checkoutForm);
+                return;
+            }
+            this.paymentShow = true;
+            this.loadingData = false;
+
+            this.footageplansData.download_pack['4K'].forEach(element => {
+                if (element["package_id"] == this.footagekform.value.kfplan) {
+                    this.selectedData = element;
+                    this.selectedPlanType = '4K Footage Plan';
+                }
+            });
+            console.log(this.selectedData);
+            //localStorage.setItem('billing_address', JSON.stringify(this.planform.value));
+            window.scrollTo(0, 0)
+        }
+    }
   purchagePlanPayment(paymentgatway){
     this.loadingData = true;
     console.log(paymentgatway);
@@ -210,6 +284,7 @@ export class PricingComponent implements OnInit {
               this.loadingData = false;
             });
   }
+
 
     hideLoginPopup(event){
         this.showloginPopup = false;
