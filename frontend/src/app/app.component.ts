@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, OnDestroy, Inject } from '@angular/cor
 import { Router, ActivatedRoute, Event, NavigationEnd } from '@angular/router';
 import { Location, DOCUMENT } from "@angular/common";
 import { Subscription } from 'rxjs';
-import { environment } from '../environments/environment';
+
 
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -28,11 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   navIsFixed: boolean;
 
   ngOnInit() {
-  /*if (environment.production) {
-   if (location.protocol === 'http:') {
-    window.location.href = location.href.replace('http', 'https');
-   }
-  }*/    
+    
     this.sub = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes("/search?")) {
