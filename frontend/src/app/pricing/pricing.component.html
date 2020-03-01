@@ -299,6 +299,7 @@
 <section class="contact-page-area section-gap" >
 <!--    appNoRightClick-->
 
+    <div *ngIf="paymentShow==false">
     <tabs>
     
         <tab tabTitle="Images">
@@ -426,7 +427,7 @@
         <tab tabTitle="Footages">
             <!-- Start Container -->
             <div class="container" >
-                <div class="row justify-content-center" *ngIf="footageplansData!=[]">
+                <div class="row justify-content-center" *ngIf="footageplansData?.download_pack">
                     <!--Monthly packs!-->
                     <div class="col-md-3 pricing hvr-float" style="height: 365px;">
                         <div class="klausheader" style="height: 110px;">
@@ -479,51 +480,50 @@
             <!--End Container!-->
         </tab>
 
-        <tab tabTitle="Payment" *ngIf="paymentShow" class='ng-star-inserted' >
-            <!-- Start Container -->
-            <div class="container" >
-                <div class="row justify-content-center">
-                    <!--Monthly packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 365px;">
-                        <div class="klausheader" style="height: 110px;">
-                            <h5>{{selectedPlanType}}</h5>
-                        </div>
-                        <div class="klaus_features skinoneklaus_features">
-                            <li>{{selectedData.package_name}} => INR {{selectedData.package_price}}</li>
 
-                        </div>
-
-                    </div>
-                    <!--End Monthly Packs!-->
-
-                    <!--Annual Packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 365px;">
-                        <div class="klausheader" style="height: 110px;">
-                            <h5>Payment Method</h5>
-                        </div>
-
-                        <div class="klaus_features skinoneklaus_features">
-                            <div class="text-center m-auto">
-                                <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
-                            </div>
-                            <div class="text-center m-auto">
-                                <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
-                            </div>
-                            <div class="text-center m-auto">
-                                <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--End Annual Packs!-->
+    </tabs>
+    </div>
+    <!-- Start Container -->
+    <div class="container"  *ngIf="paymentShow">
+        <div class="row justify-content-center">
+            <!--Monthly packs!-->
+            <div class="col-md-3 pricing hvr-float" style="height: 365px;">
+                <div class="klausheader" style="height: 110px;">
+                    <h5>{{selectedPlanType}}</h5>
+                </div>
+                <div class="klaus_features skinoneklaus_features">
+                    <li>{{selectedData.package_name}} => INR {{selectedData.package_price}}</li>
 
                 </div>
 
             </div>
-            <!--End Container!-->
-        </tab>
+            <!--End Monthly Packs!-->
 
-    </tabs>
+            <!--Annual Packs!-->
+            <div class="col-md-3 pricing hvr-float" style="height: 365px;">
+                <div class="klausheader" style="height: 110px;">
+                    <h5>Payment Method</h5>
+                </div>
+
+                <div class="klaus_features skinoneklaus_features">
+                    <div class="text-center m-auto">
+                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
+                    </div>
+                    <div class="text-center m-auto">
+                        <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
+                    </div>
+                    <div class="text-center m-auto">
+                        <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">
+                    </div>
+                </div>
+
+            </div>
+            <!--End Annual Packs!-->
+
+        </div>
+
+    </div>
+    <!--End Container!-->
 
 </section>
 

@@ -150,6 +150,10 @@ class ImageApi {
              $orientation_filter_data ='orientation:panorama;';
          }
      }
+     $liencence_filter_data ='license:commercial;';
+      if(isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial'])){
+          $liencence_filter_data = 'license:editorial;';
+      }
 
     $this->access_key = $this->getAccessKey();
       // echo $this->access_key; die;
@@ -171,7 +175,7 @@ class ImageApi {
                 'page'=>0,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data
+                'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data.$liencence_filter_data
             ]
         ]);
        

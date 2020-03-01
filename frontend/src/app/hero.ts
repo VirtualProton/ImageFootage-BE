@@ -29,6 +29,7 @@ export class Search{
   product_imagetypes:any;
   product_orientation:any;
   product_sortType:any;
+  product_editorial:any;
 }
 
 export class aosSlider{
