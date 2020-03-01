@@ -42,7 +42,7 @@ export class UserProfileComponent implements OnInit {
     this.authenticationService.getUserprofileData()
         .subscribe(
             data => {
-              this.profileData = data.data[0];
+              this.profileData = data.data;
               this.loadingData = false;
              },
             error => {

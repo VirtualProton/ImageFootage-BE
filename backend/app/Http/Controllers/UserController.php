@@ -20,16 +20,36 @@ class UserController extends Controller
 {
    public function userProfile($id){
 
-	   $userlist= User::with('country')
+	   $send_data = [];
+       $userlist= User::where('id',$id)
+                        ->with('country')
                         ->with('state')
                         ->with('city')
-                        ->with('plans')
-                        ->where('id',$id)
-                        //->select()
-                        ->get()->toArray();
-
-	    if(count($userlist)>0){
-				return '{"status":"1","message":"","data":'.json_encode($userlist).'}';
+                        ->with(['plans'=> function ($query) {
+                            $query->whereIn('payment_status',['Completed','Transction Success']);
+                       }])
+                    ->get()->toArray();
+            //print_r($userlist); die;
+       if(count($userlist)>0){
+	          foreach($userlist as $user){
+                  $send_data['first_name'] =$user['first_name'];
+                  $send_data['last_name'] =$user['last_name'];
+                  $send_data['title'] =$user['title'];
+                  $send_data['email'] =$user['email'];
+                  $send_data['user_name'] =$user['user_name'];
+                  $send_data['contact_owner'] =$user['contact_owner'];
+                  $send_data['mobile'] =$user['mobile'];
+                  $send_data['phone'] =$user['phone'];
+                  $send_data['address'] =$user['address'];
+                  $send_data['status'] =$user['status'];
+                  $send_data['type'] =$user['type'];
+                  $send_data['postal_code'] =$user['postal_code'];
+                  $send_data['plans'] =$user['plans'];
+                  $send_data['city'] =$user['city'];
+                  $send_data['state'] =$user['state'];
+                  $send_data['country'] =$user['country'];
+              }
+                return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
 	   }else{
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   }

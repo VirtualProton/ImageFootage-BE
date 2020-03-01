@@ -69,6 +69,7 @@ export class HeroSearchComponent implements OnInit {
   public show:boolean = true;
   public buttonName:any = 'Show';
   category:any ='' ;
+  editorial:any='';
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -105,6 +106,9 @@ export class HeroSearchComponent implements OnInit {
                       if(!isNullOrUndefined(params.sideBar)){
                         this.sideBarEle=params.sideBar;
                       }
+                      if(!isNullOrUndefined(params.cat)){
+                            this.editorial=params.cat;
+                        }
                       this.searchData.letest=0;
                       this.searchData.curated=1;
                       this.searchData.populer=0;
@@ -138,6 +142,9 @@ export class HeroSearchComponent implements OnInit {
             this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
             this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
             this.searchData.product_sortType = this.sliderSortTypeMenu.join();
+            if(this.editorial!=''){
+            this.searchData.product_editorial ='editorial' ;
+            }
 
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {

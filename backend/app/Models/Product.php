@@ -63,11 +63,12 @@ class Product extends Model
 //
 //            }
         }else{
-            $data =Product::where('product_main_type','=',$type)
-                    ->select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
-                    ->where('product_web','!=','1')
-                    ->get()
-                    ->toArray();
+//            $data =Product::where('product_main_type','=',$type)
+//                    ->select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
+//                    ->where('product_web','!=','1')
+//                    ->get()
+//                    ->toArray();
+            $data=[];
         }
          return  $data;
     }

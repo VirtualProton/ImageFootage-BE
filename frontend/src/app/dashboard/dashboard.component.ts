@@ -113,7 +113,12 @@ ngOnInit() {
   searchAosData(search){
     // debounceTime(400),
     if(search.trim().length > 2){
-      this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
+        if(this.searchBoxLabel==3){
+            this.router.navigate(['/search'], { queryParams: { type: 1,keyword:search.trim(),cat:'editorial' } });
+        }else{
+            this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
+        }
+
     }
   }
 
