@@ -61,6 +61,7 @@ class FootageApi {
             $search_cmd['tr'] = $id;
             $search_cmd["secret"] = $this->api_secret;
             $search_cmd["key"] =  $this->api_key;
+            //print_r($search_cmd); die;
             $data_req = json_encode($search_cmd);
             $curl = curl_init();
             // Set some options - we are passing in a useragent too here

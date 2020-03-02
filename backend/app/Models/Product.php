@@ -94,8 +94,8 @@ class Product extends Model
                     'api_product_id' => $eachmedia['id'],
                     'product_category' => $category_id,
                     'product_title' => $eachmedia['title'],
-                    'product_thumbnail' => $eachmedia['preview_no_wm'],
-                    'product_main_image' => $eachmedia['preview_high'],
+                    'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
+                    'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
                     'product_description' => $eachmedia['description'],
                     'product_size' => $eachmedia['width'] . "X" . $eachmedia['height'],
                     "product_keywords" => $eachmedia['keywords'],
@@ -126,8 +126,8 @@ class Product extends Model
                     //echo "hello";
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $eachmedia['id'])
-                        ->update(['product_thumbnail' =>$eachmedia['preview_no_wm'],
-                                  'product_main_image'=>$eachmedia['preview_high'],
+                        ->update(['product_thumbnail' =>str_replace('http','https',$eachmedia['preview_no_wm']),
+                                  'product_main_image'=>str_replace('http','https',$eachmedia['preview_high']),
                                   'product_description' => $eachmedia['description'],
                                   'product_title' => $eachmedia['title'],
                                   'updated_at' => date('Y-m-d H:i:s')
@@ -152,8 +152,8 @@ class Product extends Model
 
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $data['media']['id'])
-                        ->update(['product_thumbnail' =>$data['media']['preview_url_no_wm'],
-                            'product_main_image'=>$data['media']['preview_url'],
+                        ->update(['product_thumbnail' =>str_replace('http','https',$data['media']['preview_url_no_wm']),
+                            'product_main_image'=>str_replace('http','https',$data['media']['preview_url']),
                             'product_description' => $data['metadata']['description'],
                             'product_title' => $data['metadata']['title'],
                             'updated_at' => date('Y-m-d H:i:s'),
@@ -251,8 +251,8 @@ class Product extends Model
                     'api_product_id' => $data['media']['id'],
                     'product_category' => $category_id,
                     'product_title' => $data['metadata']['title'],
-                    'product_thumbnail' => $data['media']['preview_url_no_wm'],
-                    'product_main_image' => $data['media']['preview_url'],
+                    'product_thumbnail' => str_replace('http','https',$data['media']['preview_url_no_wm']),
+                    'product_main_image' => str_replace('http','https',$data['media']['preview_url']),
                     'product_description' => $data['metadata']['description'],
                     'product_size' => $data['media']['width'] . "X" . $data['media']['height'],
                     "product_keywords" => $data['metadata']['keywords'],
@@ -285,8 +285,8 @@ class Product extends Model
                     //echo "hello";
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $data['media']['id'])
-                        ->update(['product_thumbnail' =>$data['media']['preview_url_no_wm'],
-                            'product_main_image'=>$data['media']['preview_url'],
+                        ->update(['product_thumbnail' =>str_replace('http','https',$data['media']['preview_url_no_wm']),
+                            'product_main_image'=>str_replace('http','https',$data['media']['preview_url']),
                             'product_description' => $data['metadata']['description'],
                             'product_title' => $data['metadata']['title'],
                             'updated_at' => date('Y-m-d H:i:s')

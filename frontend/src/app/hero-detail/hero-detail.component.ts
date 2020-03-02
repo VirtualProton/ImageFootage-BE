@@ -74,6 +74,7 @@ export class HeroDetailComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
+      console.log(this.currentUser);
       //let category = this.route.snapshot.paramMap.get('cat');
       let imgtype =  this.route.snapshot.paramMap.get('webtype');
       this.prodid =  this.route.snapshot.paramMap.get('id');
@@ -334,14 +335,19 @@ export class HeroDetailComponent implements OnInit {
         this.heroService.download(cartval)
             .subscribe(data => {
                 console.log(data);
-                this.checkoutArray.push(cartval);
-                if(data["status"]=='1'){
-                    this.loadingData =false;
-                    localStorage.setItem('checkoutAray', this.checkoutArray);
-                    this.router.navigate(['/cart']);
-                }else{
-                    this.loadingData =false;
-                    alert(data["message"]);
+                if(data) {
+                    if (type == 3) {
+                        this.loadingData = false;
+                        window.location.href = data.url;
+                    } else {
+                        if (data["stat"] == 'ok') {
+                            this.loadingData = false;
+                            window.location.href = data["download_status"]["download_url"];
+                        } else {
+                            this.loadingData = false;
+                            alert("Not Downloaded");
+                        }
+                    }
                 }
 
             });

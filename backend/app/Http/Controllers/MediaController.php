@@ -116,19 +116,38 @@ class MediaController extends Controller
         //print_r($allFields); die;
         $tokens=json_decode($allFields['product']['token'],true);
         $id = $tokens['Utype'];
-        $userlist= User::with('plans')
-            ->where('id','=',$id)
+        if($allFields['product']['type']==2){
+            $flag ='Image';
+        }else{
+            $flag ='Footage';
+        }
+        $pacakegalist= UserPackage::whereIn('payment_status',['Completed','Transction Success'])
+            ->where('user_id','=',$id)
+            ->where('package_type','=',$flag)
+            ->where('package_expiry_date_from_purchage','>',Now())
             //->select()
             ->get()->toArray();
-      if($allFields['product']['type']==3){
-          $footageMedia = new FootageApi();
-          $product_details_data = $footageMedia->download($allFields['product']['selected_product'],$id);
-          return response()->json($product_details_data);
-        }else if($allFields['product']['type']==2){
-          $imageMedia = new ImageApi();
-          $product_details_data = $imageMedia->download($allFields,$id);
-          return response()->json($product_details_data);
-       }
+        $download = 0;
+
+      if(count($pacakegalist)>0){
+          foreach($pacakegalist as $perpack){
+              if($perpack['downloaded_product'] < $perpack['package_products_count']){
+                  $download =1;
+              }
+          }
+      }
+
+      if($download==1) {
+          if ($allFields['product']['type'] == 3) {
+              $footageMedia = new FootageApi();
+              $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
+              return response()->json($product_details_data);
+          } else if ($allFields['product']['type'] == 2) {
+              $imageMedia = new ImageApi();
+              $product_details_data = $imageMedia->download($allFields, $id);
+              return response()->json($product_details_data);
+          }
+      }
     }
 
 

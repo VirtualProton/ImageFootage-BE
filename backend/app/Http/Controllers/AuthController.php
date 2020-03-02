@@ -8,9 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use App\Models\Contributor;
+use App\Models\UserPackage;
 use Illuminate\Support\Facades\Hash;
 use CORS;
 use JWTAuth;
+use Razorpay\Api\Plan;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 
@@ -177,12 +179,30 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+
+         $plans = UserPackage::where('user_id','=',auth()->user()->id)->where('package_expiry_date_from_purchage','>',Now())->whereIn('payment_status',['Completed','Transction Success'])
+            ->get()->toArray();
+        $image_download=0;
+        $footage_download=0;
+         if(count($plans)>0){
+
+            foreach($plans as $plan){
+                if($plan['package_type']=='Image'){
+                    $image_download=1;
+                }else if($plan['package_type']=='Footage'){
+                    $footage_download=1;
+                }
+            }
+         }
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' =>  20,
             'user' => auth()->user()->first_name,
-            'Utype' => auth()->user()->id
+            'Utype' => auth()->user()->id,
+            'image_downlaod'=>$image_download,
+            'footage_downlaod'=>$footage_download
+
         ]);
     }
 

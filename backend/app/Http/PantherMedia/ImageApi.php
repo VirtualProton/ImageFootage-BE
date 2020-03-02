@@ -23,7 +23,7 @@ class ImageApi {
         $client = new Client(); //GuzzleHttp\Client
        // $client->setDefaultOption('headers', array('Content-Type' => 'application/x-www-form-urlencoded','Accept-Version'=>'1.0'));
          try {
-             $result = $client->post('http://rest.panthermedia.net/v1.0/host-info', [
+             $result = $client->post('https://rest.panthermedia.net/v1.0/host-info', [
                  'headers' => [
                      'Content-Type' => 'application/x-www-form-urlencoded',
                      'Accept-Version' => '1.0'
@@ -226,8 +226,8 @@ class ImageApi {
                 $products[0]['name'] = $media['metadata']['title'];
                 $products[0]['api_product_id'] = $media['media']['id'];
                 $products[0]['product_code'] = isset($product_id)?$product_id:$media['media']['id'];
-                $products[0]['description'] = $media['metadata']['description'];
-                $products[0]['thumbnail_image'] = $media['media']['preview_url_no_wm'];
+                $products[0]['description'] = str_replace('http','https',$media['metadata']['description']);
+                $products[0]['thumbnail_image'] = str_replace('http','https',$media['media']['preview_url_no_wm']);
                 $products[0]['type'] = "Royalty Free";
                 $products[0]['product_web'] = "2";
                 $products[0]['small_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']*80;
@@ -244,7 +244,7 @@ class ImageApi {
       // echo $this->access_key; die;
 
       $client = new Client(); //GuzzleHttp\Client
-      $response = $client->post('http://rest.panthermedia.net/download-media', [
+      $response = $client->post('https://rest.panthermedia.net/download-media', [
           'headers'=>[
               'Content-Type' => 'application/x-www-form-urlencoded',
               'Accept-Version'=>'1.0'
@@ -264,8 +264,33 @@ class ImageApi {
       ]);
       if ($response->getBody()) {
           $contents = json_decode($response->getBody(), true);
-          //$contents = $response->getBody();
-          return $contents;
+          $redownload = $contents['download_status']['id_download'];
+          //print_r($contents); die;
+          $client2 = new Client(); //GuzzleHttp\Client
+          $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
+              'headers'=>[
+                  'Content-Type' => 'application/x-www-form-urlencoded',
+                  'Accept-Version'=>'1.0'
+              ],
+              'form_params' => [
+                  'api_key' => $this->api_key,
+                  'access_key' => $this->access_key,
+                  'timestamp' => $this->timestamp,
+                  'nonce' => $this->nonce,
+                  'algo' => $this->algo,
+                  'content_type'=>'application/json',
+                  'lang'=>'en',
+                  'id_media'=> $data['product']['product_info']['media']['id'],
+                  'queue_hash'=>$contents['download_status']['queue_hash'],
+                  'test'=>'yes'
+              ]
+          ]);
+        if ($response2->getBody()) {
+            $downloadcontents = json_decode($response2->getBody());
+            //print_r($downloadcontents);
+           // die;
+            return $downloadcontents;
+        }
 
       }
   }
