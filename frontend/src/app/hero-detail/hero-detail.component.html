@@ -142,7 +142,7 @@
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
-                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser.image_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'2')">Download</button>
+                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.image_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'2')">Download</button>
 
                                 <!--<p>This image is exclusive to Image Footage</p>-->
                             </div>
@@ -483,7 +483,7 @@
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
-                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser.footage_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'3')">Download</button>
+                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.footage_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'3')">Download</button>
                                 <!-- <p>This image is exclusive to Image Footage</p>-->
                             </div>
                         </div>

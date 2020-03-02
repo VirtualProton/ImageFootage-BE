@@ -338,7 +338,7 @@ export class HeroDetailComponent implements OnInit {
                 if(data) {
                     if (type == 3) {
                         this.loadingData = false;
-                        window.location.href = data.url;
+                        window.location.href = data['url'];
                     } else {
                         if (data["stat"] == 'ok') {
                             this.loadingData = false;
