@@ -235,6 +235,9 @@
                                             <th>Plan Created Date</th>
                                             <th>Plan Expired Date</th>
                                         </tr>
+                                        <tr *ngIf="profileData.plans?.length == 0">
+                                        <td colspan="8">U have not subscribed any plans.Please subscribe</td>
+                                        </tr>
                                         <tr *ngFor="let plan of profileData.plans;let i= index">
                                             <td>{{i+1}}</td>
                                             <td>{{plan.package_name}}</td>
@@ -270,7 +273,7 @@
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
-                                    <p class="text-black fw-6"><b>Your Orders</b><span class="pull-right" *ngIf="orderData != null"><a href="/License Agreement.pdf" download>Download liseance aggriment</a></span></p>
+                                    <p class="text-black fw-6"><b>Your Orders</b><span class="pull-right" *ngIf="orderData != null"><a href="/License Agreement.pdf" download>Download License Agreement</a></span></p>
                                     <table class="table table-hover cart-table">
                                         <tr>
                                             <th>Sn.</th>
@@ -280,6 +283,7 @@
                                             <th>Payment Gatway</th>
                                            <th>Details</th>
                                         </tr>
+                                        
                                         <tr *ngFor="let order of orderData;let i= index">
                                             <td>{{i+1}}</td>
                                             <td>{{order.txn_id}}</td>

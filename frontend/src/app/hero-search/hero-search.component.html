@@ -4,7 +4,7 @@
         <span></span>
     </div>
 </div>
-<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#60048b !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;" appNoRightClick>
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;" appNoRightClick>
 
 
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
@@ -393,6 +393,7 @@
                             <select class="form-control" id="category" name="category" style="color:#fff;background:#1d1d1d;" [(ngModel)]="category">
                                 <option   [selected]="productType == 1" value="1">Images Only</option>
                                <option [selected]="productType == 2" value="2">Footages Only</option>
+                               <option [selected]="editorial === 'editorial'" value="3" >Editorial</option>
                             </select>
                             </span>
                             <span class="col-md-4">

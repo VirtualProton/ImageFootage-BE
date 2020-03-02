@@ -102,14 +102,10 @@ ngOnInit() {
 
           
   }
-
-
-
   getClassName(ele){
     //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
 	return 'col-6 col-md-3 col-lg-3';
   }
-
   searchAosData(search){
     // debounceTime(400),
     if(search.trim().length > 2){
@@ -118,7 +114,6 @@ ngOnInit() {
         }else{
             this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
         }
-
     }
   }
 

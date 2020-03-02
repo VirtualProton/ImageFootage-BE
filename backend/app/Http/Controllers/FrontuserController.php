@@ -126,7 +126,7 @@ class FrontuserController extends Controller {
 				echo '{"status":"0","message":"Some problem occured."}';
 			}
 		}else{
-			echo '{"status":"0","message":"Allready this product is in your Wishlist."}';
+			echo '{"status":"0","message":"Already added to wishlist."}';
 		}
 		
 	}

@@ -11,3 +11,7 @@ nav#mainNav {
 body {
     padding-top: 0px !important;
 }
+.main-content .photos .photo-item img{
+	    object-fit: contain !important;
+		background: #58303066 !important;
+}
