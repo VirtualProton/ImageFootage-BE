@@ -244,7 +244,7 @@ class ImageApi {
       // echo $this->access_key; die;
 
       $client = new Client(); //GuzzleHttp\Client
-      $response = $client->post('https://rest.panthermedia.net/download-media', [
+      $response = $client->post('http://rest.panthermedia.net/download-media', [
           'headers'=>[
               'Content-Type' => 'application/x-www-form-urlencoded',
               'Accept-Version'=>'1.0'
@@ -266,6 +266,7 @@ class ImageApi {
           $contents = json_decode($response->getBody(), true);
           $redownload = $contents['download_status']['id_download'];
           //print_r($contents); die;
+
           $client2 = new Client(); //GuzzleHttp\Client
           $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
               'headers'=>[
@@ -286,9 +287,12 @@ class ImageApi {
               ]
           ]);
         if ($response2->getBody()) {
+            echo $this->timestamp;
+            echo "<br/>";
+            echo $this->access_key;
             $downloadcontents = json_decode($response2->getBody());
-            //print_r($downloadcontents);
-           // die;
+            print_r($downloadcontents);
+            die;
             return $downloadcontents;
         }
 

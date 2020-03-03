@@ -176,7 +176,7 @@ class PaymentController extends Controller
                 if($_POST['f_code']=='Ok'){
                     Orders::where('txn_id',$_POST['mer_txn'])
                             ->update(['payment_mode'=>$_POST['discriminator'],
-                                'order_status'=>$_POST['desc'],'response_payment'=>json_encode($_POST)]);
+                                'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
                     Usercart::where('cart_added_by',$orders->user_id)->delete();
                     return redirect('/orderConfirmation/'.$_POST['mer_txn']);
@@ -277,6 +277,7 @@ class PaymentController extends Controller
         //print_r($userData); die;
         //$tax = $allFields['cartval'][0]*8/100;
         //$final_tax=round($tax,2);
+
         $packge = new UserPackage();
         $packge->user_id = $allFields['tokenData']['Utype'];
         $packge->transaction_id = $transactionId;
@@ -294,6 +295,11 @@ class PaymentController extends Controller
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
         $packge->created_at = date('Y-m-d H:i:s');
+        if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
+            $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
+        }else{
+            $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry_yearly']." years"));
+        }
         $packge->save();
         $packge_order_id = $packge->id;
 
@@ -378,7 +384,7 @@ class PaymentController extends Controller
                 if($_POST['f_code']=='Ok'){
                     UserPackage::where('transaction_id',$_POST['mer_txn'])
                         ->update(['payment_mode'=>$_POST['discriminator'],
-                            'payment_status'=>$_POST['desc'],'response_payment'=>json_encode($_POST)]);
+                            'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                      return redirect('http://localhost:4200/user-profile');
                 }else{
                     return redirect('http://localhost:4200/orderFailed/'.$_POST['mer_txn']);

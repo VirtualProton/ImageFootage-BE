@@ -48,6 +48,18 @@ class UserController extends Controller
                   $send_data['city'] =$user['city'];
                   $send_data['state'] =$user['state'];
                   $send_data['country'] =$user['country'];
+
+                  $image_download=0;
+                  $footage_download=0;
+                  foreach($user['plans'] as $plan){
+                      if($plan['package_type']=='Image'){
+                          $image_download=1;
+                      }else if($plan['package_type']=='Footage'){
+                          $footage_download=1;
+                      }
+                  }
+                  $send_data['image_download'] = $image_download;
+                  $send_data['footage_download'] = $footage_download;
               }
                 return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
 	   }else{
