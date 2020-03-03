@@ -129,7 +129,7 @@ ul.search-result {
     visibility: visible;
 }
 .main-content .photos .photo-item img{
-	    object-fit: contain !important;
+	   /* object-fit: contain !important;*/
 		background:#58303066 !important;
 }
 /* for video end  */

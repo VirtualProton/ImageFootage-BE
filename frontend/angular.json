@@ -24,7 +24,12 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+			   "src/assets/fonts/icomoon/style.css",
+			   "src/assets/css/agency.min.css",
+			   "src/assets/css/bootstrap.min.css",
+			   "src/assets/css/aos.css",
+			   "src/assets/css/style.css"
             ],
             "scripts": []
           },
@@ -85,7 +90,13 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+			   "src/assets/fonts/icomoon/style.css",
+			   "src/assets/css/agency.min.css",
+			   "src/assets/css/bootstrap.min.css",
+			   "src/assets/css/aos.css",
+			   "src/assets/css/style.css"
+			  
             ],
             "scripts": []
           }

@@ -29,11 +29,11 @@ export class AppComponent implements OnInit, OnDestroy {
   navIsFixed: boolean;
 
   ngOnInit() {
-    if (environment.production) {
+    /*if (environment.production) {
 	   if (location.protocol === 'http:') {
 		window.location.href = location.href.replace('http', 'https');
 	   }
-  	}    
+  	}    */
     this.sub = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes("/search?")) {
