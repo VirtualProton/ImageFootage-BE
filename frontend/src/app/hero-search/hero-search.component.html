@@ -536,26 +536,31 @@
         
         
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock photos and videos for {{keywordEle}}</small></p>
+            <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
             </span>
           </div> 
           <div class="clearfix"></div>
-
-          <div class="photos"><!-- pt-5 mt-5 -->
-              <div class="row align-items-stretch">
-                  <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                  <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                      <span  class=" photo-item" >
+         <div class="  site-wrap mt-5" *ngIf="productType != 2">
+         
+         <ng-masonry-grid
+                    [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5 }" 
+                    [useAnimation]="true"
+                    [useImagesLoaded]="true"
+                    [scrollAnimationOptions]="{  minDuration : 0.4, maxDuration : 0.7 }" style='margin-right:-55px;' class='main-content' >
+      <!-- Masonry Grid Item -->
+      <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let aosimges of aoslSliderImages; let i = index;" (click)="removeItem($event)" > 
+        <!-- Grid Content  -->
+        <span  class=" photo-item" >
                         <div class="">
-                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
 
                             <div class="photo-text-more">
                           <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>-->
-                          <p class="icons_thum">
+                          <p class="icons_thum2">
                             <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
@@ -565,10 +570,43 @@
                         </div>
                         </div>
                       </span>
+                      
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>
+         </div>
+         <div class="clearfix"></div>
+          <div class="photos"><!-- pt-5 mt-5 -->
+          
+              <div class="row align-items-stretch" >
+              
+              
+              
+              
+              
+              
+              
+                  <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+                 
+                      <!--<span  class=" photo-item" >
+                        <div class="">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
+
+                            <div class="photo-text-more">
+                         
+                          <p class="icons_thum">
+                           
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                        </p>
+                        </div>
+                        </div>
+                      </span>-->
                       <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                       <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
-                      <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
-                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;object-fit: cover;">
+                  <!-- <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>-->
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
@@ -588,7 +626,7 @@
                       </span>
                   </div>
               </div>
-              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0">
+              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0 && productType == 2" >
                   <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"
                   [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"
                   [boundaryLinks]="true"></ngb-pagination>

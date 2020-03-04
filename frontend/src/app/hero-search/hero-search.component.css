@@ -133,3 +133,30 @@ ul.search-result {
 		background:#58303066 !important;
 }
 /* for video end  */
+.grid ng-masonry-grid-item a, .grid ng-masonry-grid-item img{
+	display: inherit !important;
+}
+
+
+.icons_thum2 a{
+	color: #fed136 !important;
+}
+.icons_thum2>span {
+    width: 24px;
+    height: 24px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    color: #fff;
+    padding: 10px;
+}
+.icons_thum2 {
+    position: absolute;
+    right: 0px;
+    right: 7px;
+    /* top: 100px; */
+    bottom: 0px;
+}
+.main-content .photos .photo-item:hover .photo-text-more .icons_thum2 {
+    position: fixed;
+    top: 100px;
+}

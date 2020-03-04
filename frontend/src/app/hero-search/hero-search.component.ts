@@ -11,10 +11,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
 
+
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css','./sidebar.component.scss' ],
+  styleUrls: [ './hero-search.component.css','./sidebar.component.scss', '../../../node_modules/ng-masonry-grid/ng-masonry-grid.css' ],
  
   encapsulation: ViewEncapsulation.None,
   animations: [
@@ -100,6 +101,9 @@ export class HeroSearchComponent implements OnInit {
 					  this.productType=params.type;
                       this.keywordEle=params.keyword;
                       this.loadingData=true;
+					 /* if(keywordEle==''){
+					  location.reload();
+					  }*/
                     //  this.spinner.show();
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
@@ -336,8 +340,9 @@ export class HeroSearchComponent implements OnInit {
       }
 
       getClassName(ele){
-       return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
-	   //return 'col-6 col-md-3 col-lg-3';
+       //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
+	   return 'col-6 col-md-3 col-lg-3';
+	   //return '';
       }
       onPageChange = (pageNumber) => {
         let el = this.myElement.nativeElement.querySelector('main');

@@ -51,6 +51,8 @@ import { ProductPricingComponent } from './product-pricing/product-pricing.compo
 import { NoRightClickDirective } from './no-right-click.directive';
 import { ScrollComponent } from './scroll/scroll.component';
 //sidebar end
+import { NgMasonryGridModule } from 'ng-masonry-grid';
+//import { MasonryLayoutComponent } from 'ngx-masonry-layout';
 
 // Configs 
 export function getAuthServiceConfigs() {
@@ -90,7 +92,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	TabModule,
     NoopAnimationsModule,
 	SocialLoginModule,
-	PerfectScrollbarModule
+	PerfectScrollbarModule,
+	NgMasonryGridModule
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -128,7 +131,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangePasswordComponent,
     ProductPricingComponent,
     NoRightClickDirective,
-    ScrollComponent
+    ScrollComponent/*,
+	MasonryLayoutComponent*/
 
   ],
   exports:[LoginComponent],
