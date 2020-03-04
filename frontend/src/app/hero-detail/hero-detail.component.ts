@@ -340,7 +340,7 @@ export class HeroDetailComponent implements OnInit {
                         this.loadingData = false;
                          window.location.href = data['url'];
                     } else {
-                        if (data["stat"] == 'ok') {  
+                        if (data["stat"] == 'ok') {
                             this.loadingData = false;
                             window.location.href = data["download_status"]["download_url"];
                         } else {

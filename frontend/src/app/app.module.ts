@@ -49,6 +49,7 @@ import { ChangeResetPasswordComponent } from './change-reset-password/change-res
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProductPricingComponent } from './product-pricing/product-pricing.component';
 import { NoRightClickDirective } from './no-right-click.directive';
+import { ScrollComponent } from './scroll/scroll.component';
 //sidebar end
 
 // Configs 
@@ -127,7 +128,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangeResetPasswordComponent,
     ChangePasswordComponent,
     ProductPricingComponent,
-    NoRightClickDirective
+    NoRightClickDirective,
+    ScrollComponent
 
   ],
   exports:[LoginComponent],
