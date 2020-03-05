@@ -543,13 +543,13 @@
             </span>
           </div> 
           <div class="clearfix"></div>
-         <div class=" site-wrap mt-5" *ngIf="productType != 2">
+         <div class=" site-wrap mt-5 containetr-fluid" *ngIf="productType != 2">
          
          <ng-masonry-grid
-                    [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5 }" 
+                    [masonryOptions]="{animationEffect: 'effect-1', transitionDuration: '0.8s', gutter: 5 }" 
                     [useAnimation]="true"
                     [useImagesLoaded]="true"
-                    style='margin-right:-55px;' class='main-content' >
+                    style='margin-left:50px;' class='main-content' >
       <!-- Masonry Grid Item -->
       <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let aosimges of aoslSliderImages; let i = index;" (click)="removeItem($event)" > 
         <!-- Grid Content  -->
