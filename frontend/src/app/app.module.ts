@@ -133,6 +133,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangePasswordComponent,
     ProductPricingComponent,
     NoRightClickDirective,
+    ScrollComponent
     /*,
 	MasonryLayoutComponent*/
 
