@@ -30,6 +30,7 @@ export class Search{
   product_orientation:any;
   product_sortType:any;
   product_editorial:any;
+  pagenumber:number;
 }
 
 export class aosSlider{

@@ -404,7 +404,7 @@
                         </div>
                         <form [formGroup]="planform" (ngSubmit)="onSubmit()">
                         <div class="klaus_features skinoneklaus_features skinoneucolor" *ngFor="let pack of plansData.download_pack;let i= index">
-                            <li><input type="radio" /> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                            <li><input  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }"/> {{pack.package_name}} => INR {{pack.package_price}} </li>
 <!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 25 images => INR 16,500.00</li>-->
 <!--                            <li><input type="radio" /> 50 images => INR 31,500.00</li>-->
 <!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 100 images => INR 56,800.00</li>-->

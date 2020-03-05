@@ -5,7 +5,7 @@
     </div>
 </div>
 <!-- pt-5 -->
-<div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" appNoRightClick>
+<div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" >
     <main class="main-content p-0">
         <div class="container-fluid photos">
             <div class="row mr-2">
@@ -246,36 +246,40 @@
           <div class="row mx-auto my-auto mb-5">
             
             <h3 class="col-md-12" style="color: #fcbe11;">Related Images<hr /></h3>
-            
-            
-            <div class="row align-items-stretch">
-                  <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                  <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                      <span  class=" photo-item" >
+            <div  infiniteScroll
+                    [infiniteScrollDistance]="2"
+                    [infiniteScrollUpDistance]="1.5"
+                    [infiniteScrollThrottle]="2000"
+                    (scrolled)="onScrollDown()"
+                    (scrolledUp)="onScrollUp()">
+                  <div class="row align-items-stretch">
+                      <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index">
+                          <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                          <span  class=" photo-item" >
                         <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
 
                             <div class="photo-text-more">
                           <!--<h3 class="heading">{{aosimges.product_title}}</h3>
                           <span class="meta">{{aosimges.description}} Photos</span>-->
-                          <!--<p class="icons_thum">
-                           
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
-                        </p>-->
+                                <!--<p class="icons_thum">
+
+                                  <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                                  <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                                  <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                                  <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                              </p>-->
                         </div>
                         </div>
                       </span>
-                      <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                          <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                          <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                       <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
                           <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
-                          <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                              <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                           <div class="photo-text-more" >
                        	  <div class="photo-text-more" >
                         <br />
@@ -289,10 +293,9 @@
                       </div>
                       </div>
                       </span>
+                      </div>
                   </div>
               </div>
-            
-            
             
           </div>
           <div class="row mx-auto my-auto mb-5">
@@ -381,7 +384,7 @@
 
             </div>
 
-<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype==3" appNoRightClick>
+<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype==3" >
 
     <main class="main-content p-0">
         <div class="container-fluid photos">
@@ -593,16 +596,22 @@
 
  <h3 class="col-md-12" style="color: #fcbe11;">Related Footages<hr /></h3>
 
-                        <div class="row align-items-stretch">
-                            <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index"  >
+                        <div  infiniteScroll
+                              [infiniteScrollDistance]="2"
+                              [infiniteScrollUpDistance]="1.5"
+                              [infiniteScrollThrottle]="2000"
+                              (scrolled)="onScrollDown()"
+                              (scrolledUp)="onScrollUp()">
+                            <div class="row align-items-stretch">
+                                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index"  >
 
-                                <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                                <span  class=" photo-item" >
+                                    <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                                    <span  class=" photo-item" >
                         <div class="">
                 <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                       <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
 
-                                    <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                    <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
                           <div class="photo-text-more" >
                        	  <div class="photo-text-more" >
                         <br />
@@ -633,10 +642,12 @@
                         </div>
                         </div>
                       </span>
-                                <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
-                            </div>
+                                    <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                                </div>
 
+                            </div>
                         </div>
+
 
 
 
@@ -733,7 +744,7 @@
 
 
 
-<ng-template #content let-c="close" let-d="dismiss" appNoRightClick>
+<ng-template #content let-c="close" let-d="dismiss" >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title"> Editorial</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">

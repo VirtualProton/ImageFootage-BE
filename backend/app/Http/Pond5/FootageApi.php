@@ -18,18 +18,22 @@ class FootageApi {
         }
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
-    public function search($keyword,$limit=100){
+    public function search($keyword,$limit=30,$page=0){
         $serach = $keyword['search'];
+        if(isset($keyword['pagenumber'])){
+            $page = $keyword['pagenumber'];
+        }
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $serach;
         $search_cmd['bm'] = '4095';
         $search_cmd['sb'] = '1';
         $search_cmd['no'] = $limit;
-        $search_cmd['p'] = '0';
+        $search_cmd['p'] = $page;
         $search_cmd['col'] = '2047';
         $search_cmd["secret"] = $this->api_secret;
         $search_cmd["key"] =  $this->api_key;
+        //print_r($search_cmd); die;
         $data_req = json_encode($search_cmd);
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here

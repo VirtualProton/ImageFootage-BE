@@ -39,10 +39,14 @@ class SearchController extends Controller
         $keyword = array();
         $keyword['search'] = $getKeyword['search'];
         $keyword['productType']['id']= $getKeyword['productType'];
+
         if($keyword['productType']['id']=='1'){
            $all_products = $this->getImagesData($keyword,$getKeyword);
         }else if($keyword['productType']['id']=='2'){
-            $all_products =$this->getFootageData($keyword);
+            if(isset($getKeyword['pagenumber'])){
+                $keyword['pagenumber']= $getKeyword['pagenumber'];
+            }
+               $all_products =$this->getFootageData($keyword);
         }else{
             $all_products =[];
             $images = $this->getImagesData($keyword);
@@ -60,6 +64,7 @@ class SearchController extends Controller
 		//print_r($getKeyword); die;
 		$keyword = array();
 		$keyword['search'] = $getKeyword['searchData'];
+        $keyword['pagenumber'] = $getKeyword['pagenumber'];
 		if($getKeyword['imgtype']=='2') {
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword, 30);
@@ -81,7 +86,7 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-
+                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
             }
         }else{
             $footageMedia = new FootageApi();
@@ -113,9 +118,10 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page']);
             }
         }
-        return array('imgfootage'=>$all_products);
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
 	}
 
     public function getImagesData($keyword,$getKeyword){
@@ -134,6 +140,7 @@ class SearchController extends Controller
         if($flag=='0'){
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
+            //print_r($pantharmediaData); die;
             if (count($pantharmediaData) > 0) {
                 foreach ($pantharmediaData['items']['media'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -152,10 +159,11 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
+                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
             }
         }
 
-        return array('imgfootage'=>$all_products);
+          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30);
     }
 
     public function getFootageData($keyword){
@@ -175,6 +183,7 @@ class SearchController extends Controller
             $pondfootageMediaData = $footageMedia->search($keyword);
 
             if (count($pondfootageMediaData) > 0) {
+
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
                         $pond_id_withprefix = $eachmedia['id'];
@@ -200,9 +209,10 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page']);
             }
         }
-        return array('imgfootage'=>$all_products);
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
     }
 
     

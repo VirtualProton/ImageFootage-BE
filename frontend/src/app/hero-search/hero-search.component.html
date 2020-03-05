@@ -4,7 +4,7 @@
         <span></span>
     </div>
 </div>
-<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;" appNoRightClick>
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; position: fixed; width: 100%;z-index:1;margin-top: -17px;" >
 
 
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
@@ -17,17 +17,17 @@
     
 </div>
 
-<div class="site-wrap" appNoRightClick>
+<div class="site-wrap" >
   <div  [ngClass]="show == true ? 'page-wrapper chiller-theme toggled' : 'page-wrapper chiller-theme'">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="show=!show" style="font-size: 17px;color:#fff;">
       <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
     </a>
- 
+
         <!-- Sidebar -->
- 
+
        <!-- <nav id="sidebar" class="sidebar" *ngIf="show">-->
-        
-        
+
+
 <!--  <div class="sidebar-content">-->
 <!--    <perfect-scrollbar>-->
 <!--      <div class="sidebar-header">-->
@@ -358,7 +358,7 @@
   </div>-->
 <!--</nav>-->
 
- 
+
         <!-- /#sidebar-wrapper -->
   
 <!-- mt-5 -->
@@ -533,8 +533,8 @@
     
     <!-- end advanced search -->
         
-        
-        
+
+
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
@@ -543,13 +543,13 @@
             </span>
           </div> 
           <div class="clearfix"></div>
-         <div class="  site-wrap mt-5" *ngIf="productType != 2">
+         <div class=" site-wrap mt-5" *ngIf="productType != 2">
          
          <ng-masonry-grid
                     [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5 }" 
                     [useAnimation]="true"
                     [useImagesLoaded]="true"
-                    [scrollAnimationOptions]="{  minDuration : 0.4, maxDuration : 0.7 }" style='margin-right:-55px;' class='main-content' >
+                    style='margin-right:-55px;' class='main-content' >
       <!-- Masonry Grid Item -->
       <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let aosimges of aoslSliderImages; let i = index;" (click)="removeItem($event)" > 
         <!-- Grid Content  -->
@@ -576,25 +576,18 @@
          </div>
          <div class="clearfix"></div>
           <div class="photos"><!-- pt-5 mt-5 -->
-          
+
               <div class="row align-items-stretch" >
-              
-              
-              
-              
-              
-              
-              
-                  <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
-                 
+                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages;let i= index">
+
                       <!--<span  class=" photo-item" >
                         <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
 
                             <div class="photo-text-more">
-                         
+
                           <p class="icons_thum">
-                           
+
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -626,15 +619,20 @@
                       </span>
                   </div>
               </div>
-              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0 && productType == 2" >
-                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"
-                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"
-                  [boundaryLinks]="true"></ngb-pagination>
-                  
-                  
-
-              </div>
+<!--              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0 && productType == 2" >-->
+<!--                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"-->
+<!--                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"-->
+<!--                  [boundaryLinks]="true"></ngb-pagination>-->
+<!-- </div>-->
           </div>
+            <div  infiniteScroll
+                  [infiniteScrollDistance]="2"
+                  [infiniteScrollUpDistance]="1.5"
+                  [infiniteScrollThrottle]="2000"
+                  (scrolled)="onScrollDown()"
+                  (scrolledUp)="onScrollUp()">
+            </div>
+
         </main>
     </main>
 

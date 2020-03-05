@@ -71,6 +71,10 @@ export class HeroSearchComponent implements OnInit {
   public buttonName:any = 'Show';
   category:any ='' ;
   editorial:any='';
+   totalproduct:number = 0;
+   perpage:number = 30;
+   totalpages:number = 0;
+   pagenumber:number =0;
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -84,11 +88,7 @@ export class HeroSearchComponent implements OnInit {
     });
   }
   
-  
-  
-  
-
-      // Push a search term into the observable stream.
+        // Push a search term into the observable stream.
       search(term: string): void {
         this.searchTerms.next(term);
       }
@@ -116,15 +116,14 @@ export class HeroSearchComponent implements OnInit {
                       this.searchData.letest=0;
                       this.searchData.curated=1;
                       this.searchData.populer=0;
-                        this.searchAPIRequest();
+
+                      this.searchAPIRequest();
                     });
           this.category =1;
           this.heroService.getSearchLeftFilter()
                     .subscribe(leftsideData => {
                       // this.carouselSliderImages = carouselSliderImages; 
-                      console.log(leftsideData);  
-                      this.leftsideData = leftsideData;
-                 
+                        this.leftsideData = leftsideData;
                     });
               
 
@@ -149,19 +148,26 @@ export class HeroSearchComponent implements OnInit {
             if(this.editorial!=''){
             this.searchData.product_editorial ='editorial' ;
             }
+            if(this.pagenumber!=0){
+                  this.searchData.pagenumber =this.pagenumber ;
+            }
 
             this.heroService.getAosSliderSearchImages(this.searchData)
                           .subscribe(aoslSliderImages => {
                            //  if(aoslSliderImages.hasOwnProperty('code')) {
                                   //   window.location.href = aoslSliderImages['url']
                               //}else {
-                                 this.aoslSliderImages = aoslSliderImages;
+                                 this.totalproduct = aoslSliderImages.total;
+                                 this.perpage = aoslSliderImages.perpage;
+                                 this.totalpages = Math.ceil(aoslSliderImages.total/aoslSliderImages.perpage);
+                                 this.aoslSliderImages = aoslSliderImages.imgfootage;
                                  let type = this.aoslSliderImages["0"].product_keywords;
                                  this.keyword = type.split(',', 9);
-                                 console.log(this.keyword);
+
                                  this.maintainAosSlider();
                                  //  this.spinner.hide();
                                  this.loadingData = false;
+
                             // }
                               // this.maintainSearchData(aoslSliderImages);
                           },
@@ -416,7 +422,7 @@ export class HeroSearchComponent implements OnInit {
 		this.router.navigate(['/']);
   	}
 	addtolightbox(productinfo){
-        console.log(productinfo);
+
 		//return false;
         this.loadingData =true;
         this.heroService.addWishListItemsData(productinfo.api_product_id)
@@ -442,7 +448,7 @@ export class HeroSearchComponent implements OnInit {
     }
 
     filters(form: NgForm){
-        console.log('Your form data : ', form.value );
+
         this.loadingData = true;
         this.searchData.productType=form.value.category;
         this.searchData.search=form.value.search;
@@ -465,7 +471,7 @@ export class HeroSearchComponent implements OnInit {
                     this.aoslSliderImages = aoslSliderImages;
                     let type = this.aoslSliderImages["0"].product_keywords;
                     this.keyword = type.split(',', 9);
-                    console.log(this.keyword);
+
                     this.maintainAosSlider();
                     //  this.spinner.hide();
                     this.loadingData = false;
@@ -500,6 +506,57 @@ export class HeroSearchComponent implements OnInit {
                 queryParams: { keyword: keyword, type:type },
                 queryParamsHandling: 'merge'
             });
+    }
+
+
+
+    // appendItems(startIndex, endIndex) {
+    //     this.addItems(startIndex, endIndex, 'push');
+    // }
+    //
+    // prependItems(startIndex, endIndex) {
+    //     this.addItems(startIndex, endIndex, 'unshift');
+    // }
+    onScrollDown() {
+
+        if(this.pagenumber!=this.totalpages){
+            this.pagenumber++;
+            this.searchData.pagenumber = this.pagenumber ;
+            this.heroService.getAosSliderSearchImages(this.searchData)
+                .subscribe(aoslSliderImages => {
+                        aoslSliderImages.imgfootage.forEach(ele=>{
+                            this.aoslSliderImages.push(ele);
+                        })
+
+                   },
+                    error => {
+                       console.log(error);
+                        alert('No data found ....');
+                    }
+
+                );
+
+        }
+
+    }
+
+    onScrollUp() {
+
+        if(this.pagenumber!=0){
+            this.pagenumber--;
+            //this.searchAPIRequest();
+            // this.heroService.getAosSliderSearchImages(this.searchData)
+            //     .subscribe(aoslSliderImages => {
+            //             this.aoslSliderImages['unshift'] = aoslSliderImages.imgfootage;
+            //         },
+            //         error => {
+            //             console.log(error);
+            //             alert('No data found ....');
+            //         }
+            //
+            //     );
+
+        }
     }
 
 

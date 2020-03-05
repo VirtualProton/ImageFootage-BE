@@ -55,6 +55,10 @@ export class HeroDetailComponent implements OnInit {
   filePreview: string;
   category:any ='' ;
   prodid:any='';
+    totalproduct:number = 0;
+    perpage:number = 30;
+    totalpages:number = 0;
+    pagenumber:number =0;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -91,9 +95,12 @@ export class HeroDetailComponent implements OnInit {
 
   }
   getRelatedProducts(keyword,prodtype){
- 	 this.heroService.getRelatedProductData(keyword,prodtype).subscribe(relatedData => {
+ 	 this.heroService.getRelatedProductData(keyword,prodtype,this.pagenumber).subscribe(relatedData => {
        //console.log(relatedData);
-	   this.relatedData=relatedData;
+	     this.relatedData=relatedData.imgfootage;
+         this.totalproduct = relatedData.total;
+         this.perpage = relatedData.perpage;
+         this.totalpages = Math.ceil(relatedData.total/relatedData.perpage);
          
       });
 	
@@ -351,5 +358,42 @@ export class HeroDetailComponent implements OnInit {
                 }
 
             });
+    }
+    onScrollDown() {
+
+        if(this.pagenumber!=this.totalpages){
+            this.pagenumber++;
+            let imgtype =  this.route.snapshot.paramMap.get('webtype');
+            this.heroService.getRelatedProductData(this.category,imgtype,this.pagenumber).subscribe(relatedData => {
+                //console.log(relatedData);
+                relatedData.imgfootage.forEach(ele=>{
+                    this.relatedData.push(ele);
+                })
+                //this.relatedData=relatedData;
+
+            });
+            console.log(this.relatedData);
+
+        }
+
+    }
+
+    onScrollUp() {
+
+        if(this.pagenumber!=0){
+            this.pagenumber--;
+            //this.searchAPIRequest();
+            // this.heroService.getAosSliderSearchImages(this.searchData)
+            //     .subscribe(aoslSliderImages => {
+            //             this.aoslSliderImages['unshift'] = aoslSliderImages.imgfootage;
+            //         },
+            //         error => {
+            //             console.log(error);
+            //             alert('No data found ....');
+            //         }
+            //
+            //     );
+
+        }
     }
 }

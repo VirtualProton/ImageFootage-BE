@@ -39,6 +39,7 @@ import {
     FacebookLoginProvider,
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 //sidebar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -93,7 +94,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NoopAnimationsModule,
 	SocialLoginModule,
 	PerfectScrollbarModule,
-	NgMasonryGridModule
+	NgMasonryGridModule,
+    InfiniteScrollModule
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -131,7 +133,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangePasswordComponent,
     ProductPricingComponent,
     NoRightClickDirective,
-    ScrollComponent/*,
+    /*,
 	MasonryLayoutComponent*/
 
   ],
