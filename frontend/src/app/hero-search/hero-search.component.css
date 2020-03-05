@@ -160,3 +160,13 @@ ul.search-result {
     position: fixed;
     top: 100px;
 }
+
+ 
+.grid-img.img-loaded{
+    visibility: hidden;
+    opacity: 1;
+}
+.grid.effect-1 ng-masonry-grid-item.animate {
+	-webkit-animation: moveUp 0.1s ease forwards !important ;
+	animation: moveUp 0.1s ease forwards !important;
+}
