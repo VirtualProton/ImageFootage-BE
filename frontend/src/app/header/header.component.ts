@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
   sub:Subscription;
   productType:any;
   keywordEle:any=' ';
-  forimgredi:string='http://'+window.location.hostname+':4200';
-   //forimgredi:string='https://'+window.location.hostname;
+  //forimgredi:string='http://'+window.location.hostname+':4200';
+   forimgredi:string='https://'+window.location.hostname;
 
 
 

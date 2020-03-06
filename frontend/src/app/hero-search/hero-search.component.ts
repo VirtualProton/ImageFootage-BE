@@ -125,7 +125,12 @@ export class HeroSearchComponent implements OnInit {
 
                       this.searchAPIRequest();
                     });
-          this.category =1;
+          if(!isNullOrUndefined(this.editorial)){
+              this.category =3;
+          }else{
+              this.category =this.productType;
+          }
+
           this.heroService.getSearchLeftFilter()
                     .subscribe(leftsideData => {
                       // this.carouselSliderImages = carouselSliderImages; 
