@@ -125,7 +125,7 @@ export class HeroSearchComponent implements OnInit {
 
                       this.searchAPIRequest();
                     });
-          if(!isNullOrUndefined(this.editorial)){
+          if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial'){
               this.category =3;
           }else{
               this.category =this.productType;
