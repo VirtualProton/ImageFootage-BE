@@ -545,23 +545,23 @@
           <div class="clearfix"></div>
          <div class=" site-wrap mt-5 containetr-fluid" *ngIf="productType != 2">
          
-         <ng-masonry-grid
-                    [masonryOptions]="{animationEffect: 'effect-1', transitionDuration: '0.8s', gutter: 5 }" 
+         <!--<ng-masonry-grid
+                    [masonryOptions]="{animationEffect: 'effect-1', transitionDuration: '0.8s', gutter: 5,fitWidth: true }" 
                     [useAnimation]="true"
                     [useImagesLoaded]="true"
+                    
                     style='margin-left:50px;' class='main-content' >
-      <!-- Masonry Grid Item -->
+
       <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let aosimges of aoslSliderImages; let i = index;" (click)="removeItem($event)" > 
-        <!-- Grid Content  -->
+       
         <span  class=" photo-item" >
                         <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
 
                             <div class="photo-text-more">
-                          <!--<h3 class="heading">{{aosimges.product_title}}</h3>
-                          <span class="meta">{{aosimges.description}} Photos</span>-->
+                         
                           <p class="icons_thum2">
-                            <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
+                            
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -572,7 +572,28 @@
                       </span>
                       
       </ng-masonry-grid-item>
-    </ng-masonry-grid>
+    </ng-masonry-grid>-->
+
+
+<!-- Grid row -->
+<div class="gallery" id="gallery">
+  <!-- Grid column -->
+  <div class="mb-3 pics animation all 2" *ngFor="let aosimges of aoslSliderImages; let i = index;">
+    <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
+    <div class="photo-text-more">
+                         
+                          <p class="icons_thum2">
+                            
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                        </p>
+                        </div>
+  </div>
+  <!-- Grid column -->
+</div>
+<!-- Grid row -->
          </div>
          <div class="clearfix"></div>
           <div class="photos"><!-- pt-5 mt-5 -->
