@@ -11,11 +11,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
 
-
+//'../../../node_modules/ng-masonry-grid/ng-masonry-grid.css',
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ '../../../node_modules/ng-masonry-grid/ng-masonry-grid.css','./hero-search.component.css','./sidebar.component.scss' ],
+  styleUrls: [ './hero-search.component.css','./sidebar.component.scss' ],
  
   encapsulation: ViewEncapsulation.None,
   animations: [
@@ -29,7 +29,7 @@ import {NgForm} from '@angular/forms';
 export class HeroSearchComponent implements OnInit {
   productType:any;
   keywordEle:any=' ';
-  //forrefresh:string=localStorage.getItem('forrefresh');
+  forrefresh:string=localStorage.getItem('forrefresh');
   priceArray: any = [];
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
@@ -102,12 +102,14 @@ export class HeroSearchComponent implements OnInit {
 					  this.productType=params.type;
                       this.keywordEle=params.keyword;
                       this.loadingData=true;
-					 
+					
 					  /*if(this.keywordEle == '' && this.productType==1 && this.forrefresh == '' ){
+					 
 						 localStorage.setItem('forrefresh', 'yes');
 					  	//this.router.navigate(window.location.href);
 						//this.router.navigate([this.router.url]);
 					  }else{
+					  
 					  	localStorage.setItem('forrefresh','');
 					  }*/
                     //  this.spinner.show();
@@ -147,6 +149,7 @@ export class HeroSearchComponent implements OnInit {
       }
 
       searchAPIRequest(){
+
             this.searchData.product_people =this.slidebarPeopleMenu.join(); 
             this.searchData.product_gender = this.slidebarGenderMenu.join(); 
             this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();

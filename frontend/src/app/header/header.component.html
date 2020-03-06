@@ -37,15 +37,14 @@
     <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isCollapsed">
       <ul class="navbar-nav text-uppercase ml-auto">
         <li class="nav-item">
-        <!-- [queryParams]="{type:1,keyword:'',sideBar:false}"  [routerLink]="['/search']"-->
-          <a class="nav-link js-scroll-trigger" href="{{ forimgredi}}/search?type=1&keyword=&sideBar=false"  >Images</a>
+          <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',sideBar:false}"  >Images</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:2,keyword:'',sideBar:false}">Footage</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="{{ forimgredi}}/search?type=1&keyword=&cat=editorial&sideBar=false" >Editorial</a>
-          <!--<a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',cat:'editorial',sideBar:false}">Editorial</a>-->
+        <!--<a class="nav-link js-scroll-trigger" href="{{ forimgredi}}/search?type=1&keyword=&cat=editorial&sideBar=false" >Editorial</a>-->
+          <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',cat:'editorial',sideBar:false}">Editorial</a>
         </li>
 
         <li class="nav-item">

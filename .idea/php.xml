@@ -112,19 +112,19 @@
       <path value="$PROJECT_DIR$/backend/vendor/riazxrazor/payumoney" />
       <path value="$PROJECT_DIR$/backend/vendor/razorpay/razorpay" />
       <path value="$PROJECT_DIR$/backend/vendor/rmccue/requests" />
-      <path value="$PROJECT_DIR$/backend/vendor/neutron/temporary-filesystem" />
-      <path value="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver" />
       <path value="$PROJECT_DIR$/backend/vendor/php-ffmpeg/php-ffmpeg" />
-      <path value="$PROJECT_DIR$/backend/vendor/pbmedia/laravel-ffmpeg" />
       <path value="$PROJECT_DIR$/backend/vendor/evenement/evenement" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/backend/vendor/neutron/temporary-filesystem" />
       <path value="$PROJECT_DIR$/backend/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/backend/vendor/pbmedia/laravel-ffmpeg" />
+      <path value="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/backend/vendor/autoload.php" />
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/backend/vendor/autoload.php" />
     </phpunit_settings>
   </component>
 </project>
