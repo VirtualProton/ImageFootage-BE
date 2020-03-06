@@ -39,10 +39,10 @@ class ImageApi {
              ]);
          }catch (GuzzleHttp\Exception\BadResponseException  $e){
             //echo "heelo"; die;
-             //echo Psr7\str($e->getResponse());
-             //echo $e->getCode();
-             //echo $response = $e->getResponse();
-            // echo $responseBodyAsString = $response->getBody()->getContents();
+//             echo Psr7\str($e->getResponse());
+//             echo $e->getCode();
+//             echo $response = $e->getResponse();
+//             echo $responseBodyAsString = $response->getBody()->getContents();
              //die;
          }
         //print_r($result); die;
@@ -181,7 +181,7 @@ class ImageApi {
                 'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data.$liencence_filter_data
             ]
         ]);
-       
+
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
@@ -192,8 +192,10 @@ class ImageApi {
 
  public function get_media_info($media_id){
         $this->access_key = $this->getAccessKey();
-        // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
+        // echo $this->access_key; die;
+        try {
+
         $response = $client->post('http://rest.panthermedia.net/get-media-info', [
             'headers'=>[
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -218,6 +220,15 @@ class ImageApi {
             return $contents;
 
         }
+ }catch (GuzzleHttp\Exception\BadResponseException  $e){
+            
+         //echo "heelo"; die;
+//             echo Psr7\str($e->getResponse());
+//             echo $e->getCode();
+//             echo $response = $e->getResponse();
+//             echo $responseBodyAsString = $response->getBody()->getContents();
+         //die;
+     }
  }
 
   public function getPriceFromList($media,$product_id= NULL){

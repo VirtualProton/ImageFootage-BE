@@ -231,7 +231,7 @@ export class HeroDetailComponent implements OnInit {
 
     checkPriceTotalFootage(selectedPrice){
         console.log(selectedPrice);
-        this.currunt_selected_price = selectedPrice.pr*80;
+        this.currunt_selected_price = selectedPrice.pr;
         this.total = this.currunt_selected_price;
         this.standard= selectedPrice;
     }

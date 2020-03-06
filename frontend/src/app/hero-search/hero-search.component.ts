@@ -163,16 +163,21 @@ export class HeroSearchComponent implements OnInit {
                            //  if(aoslSliderImages.hasOwnProperty('code')) {
                                   //   window.location.href = aoslSliderImages['url']
                               //}else {
-                                 this.totalproduct = aoslSliderImages.total;
-                                 this.perpage = aoslSliderImages.perpage;
-                                 this.totalpages = Math.ceil(aoslSliderImages.total/aoslSliderImages.perpage);
-                                 this.aoslSliderImages = aoslSliderImages.imgfootage;
-                                 let type = this.aoslSliderImages["0"].product_keywords;
-                                 this.keyword = type.split(',', 9);
+                              this.loadingData = false;
+                              if(aoslSliderImages.imgfootage.length !=0) {
+                                  this.totalproduct = aoslSliderImages.total;
+                                  this.perpage = aoslSliderImages.perpage;
+                                  this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                                  this.aoslSliderImages = aoslSliderImages.imgfootage;
+                                  let type = this.aoslSliderImages["0"].product_keywords;
+                                  this.keyword = type.split(',', 9);
 
-                                 this.maintainAosSlider();
+                                  this.maintainAosSlider();
+                              }else{
+                                  alert("No Result Found");
+                              }
                                  //  this.spinner.hide();
-                                 this.loadingData = false;
+
 
                             // }
                               // this.maintainSearchData(aoslSliderImages);
@@ -328,7 +333,7 @@ export class HeroSearchComponent implements OnInit {
           }
          // this.searchData.product_sortType = this.sliderSortTypeMenu.join();
         }
-        this.searchAPIRequest();        
+        //this.searchAPIRequest();
       }
 
 
@@ -366,7 +371,7 @@ export class HeroSearchComponent implements OnInit {
           this.searchData.letest=1;
           this.searchData.curated=0;
           this.searchData.populer=0;
-          this.searchAPIRequest();         
+          //this.searchAPIRequest();
         }
       }
 
@@ -474,13 +479,18 @@ export class HeroSearchComponent implements OnInit {
                     //  if(aoslSliderImages.hasOwnProperty('code')) {
                     //   window.location.href = aoslSliderImages['url']
                     //}else {
-                    this.aoslSliderImages = aoslSliderImages;
-                    let type = this.aoslSliderImages["0"].product_keywords;
-                    this.keyword = type.split(',', 9);
-
-                    this.maintainAosSlider();
-                    //  this.spinner.hide();
                     this.loadingData = false;
+                    if(aoslSliderImages.imgfootage.length !=0) {
+                        this.aoslSliderImages = aoslSliderImages.imgfootage;
+                        let type = this.aoslSliderImages["0"].product_keywords;
+                        this.keyword = type.split(',', 9);
+
+                        this.maintainAosSlider();
+                    }else{
+                        alert("Result Not Found");
+                    }
+                    //  this.spinner.hide();
+
 
                     // }
                     // this.maintainSearchData(aoslSliderImages);

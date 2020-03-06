@@ -160,7 +160,9 @@ class PaymentController extends Controller
             //return redirect('/payu/'.$transactionId);
              //return 1;
            // echo json_encode(['hash'=>$hash]);
-       }
+       }else if($allFields['type']=='rozerpay'){
+
+        }
         //print_r($allFields); die;
 
       //  return response()->json($all_products);

@@ -449,7 +449,7 @@
                                     <label class="btn btn-dark" *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">
                                         <p class="f-12">{{cost.size}}</p>
-                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.pr*80 | number}}</p>
+                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.pr | number}}</p>
                                     </label>
                                 </div>
                                <p><small><span class="text-warning">Standard Use Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
