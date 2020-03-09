@@ -55,10 +55,10 @@ a {
     margin-right: 13px;
 }
 
-.klausheader {height:151px;border-bottom:1px solid #f0f0f0;}
-.pricing h5 {color:#2d2f37;font-size:25px;font-weight:700;text-transform:uppercase;float:left;width:100%;margin:0;padding-top:40px;padding-bottom:10px;}
+.klausheader {height:108px;border-bottom:1px solid #f0f0f0;}
+.pricing h5 {color:#2d2f37;font-size:20px;font-weight:700;text-transform:uppercase;float:left;width:100%;margin:0;padding-top:30px;padding-bottom:10px;}
 .pricing p {color:#9fa5ae;font-size:16px;font-weight:300;float:left;width:100%;margin-top:-10px}
-.klaus_package {color:#2d2f37;font-size:11px;font-weight:300;text-transform:uppercase;float:left;width:100%;text-align:right;}
+.klaus_package {color:#2d2f37;font-size:11px;font-weight:300;text-transform:uppercase;/*float:left;*/width:100%;/*text-align:right;*/}
 .klaus_price {font-size:46px;font-weight:300;float:left;width:100%;margin-top:10px;}
 .klaus_featured {
     width:130px;

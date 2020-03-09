@@ -329,7 +329,10 @@
                         </div>
                         <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()">
                         <div class="klaus_features skinoneklaus_features" *ngFor="let pack of plansData.monthly_pack;let i= index">
-                            <li><input type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }" /> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                            <li style="margin:3px 9px 5px 2px;">
+                            <span class="row">
+                            <span class="col-md-5">
+                            <input type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }" /> {{pack.package_name}} </span> <span class="col-md-2 text-right"> => </span> <span class="col-md-5 text-right" >INR {{pack.package_price}}</span> </span></li>
 <!--                            <li class="klaus_plancolor"><input type="radio" /> 25 images => INR 3750.00</li>-->
 <!--                            <li><input type="radio" /> 50 images => INR 6000.00</li>-->
 <!--                            <li class="klaus_plancolor"><input type="radio" /> 100 images => INR 9000.00</li>-->
@@ -357,7 +360,10 @@
                         </div>
                         <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">
                         <div class="klaus_features skinoneklaus_features"  *ngFor="let pack of plansData.yearly_pack;let i= index">
-                            <li><input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }" /> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                            <li style="margin:3px 9px 5px 2px;">
+                            <span class="row">
+                            <span class="col-md-5">
+                            <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }" /> {{pack.package_name}} </span> <span class="col-md-2 text-right"> => </span> <span class="col-md-5 text-right">INR {{pack.package_price}}</span> </span> </li>
 <!--                            <li class="klaus_plancolor"><input type="radio" /> 25 images => INR 33,750.00</li>-->
 <!--                            <li><input type="radio" /> 50 images => INR 50,400.00</li>-->
 <!--                            <li class="klaus_plancolor"><input type="radio" /> 100 images => INR 70,200.00</li>-->
@@ -404,7 +410,10 @@
                         </div>
                         <form [formGroup]="planform" (ngSubmit)="onSubmit()">
                         <div class="klaus_features skinoneklaus_features skinoneucolor" *ngFor="let pack of plansData.download_pack;let i= index">
-                            <li><input  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }"/> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                            <li style="margin:3px 9px 5px 2px;">
+                            <span class="row">
+                            <span class="col-md-5">
+                            <input  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }"/> {{pack.package_name}} </span> <span class="col-md-2 text-right">=> </span> <span class="col-md-5 text-right" > INR {{pack.package_price}} </span> </span></li>
 <!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 25 images => INR 16,500.00</li>-->
 <!--                            <li><input type="radio" /> 50 images => INR 31,500.00</li>-->
 <!--                            <li class="skinoneklaus_plancolor"><input type="radio" /> 100 images => INR 56,800.00</li>-->
@@ -429,13 +438,16 @@
             <div class="container" >
                 <div class="row justify-content-center" *ngIf="footageplansData?.download_pack">
                     <!--Monthly packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 365px;">
-                        <div class="klausheader" style="height: 110px;">
+                    <div class="col-md-3 pricing hvr-float" style="height: 377px;">
+                        <div class="klausheader" style="height: 78px;">
                             <h5>HD(1080) Footages</h5>
                         </div>
                         <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
                             <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
-                            <li><input type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" /> {{pack.package_name}} => INR {{pack.package_price}} </li>
+                            <li style="margin:3px 9px 5px 2px;">
+                            <span class="row">
+                            <span class="col-md-5">
+                            <input type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" /> {{pack.package_name}} </span> <span class="col-md-2 text-right">=> </span> <span class="col-md-5 text-right" >INR {{pack.package_price}} </span> </span></li>
                              </div>
                             <span style="color:red;" *ngIf="submitted4 && i.hdfplan.errors && i.hdfplan.errors.required" >Please select a plan</span>
                           <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
@@ -445,13 +457,16 @@
                     <!--End Monthly Packs!-->
 
                     <!--Annual Packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 365px;">
-                        <div class="klausheader" style="height: 110px;">
+                    <div class="col-md-3 pricing hvr-float" style="height: 377px;">
+                        <div class="klausheader" style="height: 78px;">
                             <h5>4K Footages</h5>
                         </div>
                         <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()">
                         <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
-                            <li><input type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted5 && j.kfplan.errors }" /> {{pack.package_name}} => INR {{pack.package_price}}  </li>
+                            <li style="margin:3px 9px 5px 2px;">
+                            <span class="row">
+                            <span class="col-md-5">
+                            <input type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted5 && j.kfplan.errors }" /> {{pack.package_name}} </span> <span class="col-md-2 text-right"> => </span> <span class="col-md-5 text-right" >INR {{pack.package_price}}  </span> </span></li>
 
                         </div>
                             <span style="color:red;" *ngIf="submitted5 && j.kfplan.errors && j.kfplan.errors.required" >Please select a plan</span>
@@ -487,7 +502,7 @@
     <div class="container"  *ngIf="paymentShow">
         <div class="row justify-content-center">
             <!--Monthly packs!-->
-            <div class="col-md-3 pricing hvr-float" style="height: 365px;">
+            <div class="col-md-3 pricing hvr-float" style="height: 377px;">
                 <div class="klausheader" style="height: 110px;">
                     <h5>{{selectedPlanType}}</h5>
                 </div>
