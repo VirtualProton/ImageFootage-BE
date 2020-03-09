@@ -47,12 +47,12 @@ a {
     background:#fff;
     height:570px;
     text-align:center;
-    font-family: 'Titillium Web', sans-serif;
     cursor:default;
     padding:0;
     margin-bottom:30px;
     border-right:1px solid #f0f0f0;
     margin-right: 13px;
+	text-transform: uppercase;
 }
 
 .klausheader {height:108px;border-bottom:1px solid #f0f0f0;}
