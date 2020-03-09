@@ -438,9 +438,9 @@
             <div class="container" >
                 <div class="row justify-content-center" *ngIf="footageplansData?.download_pack">
                     <!--Monthly packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 377px;">
-                        <div class="klausheader" style="height: 78px;">
-                            <h5>HD(1080) Footages</h5>
+                    <div class="col-md-3 pricing hvr-float" style="height: 377px; border-right: 0px solid #f0f0f0;">
+                        <div class="klausheader" style="height: 78px;    background: #313e35;">
+                            <h5 style="color: #fff;">HD(1080) Footages</h5>
                         </div>
                         <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
                             <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
@@ -457,9 +457,9 @@
                     <!--End Monthly Packs!-->
 
                     <!--Annual Packs!-->
-                    <div class="col-md-3 pricing hvr-float" style="height: 377px;">
-                        <div class="klausheader" style="height: 78px;">
-                            <h5>4K Footages</h5>
+                    <div class="col-md-3 pricing hvr-float" style="height: 377px;border-right: 0px solid #f0f0f0;">
+                        <div class="klausheader" style="height: 78px;    background: #313e35;">
+                            <h5 style="color: #fff;">4K Footages</h5>
                         </div>
                         <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()">
                         <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
