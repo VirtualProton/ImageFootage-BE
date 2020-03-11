@@ -5,7 +5,7 @@
     </div>
 </div>
 <!-- pt-5 -->
-<div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" >
+<div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" appNoRightClick>
     <main class="main-content p-0">
         <div class="container-fluid photos">
             <div class="row mr-2">
@@ -73,7 +73,8 @@
                                     </label>
                                     </div>
                                 </div>
-                                <p><small><span class="text-warning">Standard Use Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
+                                <p><small><!--<span class="text-warning">Standard Use Only</span> -->
+                                <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
                             </div>
                             <div id="extlic" *ngIf="extendedTab" class="tab-pane active">
 
@@ -404,7 +405,7 @@
 
             </div>
 
-<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype==3" >
+<div class="site-wrap mt-5 pt-1 bg-dark" *ngIf="webtype==3" appNoRightClick>
 
     <main class="main-content p-0">
         <div class="container-fluid photos">
@@ -472,7 +473,9 @@
                                         <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.pr | number}}</p>
                                     </label>
                                 </div>
-                               <p><small><span class="text-warning">Standard Use Only</span> <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
+                               <p><small>
+                               <!--<span class="text-warning">Standard Use Only</span>--> 
+                               <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
                             </div>
                         </div>
                         <!-- <p class="text-white">Use This Image Exclusively</p>
