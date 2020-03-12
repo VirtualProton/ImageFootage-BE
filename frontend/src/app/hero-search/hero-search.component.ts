@@ -480,6 +480,8 @@ export class HeroSearchComponent implements OnInit {
         this.searchData.product_imagesizes = form.value.image_size;
         this.searchData.product_imagetypes = form.value.imagetype;
         this.searchData.product_orientation = form.value.orientation;
+
+        this.searchData.pagenumber = 0;
         //this.searchData.product_sortType = this.sliderSortTypeMenu.join();
         this.changeQueryParams(form.value.search,form.value.category);
         this.heroService.getAosSliderSearchImages(this.searchData)
@@ -542,8 +544,7 @@ export class HeroSearchComponent implements OnInit {
     //     this.addItems(startIndex, endIndex, 'unshift');
     // }
     onScrollDown() {
-
-        if(this.pagenumber!=this.totalpages){
+       if(this.pagenumber < this.totalpages){
             this.pagenumber++;
             this.searchData.pagenumber = this.pagenumber ;
             this.heroService.getAosSliderSearchImages(this.searchData)

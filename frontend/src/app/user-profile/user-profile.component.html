@@ -260,10 +260,7 @@
                                                                                             <td style="font-size:12px;">{{plan.package_products_count}}</td>
                                                                                             <td style="font-size:12px;">{{plan.transaction_id}}</td>
                                                         <td style="font-size:12px;">{{plan.updated_at}}</td>
-                                                        <td *ngIf="plan.package_expiry_yearly==1" style="font-size:12px;">1 Year Plan subscription</td>
-                                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1" style="font-size:12px;">1 Month Plan subscription</td>
-                                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0" style="font-size:12px;">1 Year Download Plan</td>
-                                                        
+                                                        <td>{{plan.package_expiry_date_from_purchage}}</td>
                                                     </tr>
                                                     </tbody>
                                                     </table>
