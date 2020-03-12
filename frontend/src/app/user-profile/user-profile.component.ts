@@ -6,6 +6,7 @@ import {Location} from "@angular/common";
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
 import {NgxSpinnerService} from "ngx-spinner";
 
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',

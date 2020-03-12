@@ -14,7 +14,7 @@
                         <li class="nav-item active"><i class="flaticon-user-1 f-24"></i><a  [ngClass]="[profileTab ? 'active' : '']"   (click)="tabshow('profile')" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
                             <i class="mdi mdi-help-circle"></i> Profile
                         </a></li>
-                        <li class="nav-item"><i class="flaticon-review f-24"></i>  <a  [ngClass]="[plansTab ? 'active' : '']"   (click)="tabshow('plans')"  data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">
+                        <li class="nav-item"><i class="flaticon-review f-24"></i>  <a  [ngClass]="[plansTab ? 'active' : '']"   (click)="tabshow('plans')"  data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>
                             <i class="mdi mdi-account"></i> Plans
                         </a></li>
 
@@ -224,7 +224,62 @@
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Your Plans</b></p>
-                                    <table class="table table-hover cart-table">
+                                    
+                                    
+                             <mat-accordion>
+                             <table class="table">
+                               <tbody>
+                                <tr >
+                                            <td style="font-size:12px;">Sn.</td>
+                                            <td style="font-size:12px;">Plan Name</td>
+                                            <td style="font-size:12px;">Plan Price</td>
+                                            <td style="font-size:12px;">Plan Type</td>
+                                            <td style="font-size:12px;">Plan count</td>
+                                            <td style="font-size:12px;">Transaction ID</td>
+                                            <td style="font-size:12px;">Plan Created Date</td>
+                                            <td style="font-size:12px;">Plan Expired Date</td>
+                                        </tr>
+                                        </tbody>
+                                 </table>
+                           
+                              <mat-expansion-panel *ngFor="let  plan of profileData.plans; index as i" hideToggle="true">
+                               <!--<mat-expansion-panel-header  *ngIf='i==0' disabled="disabled" >
+                               
+                               </mat-expansion-panel-header>-->
+                                <mat-expansion-panel-header [collapsedHeight]="'47px'" >
+
+                                       
+                                    <table class="table">
+                                    
+                                    <tbody>
+                                   <tr style="font-size:12px;">
+                                                        <td style="font-size:12px;">{{i+1}}</td>
+                                                                                            <td style="font-size:12px;">{{plan.package_name}}</td>
+                                                                                            <td style="font-size:12px;">{{plan.package_price}}</td>
+                                                                                            <td style="font-size:12px;">{{plan.package_type}}</td>
+                                                                                            <td style="font-size:12px;">{{plan.package_products_count}}</td>
+                                                                                            <td style="font-size:12px;">{{plan.transaction_id}}</td>
+                                                        <td style="font-size:12px;">{{plan.updated_at}}</td>
+                                                        <td *ngIf="plan.package_expiry_yearly==1" style="font-size:12px;">1 Year Plan subscription</td>
+                                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1" style="font-size:12px;">1 Month Plan subscription</td>
+                                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0" style="font-size:12px;">1 Year Download Plan</td>
+                                                        
+                                                    </tr>
+                                                    </tbody>
+                                                    </table>
+                                </mat-expansion-panel-header>
+                            		<mat-panel-description>
+                               			no results found
+                               		</mat-panel-description>
+                              </mat-expansion-panel>
+							</mat-accordion>
+                                    
+                                    
+                                    
+                                    
+                                    <!-- table table-hover cart-table -->
+                                    <!--<table class="table table-condensed" id="myTable">
+                                     <thead>
                                         <tr>
                                             <th>Sn.</th>
                                             <th>Plan Name</th>
@@ -235,10 +290,39 @@
                                             <th>Plan Created Date</th>
                                             <th>Plan Expired Date</th>
                                         </tr>
+                                       </thead>
+                                       <tbody class="panel">
                                         <tr *ngIf="profileData.plans?.length == 0">
                                         <td colspan="8">U have not subscribed any plans.Please subscribe</td>
                                         </tr>
-                                        <tr *ngFor="let plan of profileData.plans;let i= index">
+             
+                       <ng-container *ngFor="let  plan of profileData.plans; index as i">
+                        <tr data-toggle="collapse" [attr.data-target]="'#demo'+i" data-parent="#myTable">
+                            <td>{{i+1}}</td>
+                                                                <td>{{plan.package_name}}</td>
+                                                                <td>{{plan.package_price}}</td>
+                                                                <td>{{plan.package_type}}</td>
+                                                                <td>{{plan.package_products_count}}</td>
+                                                                <td>{{plan.transaction_id}}</td>
+                            <td>{{plan.updated_at}}</td>
+                            <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
+                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
+                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
+                            
+                        </tr>
+                        <tr [attr.id]="'demo' + i" class="collapse">
+                                <td colspan="6" class="hiddenRow"><div>Demo1</div> </td>
+                        </tr>
+   
+					</ng-container>-->
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <!--<tr *ngFor="let plan of profileData.plans;let i= index" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                                             <td>{{i+1}}</td>
                                             <td>{{plan.package_name}}</td>
                                             <td>{{plan.package_price}}</td>
@@ -249,8 +333,10 @@
                                             <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
                                             <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
                                             <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
-                                        </tr>
-                                    </table>
+                                        </tr>-->
+                                         
+                                     <!--  </tbody>
+                                    </table> -->
 
 
                                 </div>

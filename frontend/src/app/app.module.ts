@@ -53,6 +53,7 @@ import { NoRightClickDirective } from './no-right-click.directive';
 import { ScrollComponent } from './scroll/scroll.component';
 //sidebar end
 import { NgMasonryGridModule } from 'ng-masonry-grid';
+import {MatExpansionModule} from '@angular/material/expansion';
 //import { MasonryLayoutComponent } from 'ngx-masonry-layout';
 
 // Configs 
@@ -95,7 +96,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	SocialLoginModule,
 	PerfectScrollbarModule,
 	NgMasonryGridModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+	MatExpansionModule
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
