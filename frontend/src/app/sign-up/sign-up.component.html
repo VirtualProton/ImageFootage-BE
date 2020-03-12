@@ -4,34 +4,36 @@
         <span></span>
     </div>
 </div>
-<div class="site-wrap mt-5 pt-5" appNoRightClick>
+<!-- mt-5 pt-5 -->
+<div class="site-wrap " appNoRightClick>
     <main class="main-content mt-5 pt-5">
       <div class="container photos">
         <div class="row">
           
-          <div class="col-md-10 pt-3"  data-aos="fade-up">
-            <h2 class="text-white mb-4">Create your Image Footage account</h2>
-            <p>Already have an account? <a (click)="clickLoginPopup()">Login</a></p>
+          <div class="col-md-12 pt-3 regform"  data-aos="fade-up">
+            <h2 class="mb-4 text-center">Create your Image Footage account</h2>
+            <p class="text-center">Already have an account? <a (click)="clickLoginPopup()">Login</a></p>
   
                     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"  class="mt-5 pt-5">
   
                       <div class="row form-group mb-5">
                           <div class="col-md-4 col-sm-4 mb-3 mb-md-0">
-                              <label class="text-white">First Name</label>
+                          <!-- text-white -->
+                              <label class="">First Name</label>
                               <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control text-white">
                               <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
                                   <div *ngIf="f.first_name.errors.required">First Name is required</div>
                               </div>
                           </div>
                           <div class="col-md-4 col-sm-4 ">
-                              <label class="text-white" >Last Name</label>
+                              <label class="" >Last Name</label>
                               <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"  class="form-control text-white">
                               <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
                                   <div *ngIf="f.last_name.errors.required">Last Name is required</div>
                               </div>
                           </div>
                           <div class="col-md-4 col-sm-4 ">
-                            <label class="text-white">Email</label> 
+                            <label class="">Email</label> 
                             <input type="text" formControlName="email" id="email" class="form-control text-white" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                 <div *ngIf="f.email.errors.required">Email is required</div>
@@ -42,7 +44,7 @@
   
                       <div class="row form-group mb-5">                        
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" >Password</label> 
+                            <label class="" >Password</label> 
                             <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="pswrd" class="form-control text-white">
                             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                 <div *ngIf="f.password.errors.required">Password is required</div>
@@ -50,7 +52,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white">Confirm Password</label> 
+                            <label class="">Confirm Password</label> 
                             <input type="password" formControlName="confirmPassword" id="cnfpswrd" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" class="form-control text-white">
                             <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
                                 <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
@@ -59,7 +61,7 @@
                         </div>
                         
                         <div class="col-md-4 col-sm-4">
-                          <label class="text-white">Job Title</label> 
+                          <label class="">Job Title</label> 
                           <input type="text" formControlName="occupation" id="jobTitle" [ngClass]="{ 'is-invalid': submitted && f.occupation.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.occupation.errors" class="invalid-feedback">
                             <div *ngIf="f.occupation.errors.required">JobTitle is required</div>
@@ -69,14 +71,14 @@
                 
                       <div class="row form-group mb-5">
                         <div class="col-md-4 col-sm-4">
-                          <label class="text-white">Company</label> 
+                          <label class="">Company</label> 
                           <input type="text" id="companyName" formControlName="company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
                             <div *ngIf="f.company.errors.required">Company is required</div>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                          <label class="text-white">Phone</label> 
+                          <label class="">Phone</label> 
                           <input type="text" id="phne" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.phoneNumber.errors.required">PhoneNumber is required</div>
@@ -84,7 +86,7 @@
                         </div>
                         
                         <div class="col-md-4 col-sm-4">
-                          <label class="text-white">Mobile Number</label> 
+                          <label class="">Mobile Number</label> 
                           <input type="text" id="mbnum" formControlName="mobileNumber" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" class="form-control text-white">
                           <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.mobileNumber.errors.required">MobileNumber is required</div>
@@ -95,7 +97,7 @@
                       
                       <div class="row form-group mb-5">
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" >Select Country</label>
+                            <label class="" >Select Country</label>
                             <select class="form-control" id="select-language1" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"  formControlName="country" (change)="onChangeCountry($event.target.value)">
                                 <option *ngFor="let country of countryInfo; let i = index"  value="{{country.id}}">{{country.name}}</option>
                             </select> 
@@ -104,7 +106,7 @@
                              </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white" >Select State</label>                           
+                            <label class="" >Select State</label>                           
                             <select class="form-control" id="select-language2" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" (change)="onChangeState($event.target.value)">
                                 <option *ngIf="stateInfo == []" value="-1">--Select State--</option>
                                 <option *ngFor="let state of stateInfo; let j = index"  value="{{state.id}}">{{state.state}}</option>
@@ -114,7 +116,7 @@
                              </div>
                         </div>                        
                         <div class="col-md-4 col-sm-4">
-                            <label class="text-white">Select City</label> 
+                            <label class="">Select City</label> 
                             <select class="form-control  text-white" id="select-language3" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" (change)="onChangeCity($event.target.value)">
                                 <option *ngIf="cityInfo == []" value="-1">--Select CIty--</option>
                                 <option *ngFor="let city of cityInfo; let k = index"  value="{{city.id}}">{{city.name}}</option>
@@ -127,7 +129,7 @@
   
                       <div class="row form-group mb-5">
                           <div class="col-md-4 col-sm-4">
-                            <label class="text-white" >Zip Code</label> 
+                            <label class="" >Zip Code</label> 
                             <input type="text" id="pincode" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
                             <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
                                 <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
@@ -136,7 +138,7 @@
                           </div>
                           
                           <div class="col-md-8 col-sm-8">
-                            <label class="text-white">Address</label> 
+                            <label class="">Address</label> 
                             <textarea name="address" id="address" cols="5" rows="1" class="form-control" placeholder="" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
                             <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
                                 <div *ngIf="f.address.errors.required">Address is required</div>
@@ -156,7 +158,7 @@
                     
                       <div class="row form-group text-center">
                         <div class="col-md-12">
-                          <button [disabled]="loading" type="submit" class="btn btn-warning btn-md text-white">Create Account</button>
+                          <button [disabled]="loading" type="submit" class="btn btn-success btn-md ">Create Account</button>
                         </div>
                       </div>
   
