@@ -15,9 +15,6 @@ body {
 	    object-fit: contain !important;
 		background: #58303066 !important;
 }
-
-
-
 .gallery {
 -webkit-column-count: 5;
 -moz-column-count: 5;
@@ -49,4 +46,7 @@ column-width: 100%;
 padding-left: 1.1rem;
 padding-right: 1.1rem;
 }
+}
+.red{
+	color:red;
 }

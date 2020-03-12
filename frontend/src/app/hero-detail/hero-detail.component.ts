@@ -55,6 +55,7 @@ export class HeroDetailComponent implements OnInit {
   filePreview: string;
   category:any ='' ;
   prodid:any='';
+  lightBoxListDataItems: any = [];
     totalproduct:number = 0;
     perpage:number = 30;
     totalpages:number = 0;
@@ -75,6 +76,9 @@ export class HeroDetailComponent implements OnInit {
       this.loadingData =true;
      //this.getcategoryCarouselImages();
      this.getDetailinfo();
+	 this.lightBoxListDataItems=localStorage.getItem('lightboxData');
+	  //var isPresent = this.lightBoxListDataItems.some(function(el){ return el.api_product_id === this.route.snapshot.paramMap.get('id')});
+		//console.log(isPresent);
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
@@ -82,6 +86,7 @@ export class HeroDetailComponent implements OnInit {
       //let category = this.route.snapshot.paramMap.get('cat');
       let imgtype =  this.route.snapshot.paramMap.get('webtype');
       this.prodid =  this.route.snapshot.paramMap.get('id');
+	 
       this.route
           .queryParams
           .subscribe(params => {
@@ -295,16 +300,21 @@ export class HeroDetailComponent implements OnInit {
 
     addtolightbox(id){
         console.log(id);
+		let element = document.getElementById('adtow')
         if (!this.currentUser) {
             this.showloginPopup = true;
        }else {
-            this.loadingData = true;
+            //this.loadingData = true;
             this.heroService.addWishListItemsData(id)
                 .subscribe(data => {
                     if (data["status"] == '1') {
                         this.loadingData = false;
-                        this.router.navigate(['/wishlist']);
-                    } else {
+						element.style.color = 'red';
+						//alert(data["message"]);
+                       // this.router.navigate(['/wishlist']);
+                    }if (data["status"] == '2') {
+						element.style.color = '#ffffffa8';
+					} else if (data["status"] == '0') { 
                         this.loadingData = false;
                         alert(data["message"]);
                     }

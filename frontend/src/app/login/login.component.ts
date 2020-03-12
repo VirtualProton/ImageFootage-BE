@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: HeroService,
@@ -121,6 +120,7 @@ export class LoginComponent implements OnInit {
                          this.loading = false;
                          alert("Please enter correct username or password");
                      }else{
+					 	  this.loaddata();
 					      alert("Login Successful");
                          this.closeLoginPopup.emit(true);
                      }
@@ -129,6 +129,18 @@ export class LoginComponent implements OnInit {
                       this.loading = false;
                   });
       }
+	  loaddata() {
+        this.authenticationService.getLightboxItemsData()
+            .subscribe(
+                data => {
+                    if (data.status == '1') {
+						localStorage.setItem('lightboxData', JSON.stringify(data.data));
+                    } 
+                },
+                error => {
+
+                });
+    }
   resetPassword(){
       this.closePopup();
       this.router.navigate(['/user-reset-password']);
