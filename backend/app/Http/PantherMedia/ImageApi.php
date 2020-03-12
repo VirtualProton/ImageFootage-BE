@@ -255,7 +255,7 @@ class ImageApi {
 
   public function download($data,$id){
       $this->access_key = $this->getAccessKey();
-      // echo $this->access_key; die;
+       //echo $this->access_key; die;
 
       $client = new Client(); //GuzzleHttp\Client
       $response = $client->post('http://rest.panthermedia.net/download-media', [
@@ -279,34 +279,40 @@ class ImageApi {
       if ($response->getBody()) {
           $contents = json_decode($response->getBody(), true);
           $redownload = $contents['download_status']['id_download'];
-          //print_r($contents); die;
+         // print_r($contents); die;
 
           $client2 = new Client(); //GuzzleHttp\Client
+          $r = $client->request('POST', 'http://httpbin.org/post', [
+              'body' => 'raw data'
+          ]);
           $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
               'headers'=>[
                   'Content-Type' => 'application/x-www-form-urlencoded',
                   'Accept-Version'=>'1.0'
               ],
-              'form_params' => [
-                  'api_key' => $this->api_key,
-                  'access_key' => $this->access_key,
-                  'timestamp' => $this->timestamp,
-                  'nonce' => $this->nonce,
-                  'algo' => $this->algo,
-                  'content_type'=>'application/json',
-                  'lang'=>'en',
-                  'id_media'=> $data['product']['product_info']['media']['id'],
-                  'queue_hash'=>$contents['download_status']['queue_hash'],
-                  'test'=>'yes'
-              ]
+              'body'=>'api_key='.$this->api_key.'&access_key='.$this->access_key.'&timestamp='.$this->timestamp.'&nonce='.$this->nonce.'&algo=sha1&id_media='.$contents['download_status']['id_media'].'&queue_hash='.$contents['download_status']['queue_hash'].'&test=yes&content_type=application/json'
+//              'form_params' => [
+//                  'api_key' => $this->api_key,
+//                  'access_key' => $this->access_key,
+//                  'timestamp' => $this->timestamp,
+//                  'nonce' => $this->nonce,
+//                  'algo' => $this->algo,
+//                  'content_type'=>'application/json',
+//                  'lang'=>'en',
+//                  'id_media'=> $contents['download_status']['id_media'],
+//                  'queue_hash'=>$contents['download_status']['queue_hash'],
+//                  'test'=>'yes'
+//              ]
           ]);
+          //print_r($response2); die;
         if ($response2->getBody()) {
-            echo $this->timestamp;
-            echo "<br/>";
-            echo $this->access_key;
+            //echo $this->timestamp;
+            //echo "<br/>";
+            //echo $this->access_key;
+            //print_r($response2->getBody());
             $downloadcontents = json_decode($response2->getBody());
-            print_r($downloadcontents);
-            die;
+            //print_r($downloadcontents);
+            //die;
             return $downloadcontents;
         }
 
