@@ -100,6 +100,9 @@ export class LoginComponent implements OnInit {
 	 	this.closeLoginPopup.emit(false);
 	} */
      signUp(){
+	 this.closeLoginPopup.emit(false);
+	 this.router.navigate(['/signUp']);
+	 
 	 }
   onSubmit() {
       this.submitted = true;
