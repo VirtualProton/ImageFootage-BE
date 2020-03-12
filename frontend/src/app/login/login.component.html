@@ -38,7 +38,7 @@
 
                                         <div class="form-group mt-3">
                                             <button type="submit" [disabled]="loading" class="btn btn-dark w-100 d-block rounded-0 p-3 text-white shadow-lg mb-3">Submit</button>
-                                            <p class="f-12 text-center">Not a member as yet?<a routerLink="/signUp" class="text-primary" > Register Now</a></p>
+                                            <p class="f-12 text-center">Not a member as yet?<a routerLink="/signUp" class="text-primary" (click)="signUp()" > Register Now</a></p>
 <!--                                            (click)="closeLoginPopupForReg()"-->
                                         </div>
                                     </form>
