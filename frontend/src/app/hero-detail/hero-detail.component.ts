@@ -261,7 +261,7 @@ export class HeroDetailComponent implements OnInit {
     hideLoginPopup(event){
       this.showloginPopup = false;
       if(event){
-        this.addToCheckoutItem(this.detailPageInfo,this.standard,this.total,this.extended,'2');
+        //this.addToCheckoutItem(this.detailPageInfo,this.standard,this.total,this.extended,'2');
       }
     }
 
@@ -295,18 +295,22 @@ export class HeroDetailComponent implements OnInit {
 
     addtolightbox(id){
         console.log(id);
-        this.loadingData =true;
-        this.heroService.addWishListItemsData(id)
-            .subscribe(data => {
-                if(data["status"]=='1'){
-                    this.loadingData =false;
-                    this.router.navigate(['/lightbox']);
-                }else{
-                    this.loadingData =false;
-                    alert(data["message"]);
-                }
+        if (!this.currentUser) {
+            this.showloginPopup = true;
+       }else {
+            this.loadingData = true;
+            this.heroService.addWishListItemsData(id)
+                .subscribe(data => {
+                    if (data["status"] == '1') {
+                        this.loadingData = false;
+                        this.router.navigate(['/wishlist']);
+                    } else {
+                        this.loadingData = false;
+                        alert(data["message"]);
+                    }
 
-            });
+                });
+        }
     }
 	open(content) {
     	this.modalService.open(content);
