@@ -377,13 +377,13 @@
           <div class="col-md-12">
           <div class="row">
           <div class="col-md-6">
-            <input type="text" class="form-control form-control-search" name="search" placeholder="Search for snippets" style="height: 48px;color: #fff;" [(ngModel)]="keywordEle"  aria-label="Text input with dropdown button" />
+            <input type="text" class="form-control form-control-search" name="search" placeholder="Search for snippets" style="height: 48px;color: #fff;border-bottom: 1px solid #80808082;border-left: 1px solid #80808082; border-top: 1px solid #80808082;" [(ngModel)]="keywordEle"  aria-label="Text input with dropdown button" />
             </div>
             <div class="col-md-6" style="margin-left: -10px;">
             <div class="input-group-btn">
               <div class="btn-group" role="group">
                 <div class="dropdown dropdown-lg">
-                  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #feaa0c; border: 1px solid #feaa0c;border-right:1px solid #fff;">
+                  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #feaa0c; border: 1px solid #feaa0c;border-right:1px solid #fff;">Filters
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu" style=" background:#1d1d1d;margin-right:-300px;" *ngIf="leftsideData">
                      <div class="form-group">
@@ -543,8 +543,8 @@
             </span>
           </div> 
           <div class="clearfix"></div>
-         <div class=" site-wrap mt-5 containetr-fluid" *ngIf="productType != 2">
-         
+         <div class="site-wrap  containetr-fluid" *ngIf="productType != 2">
+         <!-- mt-5 -->
          <!--<ng-masonry-grid
                     [masonryOptions]="{animationEffect: 'effect-1', transitionDuration: '0.8s', gutter: 5,fitWidth: true }" 
                     [useAnimation]="true"
@@ -578,11 +578,11 @@
 <!-- Grid row -->
 <div class="gallery" id="gallery">
   <!-- Grid column -->
-  <div class="mb-3 pics animation all 2" *ngFor="let aosimges of aoslSliderImages; let i = index;">
+  <div class="mb-3 pics animation all 2 imgg" *ngFor="let aosimges of aoslSliderImages; let i = index;">
     <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
-    <div class="photo-text-more">
+    <div class="photo-text-more forimgic" >
                          
-                          <p class="icons_thum2">
+                          <p class="icons_thum2" >
                             
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>

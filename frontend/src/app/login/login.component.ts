@@ -99,7 +99,8 @@ export class LoginComponent implements OnInit {
 	/* closeLoginPopupForReg(){
 	 	this.closeLoginPopup.emit(false);
 	} */
-     
+     signUp(){
+	 }
   onSubmit() {
       this.submitted = true;
       // stop here if form is invalid

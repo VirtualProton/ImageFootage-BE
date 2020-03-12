@@ -206,3 +206,9 @@ padding-left: 1.1rem;
 padding-right: 1.1rem;
 }
 }
+.forimgic{
+	display:none;
+}
+.imgg:hover .forimgic{
+	display:block;
+}
