@@ -82,7 +82,7 @@ export class HeroDetailComponent implements OnInit {
 	  	this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
 	
 	console.log(this.lightBoxListDataItems);
-	console.log(this.found);
+	console.log(this.vfound);
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
@@ -314,10 +314,12 @@ export class HeroDetailComponent implements OnInit {
                     if (data["status"] == '1') {
                         this.loadingData = false;
 						element.style.color = 'red';
+						this. loaddata();
 						//alert(data["message"]);
                        // this.router.navigate(['/wishlist']);
                     }if (data["status"] == '2') {
 						element.style.color = '#ffffffa8';
+						this. loaddata();
 					} else if (data["status"] == '0') { 
                         this.loadingData = false;
                         alert(data["message"]);
@@ -325,6 +327,18 @@ export class HeroDetailComponent implements OnInit {
 
                 });
         }
+    }
+	 loaddata() {
+        this.authenticationService.getLightboxfsItemsData()
+            .subscribe(
+                data => {
+                    if (data.status == '1') {
+						localStorage.setItem('lightboxData', JSON.stringify(data.data));
+                    } 
+                },
+                error => {
+
+                });
     }
 	open(content) {
     	this.modalService.open(content);
