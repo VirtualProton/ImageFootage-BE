@@ -66,6 +66,9 @@ class UserController extends Controller
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   }
    }
+   public function getUserAddress(Request $request){
+	   
+   }
    public function contributorProfile($id){
 	   $User=new Contributor();
 	   $userlist=$User->where('contributor_id',$id)->get()->toArray();

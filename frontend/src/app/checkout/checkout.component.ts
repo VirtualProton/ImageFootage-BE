@@ -90,6 +90,12 @@ export class CheckoutComponent implements OnInit {
                   });
 
   }
+  getUserAddress(){
+    this.authenticationService.getUserAddress()
+      .subscribe(data => {
+         console.log(data);
+       });
+  }
     get f() { return this.checkoutForm.controls; }
     getCountries(){
         this.authenticationService.allCountries().

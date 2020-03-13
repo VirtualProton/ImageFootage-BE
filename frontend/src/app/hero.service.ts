@@ -342,6 +342,24 @@ export class HeroService {
             catchError(this.handleError<userData>(`unable to get data`))
         );
     }
+	getUserAddress(){
+		 const url = `${this.heroesUrl}getuseraddress`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+        return this.http.post<any>(url, tokenData, options).pipe(
+            map(cart => {
+                console.log(cart);
+
+                //this.currentUserSubject.next(cart);
+                return cart;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+	}
 
 
     getMarketdeatils(): Observable<market> {

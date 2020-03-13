@@ -90,6 +90,8 @@ Route::group([
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
     Route::post('downloadindi', 'MediaController@downloadindi');
+	Route::post('getuseraddress','UserController@getUserAddress');
+	
 
 
 

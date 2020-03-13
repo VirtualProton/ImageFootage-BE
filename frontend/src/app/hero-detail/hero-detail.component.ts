@@ -81,8 +81,8 @@ export class HeroDetailComponent implements OnInit {
 	
 	  	this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
 	
-	console.log(this.lightBoxListDataItems);
-	console.log(this.vfound);
+	//console.log(this.lightBoxListDataItems);
+	//console.log(this.vfound);
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });

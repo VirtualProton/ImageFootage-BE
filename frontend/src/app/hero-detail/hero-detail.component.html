@@ -140,7 +140,7 @@
 <!--                            </div>-->
 <!--                        </div>-->
 
-                        <div class="row mt-2 mb-5">
+                        <div class="row mt-2 mb-1">
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
@@ -149,9 +149,9 @@
                                 <!--<p>This image is exclusive to Image Footage</p>-->
                             </div>
                         </div>
-                        <h6 class="text-center" style="color:#ffffffa8;">DETAILS</h6>
-                        <br />
-                       
+                        <h6 class="text-center" style="color:#ffffffa8;border-bottom:#999;">DETAILS</h6>
+                        <hr />
+                      
                         <div class="col-md-12">
 <!--                            <div class="row">-->
 <!--                                <div class="col-md-4">Restrictions</div>-->
@@ -203,7 +203,7 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
                             </div>
-                            <div class="row">
+                           <!-- <div class="row">
                                 <div class="col-md-4">Editorial #</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.editorial.toUpperCase()}}</div>
@@ -217,7 +217,7 @@
                                 <div class="col-md-4">Rights managed </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">Date created</div>
                                 <div class="col-md-1">:</div>
@@ -441,7 +441,12 @@
                             <div class="p-3">
                                 <div style="float: right;margin-right:130px;font-height:18px;">
                                     <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
-                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>
+                                   <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
+                                    
+                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;color:red;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
+                                 <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
+                                    
+                                    
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
@@ -506,7 +511,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2 mb-5">
+                        <div class="row mt-2 mb-1">
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
@@ -515,8 +520,8 @@
                             </div>
                         </div>
 
-                        <h6 class="text-center" style="color:#ffffffa8;">DETAILS</h6>
-                        <br />
+                        <h6 class="text-center" style="color:#ffffffa8;border-bottom:#999;">DETAILS</h6>
+                        <hr />
                         <!--<table class="f-12">
                             <tbody>
                             <tr>
