@@ -88,6 +88,8 @@ Route::group([
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
+    Route::post('downloadindi', 'MediaController@downloadindi');
+
 
 
 });

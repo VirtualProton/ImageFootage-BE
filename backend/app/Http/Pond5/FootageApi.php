@@ -54,6 +54,7 @@ class FootageApi {
  }
 
   public function download($data,$id){
+      ini_set('max_execution_time',0);
         if(count($data)>0){
             $search_cmd= array();
            //$search_cmd['command'] = 'search';

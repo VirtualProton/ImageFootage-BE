@@ -44,6 +44,7 @@ class FrontuserController extends Controller {
                 $Usercart->product_desc= $request['product']['product_info']['metadata']['description'];
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_json= json_encode($request['product']['product_info']);
+                $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $result=$Usercart->save();
                 if($result){
                     echo '{"status":"1","message":"Product added to cart successfully"}';
@@ -67,7 +68,7 @@ class FrontuserController extends Controller {
                 $Usercart->standard_type= $request['product']['product_info'][0]['items'][0]['pf'];
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
                 $Usercart->standard_size= $request['product']['product_info'][0]['items'][0]['filesize'];
-                $Usercart->standard_price = $request['product']['selected_product']['pr']*80;
+                $Usercart->standard_price = $request['product']['selected_product']['pr'];
                 $Usercart->total= $request['product']['total'];
                 $Usercart->product_name= $request['product']['product_info'][0]['items'][0]['pf'];
                 $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
@@ -75,6 +76,7 @@ class FrontuserController extends Controller {
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_main_footage = $request['product']['product_info'][2];
                 $Usercart->product_json= json_encode($request['product']['product_info'][0]);
+                $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $result=$Usercart->save();
                 if($result){
                     echo '{"status":"1","message":"Product added to cart successfully"}';

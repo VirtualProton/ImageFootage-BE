@@ -150,5 +150,33 @@ class MediaController extends Controller
       }
     }
 
+    public function downloadindi(Request $request){
+        ini_set('max_execution_time',0);
+        $allFields = $request->all();
+        //print_r($allFields); die;
+        $tokens=json_decode($allFields['product']['token'],true);
+        $id = $tokens['Utype'];
+        if($allFields['product']['type']==2){
+            $flag ='Image';
+        }else{
+            $flag ='Footage';
+        }
+         if ($allFields['product']['type'] == 3) {
+                $footageMedia = new FootageApi();
+                $product_details_data = $footageMedia->download(json_decode($allFields['product']['product_info']['selected_product'],true), $id);
+                return response()->json($product_details_data);
+            } else if ($allFields['product']['type'] == 2) {
+                $imageMedia = new ImageApi();
+                $selected = json_decode($allFields['product']['product_info']['selected_product'],true);
+                $all =json_decode($allFields,true);
+                $download = [];
+                $download['product']['product_info']['media']['id'] = $all['product']['product_info']['media']['id'];
+                $download['product']['selected_product']['id'] = $selected['id'];
+                $product_details_data = $imageMedia->download($allFields, $id);
+                return response()->json($product_details_data);
+            }
+
+    }
+
 
 }

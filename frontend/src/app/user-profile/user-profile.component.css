@@ -3,6 +3,10 @@ body{ font-weight:normal; background: #f1f5f6 !important;}
 hr {
     border-top: 1px solid #ddd !important;
 }
+a {
+    cursor:pointer;
+}
+
 .nice-select {
     -webkit-tap-highlight-color: transparent;
     background-color: #fff;

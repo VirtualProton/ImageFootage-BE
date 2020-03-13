@@ -87,6 +87,7 @@ class PaymentController extends Controller
                 $orderItem->product_thumb = $eachCart['product_thumb'];
                 $orderItem->product_desc = $eachCart['product_desc'];
                 $orderItem->product_json = $eachCart['product_json'];
+                $orderItem->selected_product = $eachCart['selected_product'];
                 $orderItem->product_web = $eachCart['product_web'];
                 $orderItem->token = $eachCart['token'];
                 $orderItem->cart_added_by = $eachCart['cart_added_by'];

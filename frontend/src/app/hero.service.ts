@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -692,6 +692,31 @@ export class HeroService {
 
         let tokenData = JSON.parse(product.token);
         const url = `${this.heroesUrl}download`;
+        // var options = {
+        //     headers: new HttpHeaders()
+        //         .set('Authorization',  `Bearer ${tokenData.access_token}`)
+        //         .set('Content-Type',  `application/json`)
+        // }
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+
+        return this.http.post<any>(url, {product}, options).pipe(
+            map(download => {
+                console.log(download);
+
+                //this.currentUserSubject.next(cart);
+                return download;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
+
+    downloadindi(product: any): Observable<userData> {
+        let tokenData = JSON.parse(product.token);
+        const url = `${this.heroesUrl}downloadindi`;
         // var options = {
         //     headers: new HttpHeaders()
         //         .set('Authorization',  `Bearer ${tokenData.access_token}`)

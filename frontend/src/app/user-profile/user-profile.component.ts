@@ -94,4 +94,41 @@ export class UserProfileComponent implements OnInit {
     this.order_items = this.orderData[dataid]['items']
   }
 
+
+  download(orderDetials,type){
+    var token = localStorage.getItem('currentUser');
+    let cartval = {
+      "product_info":orderDetials,
+      "token":token,
+      "type":type
+    };
+
+    this.heroService.downloadindi(cartval)
+        .subscribe(data => {
+          console.log(data);
+          if(data) {
+            if (type == 3) {
+              this.loadingData = false;
+              window.location.href = data['url'];
+            } else {
+              if (data["stat"] == 'ok') {
+                this.loadingData = false;
+                window.location.href = data["download_status"]["download_url"];
+              } else {
+                this.loadingData = false;
+                alert("Not Downloaded");
+              }
+            }
+          }
+
+        });
+  }
+  posterData(imgstr){
+      var newstr = imgstr.toString();
+      newstr = newstr.replace("main_l.mp4","iconl.jpeg")
+     console.log(newstr);
+     return newstr;
+  }
+
+
 }

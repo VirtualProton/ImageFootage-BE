@@ -4,7 +4,7 @@
         <span></span>
     </div>
 </div>
-<section appNoRightClick>
+<section >
 <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-3 col-md-3">
@@ -373,7 +373,7 @@
                                             <td>{{order.order_total}}</td>
                                             <td>{{order.order_date}}</td>
                                             <td>{{order.paymentgatway}}</td>
-                                            <td (click)="orderDetails(i)">Details</td>
+                                            <td ><a (click)="orderDetails(i)">Details</a></td>
                                         </tr>
                                     </table>
                                     <p class="text-black fw-6" *ngIf="order_items"><b>Order Details</b></p>
@@ -403,7 +403,8 @@
                                             <td>{{orderitem.product_name}}</td>
                                             <td>{{orderitem.standard_size}}</td>
                                             <td>{{orderitem.total}}</td>
-                                            <td>Download</td>
+                                            <td *ngIf="orderitem.product_web=='2'" ><a (click)="download(orderitem,'2')">Download</a></td>
+                                            <td *ngIf="orderitem.product_web=='3'" ><a (click)="download(orderitem,'3')">Download</a></td>
                                         </tr>
                                     </table>
                                 </div>
