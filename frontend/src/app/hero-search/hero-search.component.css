@@ -1,5 +1,5 @@
 /* HeroSearch private styles */
-body{padding-top: 70px;}
+body{padding-top: 70px; background:#000;}
 #mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}
 input[type="radio"], input[type="checkbox"]{
 	height:10px !important;

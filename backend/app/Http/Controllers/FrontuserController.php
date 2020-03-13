@@ -128,7 +128,12 @@ class FrontuserController extends Controller {
 				echo '{"status":"0","message":"Some problem occured."}';
 			}
 		}else{
-			echo '{"status":"0","message":"Already added to wishlist."}';
+			$del_result=UserWishlist::where('wishlist_product',$productId)->where('wishlist_user_id',$product_addedby)->delete();
+			if($del_result){
+				echo '{"status":"2","message":"Product removed from wishlist."}';
+			}else{
+				echo '{"status":"0","message":"Some problem occured."}';
+			}
 		}
 		
 	}

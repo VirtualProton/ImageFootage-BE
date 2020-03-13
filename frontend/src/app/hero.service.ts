@@ -171,7 +171,7 @@ export class HeroService {
             map(user => {
                	 console.log(user);
                 localStorage.setItem('currentUser', JSON.stringify(user));
-				console.log(localStorage.getItem('currentUser.utype'))
+				//console.log(localStorage.getItem('currentUser.utype'))
                 this.currentUserSubject.next(user);
                 return user;
             }),
