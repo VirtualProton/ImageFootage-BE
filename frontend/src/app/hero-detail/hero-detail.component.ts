@@ -78,8 +78,9 @@ export class HeroDetailComponent implements OnInit {
      //this.getcategoryCarouselImages();
      this.getDetailinfo();
 	 this.lightBoxListDataItems=localStorage.getItem('lightboxData');
-	
+	if(this.lightBoxListDataItems != null){
 	  	this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
+	}
 	
 	//console.log(this.lightBoxListDataItems);
 	//console.log(this.vfound);
