@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -585,6 +585,25 @@ export class HeroService {
     getLightboxItemsData(): Observable<any> {
         //let params = new HttpParams();
         const url = `${this.heroesUrl}wishlist`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+        return this.http.post<any>(url, tokenData, options).pipe(
+            map(lightBox => {
+                console.log(lightBox);
+
+                //this.currentUserSubject.next(cart);
+                return lightBox;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
+	getLightboxfsItemsData(): Observable<any> {
+        //let params = new HttpParams();
+        const url = `${this.heroesUrl}wishlistfs`;
         let tokenData = JSON.parse(localStorage.getItem('currentUser'));
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',

@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
                   });
       }
 	  loaddata() {
-        this.authenticationService.getLightboxItemsData()
+        this.authenticationService.getLightboxfsItemsData()
             .subscribe(
                 data => {
                     if (data.status == '1') {

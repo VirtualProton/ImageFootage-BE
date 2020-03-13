@@ -163,6 +163,27 @@ class FrontuserController extends Controller {
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
 		}
 	}
+	public function wishlistfs(Request $request){
+        //print_r($request->all());
+		$user_id = $request['Utype'];
+        $UserWishlist=new UserWishlist;
+		$products=new Product;
+		$cart_list= $UserWishlist->select('wishlist_product')->where('wishlist_user_id',$user_id)->get()->toArray();
+		if(isset($cart_list) && !empty($cart_list)){
+			$wishlist_products=array();
+			foreach($cart_list as $key=>$wish){
+				$wishlist_products[]=(int)$wish['wishlist_product'];
+			}
+			$productids=implode(',',$wishlist_products);
+			$cart_list=$products->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
+			foreach($cart_list as $key=>$wish){
+				$wishlist_products1[]=(int)$wish['api_product_id'];
+			}
+			echo '{"status":"1","data":'.json_encode($wishlist_products1,true).',"message":""}';
+		}else{
+			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
+		}
+	}
 	public function validateOtpForcontributorPass(Request $request){
 		$user_id=$request->user_id;
 		$contributor_otp=$request->otp;

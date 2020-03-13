@@ -35,6 +35,7 @@ export class HeroDetailComponent implements OnInit {
   checkoutArray:any=[];
   showloginPopup:boolean=false;
   id:number=0;
+  vfound:boolean =false;
   addedCartItem:boolean=false;
   webtype:number=0;
   type:string='';
@@ -77,8 +78,11 @@ export class HeroDetailComponent implements OnInit {
      //this.getcategoryCarouselImages();
      this.getDetailinfo();
 	 this.lightBoxListDataItems=localStorage.getItem('lightboxData');
-	  //var isPresent = this.lightBoxListDataItems.some(function(el){ return el.api_product_id === this.route.snapshot.paramMap.get('id')});
-		//console.log(isPresent);
+	
+	  	this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
+	
+	console.log(this.lightBoxListDataItems);
+	console.log(this.found);
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });

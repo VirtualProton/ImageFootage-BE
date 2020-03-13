@@ -33,7 +33,8 @@
                             <div class="p-3">
                                 <div style="float: right;margin-right:130px;font-height:18px;">
                                  <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
-                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;" title="Wishlist" id='adtow'><i class="fas fa-heart"></i></a>
+                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
+                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
@@ -187,11 +188,11 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.media.mime_type}}</div>
                             </div>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">Author ID</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.author_id}}</div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">Model-release</div>
                                 <div class="col-md-1">:</div>
@@ -440,7 +441,7 @@
                             <div class="p-3">
                                 <div style="float: right;margin-right:130px;font-height:18px;">
                                     <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
-                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;color:{{ hcolor}};" title="Wishlist"><i class="fas fa-heart"></i></a>
+                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
