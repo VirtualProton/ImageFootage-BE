@@ -352,9 +352,6 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, tokenData, options).pipe(
             map(cart => {
-                console.log(cart);
-
-                //this.currentUserSubject.next(cart);
                 return cart;
             }),
             catchError(this.handleError<userData>(`unable to get data`))
