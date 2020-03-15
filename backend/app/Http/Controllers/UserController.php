@@ -66,6 +66,12 @@ class UserController extends Controller
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   }
    }
+   public function getUserAddress(Request $request){
+	   $id=$request->Utype;
+	   $userlist=User::select('first_name','last_name','address','city','state','country','postal_code')->where('id',$id)->first();
+	   return '{"status":"1","message":"","data":'.json_encode($userlist).'}';
+	   
+   }
    public function contributorProfile($id){
 	   $User=new Contributor();
 	   $userlist=$User->where('contributor_id',$id)->get()->toArray();

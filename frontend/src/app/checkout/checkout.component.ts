@@ -28,6 +28,13 @@ export class CheckoutComponent implements OnInit {
   loadingData:boolean=false;
   paymentShow:boolean=false;
   payuData:any ='';
+  firstname:string='';
+  lastname:string='';
+  address:string='';
+  city:string='';
+  state:string='';
+  country:string='';
+  postal_code:string='';
   payuForm: FormGroup;
   hash:any='';
   public currentUser: any;
@@ -74,6 +81,7 @@ export class CheckoutComponent implements OnInit {
           });
       }
     this.getCountries();
+	this.getUserAddress();
     this.authenticationService.getcartItemsData()
               .subscribe(
                   data => {
@@ -89,6 +97,18 @@ export class CheckoutComponent implements OnInit {
                      
                   });
 
+  }
+  getUserAddress(){
+    this.authenticationService.getUserAddress()
+      .subscribe(data => {
+		  this.firstname=data.data.first_name;
+		  this.lastname=data.data.last_name;
+		  this.address=data.data.address;
+		  this.city=data.data.city;
+		  this.state=data.data.state;
+		  this.country=data.data.country;
+		  this.postal_code=data.data.postal_code;
+      });
   }
     get f() { return this.checkoutForm.controls; }
     getCountries(){

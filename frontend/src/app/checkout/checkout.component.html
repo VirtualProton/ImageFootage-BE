@@ -18,7 +18,7 @@
                         <div class="row form-group">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <label>First Name</label>
-                                <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0">
+                                <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" class="form-control rounded-0" [value]="firstname">
                                 <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.first_name.errors.required">First Name is required</div>
                                 </div>
@@ -26,7 +26,7 @@
 
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <label>Last Name</label>
-                                <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" class="form-control">
+                                <input type="text" formControlName="last_name" id="lname" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" class="form-control" [value]="lastname">
                                 <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.last_name.errors.required">Last Name is required</div>
                                 </div>
@@ -35,7 +35,7 @@
 
                         <div class="form-group">
                             <label>Street Address</label>
-                            <textarea  class="form-control rounded-0" rows="2" style="min-height:70px;" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"></textarea>
+                            <textarea  class="form-control rounded-0" rows="2" style="min-height:70px;" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address" [ngModel]="address"></textarea>
                             <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
                                 <div *ngIf="f.address.errors.required">Address is required</div>
                             </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group">
                             <label>Zipcode</label>
-                                <input type="text" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }">
+                                <input type="text" class="form-control" formControlName="pincode"  [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" [value]="postal_code">
                             <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback" >
                                 <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
                                 <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number should be 6 digits</div>

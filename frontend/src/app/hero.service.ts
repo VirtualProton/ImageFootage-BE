@@ -342,6 +342,21 @@ export class HeroService {
             catchError(this.handleError<userData>(`unable to get data`))
         );
     }
+	getUserAddress(){
+		 const url = `${this.heroesUrl}getuseraddress`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+        return this.http.post<any>(url, tokenData, options).pipe(
+            map(cart => {
+                return cart;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+	}
 
 
     getMarketdeatils(): Observable<market> {
@@ -585,6 +600,25 @@ export class HeroService {
     getLightboxItemsData(): Observable<any> {
         //let params = new HttpParams();
         const url = `${this.heroesUrl}wishlist`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+        return this.http.post<any>(url, tokenData, options).pipe(
+            map(lightBox => {
+                console.log(lightBox);
+
+                //this.currentUserSubject.next(cart);
+                return lightBox;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
+	getLightboxfsItemsData(): Observable<any> {
+        //let params = new HttpParams();
+        const url = `${this.heroesUrl}wishlistfs`;
         let tokenData = JSON.parse(localStorage.getItem('currentUser'));
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
