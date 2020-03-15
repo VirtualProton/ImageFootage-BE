@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Api;
 use App\Models\UserPackage;
+use App\Models\UserProductDownload;
 use CORS;
 use Image;
 
@@ -141,6 +142,37 @@ class MediaController extends Controller
           if ($allFields['product']['type'] == 3) {
               $footageMedia = new FootageApi();
               $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
+
+              if(!empty($product_details_data)){
+                  $dataCheck =UserProductDownload::where('product_id_api',$allFields['product']['selected_product']['id'])->where('product_size',$allFields['product']['selected_product']['size'])->where('web_type',$allFields['product']['type'])->first();
+                  if(!$dataCheck) {
+                      $dataInsert = array(
+                          'user_id' => $id,
+                          'product_id' => $allFields['product']['selected_product']['id'],
+                          'product_id_api' => $allFields['product']['selected_product']['id'],
+                          'id_media' => $allFields['product']['selected_product']['id'],
+                          'download_url' => $product_details_data['url'],
+                          'downloaded_date' => date('Y-m-d H:i:s'),
+                          'product_name' => $allFields['product']['product_info'][0]['items'][0]['pf'],
+                          'product_desc' => $allFields['product']['product_info'][0]['items'][0]['desc'],
+                          'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
+                          'web_type' => $allFields['product']['type'],
+                          'product_size' => $allFields['product']['selected_product']['size'],
+                          'product_price' => $allFields['product']['selected_product']['pr'],
+                          'product_poster' => $allFields['product']['product_info'][2],
+                          'selected_product' => json_encode($allFields['product']['selected_product']),
+                          'created_at' => date('Y-m-d H:i:s'),
+                          'updated_at' => date('Y-m-d H:i:s')
+                      );
+                      UserProductDownload::insert($dataInsert);
+                      UserPackage::where('user_id','=',$id)
+                          ->where('package_type','=',$flag)
+                          ->update([
+                              'downloaded_product'=> DB::raw('downloaded_product+1'),
+                              'updated_at' => date('Y-m-d H:i:s')
+                          ]);
+                  }
+              }
               return response()->json($product_details_data);
           } else if ($allFields['product']['type'] == 2) {
               $imageMedia = new ImageApi();
