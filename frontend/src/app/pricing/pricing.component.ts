@@ -21,6 +21,8 @@ export class PricingComponent implements OnInit {
   footageplansData:any =[];
   yearly:boolean = true;
   monthly:boolean = false;
+  pimages:boolean = true;
+  pfootages:boolean = false;
   submitted = false;
   submitted2 = false;
   submitted3 = false;
@@ -98,6 +100,10 @@ export class PricingComponent implements OnInit {
   showprice(){
     this.yearly = !this.yearly;
     this.monthly = !this.monthly;
+  }
+  showpricefoot(){
+	  this.pimages= !this.pimages;
+	  this.pfootages=!this.pfootages;
   }
 
   onSubmit() {

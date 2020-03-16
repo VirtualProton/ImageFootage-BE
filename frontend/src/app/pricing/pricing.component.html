@@ -295,6 +295,353 @@
 <!--</section>-->
 
 
+<section class="purple-gradient">
+
+
+<!--<div class="switch">
+      <input type="radio" class="switch-input" name="view" value="week" id="week" checked>
+      <label for="week" class="switch-label switch-label-off">Week</label>
+      <input type="radio" class="switch-input" name="view" value="month" id="month">
+      <label for="month" class="switch-label switch-label-on">Month</label>
+      <span class="switch-selection"></span>
+    </div>
+
+    <div class="switch switch-blue">
+      <input type="radio" class="switch-input" name="view2" value="week2" id="week2" checked>
+      <label for="week2" class="switch-label switch-label-off">Week</label>
+      <input type="radio" class="switch-input" name="view2" value="month2" id="month2">
+      <label for="month2" class="switch-label switch-label-on">Month</label>
+      <span class="switch-selection"></span>
+    </div>-->
+
+    <div class="switch switch-yellow">
+      <input type="radio" class="switch-input" name="view3" value="week3" id="week3" checked>
+      <label for="week3" class="switch-label switch-label-off" (click)="showpricefoot()">Images</label>
+      <input type="radio" class="switch-input" name="view3" value="month3" id="month3">
+      <label for="month3" class="switch-label switch-label-on" (click)="showpricefoot()">Footages</label>
+      <span class="switch-selection"></span>
+    </div>
+
+
+
+
+
+
+
+  <div class="container">
+    <div class="text-white text-center">
+  <!--<h1 class="text-white">Images for every project, plans for every budget</h1>
+  <p>Access over 320 million images with 1,65,000 new images added every day.</p>-->
+</div>
+
+<!--<h3 class="text-white pt-5 pb-3">Plans for individuals</h3>-->
+
+<div class="row justify-content-center" *ngIf="pimages">
+  <div class="col-lg-4 col-md-5 col-sm-5">
+  
+  <div class="card">
+    <div class="card-header text-center">
+     <h3 class="text-center">Subscriptions Plans</h3>
+     <!--<p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>-->
+   </div>
+
+   <div class="card-body">
+    <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()" *ngIf="monthly">
+     <div class="row">
+      <div class="col-md-12">
+      <h5 class='text-center'>Monthly Packs</h5>
+     
+       <table class="table table-hover">
+         
+         <tbody>
+           <tr *ngFor="let pack of plansData.monthly_pack;let i= index">
+             <td class="border-top-0">
+               
+               <label class="custmLable">
+                <span class="float-left">
+                    <b class="f-14">{{pack.package_name}}</b>
+                </span>
+                <span class="float-right">
+                    <b class="f-14">INR {{pack.package_price}}</b>
+				</span>
+              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
+              <span class="checkmark"></span>
+            </label>
+             </td>
+            
+           </tr>
+
+         </tbody>
+       </table>
+       
+     </div>
+
+
+     
+   </div>
+   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
+                             <button type="button" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   
+                             <p class="pt-3"><a  (click)="showprice()">See Annual Pricing</a></p>            
+     </div>
+     </form>
+     <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()" *ngIf="yearly">
+     <div class="row">
+      <div class="col-md-12">
+     		<h5 class='text-center'>Annual Packs</h5>
+       <table class="table table-hover">
+         
+         <tbody>
+           <tr *ngFor="let pack of plansData.yearly_pack;let i= index">
+             <td class="border-top-0">
+               
+               <label class="custmLable">
+                <span class="float-left">
+                    <b class="f-14">{{pack.package_name}}</b>
+                </span>
+                <span class="float-right">
+                    <b class="f-14">INR {{pack.package_price}}</b>
+				</span>
+              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
+              <span class="checkmark"></span>
+            </label>
+             </td>
+            
+           </tr>
+
+         </tbody>
+       </table>
+       
+     </div>
+
+
+     
+   </div>
+   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
+                             <button type="button" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   
+                             <p class="pt-3"><a (click)="showprice()">See Monthly Pricing</a></p>            
+     </div>
+     </form>
+   </div>
+</div>
+  </div>
+
+
+
+  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">
+  
+  <div class="card">
+    <div class="card-header text-center">
+     <h3 class="text-center ">Download Packs</h3>
+     <!--<p class="mb-1">Get images on demand.</p><p class="mb-0"> Download within a year.</p>-->
+   </div>
+
+   <div class="card-body">
+     <div class="row">
+     <form [formGroup]="planform" (ngSubmit)="onSubmit()" class="col-md-12">
+     <h5 class="text-center">Download Within A Year</h5>
+       <table class="table table-hover">
+         
+         <tbody>
+           <tr *ngFor="let pack of plansData.download_pack;let i= index">
+             <td class="border-top-0">
+               <label class="custmLable">
+                <span class="float-left">
+                    <b class="f-14">{{pack.package_name}}</b><small></small>
+                </span>
+                <span class="float-right">
+                    <b class="f-14">INR {{pack.package_price}}</b>
+                </span>
+                  <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
+                  <span class="checkmark"></span>
+               </label>
+             </td>
+            
+           </tr>
+
+            
+
+           
+           
+
+         </tbody>
+       </table>
+       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
+ <button type="button" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>
+   </div>
+   	 </form>
+ </div>
+   </div>
+</div>
+  </div>
+</div>
+<div class="row justify-content-center" *ngIf="pfootages">
+	 <div class="col-lg-4 col-md-5 col-sm-5">
+  
+  <div class="card">
+    <div class="card-header text-center">
+     <h3 class="text-center">HD(1080) Footages</h3>
+   </div>
+
+   <div class="card-body">
+    <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
+     <div class="row" style="margin-top: -21px;">
+      <div class="col-md-12">
+      
+       <table class="table">
+         
+         <tbody>
+         <tr>
+             <td style="margin:3px 9px 5px 2px;" >
+                                    <span class="row" style="color:#938b76;font-weight: 700;">
+                                        <span class="col-md-6 text-right">
+                                            Individual
+                                        </span>
+                                        <span class="col-md-6 text-left">
+                                        &nbsp;&nbsp;&nbsp;INR 11500 
+                                        </span>
+                                    </span>
+              </td>
+         </tr>
+           <tr *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
+             <td class="border-top-0">
+               
+               <label class="custmLable">
+                <span class="float-left">
+                    <b class="f-14">{{pack.package_name}}</b>
+                </span>
+                <span class="float-right">
+                    <b class="f-14">INR {{pack.package_price}}</b>
+				</span>
+              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
+              <span class="checkmark"></span>
+            </label>
+             </td>
+            
+           </tr>
+
+         </tbody>
+       </table>
+       
+     </div>
+
+
+     
+   </div>
+   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
+                             <button type="button" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>     </div>
+     </form>
+     
+   </div>
+</div>
+  </div>
+  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">
+  
+  <div class="card">
+    <div class="card-header text-center">
+     <h3 class="text-center ">4K Footages</h3>
+   </div>
+
+   <div class="card-body">
+     <div class="row" style="margin-top: -21px;">
+     <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()" class="col-md-12">
+       <table class="table ">
+         
+         <tbody>
+         <tr>
+            <td style="margin:3px 9px 5px 2px;" >
+                            <span class="row" style="color:#938b76;font-weight: 700;">
+                                <span class="col-md-6 text-right">
+                                	Individual
+                                </span>
+                                <span class="col-md-6 text-left">
+                                	&nbsp;&nbsp;&nbsp;INR 16500 
+                                </span>
+                            </span>
+            </td>
+         </tr>
+           <tr *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
+           
+           
+           
+        
+           
+           
+           
+             <td class="border-top-0">
+               <label class="custmLable">
+                <span class="float-left">
+                    <b class="f-14">{{pack.package_name}}</b><small></small>
+                </span>
+                <span class="float-right">
+                    <b class="f-14">INR {{pack.package_price}}</b>
+                </span>
+                  <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
+                  <span class="checkmark"></span>
+               </label>
+             </td>
+            
+           </tr>
+
+            
+
+           
+           
+
+         </tbody>
+       </table>
+       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
+ <button type="button" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>
+   </div>
+   	 </form>
+ </div>
+   </div>
+</div>
+  </div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section class="contact-page-area section-gap" >
 <!--    appNoRightClick-->
