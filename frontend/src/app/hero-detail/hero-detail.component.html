@@ -32,9 +32,9 @@
 
                             <div class="p-3">
                                 <div style="float: right;margin-right:130px;font-height:18px;">
-                                 <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
-                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;color:red;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
-                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
+                                 <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
+                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
+                                 <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
@@ -440,11 +440,11 @@
 
                             <div class="p-3">
                                 <div style="float: right;margin-right:130px;font-height:18px;">
-                                    <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
+                                    <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
                                    <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
                                     
-                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;color:red;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
-                                 <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
+                                    <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="vfound" ><i class="fas fa-heart"></i></a>
+                                 <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="!vfound" ><i class="fas fa-heart"></i></a>
                                     
                                     
                                 </div>
