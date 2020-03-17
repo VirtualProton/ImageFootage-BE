@@ -15,7 +15,7 @@ body{ font-weight:normal;/*background: #f1f5f6;*/}
 	outline: none;
     border: none
 }
-#mainNav{background:#000;}
+#mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}
 a {
     cursor:pointer;
 }
@@ -212,13 +212,10 @@ table {
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-
-
-
 .switch {
   position: relative;
   margin: 20px auto;
-  height: 26px;
+  height: 39px;
   width: 200px;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 3px;
@@ -230,10 +227,10 @@ table {
   position: relative;
   z-index: 2;
   float: left;
-  width: 70px;
-  line-height: 26px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
+  width: 99px;
+  line-height: 38px;
+  font-size: 16px;
+  color: rgb(251, 249, 249);
   text-align: center;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
   cursor: pointer;
@@ -269,7 +266,7 @@ table {
   transition: 0.15s ease-out;
 }
 .switch-input:checked + .switch-label-on ~ .switch-selection {
-  left: 60px;
+  left: 99px;
   /* Note: left: 50% doesn't transition in WebKit */
 }
 
@@ -279,8 +276,8 @@ table {
   z-index: 1;
   top: 2px;
   left: 2px;
-  width: 58px;
-  height: 22px;
+  width: 99px;
+  height: 35px;
   background: #65bd63;
   border-radius: 3px;
   background-image: -webkit-linear-gradient(top, #9dd993, #65bd63);
@@ -303,11 +300,17 @@ table {
 }
 .switch-yellow .switch-selection {
   background: #c4bb61;
+  width:99px;
   background-image: -webkit-linear-gradient(top, #e0dd94, #c4bb61);
   background-image: -moz-linear-gradient(top, #e0dd94, #c4bb61);
   background-image: -o-linear-gradient(top, #e0dd94, #c4bb61);
   background-image: linear-gradient(to bottom, #e0dd94, #c4bb61);
 }
-
-
-
+.purple-gradient {
+    background: -webkit-linear-gradient(left, #544195 0%, #832E68 100%) !important;
+    background: linear-gradient(to left, #544195 0%, #832E68 100%) !important;
+    background: -moz-linear-gradient(left, #544195 0%, #832E68 100%) !important;
+    padding: 50px 0px 25px;
+    margin-top: 86px;
+	margin-top: 4px;
+}

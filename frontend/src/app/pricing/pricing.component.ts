@@ -101,9 +101,13 @@ export class PricingComponent implements OnInit {
     this.yearly = !this.yearly;
     this.monthly = !this.monthly;
   }
+  showpriceimg(){
+	  this.pimages=true;
+	  this.pfootages=false;
+  }
   showpricefoot(){
-	  this.pimages= !this.pimages;
-	  this.pfootages=!this.pfootages;
+	  this.pimages=false;
+	  this.pfootages=true;
   }
 
   onSubmit() {
