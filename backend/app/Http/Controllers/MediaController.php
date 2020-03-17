@@ -47,6 +47,13 @@ class MediaController extends Controller
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
            }
+
+           $product_details_data['media']['thumb_150_url'] =str_replace('http:','https:',$product_details_data['media']['thumb_150_url']);
+           $product_details_data['media']['thumb_170_url'] =str_replace('http:','https:',$product_details_data['media']['thumb_170_url']);
+           $product_details_data['media']['preview_url'] =str_replace('http:','https:',$product_details_data['media']['preview_url']);
+           $product_details_data['media']['preview_url_high'] =str_replace('http:','https:',$product_details_data['media']['preview_url_high']);
+           $product_details_data['media']['preview_url_no_wm'] =str_replace('http:','https:',$product_details_data['media']['preview_url_no_wm']);
+           $product_details_data['media']['preview_url_high_no_wm'] =str_replace('http:','https:',$product_details_data['media']['preview_url_high_no_wm']);
            $product_details= array($product_details_data,$imagefootage_id,$downlaod_image);
         }else if($origin=='3'){
            $keyword['search'] = $media_id;
