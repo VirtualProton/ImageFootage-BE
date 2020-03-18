@@ -47,7 +47,32 @@
                             </div>
                         </div>
 
+
+
+	 
+                            
+
+
+
+
                     </div>
+                    <p></p>
+                    <div class="row text-center">
+     	<div class="col-md-6">
+        		<div class="row">
+                                <div class="col-md-4">Model-release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7 text-left">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>
+                </div>
+        </div>
+        <div class="col-md-6">
+        		<div class="row">
+        						<div class="col-md-4">Property release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7 text-left">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
+                </div>
+        </div>
+    </div>
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
@@ -74,7 +99,7 @@
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
                                         <p class="f-12">{{cost.description}}</p>
                                         <!-- | currency:'INR'-->
-                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
+                                        <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
                                         <span class="f-8">{{cost.width}} x {{cost.height}}</span>
                                     </label>
                                     </div>
@@ -178,7 +203,7 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{imagefootId}}</div>
                             </div>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">Width</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.media.width}}</div>
@@ -192,13 +217,13 @@
                                 <div class="col-md-4">Mime_type</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.media.mime_type}}</div>
-                            </div>
+                            </div>-->
                             <!--<div class="row">
                                 <div class="col-md-4">Author ID</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.author_id}}</div>
                             </div>-->
-                            <div class="row">
+                           <!-- <div class="row">
                                 <div class="col-md-4">Model-release</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>
@@ -207,7 +232,7 @@
                                 <div class="col-md-4">Property release</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
-                            </div>
+                            </div>-->
                            <!-- <div class="row">
                                 <div class="col-md-4">Editorial #</div>
                                 <div class="col-md-1">:</div>
@@ -223,11 +248,11 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>
                             </div>-->
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">Date created</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.date}}</div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">License type</div>
                                 <div class="col-md-1">:</div>
