@@ -1,7 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="" />
+    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/imagefootagenew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imagefootagenew.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/index.html" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/frontend/node_modules/karma/config.tpl.js/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php-laravel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/barryvdh/laravel-dompdf/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/beyondcode/laravel-dump-server/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/composer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dnoegel/php-xdg-base-dir/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/cache/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/inflector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/instantiator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/lexer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dompdf/dompdf/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dragonmantank/cron-expression/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/egulias/email-validator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/erusev/parsedown/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/evenement/evenement/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/fideloper/proxy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/filp/whoops/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/fzaninotto/faker/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/guzzle/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/promises/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/psr7/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/hamcrest/hamcrest-php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/intervention/image/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-color/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-highlighter/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/framework/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/tinker/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravelcollective/html/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/lcobucci/jwt/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/league/flysystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/maatwebsite/excel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/complex/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/matrix/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/mockery/mockery/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/monolog/monolog/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/mtdowling/jmespath.php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/myclabs/deep-copy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/namshi/jose/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nesbot/carbon/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/neutron/temporary-filesystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nikic/php-parser/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nunomaduro/collision/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/opis/closure/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/paragonie/random_compat/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/pbmedia/laravel-ffmpeg/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/manifest/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/version/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-font-lib/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-svg-lib/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/php-ffmpeg/php-ffmpeg/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-common/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-docblock/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/type-resolver/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpoffice/phpspreadsheet/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpoption/phpoption/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpspec/prophecy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-code-coverage/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-file-iterator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-text-template/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-timer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-token-stream/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/phpunit/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/container/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/http-message/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/log/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/simple-cache/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psy/psysh/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/ralouphie/getallheaders/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/ramsey/uuid/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/razorpay/razorpay/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/riazxrazor/payumoney/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/rmccue/requests/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sabberworm/php-css-parser/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/code-unit-reverse-lookup/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/comparator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/diff/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/environment/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/exporter/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/global-state/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-enumerator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-reflector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/recursion-context/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/resource-operations/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/version/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/swiftmailer/swiftmailer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/console/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/css-selector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/debug/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/error-handler/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/filesystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/finder/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-kernel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/mime/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-ctype/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-iconv/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-idn/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-mbstring/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php56/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php72/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php73/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-util/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/process/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/routing/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/service-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/var-dumper/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/theseer/tokenizer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/tijsverkoyen/css-to-inline-styles/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/tymon/jwt-auth/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/unisharp/laravel-ckeditor/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/vlucas/phpdotenv/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/webmozart/assert/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +150,130 @@
     <expand />
     <select />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="435" column="5" selection-start-line="435" selection-start-column="5" selection-end-line="435" selection-end-column="5" />
+              <folding>
+                <element signature="e#0#76#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="110" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="411">
+              <caret line="50" column="69" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="84" column="34" lean-forward="true" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#1834#1840#0" expanded="true" />
+                <element signature="e#1840#1846#0" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#label#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#small#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#small#0;n#p#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h6#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#ng-template#0;n#!!top" />
+                <element signature="n#ng-template#1;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#111#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/app-routing.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/app.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4658">
+              <caret line="274" column="91" selection-start-line="274" selection-start-column="91" selection-end-line="274" selection-end-column="91" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/app/wishlist/wishlist.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="29" column="34" selection-start-line="21" selection-start-column="29" selection-end-line="29" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -36,36 +283,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>updateproductcategory</find>
-      <find>all</find>
-      <find>otp</find>
-      <find>payment</find>
-      <find>salt</find>
-      <find>Enter Addre</find>
-      <find>bolt</find>
-      <find>checkoutForm</find>
-      <find>form</find>
-      <find>priv</find>
-      <find>launchBOLT</find>
-      <find>fetch</find>
-      <find>web</find>
-      <find>closeLoginPopupForReg</find>
-      <find>sidebar</find>
-      <find>body</find>
-      <find>account-list</find>
-      <find>back</find>
-      <find>nav</find>
-      <find>tab</find>
-      <find>currentUser</find>
-      <find>profile</find>
       <find>userProfile</find>
       <find>get</find>
       <find>pro</find>
       <find>pay</find>
       <find>image</find>
       <find>add</find>
-      <find>hideLoginPopup</find>
       <find>wish</find>
+      <find>closeLoginPopup</find>
+      <find>close</find>
+      <find>searchAPIRequest</find>
+      <find>closePopup</find>
+      <find>closeLoginPopupForReg</find>
+      <find>cart</find>
+      <find>hideLoginPopup</find>
+      <find>appNoRightClick</find>
+      <find>replace</find>
+      <find>title</find>
+      <find>Title</find>
+      <find>img</find>
+      <find>Exclusi</find>
+      <find>Download</find>
+      <find>content</find>
+      <find>option</find>
+      <find>search</find>
+      <find>content1</find>
+      <find>download</find>
+      <find>foreac</find>
+      <find>No</find>
+      <find>ng</find>
+      <find>infiniteScroll</find>
     </findStrings>
     <replaceStrings>
       <replace>images/img_4.jpg</replace>
@@ -77,6 +324,39 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/SearchController.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.ts" />
+        <option value="$PROJECT_DIR$/frontend/src/app/sign-up/sign-up.component.ts" />
+        <option value="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" />
+        <option value="$PROJECT_DIR$/frontend/src/app/login/login.component.html" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/PaymentController.php" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/PaymentController.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.css" />
+        <option value="$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.ts" />
+        <option value="$PROJECT_DIR$/backend/routes/api.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/order-confirmation/order-confirmation.component.html" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/FrontuserController.php" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-3/MediaController.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.html" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/FootageApi.php" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/MediaController.php" />
+        <option value="$PROJECT_DIR$/backend/app/Models/UserPackage.php" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.html" />
+        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/hero.service.ts" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/ImageApi.php" />
+        <option value="$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.html" />
+        <option value="$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.ts" />
+      </list>
+    </option>
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
@@ -200,7 +480,201 @@
       <path value="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver" />
     </include_path>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1100" />
+  </component>
   <component name="ProjectId" id="1YkAkKMogKAIGTobTGq2UHgsrPg" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="PantherMedia" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Pond5" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="_helpers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="checkout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="header" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="hero-detail" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="hero-search" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="lightbox" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="order-confirmation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="sign-up" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="user-profile" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -234,6 +708,18 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\imagefootagenew\backend\app\Models" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -316,8 +802,65 @@
       <workItem from="1580275380380" duration="175000" />
       <workItem from="1580314427120" duration="21757000" />
       <workItem from="1583476396519" duration="291000" />
+      <workItem from="1583604545565" duration="59604000" />
+      <workItem from="1584288262818" duration="834000" />
+      <workItem from="1584376165650" duration="137000" />
+      <workItem from="1584414077051" duration="1965000" />
+      <workItem from="1584461136140" duration="25110000" />
+      <workItem from="1584504718591" duration="3797000" />
     </task>
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="91447000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2671141" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="TypeScript" order="10" weight="0.3286119" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.33002833" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.3295302" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.24966443" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="5" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Run" order="8" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="right" id="Database" order="0" weight="0.3295302" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -356,5 +899,389 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/sign-up/sign-up.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="53" column="24" lean-forward="true" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/sign-up/sign-up.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-496" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/checkout/checkout.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="20" lean-forward="true" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/PaymentController.php" />
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/PaymentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="89" column="77" lean-forward="true" selection-start-line="89" selection-start-column="15" selection-end-line="89" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="90" column="61" selection-start-line="90" selection-start-column="61" selection-end-line="90" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-936" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/order-confirmation/order-confirmation.component.spec.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/.htaccess" />
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/FrontuserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3502">
+          <caret line="214" selection-start-line="214" selection-end-line="214" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-3/MediaController.php" />
+    <entry file="file://$PROJECT_DIR$/backend/app/Models/Product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4267">
+          <caret line="253" column="70" selection-start-line="253" selection-start-column="43" selection-end-line="253" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/order-confirmation/order-confirmation.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/order-confirmation/order-confirmation.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="34" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="261" column="16" lean-forward="true" selection-start-line="261" selection-start-column="16" selection-end-line="261" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="16" lean-forward="true" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="74" column="15" selection-start-line="74" selection-start-column="3" selection-end-line="74" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#81#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/FootageApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/login/login.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/login/login.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/_helpers/image-footer-helper.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="50" column="15" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="50" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+            <element signature="e#1480#1580#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/MediaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="60" column="67" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/checkout/checkout.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="45" column="169" lean-forward="true" selection-start-line="45" selection-start-column="169" selection-end-line="45" selection-end-column="176" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/PackageApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Models/UserProductDownload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="25" />
+          <folding>
+            <element signature="e#30#69#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="45" column="36" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Models/UserPackage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/ImageApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="267" column="31" selection-start-line="267" selection-start-column="31" selection-end-line="267" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="92" column="79" selection-start-line="92" selection-start-column="79" selection-end-line="92" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3026">
+          <caret line="191" column="5" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
+          <folding>
+            <element signature="e#40#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11169">
+          <caret line="657" column="22" selection-start-line="654" selection-start-column="13" selection-end-line="657" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4080">
+          <caret line="244" column="36" selection-start-line="244" selection-start-column="36" selection-end-line="244" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4658">
+          <caret line="274" column="91" selection-start-line="274" selection-start-column="91" selection-end-line="274" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/wishlist/wishlist.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="34" selection-start-line="21" selection-start-column="29" selection-end-line="29" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/app-routing.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="50" column="69" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="435" column="5" selection-start-line="435" selection-start-column="5" selection-end-line="435" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="84" column="34" lean-forward="true" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#1834#1840#0" expanded="true" />
+            <element signature="e#1840#1846#0" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#label#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#small#0;n#p#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#small#0;n#p#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h3#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#main#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#ng-template#0;n#!!top" />
+            <element signature="n#ng-template#1;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
