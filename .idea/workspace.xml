@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="" />
+    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -316,6 +318,7 @@
       <workItem from="1580275380380" duration="175000" />
       <workItem from="1580314427120" duration="21757000" />
       <workItem from="1583476396519" duration="291000" />
+      <workItem from="1584523874382" duration="1648000" />
     </task>
     <servers />
   </component>
@@ -328,18 +331,26 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="129" y="61" key="MergeDialog" timestamp="1583476602337">
+    <state x="129" y="61" key="MergeDialog" timestamp="1584525033212">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1583476602337" />
-    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1583476602345">
+    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033212" />
+    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1584525033222">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1583476602345" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1583476401439">
+    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033222" />
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1584525053312">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1583476401439" />
+    <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1584525053312" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1584523937617">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584523937617" />
+    <state x="484" y="156" key="git4idea.merge.GitMergeDialog" timestamp="1584524351990">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="484" y="156" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584524351990" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
