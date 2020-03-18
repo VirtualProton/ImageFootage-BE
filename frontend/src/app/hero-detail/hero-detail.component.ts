@@ -56,11 +56,13 @@ export class HeroDetailComponent implements OnInit {
   filePreview: string;
   category:any ='' ;
   prodid:any='';
+    profileData:any ='';
   lightBoxListDataItems: any = [];
     totalproduct:number = 0;
     perpage:number = 30;
     totalpages:number = 0;
     pagenumber:number =0;
+    packeagechoose:any=[];
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -102,6 +104,33 @@ export class HeroDetailComponent implements OnInit {
      //  .subscribe(data => {
      //    this.marketDetails = data;
      //  });
+      if(this.currentUser) {
+          this.authenticationService.getUserprofileData()
+              .subscribe(
+                  data => {
+                      this.profileData = data.data;
+                       if(this.profileData["plans"]){
+
+                          if(imgtype=='3'){
+                              var ptype= 'Footage';
+                          }else{
+                              var ptype='Image';
+                          }
+                          this.profileData["plans"].forEach(ele=>{
+                              if(ele.package_type==ptype) {
+                                  this.packeagechoose.push(ele);
+                              }
+                          })
+
+                      }
+                      //this.loadingData = false;
+                  },
+                  error => {
+
+                  });
+
+
+      }
 
   }
   getRelatedProducts(keyword,prodtype){
@@ -355,11 +384,23 @@ export class HeroDetailComponent implements OnInit {
         window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
     }
 
-    download(productinfo,cartproduct,total,extended,type){
-        if(cartproduct.length==0){
+    download(productinfo,cartproduct,total,extended,type,pricecontent){
+        var flag=0;
+        if(cartproduct && Object.keys(cartproduct).length>0){
+            flag =1;
+        }
+        if(extended && Object.keys(extended).length>0){
+            flag =1;
+        }
+        if(flag==0){
             alert("Please select size of product !!");
             return false;
         }
+        if(this.packeagechoose.length > 1){
+            this.modalService.open(pricecontent);
+            return false;
+        }
+
         this.loadingData = true;
         this.token = localStorage.getItem('currentUser');
 
@@ -369,7 +410,8 @@ export class HeroDetailComponent implements OnInit {
             "total":total,
             "extended":extended,
             "token":this.token,
-            "type":type
+            "type":type,
+            "package":this.packeagechoose[0].id
         };
 
         this.heroService.download(cartval)
@@ -379,6 +421,41 @@ export class HeroDetailComponent implements OnInit {
                     if (type == 3) {
                         this.loadingData = false;
                          window.location.href = data['url'];
+                    } else {
+                        if (data["stat"] == 'ok') {
+                            this.loadingData = false;
+                            window.location.href = data["download_status"]["download_url"];
+                        } else {
+                            this.loadingData = false;
+                            alert("Not Downloaded");
+                        }
+                    }
+                }
+
+            });
+    }
+    downloadselect(productinfo,cartproduct,total,extended,type,selected){
+        console.log(selected);
+        this.loadingData = true;
+        this.token = localStorage.getItem('currentUser');
+
+        let cartval = {
+            "product_info":productinfo,
+            "selected_product":cartproduct,
+            "total":total,
+            "extended":extended,
+            "token":this.token,
+            "type":type,
+            "package":selected
+        };
+        console.log(cartval);
+        this.heroService.download(cartval)
+            .subscribe(data => {
+                console.log(data);
+                if(data) {
+                    if (type == 3) {
+                        this.loadingData = false;
+                        window.location.href = data['url'];
                     } else {
                         if (data["stat"] == 'ok') {
                             this.loadingData = false;

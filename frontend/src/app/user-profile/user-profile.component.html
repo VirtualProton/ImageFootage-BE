@@ -266,7 +266,42 @@
                                                     </table>
                                 </mat-expansion-panel-header>
                             		<mat-panel-description>
-                               			no results found
+                                        <table class="table" *ngIf="plan?.downloads.length>0" >
+
+                                            <tbody>
+                                            <tr>
+                                                <th style="font-size:12px;">Sn.</th>
+                                                <th style="font-size:12px;">Image/Footage</th>
+                                                <th style="font-size:12px;">Product ID</th>
+                                                <th style="font-size:12px;">Product Name</th>
+<!--                                                <td style="font-size:12px;">Product Price</td>-->
+                                                <th style="font-size:12px;">Product Size</th>
+                                                <th style="font-size:12px;">Download Date</th>
+
+                                            </tr>
+                                            <tr style="font-size:12px;" *ngFor="let download of plan.downloads; index as i">
+                                                <td style="font-size:12px;">{{i+1}}</td>
+                                                <td style="font-size:12px;">
+                                                    <a href="javascript:void(0)" *ngIf="download.web_type=='2'" >
+                                                        <img src="{{download.product_thumb}}" alt="product-img" />
+                                                    </a>
+                                                    <a href="javascript:void(0)" *ngIf="download.web_type=='3'" >
+                                                        <video  width="200" height="150" [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+download.product_poster" controls controlsList="nodownload" onmouseover="this.play()" onmouseout="this.load()">
+                                                            <source src="{{download.product_thumb}}" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    </a>
+                                                </td>
+                                                <td style="font-size:12px;">{{download.product_id}}</td>
+                                                <td style="font-size:12px;">{{download.product_name}}</td>
+<!--                                                <td style="font-size:12px;">{{download.product_size}}</td>-->
+                                                <td style="font-size:12px;">{{download.product_size}}</td>
+                                                <td style="font-size:12px;">{{download.downloaded_date}}</td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div *ngIf="plan?.downloads.length==0">No Download yet</div>
                                		</mat-panel-description>
                               </mat-expansion-panel>
 							</mat-accordion>
