@@ -50,3 +50,25 @@ padding-right: 1.1rem;
 .red{
 	color:red;
 }
+#expend {
+  display:none;  
+}
+#expend + .smalldesc {
+  max-height:30px;
+  overflow:hidden;
+  transition:all .3s ease;
+}
+
+#expend:checked + .smalldesc {
+  max-height:250px;  
+}
+
+.rmore {
+  color:blue;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.rmore:hover {
+  text-decoration:none;  
+}
