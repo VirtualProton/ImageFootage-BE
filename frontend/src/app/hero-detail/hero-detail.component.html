@@ -39,10 +39,10 @@
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
                                 <input type="checkbox" id="expend" />
-                                <div class="medium-12 small-12 columns smalldesc">
-                                    <a href="/search?type=1&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
+                                <div class="medium-12 small-12 columns smalldesc tags">
+                                    <a href="/search?type=1&keyword={{keys}}" class="f-12" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
                                     </div>
-                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10">Read More</label>
+                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10">See More</label>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +75,7 @@
                                         <p class="f-12">{{cost.description}}</p>
                                         <!-- | currency:'INR'-->
                                         <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
+                                        <span class="f-8">{{cost.width}} x {{cost.height}}</span>
                                     </label>
                                     </div>
                                 </div>
@@ -454,7 +455,11 @@
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
-                                    <a href="/search?type=2&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
+                                <input type="checkbox" id="expend" />
+                                <div class="medium-12 small-12 columns smalldesc tags">
+                                    <a href="/search?type=2&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
+                                </div>
+                                 <label class="rmore" for="expend" *ngIf="keyword.length > 10">See More</label>
                                 </div>
                             </div>
                         </div>
