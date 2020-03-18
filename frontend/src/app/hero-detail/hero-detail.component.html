@@ -71,7 +71,9 @@
                                         <p class="f-12">{{cost.description}}</p>
                                         <!-- | currency:'INR'-->
                                         <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
+                                        <span class="f-8" >{{cost.width}} X {{cost.height}}</span>
                                     </label>
+
                                     </div>
                                 </div>
                                 <p><small><!--<span class="text-warning">Standard Use Only</span> -->
@@ -85,7 +87,7 @@
                                         <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
                                         <div class="row align-items-center">
                                             <div class="col-md-9 col-sm-9 col-lg-9" >
-                                                <p class="f-14  fw-6 pt-2" >{{license.name}}</p>
+                                                <p class="f-14  fw-6 pt-2"  style="text-transform: capitalize;">{{license.name}}</p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-lg-3">
                                                 <p class="mb-0"><strong><i class="fa fa-inr"></i> {{license.price*80 | number}}</strong></p>
@@ -254,6 +256,7 @@
                     [infiniteScrollThrottle]="2000"
                     (scrolled)="onScrollDown()"
                     (scrolledUp)="onScrollUp()">
+
                   <div class="row align-items-stretch">
                   
                   
@@ -261,6 +264,7 @@
                   
                                               <!-- Grid row -->
 <div class="gallery" id="gallery">
+
   <!-- Grid column -->
   <div class="mb-3 pics animation all 2" *ngFor="let aosimges of relatedData; let i = index;">
     <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
@@ -276,6 +280,10 @@
                         </div>
   </div>
   <!-- Grid column -->
+    <div style="color:#FFF;">
+        Loading...
+        <span></span>
+    </div>
 </div>
 <!-- Grid row -->
                   
@@ -631,13 +639,13 @@
                               [infiniteScrollThrottle]="2000"
                               (scrolled)="onScrollDown()"
                               (scrolledUp)="onScrollUp()">
+                            <div>
+                                Loading...
+                                <span></span>
+                            </div>
                             <div class="row align-items-stretch">
                             
-                            
-
-                            
-                            
-                                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index"  >
+                              <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index"  >
 
                                     <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                                     <span  class=" photo-item" >
@@ -680,6 +688,7 @@
                                 </div>
 
                             </div>
+
                         </div>
 
 

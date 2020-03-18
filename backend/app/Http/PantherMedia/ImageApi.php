@@ -39,10 +39,10 @@ class ImageApi {
              ]);
          }catch (GuzzleHttp\Exception\BadResponseException  $e){
             //echo "heelo"; die;
-//             echo Psr7\str($e->getResponse());
-//             echo $e->getCode();
-//             echo $response = $e->getResponse();
-//             echo $responseBodyAsString = $response->getBody()->getContents();
+             //echo Psr7\str($e->getResponse());
+             //echo $e->getCode();
+             //echo $response = $e->getResponse();
+            // echo $responseBodyAsString = $response->getBody()->getContents();
              //die;
          }
         //print_r($result); die;
@@ -181,7 +181,7 @@ class ImageApi {
                 'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data.$liencence_filter_data
             ]
         ]);
-
+       
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
@@ -192,10 +192,8 @@ class ImageApi {
 
  public function get_media_info($media_id){
         $this->access_key = $this->getAccessKey();
-        $client = new Client(); //GuzzleHttp\Client
         // echo $this->access_key; die;
-        try {
-
+        $client = new Client(); //GuzzleHttp\Client
         $response = $client->post('http://rest.panthermedia.net/get-media-info', [
             'headers'=>[
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -220,15 +218,6 @@ class ImageApi {
             return $contents;
 
         }
- }catch (GuzzleHttp\Exception\BadResponseException  $e){
-            
-         //echo "heelo"; die;
-//             echo Psr7\str($e->getResponse());
-//             echo $e->getCode();
-//             echo $response = $e->getResponse();
-//             echo $responseBodyAsString = $response->getBody()->getContents();
-         //die;
-     }
  }
 
   public function getPriceFromList($media,$product_id= NULL){
@@ -255,8 +244,12 @@ class ImageApi {
 
   public function download($data,$id){
       $this->access_key = $this->getAccessKey();
-       //echo $this->access_key; die;
-
+      // echo $this->access_key; die;
+      if(count($data['product']['selected_product'])>0){
+         $id = $data['product']['selected_product']['id'];
+      }else{
+          $id = $data['product']['extended']['id'];
+      }
       $client = new Client(); //GuzzleHttp\Client
       $response = $client->post('http://rest.panthermedia.net/download-media', [
           'headers'=>[
@@ -272,47 +265,41 @@ class ImageApi {
               'content_type'=>'application/json',
               'lang'=>'en',
               'id_media'=> $data['product']['product_info']['media']['id'],
-              'id_article'=>$data['product']['selected_product']['id'],
+              'id_article'=>$id,
               'test'=>'yes'
           ]
       ]);
       if ($response->getBody()) {
           $contents = json_decode($response->getBody(), true);
           $redownload = $contents['download_status']['id_download'];
-         // print_r($contents); die;
+          //print_r($contents); die;
 
           $client2 = new Client(); //GuzzleHttp\Client
-          $r = $client->request('POST', 'http://httpbin.org/post', [
-              'body' => 'raw data'
-          ]);
           $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
               'headers'=>[
                   'Content-Type' => 'application/x-www-form-urlencoded',
                   'Accept-Version'=>'1.0'
               ],
-              'body'=>'api_key='.$this->api_key.'&access_key='.$this->access_key.'&timestamp='.$this->timestamp.'&nonce='.$this->nonce.'&algo=sha1&id_media='.$contents['download_status']['id_media'].'&queue_hash='.$contents['download_status']['queue_hash'].'&test=yes&content_type=application/json'
-//              'form_params' => [
-//                  'api_key' => $this->api_key,
-//                  'access_key' => $this->access_key,
-//                  'timestamp' => $this->timestamp,
-//                  'nonce' => $this->nonce,
-//                  'algo' => $this->algo,
-//                  'content_type'=>'application/json',
-//                  'lang'=>'en',
-//                  'id_media'=> $contents['download_status']['id_media'],
-//                  'queue_hash'=>$contents['download_status']['queue_hash'],
-//                  'test'=>'yes'
-//              ]
+              'form_params' => [
+                  'api_key' => $this->api_key,
+                  'access_key' => $this->access_key,
+                  'timestamp' => $this->timestamp,
+                  'nonce' => $this->nonce,
+                  'algo' => $this->algo,
+                  'content_type'=>'application/json',
+                  'lang'=>'en',
+                  'id_media'=> $data['product']['product_info']['media']['id'],
+                  'queue_hash'=>$contents['download_status']['queue_hash'],
+                  'test'=>'yes'
+              ]
           ]);
-          //print_r($response2); die;
         if ($response2->getBody()) {
-            //echo $this->timestamp;
-            //echo "<br/>";
-            //echo $this->access_key;
-            //print_r($response2->getBody());
+            echo $this->timestamp;
+            echo "<br/>";
+            echo $this->access_key;
             $downloadcontents = json_decode($response2->getBody());
-            //print_r($downloadcontents);
-            //die;
+            print_r($downloadcontents);
+            die;
             return $downloadcontents;
         }
 
