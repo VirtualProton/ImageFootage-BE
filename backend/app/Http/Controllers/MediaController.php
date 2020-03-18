@@ -58,7 +58,7 @@ class MediaController extends Controller
         }else if($origin=='3'){
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
-           $product_details_data = $footageMedia->search($keyword);
+           $product_details_data = $footageMedia->search($keyword,[]);
            if (isset($product_details_data['items'][0]['id'])) {
                $pond_id_withprefix = $product_details_data['items'][0]['id'];
                if (strlen($product_details_data['items'][0]['id']) < 9) {
