@@ -40,7 +40,7 @@ class FrontuserController extends Controller {
                 $Usercart->extended_price= ($request['product']['extended'])?$request['product']['extended']['price']:'0';
                 $Usercart->total= $request['product']['total'];
                 $Usercart->product_name= $request['product']['product_info']['metadata']['title'];
-                $Usercart->product_thumb= $request['product']['product_info']['media']['thumb_170_url'];
+                $Usercart->product_thumb= str_replace('http','https',$request['product']['product_info']['media']['thumb_170_url']);
                 $Usercart->product_desc= $request['product']['product_info']['metadata']['description'];
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_json= json_encode($request['product']['product_info']);

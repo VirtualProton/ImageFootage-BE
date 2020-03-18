@@ -536,7 +536,7 @@
 
 
           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small>{{aoslSliderImages.length}} Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
+            <p><small>{{totalproduct}} Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
@@ -652,6 +652,10 @@
                   [infiniteScrollThrottle]="2000"
                   (scrolled)="onScrollDown()"
                   (scrolledUp)="onScrollUp()">
+                <div>
+                    Loading...
+                    <span></span>
+                </div>
             </div>
 
         </main>

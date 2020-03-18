@@ -46,7 +46,7 @@ class SearchController extends Controller
             if(isset($getKeyword['pagenumber'])){
                 $keyword['pagenumber']= $getKeyword['pagenumber'];
             }
-               $all_products =$this->getFootageData($keyword);
+               $all_products =$this->getFootageData($keyword,$getKeyword);
         }else{
             $all_products =[];
             $images = $this->getImagesData($keyword);
@@ -90,7 +90,7 @@ class SearchController extends Controller
             }
         }else{
             $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword,'30');
+            $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword,'30');
 
             if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
@@ -166,7 +166,7 @@ class SearchController extends Controller
           return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30);
     }
 
-    public function getFootageData($keyword){
+    public function getFootageData($keyword,$getKeyword){
         $product = new Product();
         $all_products =[];
         $all_products = $product->getProducts($keyword);
@@ -180,7 +180,7 @@ class SearchController extends Controller
         if($flag=='0'){
 
             $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword);
+            $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
 
             if (count($pondfootageMediaData) > 0) {
 

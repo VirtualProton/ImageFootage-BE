@@ -39,19 +39,26 @@ class MediaController extends Controller
     		// insert watermark at bottom-right corner with 10px offset 
     		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
 			$time=time();
-			//$img->save(public_path('images/dump/'.$time.'.jpg'));
-			//$img->encode('jpg');
+			$img->save(public_path('images/dump/'.$time.'.jpg'));
+			$img->encode('jpg');
 			$type = 'jpg';
 			$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
-			//unlink(public_path('images/dump/'.$time.'.jpg'));
+			unlink(public_path('images/dump/'.$time.'.jpg'));
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
            }
+
+           $product_details_data['media']['thumb_150_url'] =str_replace('http:','https:',$product_details_data['media']['thumb_150_url']);
+           $product_details_data['media']['thumb_170_url'] =str_replace('http:','https:',$product_details_data['media']['thumb_170_url']);
+           $product_details_data['media']['preview_url'] =str_replace('http:','https:',$product_details_data['media']['preview_url']);
+           $product_details_data['media']['preview_url_high'] =str_replace('http:','https:',$product_details_data['media']['preview_url_high']);
+           $product_details_data['media']['preview_url_no_wm'] =str_replace('http:','https:',$product_details_data['media']['preview_url_no_wm']);
+           $product_details_data['media']['preview_url_high_no_wm'] =str_replace('http:','https:',$product_details_data['media']['preview_url_high_no_wm']);
            $product_details= array($product_details_data,$imagefootage_id,$downlaod_image);
         }else if($origin=='3'){
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
-           $product_details_data = $footageMedia->search($keyword);
+           $product_details_data = $footageMedia->search($keyword,[]);
            if (isset($product_details_data['items'][0]['id'])) {
                $pond_id_withprefix = $product_details_data['items'][0]['id'];
                if (strlen($product_details_data['items'][0]['id']) < 9) {
@@ -144,11 +151,13 @@ class MediaController extends Controller
               $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
 
               if(!empty($product_details_data)){
-                  $dataCheck =UserProductDownload::where('product_id_api',$allFields['product']['selected_product']['id'])->where('product_size',$allFields['product']['selected_product']['size'])->where('web_type',$allFields['product']['type'])->first();
+                   $dataCheck =UserProductDownload::where('product_id_api',$allFields['product']['selected_product']['id'])->where('product_size',$allFields['product']['selected_product']['size'])->where('web_type',$allFields['product']['type'])->first();
+                   $product_id =Product::where('api_product_id','=',$allFields['product']['selected_product']['id'])->first()->product_id;
                   if(!$dataCheck) {
                       $dataInsert = array(
                           'user_id' => $id,
-                          'product_id' => $allFields['product']['selected_product']['id'],
+                          'package_id'=>$allFields['product']['package'],
+                          'product_id' => $product_id,
                           'product_id_api' => $allFields['product']['selected_product']['id'],
                           'id_media' => $allFields['product']['selected_product']['id'],
                           'download_url' => $product_details_data['url'],

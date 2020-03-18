@@ -18,16 +18,25 @@ class FootageApi {
         }
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
-    public function search($keyword,$limit=30,$page=0){
+    public function search($keyword,$getKeyword,$limit=30,$page=0){
         $serach = $keyword['search'];
         if(isset($keyword['pagenumber'])){
             $page = $keyword['pagenumber'];
         }
+        //print_r($getKeyword); die;
+        if(isset($getKeyword['letest']) && $getKeyword['letest']=='1'){
+            $sort = '6' ;
+        }else if(isset($getKeyword['populer']) && $getKeyword['populer']=='1'){
+            $sort = '8' ;
+        }else{
+            $sort = '1' ;
+        }
+
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $serach;
         $search_cmd['bm'] = '4095';
-        $search_cmd['sb'] = '1';
+        $search_cmd['sb'] = $sort;
         $search_cmd['no'] = $limit;
         $search_cmd['p'] = $page;
         $search_cmd['col'] = '2047';

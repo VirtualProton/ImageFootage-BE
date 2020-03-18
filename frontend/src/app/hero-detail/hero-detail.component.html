@@ -148,7 +148,7 @@
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'2')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
-                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.image_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'2')">Download</button>
+                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.image_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'2',pricecontent)">Download</button>
 
                                 <!--<p>This image is exclusive to Image Footage</p>-->
                             </div>
@@ -162,11 +162,11 @@
 <!--                                <div class="col-md-1">:</div>-->
 <!--                                <div class="col-md-7">Contact your local office for all commercial or promotional uses.</div>-->
 <!--                            </div>-->
-                            <div class="row">
-                                <div class="col-md-4">Title</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo.metadata.title}}</div>
-                            </div>
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-4">Title</div>-->
+<!--                                <div class="col-md-1">:</div>-->
+<!--                                <div class="col-md-7">{{detailPageInfo.metadata.title}}</div>-->
+<!--                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">Credit</div>
                                 <div class="col-md-1">:</div>
@@ -519,7 +519,7 @@
                             <div class="col-12">
                                 <button type="button" *ngIf="!addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="addToCheckoutItem(detailPageInfo,standard,total,extended,'3')">ADD TO CART</button>
                                 <button type="button" *ngIf="addedCartItem" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="checkout()">Checkout</button>
-                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.footage_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'3')">Download</button>
+                                <br/><button type="button" *ngIf="showloginPopup==false && currentUser?.footage_downlaod==1" class="btn btn-warning rounded-0 p-3 shadow text-white d-block  w-100" (click)="download(detailPageInfo,standard,total,extended,'3',pricecontent)">Download</button>
                                 <!-- <p>This image is exclusive to Image Footage</p>-->
                             </div>
                         </div>
@@ -823,4 +823,24 @@
   <!--<div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
   </div>-->
+</ng-template>
+
+<ng-template #pricecontent let-c="close" let-d="dismiss" >
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title1">Please choose plan from which want to download.</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <select (change)="downloadselect(detailPageInfo,standard,total,extended,webtype,$event.target.value)">
+            <option value="">--Select Plan--</option>
+            <option *ngFor="let pkg of packeagechoose; let i = index"  value="{{pkg.id}}"  >{{pkg.package_description}}</option>
+        </select>
+
+    </div>
+    <!--<div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+    </div>-->
 </ng-template>

@@ -26,8 +26,10 @@ class UserController extends Controller
                         ->with('state')
                         ->with('city')
                         ->with(['plans'=> function ($query) {
-                            $query->whereIn('payment_status',['Completed','Transction Success']);
-                       }])
+                            $query->whereIn('payment_status',['Completed','Transction Success'])
+                                ->with('downloads');
+                       }
+                       ])
                     ->get()->toArray();
             //print_r($userlist); die;
        if(count($userlist)>0){

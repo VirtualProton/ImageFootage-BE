@@ -9,6 +9,11 @@ class UserPackage extends Model
 {
     protected $table = 'imagefootage_user_package';
 
+    public function downloads(){
+        return $this->hasMany(UserProductDownload::class,'package_id', 'id');
+    }
+
+
 
 
 }
