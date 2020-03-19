@@ -18,8 +18,13 @@ export class ResetPasswordComponent implements OnInit {
   public currentUser: any;
   loadingData:boolean = false;
   resetpasswordForm: FormGroup;
+  requestOtpForm: FormGroup;
   submitted = false;
   loading = false;
+  toemail:boolean = true;
+  tomobile:boolean = false;
+  step1otp:boolean = true;
+  step2otp:boolean = false;
   passwordotpForm:FormGroup;
   constructor(private heroService: HeroService,private formBuilder: FormBuilder, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
     this.authenticationService.currentUser.subscribe(x => {
@@ -35,9 +40,20 @@ export class ResetPasswordComponent implements OnInit {
     this.resetpasswordForm = this.formBuilder.group({
       user_email: ['', Validators.required],
     });
+	this.requestOtpForm = this.formBuilder.group({
+      user_mobile: ['', Validators.required],
+    });
   }
 
   get f() { return this.resetpasswordForm.controls; }
+  showtoemail(){
+	  this.toemail=true;
+	  this.tomobile=false;
+  }
+  showtomobile(){
+	  this.toemail=false;
+	  this.tomobile=true;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -72,5 +88,17 @@ export class ResetPasswordComponent implements OnInit {
               this.loading = false;
             });
 
+  }
+  requestOtp(){
+  alert('here');
+  	this.submitted = true;
+    // stop here if form is invalid
+    if(this.requestOtpForm.invalid) {
+      console.log('at invalid');
+      console.log(this.resetpasswordForm);
+      return;
+    }
+	alert(this.requestOtpForm.value);
+	return false;
   }
 }
