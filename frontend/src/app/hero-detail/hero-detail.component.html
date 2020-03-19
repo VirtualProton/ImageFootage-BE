@@ -39,15 +39,40 @@
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
                                 <input type="checkbox" id="expend" />
-                                <div class="medium-12 small-12 columns smalldesc">
-                                    <a href="/search?type=1&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
+                                <div class="medium-12 small-12 columns smalldesc tags">
+                                    <a href="/search?type=1&keyword={{keys}}" class=" f-12" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
                                     </div>
                                     <label class="rmore" for="expend" *ngIf="keyword.length > 10">Read More</label>
                                 </div>
                             </div>
                         </div>
 
+
+
+	 
+                            
+
+
+
+
                     </div>
+                    <p></p>
+                    <div class="row text-center">
+     	<div class="col-md-6">
+        		<div class="row">
+                                <div class="col-md-4">Model-release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7 text-left">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>
+                </div>
+        </div>
+        <div class="col-md-6">
+        		<div class="row">
+        						<div class="col-md-4">Property release</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-7 text-left">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
+                </div>
+        </div>
+    </div>
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
@@ -74,10 +99,9 @@
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
                                         <p class="f-12">{{cost.description}}</p>
                                         <!-- | currency:'INR'-->
-                                        <p class="f-15 mb-0"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
-                                        <span class="f-8" >{{cost.width}} X {{cost.height}}</span>
+                                        <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
+                                        <span class="f-8">{{cost.width}} x {{cost.height}}</span>
                                     </label>
-
                                     </div>
                                 </div>
                                 <p><small><!--<span class="text-warning">Standard Use Only</span> -->
@@ -91,7 +115,7 @@
                                         <input type="radio" name="options" id="option{{j}}" autocomplete="off" [class]="j==0 ? 'checked' : ''" (click)="addExtendedPriceTotal(license)">
                                         <div class="row align-items-center">
                                             <div class="col-md-9 col-sm-9 col-lg-9" >
-                                                <p class="f-14  fw-6 pt-2"  style="text-transform: capitalize;">{{license.name}}</p>
+                                                <p class="f-14  fw-6 pt-2" >{{license.name}}</p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-lg-3">
                                                 <p class="mb-0"><strong><i class="fa fa-inr"></i> {{license.price*80 | number}}</strong></p>
@@ -157,7 +181,7 @@
                         </div>
                         <h6 class="text-center" style="color:#ffffffa8;border-bottom:#999;">DETAILS</h6>
                         <hr />
-                      
+
                         <div class="col-md-12">
 <!--                            <div class="row">-->
 <!--                                <div class="col-md-4">Restrictions</div>-->
@@ -179,7 +203,7 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{imagefootId}}</div>
                             </div>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">Width</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.media.width}}</div>
@@ -193,13 +217,13 @@
                                 <div class="col-md-4">Mime_type</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.media.mime_type}}</div>
-                            </div>
+                            </div>-->
                             <!--<div class="row">
                                 <div class="col-md-4">Author ID</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.author_id}}</div>
                             </div>-->
-                            <div class="row">
+                           <!-- <div class="row">
                                 <div class="col-md-4">Model-release</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.model_release.toUpperCase()}}</div>
@@ -208,7 +232,7 @@
                                 <div class="col-md-4">Property release</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.property_release.toUpperCase()}}</div>
-                            </div>
+                            </div>-->
                            <!-- <div class="row">
                                 <div class="col-md-4">Editorial #</div>
                                 <div class="col-md-1">:</div>
@@ -224,11 +248,11 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.options.rights_managed.toUpperCase()}}</div>
                             </div>-->
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">Date created</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.date}}</div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-md-4">License type</div>
                                 <div class="col-md-1">:</div>
@@ -252,7 +276,7 @@
     <div class="bg-black p-3">
         <div class="row align-items-stretch">
           <div class="row mx-auto my-auto mb-5">
-            
+
             <h3 class="col-md-12" style="color: #fcbe11;">Related Images<hr /></h3>
             <div  infiniteScroll
                     [infiniteScrollDistance]="2"
@@ -260,22 +284,20 @@
                     [infiniteScrollThrottle]="2000"
                     (scrolled)="onScrollDown()"
                     (scrolledUp)="onScrollUp()">
-
                   <div class="row align-items-stretch">
-                  
-                  
-                  
-                  
+
+
+
+
                                               <!-- Grid row -->
 <div class="gallery" id="gallery">
-
   <!-- Grid column -->
   <div class="mb-3 pics animation all 2" *ngFor="let aosimges of relatedData; let i = index;">
     <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
     <div class="photo-text-more">
-                         
+
                          <!-- <p class="icons_thum2">
-                            
+
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -284,41 +306,37 @@
                         </div>
   </div>
   <!-- Grid column -->
-    <div style="color:#FFF;">
-        Loading...
-        <span></span>
-    </div>
 </div>
 <!-- Grid row -->
-                  
-                  
-                  
-                  
-                  
+
+
+
+
+
                       <!--<div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index">
-                         
+
                           <span  class=" photo-item" >
                         <div class="">
                             <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
 
                             <div class="photo-text-more">
-                         
+
                         </div>
                         </div>
                       </span>
-                         
+
                           <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                       <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
                           <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #7d494957;object-fit: cover;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
-                             
+
                           <div class="photo-text-more" >
                        	  <div class="photo-text-more" >
                         <br />
                         <p class="icons_thum1" >
-                        
+
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
@@ -330,7 +348,7 @@
                       </div>-->
                   </div>
               </div>
-            
+
           </div>
           <div class="row mx-auto my-auto mb-5">
             <div id="recipeCarousel" class="carousel slide w-100 related_slider" *ngIf="carouselSliderImages">
@@ -454,15 +472,19 @@
                                 <div style="float: right;margin-right:154px;font-height:18px;">
                                     <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
                                    <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
-                                    
+
                                     <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="vfound" ><i class="fas fa-heart"></i></a>
                                  <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="!vfound" ><i class="fas fa-heart"></i></a>
-                                    
-                                    
+
+
                                 </div>
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
-                                    <a href="/search?type=2&keyword={{keys}}" class="btn btn-outline-light btn-sm f-12" title="underwater" *ngFor="let keys of keyword">{{keys}}</a>
+                                <input type="checkbox" id="expend" />
+                                <div class="medium-12 small-12 columns smalldesc tags">
+                                    <a href="/search?type=2&keyword={{keys}}" class=" f-12" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
+                                    </div>
+                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10">Read More</label>
                                 </div>
                             </div>
                         </div>
@@ -492,7 +514,7 @@
                                     </label>
                                 </div>
                                <p><small>
-                               <!--<span class="text-warning">Standard Use Only</span>--> 
+                               <!--<span class="text-warning">Standard Use Only</span>-->
                                <!--<span style="cursor:pointer;" (click)="open(content)">Learn More</span>--></small></p>
                             </div>
                         </div>
@@ -643,13 +665,13 @@
                               [infiniteScrollThrottle]="2000"
                               (scrolled)="onScrollDown()"
                               (scrolledUp)="onScrollUp()">
-                            <div>
-                                Loading...
-                                <span></span>
-                            </div>
                             <div class="row align-items-stretch">
-                            
-                              <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index"  >
+
+
+
+
+
+                                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of relatedData;let i= index"  >
 
                                     <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                                     <span  class=" photo-item" >
@@ -692,7 +714,6 @@
                                 </div>
 
                             </div>
-
                         </div>
 
 
@@ -802,7 +823,7 @@
 <p>For editorial use only. This image cannot be used for advertising or promotional purposes. Allows use in all media, excluding broadcast and print covers. This image is for single-use in context only. For additional use, please relicense.</p>
 <p>Learn more on our <a href="https://imagefootage.com/terms." target="_blank">https://imagefootage.com/terms.</a></p>
 <p>Need additional rights or interested in commercial use? For enterprise access, Contact us:<a href="https://imagefootage.com/contactUs" target="_blank">https://imagefootage.com/contactUs</a></p>
- 
+
   </div>
   <!--<div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
@@ -827,7 +848,7 @@
 <li>Video production of any budget</li>
 <li>Decoration in personal and commercial spaces</li>
     </ul>
-    
+
   </div>
   <!--<div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
