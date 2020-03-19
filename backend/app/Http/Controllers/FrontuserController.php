@@ -93,7 +93,7 @@ class FrontuserController extends Controller {
 	}
 	public function userCartList(Request $request){
         $Usercart = new Usercart;
-		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->get()->toArray();
+		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->with('product')->get()->toArray();
 		echo json_encode($cart_list,true);
 	}
 	public function deleteCartItem(Request $request){

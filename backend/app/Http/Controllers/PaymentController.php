@@ -201,8 +201,9 @@ class PaymentController extends Controller
     public function orderDetails(Request $request){
         $allFields = $request->all();
         if(count($allFields)>0){
-            $OrderData = Orders::with('items')
-                ->where('txn_id','=',$allFields['id'])
+            $OrderData = Orders::with(['items'=>function($query){
+                $query->with('product');
+            }]) ->where('txn_id','=',$allFields['id'])
                 ->get()->toArray();
              echo json_encode(['status'=>"success",'data'=>$OrderData]);
         }else{

@@ -1,41 +1,55 @@
 <div class="loader-bg" *ngIf="loadingData">
-    <div class="loader">
-        Loading
-        <span></span>
-    </div>
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
 </div>
-<section >
-<div class="container">
+<section>
+    <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-3 col-md-3">
                 <div class="card shadow p-3">
                     <p class="f-18"><b>My Account</b></p>
-                    <div class="account-list nav nav-pills faq-nav border-0 z-depth-0" id="faq-tabs" role="tablist" aria-orientation="vertical">
-                        <li class="nav-item active"><i class="flaticon-user-1 f-24"></i><a  [ngClass]="[profileTab ? 'active' : '']"   (click)="tabshow('profile')" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
+                    <div class="account-list nav nav-pills faq-nav border-0 z-depth-0" id="faq-tabs" role="tablist"
+                         aria-orientation="vertical">
+                        <li class="nav-item active"><i class="flaticon-user-1 f-24"></i><a
+                                [ngClass]="[profileTab ? 'active' : '']" (click)="tabshow('profile')" data-toggle="pill"
+                                role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
                             <i class="mdi mdi-help-circle"></i> Profile
                         </a></li>
-                        <li class="nav-item"><i class="flaticon-review f-24"></i>  <a  [ngClass]="[plansTab ? 'active' : '']"   (click)="tabshow('plans')"  data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>
+                        <li class="nav-item"><i class="flaticon-review f-24"></i> <a
+                                [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"
+                                role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>
                             <i class="mdi mdi-account"></i> Plans
                         </a></li>
 
-<!--                        <li class="nav-item"><i class="flaticon-wallet-1 f-24"></i> <a  [ngClass]="[billingTab ? 'active' : '']"   (click)="tabshow('billing')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">-->
-<!--                            <i class="mdi mdi-account-settings"></i> Billing-->
-<!--                        </a> </li>-->
-                        <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a  [ngClass]="[purchaseTab ? 'active' : '']"   (click)="tabshow('purchase')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false" style='cursor:pointer;'>
+                        <!--                        <li class="nav-item"><i class="flaticon-wallet-1 f-24"></i> <a  [ngClass]="[billingTab ? 'active' : '']"   (click)="tabshow('billing')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">-->
+                        <!--                            <i class="mdi mdi-account-settings"></i> Billing-->
+                        <!--                        </a> </li>-->
+                        <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a
+                                [ngClass]="[purchaseTab ? 'active' : '']" (click)="tabshow('purchase')"
+                                data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false"
+                                style='cursor:pointer;'>
                             <i class="mdi mdi-account-settings"></i> Purchase History
                         </a></li>
-                        <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a  [ngClass]="[purchaseTab ? 'active' : '']" routerLink="/change-password" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false" style='cursor:pointer;color:#a6a6a6;'>
+                        <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a
+                                [ngClass]="[purchaseTab ? 'active' : '']" routerLink="/change-password"
+                                data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false"
+                                style='cursor:pointer;color:#a6a6a6;'>
                             <i class="mdi mdi-account-settings"></i> Change Password </a></li>
                     </div>
                 </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9">
                 <div class="tab-content faq_tab-content" id="faq-tab-content">
-                    <div  [ngClass]="[profileTab ? 'tab-pane show active' : '']" *ngIf="profileTab && profileData" id="profile" role="tabpanel" aria-labelledby="tab1">
+                    <div [ngClass]="[profileTab ? 'tab-pane show active' : '']" *ngIf="profileTab && profileData"
+                         id="profile" role="tabpanel" aria-labelledby="tab1">
 
                         <div class="card shadow">
                             <div class="pt-3 pb-3 pl-5 pr-5">
-                                <p class="f-18"><b>User details</b> <a href="#" class="text-primary f-20 pl-3"><i class="flaticon-edit"></i></a></p>
+                                <p class="f-18"><b>User details</b> <a href="#" class="text-primary f-20 pl-3"><i
+                                        class="flaticon-edit"></i></a></p>
                                 <div class="p-3">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
@@ -57,9 +71,9 @@
                                         </div>
 
                                     </div>
-                                        <div class="row">
+                                    <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">E-mail  </p>
+                                            <p class="text-muted">E-mail </p>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
@@ -70,7 +84,7 @@
 
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Phone No  </p>
+                                            <p class="text-muted">Phone No </p>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
@@ -143,17 +157,20 @@
                                     <hr>
                                     <div class="custom-control custom-checkbox fw-6">
                                         <input type="checkbox" class="custom-control-input" id="customCheck">
-                                        <label class="custom-control-label" for="customCheck">Design inspiration, tutorials, and professionally curated content.</label>
+                                        <label class="custom-control-label" for="customCheck">Design inspiration,
+                                            tutorials, and professionally curated content.</label>
                                     </div>
                                     <div class="custom-control custom-checkbox fw-6 pt-3">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Special offers and amazing deals.
+                                        <label class="custom-control-label" for="customCheck1">Special offers and
+                                            amazing deals.
                                         </label>
                                     </div>
 
                                     <div class="custom-control custom-checkbox fw-6 pt-3">
                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                        <label class="custom-control-label" for="customCheck2">Product education and updates.</label>
+                                        <label class="custom-control-label" for="customCheck2">Product education and
+                                            updates.</label>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +181,8 @@
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Language Preference</b></p>
-                                    <p>Select your language. This language will be used for e-mails you receive from us and browsing our site
+                                    <p>Select your language. This language will be used for e-mails you receive from us
+                                        and browsing our site
                                     </p>
 
                                     <div class="col-md-6 col-lg-6 col-sm-6">
@@ -191,14 +209,17 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-4 col-md-4">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="customRadio" name="example1" value="customEx" checked="">
+                                                <input type="radio" class="custom-control-input" id="customRadio"
+                                                       name="example1" value="customEx" checked="">
                                                 <label class="custom-control-label" for="customRadio"><strong>Centimeters</strong></label>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-4 col-md-4">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="customRadio1" name="example1" value="customEx">
-                                                <label class="custom-control-label" for="customRadio1"><strong>Inches</strong></label>
+                                                <input type="radio" class="custom-control-input" id="customRadio1"
+                                                       name="example1" value="customEx">
+                                                <label class="custom-control-label"
+                                                       for="customRadio1"><strong>Inches</strong></label>
                                             </div>
                                         </div>
                                     </div>
@@ -219,96 +240,103 @@
                             </div>
                         </div>
                     </div>
-                    <div  [ngClass]="[plansTab ? 'tab-pane show active' : '']" id="plans" *ngIf="plansTab" role="tabpanel" aria-labelledby="tab2">
+                    <div [ngClass]="[plansTab ? 'tab-pane show active' : '']" id="plans" *ngIf="plansTab"
+                         role="tabpanel" aria-labelledby="tab2">
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Your Plans</b></p>
-                                    
-                                    
-                             <mat-accordion>
-                             <table class="table">
-                               <tbody>
-                                <tr >
-                                            <td style="font-size:12px;">Sn.</td>
-                                            <td style="font-size:12px;">Plan Name</td>
-                                            <td style="font-size:12px;">Plan Price</td>
-                                            <td style="font-size:12px;">Plan Type</td>
-                                            <td style="font-size:12px;">Plan count</td>
-                                            <td style="font-size:12px;">Transaction ID</td>
-                                            <td style="font-size:12px;">Plan Created Date</td>
-                                            <td style="font-size:12px;">Plan Expired Date</td>
-                                        </tr>
-                                        </tbody>
-                                 </table>
-                           
-                              <mat-expansion-panel *ngFor="let  plan of profileData.plans; index as i" hideToggle="true">
-                               <!--<mat-expansion-panel-header  *ngIf='i==0' disabled="disabled" >
-                               
-                               </mat-expansion-panel-header>-->
-                                <mat-expansion-panel-header [collapsedHeight]="'47px'" >
 
-                                       
-                                    <table class="table">
-                                    
-                                    <tbody>
-                                   <tr style="font-size:12px;">
-                                                        <td style="font-size:12px;">{{i+1}}</td>
-                                                                                            <td style="font-size:12px;">{{plan.package_name}}</td>
-                                                                                            <td style="font-size:12px;">{{plan.package_price}}</td>
-                                                                                            <td style="font-size:12px;">{{plan.package_type}}</td>
-                                                                                            <td style="font-size:12px;">{{plan.package_products_count}}</td>
-                                                                                            <td style="font-size:12px;">{{plan.transaction_id}}</td>
+
+                                    <mat-accordion>
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td style="font-size:12px;">Sn.</td>
+                                                <td style="font-size:12px;">Plan Name</td>
+                                                <td style="font-size:12px;">Plan Price</td>
+                                                <td style="font-size:12px;">Plan Type</td>
+                                                <td style="font-size:12px;">Plan count</td>
+                                                <td style="font-size:12px;">Transaction ID</td>
+                                                <td style="font-size:12px;">Plan Created Date</td>
+                                                <td style="font-size:12px;">Plan Expired Date</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <mat-expansion-panel *ngFor="let  plan of profileData.plans; index as i"
+                                                             hideToggle="true">
+                                            <!--<mat-expansion-panel-header  *ngIf='i==0' disabled="disabled" >
+
+                                            </mat-expansion-panel-header>-->
+                                            <mat-expansion-panel-header [collapsedHeight]="'47px'">
+
+
+                                                <table class="table">
+
+                                                    <tbody>
+                                                    <tr style="font-size:12px;">
+                                                        <td style="font-size:12px;">{{i + 1}}</td>
+                                                        <td style="font-size:12px;">{{plan.package_name}}</td>
+                                                        <td style="font-size:12px;">{{plan.package_price}}</td>
+                                                        <td style="font-size:12px;">{{plan.package_type}}</td>
+                                                        <td style="font-size:12px;">{{plan.package_products_count}}</td>
+                                                        <td style="font-size:12px;">{{plan.transaction_id}}</td>
                                                         <td style="font-size:12px;">{{plan.updated_at}}</td>
                                                         <td>{{plan.package_expiry_date_from_purchage}}</td>
                                                     </tr>
                                                     </tbody>
-                                                    </table>
-                                </mat-expansion-panel-header>
-                            		<mat-panel-description>
-                                        <table class="table" *ngIf="plan?.downloads.length>0" >
+                                                </table>
+                                            </mat-expansion-panel-header>
+                                            <mat-panel-description>
+                                                <table class="table" *ngIf="plan?.downloads.length>0">
 
-                                            <tbody>
-                                            <tr>
-                                                <th style="font-size:12px;">Sn.</th>
-                                                <th style="font-size:12px;">Image/Footage</th>
-                                                <th style="font-size:12px;">Product ID</th>
-                                                <th style="font-size:12px;">Product Name</th>
-<!--                                                <td style="font-size:12px;">Product Price</td>-->
-                                                <th style="font-size:12px;">Product Size</th>
-                                                <th style="font-size:12px;">Download Date</th>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th style="font-size:12px;">Sn.</th>
+                                                        <th style="font-size:12px;">Image/Footage</th>
+                                                        <th style="font-size:12px;">Product ID</th>
+                                                        <th style="font-size:12px;">Product Name</th>
+                                                        <!--                                                <td style="font-size:12px;">Product Price</td>-->
+                                                        <th style="font-size:12px;">Product Size</th>
+                                                        <th style="font-size:12px;">Download Date</th>
 
-                                            </tr>
-                                            <tr style="font-size:12px;" *ngFor="let download of plan.downloads; index as i">
-                                                <td style="font-size:12px;">{{i+1}}</td>
-                                                <td style="font-size:12px;">
-                                                    <a href="javascript:void(0)" *ngIf="download.web_type=='2'" >
-                                                        <img src="{{download.product_thumb}}" alt="product-img" />
-                                                    </a>
-                                                    <a href="javascript:void(0)" *ngIf="download.web_type=='3'" >
-                                                        <video  width="200" height="150" [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+download.product_poster" controls controlsList="nodownload" onmouseover="this.play()" onmouseout="this.load()">
-                                                            <source src="{{download.product_thumb}}" type="video/mp4">
-                                                            Your browser does not support the video tag.
-                                                        </video>
-                                                    </a>
-                                                </td>
-                                                <td style="font-size:12px;">{{download.product_id}}</td>
-                                                <td style="font-size:12px;">{{download.product_name}}</td>
-<!--                                                <td style="font-size:12px;">{{download.product_size}}</td>-->
-                                                <td style="font-size:12px;">{{download.product_size}}</td>
-                                                <td style="font-size:12px;">{{download.downloaded_date}}</td>
+                                                    </tr>
+                                                    <tr style="font-size:12px;"
+                                                        *ngFor="let download of plan.downloads; index as i">
+                                                        <td style="font-size:12px;">{{i + 1}}</td>
+                                                        <td style="font-size:12px;">
+                                                            <a href="javascript:void(0)" *ngIf="download.web_type=='2'">
+                                                                <img src="{{download.product_thumb}}"
+                                                                     alt="product-img"/>
+                                                            </a>
+                                                            <a href="javascript:void(0)" *ngIf="download.web_type=='3'">
+                                                                <video width="200" height="150"
+                                                                       [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+download.product_poster"
+                                                                       controls controlsList="nodownload"
+                                                                       onmouseover="this.play()"
+                                                                       onmouseout="this.load()">
+                                                                    <source src="{{download.product_thumb}}"
+                                                                            type="video/mp4">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </a>
+                                                        </td>
+                                                        <td style="font-size:12px;">{{download.product_id}}</td>
+                                                        <td style="font-size:12px;">{{download.product_name}}</td>
+                                                        <!--                                                <td style="font-size:12px;">{{download.product_size}}</td>-->
+                                                        <td style="font-size:12px;">{{download.product_size}}</td>
+                                                        <td style="font-size:12px;">{{download.downloaded_date}}</td>
 
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <div *ngIf="plan?.downloads.length==0">No Download yet</div>
-                               		</mat-panel-description>
-                              </mat-expansion-panel>
-							</mat-accordion>
-                                    
-                                    
-                                    
-                                    
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div *ngIf="plan?.downloads.length==0">No Download yet</div>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+
+
                                     <!-- table table-hover cart-table -->
                                     <!--<table class="table table-condensed" id="myTable">
                                      <thead>
@@ -347,35 +375,31 @@
                         </tr>
    
 					</ng-container>-->
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        <!--<tr *ngFor="let plan of profileData.plans;let i= index" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
-                                            <td>{{i+1}}</td>
-                                            <td>{{plan.package_name}}</td>
-                                            <td>{{plan.package_price}}</td>
-                                            <td>{{plan.package_type}}</td>
-                                            <td>{{plan.package_products_count}}</td>
-                                            <td>{{plan.transaction_id}}</td>
-                                            <td>{{plan.updated_at}}</td>
-                                            <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
-                                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
-                                            <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
-                                        </tr>-->
-                                         
-                                     <!--  </tbody>
-                                    </table> -->
+
+
+                                    <!--<tr *ngFor="let plan of profileData.plans;let i= index" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                        <td>{{i+1}}</td>
+                                        <td>{{plan.package_name}}</td>
+                                        <td>{{plan.package_price}}</td>
+                                        <td>{{plan.package_type}}</td>
+                                        <td>{{plan.package_products_count}}</td>
+                                        <td>{{plan.transaction_id}}</td>
+                                        <td>{{plan.updated_at}}</td>
+                                        <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
+                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
+                                        <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
+                                    </tr>-->
+
+                                    <!--  </tbody>
+                                   </table> -->
 
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div  [ngClass]="[billingTab ? 'tab-pane show active' : '']" id="billing" *ngIf="billingTab" role="tabpanel" aria-labelledby="tab3">
+                    <div [ngClass]="[billingTab ? 'tab-pane show active' : '']" id="billing" *ngIf="billingTab"
+                         role="tabpanel" aria-labelledby="tab3">
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
@@ -384,11 +408,15 @@
                             </div>
                         </div>
                     </div>
-                    <div  [ngClass]="[purchaseTab ? 'tab-pane show active' : '']" id="purchase" *ngIf="purchaseTab" role="tabpanel" aria-labelledby="tab3">
+                    <div [ngClass]="[purchaseTab ? 'tab-pane show active' : '']" id="purchase" *ngIf="purchaseTab"
+                         role="tabpanel" aria-labelledby="tab3">
                         <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
-                                    <p class="text-black fw-6"><b>Your Orders</b><span class="pull-right" *ngIf="orderData != null"><a href="/License Agreement.pdf" download>Download License Agreement</a></span></p>
+                                    <p class="text-black fw-6"><b>Your Orders</b><span class="pull-right"
+                                                                                       *ngIf="orderData != null"><a
+                                            href="/License Agreement.pdf" download>Download License Agreement</a></span>
+                                    </p>
                                     <table class="table table-hover cart-table">
                                         <tr>
                                             <th>Sn.</th>
@@ -396,16 +424,16 @@
                                             <th>Total</th>
                                             <th>Order Date</th>
                                             <th>Payment Gatway</th>
-                                           <th>Details</th>
+                                            <th>Details</th>
                                         </tr>
-                                        
+
                                         <tr *ngFor="let order of orderData;let i= index">
-                                            <td>{{i+1}}</td>
+                                            <td>{{i + 1}}</td>
                                             <td>{{order.txn_id}}</td>
                                             <td>{{order.order_total}}</td>
                                             <td>{{order.order_date}}</td>
                                             <td>{{order.paymentgatway}}</td>
-                                            <td ><a (click)="orderDetails(i)">Details</a></td>
+                                            <td><a (click)="orderDetails(i)">Details</a></td>
                                         </tr>
                                     </table>
                                     <p class="text-black fw-6" *ngIf="order_items"><b>Order Details</b></p>
@@ -413,30 +441,38 @@
                                         <tr>
                                             <th>Sn.</th>
                                             <th>Image</th>
+                                            <th>Product ID</th>
                                             <th>Name</th>
                                             <th>Size</th>
                                             <th>Price</th>
                                             <th>Download</th>
                                         </tr>
-                                        <tr  *ngFor="let orderitem of order_items;let j= index">
-                                            <td>{{j+1}}</td>
-                                            <td> <div class="product-info">
-                                                <a href="javascript:void(0)" *ngIf="orderitem.product_web=='2'" >
-                                                    <img src="{{orderitem.product_thumb}}" alt="product-img" />
-                                                </a>
-                                                <a href="javascript:void(0)" *ngIf="orderitem.product_web=='3'" >
-                                                    <video  width="200" height="150" poster="{{orderitem.product_thumb}}" controls onmouseover="this.play()" onmouseout="this.pause()">
-                                                        <source src="{{orderitem.product_thumb}}" type="video/mp4">
-                                                        Your browser does not support the video tag.
-                                                    </video>
-                                                </a>
+                                        <tr *ngFor="let orderitem of order_items;let j= index">
+                                            <td>{{j + 1}}</td>
+                                            <td>
+                                                <div class="product-info">
+                                                    <a href="javascript:void(0)" *ngIf="orderitem.product_web=='2'">
+                                                        <img src="{{orderitem.product_thumb}}" alt="product-img"/>
+                                                    </a>
+                                                    <a href="javascript:void(0)" *ngIf="orderitem.product_web=='3'">
+                                                        <video width="200" height="150"
+                                                               poster="{{orderitem.product.product_thumb}}" controls
+                                                               onmouseover="this.play()" onmouseout="this.pause()">
+                                                            <source src="{{orderitem.product_thumb}}" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    </a>
 
-                                            </div></td>
+                                                </div>
+                                            </td>
+                                            <td>{{orderitem.product.product_id}}</td>
                                             <td>{{orderitem.product_name}}</td>
                                             <td>{{orderitem.standard_size}}</td>
                                             <td>{{orderitem.total}}</td>
-                                            <td *ngIf="orderitem.product_web=='2'" ><a (click)="download(orderitem,'2')">Download</a></td>
-                                            <td *ngIf="orderitem.product_web=='3'" ><a (click)="download(orderitem,'3')">Download</a></td>
+                                            <td *ngIf="orderitem.product_web=='2'"><a (click)="download(orderitem,'2')">Download</a>
+                                            </td>
+                                            <td *ngIf="orderitem.product_web=='3'"><a (click)="download(orderitem,'3')">Download</a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>

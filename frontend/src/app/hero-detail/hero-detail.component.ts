@@ -63,6 +63,7 @@ export class HeroDetailComponent implements OnInit {
     totalpages:number = 0;
     pagenumber:number =0;
     packeagechoose:any=[];
+    refrencemodel:any ='';
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -397,7 +398,7 @@ export class HeroDetailComponent implements OnInit {
             return false;
         }
         if(this.packeagechoose.length > 1){
-            this.modalService.open(pricecontent);
+            this.refrencemodel = this.modalService.open(pricecontent);
             return false;
         }
 
@@ -438,7 +439,7 @@ export class HeroDetailComponent implements OnInit {
         console.log(selected);
         this.loadingData = true;
         this.token = localStorage.getItem('currentUser');
-
+        this.refrencemodel.close();
         let cartval = {
             "product_info":productinfo,
             "selected_product":cartproduct,

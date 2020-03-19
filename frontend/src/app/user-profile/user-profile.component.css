@@ -159,4 +159,10 @@ a {
 }
 .fw-6{font-weight: 600;}
 .z-depth-0{box-shadow:none !important;}
+table tr th {
+    font-size:14px;
+}
+table tr td {
+    font-size:12px;
+}
 /*.account-list>li>a.active{color:#ef6c57}*/

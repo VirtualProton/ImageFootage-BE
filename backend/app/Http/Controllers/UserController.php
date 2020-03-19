@@ -116,7 +116,9 @@ class UserController extends Controller
 
     public function userOrders($id){
         if($id>0){
-            $OrderData = Orders::with('items')
+            $OrderData = Orders::with(['items'=>function($query){
+                    $query->with('product');
+                }])
                 ->where('user_id','=',$id)
                 ->whereIn('order_status',['Completed','Transction Success'])
                 ->orderBy('id','desc')

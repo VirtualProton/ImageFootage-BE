@@ -139,7 +139,7 @@
                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                 <!-- d-block -->
                     <span *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'"  class=" photo-item" style="object-fit: cover;">
-
+                        <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;">{{aosimges.product_id}}</span>
                       <img  src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" >
 
                         <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe> (mouseover)="returnonposter(htmlVideoElement)" -->
@@ -161,7 +161,7 @@
                     </span>
                     <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block -->
                     <span  *ngIf="aosimges.product_web == '3'"  class=" photo-item" >
-                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>
+                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; {{aosimges.product_id}}</span>
                          <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" style="width: 100% !important;background: #7d494957; object-fit: cover;cursor:pointer;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.

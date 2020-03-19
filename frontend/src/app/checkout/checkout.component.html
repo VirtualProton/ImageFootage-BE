@@ -1,8 +1,9 @@
 <div class="loader-bg" *ngIf="loadingData">
-    <div class="loader">
-        Loading
-        <span></span>
-    </div>
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
 </div>
 
 
@@ -150,11 +151,13 @@
                             <tr *ngFor="let checkout of wishListDataItems;let i= index">
 
                                 <td width="25%" align="center" *ngIf="checkout.product_web=='2'">
+                                    ( {{checkout.product.product_id}} )<br/>
                                     <div class="product-info">
                                         <img src="{{checkout.product_thumb}}" alt="product-img"  style="object-fit: cover;width: 100%;">
                                     </div>
                                 </td>
                                 <td width="25%" align="center" *ngIf="checkout.product_web=='3'">
+                                    ( {{checkout.product.product_id}} )<br/>
                                     <div class="product-info">
                                         <video   [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+checkout.product_main_footage" controls controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()" style="object-fit: cover;width: 100%;">
                                             <source src="{{checkout.product_thumb}}" type="video/mp4">

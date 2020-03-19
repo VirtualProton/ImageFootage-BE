@@ -1,8 +1,9 @@
 <div class="loader-bg" *ngIf="loadingData">
-    <div class="loader">
-        Loading
-        <span></span>
-    </div>
+<!--    <div class="loader">-->
+<!--        Loading-->
+<!--        <span></span>-->
+<!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
 </div>
 <!-- pt-5 -->
 <div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" appNoRightClick>
@@ -14,7 +15,7 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
 
                         <div class="p-3">
-                            <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}}</p>
+                            <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}} ( {{imagefootId}} )</p>
                             <p>{{detailPageInfo.metadata.description}}</p>
 							<!-- data-aos="fade-up" -->
                             <div >
@@ -49,8 +50,8 @@
 
 
 
-	 
-                            
+
+
 
 
 
@@ -446,7 +447,7 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
 						<!-- p-3 -->
                         <div class="">
-                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}}</p>
+                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}} ( {{imagefootId}} )</p>
                             <p class="pl-3">{{detailPageInfo[0].items[0].desc}}</p>
 <!-- data-aos="fade-up" -->
                             <div >

@@ -1,8 +1,9 @@
 <div class="loader-bg" *ngIf="loadingData">
-    <div class="loader">
-        Loading
-        <span></span>
-    </div>
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
 </div>
 <section class="mt-5">
 
@@ -110,7 +111,7 @@
                                         <td class="text-right">
                                             <span class="text-success">Product ID :</span>
                                         </td>
-                                        <td>{{itemdata.product_id}}</td>
+                                        <td>{{itemdata.product.product_id}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-right">

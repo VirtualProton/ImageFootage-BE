@@ -50,6 +50,7 @@ class UserContactusController extends Controller
 		$password=$request->password;
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
+		$email= User::where('id','=',$user_id)->first()->email;
 		  //echo Hash::make($old_pass); exit();
 		
 		if(!isset($old_pass) && empty($old_pass)){
@@ -68,9 +69,9 @@ class UserContactusController extends Controller
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 			  exit();
 		}
-		  $credentials = ['id'=>$user_id, 'password'=>$password];
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or password does\'t exist'], 401);
+		  $credentials = ['email'=>$email, 'password'=>$old_pass];
+          if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
 			 exit();
         }else{
 		$result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);

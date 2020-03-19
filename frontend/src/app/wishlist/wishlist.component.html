@@ -1,8 +1,9 @@
 <div class="loader-bg" *ngIf="loadingData">
-    <div class="loader">
-        Loading
-        <span></span>
-    </div>
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
 </div>
 <section>
  <div class="container">
@@ -19,7 +20,9 @@
                       </td>
                       <td width="25%" align="center">
                           <div class="product-info">
+                              ( {{wishList.product.product_id}} )<br/>
                               <a href="javascript:void(0)" *ngIf="wishList.product_web=='2'" >
+
                                   <img src="{{wishList.product_thumb}}" alt="product-img" />
                               </a>
                               <a href="javascript:void(0)" *ngIf="wishList.product_web=='3'" >

@@ -28,23 +28,24 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
   console.log(this.currentUser.Utype);
   this.changepasswordForm = this.formBuilder.group({
-  			old_password: ['', Validators.required],
-            password: ['', Validators.required],
-            confirm_password: ['', Validators.required]
-        }, {
-            //validator: MustMatch('password', 'confirm_password')
-        });
+      old_password: ['', Validators.required],
+      password: ['', Validators.required],
+      confirm_password: ['', Validators.required]
+      // }, {
+      //     validator: MustMatch('password', 'confirm_password')
+      // }
+    });
   }
   // convenience getter for easy access to form fields
     get f() { return this.changepasswordForm.controls; }
 	onSubmit() {
         this.submitted = true;
-		this.loadingData = true;
-		
+		//this.loadingData = true;
+		console.log();
         // stop here if form is invalid
-       /* if (this.changepasswordForm.invalid) {
-            return;
-        }*/
+        if (this.changepasswordForm.invalid) {
+            return false;
+        }
 		 this.loadingData = true;
 
     this.authenticationService.userchangepassword(this.changepasswordForm.value,this.currentUser.Utype)
