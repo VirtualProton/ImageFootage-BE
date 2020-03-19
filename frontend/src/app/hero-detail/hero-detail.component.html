@@ -15,24 +15,19 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
 
                         <div class="p-3">
-                            <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}} ( {{imagefootId}} )</p>
+                            <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}}</p>
                             <p>{{detailPageInfo.metadata.description}}</p>
 							<!-- data-aos="fade-up" -->
                             <div >
                             <!-- photo-item -->
                                 <a  class="d-block " style="text-align: center;">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image" class="img-fluid">
-                                    <!--<div class="photo-text-more">
-                                        <div class="photo-text-more">
-                                            <h3 class="heading">{{detailPageInfo.metadata.title}}</h3>
-                                            <span class="meta">{{detailPageInfo.photoCount}}</span>
-                                        </div>
-                                    </div>-->
                                 </a>
+                                <span class="pull-right" style="margin-right:154px;font-size: 15px;">{{imagefootId}}</span>
                             </div>
 
-                            <div class="p-3">
-                                <div style="float: right;margin-right:154px;font-height:18px;">
+                            <div class="p-4">
+                                <div style="float: right;margin-right: -71px;font-height:18px;">
                                  <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
                                  <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
                                  <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
@@ -47,15 +42,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
                     </div>
                     <p></p>
                     <div class="row text-center">
@@ -101,7 +87,7 @@
                                         <p class="f-12">{{cost.description}}</p>
                                         <!-- | currency:'INR'-->
                                         <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
-                                        <span class="f-8">{{cost.width}} x {{cost.height}}</span>
+                                        <span class="f-11">{{cost.width}} x {{cost.height}}</span>
                                     </label>
                                     </div>
                                 </div>
