@@ -48,7 +48,8 @@ export class ChangeResetPasswordComponent implements OnInit {
             data2 => {
 				if(data2.status==1){
 				    alert(data2.message);
-					this.router.navigate(['/']);
+                    this.authenticationService.logout();
+                    this.router.navigate(['']);
 				}else if(data2.status==0){
 					alert(data2.message);
 				}
