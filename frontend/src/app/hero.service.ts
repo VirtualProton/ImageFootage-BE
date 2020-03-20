@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -231,6 +231,21 @@ export class HeroService {
             }),
             catchError(this.handleError<any>(`unable to resend otp data`))
         );
+    }
+	 requestChangePassword(usrData: any): Observable<any> {
+        const url = `${this.heroesUrl}requestChangePassword`
+        return this.http.post(url, usrData, this.httpOptions).pipe(
+            map(userInfo => {
+                console.log(userInfo);
+                if (userInfo['status'] == '1') {
+                    localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
+                    this.currentUserSubject.next(userInfo['userdata']);
+                }
+                return userInfo;
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+        ;
     }
 
     verifyOtp(email: any, mobile: any, otp: any): Observable<any> {
@@ -549,6 +564,19 @@ export class HeroService {
                 return userInfo;
                 //console.log(JSON.stringify(userInfo));
                 //return JSON.stringify(userInfo);
+            }),
+            catchError(this.handleError<any>(`unable to register data`))
+        );
+    }
+	requestOtpPassword(mobile): Observable<any> {
+        const url = `${this.heroesUrl}validMobileUser`;
+        var headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+        let options = {headers: headers};
+        return this.http.post(url, {mobile}, options).pipe(
+            map(userInfo => {
+                return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
         );

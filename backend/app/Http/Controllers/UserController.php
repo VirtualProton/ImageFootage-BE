@@ -15,6 +15,7 @@ use File;
 use App\Http\TnnraoSms\TnnraoSms;
 use App\Models\Contributor;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -113,7 +114,38 @@ class UserController extends Controller
         }
         return response()->json($result);
     }
-
+	public function validMobileUser(Request $request){
+		$count = User::where('mobile','=',$request['mobile']['user_mobile'])->count();
+		if($count>0){
+			$otp = rand(100000,999999);
+			$update = User::where('mobile',$request['mobile']['user_mobile'])->update(['otp'=>$otp]);
+			if($update){
+				$message = "Your otp for forgot password is ".$otp." \n Thanks \n Imagefootage Team";
+				$smsClass = new TnnraoSms;
+				$smsClass->sendSms($message,$request['mobile']['user_mobile']);
+				return response()->json(['status'=>'1','message' => 'Otp sent to your mobile. Please verify !!!'], 200);
+			}else{
+				return response()->json(['status'=>'0','message' => 'Error in sending otp again !!!'], 200);
+			}
+		}else{
+			return response()->json(['status'=>0,'message'=>'Mobile Number Not Found.']);
+		}
+	}
+	public function requestChangePassword(Request $request){
+		$count = User::where('mobile','=',$request['user_mobile'])->where('otp','=',$request['user_otp'])->count();
+		if($count>0){
+			$update = User::where('mobile',$request['user_mobile'])->update(['password'=>Hash::make($request['user_password'])]);
+			if($update){
+				return response()->json(['status'=>'1','message' => 'Password changed successfully '], 200);
+			}else{
+				return response()->json(['status'=>'0','message' => 'Some problem occured !!!'], 200);
+			}
+			
+		}else{
+			return response()->json(['status'=>0,'message'=>'Enter correct otp.']);
+		}
+		
+	}
     public function userOrders($id){
         if($id>0){
             $OrderData = Orders::with(['items'=>function($query){
