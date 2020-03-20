@@ -62,6 +62,8 @@ Route::group([
     Route::get('categoryListApi', 'MediaController@categoryListApi');
     Route::post('payUResponse', 'PaymentController@payUResponse');
     Route::post('validUser', 'UserController@validUser');
+	Route::post('validMobileUser', 'UserController@validMobileUser');
+	Route::post('requestChangePassword', 'UserController@requestChangePassword');
 	Route::post('fbLogin','AuthController@fbLogin');
 	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
 	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
