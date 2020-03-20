@@ -237,15 +237,11 @@ export class HeroService {
         return this.http.post(url, usrData, this.httpOptions).pipe(
             map(userInfo => {
                 console.log(userInfo);
-                if (userInfo['status'] == '1') {
-                    localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
-                    this.currentUserSubject.next(userInfo['userdata']);
-                }
                 return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
         );
-        ;
+       
     }
 
     verifyOtp(email: any, mobile: any, otp: any): Observable<any> {
