@@ -16,6 +16,7 @@ use App\Http\TnnraoSms\TnnraoSms;
 use App\Models\Contributor;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Hash;
 
 class UserController extends Controller
 {
@@ -132,7 +133,7 @@ class UserController extends Controller
 		}
 	}
 	public function requestChangePassword(Request $request){
-		$count = User::where('mobile','=',$request['user_mobile'])->where('otp','=',$request['user_otp'])->count();
+		$count = User::where('mobile','=',$request['mobile'])->where('otp','=',$request['user_otp'])->count();
 		if($count>0){
 			$update = User::where('mobile',$request['user_mobile'])->update(['password'=>Hash::make($request['user_password'])]);
 			if($update){

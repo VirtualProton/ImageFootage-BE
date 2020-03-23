@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'http://localhost/imagefootagenew/backend/api/';  // URL to web api
+    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -232,9 +232,10 @@ export class HeroService {
             catchError(this.handleError<any>(`unable to resend otp data`))
         );
     }
-	 requestChangePassword(usrData: any): Observable<any> {
+	/*usrData: any,*/
+	 requestChangePassword(mobile: any,user_otp:any,user_password:any,user_rpassword:any): Observable<any> {
         const url = `${this.heroesUrl}requestChangePassword`
-        return this.http.post(url, usrData, this.httpOptions).pipe(
+        return this.http.post(url, {mobile,user_otp,user_password,user_rpassword}, this.httpOptions).pipe(
             map(userInfo => {
                 console.log(userInfo);
                 return userInfo;

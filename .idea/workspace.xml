@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/imagefootagenew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imagefootagenew.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,6 +226,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\xampp\htdocs\imagefootagenew\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
@@ -319,6 +323,8 @@
       <workItem from="1580314427120" duration="21757000" />
       <workItem from="1583476396519" duration="291000" />
       <workItem from="1584523874382" duration="1648000" />
+      <workItem from="1584775066175" duration="1161000" />
+      <workItem from="1584942596484" duration="357000" />
     </task>
     <servers />
   </component>
@@ -339,14 +345,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033222" />
+    <state x="184" y="7" key="SettingsEditor" timestamp="1584775117910">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="7" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1584775117910" />
     <state x="275" y="98" key="Vcs.Push.Dialog.v2" timestamp="1584525053312">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1584525053312" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1584523937617">
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1584942644087">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584523937617" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584942644087" />
     <state x="484" y="156" key="git4idea.merge.GitMergeDialog" timestamp="1584524351990">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -364,6 +374,10 @@
           <url>file://$PROJECT_DIR$/frontend/src/app/contact-us/contact-us.component.html</url>
           <line>37</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/frontend/src/app/hero.service.ts</url>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
