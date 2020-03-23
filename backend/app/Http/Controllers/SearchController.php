@@ -135,6 +135,7 @@ class SearchController extends Controller
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
                 $flag =1;
+                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
         if($flag=='0'){
@@ -159,11 +160,11 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
+                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items'],'tp'=>'2');
             }
         }
 
-          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30);
+          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30,'tp'=>'2');
     }
 
     public function getFootageData($keyword,$getKeyword){
@@ -175,6 +176,7 @@ class SearchController extends Controller
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
                 $flag =1;
+                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
         if($flag=='0'){
@@ -209,10 +211,10 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page']);
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page'],'tp'=>'2');
             }
         }
-        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
     

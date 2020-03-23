@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Models\Api;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
+
 class Product extends Model
 {
     protected $table = 'imagefootage_products';
@@ -15,6 +17,11 @@ class Product extends Model
     public function api(){
         return $this->hasOne(Api::class,'api_id', 'product_web');
     }
+
+    public function category(){
+        return $this->hasOne(ProductCategory::class,'category_id', 'product_category');
+    }
+
 
     public function getProducts($keyword){
         //dd($getKeyword);
@@ -38,7 +45,7 @@ class Product extends Model
                 'product_locations'=>'product_locations',
                 'product_sorttype'=>'product_sort_types');
             //DB::enableQueryLog();
-            $data = Product::select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
+            $data = Product::select('product_id','api_product_id','product_category','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
                     //->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
                 ->where(function ($query) use ($type){
                 $query->whereIn('product_web',[1,2,3])->where('product_main_type','=',$type);
@@ -47,6 +54,7 @@ class Product extends Model
                         //->orWhere('product_title','LIKE', ''. $serach .'%')
                         //->orWhere('product_keywords','LIKE',''. $serach .'%');
             })->get()->toArray();
+            //dd(DB::getQueryLog());
             if(count($data)>0){
                 if($serach==$data[0]['product_id'] && count($data)==1){
                    //if($data[0]['product_web']=='2'){

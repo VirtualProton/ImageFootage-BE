@@ -130,6 +130,7 @@ export class HeroSearchComponent implements OnInit {
           if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial'){
               this.category =3;
           }else{
+
               this.category =this.productType;
           }
 
@@ -179,7 +180,9 @@ export class HeroSearchComponent implements OnInit {
                                   this.aoslSliderImages = aoslSliderImages.imgfootage;
                                   let type = this.aoslSliderImages["0"].product_keywords;
                                   this.keyword = type.split(',', 9);
-
+                                  if(aoslSliderImages.tp==1){
+                                      this.category = this.keyword[0];
+                                  }
                                   this.maintainAosSlider();
                               }else{
                                   alert("No Result Found");
@@ -494,7 +497,6 @@ export class HeroSearchComponent implements OnInit {
                         this.aoslSliderImages = aoslSliderImages.imgfootage;
                         let type = this.aoslSliderImages["0"].product_keywords;
                         this.keyword = type.split(',', 9);
-
                         this.maintainAosSlider();
                     }else{
                         alert("Result Not Found");
