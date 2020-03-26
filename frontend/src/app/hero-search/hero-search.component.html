@@ -8,7 +8,7 @@
  <!-- advanched search -->
        
         
-        <div class="container"  style="position:fixed;z-index:2;">
+     <div class="container"  style="position:fixed;z-index:2;">
       <div class="row">
         <div class="col-lg-9 offset-lg-4 col-sm-8 offset-sm-2 col-12">
 
@@ -46,7 +46,7 @@
                       </span>
                       </div>
 
-                    <div class="row" style="font-size:11px;">
+                    <div class="row" style="font-size:11px;" *ngIf="productType != 2">
                     <div class="col-md-6" style="border-right:1px solid #808080;">
                          <div class="form-group col-md-12" style="color:#fff;">
                          <label for="category" class="" style="color:#feaa0c;">Gender</label>
@@ -129,7 +129,66 @@
                         </div>
  
                    </div>
-                    
+                      <div class="row" style="font-size:11px;" *ngIf="productType == 2">
+                          <div class="col-md-6" style="border-right:1px solid #808080;">
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">Resolution</label>
+                                  &nbsp;
+                                  <div class="row">
+                        <span for="category"  *ngFor="let res of resolutions;" class="col-md-4">
+
+                        <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
+
+                        </span>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">Duration</label>
+                                  &nbsp;
+                                  <div class="row">
+                                      <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
+                                  </div>
+                              </div>
+
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">FPS</label>
+                    <div class="row">
+                    <span for="category"  *ngFor="let fps of fpsValues;" class="col-md-4">
+                    <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
+                    </span>
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                          <div class="col-md-2">
+
+                              <div class="form-group" style="color:#fff;" >
+                                  <label for="category" class="" style="color:#feaa0c;">People</label>
+                                  &nbsp;
+
+                                  <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                                      <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+                          <div class="col-md-2">
+
+                              <div class="form-group" style="color:#fff;" >
+                                  <label for="category" class="" style="color:#feaa0c;">Gender</label>
+                                  &nbsp;
+                                  <div for="category"  *ngFor="let gender of leftsideData.product_gender"   >
+                                      <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+
+
+
+                      </div>
 
                     <div class="row" style="color:#fff;">
                     	
@@ -577,7 +636,7 @@
 <div class="gallery" id="gallery">
   <!-- Grid column -->
   <div class="mb-3 pics animation all 2 imgg" *ngFor="let aosimges of aoslSliderImages; let i = index;">
-    <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
+    <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
     <div class="photo-text-more forimgic" >
                          
                           <p class="icons_thum2" >
@@ -618,7 +677,7 @@
                       <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                       <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                   <!-- <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>-->
-                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;">
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
@@ -650,7 +709,7 @@
                   [infiniteScrollThrottle]="2000"
                   (scrolled)="onScrollDown()"
                   (scrolledUp)="onScrollUp()">
-                <div>
+                <div *ngIf="totalproduct>30">
                     Loading...
                     <span></span>
                 </div>

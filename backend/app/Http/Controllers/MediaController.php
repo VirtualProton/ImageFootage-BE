@@ -32,6 +32,7 @@ class MediaController extends Controller
     public function index($media_id,$origin,$type){
        if($origin=='2'){
            $imageMedia = new ImageApi();
+           $media_id = decrypt($media_id);
            $product_details_data = $imageMedia->get_media_info($media_id);
            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
 
@@ -56,6 +57,7 @@ class MediaController extends Controller
            $product_details_data['media']['preview_url_high_no_wm'] =str_replace('http:','https:',$product_details_data['media']['preview_url_high_no_wm']);
            $product_details= array($product_details_data,$imagefootage_id,$downlaod_image);
         }else if($origin=='3'){
+           $media_id = decrypt($media_id);
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
            $product_details_data = $footageMedia->search($keyword,[]);

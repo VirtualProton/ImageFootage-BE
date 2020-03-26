@@ -73,8 +73,9 @@ class SearchController extends Controller
                     if (isset($eachmedia['id'])) {
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id']),
                             'product_title' => $eachmedia['title'],
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
                             'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
                             'product_description' => $eachmedia['description'],
@@ -104,8 +105,9 @@ class SearchController extends Controller
                         }
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id']),
                             'product_title' => $eachmedia['n'],
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['n']))),
                             'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
                             'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
                             'product_description' => $eachmedia['desc'],
@@ -147,7 +149,8 @@ class SearchController extends Controller
                     if (isset($eachmedia['id'])) {
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id'],true),
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_title' => $eachmedia['title'],
                             'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
                             'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
@@ -197,7 +200,8 @@ class SearchController extends Controller
                         }
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id'],true),
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['n']))),
                             'product_title' => $eachmedia['n'],
                             'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
                             'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
@@ -217,6 +221,5 @@ class SearchController extends Controller
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
-    
 
 }

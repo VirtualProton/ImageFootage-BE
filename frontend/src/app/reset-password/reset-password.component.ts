@@ -47,17 +47,18 @@ export class ResetPasswordComponent implements OnInit {
       user_mobile: ['', Validators.required],
     });
 	this.requestOtpForm2 = this.formBuilder.group({
+	  /*user_mobile1: ['', Validators.required],*/
       user_otp: ['', Validators.required],
-	  user_mobile: ['', Validators.required],
 	  user_password: ['', Validators.required],
 	  user_rpassword: ['', Validators.required],
-    }, {
+    },{
             validator:  this.dataHelper.mustMatch('user_password', 'user_rpassword')
      });
   }
-   get r() { return this.requestOtpForm2.controls; }
-   get o() { return this.requestOtpForm.controls; }
+   
   get f() { return this.resetpasswordForm.controls; }
+  get o() { return this.requestOtpForm.controls; }
+  get r() { return this.requestOtpForm2.controls; }
  
   showtoemail(){
 	  this.toemail=true;
@@ -112,12 +113,14 @@ export class ResetPasswordComponent implements OnInit {
     }
 	this.loadingData = true;
 	this.fmobile=this.requestOtpForm.value.user_mobile;
+	localStorage.setItem('userotpmobile', this.requestOtpForm.value.user_mobile);
     this.authenticationService.requestOtpPassword(this.requestOtpForm.value)
         .pipe(first())
         .subscribe(
             data2 => {
               this.loadingData = false;
               if(data2.status=='1'){
+			  this.fmobile=localStorage.getItem('userotpmobile');
                 this.step1otp= false;
   				this.step2otp= true;
 				alert(data2.message);
@@ -138,13 +141,15 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 	this.loadingData = true;
-    this.authenticationService.requestChangePassword(this.requestOtpForm2.value)
+    /*this.requestOtpForm2.value,*/
+	this.authenticationService.requestChangePassword(this.fmobile,this.requestOtpForm2.value.user_otp,this.requestOtpForm2.value.user_password,this.requestOtpForm2.value.user_rpassword)
         .pipe(first())
         .subscribe(
             data2 => {
               this.loadingData = false;
               if(data2.status=='1'){
 				alert(data2.message);
+				localStorage.removeItem('userotpmobile');    
 				this.router.navigate(['/']);
               }else{
 				alert(data2.message);

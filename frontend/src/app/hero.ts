@@ -31,6 +31,9 @@ export class Search{
   product_sortType:any;
   product_editorial:any;
   pagenumber:number;
+  durationless:any;
+  durationgrt:any;
+  searchFilter:any;
 }
 
 export class aosSlider{

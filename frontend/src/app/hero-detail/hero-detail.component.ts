@@ -78,11 +78,20 @@ export class HeroDetailComponent implements OnInit {
   ngOnInit(): void {
       //this.spinner.show();
       this.loadingData =true;
+      this.route
+          .queryParams
+          .subscribe(params => {
+              this.category = params.cat;
+              this.id = params.prod_id;
+              this.webtype = params.webtype;
+              this.type = params.type;
+
+          });
      //this.getcategoryCarouselImages();
      this.getDetailinfo();
 	 this.lightBoxListDataItems=localStorage.getItem('lightboxData');
 	if(this.lightBoxListDataItems != null){
-	  	this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
+	  	//this.vfound=this.lightBoxListDataItems.indexOf(this.route.snapshot.paramMap.get('id')) > -1;
 	}
 	
 	//console.log(this.lightBoxListDataItems);
@@ -92,15 +101,11 @@ export class HeroDetailComponent implements OnInit {
       });
       console.log(this.currentUser);
       //let category = this.route.snapshot.paramMap.get('cat');
-      let imgtype =  this.route.snapshot.paramMap.get('webtype');
-      this.prodid =  this.route.snapshot.paramMap.get('id');
+      //let imgtype =  this.route.snapshot.paramMap.get('webtype');
+     // this.prodid =  this.route.snapshot.paramMap.get('id');
 	 
-      this.route
-          .queryParams
-          .subscribe(params => {
-              this.category = params.cat;
-          });
-      this.getRelatedProducts(this.category,imgtype);
+
+      this.getRelatedProducts(this.category,this.webtype);
      // this.heroService.getMarketdeatils()
      //  .subscribe(data => {
      //    this.marketDetails = data;
@@ -112,7 +117,7 @@ export class HeroDetailComponent implements OnInit {
                       this.profileData = data.data;
                        if(this.profileData["plans"]){
 
-                          if(imgtype=='3'){
+                          if(this.webtype==3){
                               var ptype= 'Footage';
                           }else{
                               var ptype='Image';
@@ -147,9 +152,10 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getDetailinfo(){
-    this.id = +this.route.snapshot.paramMap.get('id');
-    this.webtype = +this.route.snapshot.paramMap.get('webtype');
-    this.type = this.route.snapshot.paramMap.get('type');
+    //this.id = +this.route.snapshot.paramMap.get('id');
+    //this.webtype = +this.route.snapshot.paramMap.get('webtype');
+    //this.type = this.route.snapshot.paramMap.get('type');
+
     this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
          //console.log(data);

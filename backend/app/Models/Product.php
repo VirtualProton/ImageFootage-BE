@@ -229,7 +229,7 @@ class Product extends Model
     public function getProductsRandom(){
         ini_set('max_execution_time',0);
         $final_data = [];
-       return   DB::table('imagefootage_products as pr')
+       $data =   DB::table('imagefootage_products as pr')
             //->where('pr.product_web','2')
             //->where('pr.width_thumb','<>',NULL)
             ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','product_main_type','width_thumb','height_thumb')
@@ -238,16 +238,22 @@ class Product extends Model
                 'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
             ->inRandomOrder()
             ->limit(Product::HomeLimit)
-            ->get();
+            ->get()
+            ->toArray();
 //
-//            foreach($data as $k=>$perdata){
-//                 $final_data[$k] = (array)$perdata;
-//                 $imgData =getimagesize($perdata->product_thumbnail);
-//                 $final_data[$k]['width_img'] = $imgData[0];
-//                $final_data[$k] ['height_img']= $imgData[1];
-//                $final_data[$k]['attr'] = $imgData[3];
-//            }
-            //return $final_data;
+        //$data = (array)$data;
+
+        foreach($data as $k=>$perdata){
+                // $final_data[$k] = (array)$perdata;
+                // $imgData =getimagesize($perdata->product_thumbnail);
+                 //$final_data[$k]['width_img'] = $imgData[0];
+               // $final_data[$k] ['height_img']= $imgData[1];
+                //$final_data[$k]['attr'] = $imgData[3];
+                $data[$k]->api_product_id = encrypt($perdata->api_product_id);
+                $data[$k]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($perdata->product_title)));
+            }
+
+            return $data;
    }
 
     public function savePantherImagedetail($data,$category_id){

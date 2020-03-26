@@ -10,6 +10,7 @@ import * as AOS from 'aos';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
+import { Options } from 'ng5-slider';
 
 //'../../../node_modules/ng-masonry-grid/ng-masonry-grid.css',
 @Component({
@@ -76,6 +77,17 @@ export class HeroSearchComponent implements OnInit {
    perpage:number = 30;
    totalpages:number = 0;
    pagenumber:number =0;
+   resolutions:any =['5K+','4K','HD(1080)','HD(720)','2K','SD'];
+   durvalue: any = 0.00;
+   durhighValue: number = 2.00;
+   options: Options = {
+        floor: 0.00,
+        ceil: 2.00,
+        step: 0.01,
+    };
+   fpsValues:any =["23.98","24","25","29.97","30","60","60+"];
+    checkArray:any = {'resolution':[],'fps':[],'people':[],'gender':[]};
+
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -150,8 +162,7 @@ export class HeroSearchComponent implements OnInit {
       }
 
       searchAPIRequest(){
-
-            this.searchData.product_people =this.slidebarPeopleMenu.join(); 
+            this.searchData.product_people =this.slidebarPeopleMenu.join();
             this.searchData.product_gender = this.slidebarGenderMenu.join(); 
             this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
             this.searchData.product_locations = this.slidebarLocationMenu.join();
@@ -181,7 +192,7 @@ export class HeroSearchComponent implements OnInit {
                                   let type = this.aoslSliderImages["0"].product_keywords;
                                   this.keyword = type.split(',', 9);
                                   if(aoslSliderImages.tp==1){
-                                      this.category = this.keyword[0];
+                                      this.searchData.search = this.keyword[0];
                                   }
                                   this.maintainAosSlider();
                               }else{
@@ -429,11 +440,11 @@ export class HeroSearchComponent implements OnInit {
     else
       this.buttonName = "Show";
   }
-  onNavigate(link,pid,pweb,prod_type){
+  onNavigate(link,slug,pid,pweb,prod_type){
 		//for redirect
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
 
-		window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+this.searchData.search.toLowerCase();
+		window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat='+this.searchData.search.toLowerCase();
   }
   clickLoginPopup(){
 		this.showloginPopup = true;
@@ -471,18 +482,26 @@ export class HeroSearchComponent implements OnInit {
 
     filters(form: NgForm){
 
-        this.loadingData = true;
-        this.searchData.productType=form.value.category;
-        this.searchData.search=form.value.search;
-        this.searchData.product_people =form.value.people;
-        this.searchData.product_people =form.value.people;
-        this.searchData.product_gender = form.value.gender;
-        this.searchData.product_ethinicities = form.value.gender;
-        this.searchData.product_locations = form.value.locations;
-        this.searchData.product_colors = form.value.color;
-        this.searchData.product_imagesizes = form.value.image_size;
-        this.searchData.product_imagetypes = form.value.imagetype;
-        this.searchData.product_orientation = form.value.orientation;
+        //this.loadingData = true;
+
+        if(form.value.category==2){
+            this.searchData.productType = form.value.category;
+            this.searchData.search = form.value.search;
+            this.searchData.durationless = this.durvalue;
+            this.searchData.durationgrt = this.durhighValue;
+            this.searchData.searchFilter = this.checkArray;
+        }else {
+            this.searchData.productType = form.value.category;
+            this.searchData.search = form.value.search;
+            this.searchData.product_people = form.value.people;
+            this.searchData.product_gender = form.value.gender;
+            this.searchData.product_ethinicities = form.value.gender;
+            this.searchData.product_locations = form.value.locations;
+            this.searchData.product_colors = form.value.color;
+            this.searchData.product_imagesizes = form.value.image_size;
+            this.searchData.product_imagetypes = form.value.imagetype;
+            this.searchData.product_orientation = form.value.orientation;
+        }
 
         this.searchData.pagenumber = 0;
         //this.searchData.product_sortType = this.sliderSortTypeMenu.join();
@@ -546,7 +565,7 @@ export class HeroSearchComponent implements OnInit {
     //     this.addItems(startIndex, endIndex, 'unshift');
     // }
     onScrollDown() {
-       if(this.pagenumber < this.totalpages){
+       if(this.pagenumber < (this.totalpages-1)){
             this.pagenumber++;
             this.searchData.pagenumber = this.pagenumber ;
             this.heroService.getAosSliderSearchImages(this.searchData)
@@ -583,6 +602,23 @@ export class HeroSearchComponent implements OnInit {
             //
             //     );
 
+        }
+    }
+    //checkArray:any =[{}];
+
+    onCheckboxChange(e,type) {
+
+        if (e.target.checked) {
+            this.checkArray[type].push(e.target.value);
+        } else {
+            let i: number = 0;
+            this.checkArray[type].forEach((item,index) => {
+                if (item == e.target.value) {
+                    this.checkArray[type].splice(index,1);
+                    return;
+                }
+                i++;
+            });
         }
     }
 

@@ -232,9 +232,10 @@ export class HeroService {
             catchError(this.handleError<any>(`unable to resend otp data`))
         );
     }
-	 requestChangePassword(usrData: any): Observable<any> {
+	/*usrData: any,*/
+	 requestChangePassword(mobile: any,user_otp:any,user_password:any,user_rpassword:any): Observable<any> {
         const url = `${this.heroesUrl}requestChangePassword`
-        return this.http.post(url, usrData, this.httpOptions).pipe(
+        return this.http.post(url, {mobile,user_otp,user_password,user_rpassword}, this.httpOptions).pipe(
             map(userInfo => {
                 console.log(userInfo);
                 return userInfo;

@@ -161,10 +161,11 @@ ngOnInit() {
 		//alert ('hi');
     }
 	
-	onNavigate(link,pid,pweb,prod_type,category){
+	onNavigate(link,slug,pid,pweb,prod_type,category){
 		//for redirect
 		//alert(link+pid+'/'+pweb+'/'+prod_type);
-        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
+        //window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
+        window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat='+category.toLowerCase();
   }
 	clickLoginPopup(){
 		this.showloginPopup = true;
@@ -192,9 +193,7 @@ ngOnInit() {
     }
 
     getPrice(api_id,webtype,mainType){
-        console.log(api_id);
-        console.log(webtype);
-        console.log(mainType);
+
         this.heroService.getDetailPagedetails(api_id,webtype,mainType)
             .subscribe(data => {
                 console.log(data);

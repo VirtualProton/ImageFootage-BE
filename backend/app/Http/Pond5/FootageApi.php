@@ -19,6 +19,7 @@ class FootageApi {
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
     public function search($keyword,$getKeyword,$limit=30,$page=0){
+         //print_r($getKeyword); die;
         $serach = $keyword['search'];
         if(isset($keyword['pagenumber'])){
             $page = $keyword['pagenumber'];
@@ -31,6 +32,9 @@ class FootageApi {
         }else{
             $sort = '1' ;
         }
+        if(isset($getKeyword['searchFilter']) && count($getKeyword['searchFilter'])>0){
+
+        }
 
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
@@ -39,7 +43,7 @@ class FootageApi {
         $search_cmd['sb'] = $sort;
         $search_cmd['no'] = $limit;
         $search_cmd['p'] = $page;
-        $search_cmd['col'] = '2047';
+        $search_cmd['col'] = '3071';
         $search_cmd["secret"] = $this->api_secret;
         $search_cmd["key"] =  $this->api_key;
         //print_r($search_cmd); die;
