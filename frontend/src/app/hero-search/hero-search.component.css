@@ -62,7 +62,7 @@ ul.search-result {
 }
 
 .dropdown.dropdown-lg .dropdown-menu{
-    min-width: 550px;
+    min-width: 850px;
 }
 .dropdown-menu{
     box-shadow: 1px 4px 8px -1px #c1c1c1;
@@ -233,3 +233,99 @@ padding-right: 1.1rem;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     font-weight: bold;
  }
+ input:focus {
+  color: #000;
+}
+.input-group > .form-control:focus, .input-group > .custom-select:focus, .input-group > .custom-file .custom-file-input:focus ~ .custom-file-label{
+	color:#000;
+}
+.select-css {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #444;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 100%;
+    max-width: 100%; 
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+.select-css::-ms-expand {
+    display: none;
+}
+.select-css:hover {
+    border-color: #888;
+}
+.select-css:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222; 
+    outline: none;
+}
+.select-css option {
+    font-weight:normal;
+}
+
+ 
+ /* for new search */
+ 
+ 
+/*.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: 2px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+    }
+}
+.form-control{
+	border-bottom: 0px solid gray !important;
+	background:#fff;
+	
+}
+.form-control:active, .form-control:focus{
+	border-bottom: 0px solid gray !important;
+	background:#fff;
+}*/

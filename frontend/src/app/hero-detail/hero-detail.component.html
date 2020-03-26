@@ -3,7 +3,7 @@
 <!--        Loading-->
 <!--        <span></span>-->
 <!--    </div>-->
-    <div class="loader2"><img src="assets/images/loader.gif" width="500px"></div>
+    <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
 <!-- pt-5 -->
 <div class="site-wrap mt-5  bg-dark" *ngIf="webtype==2" appNoRightClick>
@@ -23,15 +23,16 @@
                                 <a  class="d-block " style="text-align: center;">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image" class="img-fluid">
                                 </a>
-                                <span class="pull-right" style="margin-right:154px;font-size: 15px;">{{imagefootId}}</span>
-                            </div>
-
-                            <div class="p-4">
-                                <div style="float: right;margin-right: -71px;font-height:18px;">
+                                <span class="pull-left" style="margin-left:133px;font-size: 15px;">{{imagefootId}}</span>
+                                <div style="float: right;margin-right: 128px;font-height:18px;">
                                  <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
                                  <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="vfound"><i class="fas fa-heart"></i></a>
                                  <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow' *ngIf="!vfound"><i class="fas fa-heart"></i></a>
                                 </div>
+                            </div>
+<div class="clearfix"></div>
+                            <div class="p-4">
+                                
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
                                 <input type="checkbox" id="expend" />
@@ -240,12 +241,12 @@
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7">{{detailPageInfo.metadata.date}}</div>
                             </div>-->
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-4">License type</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7"><p  *ngIf="detailPageInfo.options.extended=='yes' && extendedTab">Extended</p>
                                 <p *ngIf="!extendedTab">Standard</p></div>
-                            </div>
+                            </div>-->
                             <!--<div class="row">
                                 <div class="col-md-3">Release info :</div>
                                 <div class="col-md-9">Not released. More information</div>
@@ -433,7 +434,7 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
 						<!-- p-3 -->
                         <div class="">
-                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}} ( {{detailPageInfo[3]}} )</p>
+                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}} </p>
                             <p class="pl-3">{{detailPageInfo[0].items[0].desc}}</p>
 <!-- data-aos="fade-up" -->
                             <div >
@@ -452,11 +453,8 @@
 <!--&lt;!&ndash;                                            <span class="meta">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->
 <!--                                        </div>-->
 <!--                                    </div>-->
-
-                            </div>
-
-                            <div class="p-3">
-                                <div style="float: right;margin-right:154px;font-height:18px;">
+<span class="pull-left" style="margin-left:133px;font-size: 15px;">{{detailPageInfo[3]}}</span>
+<div style="float: right;margin-right: 128px;font-height:18px;">
                                     <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}" title="Download" style="font-size: 24px;"><i class="fas fa-download"></i></a> &nbsp;&nbsp;
                                    <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
 
@@ -465,6 +463,11 @@
 
 
                                 </div>
+<div class="clearfix"></div>
+                            </div>
+
+                            <div class="p-3">
+                                
                                 <p class="text-white text-uppercase"><strong>Related Keywords</strong></p>
                                 <div class="related_key">
                                 <input type="checkbox" id="expend" />

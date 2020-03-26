@@ -88,6 +88,7 @@ export class HeroSearchComponent implements OnInit {
    fpsValues:any =["23.98","24","25","29.97","30","60","60+"];
     checkArray:any = {'resolution':[],'fps':[],'people':[],'gender':[]};
 
+   public searchStr: string = "";
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -142,7 +143,6 @@ export class HeroSearchComponent implements OnInit {
           if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial'){
               this.category =3;
           }else{
-
               this.category =this.productType;
           }
 
@@ -154,6 +154,9 @@ export class HeroSearchComponent implements OnInit {
               
 
       }
+	  public modelChange(str: string): void {
+    		this.keywordEle = str;
+  	  }
 
       searchDropDownClick(type){
         this.loadingData=true;
@@ -162,7 +165,8 @@ export class HeroSearchComponent implements OnInit {
       }
 
       searchAPIRequest(){
-            this.searchData.product_people =this.slidebarPeopleMenu.join();
+
+            this.searchData.product_people =this.slidebarPeopleMenu.join(); 
             this.searchData.product_gender = this.slidebarGenderMenu.join(); 
             this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
             this.searchData.product_locations = this.slidebarLocationMenu.join();
