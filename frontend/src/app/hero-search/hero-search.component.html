@@ -5,41 +5,160 @@
     <!--    </div>-->
     <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
- <!-- advanched search -->
+
+
+
+
+
+
+
+
+ <!-- advanched search  -->
        <div class="container" style="display:none">
 	<div class="row">
 		<div class="col-md-12">
             <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" />
+                <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>filters</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(myform)">
+                                <input type="hidden" [(ngModel)]="keywordEle" name="serrch" value="{{keywordEle}}" />
                                   <div class="form-group">
-                                    <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>All Snippets</option>
-                                        <option value="1">Featured</option>
-                                        <option value="2">Most popular</option>
-                                        <option value="3">Top rated</option>
-                                        <option value="4">Most commented</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                     <span class="col-md-12" >
+                     	<span class="row" style="margin-top: -20px;">
+                            <span class="col-md-8" >
+                            <select class="form-control select-css" id="category" name="category" style="color:#000;" [(ngModel)]="category">
+                                <option   [selected]="productType == 1" value="1">Images Only</option>
+                               <option [selected]="productType == 2" value="2">Footages Only</option>
+                               <option [selected]="editorial === 'editorial'" value="3" >Editorial</option>
+                            </select>
+                            </span>
+                            <span class="col-md-4">
+                                <span class="pull-right">
+                                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;    background-color: #dfdddd;    border-radius: 5px;
+    border: 1px solid #dfdddd;" >Apply</button>
+                                    <button type="button" class="btn btn-primary" (click)="reset(myform)" style=" background-color: #dfdddd;border-radius: 5px;
+    border: 1px solid #dfdddd;">Clear</button>
+                                 </span>
+                            </span>
+                        </span>
+                      </span>
+                      </div>
+
+                    <div class="row" style="font-size:14px;">
+                    <div class="col-md-6" style="border-right:1px solid #808080;">
+                         <div class="form-group col-md-12">
+                         <label for="category" class="" style="color:#feaa0c;">Gender</label>
+                         &nbsp;
+                         <div class="row">
+                        <span for="category"  *ngFor="let gender of leftsideData.product_gender" class="col-md-4">
+                        	
+                        <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
+                        
+                        </span>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-12" >
+                         <label for="category" class="" style="color:#feaa0c;">Orientations</label>
+                         &nbsp;
+                         <div class="row">
+                        <span for="category"  *ngFor="let orientation of leftsideData.product_orientations" class="col-md-4">
+                        <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
+                        </span>
+                        </div>
+                      </div>
+                      
+                  			<div class="form-group col-md-12" >
+                     <label for="category" class="" style="color:#feaa0c;">Image Types</label>
+                     &nbsp;
+                     <div class="row">
+                    <span for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class="col-md-4">
+                    <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
+                    </span>
+                    </div>
+
+                  </div>
+                       
+                          <div class="form-group col-md-12"  >
+                             <label for="category" class="" style="color:#feaa0c;">Color</label>
+                             &nbsp;
+                             <div class="row">
+                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">
+                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;
+                            </span>
+                            </div>
+
+                          </div>
+                       
+                        
+                        </div>
+                        
+                        <div class="col-md-2">
+
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">People</label>
+                         &nbsp;
+
+                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                        <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>
+                        <div class="col-md-2">
+
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">Locations</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let locations of leftsideData.product_locations"   >
+                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">Ethnicity</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class="">
+                        <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                        </div>
+                         </div>
+                        </div>
+ 
+                   </div>
+                    
+
+                    <div class="row" style="color:#fff;">
+                    	
+                  		<!--<div class="col-md-4">
+                  			<div class="form-group" >
+                     <label for="category" class="" style="color:#feaa0c;">Image Sizes</label><br />
+                     &nbsp;
+                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" >
+                    <input type="radio" name="image_size" value="{{imagesizes.imagesize_id}}" class="" ngModel> {{imagesizes.imagesize_name}}  &nbsp;
+                    </div>
+                  </div>
+                  		</div>-->
+<!--                        <div class="col-md-4">-->
+<!--                  <div class="form-group" style="color:#fff;">-->
+<!--                     <label for="category" class="" >Sort Types</label><br />-->
+<!--                     &nbsp;-->
+<!--                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" >-->
+<!--                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  </div>-->
+                     </div>
+                                
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button (click)="documentEditForm.ngSubmit.emit()"  class="btn btn-primary" style="background: #dfdddd;border: 1px solid #dfdddd;"><span class="fa fa-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
             </div>

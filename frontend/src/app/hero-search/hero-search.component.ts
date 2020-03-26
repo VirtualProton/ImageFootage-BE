@@ -76,6 +76,7 @@ export class HeroSearchComponent implements OnInit {
    perpage:number = 30;
    totalpages:number = 0;
    pagenumber:number =0;
+   public searchStr: string = "";
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -141,6 +142,9 @@ export class HeroSearchComponent implements OnInit {
               
 
       }
+	  public modelChange(str: string): void {
+    		this.keywordEle = str;
+  	  }
 
       searchDropDownClick(type){
         this.loadingData=true;
