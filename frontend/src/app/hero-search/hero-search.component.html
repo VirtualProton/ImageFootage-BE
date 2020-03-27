@@ -6,15 +6,8 @@
     <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
 
-
-
-
-
-
-
-
- <!-- advanched search  -->
-       <div class="container" style="display:none">
+ <!-- advanched search style="display:none" -->
+       <div class="container" >
 	<div class="row">
 		<div class="col-md-12">
             <div class="input-group" id="adv-search">
@@ -48,7 +41,7 @@
                       </span>
                       </div>
 
-                    <div class="row" style="font-size:14px;">
+                    <div class="row" style="font-size:14px;" *ngIf="productType != 2">
                     <div class="col-md-6" style="border-right:1px solid #808080;">
                          <div class="form-group col-md-12">
                          <label for="category" class="" style="color:#feaa0c;">Gender</label>
@@ -132,8 +125,67 @@
  
                    </div>
                     
+					<div class="row" style="font-size:14px;" *ngIf="productType == 2">
+                          <div class="col-md-6" style="border-right:1px solid #808080;">
+                              <div class="form-group col-md-12" >
+                                  <label for="category" class="" style="color:#feaa0c;">Resolution</label>
+                                  &nbsp;
+                                  <div class="row">
+                        <span for="category"  *ngFor="let res of resolutions;" class="col-md-4">
 
-                    <div class="row" style="color:#fff;">
+                        <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
+
+                        </span>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-12" >
+                                  <label for="category" class="" style="color:#feaa0c;">Duration</label>
+                                  &nbsp;
+                                  <div class="row">
+                                      <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
+                                  </div>
+                              </div>
+
+                              <div class="form-group col-md-12" >
+                                  <label for="category" class="" style="color:#feaa0c;">FPS</label>
+                    <div class="row">
+                    <span for="category"  *ngFor="let fps of fpsValues;" class="col-md-4">
+                    <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
+                    </span>
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                          <div class="col-md-2">
+
+                              <div class="form-group"  >
+                                  <label for="category" class="" style="color:#feaa0c;">People</label>
+                                  &nbsp;
+
+                                  <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                                      <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+                          <div class="col-md-2">
+
+                              <div class="form-group"  >
+                                  <label for="category" class="" style="color:#feaa0c;">Gender</label>
+                                  &nbsp;
+                                  <div for="category"  *ngFor="let gender of leftsideData.product_gender"   >
+                                      <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+
+
+
+                      </div>
+                       <div class="row" style="color:#fff;">
                     	
                   		<!--<div class="col-md-4">
                   			<div class="form-group" >
@@ -154,6 +206,7 @@
 <!--                  </div>-->
 <!--                  </div>-->
                      </div>
+                   
                                 
                                 </form>
                             </div>
@@ -167,7 +220,7 @@
 	</div>
 
         
-     <div class="container"  style="position:fixed;z-index:2;">
+     <!--<div class="container"  style="position:fixed;z-index:2;">
       <div class="row">
         <div class="col-lg-9 offset-lg-4 col-sm-8 offset-sm-2 col-12">
 
@@ -349,27 +402,7 @@
 
                       </div>
 
-                    <div class="row" style="color:#fff;">
-                    	
-                  		<!--<div class="col-md-4">
-                  			<div class="form-group" >
-                     <label for="category" class="" style="color:#feaa0c;">Image Sizes</label><br />
-                     &nbsp;
-                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" >
-                    <input type="radio" name="image_size" value="{{imagesizes.imagesize_id}}" class="" ngModel> {{imagesizes.imagesize_name}}  &nbsp;
-                    </div>
-                  </div>
-                  		</div>-->
-<!--                        <div class="col-md-4">-->
-<!--                  <div class="form-group" style="color:#fff;">-->
-<!--                     <label for="category" class="" >Sort Types</label><br />-->
-<!--                     &nbsp;-->
-<!--                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" >-->
-<!--                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  </div>-->
-                     </div>
+                   
 
                   </div>
                 </div>
@@ -383,12 +416,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     
     <!-- end advanced search -->
-<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; /*position: fixed;*/position: fixed; width: 100%;z-index:1;margin-top: 50px;" >
-
-
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; /*position: fixed;*/width: 100%;z-index:1;margin-top: 19px;" >
     <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
         <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVANCE</a></li>
        <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
@@ -744,14 +775,9 @@
         <!-- /#sidebar-wrapper -->
   
 <!-- mt-5 -->
-    <main class="page-content mt-3">
-       
-        <main class="main-content" style='margin-top:60px'>
-       
-        
-
-
-          <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
+    <main class="page-content mt-0">
+        <main class="main-content" style='/*margin-top:60px*/'>
+           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
             <p><small><span style="color:#fcbe11;">{{totalproduct}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10 tags">
