@@ -47,7 +47,7 @@
                          <label for="category" class="" style="color:#feaa0c;">Gender</label>
                          &nbsp;
                          <div class="row">
-                        <span for="category"  *ngFor="let gender of leftsideData.product_gender" class="col-md-4">
+                        <span for="category"  *ngFor="let gender of leftsideData?.product_gender" class="col-md-4">
                         	
                         <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
                         
@@ -164,7 +164,7 @@
                                   <label for="category" class="" style="color:#feaa0c;">People</label>
                                   &nbsp;
 
-                                  <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                                  <div for="category"  *ngFor="let peoples of leftsideData?.product_peoples"   >
                                       <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
                                   </div>
 
@@ -175,7 +175,7 @@
                               <div class="form-group"  >
                                   <label for="category" class="" style="color:#feaa0c;">Gender</label>
                                   &nbsp;
-                                  <div for="category"  *ngFor="let gender of leftsideData.product_gender"   >
+                                  <div for="category"  *ngFor="let gender of leftsideData?.product_gender"   >
                                       <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
                                   </div>
 
@@ -778,7 +778,7 @@
     <main class="page-content mt-0">
         <main class="main-content" style='/*margin-top:60px*/'>
            <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small><span style="color:#fcbe11;">{{totalproduct}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
+            <p><small><span style="color:#fcbe11;">{{totalproduct.toLocaleString()}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10 tags">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
@@ -821,6 +821,7 @@
 <div class="gallery" id="gallery">
   <!-- Grid column -->
   <div class="mb-3 pics animation all 2 imgg" *ngFor="let aosimges of aoslSliderImages; let i = index;">
+    <span *ngIf="editorial === 'editorial'" style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;">Editorial</span>
     <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
     <div class="photo-text-more forimgic" >
                          
