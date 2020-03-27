@@ -166,18 +166,24 @@ export class HeroSearchComponent implements OnInit {
 
       searchAPIRequest(){
 
-            this.searchData.product_people =this.slidebarPeopleMenu.join(); 
-            this.searchData.product_gender = this.slidebarGenderMenu.join(); 
-            this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
-            this.searchData.product_locations = this.slidebarLocationMenu.join();
-            this.searchData.product_colors = this.slidebarColorMenu.join();
-            this.searchData.product_imagesizes = this.slidebarImageSizeMenu.join();
-            this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
-            this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
-            this.searchData.product_sortType = this.sliderSortTypeMenu.join();
-            if(this.editorial!=''){
-            this.searchData.product_editorial ='editorial' ;
-            }
+          if(this.productType==2){
+              this.searchData.durationless = this.durvalue;
+              this.searchData.durationgrt = this.durhighValue;
+              this.searchData.searchFilter = this.checkArray;
+          }else {
+              this.searchData.product_people = this.slidebarPeopleMenu.join();
+              this.searchData.product_gender = this.slidebarGenderMenu.join();
+              this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
+              this.searchData.product_locations = this.slidebarLocationMenu.join();
+              this.searchData.product_colors = this.slidebarColorMenu.join();
+              this.searchData.product_imagesizes = this.slidebarImageSizeMenu.join();
+              this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
+              this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
+              this.searchData.product_sortType = this.sliderSortTypeMenu.join();
+              if (this.editorial != '') {
+                  this.searchData.product_editorial = 'editorial';
+              }
+          }
             if(this.pagenumber!=0){
                   this.searchData.pagenumber =this.pagenumber ;
             }
@@ -486,7 +492,7 @@ export class HeroSearchComponent implements OnInit {
 
     filters(form: NgForm){
 
-        //this.loadingData = true;
+        this.loadingData = true;
 
         if(form.value.category==2){
             this.searchData.productType = form.value.category;

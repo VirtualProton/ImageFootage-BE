@@ -32,13 +32,62 @@ class FootageApi {
         }else{
             $sort = '1' ;
         }
+        $filters ='';
         if(isset($getKeyword['searchFilter']) && count($getKeyword['searchFilter'])>0){
+            if(count($getKeyword['searchFilter']['fps'])>0){
+                foreach($getKeyword['searchFilter']['fps'] as $perfps){
+                    if($perfps=='60+'){
+                        $filters .= ' fpsgt:'.$perfps;
+                    }else{
+                        $filters .= ' fps:'.$perfps;
+                    }
 
+                }
+            }
+            if(count($getKeyword['searchFilter']['people'])>0){
+                foreach($getKeyword['searchFilter']['people'] as $perpeople){
+                    if($perpeople=='6'){
+                        $filters .= ' people:0';
+                    }elseif($perpeople!='6' && $perpeople>3 ){
+                        $filters .= ' people:3';
+                    }else{
+                        $filters .= ' people:'.$perpeople;
+                    }
+                }
+            }
+            if(count($getKeyword['searchFilter']['gender'])>0){
+                foreach($getKeyword['searchFilter']['gender'] as $pergender){
+                    if($pergender=='4'){
+                        $filters .= ' gender:3';
+                    }else if($pergender=='1'){
+                        $filters .= ' gender:2';
+                    }elseif($pergender=='2'){
+                        $filters .= ' gender:1';
+                    }else{
+                        $filters .= ' gender:3';
+                    }
+                }
+            }
+
+            if(count($getKeyword['searchFilter']['resolution'])>0){
+                $array  = array("8K"=>"5K+","4K"=>"4K","HD1080"=>"HD(1080)","HD720"=>"HD(720)","2K"=>"2K","SD"=>"SD");
+                $rs =[];
+                foreach($getKeyword['searchFilter']['resolution'] as $resoulution){
+                     $resolutionkey = array_search($resoulution,$array);
+                     array_push($rs,$resolutionkey);
+                }
+                $all = implode(":",$rs);
+                $filters .= " resolutions:".$all;
+            }
+            if($getKeyword['durationless']!=0 && $getKeyword['durationgrt']!=2) {
+                $filters .= " durationgt:" . $getKeyword['durationless'];
+                $filters .= " durationlt:" . $getKeyword['durationgrt'];
+            }
         }
 
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
-        $search_cmd['query'] = $serach;
+        $search_cmd['query'] = $filters.' '.$serach;
         $search_cmd['bm'] = '4095';
         $search_cmd['sb'] = $sort;
         $search_cmd['no'] = $limit;
