@@ -778,7 +778,7 @@
     <main class="page-content mt-0">
         <main class="main-content" style='/*margin-top:60px*/'>
            <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small><span style="color:#fcbe11;">{{totalproduct.toLocaleString()}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
+            <p><small><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
             <span class="f-12">Related:</span> 
             <span class="related_key mt-10 tags">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
