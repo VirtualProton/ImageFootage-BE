@@ -282,7 +282,7 @@ padding-right: 1.1rem;
  /* for new search */
  
  
-/*.dropdown.dropdown-lg .dropdown-menu {
+.dropdown.dropdown-lg .dropdown-menu {
     margin-top: 2px;
     padding: 6px 20px;
 }
@@ -328,4 +328,4 @@ padding-right: 1.1rem;
 .form-control:active, .form-control:focus{
 	border-bottom: 0px solid gray !important;
 	background:#fff;
-}*/
+}
