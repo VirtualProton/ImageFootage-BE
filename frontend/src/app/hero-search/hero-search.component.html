@@ -17,8 +17,8 @@
                         <div class="dropdown dropdown-lg">
                             <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>filters</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(myform)">
-                                <input type="hidden" [(ngModel)]="keywordEle" name="serrch" value="{{keywordEle}}" />
+                                <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
+                                <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
                      <span class="col-md-12" >
                      	<span class="row" style="margin-top: -20px;">
