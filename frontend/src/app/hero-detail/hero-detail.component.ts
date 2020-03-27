@@ -384,11 +384,12 @@ export class HeroDetailComponent implements OnInit {
        // return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
 	   return 'col-6 col-md-3 col-lg-3';
     }
-    onNavigate(link,pid,pweb,prod_type){
+    onNavigate(link,slug,pid,pweb,prod_type){
         //for redirect
         //alert(link+pid+'/'+pweb+'/'+prod_type);
         let category = this.category;
-        window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
+       // window.location.href=link+pid+'/'+pweb+'/'+prod_type.toLowerCase()+'?cat='+category.toLowerCase();
+        window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat='+category.toLowerCase();
     }
 
     download(productinfo,cartproduct,total,extended,type,pricecontent){
