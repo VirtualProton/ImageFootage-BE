@@ -42,6 +42,14 @@
                       </div>
 
                     <div class="row" style="font-size:14px;" *ngIf="productType != 2">
+                    <!--<div class="col-sm-6">
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSummer" value="summer" checked> Summer </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonWinter" value="winter"> Winter </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall  Spring Fall </label>
+        </div>-->
                     <div class="col-md-6" style="border-right:1px solid #808080;">
                          <div class="form-group col-md-12">
                          <label for="category" class="" style="color:#feaa0c;">Gender</label>
@@ -88,8 +96,27 @@
                        
                         
                         </div>
+                        <div class="col-md-6">
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#feaa0c;">Ethnicity</label><br />
+                        	<label class="radio-inline" for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities">
+                            <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                         <label for="category" class="" style="color:#feaa0c;">People</label><br />
+                         <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData.product_peoples">
+                          <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                         </label>
+                        </div>
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#feaa0c;">Locations</label><br />
+                        <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData.product_locations">
+                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                        </label>
+                        </div>
                         
-                        <div class="col-md-2">
+                        <!--<div class="col-md-2">
 
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">People</label>
@@ -100,8 +127,8 @@
                         </div>
 
                       </div>
-                        </div>
-                        <div class="col-md-2">
+                        </div>-->
+                        <!--<div class="col-md-2">
 
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">Locations</label>
@@ -111,9 +138,9 @@
                         </div>
 
                       </div>
-                        </div>
+                        </div>-->
                         
-                        <div class="col-md-2">
+                        <!--<div class="col-md-2">
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">Ethnicity</label>
                          &nbsp;
@@ -121,6 +148,7 @@
                         <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
                         </div>
                          </div>
+                        </div>-->
                         </div>
  
                    </div>
