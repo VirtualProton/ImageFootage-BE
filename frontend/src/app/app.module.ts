@@ -56,6 +56,7 @@ import { NgMasonryGridModule } from 'ng-masonry-grid';
 import {MatExpansionModule} from '@angular/material/expansion';
 //import { MasonryLayoutComponent } from 'ngx-masonry-layout';
 import { Ng5SliderModule } from 'ng5-slider';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 // Configs 
 export function getAuthServiceConfigs() {
@@ -99,7 +100,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	NgMasonryGridModule,
     InfiniteScrollModule,
 	MatExpansionModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    ColorPickerModule
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
