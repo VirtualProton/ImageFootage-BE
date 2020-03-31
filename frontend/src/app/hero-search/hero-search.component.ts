@@ -86,9 +86,11 @@ export class HeroSearchComponent implements OnInit {
         step: 0.01,
     };
    fpsValues:any =["23.98","24","25","29.97","30","60","60+"];
-    checkArray:any = {'resolution':[],'fps':[],'people':[],'gender':[]};
+   checkArray:any = {'resolution':[],'fps':[],'people':[],'gender':[]};
+   color:any = ' Pick Color';
 
    public searchStr: string = "";
+
 
   constructor(private heroService: HeroService,
     private route: ActivatedRoute,
@@ -175,7 +177,8 @@ export class HeroSearchComponent implements OnInit {
               this.searchData.product_gender = this.slidebarGenderMenu.join();
               this.searchData.product_ethinicities = this.slidebarEthnicityMenu.join();
               this.searchData.product_locations = this.slidebarLocationMenu.join();
-              this.searchData.product_colors = this.slidebarColorMenu.join();
+              //this.searchData.product_colors = this.slidebarColorMenu.join();
+              this.searchData.product_colors = this.color;
               this.searchData.product_imagesizes = this.slidebarImageSizeMenu.join();
               this.searchData.product_imagetypes = this.slidebarImageTypeMenu.join();
               this.searchData.product_orientation = this.slidebarOrientationsMenu.join();
@@ -505,12 +508,13 @@ export class HeroSearchComponent implements OnInit {
             this.searchData.search = form.value.search;
             this.searchData.product_people = form.value.people;
             this.searchData.product_gender = form.value.gender;
-            this.searchData.product_ethinicities = form.value.gender;
+            this.searchData.product_ethinicities = form.value.ethinicity;
             this.searchData.product_locations = form.value.locations;
-            this.searchData.product_colors = form.value.color;
+            this.searchData.product_colors = this.color;
             this.searchData.product_imagesizes = form.value.image_size;
             this.searchData.product_imagetypes = form.value.imagetype;
             this.searchData.product_orientation = form.value.orientation;
+            this.searchData.tolerance = form.value.tolerance;
         }
 
         this.searchData.pagenumber = 0;
@@ -523,6 +527,9 @@ export class HeroSearchComponent implements OnInit {
                     //}else {
                     this.loadingData = false;
                     if(aoslSliderImages.imgfootage.length !=0) {
+                        this.totalproduct = aoslSliderImages.total;
+                        this.perpage = aoslSliderImages.perpage;
+                        this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
                         this.aoslSliderImages = aoslSliderImages.imgfootage;
                         let type = this.aoslSliderImages["0"].product_keywords;
                         this.keyword = type.split(',', 9);

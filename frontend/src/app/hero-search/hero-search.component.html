@@ -10,7 +10,7 @@
        <div class="container" >
 	<div class="row">
 		<div class="col-md-12">
-            <div class="input-group" id="adv-search">
+            <div class="input-group" id="adv-search" style="margin-top: 66px;">
                 <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -42,7 +42,50 @@
                       </div>
 
                     <div class="row" style="font-size:14px;" *ngIf="productType != 2">
+                    <!--<div class="col-sm-6">
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSummer" value="summer" checked> Summer </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonWinter" value="winter"> Winter </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall  Spring Fall </label>
+        </div>-->
                     <div class="col-md-6" style="border-right:1px solid #808080;">
+                        <div class="form-group col-md-12"  >
+                            <label for="category" class="" style="color:#feaa0c;">Color</label>
+                            &nbsp;
+                            <div class="row">
+                                <input name="color" [value]="color"
+                                       [style.background]="color"
+                                       [cpOKButton]="true"
+                                       [cpSaveClickOutside]="false"
+                                       [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+                                       [(colorPicker)]="color"/>
+                                <!--                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">-->
+                                <!--                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;-->
+                                <!--                            </span>-->
+
+                            </div>
+
+                        </div>
+                        <div class="form-group col-md-12"  >
+                            <label for="category" class="" style="color:#feaa0c;">Color Tolerance</label>
+                            &nbsp;
+                            <div class="row">
+                                 <span for="category"   class="col-md-5">
+                                      <input type="radio" name="tolerance" value="2" class="" [checked]="true"  ngModel> Exact (less results)
+                                 </span>
+                                <span for="category"   class="col-md-5">
+                                      <input type="radio" name="tolerance" value="9" class="" ngModel> Approx (more results)
+                                 </span>
+                                <span for="category"   class="col-md-3">
+                                      <input type="radio" name="tolerance" value="5" class="" ngModel> Standard
+                                 </span>
+
+
+                            </div>
+
+                        </div>
                          <div class="form-group col-md-12">
                          <label for="category" class="" style="color:#feaa0c;">Gender</label>
                          &nbsp;
@@ -58,7 +101,7 @@
                          <label for="category" class="" style="color:#feaa0c;">Orientations</label>
                          &nbsp;
                          <div class="row">
-                        <span for="category"  *ngFor="let orientation of leftsideData.product_orientations" class="col-md-4">
+                        <span for="category"  *ngFor="let orientation of leftsideData?.product_orientations" class="col-md-4">
                         <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
                         </span>
                         </div>
@@ -68,28 +111,38 @@
                      <label for="category" class="" style="color:#feaa0c;">Image Types</label>
                      &nbsp;
                      <div class="row">
-                    <span for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class="col-md-4">
+                    <span for="category"  *ngFor="let imageTypes of leftsideData?.product_imagetypes" class="col-md-4">
                     <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
                     </span>
                     </div>
 
                   </div>
                        
-                          <div class="form-group col-md-12"  >
-                             <label for="category" class="" style="color:#feaa0c;">Color</label>
-                             &nbsp;
-                             <div class="row">
-                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">
-                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;
-                            </span>
-                            </div>
 
-                          </div>
                        
                         
                         </div>
+                        <div class="col-md-6">
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#feaa0c;">Ethnicity</label><br />
+                        	<label class="radio-inline" for="category"  *ngFor="let ethinicities of leftsideData?.product_ethinicities">
+                            <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                         <label for="category" class="" style="color:#feaa0c;">People</label><br />
+                         <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
+                          <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                         </label>
+                        </div>
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#feaa0c;">Locations</label><br />
+                        <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData?.product_locations">
+                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                        </label>
+                        </div>
                         
-                        <div class="col-md-2">
+                        <!--<div class="col-md-2">
 
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">People</label>
@@ -100,8 +153,8 @@
                         </div>
 
                       </div>
-                        </div>
-                        <div class="col-md-2">
+                        </div>-->
+                        <!--<div class="col-md-2">
 
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">Locations</label>
@@ -111,9 +164,9 @@
                         </div>
 
                       </div>
-                        </div>
+                        </div>-->
                         
-                        <div class="col-md-2">
+                        <!--<div class="col-md-2">
                         <div class="form-group" >
                          <label for="category" class="" style="color:#feaa0c;">Ethnicity</label>
                          &nbsp;
@@ -121,6 +174,7 @@
                         <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
                         </div>
                          </div>
+                        </div>-->
                         </div>
  
                    </div>
@@ -139,7 +193,7 @@
                                   </div>
                               </div>
                               <div class="form-group col-md-12" >
-                                  <label for="category" class="" style="color:#feaa0c;">Duration</label>
+                                  <label for="category" class="" style="color:#feaa0c;">Duration (In minutes)</label>
                                   &nbsp;
                                   <div class="row">
                                       <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
@@ -895,9 +949,12 @@
                   [infiniteScrollThrottle]="2000"
                   (scrolled)="onScrollDown()"
                   (scrolledUp)="onScrollUp()">
-                <div *ngIf="totalproduct>30">
+                <div *ngIf="totalproduct>30 && totalproduct!=aoslSliderImages.length">
                     Loading...
                     <span></span>
+                </div>
+                <div *ngIf="totalproduct==aoslSliderImages.length">
+                    That's All
                 </div>
             </div>
 

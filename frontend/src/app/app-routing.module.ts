@@ -23,6 +23,7 @@ import { FailOrderComponent } from './fail-order/fail-order.component';
 import { ChangeResetPasswordComponent } from './change-reset-password/change-reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProductPricingComponent } from './product-pricing/product-pricing.component';
+import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component'
 
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'resetpassword/:otp/:email', component: ChangeResetPasswordComponent },
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'product-pricing', component: ProductPricingComponent },
+  { path: 'footage-license', component: FootageLicenceAgreementComponent },
 
 ];
 

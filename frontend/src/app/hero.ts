@@ -34,6 +34,7 @@ export class Search{
   durationless:any;
   durationgrt:any;
   searchFilter:any;
+  tolerance:any;
 }
 
 export class aosSlider{

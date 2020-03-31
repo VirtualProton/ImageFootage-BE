@@ -80,8 +80,10 @@ class FootageApi {
                 $filters .= " resolutions:".$all;
             }
             if($getKeyword['durationless']!=0 && $getKeyword['durationgrt']!=2) {
-                $filters .= " durationgt:" . $getKeyword['durationless'];
-                $filters .= " durationlt:" . $getKeyword['durationgrt'];
+                 $start = explode('.',$getKeyword['durationless']);
+                 $end = explode('.',$getKeyword['durationgrt']);
+                $filters .= " durationgt:" .(($start[0]*60) + $start[1]);
+                $filters .= " durationlt:" .(($end[0]*60) + $end[1]);
             }
         }
 

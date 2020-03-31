@@ -128,10 +128,18 @@ class ImageApi {
          $count = count($locations);
          $location_filter = $locations[$count-1];
      }
+     $color_filter ='';
      if(isset($getKeyword['product_colors']) && !empty($getKeyword['product_colors'])){
-         $colors = explode(',',$getKeyword['product_colors']);
-         $count = count($colors);
-         $color_filter = $colors[$count-1];
+         //$colors = explode(',',$getKeyword['product_colors']);
+         //$count = count($colors);
+         //$color_filter = $colors[$count-1];
+         if(trim($getKeyword['product_colors']) != 'Pick Color') {
+             $color_filter = "color:".strtoupper(str_replace('#','',$getKeyword['product_colors'])).';';
+         }
+     }
+     $tolerance='';
+     if(isset($getKeyword['tolerance']) && !empty($getKeyword['tolerance'])){
+         $tolerance = "color_tolerance:".$getKeyword['tolerance'].';';
      }
      if(isset($getKeyword['product_imagetypes']) && !empty($getKeyword['product_imagetypes'])){
          $types = explode(',',$getKeyword['product_imagetypes']);
@@ -178,7 +186,7 @@ class ImageApi {
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                'filters'=> $sort.'type: photos;'.$product_filter_data.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data.$liencence_filter_data
+                'filters'=> $sort.'type: photos;'.$product_filter_data.$color_filter.$tolerance.$gender_filter_data.$ethinicities_filter_data.$orientation_filter_data.$liencence_filter_data
             ]
         ]);
        

@@ -57,6 +57,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 //import { MasonryLayoutComponent } from 'ngx-masonry-layout';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component';
 
 // Configs 
 export function getAuthServiceConfigs() {
@@ -139,7 +140,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangePasswordComponent,
     ProductPricingComponent,
     NoRightClickDirective,
-    ScrollComponent
+    ScrollComponent,
+    FootageLicenceAgreementComponent
     /*,
 	MasonryLayoutComponent*/
 
