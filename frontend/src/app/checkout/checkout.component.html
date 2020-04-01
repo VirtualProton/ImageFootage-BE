@@ -200,12 +200,12 @@
                             <tr class="f-20">
                                 <td colspan="2"></td>
                                 <td align="right"><strong>Taxes</strong></td>
-                                <td align="right"><strong>10.00 INR</strong></td>
+                                <td align="right"><strong>{{showTax()}} INR</strong></td>
                             </tr>
                             <tr class="f-16">
                                 <td colspan="2"></td>
                                 <td align="right"><strong>BALANCE DUE</strong></td>
-                                <td align="right"><strong>{{showTotalPrice() + 10 }} INR</strong></td>
+                                <td align="right"><strong>{{showTotalPrice() + showTax() }} INR</strong></td>
                             </tr>
                             </tfoot>
                         </table>

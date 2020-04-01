@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit {
   state:string='';
   country:string='';
   postal_code:string='';
+  totalPrice:number=0;
   payuForm: FormGroup;
   hash:any='';
   public currentUser: any;
@@ -104,10 +105,10 @@ export class CheckoutComponent implements OnInit {
 		  this.firstname=data.data.first_name;
 		  this.lastname=data.data.last_name;
 		  this.address=data.data.address;
-		  this.city=data.data.city;
-		  this.state=data.data.state;
 		  this.country=data.data.country;
-		  this.postal_code=data.data.postal_code;
+          this.state=data.data.state;
+          this.city=data.data.city;
+          this.postal_code=data.data.postal_code;
       });
   }
     get f() { return this.checkoutForm.controls; }
@@ -197,10 +198,12 @@ export class CheckoutComponent implements OnInit {
         window.scrollTo(0, 0)
     }
     showTotalPrice(){
-
-    return this.priceArray.reduce(function(acc, val) { return acc + val; }, 0);
-  }
-
+        this.totalPrice = this.priceArray.reduce(function(acc, val) { return acc + val; }, 0);
+        return  this.totalPrice;
+    }
+    showTax() {
+        return this.totalPrice*12/100;
+    }
   goToWishList(){
     this.router.navigate(['/cart']);
   }

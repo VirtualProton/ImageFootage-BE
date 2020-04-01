@@ -40,7 +40,7 @@ class FrontuserController extends Controller {
                 $Usercart->extended_price= ($request['product']['extended'])?$request['product']['extended']['price']:'0';
                 $Usercart->total= $request['product']['total'];
                 $Usercart->product_name= $request['product']['product_info']['metadata']['title'];
-                $Usercart->product_thumb= str_replace('http','https',$request['product']['product_info']['media']['thumb_170_url']);
+                $Usercart->product_thumb= $request['product']['product_info']['media']['thumb_170_url'];
                 $Usercart->product_desc= $request['product']['product_info']['metadata']['description'];
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_json= json_encode($request['product']['product_info']);
@@ -102,7 +102,7 @@ class FrontuserController extends Controller {
         $id = $request['product']['cart_id'];
 		$del_result=Usercart::find($id)->delete();
 		if($del_result){
-			echo '{"status":"1","message":"Cart itom deleted successfully"}';
+			echo '{"status":"1","message":"Cart item deleted successfully"}';
 		}else{
 			echo '{"status":"0","message":"Some problem occured."}';
 		}
@@ -140,7 +140,7 @@ class FrontuserController extends Controller {
 	public function deleteWishlistItem(Request $request){
         $del_result=UserWishlist::where('wishlist_user_id',$request['tokenData']['Utype'])->where('wishlist_product',$request['product']['id'])->delete();
 		if($del_result){
-			echo '{"status":"1","message":"Wishlist itom deleted successfully"}';
+			echo '{"status":"1","message":"Wishlist item deleted successfully"}';
 		}else{
 			echo '{"status":"0","message":"Some problem occured."}';
 		}

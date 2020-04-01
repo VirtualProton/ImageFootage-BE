@@ -77,8 +77,8 @@
                  <div class="col-md-8 col-sm-8 col-lg-8">
                   <ul class="list-unstyled text-right text-black f-18 text-black">
                     <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">{{showTotalPrice()}} INR</span></li>
-                    <li class="pb-5 fw-6 ">Taxes <span class="d-inline-block w-100px">10.00 INR</span></li>
-                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">{{showTotalPrice() + 10}} INR</span></li>
+                    <li class="pb-5 fw-6 ">Taxes <span class="d-inline-block w-100px">{{showTax()}} INR</span></li>
+                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">{{showTotalPrice() + showTax()}} INR</span></li>
                   </ul>
                   </div>
                   </div>

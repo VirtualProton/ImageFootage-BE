@@ -236,6 +236,7 @@ class Product extends Model
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             ->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
                 'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
+             ->where('pr.updated_at', '>=','2020-04-01')
             ->inRandomOrder()
             ->limit(Product::HomeLimit)
             ->get()

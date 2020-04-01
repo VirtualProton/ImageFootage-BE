@@ -52,7 +52,7 @@ class CronController extends Controller
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
         DB::enableQueryLog();
-        $products = Product::where('product_web','=','2')->whereRaw("date(updated_at) = '2020-03-01'")->get()->toArray();
+        $products = Product::where('product_web','=','2')->whereRaw("date(updated_at) < '2020-04-01'")->get()->toArray();
         //dd(DB::getQueryLog());
        // print_r($products); die;
         foreach($products as $perproduct){

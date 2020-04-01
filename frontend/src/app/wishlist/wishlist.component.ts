@@ -17,6 +17,7 @@ export class WishlistComponent implements OnInit {
     priceArray: any = [];
     loadingData:boolean=false;
     promocodeflag:boolean=false;
+    totalPrice:number =0;
     public currentUser: any;
     constructor(private heroService: HeroService, private authenticationService: HeroService, private router: Router,private spinner: NgxSpinnerService) {
         this.authenticationService.currentUser.subscribe(x => {
@@ -30,8 +31,14 @@ export class WishlistComponent implements OnInit {
 
     ngOnInit() {
         //this.spinner.show();
-        this.loadingData = true;
+
         // console.log(localStorage.getItem('checkoutAray'));
+        this.loadingData = true;
+        this.loadcart();
+
+    }
+    loadcart(){
+
         this.authenticationService.getcartItemsData()
             .subscribe(
                 data => {
@@ -45,13 +52,16 @@ export class WishlistComponent implements OnInit {
                 error => {
 
                 });
-
     }
 
     showTotalPrice() {
-        return this.priceArray.reduce(function (acc, val) {
+        this.totalPrice = this.priceArray.reduce(function (acc, val) {
             return acc + val;
         }, 0);
+        return this.totalPrice;
+    }
+    showTax() {
+        return this.totalPrice*12/100;
     }
 
     redirectToCheckout() {
@@ -99,17 +109,22 @@ export class WishlistComponent implements OnInit {
         this.heroService.addWishListItemsData(productinfo.cart_product_id)
             .subscribe(data => {
                 if(data["status"]=='1'){
-                    this.loadingData =false;
+
                     this.heroService.removeCartItemsData(productinfo)
                         .subscribe(data => {
                             if (data["status"] == '1') {
+                                this.loadcart();
+                                this.loadingData =false;
+                                alert("Sucessfully moved to wishlist");
                                 this.priceArray=[];
+
                            } else {
                                 alert(data["message"]);
                             }
 
                         });
-                    this.router.navigate(['/wishlist']);
+
+                   // this.router.navigate(['/wishlist']);
                 }else{
                     this.loadingData =false;
                     alert(data["message"]);
