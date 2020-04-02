@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef ,Renderer2 } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
@@ -97,7 +97,7 @@ export class HeroSearchComponent implements OnInit {
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
 	private router: Router,
-    private spinner: NgxSpinnerService,private authenticationService: HeroService) {
+    private spinner: NgxSpinnerService,private authenticationService: HeroService,private renderer: Renderer2) {
     this.searchData = new Search();
 	this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
@@ -153,8 +153,10 @@ export class HeroSearchComponent implements OnInit {
                       // this.carouselSliderImages = carouselSliderImages; 
                         this.leftsideData = leftsideData;
                     });
-              
-
+            
+		if(this.productType == 2){
+			this.renderer.addClass(document.body, 'body_background');
+		}
       }
 	  public modelChange(str: string): void {
     		this.keywordEle = str;
