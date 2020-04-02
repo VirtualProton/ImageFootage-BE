@@ -26,7 +26,8 @@
                             <select class="form-control select-css" id="category" name="category" style="color:#000;" [(ngModel)]="category">
                                 <option   [selected]="productType == 1" value="1">Images Only</option>
                                <option [selected]="productType == 2" value="2">Footages Only</option>
-                               <option [selected]="editorial === 'editorial'" value="3" >Editorial</option>
+                               <option [selected]="editorial === 'editorial' && productType==1" value="3" >Editorial Images</option>
+                               <option [selected]="editorial === 'editorial' && productType==2 " value="4" >Editorial Footages</option>
                             </select>
                             </span>
                             <span class="col-md-4">

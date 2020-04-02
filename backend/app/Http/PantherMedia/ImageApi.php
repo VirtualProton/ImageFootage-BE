@@ -3,6 +3,7 @@ namespace App\Http\PantherMedia;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
 
 use GuzzleHttp\Client;
 class ImageApi {
@@ -168,6 +169,7 @@ class ImageApi {
 
     $this->access_key = $this->getAccessKey();
       // echo $this->access_key; die;
+      try{
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post('http://rest.panthermedia.net/search', [
             'headers'=>[
@@ -196,7 +198,12 @@ class ImageApi {
             return $contents;
 
         }
- }
+     }catch (BadResponseException $ex) {
+          $response = $ex->getResponse();
+          $jsonBody = (string) $response->getBody();
+          print_r($jsonBody); die;
+         }
+      }
 
  public function get_media_info($media_id){
         $this->access_key = $this->getAccessKey();

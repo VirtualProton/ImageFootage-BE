@@ -142,8 +142,10 @@ export class HeroSearchComponent implements OnInit {
 
                       this.searchAPIRequest();
                     });
-          if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial'){
+          if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==1){
               this.category =3;
+          }else if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==2){
+              this.category =4;
           }else{
               this.category =this.productType;
           }
@@ -172,6 +174,9 @@ export class HeroSearchComponent implements OnInit {
               this.searchData.durationless = this.durvalue;
               this.searchData.durationgrt = this.durhighValue;
               this.searchData.searchFilter = this.checkArray;
+              if (this.editorial != '') {
+                  this.searchData.product_editorial = 'editorial';
+              }
           }else {
               this.searchData.product_people = this.slidebarPeopleMenu.join();
               this.searchData.product_gender = this.slidebarGenderMenu.join();

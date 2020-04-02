@@ -21,6 +21,8 @@ class FootageApi {
     public function search($keyword,$getKeyword,$limit=30,$page=0){
          //print_r($getKeyword); die;
         $serach = $keyword['search'];
+        $editorial = 0;
+        $bittotal = 0;
         if(isset($keyword['pagenumber'])){
             $page = $keyword['pagenumber'];
         }
@@ -71,9 +73,13 @@ class FootageApi {
 
             if(count($getKeyword['searchFilter']['resolution'])>0){
                 $array  = array("8K"=>"5K+","4K"=>"4K","HD1080"=>"HD(1080)","HD720"=>"HD(720)","2K"=>"2K","SD"=>"SD");
+                $bitmak  = array("16515087"=>"5K+","262144"=>"4K","1048576"=>"HD(1080)","2097152"=>"HD(720)","0"=>"2K","0"=>"SD");
                 $rs =[];
+
                 foreach($getKeyword['searchFilter']['resolution'] as $resoulution){
                      $resolutionkey = array_search($resoulution,$array);
+                     $bit = array_search($resoulution,$bitmak);
+                     $bittotal = $bittotal+$bit;
                      array_push($rs,$resolutionkey);
                 }
                 $all = implode(":",$rs);
@@ -85,16 +91,21 @@ class FootageApi {
                 $filters .= " durationgt:" .(($start[0]*60) + $start[1]);
                 $filters .= " durationlt:" .(($end[0]*60) + $end[1]);
             }
+            if(isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial'])){
+                $editorial = 1;
+            }
         }
 
+        //echo $bittotal; die;
         $search_cmd= array();
         //$search_cmd['command'] = 'search';
         $search_cmd['query'] = $filters.' '.$serach;
-        $search_cmd['bm'] = '4095';
+        $search_cmd['bm'] = ($bittotal!=0)?$bittotal:'2063';
         $search_cmd['sb'] = $sort;
         $search_cmd['no'] = $limit;
         $search_cmd['p'] = $page;
         $search_cmd['col'] = '3071';
+        $search_cmd['editorial'] = $editorial;
         $search_cmd["secret"] = $this->api_secret;
         $search_cmd["key"] =  $this->api_key;
         //print_r($search_cmd); die;

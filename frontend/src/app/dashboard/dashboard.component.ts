@@ -108,13 +108,16 @@ ngOnInit() {
   }
   searchAosData(search){
     // debounceTime(400),
-    if(search.trim().length > 2){
+    //if(search.trim().length > 2){
+      console.log(this.searchBoxLabel);
         if(this.searchBoxLabel==3){
             this.router.navigate(['/search'], { queryParams: { type: 1,keyword:search.trim(),cat:'editorial' } });
+        }else if(this.searchBoxLabel==4){
+          this.router.navigate(['/search'], { queryParams: { type: 2,keyword:search.trim(),cat:'editorial' } });
         }else{
             this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
         }
-    }
+    //}
   }
 
   onPageChange = (pageNumber) => {
