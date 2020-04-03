@@ -847,7 +847,7 @@ body{
   
 <!-- mt-5 -->
     <main class="page-content mt-0">
-        <main class="main-content" style='/*margin-top:60px*/'>
+        <main class="main-content" style='/*margin-top:60px*/' *ngIf="totalproduct>0">
            <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors" 
            bind-style.background = "productType == 2 ? '#fff' : '#000'">
             <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>

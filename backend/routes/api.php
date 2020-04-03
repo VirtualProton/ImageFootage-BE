@@ -68,6 +68,8 @@ Route::group([
 	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
 	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
+    Route::post('atomPayInvoiceResponse', 'PaymentController@atomPayInvoiceResponse');
+
 	
 
 

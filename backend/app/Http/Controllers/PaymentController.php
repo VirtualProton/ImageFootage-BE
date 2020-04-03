@@ -18,6 +18,7 @@ use CORS;
 use Payumoney;
 
 
+
 class PaymentController extends Controller
 {
     /**
@@ -402,6 +403,59 @@ class PaymentController extends Controller
         } else {
             echo "Invalid Signature";
         }
+
+    }
+
+    public function atomPayInvoiceResponse(){
+        $transactionResponse = new TransactionResponse();
+        $transactionResponse->setRespHashKey("KEYRESP123657234");
+        if($transactionResponse->validateResponse($_POST)){
+            //echo "Transaction Processed <br/>";
+            // print_r($_POST);die;
+            if(count($_POST)>0){
+                if($_POST['f_code']=='Ok'){
+                    DB::table('imagefootage_performa_invoices')->where('invoice_name',$_POST['mer_txn'])
+                        ->update(['payment_mode'=>$_POST['discriminator'],
+                            'payment_status'=>'Transction Success','payment_response'=>json_encode($_POST)]);
+                    return redirect('/invoiceConfirmation/'.encrypt($_POST['mer_txn']));
+                }else{
+                    return redirect('/invoiceFailed/'.encrypt($_POST['mer_txn']));
+                }
+                //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
+
+            }else{
+                //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
+                return redirect('/orderFailed/'.$_POST['mer_txn']);
+            }
+        } else {
+            echo "Invalid Signature";
+        }
+    }
+
+    public function invoiceConfirmation($id){
+         $invoice_id = decrypt($id);
+         $dataForEmail = $this->getData($invoice_id);
+         return view('invoiceconfirmation',['quotation' => $dataForEmail]);
+    }
+    public function getData($invoice_id){
+
+        $all_datas = DB::table('imagefootage_performa_invoices')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname')
+            ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
+            ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
+            ->where('imagefootage_performa_invoices.invoice_name','=',$invoice_id)
+            ->join('countries as cn','cn.id','=','usr.country')
+            ->join('states as st','st.id','=','usr.state')
+            ->join('cities as ct','ct.id','=','usr.city')
+            ->get()
+            ->toArray();
+        $dataForEmail = json_decode(json_encode($all_datas), true);
+       return $dataForEmail;
+    }
+    public function invoiceFailed($id){
+        $invoice_id = decrypt($id);
+        $dataForEmail = $this->getData($invoice_id);
+        return view('invoicefail',['quotation' => $dataForEmail]);
 
     }
 

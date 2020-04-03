@@ -9,6 +9,7 @@ use DB;
 use Mail;
 use PDF;
 
+
 class InvoiceController extends Controller
 {
     public function __construct()

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Mail;
 use PDF;
+use App\Http\AtomPay\TransactionRequest;
+use App\Http\AtomPay\TransactionResponse;
 
 
 class Common extends Model
@@ -76,6 +78,7 @@ class Common extends Model
     
 
     public function save_proforma($data){
+        date_default_timezone_set('Asia/Kolkata');
         ini_set('max_execution_time', 0);
         $selected_taxes = array();
        
@@ -115,8 +118,8 @@ class Common extends Model
             'status'=>'1',
             'invoice_type'=>'custom',
             'expiry_invoices'=>$data['expiry_date'],
-            'po_detail'=>date('Y-m-d',strtotime($data['poDate'])),
-            'invoice_type'=>''
+            'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+
 );
         DB::table('imagefootage_performa_invoices')->insert($insert);   
         $id = DB::getPdo()->lastInsertId();
@@ -185,8 +188,32 @@ class Common extends Model
                 $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
                 $data["email"] = $data['email'];
                 $data["invoice"] = $dataForEmail[0]['invoice_name'];
-                
-                //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;
+            $transactionRequest = new TransactionRequest();
+            //Setting all values here
+            $transactionRequest->setMode("test");
+            $transactionRequest->setLogin(197);
+            $transactionRequest->setPassword("Test@123");
+            $transactionRequest->setProductId('NSE');
+             $transactionRequest->setAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
+                $transactionRequest->setTransactionCurrency("INR");
+                $transactionRequest->setTransactionAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
+
+            $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
+            $transactionRequest->setClientCode(007);
+            $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+            $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+            $transactionDate = str_replace(" ", "%20", $datenow);
+            $transactionRequest->setTransactionDate($transactionDate);
+            $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+            $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+            $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+            $transactionRequest->setCustomerBillingAddress("India");
+            $transactionRequest->setCustomerAccount($data['uid']);
+            $transactionRequest->setReqHashKey("KEY123657234");
+            $url = $transactionRequest->getPGUrl();
+            $dataForEmail[0]['payment_url'] = $url;
+
+              //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;
 
                 $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail]));
                 $fileName = $data["invoice"]."_quotation.pdf";
@@ -213,8 +240,7 @@ class Common extends Model
                         'bucket' => 'imgfootage',
                         'key' => $path,
                     ]);
-
-                    try {
+                  try {
                         $fileupresult = $uploader->upload();
                     } catch (MultipartUploadException $e) {
                         echo $e->getMessage() . "\n";
@@ -251,17 +277,23 @@ class Common extends Model
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
            $all_datas = DB::table('imagefootage_performa_invoices')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname')
             ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
-            ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+            ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
             ->where('imagefootage_performa_invoices.user_id','=',$user_id)
+            ->join('countries as cn','cn.id','=','usr.country')
+            ->join('states as st','st.id','=','usr.state')
+            ->join('cities as ct','ct.id','=','usr.city')
             ->get()
             ->toArray();
             //dd(DB::getQueryLog());
             return  $all_datas;
 
-            ;  
+
         }
     }
+
+
 
 }

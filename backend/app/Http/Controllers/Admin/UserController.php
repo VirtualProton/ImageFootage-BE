@@ -33,6 +33,7 @@ class UserController extends Controller
     public function index()
     {
         $userlist=$this->User->getUserData();
+        //dd($userlist);
         return view('admin.user.index',compact('userlist'));
     }
 

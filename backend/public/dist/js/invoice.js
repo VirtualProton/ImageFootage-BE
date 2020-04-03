@@ -133,6 +133,7 @@ app.controller('quotatationController', function($scope, $http,$location) {
     
     $scope.submitQuotation = function(){
         console.log($scope.quotation);
+        $('#loading').show();
         var sendData = {
             "uid":$('#uid').val(),
             "quotation_type":$scope.quotation_type,

@@ -22,6 +22,7 @@
                 @include('admin.partials.message')
              <!-- /.box-header -->
              <div class="box-body">
+
             <table id="account" class="table table-bordered table-striped dataTable " class="col-sm-12">
                 <thead>
                 <tr >
@@ -49,7 +50,6 @@
                   <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>
                   <td>{{$user['mobile']}}</td>
-                  
                   <td>{{$user['account']['account_name']}}</td>
                   <td>{{$user['type']}}</td>
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
@@ -75,12 +75,12 @@
                 @endif
 
               </table>
-              </table>
+
               </div>
             </div>
             </div>
         </div>
-    </div>
+{{--    </div>--}}
     </section>
     <!-- /.content -->
   </div>

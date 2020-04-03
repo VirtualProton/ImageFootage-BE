@@ -10,6 +10,7 @@
                <tr class="rr1">
                   <td width="40%" style="vertical-align: top; font-size: 12px;">
                      <div class="qutationtext">
+                        <h2>Sorry Your Payment got Failed due To some technical issues. We will get you soon. </h2>
                         <p>Dear ,<?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></p>
                        <p> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. </p>
                         <br>
@@ -43,7 +44,7 @@
                            </tr>
                            <tr>
                               <td style="color: #fc8041; font-weight: 700">Quote expiration:</td>
-                              <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y",strtotime($quotation[0]['invicecreted']." + ".$quotation[0]['expiry_invoices']." days")) ?></td>
+                              <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y",strtotime($quotation[0]['invicecreted'])) ?></td>
                            </tr>
                            <tr>
                               <td style="color: #fc8041; font-weight: 700">Subtotal:</td>
@@ -218,16 +219,7 @@
                                     <p style="margin: 0px;"><span>Note:</span> Any Sales tax included in this quote is an estimation and may change at the time of purchase. sales tax may be applied to your order in accordance with apllicable state and local tax laws.</p>
                                     <p style="margin: 0px;"><span>Note:</span> To review our licensing policy online, please visit our</p>
                                  </td>
-
                               </tr>
-                            <tr>
-                                <td colspan="4" style="font-size: 12px;">
-                                    <P>Please click on below link to Pay.</P>
-                                    <p style="margin: 0px;"><a href="<?php echo $quotation[0]['payment_url']; ?>" target="_blank" style="font-size: 12px;color:Red;">Payment Link</a></p>
-
-                                </td>
-                            </tr>
-
                            </tbody>
                         </table>
                      </div>
