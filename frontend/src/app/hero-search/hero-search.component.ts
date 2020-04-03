@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef ,Renderer2 } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
@@ -97,7 +97,7 @@ export class HeroSearchComponent implements OnInit {
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
 	private router: Router,
-    private spinner: NgxSpinnerService,private authenticationService: HeroService) {
+    private spinner: NgxSpinnerService,private authenticationService: HeroService,private renderer: Renderer2) {
     this.searchData = new Search();
 	this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
@@ -128,6 +128,7 @@ export class HeroSearchComponent implements OnInit {
 					  	localStorage.setItem('forrefresh','');
 					  }*/
                     //  this.spinner.show();
+                        console.log("hello");
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
                       if(!isNullOrUndefined(params.sideBar)){
@@ -139,23 +140,28 @@ export class HeroSearchComponent implements OnInit {
                       this.searchData.letest=0;
                       this.searchData.curated=1;
                       this.searchData.populer=0;
-
-                      this.searchAPIRequest();
+                      if(this.productType == 2 || this.productType == 4){
+                            this.renderer.addClass(document.body, 'body_background');
+                        }else{
+                            this.renderer.removeClass(document.body, 'body_background');
+                      }
+                      if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==1){
+                            this.category =3;
+                        }else if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==2){
+                            this.category =4;
+                        }else{
+                            this.category =this.productType;
+                        }
+                        this.searchAPIRequest();
                     });
-          if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==1){
-              this.category =3;
-          }else if(!isNullOrUndefined(this.editorial) &&  this.editorial=='editorial' && this.searchData.productType==2){
-              this.category =4;
-          }else{
-              this.category =this.productType;
-          }
+
 
           this.heroService.getSearchLeftFilter()
                     .subscribe(leftsideData => {
                       // this.carouselSliderImages = carouselSliderImages; 
                         this.leftsideData = leftsideData;
                     });
-              
+            
 
       }
 	  public modelChange(str: string): void {
@@ -502,14 +508,19 @@ export class HeroSearchComponent implements OnInit {
 
         this.loadingData = true;
 
-        if(form.value.category==2){
-            this.searchData.productType = form.value.category;
+        if(form.value.category==2 || form.value.category==4){
+            this.searchData.productType = 2;
             this.searchData.search = form.value.search;
             this.searchData.durationless = this.durvalue;
             this.searchData.durationgrt = this.durhighValue;
             this.searchData.searchFilter = this.checkArray;
+            if(form.value.category==2){
+                this.searchData.product_editorial = '';
+            }else{
+                this.searchData.product_editorial = 'editorial';
+            }
         }else {
-            this.searchData.productType = form.value.category;
+            this.searchData.productType = 1;
             this.searchData.search = form.value.search;
             this.searchData.product_people = form.value.people;
             this.searchData.product_gender = form.value.gender;
@@ -520,6 +531,11 @@ export class HeroSearchComponent implements OnInit {
             this.searchData.product_imagetypes = form.value.imagetype;
             this.searchData.product_orientation = form.value.orientation;
             this.searchData.tolerance = form.value.tolerance;
+            if(form.value.category==1){
+                this.searchData.product_editorial = '';
+            }else{
+                this.searchData.product_editorial = 'editorial';
+            }
         }
 
         this.searchData.pagenumber = 0;
@@ -568,13 +584,38 @@ export class HeroSearchComponent implements OnInit {
     }
 
     public changeQueryParams(keyword,type) {
-        this.router.navigate(
-            [],
-            {
-                relativeTo: this.route,
-                queryParams: { keyword: keyword, type:type },
-                queryParamsHandling: 'merge'
-            });
+       if(type==3){
+          this.router.navigate(
+               [],
+               {
+                   relativeTo: this.route,
+                   queryParams: { keyword: keyword, type:1, cat:"editorial" },
+                   queryParamsHandling: 'merge'
+               });
+       }else if(type==4){
+           this.router.navigate(
+               [],
+               {
+                   relativeTo: this.route,
+                   queryParams: { keyword: keyword, type:2, cat:"editorial" },
+                   queryParamsHandling: 'merge'
+               });
+       }else{
+           this.router.navigate(
+               [],
+               {
+                   relativeTo: this.route,
+                   queryParams: { keyword: keyword, type:type,cat:""},
+                   queryParamsHandling: 'merge'
+               });
+       }
+
+        if(type==2 || type==4){
+            this.renderer.addClass(document.body, 'body_background');
+        }else{
+            this.renderer.removeClass(document.body, 'body_background');
+        }
+
     }
 
 

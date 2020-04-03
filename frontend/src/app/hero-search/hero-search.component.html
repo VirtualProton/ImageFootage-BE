@@ -6,16 +6,32 @@
     <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
 
+<!--<style *ngIf="productType == 2">
+body{
+	background:#fff;
+}
+.black_font{
+	color:#000;
+}
+.backgroung_colors{
+	background:#fff;
+}
+.tags a{
+	background:#000;
+}
+</style>-->
+
+
  <!-- advanched search style="display:none" -->
        <div class="container" >
 	<div class="row">
 		<div class="col-md-12">
-            <div class="input-group" id="adv-search" style="margin-top: 66px;">
+            <div class="input-group" id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
                 <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>filters</button>
+                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
@@ -832,11 +848,12 @@
 <!-- mt-5 -->
     <main class="page-content mt-0">
         <main class="main-content" style='/*margin-top:60px*/'>
-           <div style="width: 100%; z-index: 9999; background: #000; top:132px;left:19%;padding: 10px;">
-            <p><small><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
-            <span class="f-12">Related:</span> 
+           <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors" 
+           bind-style.background = "productType == 2 ? '#fff' : '#000'">
+            <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
+            <span class="f-12 black_font" bind-style.color = "productType == 2 ? '#000' :''">Related:</span> 
             <span class="related_key mt-10 tags">
-             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword">{{keys}}</a>
+             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : ''">{{keys}}</a>
             </span>
           </div> 
           <div class="clearfix"></div>
