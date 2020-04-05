@@ -69,6 +69,7 @@ Route::group([
 	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
     Route::post('atomPayInvoiceResponse', 'PaymentController@atomPayInvoiceResponse');
+    Route::post('sampledownloadFootage', 'MediaController@sampledownloadFootage');
 
 	
 

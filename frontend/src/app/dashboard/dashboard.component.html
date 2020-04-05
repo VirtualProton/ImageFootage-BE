@@ -1,3 +1,10 @@
+<div class="loader-bg" *ngIf="loadingData">
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
+</div>
 <div class="video-background-holder" appNoRightClick>
   <div class="video-background-overlay"></div>
   <video playsinline="playsinline" autoplay  loop [muted]="'muted'" poster="https://imagefootage.com/video/Screenshot.png" >
@@ -120,7 +127,8 @@
                           <div class="col-11 m-auto">
                               <div class="row">
                                     <div class="col-md-2 col-sm-2 col-4 text-center" *ngFor="let images of carouseimges.categoryNames">
-                                      <a href="javascript:void(0)" [routerLink]="['/search']" [queryParams]="{type:1,keyword:images.category_name}">{{images.category_name}}</a>
+<!--                                      <a href="javascript:void(0)" [routerLink]="['/search']" [queryParams]="{type:1,keyword:images.category_name}">{{images.category_name}}</a>-->
+                                        <a href="javascript:void(0)" (click)="showcategory(images.category_name)">{{images.category_name}}</a>
                                     </div>
                               </div>
                           </div>
@@ -152,9 +160,10 @@
                         <p class="icons_thum">
                             <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+<!--                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>-->
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                         
@@ -179,9 +188,9 @@
                         <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                              <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a  style='cursor:pointer;'  (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;'  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" ><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>
@@ -200,11 +209,12 @@
 
           </div>
       </main>
-          
-
-
     </div>
 <!-- <app-hero-search></app-hero-search> -->
 <ng-container *ngIf="showloginPopup">
   <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
 </ng-container>
+
+<!--<ng-container *ngIf="showcartprice">-->
+<!--    <-->
+<!--</ng-container>-->

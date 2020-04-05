@@ -26,7 +26,8 @@ export class DashboardComponent implements OnInit {
   page:number = 1;
   pageSize:number = 32;
   aosSliderSizes:any=[];
-   loadingData:boolean=false;
+  loadingData:boolean=false;
+  allcategoryData:any =[];
 
   constructor(private heroService: HeroService,
     private dataHelper:imageFooterHelper,
@@ -95,12 +96,20 @@ ngOnInit() {
     this.heroService.getAosSliderImages()
       .subscribe(aoslSliderImages => {
         // console.log(aoslSliderImages);
-        this.aoslSliderImages = aoslSliderImages;
-        this.aoslSliderImagesData = aoslSliderImages;
+        this.aoslSliderImages = aoslSliderImages.home;
+        this.aoslSliderImagesData = aoslSliderImages.home;
+        this.allcategoryData = aoslSliderImages.api
+
         this.maintainAosSlider();   
       });
 
           
+  }
+  showcategory(categoryname){
+      if(this.allcategoryData[categoryname]) {
+          this.aoslSliderImages = this.allcategoryData[categoryname];
+          this.aoslSliderImagesData = this.allcategoryData[categoryname];
+      }
   }
   getClassName(ele){
     //return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
@@ -182,13 +191,16 @@ ngOnInit() {
         console.log(productinfo);
 		//return false;
         this.loadingData =true;
-        this.heroService.addWishListItemsData(productinfo.api_product_id)
+        this.heroService.addWishListItemsData(productinfo)
             .subscribe(data => {
                 if(data["status"]=='1'){
                     this.loadingData =false;
-                    this.router.navigate(['/wishlist']);
+                    productinfo.class='wishlistafter';
+                    //this.router.navigate(['/wishlist']);
+                    alert("Product is added to wishlist sucessfully");
                 }else{
                     this.loadingData =false;
+                    productinfo.class='wishlistbefore';
                     alert(data["message"]);
                 }
 

@@ -91,7 +91,7 @@ class FootageApi {
                 $filters .= " durationgt:" .(($start[0]*60) + $start[1]);
                 $filters .= " durationlt:" .(($end[0]*60) + $end[1]);
             }
-            if(isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial'])){
+            if(isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial']) && $getKeyword['product_editorial']=='editorial'){
                 $editorial = 1;
             }
         }

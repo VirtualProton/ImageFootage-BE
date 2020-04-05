@@ -41,7 +41,7 @@
                                 <div class="clearfix"></div>
                                 <div class="mt-2">
                                     <a  class="btn btn-danger btn-sm f-12" (click)="removeProductFromWishlist(wishList)"><i class="fa fa-times-circle"></i> Remove</a>
-                                    <a  class="btn btn-success btn-sm f-12 text-white ml-1" routerLink="/detail/{{wishList.api_product_id}}/{{wishList.product_web}}/{{wishList.product_main_type}}"><i class="fa fa-heart"></i> Buy</a>
+                                    <a  class="btn btn-success btn-sm f-12 text-white ml-1" (click)="onNavigate('/detail/',wishList.slug,wishList.api_product_id,wishList.product_web,wishList.product_main_type)" ><i class="fa fa-heart"></i> Buy</a>
                                 </div>
 
                             </td>

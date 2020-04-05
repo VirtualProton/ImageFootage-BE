@@ -70,7 +70,7 @@ class MediaController extends Controller
                    }
                }
                $b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
-               $downlaod_image= 'data:video/mp4;base64,'.$b64image;
+               $downlaod_image= '';
                if (count($product_details_data) > 0) {
                       $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                }
@@ -219,6 +219,16 @@ class MediaController extends Controller
                 return response()->json($product_details_data);
             }
 
+    }
+
+    public function sampledownloadFootage(Request $request)
+    {
+        ini_set('max_execution_time', 0);
+        $allFields = $request->all();
+        $main_image = Product::where('product_id', '=', $allFields['productID'])->first()->product_main_image;
+        $b64image = base64_encode(file_get_contents($main_image));
+        $downlaod_image = 'data:video/mp4;base64,' . $b64image;
+        return response()->json($downlaod_image);
     }
 
 

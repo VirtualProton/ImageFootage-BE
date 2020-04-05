@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output,EventEmitter, ViewEncapsulation, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HeroService } from '../hero.service';
+import {NgbModalConfig,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import * as AOS from 'aos';
 import { Subscription } from 'rxjs';
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
   sub:Subscription;
   productType:any;
   keywordEle:any=' ';
+  refrencemodel:any ='';
   //forimgredi:string='http://'+window.location.hostname+':4200';
   forimgredi:string='https://'+window.location.hostname;
 
@@ -33,7 +35,9 @@ export class HeaderComponent implements OnInit {
   //  private window:Window,
   //  private document: Document,
     private router: Router,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    config: NgbModalConfig,
+    private modalService: NgbModal,
     private authenticationService: HeroService) {    
     this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;
@@ -88,6 +92,18 @@ export class HeaderComponent implements OnInit {
       this.authenticationService.logout();
       this.router.navigate(['']);
   }
-  
+  selectEditorialType(editorialtype){
+    this.refrencemodel = this.modalService.open(editorialtype);
+  }
+  redirectEditorial(typeValue){
+    let type;
+    if(typeValue==3){
+      type = 1;
+    }else{
+      type = 2;
+    }
+    this.refrencemodel.close();
+    window.location.href= '/search?type='+type+'&keyword=&cat=editorial&sideBar=false';
+  }
 
 }

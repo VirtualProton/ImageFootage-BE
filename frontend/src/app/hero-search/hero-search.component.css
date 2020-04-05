@@ -332,3 +332,9 @@ padding-right: 1.1rem;
 .body_background{
 	background:#fff;
 }
+.wishlistbefore{
+    color:#fcbe11;
+}
+.wishlistafter{
+    color:red;
+}

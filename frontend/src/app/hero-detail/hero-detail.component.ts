@@ -171,6 +171,10 @@ export class HeroDetailComponent implements OnInit {
              this.detailPageInfo = data;
              let keywords  = this.detailPageInfo[0].items[0].kw;
              this.keyword = keywords.split(",").map(item => item.trim());
+             if(this.detailPageInfo[3]){
+                 this.getimagedownloadSample(this.detailPageInfo[3]);
+             }
+
          }
 
          //this.keyword = keywords.split(',',10);
@@ -181,6 +185,14 @@ export class HeroDetailComponent implements OnInit {
   }
   checkout(){
       this.router.navigate(['/checkout']);
+  }
+
+  getimagedownloadSample(footID){
+      this.heroService.getDownloadFootageSample(footID)
+          .subscribe(data => {
+              //console.log(data);
+                  this.detailPageInfo[4] = data;
+            });
   }
 
   getcategoryCarouselImages(): void {

@@ -75,5 +75,8 @@ export class LightboxComponent implements OnInit {
         }
     }
 
+    onNavigate(link,slug,pid,pweb,prod_type){
+        window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat=';
+    }
 
 }

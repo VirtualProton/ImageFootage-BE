@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 	private socialAuthService: AuthService
     ) {
       if (this.authenticationService.currentUserValue) {
-        this.router.navigate(['/']);
+            this.router.navigate(['/']);
       }
 
     }

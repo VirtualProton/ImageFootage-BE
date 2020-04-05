@@ -30,7 +30,7 @@ class SearchController extends Controller
 //        $keyword['search'] = '';
 //        $pantherMediaImages = new ImageApi();
 //        $pantharmediaData = $pantherMediaImages->search($keyword);
-        return array('api'=>$all_products);
+        return array('api'=>$all_products[0],'home'=>$all_products[1]);
     }
     public function index(SearchRequest $request){
         ini_set('max_execution_time', 0);

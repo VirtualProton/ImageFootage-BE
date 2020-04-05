@@ -36,8 +36,8 @@ body{
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
-                     <span class="col-md-12" >
-                     	<span class="row" style="margin-top: -20px;">
+                             <span class="col-md-12" >
+                     	   <span class="row" style="margin-top: -20px;">
                             <span class="col-md-8" >
                             <select class="form-control select-css" id="category" name="category" style="color:#000;" [(ngModel)]="category">
                                 <option   [selected]="productType == 1" value="1">Images Only</option>
@@ -837,7 +837,7 @@ body{
         <main class="main-content" style='/*margin-top:60px*/' *ngIf="totalproduct>0">
            <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors" 
            bind-style.background = "productType == 2 ? '#fff' : '#000'">
-            <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> for {{keywordEle}}</small></p>
+               <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> <span *ngIf="keywordEle !=''">for {{keywordEle}} </span></small></p>
             <span class="f-12 black_font" bind-style.color = "productType == 2 ? '#000' :''">Related:</span> 
             <span class="related_key mt-10 tags">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : ''">{{keys}}</a>
@@ -887,9 +887,9 @@ body{
                           <p class="icons_thum2" >
                             
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                         </div>
   </div>
@@ -933,9 +933,9 @@ body{
                         <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#"  style="cursor:pointer;color: #fcbe11;" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>
@@ -949,9 +949,9 @@ body{
 <!-- </div>-->
           </div>
             <div  infiniteScroll
-                  [infiniteScrollDistance]="2"
+                  [infiniteScrollDistance]="4"
                   [infiniteScrollUpDistance]="1.5"
-                  [infiniteScrollThrottle]="2000"
+                  [infiniteScrollThrottle]="150"
                   (scrolled)="onScrollDown()"
                   (scrolledUp)="onScrollUp()">
                 <div *ngIf="totalproduct>30 && totalproduct!=aoslSliderImages.length">
@@ -963,6 +963,13 @@ body{
                 </div>
             </div>
 
+        </main>
+        <main class="main-content" style='/*margin-top:60px*/' *ngIf="noprductFound">
+            <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors"
+                 bind-style.background = "productType == 2 ? '#fff' : '#000'">
+                <h1 *ngIf="productType==1" style="color:red;margin-top:200px;text-align:center">No Images Found</h1>
+                <h1 *ngIf="productType==2" style="color:red;margin-top:200px;text-align:center">No Footage Found </h1>
+            </div>
         </main>
     </main>
 

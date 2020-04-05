@@ -77,7 +77,8 @@ export class HeroSearchComponent implements OnInit {
    perpage:number = 30;
    totalpages:number = 0;
    pagenumber:number =0;
-   resolutions:any =['5K+','4K','HD(1080)','HD(720)','2K','SD'];
+   //resolutions:any =['5K+','4K','HD(1080)','HD(720)','2K','SD'];
+   resolutions:any =['4K','HD(1080)','HD(720)'];
    durvalue: any = 0.00;
    durhighValue: number = 2.00;
    options: Options = {
@@ -88,8 +89,10 @@ export class HeroSearchComponent implements OnInit {
    fpsValues:any =["23.98","24","25","29.97","30","60","60+"];
    checkArray:any = {'resolution':[],'fps':[],'people':[],'gender':[]};
    color:any = ' Pick Color';
-
    public searchStr: string = "";
+   noprductFound:boolean = false;
+   addTocartFlag:boolean = false;
+   colorClass:string = '';
 
 
   constructor(private heroService: HeroService,
@@ -128,7 +131,7 @@ export class HeroSearchComponent implements OnInit {
 					  	localStorage.setItem('forrefresh','');
 					  }*/
                     //  this.spinner.show();
-                        console.log("hello");
+
                       this.searchData.productType=params.type;
                       this.searchData.search=params.keyword;
                       if(!isNullOrUndefined(params.sideBar)){
@@ -136,7 +139,9 @@ export class HeroSearchComponent implements OnInit {
                       }
                       if(!isNullOrUndefined(params.cat)){
                             this.editorial=params.cat;
-                        }
+                        }else{
+                          this.editorial='';
+                      }
                       this.searchData.letest=0;
                       this.searchData.curated=1;
                       this.searchData.populer=0;
@@ -182,6 +187,8 @@ export class HeroSearchComponent implements OnInit {
               this.searchData.searchFilter = this.checkArray;
               if (this.editorial != '') {
                   this.searchData.product_editorial = 'editorial';
+              }else{
+                  this.searchData.product_editorial = '';
               }
           }else {
               this.searchData.product_people = this.slidebarPeopleMenu.join();
@@ -196,6 +203,8 @@ export class HeroSearchComponent implements OnInit {
               this.searchData.product_sortType = this.sliderSortTypeMenu.join();
               if (this.editorial != '') {
                   this.searchData.product_editorial = 'editorial';
+              }else{
+                  this.searchData.product_editorial = '';
               }
           }
             if(this.pagenumber!=0){
@@ -209,6 +218,7 @@ export class HeroSearchComponent implements OnInit {
                               //}else {
                               this.loadingData = false;
                               if(aoslSliderImages.imgfootage.length !=0) {
+                                  this.noprductFound = false;
                                   this.totalproduct = aoslSliderImages.total;
                                   this.perpage = aoslSliderImages.perpage;
                                   this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
@@ -220,7 +230,8 @@ export class HeroSearchComponent implements OnInit {
                                   }
                                   this.maintainAosSlider();
                               }else{
-                                  alert("No Result Found");
+                                  //alert("No Result Found");
+                                  this.noprductFound = true;
                               }
                                  //  this.spinner.hide();
 
@@ -476,28 +487,22 @@ export class HeroSearchComponent implements OnInit {
   	}
     hideLoginPopup(event){
 		this.showloginPopup = false;
-		this.router.navigate(['/']);
+		//this.router.navigate(['/']);
   	}
 	addtolightbox(productinfo){
 
 		//return false;
         this.loadingData =true;
-        this.heroService.addWishListItemsData(productinfo.api_product_id)
+        this.heroService.addWishListItemsData(productinfo)
             .subscribe(data => {
                 if(data["status"]=='1'){
-                    this.loadingData =false;
-                    this.heroService.removeCartItemsData(productinfo)
-                        .subscribe(data => {
-                            if (data["status"] == '1') {
-                                this.priceArray=[];
-                           } else {
-                                alert(data["message"]);
-                            }
-
-                        });
-                    this.router.navigate(['/wishlist']);
+                     this.loadingData =false;
+                     productinfo.class='wishlistafter';
+                    //this.router.navigate(['/wishlist']);
+                    alert("Product is added to wishlist sucessfully");
                 }else{
                     this.loadingData =false;
+                    productinfo.class='wishlistbefore';
                     alert(data["message"]);
                 }
 
@@ -548,6 +553,7 @@ export class HeroSearchComponent implements OnInit {
                     //}else {
                     this.loadingData = false;
                     if(aoslSliderImages.imgfootage.length !=0) {
+                        this.noprductFound = false;
                         this.totalproduct = aoslSliderImages.total;
                         this.perpage = aoslSliderImages.perpage;
                         this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
@@ -556,7 +562,8 @@ export class HeroSearchComponent implements OnInit {
                         this.keyword = type.split(',', 9);
                         this.maintainAosSlider();
                     }else{
-                        alert("Result Not Found");
+                        //alert("Result Not Found");
+                        this.noprductFound = true;
                     }
                     //  this.spinner.hide();
 

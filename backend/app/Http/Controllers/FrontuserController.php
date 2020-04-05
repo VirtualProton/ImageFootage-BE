@@ -108,13 +108,18 @@ class FrontuserController extends Controller {
 		}
 	}
 	public function addtoWishlist(Request $request){
-        //print_r($request->all()); die;
+
+        $product_data = $request->all();
 		$UserWishlist=new UserWishlist;
-		$product_id=$request['product'];
-		$product_addedby=$request['tokenData']['Utype'];
-		$productId = Product::orWhere('product_id',$product_id)
-                           ->orWhere('api_product_id',$product_id)
-                          ->first()->id;
+		$product_id = decrypt($request['product']['api_product_id']);
+		$product_addedby= $request['tokenData']['Utype'];
+		$productData = Product::where('api_product_id',$product_id)->first();
+		if(!$productData){
+		    $product = new Product;
+            $productId =$product->saveProduct($product_data['product']);
+        }else{
+            $productId=$productData->id;
+        }
         $cart_list=$UserWishlist->where('wishlist_product',$productId)->where('wishlist_user_id',$product_addedby)->get()->toArray();
 		if(empty($cart_list)){
 			$UserWishlist=new UserWishlist;
@@ -157,8 +162,12 @@ class FrontuserController extends Controller {
 				$wishlist_products[]=$wish['wishlist_product'];
 			}
 			$productids=implode(',',$wishlist_products);
-			$cart_list=$products->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
-			echo '{"status":"1","data":'.json_encode($cart_list,true).',"message":""}';
+			$cart_list_new=$products->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','product_main_type')->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
+            foreach($cart_list_new as $key=>$wishnew){
+                $cart_list_new[$key]['api_product_id'] = encrypt($wishnew['api_product_id']);
+                $cart_list_new[$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($wishnew['product_title'])));
+            }
+			echo '{"status":"1","data":'.json_encode($cart_list_new,true).',"message":""}';
 		}else{
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
 		}
@@ -175,7 +184,7 @@ class FrontuserController extends Controller {
 				$wishlist_products[]=(int)$wish['wishlist_product'];
 			}
 			$productids=implode(',',$wishlist_products);
-			$cart_list=$products->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
+			$cart_list=$products->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web')->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
 			foreach($cart_list as $key=>$wish){
 				$wishlist_products1[]=(int)$wish['api_product_id'];
 			}

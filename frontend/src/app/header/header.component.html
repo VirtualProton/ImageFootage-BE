@@ -44,7 +44,8 @@
         </li>
         <li class="nav-item">
         <!--<a class="nav-link js-scroll-trigger" href="{{ forimgredi}}/search?type=1&keyword=&cat=editorial&sideBar=false" >Editorial</a>-->
-          <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',cat:'editorial',sideBar:false}">Editorial</a>
+<!--          [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',cat:'editorial',sideBar:false}"-->
+          <a class="nav-link js-scroll-trigger" (click)="selectEditorialType(editorial)">Editorial</a>
         </li>
 
         <li class="nav-item">
@@ -173,3 +174,23 @@
 <ng-container *ngIf="showloginPopup">
   <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
 </ng-container>
+<ng-template #editorial let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title1">Please Select Editorial Type.</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <select (change)="redirectEditorial($event.target.value)">
+      <option value="">--Select Type--</option>
+      <option value="3">Image Editorial</option>
+      <option value="4">Footage Editorial</option>
+    </select>
+
+  </div>
+  <!--<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div>-->
+</ng-template>

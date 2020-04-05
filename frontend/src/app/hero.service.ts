@@ -122,7 +122,7 @@ export class HeroService {
         return this.http.get<any>(url)
             .pipe(
                 map(aosImagesUrl => {
-                    return aosImagesUrl.api;
+                    return aosImagesUrl;
                     // return aosImagesUrl;
                 }),
                 catchError(this.handleError<any>('getCarouselImages', []))
@@ -793,6 +793,23 @@ export class HeroService {
 
                 //this.currentUserSubject.next(cart);
                 return download;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
+
+    getDownloadFootageSample(productID: any): Observable<any> {
+        const url = `${this.heroesUrl}sampledownloadFootage`;
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+          });
+        let options = {headers: headers};
+        return this.http.post<any>(url, {productID}, options).pipe(
+            map(downloadfootage => {
+                console.log(downloadfootage);
+
+                //this.currentUserSubject.next(cart);
+                return downloadfootage;
             }),
             catchError(this.handleError<userData>(`unable to get data`))
         );
