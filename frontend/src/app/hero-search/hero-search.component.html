@@ -18,7 +18,7 @@
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
                             <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(225,225,225,0.95);">
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);">
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
@@ -55,7 +55,7 @@
         </div>-->
                     <div class="col-md-6" style="border-right:1px solid #808080;">
                         <div class=" col-md-12"  >
-                            <label for="category" class="" style="color:#333;">Color</label>
+                            <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Color</label>
                            
                             <!--<div class="row">-->
                             <span class="boxing_filters">
@@ -64,7 +64,7 @@
                                        [cpOKButton]="true"
                                        [cpSaveClickOutside]="false"
                                        [cpOKButtonClass]= "'btn btn-primary btn-xs'"
-                                       [(colorPicker)]="color"/>
+                                       [(colorPicker)]="color" style="    width: 100%; border-radius: 5px !important;"/>
                             </span>
                                 <!--                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">-->
                                 <!--                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;-->
@@ -74,7 +74,7 @@
 
                         </div>
                         <div class=" col-md-12"  >
-                            <label for="category" class="" style="color:#333;">Color Tolerance</label>
+                            <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Color Tolerance</label>
                             <span class="boxing_filters">
                            <label class="radio-inline" for="category"  >
                                 <input type="radio" name="tolerance" value="2" class="" [checked]="true"  ngModel> Exact (less results) &nbsp;
@@ -90,7 +90,7 @@
                         </div>
                          
                         <div class="col-md-12" >
-                         <label for="category" class="" style="color:#333;">Orientations</label>
+                         <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Orientations</label>
                          
                          <span class="boxing_filters">
                          <label class="radio-inline" for="category"  *ngFor="let orientation of leftsideData?.product_orientations">
@@ -103,7 +103,7 @@
                       </div>
                       
                   			<div class=" col-md-12" >
-                     <label for="category" class="" style="color:#333;">Image Types</label>
+                     <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Image Types</label>
                      <span class="boxing_filters">
                      <label class="radio-inline" for="category"  *ngFor="let imageTypes of leftsideData?.product_imagetypes">
                                 <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-md-6">
                         <div class=" col-md-12">
-                         	 <label for="category" class="" style="color:#333;">Gender</label>
+                         	 <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Gender</label>
                              <span class="boxing_filters">
                                  <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
                                     <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
@@ -127,7 +127,7 @@
                              </span>
                         </div>
                         <div class="col-md-12">
-                        <label for="category" class="" style="color:#333;">Ethnicity</label>
+                        <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Ethnicity</label>
                         <span class="boxing_filters">
                         	<label class="radio-inline" for="category"  *ngFor="let ethinicities of leftsideData?.product_ethinicities">
                             <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
@@ -135,7 +135,7 @@
                         </span>
                         </div>
                         <div class="col-md-12">
-                         <label for="category" class="" style="color:#333;">People</label>
+                         <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">People</label>
                          <span class="boxing_filters">
                              <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
                               <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
@@ -143,7 +143,7 @@
                          </span>
                         </div>
                         <div class="col-md-12">
-                        <label for="category" class="" style="color:#333;">Locations</label>
+                        <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Locations</label>
                         <span class="boxing_filters">
                             <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData?.product_locations">
                             <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
@@ -191,15 +191,17 @@
 					<div class="row" style="font-size:14px;" *ngIf="productType == 2">
                           <div class="col-md-6" style="border-right:1px solid #808080;">
                               <div class="col-md-12" >
-                                  <label for="category" class="" style="color:#333;">Resolution</label><br />
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Resolution</label>
+                                  <span class="boxing_filters">
                                   <label class="radio-inline" for="category"  *ngFor="let res of resolutions;">
                                 <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
 
                              </label>
+                             </span>
                                  
                               </div>
                               <div class="form-group col-md-12" >
-                                  <label for="category" class="" style="color:#333;">Duration (In minutes)</label>
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Duration (In minutes)</label>
                                   &nbsp;
                                   <div class="row">
                                       <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
@@ -207,11 +209,13 @@
                               </div>
 
                               <div class=" col-md-12" >
-                                  <label for="category" class="" style="color:#333;">FPS</label><br />
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">FPS</label>
+                                  <span class="boxing_filters">
                                    <label class="radio-inline" for="category"  *ngFor="let fps of fpsValues;">
                                 <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
 
                              </label>
+                             </span>
                     
 
                               </div>
@@ -221,22 +225,24 @@
                           <div class="col-md-6">
 
                               <div class=" col-md-12"  >
-                                  <label for="category" class="" style="color:#333;">People</label><br />
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">People</label>
+                                  <span class="boxing_filters">
                                  <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
                                 <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
 
                              </label>
-
+								</span>
                                   
 
                               </div>
                               <div class=" col-md-12"  >
-                                  <label for="category" class="" style="color:#333;">Gender</label><br />
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Gender</label>
+                                  <span class="boxing_filters">
                                    <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
                                 <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
 
                              </label>
-                                  
+                                  </span>
 
                               </div>
                           </div>
@@ -885,10 +891,10 @@
                          
                           <p class="icons_thum2" >
                             
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Cart"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' matTooltip="Add to Cart"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                         </div>
   </div>
@@ -931,10 +937,10 @@
                         <br />
                         <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" matTooltip="Add to Cart" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>

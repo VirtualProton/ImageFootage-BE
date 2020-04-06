@@ -40,6 +40,7 @@ import {
 } from "angular-6-social-login";
 import { LightboxComponent } from './lightbox/lightbox.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 //sidebar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -102,7 +103,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InfiniteScrollModule,
 	MatExpansionModule,
     Ng5SliderModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatTooltipModule
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
