@@ -935,7 +935,7 @@ body{
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#"  style="cursor:pointer;color: #fcbe11;" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>
