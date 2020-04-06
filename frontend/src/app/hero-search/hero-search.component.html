@@ -6,20 +6,6 @@
     <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
 
-<!--<style *ngIf="productType == 2">
-body{
-	background:#fff;
-}
-.black_font{
-	color:#000;
-}
-.backgroung_colors{
-	background:#fff;
-}
-.tags a{
-	background:#000;
-}
-</style>-->
 
 
  <!-- advanched search style="display:none" -->
@@ -32,7 +18,7 @@ body{
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
                             <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(225,225,225,0.95);">
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
@@ -48,10 +34,10 @@ body{
                             </span>
                             <span class="col-md-4">
                                 <span class="pull-right">
-                                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;    background-color: #dfdddd;    border-radius: 5px;
-    border: 1px solid #dfdddd;" >Apply</button>
-                                    <button type="button" class="btn btn-primary" (click)="reset(documentEditForm)" style=" background-color: #dfdddd;border-radius: 5px;
-    border: 1px solid #dfdddd;">Clear</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;    background-color: #fcbe11;    border-radius: 5px;
+    border: 1px solid #fcbe11;" >Apply</button>
+                                    <button type="button" class="btn btn-primary" (click)="reset(documentEditForm)" style=" background-color: #fcbe11;border-radius: 5px;
+    border: 1px solid #fcbe11;">Clear</button>
                                  </span>
                             </span>
                         </span>
@@ -69,15 +55,17 @@ body{
         </div>-->
                     <div class="col-md-6" style="border-right:1px solid #808080;">
                         <div class=" col-md-12"  >
-                            <label for="category" class="" style="color:#feaa0c;">Color</label><br />
+                            <label for="category" class="" style="color:#333;">Color</label>
                            
                             <!--<div class="row">-->
+                            <span class="boxing_filters">
                                 <input name="color" [value]="color"
                                        [style.background]="color"
                                        [cpOKButton]="true"
                                        [cpSaveClickOutside]="false"
                                        [cpOKButtonClass]= "'btn btn-primary btn-xs'"
                                        [(colorPicker)]="color"/>
+                            </span>
                                 <!--                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">-->
                                 <!--                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;-->
                                 <!--                            </span>-->
@@ -86,7 +74,8 @@ body{
 
                         </div>
                         <div class=" col-md-12"  >
-                            <label for="category" class="" style="color:#feaa0c;">Color Tolerance</label><br />
+                            <label for="category" class="" style="color:#333;">Color Tolerance</label>
+                            <span class="boxing_filters">
                            <label class="radio-inline" for="category"  >
                                 <input type="radio" name="tolerance" value="2" class="" [checked]="true"  ngModel> Exact (less results) &nbsp;
                              </label>
@@ -96,28 +85,30 @@ body{
                              <label class="radio-inline" for="category"  >
                                 <input type="radio" name="tolerance" value="5" class="" ngModel> Standard &nbsp;
                              </label>
-                           
+                           </span>
 
                         </div>
                          
                         <div class="col-md-12" >
-                         <label for="category" class="" style="color:#feaa0c;">Orientations</label><br />
+                         <label for="category" class="" style="color:#333;">Orientations</label>
                          
-                         
+                         <span class="boxing_filters">
                          <label class="radio-inline" for="category"  *ngFor="let orientation of leftsideData?.product_orientations">
                                 <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
-                             </label>
+                          </label>
+                          </span>
                          
                          
                          
                       </div>
                       
                   			<div class=" col-md-12" >
-                     <label for="category" class="" style="color:#feaa0c;">Image Types</label><br />
-                     
+                     <label for="category" class="" style="color:#333;">Image Types</label>
+                     <span class="boxing_filters">
                      <label class="radio-inline" for="category"  *ngFor="let imageTypes of leftsideData?.product_imagetypes">
                                 <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
                              </label>
+                     </span>
                      
 
                   </div>
@@ -128,28 +119,36 @@ body{
                         </div>
                         <div class="col-md-6">
                         <div class=" col-md-12">
-                         	 <label for="category" class="" style="color:#feaa0c;">Gender</label><br />
-                             <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
-                                <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
-                             </label>
+                         	 <label for="category" class="" style="color:#333;">Gender</label>
+                             <span class="boxing_filters">
+                                 <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
+                                    <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
+                                 </label>
+                             </span>
                         </div>
                         <div class="col-md-12">
-                        <label for="category" class="" style="color:#feaa0c;">Ethnicity</label><br />
+                        <label for="category" class="" style="color:#333;">Ethnicity</label>
+                        <span class="boxing_filters">
                         	<label class="radio-inline" for="category"  *ngFor="let ethinicities of leftsideData?.product_ethinicities">
                             <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
                             </label>
+                        </span>
                         </div>
                         <div class="col-md-12">
-                         <label for="category" class="" style="color:#feaa0c;">People</label><br />
-                         <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
-                          <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
-                         </label>
+                         <label for="category" class="" style="color:#333;">People</label>
+                         <span class="boxing_filters">
+                             <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
+                              <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                             </label>
+                         </span>
                         </div>
                         <div class="col-md-12">
-                        <label for="category" class="" style="color:#feaa0c;">Locations</label><br />
-                        <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData?.product_locations">
-                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
-                        </label>
+                        <label for="category" class="" style="color:#333;">Locations</label>
+                        <span class="boxing_filters">
+                            <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData?.product_locations">
+                            <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                            </label>
+                        </span>
                         </div>
                         
                         <!--<div class="col-md-2">
@@ -192,7 +191,7 @@ body{
 					<div class="row" style="font-size:14px;" *ngIf="productType == 2">
                           <div class="col-md-6" style="border-right:1px solid #808080;">
                               <div class="col-md-12" >
-                                  <label for="category" class="" style="color:#feaa0c;">Resolution</label><br />
+                                  <label for="category" class="" style="color:#333;">Resolution</label><br />
                                   <label class="radio-inline" for="category"  *ngFor="let res of resolutions;">
                                 <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
 
@@ -200,7 +199,7 @@ body{
                                  
                               </div>
                               <div class="form-group col-md-12" >
-                                  <label for="category" class="" style="color:#feaa0c;">Duration (In minutes)</label>
+                                  <label for="category" class="" style="color:#333;">Duration (In minutes)</label>
                                   &nbsp;
                                   <div class="row">
                                       <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
@@ -208,7 +207,7 @@ body{
                               </div>
 
                               <div class=" col-md-12" >
-                                  <label for="category" class="" style="color:#feaa0c;">FPS</label><br />
+                                  <label for="category" class="" style="color:#333;">FPS</label><br />
                                    <label class="radio-inline" for="category"  *ngFor="let fps of fpsValues;">
                                 <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
 
@@ -222,7 +221,7 @@ body{
                           <div class="col-md-6">
 
                               <div class=" col-md-12"  >
-                                  <label for="category" class="" style="color:#feaa0c;">People</label><br />
+                                  <label for="category" class="" style="color:#333;">People</label><br />
                                  <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
                                 <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
 
@@ -232,7 +231,7 @@ body{
 
                               </div>
                               <div class=" col-md-12"  >
-                                  <label for="category" class="" style="color:#feaa0c;">Gender</label><br />
+                                  <label for="category" class="" style="color:#333;">Gender</label><br />
                                    <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
                                 <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
 
