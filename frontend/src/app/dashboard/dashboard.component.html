@@ -159,11 +159,11 @@
                         <span class="meta">{{aosimges.product_description}}</span>-->
                         <p class="icons_thum">
                             <!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Cart"><i class="fa fa-plus"></i></a></span>
 <!--                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="getPrice(aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>-->
-                            <span *ngIf="currentUser"><a  style='cursor:pointer;' (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                         
@@ -187,10 +187,10 @@
                         <br />
                         <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
-                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a  style='cursor:pointer;'  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" ><i class="fa fa-plus"></i></a></span>
+                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist" aria-label="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist" aria-label="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Cart" aria-label="Add to Cart"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" ><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>

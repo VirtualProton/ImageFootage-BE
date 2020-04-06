@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   constructor(private heroService: HeroService,
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
-    private router: Router, 
+    private router: Router,
     private authenticationService: HeroService) {
 	this.authenticationService.currentUser.subscribe(x => {
         this.currentUser = x;

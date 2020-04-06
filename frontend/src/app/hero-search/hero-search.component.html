@@ -886,10 +886,10 @@ body{
                          
                           <p class="icons_thum2" >
                             
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Cart"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' matTooltip="Add to Cart"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                         </div>
   </div>
@@ -932,10 +932,10 @@ body{
                         <br />
                         <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
-                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
-                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
-                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" matTooltip="Add to Cart" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
                       </div>
                       </div>
