@@ -111,15 +111,20 @@ class FrontuserController extends Controller {
 
         $product_data = $request->all();
 		$UserWishlist=new UserWishlist;
-		$product_id = decrypt($request['product']['api_product_id']);
-		$product_addedby= $request['tokenData']['Utype'];
-		$productData = Product::where('api_product_id',$product_id)->first();
-		if(!$productData){
-		    $product = new Product;
-            $productId =$product->saveProduct($product_data['product']);
+        $product_addedby= $request['tokenData']['Utype'];
+		if(is_array($product_data['product'])){
+            $product_id = decrypt($request['product']['api_product_id']);
+            $productData = Product::where('api_product_id',$product_id)->first();
+            if(!$productData){
+                $product = new Product;
+                $productId =$product->saveProduct($product_data['product']);
+            }else{
+                $productId=$productData->id;
+            }
         }else{
-            $productId=$productData->id;
+            $productId = Product::where('product_id',$request['product'])->first()->id;
         }
+
         $cart_list=$UserWishlist->where('wishlist_product',$productId)->where('wishlist_user_id',$product_addedby)->get()->toArray();
 		if(empty($cart_list)){
 			$UserWishlist=new UserWishlist;

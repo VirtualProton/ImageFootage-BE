@@ -40,11 +40,11 @@ class MediaController extends Controller
     		// insert watermark at bottom-right corner with 10px offset 
     		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
 			$time=time();
-			//$img->save(public_path('images/dump/'.$time.'.jpg'));
-			//$img->encode('jpg');
+			$img->save(public_path('images/dump/'.$time.'.jpg'));
+			$img->encode('jpg');
 			$type = 'jpg';
 			$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
-			//unlink(public_path('images/dump/'.$time.'.jpg'));
+			unlink(public_path('images/dump/'.$time.'.jpg'));
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
            }
