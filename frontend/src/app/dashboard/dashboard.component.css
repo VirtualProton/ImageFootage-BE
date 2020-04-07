@@ -134,6 +134,9 @@ body{
     opacity: 1;
     visibility: visible;
 }
+.span_for_video_home{
+	height:300px;
+}
 /* for video end  */
 /* ----------- iPhone 4 and 4S ----------- */
 
@@ -211,7 +214,9 @@ body{
 	font-size: 10px;
     padding: 14px 0px;
 }
-
+.span_for_video_home{
+	height:200px;
+}
 }
 
 /* Portrait */
@@ -269,6 +274,9 @@ body{
 	margin-top:10px;
 	font-size: 10px;
     padding: 14px 0px;
+}
+.span_for_video_home{
+	height:200px;
 }
 }
 
@@ -385,6 +393,9 @@ body{
 	margin-top:10px;
 	font-size: 10px;
     padding: 14px 0px;
+}
+.span_for_video_home{
+	height:200px;
 }
 }
 
@@ -604,3 +615,4 @@ body{
 .wishlistafter{
     color:red;
 }
+
