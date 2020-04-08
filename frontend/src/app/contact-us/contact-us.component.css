@@ -1,5 +1,4 @@
 body{ font-weight:normal;}
-#mainNav{background:#000;}
 
 
 .contact-page-area .form-area input, .contact-page-area .form-area textarea{
@@ -7,4 +6,13 @@ body{ font-weight:normal;}
 }
 .contact-page-area[_ngcontent-hej-c5] .form-area[_ngcontent-hej-c5] input[_ngcontent-hej-c5], .contact-page-area[_ngcontent-hej-c5] .form-area[_ngcontent-hej-c5] textarea[_ngcontent-hej-c5] {
     color: #000 !important;
+}
+.banner-area {
+    min-height: 250px;
+}
+#mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}
+@media (min-width: 992px){
+#mainNav {
+	padding-bottom: 0px;padding-top: 0px;background: #000 !important;
+}
 }

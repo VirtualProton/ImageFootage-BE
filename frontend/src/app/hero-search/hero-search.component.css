@@ -171,9 +171,6 @@ ul.search-result {
 	animation: moveUp 0.1s ease forwards !important;
 }
 
-
-
-
 .gallery {
 -webkit-column-count: 5;
 -moz-column-count: 5;
