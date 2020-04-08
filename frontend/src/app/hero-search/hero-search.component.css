@@ -171,9 +171,6 @@ ul.search-result {
 	animation: moveUp 0.1s ease forwards !important;
 }
 
-
-
-
 .gallery {
 -webkit-column-count: 5;
 -moz-column-count: 5;
@@ -337,4 +334,12 @@ padding-right: 1.1rem;
 }
 .wishlistafter{
     color:red;
+}
+.boxing_filters{
+	padding: 4px 7px 3px 7px;
+    border: 1px solid #AAA;
+    border-radius: 6px;
+    box-shadow: 0 0 4px rgba(120,120,120,0.2);
+    width: 100%;
+    display: block;
 }

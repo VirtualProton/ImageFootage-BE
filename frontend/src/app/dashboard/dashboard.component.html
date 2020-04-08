@@ -14,7 +14,7 @@
     <div class="d-flex h-100 text-center align-items-center">
       <div class="col-md-10 col-sm-10 col-lg-10 m-auto">
       <div class="w-100 text-white vedio_text">
-        <h1 class="display-4" style="font-size: 2rem"><strong>As Real as it Gets…<br>Bring Life to Your Vision.</strong></h1>
+        <h1 class="display-4" style="font-size: 2rem"><strong>As Real as it Gets…<br>Bring to Life Your Vision.</strong></h1>
            
           <form class="search_m">
     <div class="input-group search-bar">
@@ -173,8 +173,8 @@
                     </span>
                     <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block -->
                     <span  *ngIf="aosimges.product_web == '3'"  class=" photo-item" >
-                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; {{aosimges.product_id}}</span>
-                         <video   width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" style="width: 100% !important;background: #7d494957; object-fit: cover;cursor:pointer;">
+                    <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;" ><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; {{aosimges.product_id}}</span>
+                         <video class="span_for_video_home"   width="400"  [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement onmouseover="this.play()"   onmouseout="this.load()" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type,aosimges.category_name)" style="width: 100% !important;background: #7d494957; object-fit: cover;cursor:pointer;">
                             <source src="{{aosimges.product_main_image}}" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
