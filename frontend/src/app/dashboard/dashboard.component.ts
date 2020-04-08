@@ -28,6 +28,8 @@ export class DashboardComponent implements OnInit {
   aosSliderSizes:any=[];
   loadingData:boolean=false;
   allcategoryData:any =[];
+  categoryname:string ='';
+  selectedCategory:string =   localStorage.getItem('searchCategory');
 
   constructor(private heroService: HeroService,
     private dataHelper:imageFooterHelper,
@@ -39,9 +41,7 @@ export class DashboardComponent implements OnInit {
     });  
    }
 ngOnInit() {
- 
-
-     this.heroService.getcarouselSliderImages()
+        this.heroService.getcarouselSliderImages()
         .subscribe(data => {
 
             let _carouselSlider = new carouselSlider();
@@ -109,6 +109,7 @@ ngOnInit() {
       if(this.allcategoryData[categoryname]) {
           this.aoslSliderImages = this.allcategoryData[categoryname];
           this.aoslSliderImagesData = this.allcategoryData[categoryname];
+          this.categoryname =categoryname;
       }
   }
   getClassName(ele){
@@ -118,12 +119,13 @@ ngOnInit() {
   searchAosData(search){
     // debounceTime(400),
     //if(search.trim().length > 2){
-      console.log(this.searchBoxLabel);
+        localStorage.setItem('searchCategory', this.searchBoxLabel.toString());
         if(this.searchBoxLabel==3){
-            this.router.navigate(['/search'], { queryParams: { type: 1,keyword:search.trim(),cat:'editorial' } });
+           this.router.navigate(['/search'], { queryParams: { type: 1,keyword:search.trim(),cat:'editorial' } });
         }else if(this.searchBoxLabel==4){
-          this.router.navigate(['/search'], { queryParams: { type: 2,keyword:search.trim(),cat:'editorial' } });
+            this.router.navigate(['/search'], { queryParams: { type: 2,keyword:search.trim(),cat:'editorial' } });
         }else{
+
             this.router.navigate(['/search'], { queryParams: { type: this.searchBoxLabel,keyword:search.trim() } });
         }
     //}

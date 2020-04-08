@@ -21,10 +21,10 @@
           <div class="input-group-btn d-none d-md-block " ngbDropdown >
           
           <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">
-                  	<option value="1">Images</option>
-                    <option value="2">Footages</option>
-                    <option value="3">Editorial Images</option>
-                    <option value="4">Editorial Footages</option>
+                  	<option value="1" [selected]="selectedCategory == '1'">Images</option>
+                    <option value="2" [selected]="selectedCategory == '2'">Footages</option>
+                    <option value="3" [selected]="selectedCategory == '3'">Editorial Images</option>
+                    <option value="4" [selected]="selectedCategory == '4'">Editorial Footages</option>
            </select>
           
            <!-- <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >
@@ -146,7 +146,8 @@
           <div class="container-fluid photos">
             <div class="row align-items-stretch">
 <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" -->
-                <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
+<!--                data-aos="fade-up" data-aos-delay="100"-->
+                <div [ngClass]="getClassName(aosimges)"   *ngFor="let aosimges of aoslSliderImagesData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i= index">
                 <!-- d-block -->
                     <span *ngIf="aosimges.product_web == '2' || aosimges.product_web == '1'"  class=" photo-item" style="object-fit: cover;">
                         <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;">{{aosimges.product_id}}</span>
@@ -209,6 +210,10 @@
 
           </div>
       </main>
+      <div class="text-center mb-2">
+          <button class="btn mr-2" [routerLink]="['/search']" [queryParams]="{type:1,keyword:categoryname}">More Images</button>
+          <button class="btn" [routerLink]="['/search']" [queryParams]="{type:2,keyword:categoryname}">More Footages</button>
+      </div>
     </div>
 <!-- <app-hero-search></app-hero-search> -->
 <ng-container *ngIf="showloginPopup">

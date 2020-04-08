@@ -88,7 +88,7 @@ class MediaController extends Controller
     public function categoryListApi(){
        $categories  = ProductCategory::select('category_id','category_name')
                         ->where('is_display_home',1)
-                        ->orderBy('category_id','desc')
+                        ->orderBy('category_order','asc')
                         ->limit(24)
                         ->get()
                         ->toArray();

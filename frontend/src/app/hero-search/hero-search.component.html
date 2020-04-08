@@ -23,7 +23,7 @@ body{
 
 
  <!-- advanched search style="display:none" -->
-       <div class="container" >
+   <div class="container" >
 	<div class="row">
 		<div class="col-md-12">
             <div class="input-group" id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
@@ -901,7 +901,8 @@ body{
           <div class="photos"><!-- pt-5 mt-5 -->
 
               <div class="row align-items-stretch" >
-                 <div [ngClass]="getClassName(aosimges)" data-aos="fade-up" data-aos-delay="200"  *ngFor="let aosimges of aoslSliderImages;let i= index">
+<!--                  data-aos="fade-up" data-aos-delay="200"-->
+                 <div [ngClass]="getClassName(aosimges)"   *ngFor="let aosimges of aoslSliderImages;let i= index">
 
                       <!--<span  class=" photo-item" >
                         <div class="">

@@ -29,8 +29,7 @@ class CronController extends Controller
         ini_set('max_execution_time', 0);
         //$product = new Product();
         //$all_products = $product->getProducts($keyword);
-        $home_categories = array('Christmas','SkinCare','Cannabis','Business','Curated',
-        'Video','Autumn','Family','Halloween','Seniors','Cats','Dogs','Party','Food');
+        $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
         foreach($home_categories as $percategory){
         $keyword['search'] = $percategory;
         $pantherMediaImages = new ImageApi();
@@ -110,12 +109,11 @@ class CronController extends Controller
         ini_set('max_execution_time', 0);
         //$product = new Product();
         //$all_products = $product->getProducts($keyword);
-        $home_categories = array('Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
-            'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food');
+        $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
         foreach ($home_categories as $percategory) {
             $keyword['search'] = $percategory;
             $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword);
+            $pondfootageMediaData = $footageMedia->search($keyword,[]);
             $common = new Common();
             $category_id = $common->checkCategory($percategory);
             if (count($pondfootageMediaData) > 0) {
