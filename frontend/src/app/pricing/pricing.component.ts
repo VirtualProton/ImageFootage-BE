@@ -4,6 +4,7 @@ import { cartItemData } from '../hero';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+declare var Razorpay: any;
 
 
 @Component({
@@ -263,31 +264,33 @@ export class PricingComponent implements OnInit {
     // .pipe(first())
         .subscribe(
             data2 => {
-
-              // alert("Sucessfully Registered");
-              console.log(data2.url);
-              console.log(paymentgatway);
-              this.loadingData = false;
-              if(paymentgatway=='atom')  {
+                this.loadingData = false;
+              if(paymentgatway=='atom'){
                 window.location.href = data2.url;
               }else if(paymentgatway=='payu'){
-                console.log(data2);
-                //this.hash = data2.hash;
                 window.location.href = data2.url;
-                //document.getElementById('payuform').onsubmit;
-                //this.payuData = data2;
-              }
+              }else if(paymentgatway=='rozerpay'){
+                  var options = data2;
+                  options.handler = this.razorpayRes.bind(this)
+                  // Boolean whether to show image inside a white frame. (default: true)
+                  options.theme.image_padding = false;
+                  options.modal = {
+                      ondismiss: function() {
+                          console.log("This code runs when the popup is closed");
+                      },
+                      // Boolean indicating whether pressing escape key
+                      // should close the checkout form. (default: true)
+                      escape: true,
+                      // Boolean indicating whether clicking translucent blank
+                      // space outside checkout form should close the form. (default: false)
+                      backdropclose: false
+                  };
 
-              //this.router.navigate([data2.url]);
-              // console.log(data2);
-              // console.log(data2.message);
-              // console.log(data2["message"]);
-              // if(data2.status=='1'){
-              //   alert(data2.message);
-              //   this.router.navigate(['/']);
-              // }else{
-              //   alert(data2.message);
-              // }
+                  var rzp = new Razorpay(options);
+                  rzp.open();
+                  event.preventDefault();
+
+              }
 
             },
             error => {
@@ -301,6 +304,15 @@ export class PricingComponent implements OnInit {
         if(event){
 
         }
+    }
+
+    razorpayRes(payres){
+        this.loadingData = true;
+        this.authenticationService.razorplanresponse(payres)
+            .subscribe(data => {
+                this.loadingData = false;
+                window.location.href = data.url;
+            });
     }
 
 }

@@ -214,6 +214,7 @@ Route::get('/invoice/{user_id}/{id}','InvoiceController@invoice');
 });
 Route::get('emailVerification','UserContactusController@emailVerification');
 Route::get('payu/{id}','PaymentController@payu');
+Route::get('payuplan/{id}','PaymentController@payuplan');
 Route::get('invoiceConfirmation/{id}','PaymentController@invoiceConfirmation');
 
 

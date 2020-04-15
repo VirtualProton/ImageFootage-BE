@@ -16,6 +16,10 @@ use App\Models\Usercart;
 use App\Models\UserPackage;
 use CORS;
 use Payumoney;
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
+use App\Jobs\SendEmail;
+
 
 
 
@@ -28,7 +32,8 @@ class PaymentController extends Controller
      */
     public function __construct()
     {
-
+        $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
+        $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
     }
 
     public function payment(Request $request){
@@ -41,7 +46,7 @@ class PaymentController extends Controller
         }else{
             $datenow = date('Y-m-d');
         }
-        $transactionId = rand(1,1000000);
+        $transactionId = rand(1,1000000).date("his");
         //echo "<pre>"; print_r($allFields); die;
         //DB::enableQueryLog();
         $userData = User::with('country')
@@ -128,46 +133,65 @@ class PaymentController extends Controller
             //return Redirect::to($url);
             //header("Location: $url");
         }else if($allFields['type']=='payu'){
-
-              $hash=hash('sha512', 'moyhzpcW|46464|100|123456|amit pathak|amitpathak.bansal@gmail.com|||||6578||||||k5fBBBjPVs');
-//            $strReqst = "https://sandboxsecure.payu.in/_payment";
-//            $strReqst .= "&key=moyhzpcW";
-//            $strReqst .= "&productinfo=123456";
-//            $strReqst .= "&amount=100";
-//            $strReqst .= "&txnid=46464";
-//            $strReqst .= "&firstname=amit pathak";
-//            $strReqst .= "&email=amitpathak.bansal@gmail.com";
-//            $strReqst .= "&phone=987706301";
-//            $strReqst .= "&surl=http://localhost/imagefootage/payment";
-//            $strReqst .= "&furl=http://localhost/imagefootage/fpayment";
-//            $strReqst .= "&udf5=6578";
-//            $strReqst .= "&hash=".$hash;
-//            echo json_encode(['url'=>$strReqst]);
-
-
-//             Payumoney::pay([
-//                'txnid'       => $transactionId,
-//                'amount'      => 10.50,
-//                'productinfo' => 'A book',
-//                'firstname'   => 'Peter',
-//                'email'       => 'abc@example.com',
-//                'phone'       => '1234567890',
-//                'surl'        => url('payumoney-test/return'),
-//                'furl'        => url('payumoney-test/return'),
-//            ])->send();
-
-             //return view('payu');
               $url = url('/payu/'.$transactionId);
-             echo json_encode(['url'=>$url]);
-            //return redirect('/payu/'.$transactionId);
-             //return 1;
-           // echo json_encode(['hash'=>$hash]);
+              echo json_encode(['url'=>$url]);
        }else if($allFields['type']=='rozerpay'){
 
-        }
-        //print_r($allFields); die;
+            $displayCurrency = 'INR';
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $orderData = [
+                'receipt'         => $transactionId,
+                'amount'          => ($allFields['cartval'][0]+$final_tax) * 100, // 2000 rupees in paise
+                'currency'        => 'INR',
+                'payment_capture' => 1 // auto capture
+            ];
 
-      //  return response()->json($all_products);
+            $razorpayOrder = $api->order->create($orderData);
+
+            $razorpayOrderId = $razorpayOrder['id'];
+            if(!empty($razorpayOrderId)) {
+                Orders::where('txn_id','=',$transactionId)->update(['rozor_pay_id'=>$razorpayOrderId]);
+            }
+
+            $displayAmount = $amount = $orderData['amount'];
+
+            if ($displayCurrency !== 'INR')
+            {
+                $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+                $exchange = json_decode(file_get_contents($url), true);
+
+                $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
+            }
+            $data = [
+                "key"               => $this->keyRazorId,
+                "amount"            => $amount,
+                "name"              => $allFields['usrData']['first_name'],
+                "description"       => "ImageFootage",
+                "image"             => "https://imagefootage.com/assets/images/logoimage_new.png",
+                "prefill"           => [
+                    "name"              => $allFields['usrData']['first_name'],
+                    "email"             => $userData[0]['email'],
+                    "contact"           => $userData[0]['phone'],
+                ],
+                "notes"             => [
+                    "address"           => $allFields['usrData']['address'],
+                    "merchant_order_id" => $transactionId,
+                ],
+                "theme"             => [
+                    "color"             => "#F37254"
+                ],
+                "order_id"          => $razorpayOrderId,
+            ];
+            if ($displayCurrency !== 'INR')
+            {
+                $data['display_currency']  = $displayCurrency;
+                $data['display_amount']    = $displayAmount;
+            }
+            echo json_encode($data);
+
+
+        }
+
     }
 
     public function atomPayResponse(Request $request){
@@ -199,26 +223,11 @@ class PaymentController extends Controller
 
     }
 
-    public function orderDetails(Request $request){
-        $allFields = $request->all();
-        if(count($allFields)>0){
-            $OrderData = Orders::with(['items'=>function($query){
-                $query->with('product');
-            }]) ->where('txn_id','=',$allFields['id'])
-                ->get()->toArray();
-             echo json_encode(['status'=>"success",'data'=>$OrderData]);
-        }else{
-            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
-        }
-
-    }
-
     public function payu($transaction){
         $OrderData = Orders::with('items')->with('user')
             ->where('txn_id','=',$transaction)
             ->get()->toArray();
-        //echo "<pre>";
-        //print_r($OrderData);
+
           $items= array();
           foreach($OrderData[0]['items'] as $each){
               array_push($items,$each['product_id']);
@@ -231,22 +240,17 @@ class PaymentController extends Controller
                 'email'       => $OrderData[0]['order_email'],
                 'phone'       => $OrderData[0]['user']['mobile'],
                 'surl'        => url('api/payUResponse'),
-                'furl'        => url('api/payUResponsefail'),
+                'furl'        => url('api/payUResponse'),
             ])->send();
     }
 
     public function payUResponse(Request $request){
 
         $result = Payumoney::completePay($_POST);
-        //echo "<pre>";
-        //print_r($result); die;
+        $params = $result->getParams();
         if ($result->checksumIsValid() && $result->isSuccess()) {
             $transaction = $result->getTransactionId();
             $status = $result->getStatus();
-            $params = $result->getParams();
-            //echo "<pre>";
-            //print_r($params);
-           // die;
             Orders::where('txn_id',$params['txnid'])
                 ->update(['payment_mode'=>$params['bankcode'],
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
@@ -254,12 +258,34 @@ class PaymentController extends Controller
             Usercart::where('cart_added_by',$orders->user_id)->delete();
             return redirect('/orderConfirmation/'.$params['txnid']);
         } else {
-            return redirect('/orderFailed');
+            return redirect('/orderFailed/'.$params['txnid']);
         }
 
     }
 
-    public function payUResponsefail(){
+    public function razor_response(Request $request){
+         $data = $request->all();
+         $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+         $success =true;
+        try
+        {
+         $attributes  = $data['paymentRes'];
+         $order  = $api->utility->verifyPaymentSignature($attributes);
+        }catch(SignatureVerificationError $e){
+            $success = false;
+            $error = 'Razorpay Error : ' . $e->getMessage();
+        }
+        $orders = Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first();
+        if($success===true){
+           Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
+                  ->update(['order_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
+                 Usercart::where('cart_added_by',$orders->user_id)->delete();
+            $url = 'http://localhost:4200/orderConfirmation/'.$orders->txn_id;
+       }else{
+            $url = 'http://localhost:4200/orderFailed/'.$orders->txn_id;
+        }
+        echo json_encode(['url'=>$url]);
+
 
     }
 
@@ -332,52 +358,63 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey("KEY123657234");
-
-
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
-            //return Redirect::to($url);
-            //header("Location: $url");
         }else if($allFields['type']=='payu'){
-
-            $hash=hash('sha512', 'moyhzpcW|46464|100|123456|amit pathak|amitpathak.bansal@gmail.com|||||6578||||||k5fBBBjPVs');
-//            $strReqst = "https://sandboxsecure.payu.in/_payment";
-//            $strReqst .= "&key=moyhzpcW";
-//            $strReqst .= "&productinfo=123456";
-//            $strReqst .= "&amount=100";
-//            $strReqst .= "&txnid=46464";
-//            $strReqst .= "&firstname=amit pathak";
-//            $strReqst .= "&email=amitpathak.bansal@gmail.com";
-//            $strReqst .= "&phone=987706301";
-//            $strReqst .= "&surl=http://localhost/imagefootage/payment";
-//            $strReqst .= "&furl=http://localhost/imagefootage/fpayment";
-//            $strReqst .= "&udf5=6578";
-//            $strReqst .= "&hash=".$hash;
-//            echo json_encode(['url'=>$strReqst]);
-
-
-//             Payumoney::pay([
-//                'txnid'       => $transactionId,
-//                'amount'      => 10.50,
-//                'productinfo' => 'A book',
-//                'firstname'   => 'Peter',
-//                'email'       => 'abc@example.com',
-//                'phone'       => '1234567890',
-//                'surl'        => url('payumoney-test/return'),
-//                'furl'        => url('payumoney-test/return'),
-//            ])->send();
-
-            //return view('payu');
-            $url = url('/payu/'.$transactionId);
+            $url = url('/payuplan/'.$transactionId);
             echo json_encode(['url'=>$url]);
-            //return redirect('/payu/'.$transactionId);
-            //return 1;
-            // echo json_encode(['hash'=>$hash]);
-        }
-        //print_r($allFields); die;
+        }else if($allFields['type']=='rozerpay') {
+            $displayCurrency = 'INR';
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $orderData = [
+                'receipt' => $transactionId,
+                'amount' => ($allFields['plan']['package_price']) * 100, // 2000 rupees in paise
+                'currency' => 'INR',
+                'payment_capture' => 1 // auto capture
+            ];
 
-        //  return response()->json($all_products);
-    }
+            $razorpayOrder = $api->order->create($orderData);
+
+            $razorpayOrderId = $razorpayOrder['id'];
+            if (!empty($razorpayOrderId)) {
+                UserPackage::where('transaction_id', '=', $transactionId)->update(['rozor_pay_id' => $razorpayOrderId]);
+            }
+
+            $displayAmount = $amount = $orderData['amount'];
+
+            if ($displayCurrency !== 'INR') {
+                $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+                $exchange = json_decode(file_get_contents($url), true);
+
+                $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
+            }
+            $data = [
+                "key" => $this->keyRazorId,
+                "amount" => $amount,
+                "name" => $userData[0]['first_name'],
+                "description" => "ImageFootage",
+                "image" => "https://imagefootage.com/assets/images/logoimage_new.png",
+                "prefill" => [
+                    "name" => $userData[0]['first_name'],
+                    "email" => $userData[0]['email'],
+                    "contact" => $userData[0]['phone'],
+                ],
+                "notes" => [
+                    "address" => $userData[0]['address'],
+                    "merchant_order_id" => $transactionId,
+                ],
+                "theme" => [
+                    "color" => "#F37254"
+                ],
+                "order_id" => $razorpayOrderId,
+            ];
+            if ($displayCurrency !== 'INR') {
+                $data['display_currency'] = $displayCurrency;
+                $data['display_amount'] = $displayAmount;
+            }
+            echo json_encode($data);
+        }
+  }
 
     public function atomPayPlanResponse(Request $request){
         $transactionResponse = new TransactionResponse();
@@ -392,7 +429,7 @@ class PaymentController extends Controller
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                      return redirect('http://localhost:4200/user-profile');
                 }else{
-                    return redirect('http://localhost:4200/orderFailed/'.$_POST['mer_txn']);
+                    return redirect('http://localhost:4200/planFailed/'.$_POST['mer_txn']);
                 }
                 //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
 
@@ -406,6 +443,63 @@ class PaymentController extends Controller
 
     }
 
+    public function payuplan($transaction){
+        $planData = UserPackage::with('user')
+            ->where('transaction_id','=',$transaction)
+            ->get()->toArray();
+
+        $items= array();
+        Payumoney::pay([
+            'txnid'       => $transaction,
+            'amount'      => $planData[0]['package_price'],
+            'productinfo' => $planData[0]['package_name'],
+            'firstname'   => $planData[0]['user']['first_name']." ".$planData[0]['user']['last_name'],
+            'email'       => $planData[0]['user']['email'],
+            'phone'       => $planData[0]['user']['mobile'],
+            'surl'        => url('api/payUplanResponse'),
+            'furl'        => url('api/planFailed'),
+        ])->send();
+    }
+
+    public function payUplanResponse(Request $request){
+
+        $result = Payumoney::completePay($_POST);
+        $params = $result->getParams();
+        if ($result->checksumIsValid() && $result->isSuccess()) {
+            $transaction = $result->getTransactionId();
+            $status = $result->getStatus();
+            UserPackage::where('transaction_id',$params['txnid'])
+                ->update(['payment_mode'=>$params['bankcode'],
+                    'payment_status'=>$status,'response_payment'=>json_encode($params)]);
+            return redirect('http://localhost:4200/user-profile');
+        }
+
+    }
+
+    public function razor_plan_response(Request $request){
+        $data = $request->all();
+        $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+        $success =true;
+        try
+        {
+            $attributes  = $data['paymentRes'];
+            $order  = $api->utility->verifyPaymentSignature($attributes);
+        }catch(SignatureVerificationError $e){
+            $success = false;
+            $error = 'Razorpay Error : ' . $e->getMessage();
+        }
+        $orders = UserPackage::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first();
+        if($success===true){
+            UserPackage::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
+                ->update(['payment_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
+            $url = 'http://localhost:4200/user-profile';
+        }else{
+            $url = 'http://localhost:4200/planFailed/'.$orders->txn_id;
+        }
+        echo json_encode(['url'=>$url]);
+  }
+
+    //PDF payment link code start
     public function atomPayInvoiceResponse(){
         $transactionResponse = new TransactionResponse();
         $transactionResponse->setRespHashKey("KEYRESP123657234");
@@ -431,7 +525,6 @@ class PaymentController extends Controller
             echo "Invalid Signature";
         }
     }
-
     public function invoiceConfirmation($id){
          $invoice_id = decrypt($id);
          $dataForEmail = $this->getData($invoice_id);
@@ -456,6 +549,27 @@ class PaymentController extends Controller
         $invoice_id = decrypt($id);
         $dataForEmail = $this->getData($invoice_id);
         return view('invoicefail',['quotation' => $dataForEmail]);
+
+    }
+    //PDF payment end
+
+    public function orderDetails(Request $request){
+        $allFields = $request->all();
+        if(count($allFields)>0){
+            $OrderData = Orders::with(['user'=>function($query1){
+                $query1->select('id','user_name','first_name','last_name','city','state','country')
+                ->with('country')
+                ->with('state')
+                ->with('city');
+            }])->with(['items'=>function($query){
+                $query->with('product');
+            }]) ->where('txn_id','=',$allFields['id'])
+                ->get()->toArray();
+             SendEmail::dispatchNow($OrderData);
+            echo json_encode(['status'=>"success",'data'=>$OrderData]);
+        }else{
+            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+        }
 
     }
 

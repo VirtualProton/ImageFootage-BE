@@ -47,6 +47,8 @@ Route::group([
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
     Route::get('pond5Upload', 'CronController@pond5Upload');
+    Route::get('pantherImageUploadCategory', 'CronController@pantherImageUploadCategory');
+    Route::get('pond5UploadCategory', 'CronController@pond5UploadCategory');
 	Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
     Route::get('getCountyStatesList/{id}', 'UserContactusController@getCountyStatesList');
@@ -70,10 +72,9 @@ Route::group([
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
     Route::post('atomPayInvoiceResponse', 'PaymentController@atomPayInvoiceResponse');
     Route::post('sampledownloadFootage', 'MediaController@sampledownloadFootage');
-
-	
-
-
+    Route::post('razor_response', 'PaymentController@razor_response');
+    Route::post('razor_plan_response', 'PaymentController@razor_plan_response');
+    Route::post('payUplanResponse', 'PaymentController@payUplanResponse');
 });
 
 Route::group([
