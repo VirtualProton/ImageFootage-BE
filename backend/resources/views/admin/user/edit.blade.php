@@ -6,7 +6,7 @@
 
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Edit Account</h3>
+              <h3 class="box-title">Edit Account </h3><a href="{{ URL::to('admin/users') }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->

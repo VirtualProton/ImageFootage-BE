@@ -15,7 +15,7 @@
     <section class="content">
         <div class="row">
         	<div class="col-md-12">
-         		<div class="box">
+         		<div class="box" style="overflow: auto;">
                 <div class="box-header">
                   <h3 class="box-title">Lead/Contact/User List</h3>
                 </div>

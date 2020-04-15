@@ -101,6 +101,7 @@ class AuthController extends Controller
                 //$save_data->user_name = $request['userData']['name'];
                 $save_data->email = $request['userData']['email'];
                 $save_data->first_name = $request['userData']['name'];
+				$save_data->user_name = $request['userData']['name'];
                 $save_data->password = Hash::make('123456');
                 $save_data->gmail_idtoken = $request['userData']['idToken'];
                 $save_data->profile_photo = $request['userData']['image'];
@@ -117,7 +118,7 @@ class AuthController extends Controller
                 //$save_data->user_name = $request['userData']['name'];
                 $save_data->email = $request['userData']['email'];
                 $save_data->first_name = $request['userData']['name'];
-               
+                $save_data->user_name = $request['userData']['name'];
                 $save_data->fb_token = $request['userData']['idToken'];
                 $save_data->profile_photo = $request['userData']['image'];
                 $save_data->provider = $request['userData']['provider'];
