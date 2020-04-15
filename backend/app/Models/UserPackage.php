@@ -12,7 +12,9 @@ class UserPackage extends Model
     public function downloads(){
         return $this->hasMany(UserProductDownload::class,'package_id', 'id');
     }
-
+    public function user(){
+        return $this->hasOne(User::class,'id', 'user_id');
+    }
 
 
 

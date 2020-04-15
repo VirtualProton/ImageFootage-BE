@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
 import { NgxSpinnerService } from "ngx-spinner";
-
+declare var Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
@@ -38,6 +38,7 @@ export class CheckoutComponent implements OnInit {
   totalPrice:number=0;
   payuForm: FormGroup;
   hash:any='';
+  rozResponse:any ='';
   public currentUser: any;
   constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
       this.authenticationService.currentUser.subscribe(x => {
@@ -210,25 +211,56 @@ export class CheckoutComponent implements OnInit {
 
   onSubmitPayment(paymentgatway){
       this.loadingData = true;
-      console.log(paymentgatway);
 
       this.authenticationService.payment(this.checkoutForm.value,this.priceArray,paymentgatway)
       // .pipe(first())
           .subscribe(
               data2 => {
-
-                  // alert("Sucessfully Registered");
-                  console.log(data2.url);
-                  console.log(paymentgatway);
                   this.loadingData = false;
                   if(paymentgatway=='atom')  {
                       window.location.href = data2.url;
                   }else if(paymentgatway=='payu'){
-                    console.log(data2);
-                     //this.hash = data2.hash;
-                      window.location.href = data2.url;
-                      //document.getElementById('payuform').onsubmit;
-                     //this.payuData = data2;
+                     window.location.href = data2.url;
+                  }else if(paymentgatway=='rozerpay'){
+                    // window.location.href = data2;
+                      var options = data2;
+
+                          /**
+                           * The entire list of Checkout fields is available at
+                           * https://docs.razorpay.com/docs/checkout-form#checkout-fields
+                           */
+                          options.handler = this.razorpayRes.bind(this)
+                      // function (response){
+                      //         this.loading = true;
+                      //         this.rozResponse = response;
+                      //         //document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                      //         //document.getElementById('razorpay_signature').value = response.razorpay_signature;
+                      //        // document.razorpayform.submit();
+                      //         this.razorpayRes(this.rozResponse);
+                      //
+                      //         console.log(response);
+                      //         console.log(response.razorpay_payment_id);
+                      //         console.log(response.razorpay_signature);
+                      //     };
+
+                      // Boolean whether to show image inside a white frame. (default: true)
+                      options.theme.image_padding = false;
+
+                      options.modal = {
+                          ondismiss: function() {
+                              console.log("This code runs when the popup is closed");
+                          },
+                          // Boolean indicating whether pressing escape key
+                          // should close the checkout form. (default: true)
+                          escape: true,
+                          // Boolean indicating whether clicking translucent blank
+                          // space outside checkout form should close the form. (default: false)
+                          backdropclose: false
+                      };
+
+                      var rzp = new Razorpay(options);
+                      rzp.open();
+                      event.preventDefault();
                   }
 
                   //this.router.navigate([data2.url]);
@@ -250,6 +282,15 @@ export class CheckoutComponent implements OnInit {
 
     editAddress(){
       this.paymentShow = false;
+    }
+
+    razorpayRes(payres){
+        this.loadingData = true;
+        this.authenticationService.razorponse(payres)
+            .subscribe(data => {
+                this.loadingData = false;
+                window.location.href = data.url;
+            });
     }
 
 

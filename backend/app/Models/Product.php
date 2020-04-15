@@ -112,7 +112,8 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                     'product_web' => '2',
-                    'product_vertical' => 'Royalty Free'
+                    'product_vertical' => 'Royalty Free',
+                    'updated_at' => date("Y-m-d H:i:s")
 
                 );
                 // print_r($media); die;
@@ -129,8 +130,8 @@ class Product extends Model
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => $flag.$key]);
-                    return $flag.$key;
-                   // echo "Inserted" . $id;
+                    //return $flag.$key;
+                    echo "Inserted" . $id;
                 }else{
 
                     //echo "hello";
@@ -142,8 +143,8 @@ class Product extends Model
                                   'product_title' => $eachmedia['title'],
                                   'updated_at' => date('Y-m-d H:i:s')
                             ]);
-                     return $data2[0]->product_id;
-                    //echo "Updated". $eachmedia['id'];
+                    // return $data2[0]->product_id;
+                    echo "Updated". $eachmedia['id'];
                 }
             }
          }
@@ -202,7 +203,8 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s"),
                     'product_web' => '3',
-                    'product_vertical' => 'Royalty Free'
+                    'product_vertical' => 'Royalty Free',
+                    'updated_at' => date("Y-m-d H:i:s")
 
                 );
                 // print_r($media); die;
@@ -218,10 +220,10 @@ class Product extends Model
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => $flag.$key]);
-                    //echo "Inserted" . $id;
-                    return $flag.$key;
+                    echo "Inserted" . $id;
+                    //return $flag.$key;
                 }else{
-                    return $data2[0]->product_id;
+                    //return $data2[0]->product_id;
                 }
             }
         }
@@ -232,22 +234,25 @@ class Product extends Model
     public function getProductsRandom(){
         ini_set('max_execution_time',0);
         $final_data = [];
-       $data =   DB::table('imagefootage_products as pr')
+        $data =   DB::table('imagefootage_products as pr')
             //->where('pr.product_web','2')
             //->where('pr.width_thumb','<>',NULL)
-            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','product_main_type','width_thumb','height_thumb')
+            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','category_id','product_main_type','width_thumb','height_thumb')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             //->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
              //   'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
              ->where('pc.is_display_home','=','1')
              ->where('pr.updated_at', '>=','2020-04-01')
+             ->orderBy('pc.category_order','asc')
              ->inRandomOrder()
+
             //->limit(Product::HomeLimit)
             ->get()
             ->groupBy("category_name")
             ->map(function($product) {
-               return $product->take(Product::HomeLimit);
+              return $product->take(Product::HomeLimit);
            });
+
 
 //
         //$data = (array)$data;
@@ -290,7 +295,8 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($data['metadata']['date'])),
                     'product_web' => '2',
-                    'product_vertical' => 'Royalty Free'
+                    'product_vertical' => 'Royalty Free',
+                    'updated_at' => date("Y-m-d H:i:s")
 
                 );
                 // print_r($media); die;

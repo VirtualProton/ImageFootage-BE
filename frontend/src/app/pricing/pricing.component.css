@@ -2,6 +2,12 @@ body{ font-weight:normal;/*background: #f1f5f6;*/}
 .skinonegetquote li button {
     background: #38b880;
 }
+a {
+    cursor:pointer;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
 .klaus_getaquote li button {
     color: #fff !important;
     float: left;
@@ -16,9 +22,7 @@ body{ font-weight:normal;/*background: #f1f5f6;*/}
     border: none
 }
 #mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}
-a {
-    cursor:pointer;
-}
+
 @charset "utf-8";
 
 .clear {clear:both;}

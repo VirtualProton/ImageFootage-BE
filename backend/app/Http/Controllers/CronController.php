@@ -10,6 +10,7 @@ use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
 use App\Models\Product;
 use App\Models\Common;
+use  App\Models\ProductCategory;
 use CORS;
 
 class CronController extends Controller
@@ -48,6 +49,28 @@ class CronController extends Controller
         //return array('api'=>$pantharmediaData);
     }
 
+    public function pantherImageUploadCategory(){
+        ini_set('max_execution_time', 0);
+        //$product = new Product();
+        //$all_products = $product->getProducts($keyword);
+       // $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
+         $categories = ProductCategory::get()->toArray();
+        foreach($categories as $percategory){
+            $keyword['search'] = $percategory['category_name'];
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData = $pantherMediaImages->search($keyword);
+            //echo "<pre>";
+            //print_r($pantharmediaData); die;
+
+            if(count($pantharmediaData) > 0){
+                $this->product->savePantherImage($pantharmediaData,$percategory['category_id']);
+            }
+
+            //print_r($pantharmediaData); die;
+
+        }
+        //return array('api'=>$pantharmediaData);
+    }
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
         DB::enableQueryLog();
@@ -124,6 +147,27 @@ class CronController extends Controller
         }
     }
 
-    
+    public function pond5UploadCategory()
+    {
+        ini_set('max_execution_time', 0);
+        //$product = new Product();
+        //$all_products = $product->getProducts($keyword);
+        //$home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
+        $categories = ProductCategory::get()->toArray();
+        foreach ($categories as $percategory) {
+            $keyword['search'] = $percategory['category_name'];
+            $footageMedia = new FootageApi();
+            $pondfootageMediaData = $footageMedia->search($keyword,[]);
+            //$common = new Common();
+            //$category_id = $common->checkCategory($percategory);
+            if (count($pondfootageMediaData) > 0) {
+                //echo "<pre>";
+                //print_r($pondfootageMediaData); die;
+                $this->product->savePond5Image($pondfootageMediaData, $percategory['category_id']);
+            }
+        }
+    }
+
+
 
 }
