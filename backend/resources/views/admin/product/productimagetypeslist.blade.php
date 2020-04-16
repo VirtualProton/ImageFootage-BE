@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Product Image Size List
+        Product Image Type List
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Product Image Size List</li>
+        <li class="active">Product Image Type List</li>
       </ol>
     </section>
 
@@ -25,7 +25,7 @@
         	<div class="col-md-12">
          		<div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
-                  <h3 class="box-title">Product Image Size List</h3>
+                  <h3 class="box-title">Product Image Type List</h3>
                 </div>
 
                 @include('admin.partials.message')

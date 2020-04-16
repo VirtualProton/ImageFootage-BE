@@ -19,7 +19,7 @@
         	<div class="col-md-12">
          		<div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title"> Edit Product Image Type</h3>
+                  <h3 class="box-title"> Edit Product Image Type</h3><a href="{{ URL::to('admin/product_image_types_list') }}" class="btn pull-right">Back</a>
                 </div>
                @if( Session::has( 'success' ))
      			{{ Session::get( 'success' ) }}

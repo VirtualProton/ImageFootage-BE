@@ -18,7 +18,7 @@
         <li class="active">Products List</li>
       </ol>
     </section>
-
+   
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -55,7 +55,7 @@
   <td>{{ $product['subcategory_name'] }} </td>
   <td>{{ $product['product_owner'] }} </td>
   <td>{{ $product['product_vertical'] }} </td>
-  <td>{{ $product['product_keywords'] }} </td>
+  <td ><span style="width:300px;display: flex;overflow:auto;">{{ $product['product_keywords'] }}</span> </td>
   <td>{{ $product['product_main_type'] }} </td>
   <td>
 
@@ -105,6 +105,7 @@
               </div>
             </div>
         </div>
+        {{ $products->links() }}
     </section>
     <!-- /.content -->
   </div>
@@ -114,14 +115,14 @@
   <script>
   $(function () {
 
-    $('#example2').DataTable(/*{
+   /* $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    }*/);
+    });*/
   });
 </script>
   @endsection
