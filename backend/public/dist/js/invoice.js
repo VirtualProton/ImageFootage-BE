@@ -1,5 +1,8 @@
 base_url ='/imagefootagenew/backend/admin/';
-app= angular.module('imageFootage', []);
+app= angular.module('imageFootage', [], function($interpolateProvider) {
+    $interpolateProvider.startSymbol('<%');
+    $interpolateProvider.endSymbol('%>');
+});
 app.controller('quotatationController', function($scope, $http,$location) {
     $scope.title = "Send Quotation";
     $scope.quotation ={};
@@ -236,4 +239,26 @@ app.directive('ngFile', ['$parse', function ($parse) {
      }
     };
    }]);
-   
+
+app.controller('ordersController', function($scope, $http,$location) {
+    $scope.orderslist = {};
+    $scope.products = {};
+    $('#loading').show();
+    $http({
+        method: 'GET',
+        url: base_url+'userListapi',
+    }).then(function (response){
+        $('#loading').hide();
+         $scope.orderslist = response.data;
+    },function (error){
+        $('#loading').hide();
+    });
+    $scope.showProduct = function(products) {
+        $scope.products = products;
+        console.log($scope.products);
+        $('#modal-default').modal('show');
+    }
+
+
+});
+

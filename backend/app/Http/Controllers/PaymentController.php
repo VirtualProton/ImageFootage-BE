@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +19,12 @@ use Payumoney;
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use App\Jobs\SendEmail;
+use App\Jobs\SendPlanEmail;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+use Aws\S3\MultipartUploader;
+use Aws\Exception\MultipartUploadException;
+use PDF;
 
 
 
@@ -32,8 +38,33 @@ class PaymentController extends Controller
      */
     public function __construct()
     {
-        $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-        $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
+        $environment = App::environment();
+        if (App::environment('local')) {
+            // The environment is local
+            $this->baseurl = 'http://localhost:4200';
+            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
+            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
+            $this->atomRequestKey ='KEY123657234';
+            $this->atomResponseKey ='KEYRESP123657234';
+            $this->login ='197';
+            $this->mode ='Test';
+            $this->password = 'Test@123';
+            $this->clientcode = '007';
+            $this->atomprodId = 'NSE';
+      }else{
+            $this->baseurl = 'https://imagefootage.com';
+            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
+            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
+            $this->atomRequestKey ='3a1575abc728e8ccf9';
+            $this->atomResponseKey ='43af4ba2fbd68d327e';
+            $this->login ='106640';
+            $this->mode ='live';
+            $this->password = '33719eef';
+            $this->clientcode = '007';
+            $this->atomprodId = 'CONCEPTUAL';
+
+        }
+
     }
 
     public function payment(Request $request){
@@ -57,7 +88,7 @@ class PaymentController extends Controller
                  ->get()->toArray();
         //dd(DB::getQueryLog());
         //print_r($userData); die;
-        $tax = $allFields['cartval'][0]*8/100;
+        $tax = $allFields['cartval'][0]*12/100;
         $final_tax=round($tax,2);
         $orders = new Orders();
         $orders->user_id = $allFields['tokenData']['Utype'];
@@ -106,10 +137,10 @@ class PaymentController extends Controller
         if($allFields['type']=='atom'){
             $transactionRequest = new TransactionRequest();
             //Setting all values here
-            $transactionRequest->setMode("test");
-            $transactionRequest->setLogin(197);
-            $transactionRequest->setPassword("Test@123");
-            $transactionRequest->setProductId('NSE');
+            $transactionRequest->setMode($this->mode);
+            $transactionRequest->setLogin($this->login);
+            $transactionRequest->setPassword($this->password);
+            $transactionRequest->setProductId($this->atomprodId);
             if(!empty($allFields['cartval'][0])){
 
                 $transactionRequest->setAmount($allFields['cartval'][0]+$final_tax);
@@ -117,7 +148,7 @@ class PaymentController extends Controller
                 $transactionRequest->setTransactionAmount($allFields['cartval'][0]+$final_tax);
             }
             $transactionRequest->setReturnUrl(url('/api/atomPayResponse'));
-            $transactionRequest->setClientCode(007);
+            $transactionRequest->setClientCode($this->clientcode);
             $transactionRequest->setTransactionId($transactionId);
             $transactionRequest->setTransactionDate($transactionDate);
             $transactionRequest->setCustomerName($allFields['usrData']['first_name']);
@@ -125,7 +156,7 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerMobile($userData[0]['phone']);
             $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
-            $transactionRequest->setReqHashKey("KEY123657234");
+            $transactionRequest->setReqHashKey($this->atomRequestKey);
 
 
             $url = $transactionRequest->getPGUrl();
@@ -167,7 +198,7 @@ class PaymentController extends Controller
                 "amount"            => $amount,
                 "name"              => $allFields['usrData']['first_name'],
                 "description"       => "ImageFootage",
-                "image"             => "https://imagefootage.com/assets/images/logoimage_new.png",
+                "image"             => $this->baseurl."/assets/images/logoimage_new.png",
                 "prefill"           => [
                     "name"              => $allFields['usrData']['first_name'],
                     "email"             => $userData[0]['email'],
@@ -196,26 +227,35 @@ class PaymentController extends Controller
 
     public function atomPayResponse(Request $request){
         $transactionResponse = new TransactionResponse();
-        $transactionResponse->setRespHashKey("KEYRESP123657234");
+        $transactionResponse->setRespHashKey($this->atomResponseKey);
         if($transactionResponse->validateResponse($_POST)){
             //echo "Transaction Processed <br/>";
            // print_r($_POST);die;
             if(count($_POST)>0){
                 if($_POST['f_code']=='Ok'){
-                    Orders::where('txn_id',$_POST['mer_txn'])
+                     Orders::where('txn_id',$_POST['mer_txn'])
                             ->update(['payment_mode'=>$_POST['discriminator'],
                                 'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
-                    $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
-                    Usercart::where('cart_added_by',$orders->user_id)->delete();
-                    return redirect('/orderConfirmation/'.$_POST['mer_txn']);
+                    $orders= Orders::with(['user'=>function($query1){
+                        $query1->select('id','user_name','first_name','last_name','city','state','country');
+                    }])->with(['items'=>function($query){
+                        $query->with('product');
+                    }]) ->where('txn_id','=',$_POST['mer_txn'])
+                        ->with('country')
+                        ->with('state')
+                        ->with('city')
+                        ->get()->toArray();
+                    $this->invoiceWithemail($orders,$_POST['mer_txn']);
+                    Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
+                    return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn']);
                  }else{
-                    return redirect('/orderFailed/'.$_POST['mer_txn']);
+                    return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
                 }
               //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
 
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('/orderFailed/'.$_POST['mer_txn']);
+                return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";
@@ -254,11 +294,21 @@ class PaymentController extends Controller
             Orders::where('txn_id',$params['txnid'])
                 ->update(['payment_mode'=>$params['bankcode'],
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
-            $orders = Orders::where('txn_id',$params['txnid'])->first();
-            Usercart::where('cart_added_by',$orders->user_id)->delete();
-            return redirect('/orderConfirmation/'.$params['txnid']);
+            $orders= Orders::with(['user'=>function($query1){
+                $query1->select('id','user_name','first_name','last_name','city','state','country');
+             }])->with(['items'=>function($query){
+                $query->with('product');
+            }]) ->where('txn_id','=',$params['txnid'])
+                ->with('country')
+                ->with('state')
+                ->with('city')
+                ->get()->toArray();
+
+            $this->invoiceWithemail($orders,$params['txnid']);
+            Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
+            return redirect($this->baseurl.'/orderConfirmation/'.$params['txnid']);
         } else {
-            return redirect('/orderFailed/'.$params['txnid']);
+            return redirect($this->baseurl.'/orderFailed/'.$params['txnid']);
         }
 
     }
@@ -275,14 +325,23 @@ class PaymentController extends Controller
             $success = false;
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
-        $orders = Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first();
+        $orders= Orders::with(['user'=>function($query1){
+            $query1->select('id','user_name','first_name','last_name','city','state','country');
+        }])->with(['items'=>function($query){
+            $query->with('product');
+        }]) ->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
+            ->with('country')
+            ->with('state')
+            ->with('city')
+            ->get()->toArray();
+        $this->invoiceWithemail($orders,$orders[0]['txn_id']);
         if($success===true){
            Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
                   ->update(['order_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
-                 Usercart::where('cart_added_by',$orders->user_id)->delete();
-            $url = 'http://localhost:4200/orderConfirmation/'.$orders->txn_id;
+                 Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
+            $url = $this->baseurl.'/orderConfirmation/'.$orders[0]['txn_id'];
        }else{
-            $url = 'http://localhost:4200/orderFailed/'.$orders->txn_id;
+            $url = $this->baseurl.'/orderFailed/'.$orders[0]['txn_id'];
         }
         echo json_encode(['url'=>$url]);
 
@@ -338,10 +397,10 @@ class PaymentController extends Controller
         if($allFields['type']=='atom'){
             $transactionRequest = new TransactionRequest();
             //Setting all values here
-            $transactionRequest->setMode("test");
-            $transactionRequest->setLogin(197);
-            $transactionRequest->setPassword("Test@123");
-            $transactionRequest->setProductId('NSE');
+            $transactionRequest->setMode($this->mode);
+            $transactionRequest->setLogin($this->login);
+            $transactionRequest->setPassword($this->password);
+            $transactionRequest->setProductId($this->atomprodId);
             if(!empty($allFields['plan']['package_price'])){
 
                 $transactionRequest->setAmount($allFields['plan']['package_price']);
@@ -349,7 +408,7 @@ class PaymentController extends Controller
                 $transactionRequest->setTransactionAmount($allFields['plan']['package_price']);
             }
             $transactionRequest->setReturnUrl(url('/api/atomPayPlanResponse'));
-            $transactionRequest->setClientCode(007);
+            $transactionRequest->setClientCode($this->clientcode);
             $transactionRequest->setTransactionId($transactionId);
             $transactionRequest->setTransactionDate($transactionDate);
             $transactionRequest->setCustomerName($userData[0]['first_name']);
@@ -357,7 +416,7 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerMobile($userData[0]['phone']);
             $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
-            $transactionRequest->setReqHashKey("KEY123657234");
+            $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
         }else if($allFields['type']=='payu'){
@@ -393,7 +452,7 @@ class PaymentController extends Controller
                 "amount" => $amount,
                 "name" => $userData[0]['first_name'],
                 "description" => "ImageFootage",
-                "image" => "https://imagefootage.com/assets/images/logoimage_new.png",
+                "image" => $this->baseurl."/assets/images/logoimage_new.png",
                 "prefill" => [
                     "name" => $userData[0]['first_name'],
                     "email" => $userData[0]['email'],
@@ -418,24 +477,33 @@ class PaymentController extends Controller
 
     public function atomPayPlanResponse(Request $request){
         $transactionResponse = new TransactionResponse();
-        $transactionResponse->setRespHashKey("KEYRESP123657234");
+        $transactionResponse->setRespHashKey($this->atomResponseKey);
         if($transactionResponse->validateResponse($_POST)){
             //echo "Transaction Processed <br/>";
             // print_r($_POST);die;
             if(count($_POST)>0){
                 if($_POST['f_code']=='Ok'){
-                    UserPackage::where('transaction_id',$_POST['mer_txn'])
+                  UserPackage::where('transaction_id',$_POST['mer_txn'])
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
-                     return redirect('http://localhost:4200/user-profile');
+                    $orders = UserPackage::with(['user'=>function($query1){
+                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                            ->with('country')
+                            ->with('state')
+                            ->with('city');
+                    }])->where('transaction_id',$_POST['mer_txn'])->first()->toArray();
+                       $this->invoiceWithemailPlan($orders,$_POST['mer_txn']);
+                            //SendPlanEmail::dispatch($orders);
+
+                        return redirect($this->baseurl.'/user-profile');
                 }else{
-                    return redirect('http://localhost:4200/planFailed/'.$_POST['mer_txn']);
+                    return redirect($this->baseurl.'/planFailed/'.$_POST['mer_txn']);
                 }
                 //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
 
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('/orderFailed/'.$_POST['mer_txn']);
+                return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";
@@ -471,7 +539,15 @@ class PaymentController extends Controller
             UserPackage::where('transaction_id',$params['txnid'])
                 ->update(['payment_mode'=>$params['bankcode'],
                     'payment_status'=>$status,'response_payment'=>json_encode($params)]);
-            return redirect('http://localhost:4200/user-profile');
+            $orders = UserPackage::with(['user'=>function($query1){
+                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                    ->with('country')
+                    ->with('state')
+                    ->with('city');
+            }])->where('transaction_id',$params['txnid'])->first()->toArray();
+
+            $this->invoiceWithemailPlan($orders,$params['txnid']);
+            return redirect($this->baseurl.'/user-profile');
         }
 
     }
@@ -488,13 +564,21 @@ class PaymentController extends Controller
             $success = false;
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
-        $orders = UserPackage::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first();
         if($success===true){
             UserPackage::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
                 ->update(['payment_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
-            $url = 'http://localhost:4200/user-profile';
+        }
+        $orders = UserPackage::with(['user'=>function($query1){
+            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                ->with('country')
+                ->with('state')
+                ->with('city');
+        }])->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
+        if($success===true){
+            $this->invoiceWithemailPlan($orders,$orders['transaction_id']);
+            $url = $this->baseurl.'/user-profile';
         }else{
-            $url = 'http://localhost:4200/planFailed/'.$orders->txn_id;
+            $url = $this->baseurl.'/planFailed/'.$orders['transaction_id'];
         }
         echo json_encode(['url'=>$url]);
   }
@@ -502,7 +586,7 @@ class PaymentController extends Controller
     //PDF payment link code start
     public function atomPayInvoiceResponse(){
         $transactionResponse = new TransactionResponse();
-        $transactionResponse->setRespHashKey("KEYRESP123657234");
+        $transactionResponse->setRespHashKey($this->atomResponseKey);
         if($transactionResponse->validateResponse($_POST)){
             //echo "Transaction Processed <br/>";
             // print_r($_POST);die;
@@ -511,15 +595,15 @@ class PaymentController extends Controller
                     DB::table('imagefootage_performa_invoices')->where('invoice_name',$_POST['mer_txn'])
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','payment_response'=>json_encode($_POST)]);
-                    return redirect('/invoiceConfirmation/'.encrypt($_POST['mer_txn']));
+                    return redirect($this->baseurl.'/invoiceConfirmation/'.encrypt($_POST['mer_txn']));
                 }else{
-                    return redirect('/invoiceFailed/'.encrypt($_POST['mer_txn']));
+                    return redirect($this->baseurl.'/invoiceFailed/'.encrypt($_POST['mer_txn']));
                 }
                 //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
 
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('/orderFailed/'.$_POST['mer_txn']);
+                return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";
@@ -557,19 +641,80 @@ class PaymentController extends Controller
         $allFields = $request->all();
         if(count($allFields)>0){
             $OrderData = Orders::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','city','state','country')
-                ->with('country')
-                ->with('state')
-                ->with('city');
-            }])->with(['items'=>function($query){
+                $query1->select('id','user_name','first_name','last_name','city','state','country');
+             }])->with(['items'=>function($query){
                 $query->with('product');
             }]) ->where('txn_id','=',$allFields['id'])
+                ->with('country')
+                ->with('state')
+                ->with('city')
                 ->get()->toArray();
-             SendEmail::dispatchNow($OrderData);
+
             echo json_encode(['status'=>"success",'data'=>$OrderData]);
         }else{
             echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
         }
+
+    }
+
+    public function invoiceWithemail($OrderData,$transaction){
+        ini_set('max_execution_time',0);
+        $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0]]));
+        $fileName = $transaction."_web_invoice.pdf";
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $s3Client = new S3Client([
+            /*'profile' => 'default',*/
+            'region' => 'us-east-2',
+            'version' => '2006-03-01'
+        ]);
+        $path ='invoice/'.$fileName;
+        $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+        $uploader = new MultipartUploader($s3Client, $source, [
+            'bucket' => 'imgfootage',
+            'key' => $path,
+        ]);
+        try {
+            $fileupresult = $uploader->upload();
+        } catch (MultipartUploadException $e) {
+            //echo $e->getMessage() . "\n";
+        }
+        $pdf_path = $fileupresult['ObjectURL'];
+        if(!empty($pdf_path)){
+            Orders::where('txn_id','=',$transaction)
+                ->update(['invoice'=>$pdf_path]);
+            unlink(storage_path('app/public/pdf'). '/' . $fileName);
+        }
+        SendEmail::dispatch($OrderData);
+    }
+
+    public function invoiceWithemailPlan($OrderData,$transaction){
+        ini_set('max_execution_time',0);
+        $pdf = PDF::loadHTML(view('email.plan_invoice',['orders' => $OrderData]));
+        $fileName = $transaction."_web_plan_invoice.pdf";
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $s3Client = new S3Client([
+            /*'profile' => 'default',*/
+            'region' => 'us-east-2',
+            'version' => '2006-03-01'
+        ]);
+        $path ='invoice/'.$fileName;
+        $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+        $uploader = new MultipartUploader($s3Client, $source, [
+            'bucket' => 'imgfootage',
+            'key' => $path,
+        ]);
+        try {
+            $fileupresult = $uploader->upload();
+        } catch (MultipartUploadException $e) {
+            //echo $e->getMessage() . "\n";
+        }
+        $pdf_path = $fileupresult['ObjectURL'];
+        if(!empty($pdf_path)){
+            UserPackage::where('transaction_id','=',$transaction)
+                ->update(['invoice'=>$pdf_path]);
+            unlink(storage_path('app/public/pdf'). '/' . $fileName);
+        }
+        SendPlanEmail::dispatch($OrderData);
 
     }
 

@@ -1,6 +1,6 @@
 <html>
    <head>
-      <title>Quotataion invoice</title>
+      <title>Order invoice</title>
    </head>
    <body>
       <div class="container">
@@ -48,10 +48,10 @@
                            </tr>
                            <tr>
                               <td style="color: #fc8041; font-weight: 700">Total:</td>
-                              <td style="color: #fc8041; font-weight: 700">Rs. <?php echo $orders['total'] ?></td>
+                              <td style="color: #fc8041; font-weight: 700">Rs. <?php echo $orders['order_total'] ?></td>
                            </tr>
                            <tr>
-                              <td>Quote for:</td>
+                              <td>User Details:</td>
                            </tr>
                            <tr>
                               <td colspan="2">
@@ -80,11 +80,11 @@
                       <?php 
                       $subtotalarray = 0;
                       foreach($orders['items'] as $value){
-                        $subtotalarray = $subtotalarray+$value['total'];
-							   $protype=$value['']['product_type']=='royalty_free'?'Royality Free':'Right Managed'; ?>
+                        $subtotalarray = $subtotalarray+$value['standard_price'];
+							   $protype=$value['product']['product_main_type']; ?>
 								<tr>
 									 <th colspan="4" style="background: #eff1e6; padding: 16px 12px; text-align: left; border-top: 2px solid grey;">
-										<p style="margin: 0px; font-weight: bold; font-size:16px;"><?php echo $value['product_id']  ?></p>
+										<p style="margin: 0px; font-weight: bold; font-size:16px;"><?php echo $value['product']['product_id']  ?></p>
 										<p style="margin: 0px;font-weight: lighter;">
 										 <?php echo $protype; ?>
 										</p>
@@ -92,13 +92,27 @@
 								  </tr>
 						<tr>
 							<td width="20%"  style="vertical-align: top; padding: 5px 20px; text-align: center;">
-							<img src="<?php echo $value['product_image'] ?>" alt="image" width="150px" height="auto">
+                               <?php if($value['product_web']=='2'){ ?>
+                                <a href="javascript:void(0)" >
+                                    <img src="<?php echo $value['product_thumb']; ?>" alt="product-img" width="200" height="150"/>
+                                </a>
+                                <?php
+                               }else if($value['product_web']=='3'){ ?>
+                                <a href="javascript:void(0)">
+                                    <video width="200" height="150"
+                                           poster="<?php echo $value['product_thumb']; ?>" controls
+                                           onmouseover="this.play()" onmouseout="this.pause()">
+                                        <source src="<?php echo $value['product_thumb']; ?>" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </a>
+                                <?php } ?>
 							</td>
 									 <td colspan="2" width="50%">
 										<table width="100%" style="font-size:12px;">
 										<tr>
 											  <td style="text-align: right; font-weight: bold;">Product size:</td>
-											  <td><?php echo $value['product_size'] ?></td>
+											  <td><?php echo $value['standard_size'] ?></td>
 										   </tr>
 
 											<!-- if(!empty($value['usageType'])){
@@ -184,7 +198,7 @@
 									 </td>
 									 <td width="25%" style="vertical-align: top; text-align: right; font-size: 18px;">
 										<p style="margin: 0px; text-align: right; font-weight: bold; " ><strong>Price:</strong></p>
-										<p style="margin: 0px; text-align: right;  font-weight: bold;"><strong>Rs. <?php echo $value['subtotal']  ?></strong></p>
+										<p style="margin: 0px; text-align: right;  font-weight: bold;"><strong>Rs. <?php echo $value['standard_price']  ?></strong></p>
 									 </td>
 								  </tr>
 							
@@ -196,10 +210,14 @@
                                           <td colspan="2" width="80%"  style="text-align: right;  background: #eff1e6; ">Subtotal:</td>
                                           <td width="20%" style="text-align: right;  background: #eff1e6; "> Rs. <?php  echo $subtotalarray?></td>
                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="80%"  style="text-align: right;  background: #eff1e6; ">Tax:</td>
+                                            <td width="20%" style="text-align: right;  background: #eff1e6; "> Rs. <?php  echo $orders['tax'] ?></td>
+                                        </tr>
                               
                                             <tr>
                                           <td colspan="2" width="80%" style="text-align: right; ">Total:</td>
-                                          <td  width="20%" style="text-align: right; "> Rs. <?php  echo $subtotalarray?></td>
+                                          <td  width="20%" style="text-align: right; "> Rs. <?php  echo $orders['order_total']?></td>
                                        </tr>
                                     </table>
                                  </td>
@@ -212,13 +230,7 @@
                                  </td>
 
                               </tr>
-                            <tr>
-                                <td colspan="4" style="font-size: 12px;">
-                                    <P>Please click on below link to Pay.</P>
-                                    <p style="margin: 0px;"><a href="<?php echo $quotation[0]['payment_url']; ?>" target="_blank" style="font-size: 12px;color:Red;">Payment Link</a></p>
 
-                                </td>
-                            </tr>
 
                            </tbody>
                         </table>

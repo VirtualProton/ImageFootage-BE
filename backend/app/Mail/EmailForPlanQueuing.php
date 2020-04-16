@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailForQueuing extends Mailable
+class EmailForPlanQueuing extends Mailable
 {
     use Queueable, SerializesModels;
     protected $details;
@@ -30,7 +30,7 @@ class EmailForQueuing extends Mailable
     public function build()
     {
         return $this->from('admin@imagefootage.com', 'Imagefootage')
-            ->subject('Your Order ('.$this->details['txn_id'].') has been successfull!!')
-            ->view('email.orders_invoice',['orders' => $this->details]);
+            ->subject('Your Plan Order ('.$this->details['transaction_id'].') has been successfull!!')
+            ->view('email.plan_invoice',['orders' => $this->details]);
     }
 }

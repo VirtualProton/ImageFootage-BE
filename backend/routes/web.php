@@ -155,6 +155,7 @@ Route::get('/editproductpeoples/{id}', 'ProductImagePeoplesController@editProduc
 Route::post('/updateproductpeoples', 'ProductImagePeoplesController@updateProductPeoples');
 //orders related
 Route::get('/user_orders', 'ProductOrdersController@userOrderList');
+Route::get('/userListapi', 'ProductOrdersController@userListapi');
 
 //Product  Orientations
 Route::get('/add_product_orientations ', 'ProductImageOrientationsController@addProductOrientations');

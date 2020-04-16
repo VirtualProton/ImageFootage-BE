@@ -216,10 +216,11 @@ export class CheckoutComponent implements OnInit {
       // .pipe(first())
           .subscribe(
               data2 => {
-                  this.loadingData = false;
-                  if(paymentgatway=='atom')  {
+                if(paymentgatway=='atom')  {
+                      this.loadingData = false;
                       window.location.href = data2.url;
                   }else if(paymentgatway=='payu'){
+                      this.loadingData = false;
                      window.location.href = data2.url;
                   }else if(paymentgatway=='rozerpay'){
                     // window.location.href = data2;

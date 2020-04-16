@@ -8,9 +8,29 @@ use Auth;
 class ProductOrdersController extends Controller
 {
    public function userOrderList(){
-	   $orders = new Orders;
-	   $all_orders_list=$orders->get()->toArray();
-	   return view('admin.orders.orderlist', ['orders' => $all_orders_list]);
+//	   $all_orders_list= Orders::with(['items'=>function($query){
+//                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+//            }])->with('user')
+//           ->with('country')
+//           ->with('state')
+//           ->with('city')
+//           ->orderBy('id','desc')
+//           ->get()->toArray();
+
+	   //return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
+       return view('admin.orders.orderlist');
+  }
+  public function userListapi(){
+      $all_orders_list= Orders::with(['items'=>function($query){
+          $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+      }])->with('user')
+          ->with('country')
+          ->with('state')
+          ->with('city')
+          ->orderBy('id','desc')
+          ->get()->toArray();
+      return response()->json($all_orders_list);
+
   }
   public function addPackage(Request $request){
 	   $this->validate($request, [

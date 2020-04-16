@@ -15,4 +15,14 @@ class Orders extends Model
     public function user(){
         return $this->hasOne(User::class,'id', 'user_id');
     }
+    public function country(){
+        return $this->hasOne(Country::class,'id', 'bill_country');
+    }
+
+    public function city(){
+        return $this->hasOne(City::class,'id', 'bill_city');
+    }
+    public function state(){
+        return $this->hasOne(State::class,'id', 'bill_state');
+    }
 }

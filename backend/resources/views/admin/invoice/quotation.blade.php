@@ -261,13 +261,13 @@
 							
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
-									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
-									<button type="reset" class="btn btn-danger">Reset</button>
+									<button typn-danger">Reset</button>
 								</div>
 							</div>
 						</form>
 						<!--form ended-->
-					</div>
+					</div>e="submit" class="btn btn-danger ng-binding">Submit</button>
+                  <button type="reset" class="btn bt
               </div>
              
 </div>

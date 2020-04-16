@@ -2,12 +2,9 @@
 @section('styles')
 <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 @endsection
-
-
-
 @section('content')
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
+ <div class="content-wrapper" ng-controller="ordersController">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -18,201 +15,132 @@
         <li class="active">Orders List</li>
       </ol>
     </section>
-
     <!-- Main content -->
-    <section class="content">
+    <section class="content" >
         <div class="row">
         	<div class="col-md-12">
          		<div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title">Orders List</h3>
                 </div>
-
-                @include('admin.partials.message')
-                <table id="example2" class="table table-bordered table-hover">
+     @include('admin.partials.message')
+                <table id="example2" class="table table-bordered table-striped dataTable">
                 	<thead>
-                        <th>Id</th>
-<th>user_id</th>
-<th>txn_id</th>
-<th>plan_id</th>
-<th>invoice</th>
-<th>download_plan_id</th>
-<th>download_plan_title</th>
+<th>User Name</th>
+<th>Transaction ID</th>
+<th>Subtotal</th>
+<th>Tax</th>
+<th>Total</th>
+<th>Order Date</th>
+<th>Payment Status</th>
+<th>Payment Provider</th>
+<th>Bill Full Name</th>
+<th>Billing Address</th>
+<th>Bill city</th>
+<th>Bill State</th>
+<th>Billing Country</th>
+<th>Billing Zip</th>
+<th>Invoice</th>
+<th>Action</th>
+</thead>
+ <tbody>
+{{--  //@foreach($orderlists as $orders)--}}
 
-<th>tax</th>
-<th>tax_selected</th>
-<th>coupon_code</th>
-<th>coupon_type</th>
-<th>coupon_value</th>
-<th>coupon_discount</th>
-<th>order_total</th>
-<th>order_date</th>
-<th>order_status</th>
-<th>order_title</th>
-<th>order_cancel_status</th>
-<th>order_type</th>
-<th>order_email</th>
+ <tr ng-if="orderslist" ng-repeat="orders in orderslist">
+     <td><%orders['user']['user_name']%></td>
+     <td><%orders['txn_id']%></td>
+     <td><%orders['order_total'] - $orders['tax']%> </td>
+     <td><%orders['tax']%></td>
+     <td><%orders['order_total']%></td>
+     <td><%orders['created_at']%></td>
+     <td><%orders['order_status']%></td>
+     <td><%orders['paymentgatway']%></td>
 
-<th>ip</th>
-<th>payment_mode</th>
-<th>cc_number</th>
-<th>cc_expiry_date</th>
-<th>job_number</th>
-<th>po_detail</th>
-<th>po_image</th>
-<th>order_comments</th>
-<th>bill_firstname</th>
-<th>bill_lastname</th>
-<th>bill_address1</th>
-<th>bill_address2</th>
-<th>bill_city</th>
-<th>bill_state</th>
-<th>bill_zip</th>
-<th>bill_country</th>
-<th>bill_phone</th>
-<th>created</th>
-<th>modified</th>
-<th>invoice_type</th>
-<th>expiry_invoices</th>
-<th>deletion_date</th>
-<th>invoice_closed</th>
-                        
-                    </thead>
+     <td><%orders['bill_firstname']%> <%orders['bill_lastname']%></td>
+     <td><%orders['bill_address1']%></td>
+     <td><%orders['city']['name']%></td>
+     <td><%orders['state']['state']%></td>
 
-                    <tbody>
-                     @foreach($orders as $orders)
-                    <tr>
-  <td>{{ $orders['id'] }} </td>
-  <td>{{ $orders['user_id'] }} </td>
-  <td>{{ $orders['txn_id'] }} </td>
-  <td>{{ $orders['plan_id'] }} </td>
-  <td>{{ $orders['invoice'] }} </td>
-  <td>{{ $orders['download_plan_id'] }} </td>
-  <td>{{ $orders['download_plan_title'] }} </td>
-  <td>{{ $orders['tax'] }} </td>
-  <td>{{ $orders['tax_selected'] }} </td>
-  <td>{{ $orders['coupon_code'] }}</td>
-  <td>{{ $orders['coupon_type'] }}</td>
-  <td>{{ $orders['coupon_value'] }}</td>
-  <td>{{ $orders['coupon_discount'] }}</td>
-  <td>{{ $orders['order_total'] }}</td>
-  <td>{{  date('Y-m-d',strtotime($orders['order_date'])) }} </td>
-  <td>{{ $orders['order_status'] }}</td>
-  <td>{{ $orders['order_title'] }}</td>
-  <td>{{ $orders['order_cancel_status'] }}</td>
-  <td>{{ $orders['order_type'] }}</td>
-  
-  
-  
-  <td>{{ $orders['order_email'] }}</td>
-  <td>{{ $orders['ip'] }}</td>
-  <td>{{ $orders['payment_mode'] }}</td>
-  <td>{{ $orders['cc_number'] }}</td>
-  
-  
-   <td>{{ $orders['cc_expiry_date'] }}</td>
-    <td>{{ $orders['job_number'] }}</td>
-     <td>{{ $orders['po_detail'] }}</td>
-      <td>{{ $orders['po_image'] }}</td>
-  
-  <td>{{ $orders['order_comments'] }}</td>
-  <td>{{ $orders['bill_firstname'] }}</td>
-  <td>{{ $orders['bill_lastname'] }}</td>
-  <td>{{ $orders['bill_address1'] }}</td>
-   <td>{{ $orders['bill_address2'] }}</td>
-    <td>{{ $orders['bill_city'] }}</td>
-     <td>{{ $orders['bill_state'] }}</td>
-     
-     <td>{{ $orders['bill_zip'] }}</td>
-     <td>{{ $orders['bill_country'] }}</td>
-     <td>{{ $orders['bill_phone'] }}</td>
-     <td>{{ $orders['created'] }}</td>
-     
-     
-     
-     
-     <td>{{ $orders['modified'] }}</td>
-     <td>{{ $orders['invoice_type'] }}</td>
-     <td>{{ $orders['expiry_invoices'] }}</td>
-     <td>{{ $orders['deletion_date'] }}</td>
-     <td>{{ $orders['invoice_closed'] }}</td>
-  
-  
-  
-  
-  
+     <td><%orders['country']['name']%></td>
+     <td><%orders['bill_zip']%></td>
+     <td><a target="_blank" href="<%orders['invoice']%>" ng-show="orders['invoice']">Download</a></td>
+     <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td>
  </tr>
-@endforeach
-                    </tbody>
-                    <tfoot>
-                        <th>Id</th>
-                        
-<th>user_id</th>
-<th>txn_id</th>
-<th>plan_id</th>
-<th>invoice</th>
-<th>download_plan_id</th>
-<th>download_plan_title</th>
 
-<th>tax</th>
-<th>tax_selected</th>
-<th>coupon_code</th>
-<th>coupon_type</th>
-<th>coupon_value</th>
-<th>coupon_discount</th>
-<th>order_total</th>
-<th>order_date</th>
-<th>order_status</th>
-<th>order_title</th>
-<th>order_cancel_status</th>
-<th>order_type</th>
-<th>order_email</th>
-
-<th>ip</th>
-<th>payment_mode</th>
-<th>cc_number</th>
-<th>cc_expiry_date</th>
-<th>job_number</th>
-<th>po_detail</th>
-<th>po_image</th>
-<th>order_comments</th>
-<th>bill_firstname</th>
-<th>bill_lastname</th>
-<th>bill_address1</th>
-<th>bill_address2</th>
-<th>bill_city</th>
-<th>bill_state</th>
-<th>bill_zip</th>
-<th>bill_country</th>
-<th>bill_phone</th>
-<th>created</th>
-<th>modified</th>
-<th>invoice_type</th>
-<th>expiry_invoices</th>
-<th>deletion_date</th>
-<th>invoice_closed</th>
-                    </tfoot>
-                </table>
+{{--@endforeach--}}
+</tbody>
+ </table>
               </div>
             </div>
         </div>
+
     </section>
     <!-- /.content -->
+     <div class="modal fade" id="modal-default">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">×</span></button>
+                     <h4 class="modal-title">Images/Footages Orders Details</h4>
+                 </div>
+                 <div class="modal-body">
+                     <table class="table table-bordered table-striped">
+                         <thead>
+                         <th>Type</th>
+                         <th>Product Image/Footage</th>
+                         <th>Product ID</th>
+                         <th>Product Name</th>
+                         <th>Size</th>
+                         <th>Price</th>
+                         <thead>
+                         <tbody>
+                             <tr ng-repeat="item in products">
+                                                         <td ng-show="item['product_web']=='2'"> Image </td>
+                                                         <td ng-show="item['product_web']=='3'">Footage</td>
+                                                         <td ng-show="item['product_web']=='2'">
+                                                             <img src="<%item['product_thumb']%>" width="150" height="100">
+                                                         </td>
+                                                         <td ng-show="item['product_web']=='3'">
+                                                             <video controls controlsList="nodownload" onmouseover="this.play()"
+                                                                                                       onmouseout="this.load()" width="150" height="150">
+                                                                 <source src="<%item['product_thumb']%>"
+                                                                         type="video/mp4">
+                                                                 Your browser does not support the video tag.
+                                                             </video>
+
+                                                         </td>
+                                                         <td><%item['product_id']%> </td>
+                                                         <td><%item['product_name']%> </td>
+                                                         <td><%item['standard_size']%> </td>
+                                                         <td><%item['standard_price']%></td>
+                                                     </tr>
+                          </tbody>
+                     </table>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+         </div>
+         <!-- /.modal-dialog -->
+     </div>
   </div>
+
   <!-- /.content-wrapper -->
+
   @endsection
+
   @section('scripts')
   <script>
-  $(function () {
+  // $(function () {
+  //
+  //   $('#example2').DataTable();
+  //
+  //
+  // });
 
-    $('#example2').DataTable(/*{
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    }*/);
-  });
 </script>
   @endsection

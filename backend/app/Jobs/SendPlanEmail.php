@@ -7,10 +7,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Mail\EmailForQueuing;
+use App\Mail\EmailForPlanQueuing;
 use Mail;
 
-class SendEmail implements ShouldQueue
+class SendPlanEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -23,7 +23,7 @@ class SendEmail implements ShouldQueue
      */
     public function __construct($details)
     {
-        $this->details = $details[0];
+        $this->details = $details;
     }
 
     /**
@@ -33,7 +33,7 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        $email = new EmailForQueuing($this->details);
-        Mail::to($this->details['order_email'])->send($email);
+        $email = new EmailForPlanQueuing($this->details);
+        Mail::to($this->details['user']['email'])->send($email);
     }
 }

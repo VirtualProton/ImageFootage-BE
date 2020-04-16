@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Mail;
 use PDF;
+use App;
 use App\Http\AtomPay\TransactionRequest;
 use App\Http\AtomPay\TransactionResponse;
 
@@ -16,6 +17,33 @@ use App\Http\AtomPay\TransactionResponse;
 class Common extends Model
 {
 
+    public function __construct()
+    {
+
+        $environment = App::environment();
+        if (App::environment('local')) {
+            // The environment is local
+            $this->baseurl = 'http://localhost:4200';
+            $this->atomRequestKey = 'KEY123657234';
+            $this->atomResponseKey = 'KEYRESP123657234';
+            $this->login = '197';
+            $this->mode = 'Test';
+            $this->password = 'Test@123';
+            $this->clientcode = '007';
+            $this->atomprodId = 'NSE';
+        } else {
+            $this->baseurl = 'https://imagefootage.com';
+            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
+            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
+            $this->atomRequestKey = '3a1575abc728e8ccf9';
+            $this->atomResponseKey = '43af4ba2fbd68d327e';
+            $this->login = '106640';
+            $this->mode = 'live';
+            $this->password = '33719eef';
+            $this->clientcode = '007';
+            $this->atomprodId = 'CONCEPTUAL';
+        }
+    }
  public function getCurruncy($col=NULL,$value=NULL){
         if(!empty($id) && !empty($type)){
             $currencies = DB::table('currency_convertes')->where($col,'=',$value)->get()->toArray();
@@ -80,6 +108,7 @@ class Common extends Model
     public function save_proforma($data){
         date_default_timezone_set('Asia/Kolkata');
         ini_set('max_execution_time', 0);
+
         $selected_taxes = array();
        
         if(isset($data['SGST']) && $data['SGST']==1){
@@ -190,16 +219,16 @@ class Common extends Model
                 $data["invoice"] = $dataForEmail[0]['invoice_name'];
             $transactionRequest = new TransactionRequest();
             //Setting all values here
-            $transactionRequest->setMode("test");
-            $transactionRequest->setLogin(197);
-            $transactionRequest->setPassword("Test@123");
-            $transactionRequest->setProductId('NSE');
+            $transactionRequest->setMode($this->mode);
+            $transactionRequest->setLogin($this->login);
+            $transactionRequest->setPassword($this->password);
+            $transactionRequest->setProductId($this->atomprodId);
              $transactionRequest->setAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
                 $transactionRequest->setTransactionCurrency("INR");
                 $transactionRequest->setTransactionAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
 
             $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
-            $transactionRequest->setClientCode(007);
+            $transactionRequest->setClientCode($this->clientcode);
             $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
             $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
             $transactionDate = str_replace(" ", "%20", $datenow);
@@ -209,7 +238,7 @@ class Common extends Model
             $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
             $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($data['uid']);
-            $transactionRequest->setReqHashKey("KEY123657234");
+            $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
 
@@ -217,8 +246,7 @@ class Common extends Model
 
                 $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail]));
                 $fileName = $data["invoice"]."_quotation.pdf";
-
-
+                $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
                 try{
                     Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
                     $message->to($data["email"])
@@ -235,7 +263,8 @@ class Common extends Model
                     //print_r($files2bucketemp);
                     //exit();
                     $path ='quotation/'.$fileName;
-                    $source = file_put_contents($fileName, $pdf->output());
+                   // $source = file_get_contents(storage_path('app/public/pdf'). '/' . $fileName);
+                    $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
                     $uploader = new MultipartUploader($s3Client, $source, [
                         'bucket' => 'imgfootage',
                         'key' => $path,
@@ -247,11 +276,10 @@ class Common extends Model
                     }
                     $pdf_path = $fileupresult['ObjectURL'];
                     if(!empty($pdf_path)){
-
                         DB::table('imagefootage_performa_invoices')
                             ->where('id','=',$id)
                             ->update(['quotation_url'=>$pdf_path]);
-                        unlink($fileName);
+                        unlink(storage_path('app/public/pdf'). '/' . $fileName);
                     }
                     // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {
         //     $message->to($data["email"])
