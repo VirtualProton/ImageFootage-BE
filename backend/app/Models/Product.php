@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Models\Api;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Product extends Model
 {
