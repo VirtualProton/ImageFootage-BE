@@ -36,6 +36,7 @@
                         <th>Id</th>
                         <th>Product Category</th>
                         <th>Product Category Alignment</th>
+                        <th>Keywords</th>
                         <th>Is Display HomePage</th>
                         <th>Added On</th>
                         <th>Actions</th>
@@ -47,6 +48,7 @@
   <td>{{ $category['category_id'] }} </td>
   <td>{{ $category['category_name'] }} </td>
   <td>{{ $category['category_order'] }} </td>
+  <td><span style="width:300px;overflow:auto;">{{ $category['category_keywords'] }}</span></td>
   <td>@if($category['is_display_home'] =='1')
         Yes
   @else
@@ -70,6 +72,8 @@
                        <th>Id</th>
                         <th>Product Category</th>
                         <th>Product Category Order</th>
+                        <th>Keywords</th>
+                        <th>Is Display HomePage</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </tfoot>
