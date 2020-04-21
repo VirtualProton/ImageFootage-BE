@@ -94,4 +94,20 @@ class InvoiceController extends Controller
     }
   }
 
+  public function edit_quotation($quotation_id)
+  {
+      
+      return view('admin.invoice.edit_quotation');
+  }
+
+      public function edit_quotation_data(Request $request){
+          $data = $request->all();
+          print_r($data); die;
+//          if(!empty($quotation_id)){
+//              $data=$this->Common->getQuotationData($quotation_id);
+//              return view('admin.invoice.edit_quotation');
+//       }
+
+     }
+
 }

@@ -262,3 +262,27 @@ app.controller('ordersController', function($scope, $http,$location) {
 
 });
 
+app.controller('editquotatationController', function($scope, $http, $location) {
+    $scope.title = "Edit Quotation";
+    $scope.quotation ={};
+    var path = $location.path();
+    console.log("hello");
+    console.log(path);
+
+
+    //$scope.uid
+    $scope.quotation.product = [
+        {
+            name:"",
+            pro_size:"",
+            pro_type:"",
+            id:"",
+            image:"",
+            price:""
+        }
+    ];
+
+    //$('#loading').show();
+
+
+});

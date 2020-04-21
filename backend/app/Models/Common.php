@@ -317,11 +317,27 @@ class Common extends Model
             ->toArray();
             //dd(DB::getQueryLog());
             return  $all_datas;
+      }
+    }
+
+    public function getQuotationData($quotation_id){
+        if(!empty($quotation_id)){
+            // DB::enableQueryLog();
+            $all_datas = DB::table('imagefootage_performa_invoices')
+                ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname')
+                ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
+                ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
+                ->where('imagefootage_performa_invoices.id','=',$quotation_id)
+                ->join('countries as cn','cn.id','=','usr.country')
+                ->join('states as st','st.id','=','usr.state')
+                ->join('cities as ct','ct.id','=','usr.city')
+                ->get()
+                ->toArray();
+            //dd(DB::getQueryLog());
+            return  $all_datas;
 
 
         }
     }
-
-
 
 }

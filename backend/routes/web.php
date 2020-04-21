@@ -188,7 +188,7 @@ Route::resource('/accounts', 'AccountController');
 
 Route::get('/users/status/{status}/{id}', 'UserController@status');
 Route::get('/users/show/{id}', 'UserController@show');
-Route::get('/users/invoices/{id}', 'UserController@invoices');
+
 
 
 Route::resource('/users', 'UserController');
@@ -201,10 +201,14 @@ Route::post('/get_email_template', 'InvoiceController@get_email_template');
 
 
 Route::post('/sendmail','InvoiceController@sendmail');
-Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/product/{id}', 'ProductController@getproduct');
+//custom Invoice routes
+Route::get('/users/invoices/{id}', 'UserController@invoices');
+Route::get('/quotation/{id}', 'InvoiceController@quotation');
+Route::get('/edit_quotation/{id}', 'InvoiceController@edit_quotation');
+Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
-Route::get('/invoice/{user_id}/{id}','InvoiceController@invoice');
+Route::get('/quotation_to_invoice/{user_id}/{id}','InvoiceController@invoice');
 
 
 

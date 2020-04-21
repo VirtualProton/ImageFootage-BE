@@ -1,12 +1,11 @@
 @extends('admin.layouts.default')
 
 @section('content')
-<div class="content-wrapper" ng-controller="quotatationController">
+<div class="content-wrapper" ng-controller="editquotatationController">
 <section class="content">
-
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"><%title%></h3>
+              <h3 class="box-title">@{{title}}</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -16,16 +15,20 @@
                
               <div class="panel-body">
 						<form role="form" name="downloadOnBehalf" method="post"  class="" enctype="multipart/form-data" ng-submit="submitQuotation()">
-						
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-sm-6">
 									<div class="">
 										<div class="form-group">
 											<label>UID</label>
-											<input type="text" name="uid" id="uid" class="form-control"  value="{{$user_id}}"  readonly >
+											<input type="text" name="uid" id="uid" ng-model="uid" class="form-control"  value=""  readonly >
 										</div>
 									</div>
+                                <div class="">
+                                    <div class="form-group">
+                                        <label>Quotation</label>
+                                        <input type="text" name="quotation_id" ng-model="quotation_id" id="uid" class="form-control"  value="{{$quotation_id}}"  readonly >
+                                    </div>
+                                </div>
 									<!-- /.col-lg-6 (nested) -->
 																		<!-- /.col-lg-6 (nested) -->
 									<div class="">
@@ -63,17 +66,17 @@
 								
 								<div class="form-group">
 									
-								<label class="">Image <%$index+1%> (Product ID)</label>
+								<label class="">Image @{{$index+1}}</label>
 								<input type="hidden" class="form-control" ng-model="product.id">
 								<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
-
+								
 								<div>
-
+								
 								</div>
 								</div>
 								<div class="form-group">
-									<span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
+									<span ng-show="product.image"><img src="@{{product.image}}" width="150" /></span>
+									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file@{{$index+1}}" id="file@{{$index+1}}" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
 								</div>
 								<div class="form-group">
 									
@@ -103,7 +106,7 @@
 							<!-- start main div for the oriduct id --->	
 					<div>
 						
-					<div>
+					<div ng-show="product.price">
 								<div class="form-group">
 								 <label for="sub_total">Sub Total</label>
 								<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);" >
@@ -261,14 +264,13 @@
 							
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
-                                    <button name="submit" class="btn btn-danger ng-binding">Submit</button>
-                                    <button type="reset" class="btn btn-danger" >Reset</button>
+									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
+									<button type="reset" class="btn btn-danger">Reset</button>
 								</div>
 							</div>
 						</form>
 						<!--form ended-->
 					</div>
-
               </div>
              
 </div>
