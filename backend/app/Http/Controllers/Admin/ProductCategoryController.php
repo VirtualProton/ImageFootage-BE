@@ -14,6 +14,10 @@ class ProductCategoryController extends Controller
 		$this->validate($request, [
 		 	'category_name'=>'required'
         ]);
+		if(ProductCategory::where('category_name',$request->category_name)->exists()){
+		  return back()->with('warning','Product Category name allready exists.');
+		  exit();
+		}
 		$ProductCategory=new ProductCategory;
 		$ProductCategory->category_name=$request->category_name;
 	    $ProductCategory->category_order=$request->category_order;
