@@ -113,7 +113,7 @@
                 },
                 category_order: {
                     validators: {
-                        integer: {
+                        numeric: {
                         	message: 'The value is not an integer'
                     	}
                     }

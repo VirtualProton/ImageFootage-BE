@@ -14,7 +14,7 @@ use CORS;
 use JWTAuth;
 use Razorpay\Api\Plan;
 use Tymon\JWTAuth\Exceptions\JWTException;
-
+use Mail;
 
 
 class AuthController extends Controller
@@ -77,6 +77,15 @@ class AuthController extends Controller
                     'user' => auth()->user()->first_name,
                     'Utype' => auth()->user()->id
                 ];
+				$cname=$request->input('first_name');
+				$cemail=$request->input('email');
+				$cont_url=url('/active_user_account').'/'.$cemail;
+			 //$body.='<a href="'.$cont_url.'">Click here to verify account</a>';
+			 //$body.="Thanks & Regards,<br>Image Footage Team.";
+			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+				 Mail::send('createusermail', $data, function($message) use($data) {
+				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
+			 }); 
                  return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);

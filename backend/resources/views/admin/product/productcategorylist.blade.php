@@ -2,9 +2,6 @@
 @section('styles')
 <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 @endsection
-
-
-
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
