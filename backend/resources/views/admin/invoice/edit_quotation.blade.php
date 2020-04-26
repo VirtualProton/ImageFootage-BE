@@ -5,7 +5,7 @@
 <section class="content">
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">@{{title}}</h3>
+              <h3 class="box-title"><%title%></h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -20,30 +20,25 @@
 									<div class="">
 										<div class="form-group">
 											<label>UID</label>
-											<input type="text" name="uid" id="uid" ng-model="uid" class="form-control"  value=""  readonly >
+											<input type="text" name="uid" id="uid" ng-model="uid" class="form-control"   readonly >
 										</div>
 									</div>
-                                <div class="">
-                                    <div class="form-group">
-                                        <label>Quotation</label>
-                                        <input type="text" name="quotation_id" ng-model="quotation_id" id="uid" class="form-control"  value="{{$quotation_id}}"  readonly >
-                                    </div>
-                                </div>
+
 									<!-- /.col-lg-6 (nested) -->
 																		<!-- /.col-lg-6 (nested) -->
 									<div class="">
 										<div class="form-group">
 											
 											<label class="margin-right">
-												<input type="radio"  ng-value="Subscription"  name="quotation_type" ng-model="quotation_type">
+												<input type="radio"  ng-value="1"  name="quotation_type" ng-model="quotation_type">
 												Subscription 
 											  </label>
 											  <label class="margin-right">
-												<input type="radio"  ng-value="Download_Packs" name="quotation_type" ng-model="quotation_type">
+												<input type="radio"  ng-value="2" name="quotation_type" ng-model="quotation_type">
 												Download Packs
 											  </label>
 											  <label class="margin-right">
-											  <input type="radio"  ng-value="custom"  name="quotation_type"  ng-model="quotation_type" ng-checked="true">
+											  <input type="radio"  ng-value="3"  name="quotation_type"  ng-model="quotation_type">
 												Custom
 											  </label>
 											
@@ -66,7 +61,7 @@
 								
 								<div class="form-group">
 									
-								<label class="">Image @{{$index+1}}</label>
+								<label class="">Image <%$index+1%></label>
 								<input type="hidden" class="form-control" ng-model="product.id">
 								<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
 								
@@ -75,8 +70,8 @@
 								</div>
 								</div>
 								<div class="form-group">
-									<span ng-show="product.image"><img src="@{{product.image}}" width="150" /></span>
-									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file@{{$index+1}}" id="file@{{$index+1}}" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
+									<span ng-show="product.image"><img src="<%product.image%>" width="150" /></span>
+									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
 								</div>
 								<div class="form-group">
 									
@@ -143,19 +138,19 @@
 								<!-- ngRepeat: tax in vm.formData.taxes track by $index --><div>
 							
 							
-								<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
+								<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]" ng-checked="SGST==1"> SGST- +6%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]"> CGST- +6%
+								<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]" ng-checked="CGST==1"> CGST- +6%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox" ng-model="IGST"  ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]" > IGST- +12%
+								<input type="checkbox" ng-model="IGST"  ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]" ng-checked="IGST==1"> IGST- +12%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index --><div  class="ng-binding ng-scope">
 							
 							
-								<input type="checkbox"  ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]" > IGST- +18%
+								<input type="checkbox"  ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]" ng-checked="IGSTT==1"> IGST- +18%
 								</div><!-- end ngRepeat: tax in vm.formData.taxes track by $index -->
 								
 								<input type="text" ng-model="tax" class="form-control " name="tax" readonly="">
@@ -224,8 +219,8 @@
 							<div class="form-group">
 										
 											<label for="expiry">Expiry Period</label><br>
-											<input type="radio"  ng-value="'7'" name="expiry" ng-model="expiry_time" class="" value="7">7 Days
-											<input type="radio"  ng-value="'30'" name="expiry" ng-model="expiry_time" ng-model="" class="" value="30">30 Days 
+											<input type="radio"  ng-value="7" name="expiry" ng-model="expiry_time">7 Days
+											<input type="radio"  ng-value="30" name="expiry" ng-model="expiry_time">30 Days
 										
 									</div> 
 						</div>

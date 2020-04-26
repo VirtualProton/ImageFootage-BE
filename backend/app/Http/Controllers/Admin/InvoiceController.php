@@ -96,18 +96,29 @@ class InvoiceController extends Controller
 
   public function edit_quotation($quotation_id)
   {
-      
       return view('admin.invoice.edit_quotation');
   }
 
       public function edit_quotation_data(Request $request){
           $data = $request->all();
-          print_r($data); die;
-//          if(!empty($quotation_id)){
-//              $data=$this->Common->getQuotationData($quotation_id);
-//              return view('admin.invoice.edit_quotation');
-//       }
+          //print_r($data); die;
+          if(!empty($data['quotation'])){
+              return $this->Common->getQuotationData($data['quotation']);
+       }
 
+     }
+     public function create_invoice(Request $request){
+         $data = $request->all();
+         if(!empty($data['quotation_id'])){
+             return $this->Common->create_invoice($data['quotation_id'],$data['user_id']);
+         }
+     }
+
+     public function change_invoice_status(Request $request){
+         $data = $request->all();
+         if(!empty($data['quotation_id']) && isset($data['status'])){
+             return $this->Common->change_invoice_status($data['quotation_id'],$data['status']);
+         }
      }
 
 }

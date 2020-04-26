@@ -220,13 +220,13 @@
                                  </td>
 
                               </tr>
-                            <tr>
-                                <td colspan="4" style="font-size: 12px;">
-                                    <P>Please click on below link to Pay.</P>
-                                    <p style="margin: 0px;"><a href="<?php echo $quotation[0]['payment_url']; ?>" target="_blank" style="font-size: 12px;color:Red;">Payment Link</a></p>
-
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td colspan="4" style="font-size: 12px;">-->
+<!--                                    <P>Please click on below link to Pay.</P>-->
+<!--                                    <p style="margin: 0px;"><a href="--><?php //echo $quotation[0]['payment_url']; ?><!--" target="_blank" style="font-size: 12px;color:Red;">Payment Link</a></p>-->
+<!---->
+<!--                                </td>-->
+<!--                            </tr>-->
 
                            </tbody>
                         </table>

@@ -87,6 +87,7 @@ app.controller('quotatationController', function($scope, $http,$location) {
             // }
         }
         $scope.quotation.product[index].price = amount;
+
        // $scope.getTheTotal(vm.formData.names,index);
     }
 
@@ -265,24 +266,294 @@ app.controller('ordersController', function($scope, $http,$location) {
 app.controller('editquotatationController', function($scope, $http, $location) {
     $scope.title = "Edit Quotation";
     $scope.quotation ={};
-    var path = $location.path();
-    console.log("hello");
-    console.log(path);
+    $scope.tax = 0;
+    var path = window.location.pathname.split("/").pop();
+    $('#loading').show();
+    $http({
+        method: 'POST',
+        url: base_url+'edit_quotation_data',
+        data:{quotation:path}
+    }).then(function (result){
+        $('#loading').hide();
+        response = result.data;
+        console.log(response.user_id);
+        $scope.uid = response.user_id;
+        $scope.quotation_type = response.invoice_type;
+        $scope.promoCode = response.promo_code;
+        $scope.tax = response.tax;
+        $scope.total = response.total;
+        $scope.total = response.total;
+        $scope.po = response.job_number;
+        $scope.poDate = response.po_detail;
+        $scope.email = response.email_id;
+        $scope.expiry_time = response.expiry_invoices;
+        $scope.quotation.product = [];
+        var tax_selected = angular.fromJson(response.tax_selected);
+        $scope.tax_selected = tax_selected;
+        angular.forEach(tax_selected,function (value,key){
+               $scope[key] = value;
+        });
+        angular.forEach(response.items,function (value,key){
+            var obj = {
+                         name:value.product_id,
+                         pro_size:value.product_size,
+                         pro_type:value.product_type,
+                         id:value.id,
+                         image:value.product_image,
+                         price:value.subtotal
+                     };
+            $scope.quotation.product.push(obj);
+        });
 
+    },function (error){
+        $('#loading').hide();
+    });
 
-    //$scope.uid
-    $scope.quotation.product = [
-        {
-            name:"",
-            pro_size:"",
-            pro_type:"",
-            id:"",
-            image:"",
-            price:""
+    $scope.addProduct = function() {
+        var newProduct = { name:"",pro_size:"",pro_type:"",id:"",image:"",price:""};
+        $scope.quotation.product.push(newProduct);
+    }
+
+    $scope.removeProduct = function(product) {
+        var index = $scope.quotation.product.indexOf(product);
+        $scope.quotation.product.splice(index,1);
+        $scope.calculatePrice();
+    }
+    $scope.prices = [];
+    $scope.getproduct = function (product){
+        console.log(product);
+        $('#loading').show();
+        var index = $scope.quotation.product.indexOf(product);
+        $http({
+            method: 'GET',
+            url: base_url+'product/'+product.name,
+        }).then(function (response){
+
+            if(response.status=='200' && response.statusText=='OK'){
+                $('#loading').hide();
+                $scope.quotation.product[index].name = response.data[0].product_code;
+                $scope.quotation.product[index].id = response.data[0].id;
+                if(response.data[0].type =="Royalty Free"){
+                    $scope.quotation.product[index].pro_type = "royalty_free";
+                }else{
+                    $scope.quotation.product[index].pro_type = "right_managed";
+                }
+                $scope.quotation.product[index].image = response.data[0].thumbnail_image;
+                $scope.prices[index] = response.data[0];
+            }
+        },function (error){
+            $('#loading').hide();
+        });
+    }
+
+    $scope.getThetotalAmount = function (product){
+        var index = $scope.quotation.product.indexOf(product);
+        console.log($scope.prices);
+        if(product.pro_type=="royalty_free"){
+            var amount=0;
+            if(product.pro_size=="Small"){
+                amount = $scope.prices[index].small_size;
+            }else if(product.pro_size=="Medium"){
+                amount = $scope.prices[index].medium_size;
+            }else if(product.pro_size=="Large"){
+                amount = $scope.prices[index].large_size;
+            }else if(product.pro_size=="X-Large"){
+                amount = $scope.prices[index].x_large_size;
+            }else{
+                amount=1;
+            }
+        }else{
+
+            // var priceList = vm.formData.priceList;
+            // if(value=="Small"){
+            //     amount=priceList[0].small;
+            // }else if(value=="Medium"){
+            //     amount=priceList[1].medium;
+            // }else if(value=="Large"){
+            //     amount=priceList[2].large;
+            // }else if(value=="X-Large"){
+            //     amount=priceList[3].xlarge;
+            // }else{
+            //     amount=0;
+            // }
         }
-    ];
+        $scope.quotation.product[index].price = amount;
+        $scope.calculatePrice();
+        // $scope.getTheTotal(vm.formData.names,index);
+    }
+    $scope.calculatePrice= function(){
 
-    //$('#loading').show();
+        var subtotal= $scope.quotation.product;
+        //console.log(subtotal);
+        var subtotalvalue=0;
+        var total = 0;
+        for (var j=0;j<subtotal.length;j++){
+            subtotalvalue +=Number(subtotal[j].price);
+
+        }
+        var intialtotal = $scope.tax;
+
+        if($scope['SGST']==1){
+            total  = total+ 6;
+        }else if($scope['CGST']==1){
+            total  = total + 6;
+        }else if($scope['IGST']==1){
+            total  = total + 12;
+        }else if($scope['IGSTT']==1){
+            total  = total + 18;
+        }
+        var intialtotal = (subtotalvalue*(total)/100);
+        subtotal = Number(subtotalvalue);
+        intialtotal = Number(intialtotal);
+        $scope.tax = intialtotal;
+        $scope.total = intialtotal+subtotal;
+    }
+
+    $scope.checkThetax = function(tax_percent,type){
+
+        var subtotal= $scope.quotation.product;
+        //console.log(subtotal);
+        var subtotalvalue=0;
+        var total = 0;
+        for (var j=0;j<subtotal.length;j++){
+            subtotalvalue +=Number(subtotal[j].price);
+
+        }
+        var intialtotal = $scope.tax;
+        if(type=='SGST'){
+            total  = (subtotalvalue*(6)/100);
+        }
+        else if(type=='CGST'){
+            total  = (subtotalvalue*(6)/100);
+        }
+        else if(type=='IGST'){
+            total  = (subtotalvalue*(12)/100);
+        }
+        else if(type=='IGSTT'){
+            total  = (subtotalvalue*(18)/100);
+        }
+
+        if(tax_percent==true){
+            total = intialtotal+total;
+        }else{
+
+            if(intialtotal>total){
+                total = intialtotal-total;
+            }else{
+                total = 0;
+            }
+
+        }
+        subtotal = Number(subtotalvalue);
+        total = Number(total);
+        $scope.tax = total;
+        $scope.total = total+subtotal;
+    }
 
 
+    $scope.submitQuotation = function(){
+        console.log($scope.quotation);
+        $('#loading').show();
+        var sendData = {
+            "uid":$('#uid').val(),
+            "quotation_type":$scope.quotation_type,
+            "products": $scope.quotation,
+            "promoCode":$scope.promoCode,
+            "po":$scope.po,
+            "poDate":$scope.poDate,
+            "expiry_date":$scope.expiry_time,
+            "tax": $scope.tax,
+            "total": $scope.total,
+            "SGST":$scope.SGST,
+            "CGST":$scope.CGST,
+            "IGST":$scope.IGST,
+            "IGSTT":$scope.IGSTT,
+            "email":$scope.email,
+            "old_quotation":path,
+            "image1":$('#file1')[0].files[0]
+
+        }
+
+        console.log($scope.quotation);
+        var fd=new FormData();
+        // angular.forEach($scope.quotation[0],function(file){
+        //     fd.append('file',file);
+        // });
+        $http({
+            method: 'POST',
+            url: base_url+'saveInvoice',
+            data:sendData,
+            headers: {'Content-Type': undefined},
+        }).then(function (response){
+            $('#loading').hide();
+            if(response.data.this.statuscode=='1'){
+                alert(response.data.this.statusdesc);
+            }else{
+                alert(response.data.this.statusdesc);
+            }
+            window.location =base_url+'users/invoices/'+$('#uid').val();
+            // $scope.quotation.product[index].name = response.data[0].product_code;
+            // $scope.quotation.product[index].id = response.data[0].id;
+            // if(response.data[0].type =="Royalty Free"){
+            //     $scope.quotation.product[index].pro_type = "royalty_free";
+            // }else{
+            //     $scope.quotation.product[index].pro_type = "right_managed";
+            // }
+            // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
+            // $scope.prices[index] = response.data[0];
+            //}
+        },function (error){
+            $('#loading').hide();
+        });
+
+    }
+
+
+
+
+});
+app.controller('invoiceController', function($scope, $http, $location) {
+
+   $scope.create_invoice = function(quotation_id,user_id) {
+       if(confirm('Do you want to send invoice for this quotation ?')){
+           $('#loading').show();
+           $http({
+               method: 'POST',
+               url: base_url+'create_invoice',
+               data:{quotation_id:quotation_id,user_id:user_id}
+           }).then(function (result){
+               $('#loading').hide();
+               if(result.data.resp.statuscode=='1'){
+                   alert(result.data.resp.statusdesc);
+               }else{
+                   alert(result.data.resp.statusdesc);
+               }
+           },function (error){
+               $('#loading').hide();
+           });
+       }
+   }
+
+    $scope.change_status = function(status,quotation_id){
+        if(confirm('Do you want to change the status of invoice/quotation')){
+            console.log(status);
+            console.log(quotation_id);
+            //$('#loading').show();
+            // $http({
+            //     method: 'POST',
+            //     url: base_url+'change_invoice_status',
+            //     data:{quotation_id:quotation_id}
+            // }).then(function (result){
+            //     $('#loading').hide();
+            //     if(result.data.resp.statuscode=='1'){
+            //         alert(result.data.resp.statusdesc);
+            //     }else{
+            //         alert(result.data.resp.statusdesc);
+            //     }
+            // },function (error){
+            //     $('#loading').hide();
+            // });
+        }
+
+    }
 });

@@ -1,7 +1,7 @@
 @extends('admin.layouts.default')
 @section('content')
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
+ <div class="content-wrapper" ng-controller="invoiceController">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -12,7 +12,7 @@
         <li class="active">Quotation/Invoices List</li>
       </ol>
     </section>
-    <section class="content">
+    <section class="content" ng-co>
         <div class="row">
         	<div class="col-md-12">
          		<div class="box">
@@ -27,13 +27,15 @@
                 <thead>
                 <tr>
                 <th>SN</th>
-                <th>Created</th>
-                <th>Invoice Number</th>
+                <th>Proforma Type</th>
+                <th>Invoice/Quotation Number</th>
                 <th>Email ID</th>
-                <th>Job Ref</th>
                 <th>Expiry Invoices</th>
+                <th>Quotation Created</th>
+                <th>Invoice Created</th>
                 <th>Status</th>
-                <th>Download</th>
+                <th>Download Quotation</th>
+                <th>Download Invoice</th>
                 <th>Action</th>
                 </tr>
                 </thead>
@@ -42,16 +44,25 @@
                     @foreach($account_invoices as $k=>$invioces)
                 <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
-                  <td>{{$invioces['created']}}</td>
+                  <td>
+                      @if($invioces['proforma_type']==2)
+                          Invoice
+                      @else
+                          Quotation
+                      @endif
+
+                  </td>
                   <td>{{$invioces['invoice_name']}}</td>
                   <td>{{$invioces['email_id']}}</td>
-                  <td>{{$invioces['job_number']}}</td>
-                  <td>{{$invioces['expiry_invoices']}}</td>
+                  <td>{{$invioces['expiry_invoices']}} Days</td>
+                    <td>{{$invioces['created']}}</td>
+                    <td>{{$invioces['invoice_created']}}</td>
                   <td>
-                  <select>
-                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Pending</option>
+                  <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
+                      <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
+                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Approved</option>
                       <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
-                      <option value="3" <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
+                      <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
                     </select>
                </td>
                  <td>
@@ -59,12 +70,20 @@
                      <a href="{{$invioces['quotation_url']}}" target="_blank">Download</a>
                      @endif
                  </td>
+                    <td>
+                        @if($invioces['invoice_url'])
+                            <a href="{{$invioces['invoice_url']}}" target="_blank">Download</a>
+                        @endif
+                    </td>
 
                <td>
-                  <a href="{{ url('admin/invoice/'.$invioces['user_id'].'/'.$invioces['id']) }}" title="Invoice"><i class="fa fa-check" aria-hidden="true"></i></a>
-                  &nbsp;&nbsp;&nbsp;
-                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>
-                  <!-- <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
+                   <?php if($invioces['status']!=3){ ?>
+                  <a href="{{ url('admin/edit_quotation/'.$invioces['id']) }}" title="Edit Quotation"><i class="fa fa-check" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                  <a href="javascript:void(0);" ng-click="create_invoice({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
+{{--                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>--}}
+
+                  <?php } ?>
+                   <!-- <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
@@ -91,6 +110,31 @@
     $(function () {
     $('#account').DataTable();
  })
+
+     function changestatus(statust,quotation_id,oldstatus){
+         event.preventDefault();
+         if(confirm('Do you want to change the status of invoice/quotation')===true) {
+             $('#loading').show();
+             $.ajax({
+                 type: "POST",
+                 data: {quotation_id: quotation_id, status: statust.value},
+                 url: "{{ url('admin/change_invoice_status')}}",
+                 success: function (result) {
+                     $('#loading').hide();
+                     console.log(result);
+                     if (result.resp.statuscode == '1') {
+                         alert(result.resp.statusdesc);
+                     } else {
+                         alert(result.resp.statusdesc);
+                     }
+                     window.location.reload();
+                 }
+             });
+         }else{
+             statust.value = oldstatus;
+            return false;
+         }
+     }
     </script>
 
 @stop

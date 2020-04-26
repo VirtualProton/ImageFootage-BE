@@ -208,7 +208,9 @@ Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/edit_quotation/{id}', 'InvoiceController@edit_quotation');
 Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
-Route::get('/quotation_to_invoice/{user_id}/{id}','InvoiceController@invoice');
+Route::post('/create_invoice','InvoiceController@create_invoice');
+Route::post('/change_invoice_status','InvoiceController@change_invoice_status');
+
 
 
 
