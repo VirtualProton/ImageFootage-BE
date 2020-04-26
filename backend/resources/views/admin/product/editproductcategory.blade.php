@@ -44,6 +44,13 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('category_order') }}</div>
                        @endif
                     </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Category Keywords</label>
+                      <input type="text" class="form-control" name="category_keywords" id="category_keywords" placeholder="Category Keywords" value="{{ $productcategory['category_keywords'] }}">
+                       @if ($errors->has('category_keywords'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('category_keywords') }}</div>
+                       @endif
+                    </div>
                       <div class="form-group">
                           <label for="exampleInputEmail1">Is Display On Home </label>
                           <input type="radio"  name="display"  value="1" <?php if($productcategory['is_display_home']=='1'){ echo "checked";} ?> /> Yes
@@ -107,7 +114,7 @@
                 },
                 category_order: {
                     validators: {
-                        integer: {
+                        numeric: {
                         	message: 'The value is not an integer'
                     	}
                     }

@@ -20,6 +20,7 @@ class ProductCategoryController extends Controller
 		}
 		$ProductCategory=new ProductCategory;
 		$ProductCategory->category_name=$request->category_name;
+		$ProductCategory->category_keywords=$request->category_keywords;
 	    $ProductCategory->category_order=$request->category_order;
 		$ProductCategory->category_added_by=Auth::guard('admins')->user()->id;
         $ProductCategory->is_display_home = $request->display;
@@ -63,6 +64,7 @@ class ProductCategoryController extends Controller
             'category_name'   => 'required'
         ]);
 		 $update_array=array('category_name'=>$request->category_name,
+		 					 'category_keywords'=>$request->category_keywords,
 		 					 'category_order'=>$request->category_order,
                              'is_display_home'=>$request->display,
 							 'updated_at'=>date('Y-m-d H:i:s')
