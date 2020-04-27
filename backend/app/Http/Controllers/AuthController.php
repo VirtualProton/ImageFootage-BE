@@ -82,11 +82,17 @@ class AuthController extends Controller
 				$cont_url=url('/active_user_account').'/'.$cemail;
 			 //$body.='<a href="'.$cont_url.'">Click here to verify account</a>';
 			 //$body.="Thanks & Regards,<br>Image Footage Team.";
-			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+			 /*$data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
 				 Mail::send('createusermail', $data, function($message) use($data) {
 				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
-			 }); 
-                 return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
+			 }); */
+			 $sm='info@imagefootage.com';
+			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+				 Mail::send('createusermail',$data,function($message) use($data,$sm) {
+				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
+			 });
+			 
+              return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
             }
