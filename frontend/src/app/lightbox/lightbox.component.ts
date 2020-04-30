@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, HostListener, Inject} from '@angular/core';
 import {HeroService} from '../hero.service';
 import {Router} from '@angular/router';
 
@@ -25,7 +25,14 @@ export class LightboxComponent implements OnInit {
 
         });
     }
-
+ @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 10 ||     
+    document.documentElement.scrollTop > 10) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
     ngOnInit() {
         //this.spinner.show();
         this.loadingData = true;

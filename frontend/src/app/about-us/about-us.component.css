@@ -3,7 +3,7 @@
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
 .banner-content{
-	margin-top:-10px;
+	margin-top:-29px;
 }
 }
 #mainNav{padding-bottom: 0px;padding-top: 0px;background: #000 !important;}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef ,Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef ,Renderer2, HostListener, Inject } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
@@ -106,7 +106,14 @@ export class HeroSearchComponent implements OnInit {
         this.currentUser = x;
     });
   }
-  
+   @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 10 ||     
+    document.documentElement.scrollTop > 10) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
        // Push a search term into the observable stream.
       search(term: string): void {
         this.searchTerms.next(term);
