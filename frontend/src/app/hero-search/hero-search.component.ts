@@ -113,6 +113,11 @@ export class HeroSearchComponent implements OnInit {
       document.getElementById('navbarResponsive').classList.remove('show');
       //document.getElementById('paragraph').classList.add('green');
     }
+       if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+           this.scrollEle =true;
+       }else{
+           this.scrollEle =false;
+       }
   }
        // Push a search term into the observable stream.
       search(term: string): void {
@@ -647,9 +652,7 @@ export class HeroSearchComponent implements OnInit {
     //     this.addItems(startIndex, endIndex, 'unshift');
     // }
     onScrollDown() {
-      if(document.documentElement.scrollTop >0){
-            this.scrollEle =true;
-        }
+
        if(this.pagenumber < (this.totalpages-1)){
             this.pagenumber++;
             this.searchData.pagenumber = this.pagenumber ;
@@ -672,10 +675,7 @@ export class HeroSearchComponent implements OnInit {
     }
 
     onScrollUp() {
-        if(document.documentElement.scrollTop==0){
-            this.scrollEle =false;
-        }
-        if(this.pagenumber!=0){
+       if(this.pagenumber!=0){
             this.pagenumber--;
             //this.searchAPIRequest();
             // this.heroService.getAosSliderSearchImages(this.searchData)
