@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -43,10 +44,10 @@ export class ContactUsComponent implements OnInit {
             .subscribe(
                 data => {
 				if(data.status==1){
-					alert(data.message);
+					Swal.fire('', data["message"], 'success');
                     this.router.navigate(['/']);
-				}else if(data.status==1){
-					alert(data.message);
+				}else if(data.status!=1){
+					Swal.fire('', data["message"], 'error');
 				}
                 },
                 error => {

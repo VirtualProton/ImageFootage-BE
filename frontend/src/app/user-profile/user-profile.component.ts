@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from "@angular/common";
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
 import {NgxSpinnerService} from "ngx-spinner";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -116,8 +117,8 @@ export class UserProfileComponent implements OnInit {
                 window.location.href = data["download_status"]["download_url"];
               } else {
                 this.loadingData = false;
-                alert("Not Downloaded");
-              }
+                Swal.fire('', "Not Downloaded", 'error');
+               }
             }
           }
 

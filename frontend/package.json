@@ -53,6 +53,7 @@
     "ngx-spinner": "^8.1.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",
+    "sweetalert2": "^9.10.12",
     "tslib": "^1.11.1",
     "validator": "^12.2.0",
     "web-animations-js": "^2.3.2",

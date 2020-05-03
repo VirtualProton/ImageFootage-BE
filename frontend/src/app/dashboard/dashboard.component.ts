@@ -5,6 +5,7 @@ import { HeroService } from '../hero.service';
 
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { Router } from '@angular/router';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit {
   loadingData:boolean=false;
   allcategoryData:any =[];
   categoryname:string ='';
+  selectedcat:string ='';
   selectedCategory:string =   localStorage.getItem('searchCategory');
 
   constructor(private heroService: HeroService,
@@ -110,6 +112,7 @@ ngOnInit() {
           this.aoslSliderImages = this.allcategoryData[categoryname];
           this.aoslSliderImagesData = this.allcategoryData[categoryname];
           this.categoryname =categoryname;
+          this.selectedcat = categoryname;
       }
   }
   getClassName(ele){
@@ -199,11 +202,12 @@ ngOnInit() {
                     this.loadingData =false;
                     productinfo.class='wishlistafter';
                     //this.router.navigate(['/wishlist']);
-                    alert("Product is added to wishlist sucessfully");
+                    Swal.fire('', 'Product is added to wishlist sucessfully.', 'success');
                 }else{
                     this.loadingData =false;
                     productinfo.class='wishlistbefore';
-                    alert(data["message"]);
+                    Swal.fire('', data["message"], 'error');
+
                 }
 
             });

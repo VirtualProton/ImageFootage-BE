@@ -222,10 +222,10 @@ class Product extends Model
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => $flag.$key]);
-                    echo "Inserted" . $id;
-                    //return $flag.$key;
+                   // echo "Inserted" . $id;
+                    return $flag.$key;
                 }else{
-                    //return $data2[0]->product_id;
+                    return $data2[0]->product_id;
                 }
             }
         }
@@ -244,7 +244,7 @@ class Product extends Model
             //->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
              //   'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
              ->where('pc.is_display_home','=','1')
-             ->where('pr.updated_at', '>=','2020-04-01')
+             ->whereRaw("date(pr.updated_at) >= '2020-05-01'")
              ->orderBy('pc.category_order','asc')
              ->inRandomOrder()
 

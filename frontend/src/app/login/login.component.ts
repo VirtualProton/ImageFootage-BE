@@ -8,6 +8,7 @@ import {
     FacebookLoginProvider,
     GoogleLoginProvider
 } from 'angular-6-social-login';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
                   data => {
                     console.log(data);
                      if(data==undefined){
-                         alert("You are non registered user");
+                         Swal.fire('', "You are non registered user", 'warning');
                      }else{
                          this.closeLoginPopup.emit(true);
                      }
@@ -118,10 +119,10 @@ export class LoginComponent implements OnInit {
                     console.log(data);
                      if(data==undefined){
                          this.loading = false;
-                         alert("Please enter correct username or password");
+                         Swal.fire('', "Please enter correct username or password", 'warning');
                      }else{
 					 	  this.loaddata();
-					      alert("Login Successful");
+					      Swal.fire('', "Login Successful", 'success');
                          this.closeLoginPopup.emit(true);
                      }
                     },

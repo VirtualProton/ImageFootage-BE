@@ -2,14 +2,23 @@
 namespace App\Http\Pond5;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use App;
 class FootageApi {
+             private  $api_key ;
+             private $api_secret;
+             private $url;
 
-     private  $api_key =  '22frBD55299';
-     private $api_secret= 'v72OkjirkV6D299';
-     private $url = "https://reseller-preprod.pond5.com/api/search";
-     
+
      public function  __construct(){
-
+              if (App::environment('local')) {
+                  $this->api_key =  '22frBD55299';
+                  $this->api_secret= 'v72OkjirkV6D299';
+                  $this->url = "https://reseller-preprod.pond5.com";
+              }else{
+                  $this->api_key =  'cJ70pBIk119';
+                  $this->api_secret= 'j5weLX518rMP119';
+                  $this->url = "https://api-reseller.pond5.com";
+              }
      }
    
   private function str_random($len = 8, $allowed_charset=null) {
@@ -114,7 +123,7 @@ class FootageApi {
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $this->url,
+            CURLOPT_URL => $this->url.'/api/search',
             CURLOPT_USERAGENT => '',
             CURLOPT_POST => 1,
             CURLOPT_POSTFIELDS => $search_cmd
@@ -147,7 +156,7 @@ class FootageApi {
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, [
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => "https://reseller-preprod.pond5.com/api/download",
+                CURLOPT_URL => $this->url."/api/download",
                 CURLOPT_USERAGENT => '',
                 CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS => $search_cmd

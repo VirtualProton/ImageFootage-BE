@@ -609,11 +609,70 @@ class PaymentController extends Controller
             echo "Invalid Signature";
         }
     }
+
     public function invoiceConfirmation($id){
          $invoice_id = decrypt($id);
          $dataForEmail = $this->getData($invoice_id);
          return view('invoiceconfirmation',['quotation' => $dataForEmail]);
     }
+    public function  atompayinvoiceplan(){
+        $datenow = date("d/m/Y h:m:s");
+        $transactionDate = str_replace(" ", "%20", $datenow);
+        $transactionRequest = new TransactionRequest();
+        //Setting all values here
+        $transactionRequest->setMode($this->mode);
+        $transactionRequest->setLogin($this->login);
+        $transactionRequest->setPassword($this->password);
+        $transactionRequest->setProductId($this->atomprodId);
+        //if(!empty($allFields['plan']['package_price'])){
+
+            $transactionRequest->setAmount('137761');
+            $transactionRequest->setTransactionCurrency("INR");
+            $transactionRequest->setTransactionAmount('137761');
+        //}
+        $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponsePlan'));
+        $transactionRequest->setClientCode($this->clientcode);
+        $transactionRequest->setTransactionId('6476732');
+        $transactionRequest->setTransactionDate($transactionDate);
+        $transactionRequest->setCustomerName("Kalptaru LTD");
+        $transactionRequest->setCustomerEmailId('jyothi@conceptualpictures.com');
+        $transactionRequest->setCustomerMobile('9949990874');
+        $transactionRequest->setCustomerBillingAddress("India");
+        $transactionRequest->setCustomerAccount('1');
+        $transactionRequest->setReqHashKey($this->atomRequestKey);
+        $url = $transactionRequest->getPGUrl();
+        return redirect($url);
+        //echo json_encode(['url'=>$url]);
+    }
+    public function atomPayInvoiceResponsePlan(){
+        $transactionResponse = new TransactionResponse();
+        $transactionResponse->setRespHashKey($this->atomResponseKey);
+        if($transactionResponse->validateResponse($_POST)){
+            //echo "Transaction Processed <br/>";
+            // print_r($_POST);die;
+            if(count($_POST)>0){
+                if($_POST['f_code']=='Ok'){
+                    DB::table('imagefootage_performa_invoices')->where('invoice_name',$_POST['mer_txn'])
+                        ->update(['payment_mode'=>$_POST['discriminator'],
+                            'payment_status'=>'Transction Success','payment_response'=>json_encode($_POST)]);
+                    return redirect($this->baseurl.'/backend/api/paymentSuccess');
+                }else{
+                    return redirect($this->baseurl.'/invoiceFailed/'.encrypt($_POST['mer_txn']));
+                }
+                //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
+
+            }else{
+                //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
+                return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
+            }
+        } else {
+            echo "Invalid Signature";
+        }
+    }
+    public function paymentSuccess (){
+        return view('paymentsuccess', ['status' => 1,'message'=>'Your Payment has been done Successfully !!!']);
+    }
+
     public function getData($invoice_id){
 
         $all_datas = DB::table('imagefootage_performa_invoices')

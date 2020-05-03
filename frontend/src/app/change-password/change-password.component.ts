@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HeroService }  from '../hero.service';
 import {NgxSpinnerService} from "ngx-spinner";
 import {first} from "rxjs/operators";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-change-password',
@@ -53,10 +54,10 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe(
             data2 => {
 				if(data2.status==1){
-				    alert(data2.message);
+				    Swal.fire('', data2.message, 'success');
 					this.router.navigate(['/']);
 				}else if(data2.status==0){
-					alert(data2.message);
+                    Swal.fire('', data2.message, 'error');
 				}
               this.loadingData = false;
             },

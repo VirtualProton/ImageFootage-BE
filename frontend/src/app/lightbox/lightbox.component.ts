@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeroService} from '../hero.service';
 import {Router} from '@angular/router';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -41,7 +42,7 @@ export class LightboxComponent implements OnInit {
                     if (data.status == '1') {
                         this.lightBoxListDataItems = data.data;
                     } else {
-                        alert(data.message);
+                        Swal.fire('', data.message, 'error');
                     }
 
                     // this.lightBoxListDataItems.forEach(element => {
@@ -62,10 +63,10 @@ export class LightboxComponent implements OnInit {
                 .subscribe(data => {
                     this.loadingData = false;
                     if (data["status"] == '1') {
-                        alert(data["message"]);
                         this.loaddata();
+                        Swal.fire('', data["message"], 'success');
                        } else {
-                        alert(data["message"]);
+                        Swal.fire('', data["message"], 'error');
                     }
 
                 });

@@ -4,6 +4,7 @@ import { cartItemData } from '../hero';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import Swal from "sweetalert2";
 declare var Razorpay: any;
 
 
@@ -57,7 +58,7 @@ export class PricingComponent implements OnInit {
                  this.footageplansData = data.data.Footage;
                 this.loadingData = false;
               }else{
-                alert(data.message);
+               Swal.fire('', data.message, 'error');
               }
 
               //this.spinner.hide();

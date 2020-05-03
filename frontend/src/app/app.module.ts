@@ -60,6 +60,8 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component';
 
+
+
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
@@ -105,6 +107,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Ng5SliderModule,
     ColorPickerModule,
     MatTooltipModule
+
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

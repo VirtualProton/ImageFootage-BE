@@ -73,15 +73,21 @@ class CronController extends Controller
     }
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
+        $cat=[53,54,55,56,57,3,4,5,40,15,8,10,12,17,20,23,13,24,26,31,52,34];
         DB::enableQueryLog();
-        $products = Product::where('product_web','=','2')->whereRaw("date(updated_at) < '2020-04-01'")->get()->toArray();
+        $products = Product::where('product_web','=','2')
+                    ->whereIn('product_category',$cat)
+                    //->whereRaw("date(updated_at) < '2020-04-02'")
+                    ->orderBy('id','desc')
+                    ->get()
+                    ->toArray();
         //dd(DB::getQueryLog());
        // print_r($products); die;
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];
             //echo $keyword['search'];
             $pantherMediaImages = new ImageApi();
-            $pantharmediaData = $pantherMediaImages->get_media_info($keyword['search']);
+            $pantharmediaData = $pantherMediaImages->get_media_info_cron($keyword['search']);
             //echo "<pre>";
             //print_r($pantharmediaData); die;
             if(count($pantharmediaData) > 0){

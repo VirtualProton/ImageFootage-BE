@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { HeroService } from '../hero.service';
 import { first } from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
    selector: 'app-sign-up',
@@ -125,7 +126,7 @@ export class SignUpComponent implements OnInit {
                     //alert("Sucessfully Registered");
                    // this.router.navigate(['/']);
                   if(data2.status=='1'){
-                    alert(data2.message);
+                       Swal.fire('', data2.message, 'error');
                       let cartData = localStorage.getItem('beforeLoginCart');
 					  if(cartData != null){
 						  if(cartData.length >0){
@@ -152,7 +153,7 @@ export class SignUpComponent implements OnInit {
 										  this.router.navigate(['/cart']);
 									  }else{
 										  this.loadingData =false;
-										  alert(data["message"]);
+										  Swal.fire('', data["message"], 'error');
 									  }
 	
 								  });
@@ -167,10 +168,10 @@ export class SignUpComponent implements OnInit {
 
                   }else{
                       this.loadingData =false;
-                    alert(data2.message);
-					if(data2.message=='User have been already registered'){
+                      Swal.fire('', data2.message, 'warning');
+                      if(data2.message=='User have been already registered'){
 						this.router.navigate(['/']);
-					}
+					 }
 
                   }
 

@@ -3,6 +3,7 @@ import { HeroService } from '../hero.service';
 import { cartItemData } from '../hero';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -92,7 +93,7 @@ export class WishlistComponent implements OnInit {
 
                                 });
                     } else {
-                        alert(data["message"]);
+                        Swal.fire('', data["message"], 'error');
                     }
 
                 });
@@ -115,11 +116,11 @@ export class WishlistComponent implements OnInit {
                             if (data["status"] == '1') {
                                 this.loadcart();
                                 this.loadingData =false;
-                                alert("Sucessfully moved to wishlist");
+                                Swal.fire('', "Sucessfully moved to wishlist", 'success');
                                 this.priceArray=[];
 
                            } else {
-                                alert(data["message"]);
+                                Swal.fire('', data["message"], 'error');
                             }
 
                         });
@@ -127,7 +128,7 @@ export class WishlistComponent implements OnInit {
                    // this.router.navigate(['/wishlist']);
                 }else{
                     this.loadingData =false;
-                    alert(data["message"]);
+                    Swal.fire('', data["message"], 'error');
                 }
 
             });

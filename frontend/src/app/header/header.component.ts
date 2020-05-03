@@ -5,7 +5,7 @@ import {NgbModalConfig,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import * as AOS from 'aos';
 import { Subscription } from 'rxjs';
-
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-header',
@@ -88,7 +88,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-      alert('Logout successful.');
+      Swal.fire('', 'Logout successful.', 'success');
       this.authenticationService.logout();
       this.router.navigate(['']);
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HeroService } from '../hero.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-fail-order',
@@ -27,7 +28,7 @@ export class FailOrderComponent implements OnInit {
               }else{
                 //this.OrderDetailData = data;
                 this.loadingData = false;
-                alert(data.message);
+                Swal.fire('', data.message, 'error');
               }
 
               //this.spinner.hide();

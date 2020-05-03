@@ -3,6 +3,7 @@ import { HeroService } from '../hero.service';
 import { cartItemData } from '../hero';
 import {ActivatedRoute, Router} from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-order-confirmation',
@@ -30,7 +31,7 @@ export class OrderConfirmationComponent implements OnInit {
               }else{
                 //this.OrderDetailData = data;
                 this.loadingData = false;
-                alert(data.message);
+                Swal.fire('', data.message, 'error');
               }
 
               //this.spinner.hide();

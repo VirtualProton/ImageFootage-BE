@@ -12,6 +12,7 @@ import {NgbModalConfig,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-hero-detail',
@@ -235,8 +236,8 @@ export class HeroDetailComponent implements OnInit {
       localStorage.setItem('beforeLoginCart', JSON.stringify({productinfo,cartproduct,total,extended,type}));
     }else{
          if(cartproduct.length==0){
-            alert("Please select size of product !!");
-            return false;
+             Swal.fire('', 'Please select size of product !!.', 'warning');
+             return false;
         }
         this.loadingData = true;
         this.addedCartItem = !this.addedCartItem;
@@ -261,7 +262,7 @@ export class HeroDetailComponent implements OnInit {
                     this.router.navigate(['/cart']);
                 }else{
                     this.loadingData =false;
-                    alert(data["message"]);
+                    Swal.fire('', data["message"], 'error');
                 }
 
             });
@@ -371,7 +372,8 @@ export class HeroDetailComponent implements OnInit {
 						this. loaddata();
 					} else if (data["status"] == '0') { 
                         this.loadingData = false;
-                        alert(data["message"]);
+                        //alert(data["message"]);
+                        Swal.fire('', data["message"], 'error');
                     }
 
                 });
@@ -413,7 +415,7 @@ export class HeroDetailComponent implements OnInit {
             flag =1;
         }
         if(flag==0){
-            alert("Please select size of product !!");
+            Swal.fire('', 'Please select size of product !!', 'warning');
             return false;
         }
         if(this.packeagechoose.length > 1){
@@ -447,7 +449,7 @@ export class HeroDetailComponent implements OnInit {
                             window.location.href = data["download_status"]["download_url"];
                         } else {
                             this.loadingData = false;
-                            alert("Not Downloaded");
+                            Swal.fire('', 'Not Downloaded !!', 'error');
                         }
                     }
                 }
@@ -482,7 +484,8 @@ export class HeroDetailComponent implements OnInit {
                             window.location.href = data["download_status"]["download_url"];
                         } else {
                             this.loadingData = false;
-                            alert("Not Downloaded");
+                            //alert("Not Downloaded");
+                            Swal.fire('', 'Not Downloaded !!', 'error');
                         }
                     }
                 }

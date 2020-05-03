@@ -75,6 +75,9 @@ Route::group([
     Route::post('razor_response', 'PaymentController@razor_response');
     Route::post('razor_plan_response', 'PaymentController@razor_plan_response');
     Route::post('payUplanResponse', 'PaymentController@payUplanResponse');
+    Route::post('atomPayInvoiceResponsePlan', 'PaymentController@atomPayInvoiceResponsePlan');
+    Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
+    Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
 });
 
 Route::group([

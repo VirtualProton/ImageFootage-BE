@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef ,Renderer2 } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ElementRef, Renderer2, Input} from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Hero, carouselSlider, aosSlider, Search } from '../hero';
 import { HeroService } from '../hero.service';
@@ -11,13 +11,12 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
 import { Options } from 'ng5-slider';
-
+import Swal from 'sweetalert2';
 //'../../../node_modules/ng-masonry-grid/ng-masonry-grid.css',
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
   styleUrls: [ './hero-search.component.css','./sidebar.component.scss' ],
- 
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('slide', [
@@ -30,6 +29,7 @@ import { Options } from 'ng5-slider';
 export class HeroSearchComponent implements OnInit {
   productType:any;
   keywordEle:any=' ';
+  scrollEle:boolean=false;
   forrefresh:string=localStorage.getItem('forrefresh');
   priceArray: any = [];
   heroes$: Observable<Hero[]>;
@@ -93,6 +93,7 @@ export class HeroSearchComponent implements OnInit {
    noprductFound:boolean = false;
    addTocartFlag:boolean = false;
    colorClass:string = '';
+
 
 
   constructor(private heroService: HeroService,
@@ -242,7 +243,9 @@ export class HeroSearchComponent implements OnInit {
                               error => {
                                   this.loadingData=false;
                                   console.log(error);
-                                  alert('No data found ....');
+                                  Swal.fire('', 'No data found...!', 'error');
+                                 // alert('No data found ....');
+
                               }
 
                           );
@@ -482,7 +485,7 @@ export class HeroSearchComponent implements OnInit {
 		window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat='+this.searchData.search.toLowerCase();
   }
   clickLoginPopup(){
-		this.showloginPopup = true;
+        this.showloginPopup = true;
 		return false;
   	}
     hideLoginPopup(event){
@@ -499,11 +502,13 @@ export class HeroSearchComponent implements OnInit {
                      this.loadingData =false;
                      productinfo.class='wishlistafter';
                     //this.router.navigate(['/wishlist']);
-                    alert("Product is added to wishlist sucessfully");
+                    //alert("Product is added to wishlist sucessfully");
+                    Swal.fire('', 'Product is added to wishlist sucessfully.', 'success');
                 }else{
                     this.loadingData =false;
                     productinfo.class='wishlistbefore';
-                    alert(data["message"]);
+                    //alert(data["message"]);
+                    Swal.fire('', data["message"], 'error');
                 }
 
             });
@@ -574,7 +579,8 @@ export class HeroSearchComponent implements OnInit {
                 error => {
                     this.loadingData=false;
                     console.log(error);
-                    alert('No data found ....');
+                    //alert('No data found ....');
+                    Swal.fire('', 'No data found .....', 'error');
                 }
 
             );
@@ -635,6 +641,9 @@ export class HeroSearchComponent implements OnInit {
     //     this.addItems(startIndex, endIndex, 'unshift');
     // }
     onScrollDown() {
+      if(document.documentElement.scrollTop >0){
+            this.scrollEle =true;
+        }
        if(this.pagenumber < (this.totalpages-1)){
             this.pagenumber++;
             this.searchData.pagenumber = this.pagenumber ;
@@ -647,7 +656,7 @@ export class HeroSearchComponent implements OnInit {
                    },
                     error => {
                        console.log(error);
-                        alert('No data found ....');
+                        Swal.fire('', 'No data found .....', 'error');
                     }
 
                 );
@@ -657,7 +666,9 @@ export class HeroSearchComponent implements OnInit {
     }
 
     onScrollUp() {
-
+        if(document.documentElement.scrollTop==0){
+            this.scrollEle =false;
+        }
         if(this.pagenumber!=0){
             this.pagenumber--;
             //this.searchAPIRequest();
