@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, Inject  } from '@angular/core';
 
 @Component({
   selector: 'app-terms-and-conditions',
@@ -10,7 +10,14 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class TermsAndConditionsComponent implements OnInit {
 
   constructor() { }
-
+ @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 10 ||     
+    document.documentElement.scrollTop > 10) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
   ngOnInit() {
   }
 

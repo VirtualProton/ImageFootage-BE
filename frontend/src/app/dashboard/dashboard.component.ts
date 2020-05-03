@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, HostListener, Inject  } from '@angular/core';
 import { Hero,carouselSlider,aosSlider } from '../hero';
 import { HeroService } from '../hero.service';
 
@@ -42,6 +42,15 @@ export class DashboardComponent implements OnInit {
         this.currentUser = x;
     });  
    }
+    @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 20 ||     
+    document.documentElement.scrollTop > 20) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
+
 ngOnInit() {
         this.heroService.getcarouselSliderImages()
         .subscribe(data => {

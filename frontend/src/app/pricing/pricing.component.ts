@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, HostListener, Inject} from '@angular/core';
 import { HeroService } from '../hero.service';
 import { cartItemData } from '../hero';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -44,7 +44,14 @@ export class PricingComponent implements OnInit {
           this.currentUser = x;
       });
   }
-
+ @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 20 ||     
+    document.documentElement.scrollTop > 20) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
 
   ngOnInit() {
     this.loadingData = true;

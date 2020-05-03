@@ -67,7 +67,7 @@
                 <div *ngIf="submitted && f.user_subject.errors" class="invalid-feedback">
                     <div *ngIf="f.user_subject.errors.required">Subject is required</div>
                 </div>
-                <input placeholder="Mobile Number"  class="common-input mb-20 form-control" pattern="[0-9]*"  type="text" id="mbnum" formControlName="mobile_number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }" class="form-control ">
+                <input placeholder="Mobile Number"  class="common-input mb-20 form-control" pattern="[0-9]*"  type="text" id="mbnum" formControlName="mobile_number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }" class="form-control " style="margin-bottom: 15px;">
                 <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
                   <div *ngIf="f.mobile_number.errors.required">Mobile Number is required</div>
                   <div *ngIf="f.mobile_number.errors.minlength || f.mobile_number.errors.maxlength">Mobile number should be 10 digits</div>

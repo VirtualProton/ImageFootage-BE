@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Inject  } from '@angular/core';
 
 @Component({
   selector: 'app-licence-agreement',
@@ -8,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class LicenceAgreementComponent implements OnInit {
 
   constructor() { }
-
+   @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (document.body.scrollTop > 10 ||     
+    document.documentElement.scrollTop > 10) {
+      document.getElementById('navbarResponsive').classList.remove('show');
+      //document.getElementById('paragraph').classList.add('green');
+    }
+  }
   ngOnInit() {
   }
 
