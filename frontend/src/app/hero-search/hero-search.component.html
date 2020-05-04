@@ -842,7 +842,9 @@
         <main class="main-content" style='/*margin-top:60px*/' *ngIf="totalproduct>0">
            <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors" 
            bind-style.background = "productType == 2 ? '#fff' : '#000'">
-               <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free stock's <!--photos and videos--> <span *ngIf="keywordEle !=''">for {{keywordEle}} </span></small></p>
+               <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free <span *ngIf="productType == 1"> Images </span> <span *ngIf="productType == 2"> Footages </span>
+                   <span *ngIf="productType == 1 && editorial === 'editorial'"> Editorial </span> <span *ngIf="productType == 2 && editorial === 'editorial'"> Editorial </span>
+                   <!--photos and videos--> <span *ngIf="keywordEle !=''">for {{keywordEle}} </span></small></p>
             <span class="f-12 black_font" bind-style.color = "productType == 2 ? '#000' :''">Related:</span> 
             <span class="related_key mt-10 tags">
              <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : ''">{{keys}}</a>

@@ -26,6 +26,9 @@ Route::post('/createproduct', 'ProductController@create');
 Route::get('/all_products', 'ProductController@productsList');
 Route::get('/subadmin/status/{status}/{id}', 'SubAdminController@status');
 Route::get('/subadmin/access_management', 'SubAdminController@access_management');
+Route::post('/save_access', 'SubAdminController@save_access');
+Route::post('/subadmin/mapping_data', 'SubAdminController@mapping_data');
+
 Route::resource('/subadmin', 'SubAdminController');
 Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
 Route::get('/deleteproduct/{id}', 'ProductController@destroy');
@@ -34,9 +37,6 @@ Route::post('/editproduct', 'ProductController@update');
 Route::get('/viewproduct/{id}', 'ProductController@viewproduct');
 Route::get('/email', 'ProductController@html_email');
 Route::post('/update_product_verify', 'ProductController@ajaxProductVerify');
-
-
-
 Route::get('/add_product_category', 'ProductCategoryController@index');
 Route::post('/insert_product_category', 'ProductCategoryController@createCategory');
 Route::get('/all_product_category', 'ProductCategoryController@productCategoryList');

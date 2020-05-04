@@ -17,7 +17,7 @@
         	<div class="col-md-12">
          		<div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Products List</h3>
+                  <h3 class="box-title">Admin User List</h3>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
@@ -48,6 +48,7 @@
                   <td>{{$agent['role']['role']}}</td>
                   <td><?php echo date('D, d M, Y',strtotime($agent['created_at'])) ?></td>
                   <td><?php echo ($agent['admin_status']=='A'?"Active":"Inactive"); ?></td>
+
                   <td>
                   @if($agent['admin_status'] =='A')
                     <a href="{{ url('admin/subadmin/status/I/'.$agent['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>

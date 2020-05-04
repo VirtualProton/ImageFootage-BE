@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Modules;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Roles;
 use App\Models\Department;
 use App\Models\Admin;
+use App\Models\RolesModulesMapping;
+use Illuminate\Support\Facades\Response;
+
 
 class SubAdminController extends Controller
 {
@@ -163,9 +167,71 @@ class SubAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function access_management(){
+        $title = "Access Management";
+        $roles= Roles::where('status','=','A')->where('id','<>','1')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $modules = Modules::where('parent_module_id','=','0')->where('id','<>','1')->select('module_name','id')->get();
+        return view('admin.subadmin.access_management', compact('title','deparments','roles','modules'));
 
+    }
+    public function save_access(Request $request){
+         $data = $request->all();
+         if(count($data)>0){
+             foreach($data['access_management'] as $k=>$eachData){
+                 $is_view='0';
+                 $is_edit='0';
+                 $is_delete='0';
+                 $is_add='0';
+                 if(isset($eachData["'view'"]) && $eachData["'view'"]=='on'){
+                     $is_view ='1';
+                 }
+                 if(isset($eachData["'add'"]) && $eachData["'add'"]=='on'){
+                     $is_add='1';
+                 }
+                 if(isset($eachData["'edit'"]) && $eachData["'edit'"]=='on'){
+                     $is_edit='1';
+                 }
+                 if(isset($eachData["'delete'"]) && $eachData["'delete'"]=='on'){
+                     $is_delete='1';
+                 }
+                 $count= RolesModulesMapping::where('department_id',$data['department'])
+                                      ->where('role_id',$data['role'])
+                                      ->where('module_id',$k)->count();
+                 if($count==0){
+                     RolesModulesMapping::insert(['department_id'=>$data['department'],'role_id'=>$data['role'],'module_id'=>$k,
+                         'can_add'=>$is_add,'can_edit'=>$is_edit,'can_view'=>$is_view,'can_delete'=>$is_delete]);
+                 }else{
+                    $updated = RolesModulesMapping::where('department_id',$data['department'])
+                         ->where('role_id',$data['role'])
+                         ->where('module_id',$k)
+                         ->update(['can_add'=>$is_add,'can_edit'=>$is_edit,'can_view'=>$is_view,'can_delete'=>$is_delete]);
+
+                 }
+
+             }
+             return redirect("admin/subadmin/access_management")->with("success", "Access has been added/Modified successfully !!!");
+         }
 
     }
 
+    public function mapping_data(Request $request){
+        $data = $request->all();
+        $modules = Modules::where('parent_module_id', '=', '0')->where('id', '<>', '1')->select('module_name', 'id')->get();
+        $access= RolesModulesMapping::select('module_id','can_add','can_edit','can_view','can_delete')->where('department_id',$data['department'])
+            ->where('role_id',$data['role'])
+            ->get()
+            ->groupBy('module_id')
+            ->toArray();
+        //print_r($access);die;
+        if(count($access)>0) {
+            $viewRendered = view('admin.subadmin.access_management_edit', compact('modules','access'))->render();
+            return Response::json(['html'=>$viewRendered]);
+        }else{
+            $access = [];
+            $viewRendered = view('admin.subadmin.access_management_edit', compact('modules','access'))->render();
+            return Response::json(['html'=>$viewRendered]);
+        }
+
+    }
 
 }
