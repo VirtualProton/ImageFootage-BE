@@ -343,3 +343,23 @@ padding-right: 1.1rem;
     width: 100%;
     display: block;
 }
+@media (max-width: 450px) {
+.for_mobileresponsive{
+	height: 95px !important;
+}
+/*.icons_thum1 {
+   position: fixed !important;
+    top: 25px !important;
+}
+*/}
+
+@media (max-width: 400px) {
+	.for_mobileresponsive{
+	height: 95px !important;
+}
+/*.photo-text-more .icons_thum1 {
+   position: fixed !important;
+    top: 25px !important;
+}*/
+
+}

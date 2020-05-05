@@ -54,17 +54,17 @@
                     <p></p>
                     <div class="row text-center">
                         <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-4">Model-release</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7 text-left">{{detailPageInfo?.metadata.model_release.toUpperCase()}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Model-release</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7 text-left">{{detailPageInfo?.metadata.model_release.toUpperCase()}}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-4">Property release</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7 text-left">{{detailPageInfo?.metadata.property_release.toUpperCase()}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Property release</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7 text-left">{{detailPageInfo?.metadata.property_release.toUpperCase()}}</span>
                             </div>
                         </div>
                     </div>
@@ -219,15 +219,15 @@
                             <!--                                <div class="col-md-1">:</div>-->
                             <!--                                <div class="col-md-7">{{detailPageInfo.metadata.title}}</div>-->
                             <!--                            </div>-->
-                            <div class="row">
-                                <div class="col-md-4">Credit</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo.metadata.author_realname}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Credit &nbsp; &nbsp; &nbsp;&nbsp;</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo.metadata.author_realname}}</span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">Product ID</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{imagefootId}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Product ID</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{imagefootId}}</span>
                             </div>
                             <!--<div class="row">
                                 <div class="col-md-4">Width</div>
@@ -507,7 +507,7 @@
                                         <video controls
                                                [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+detailPageInfo[2]"
                                                controlsList="nodownload" onmouseover="this.play()"
-                                               onmouseout="this.load()">
+                                               onmouseout="this.load()" class="for_mobile">
                                             <source src="{{detailPageInfo[0].flv_base+detailPageInfo[1]}}"
                                                     type="video/mp4">
                                             Your browser does not support the video tag.
@@ -697,25 +697,25 @@
                             <!--                                <div class="col-md-1">:</div>-->
                             <!--                                <div class="col-md-7">Contact your local office for all commercial or promotional uses.</div>-->
                             <!--                            </div>-->
-                            <div class="row">
-                                <div class="col-md-4">Credit</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo[0].items[0].artistname}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Credit</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].items[0].artistname}}</span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">Product ID</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo[3]}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Product ID</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[3]}}</span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">Duration #</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo[0].items[0].dur}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Duration #</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].items[0].dur}}</span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">Date created</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo[0].items[0].date}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Date created</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].items[0].date}}</span>
                             </div>
                             <!--                            <div class="row">-->
                             <!--                                <div class="col-md-4">License type</div>-->
@@ -726,10 +726,10 @@
                                 <div class="col-md-3">Release info :</div>
                                 <div class="col-md-9">Not released. More information</div>
                             </div>-->
-                            <div class="row">
-                                <div class="col-md-4">Max file size</div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-7">{{detailPageInfo[0].items[0].filesize}}</div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Max file size</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].items[0].filesize}}</span>
                             </div>
                         </div>
 
