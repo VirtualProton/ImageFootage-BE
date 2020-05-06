@@ -97,10 +97,16 @@ ul.search-result {
     padding: 10px;
 }
 .icons_thum1 {
-    position: fixed;
+    /*position: fixed;*/
+	position: absolute;
     right: 0px;
     right: 20px;
-    top: 100px;
+    /*top: 100px;*/
+	display:none;
+	top: 242px;
+}
+.photo-item:hover .icons_thum1{
+	display:block;
 }
 .main-content .photos .photo-item:hover .photo-text-more .icons_thum1 {
     position: fixed;
@@ -195,12 +201,18 @@ column-count: 1;
 -moz-column-width: 100%;
 column-width: 100%;
 }
+.forimgic{
+	display:block;
+}
 }
 
 @media (max-width: 400px) {
 .btn.filter {
 padding-left: 1.1rem;
 padding-right: 1.1rem;
+}
+.forimgic{
+	display:block;
 }
 }
 .forimgic{
@@ -342,4 +354,487 @@ padding-right: 1.1rem;
     box-shadow: 0 0 4px rgba(120,120,120,0.2);
     width: 100%;
     display: block;
+}
+@media (max-width: 450px) {
+.for_mobileresponsive{
+	height: 95px !important;
+}
+/*.icons_thum1 {
+   position: fixed !important;
+    top: 25px !important;
+}
+*/}
+
+@media (max-width: 400px) {
+	.for_mobileresponsive{
+	height: 95px !important;
+}
+/*.photo-text-more .icons_thum1 {
+   position: fixed !important;
+    top: 25px !important;
+}*/
+
+}
+
+/* for video end  */
+/* ----------- iPhone 4 and 4S ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+ .forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+/* ----------- Galaxy S3 ----------- */
+
+/* Portrait and Landscape */
+@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 2) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media screen 
+  and (device-width: 320px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 2) 
+  and (orientation: portrait) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}}
+
+/* Landscape */
+@media screen 
+  and (device-width: 320px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 2) 
+  and (orientation: landscape) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- Galaxy S4, S5 and Note 3 ----------- */
+
+/* Portrait and Landscape */
+@media screen 
+  and (device-width: 320px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 3) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media screen 
+  and (device-width: 320px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 3) 
+  and (orientation: portrait) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media screen 
+  and (device-width: 320px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 3) 
+  and (orientation: landscape) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* ----------- Galaxy S6 ----------- */
+
+/* Portrait and Landscape */
+@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 4) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Portrait */
+@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 4) 
+  and (orientation: portrait) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
+}
+
+/* Landscape */
+@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 4) 
+  and (orientation: landscape) {
+.forimgic{
+	display:block;
+}
+.icons_thum1 {
+	display:block;
+	visibility:visible !important;
+    position: absolute !important;
+    right: 0px;
+    right: 20px;
+    top: 63px !important;
+}
 }

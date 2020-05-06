@@ -347,10 +347,11 @@ purple-gradient{
 
 .border-top-0{border-top:0px !important;}
 .loader2{
-    position: absolute;
+   /* position: absolute;*/
+   position:relative;
     top: 42%;
-    left: 35%;
-    width: 150px;
+   /* left: 35%;*/
+    /*width: 150px;*/
     height: 150px;
     background: transparent;
     text-align: center;

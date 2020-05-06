@@ -1,4 +1,4 @@
-<div class="loader-bg" *ngIf="loadingData">
+<div class="loader-bg align-items-center" *ngIf="loadingData">
     <!--    <div class="loader">-->
     <!--        Loading-->
     <!--        <span></span>-->
@@ -930,21 +930,22 @@
                       <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
                       <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
                   <!-- <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>-->
-                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;">
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;" class="for_mobileresponsive">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
-                          <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
-                          <div class="photo-text-more" >
-                       	  <div class="photo-text-more" >
-                        <br />
-                        <p class="icons_thum1" >
+                          <p class="icons_thum1" >
                         	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
                             <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
                             <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
                             <span *ngIf="!currentUser"><a href="#" matTooltip="Add to Cart" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
                             <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
                         </p>
+                          <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                          <div class="photo-text-more" >
+                       	  <div class="photo-text-more" >
+                        <br />
+                        
                       </div>
                       </div>
                       </span>
