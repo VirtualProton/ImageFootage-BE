@@ -117,7 +117,7 @@
   </header>-->
 
   <div class="site-wrap">
-    <div class="container-fluid text-center my-5">
+    <div class="container-fluid text-center my-5 ">
       <div class="row mx-auto my-auto">
           <div id="recipeCarousel" class="carousel slide w-100">
               <div class="carousel-inner" role="listbox">
@@ -142,7 +142,7 @@
             </div>
         </div>
       </div>
-      <main class="main-content mt-3" appNoRightClick>
+      <main class="main-content mt-3 bg-white" appNoRightClick>
           <div class="container-fluid photos">
             <div class="row align-items-stretch">
 <!-- routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" -->
@@ -209,11 +209,12 @@
             </div>-->
 
           </div>
+          <div class="text-center mb-2">
+              <button class="btn mr-2" [routerLink]="['/search']" [queryParams]="{type:1,keyword:categoryname}">More Images</button>
+              <button class="btn" [routerLink]="['/search']" [queryParams]="{type:2,keyword:categoryname}">More Footages</button>
+          </div>
       </main>
-      <div class="text-center mb-2">
-          <button class="btn mr-2" [routerLink]="['/search']" [queryParams]="{type:1,keyword:categoryname}">More Images</button>
-          <button class="btn" [routerLink]="['/search']" [queryParams]="{type:2,keyword:categoryname}">More Footages</button>
-      </div>
+
     </div>
 <!-- <app-hero-search></app-hero-search> -->
 <ng-container *ngIf="showloginPopup">

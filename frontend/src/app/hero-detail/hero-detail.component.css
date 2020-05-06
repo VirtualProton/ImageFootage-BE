@@ -13,7 +13,7 @@ body {
 }
 .main-content .photos .photo-item img{
 	    object-fit: contain !important;
-		background: #58303066 !important;
+		background: #fff !important;
 }
 .gallery {
 -webkit-column-count: 5;

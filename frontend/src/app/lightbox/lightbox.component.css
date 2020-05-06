@@ -1,8 +1,10 @@
 p{
-	font-family: Open Sans,Helvetica,Arial,sans-serif !important;
+	/*font-family: Open Sans,Helvetica,Arial,sans-serif !important;*/
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
 li{
-	font-family: Open Sans,Helvetica,Arial,sans-serif !important;
+	/*font-family: Open Sans,Helvetica,Arial,sans-serif !important;*/
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
 #mainNav {
     background: #000;

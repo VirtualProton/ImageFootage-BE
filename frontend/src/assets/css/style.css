@@ -6,9 +6,10 @@ body {
   color: #a6a6a6;
   font-weight: 400;
   font-size: 1rem;
-  background: #000;
+  background: #000 !important;
   /*font-family: 'Poppins', sans-serif !important;*/
-  font-family: Open Sans,Helvetica,Arial,sans-serif !important;
+  /*font-family: Open Sans,Helvetica,Arial,sans-serif !important;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
    }
 ::-moz-selection {
   background: #000;
@@ -23,7 +24,10 @@ a {
   a:hover {
     text-decoration: none; }
 h1, h2, h3, h4, h5,
-.h1, .h2, .h3, .h4, .h5 {/*font-family: 'Poppins', sans-serif !important;*/ font-family:Open Sans,Helvetica,Arial,sans-serif !important;}
+.h1, .h2, .h3, .h4, .h5 {/*font-family: 'Poppins', sans-serif !important;*/
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif !important;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+}
 .f-8{font-size:8px !important}
 .f-10{font-size:10px !important}
 .f-11{font-size:11px !important}
@@ -62,7 +66,8 @@ h1, h2, h3, h4, h5,
 
 .bg-black {
   background: #000 !important; }
-
+.bg-white {
+  background: #fff !important; }
 .color-black-opacity-5 {
   color: rgba(0, 0, 0, 0.5); }
 
