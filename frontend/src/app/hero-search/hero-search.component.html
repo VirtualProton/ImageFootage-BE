@@ -847,7 +847,7 @@
                    <!--photos and videos--> <span *ngIf="keywordEle !=''">for {{keywordEle}} </span></small></p>
             <span class="f-12 black_font" bind-style.color = "productType == 2 ? '#000' :''">Related:</span> 
             <span class="related_key mt-10 tags">
-             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : ''">{{keys}}</a>
+             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : '#000'">{{keys}}</a>
             </span>
           </div> 
           <div class="clearfix"></div>

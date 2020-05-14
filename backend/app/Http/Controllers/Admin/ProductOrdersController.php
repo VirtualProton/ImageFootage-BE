@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Orders;
+use App\Models\Common;
+use App\Models\User;
 use Auth;
 class ProductOrdersController extends Controller
 {
-   public function userOrderList(){
+   public function index(){
 //	   $all_orders_list= Orders::with(['items'=>function($query){
 //                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
 //            }])->with('user')
@@ -18,8 +20,15 @@ class ProductOrdersController extends Controller
 //           ->get()->toArray();
 
 	   //return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
-       return view('admin.orders.orderlist');
+       $this->User = new User;
+       $userlist= $this->User->getUserData();
+       return view('admin.orders.index',compact('userlist'));
+       //return view('admin.orders.orderlist');
   }
+    public function userOrderList($id){
+         return view('admin.orders.orderlist');
+    }
+
   public function userListapi(){
       $all_orders_list= Orders::with(['items'=>function($query){
           $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
@@ -30,7 +39,6 @@ class ProductOrdersController extends Controller
           ->orderBy('id','desc')
           ->get()->toArray();
       return response()->json($all_orders_list);
-
   }
   public function addPackage(Request $request){
 	   $this->validate($request, [

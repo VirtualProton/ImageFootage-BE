@@ -24,6 +24,7 @@ export class UserProfileComponent implements OnInit {
   orderData:any ='';
   order_items:any='';
   public currentUser: any;
+  prchage:boolean = false;
   constructor(
       private route: ActivatedRoute,
       private heroService: HeroService,
@@ -137,6 +138,10 @@ export class UserProfileComponent implements OnInit {
       newstr = newstr.replace("main_l.mp4","iconl.jpeg")
      console.log(newstr);
      return newstr;
+  }
+
+  toggle(){
+    this.prchage = ! this.prchage;
   }
 
 

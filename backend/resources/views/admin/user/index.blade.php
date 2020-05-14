@@ -50,7 +50,10 @@
                   <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>
                   <td>{{$user['mobile']}}</td>
-                  <td>{{$user['account']['account_name']}}</td>
+                  <td>@if(isset($user['account']['account_name']) && !empty($user['account']['account_name']))
+                          {{$user['account']['account_name']}}
+                      @endif
+                  </td>
                   <td>{{$user['type']}}</td>
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
                   <td><?php echo date('D, d M, Y',strtotime($user['updated_at'])) ?></td>

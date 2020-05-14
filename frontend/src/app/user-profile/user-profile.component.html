@@ -18,21 +18,36 @@
                                 role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
                             <i class="mdi mdi-help-circle"></i> Profile
                         </a></li>
-                        <li class="nav-item"><i class="flaticon-review f-24"></i> <a
-                                [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"
-                                role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>
-                            <i class="mdi mdi-account"></i> Plans
-                        </a></li>
+<!--                        <li class="nav-item"><i class="flaticon-review f-24"></i> <a-->
+<!--                                [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"-->
+<!--                                role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>-->
+<!--                            <i class="mdi mdi-account"></i> Plans-->
+<!--                        </a></li>-->
 
                         <!--                        <li class="nav-item"><i class="flaticon-wallet-1 f-24"></i> <a  [ngClass]="[billingTab ? 'active' : '']"   (click)="tabshow('billing')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">-->
                         <!--                            <i class="mdi mdi-account-settings"></i> Billing-->
                         <!--                        </a> </li>-->
                         <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a
-                                [ngClass]="[purchaseTab ? 'active' : '']" (click)="tabshow('purchase')"
+                                [ngClass]="[purchaseTab ? 'active' : '']" (click)="toggle()"
                                 data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false"
                                 style='cursor:pointer;'>
-                            <i class="mdi mdi-account-settings"></i> Purchase History
+                              <i class="fa fa-angle-double-right" *ngIf="!prchage"></i>
+                              <i class="fa fa-angle-double-down" *ngIf="prchage"></i>
+                            Purchase History
                         </a>
+                            <ul *ngIf="prchage">
+                                <li class="ml-5"><i class="flaticon-checklist f-24"></i> <a
+                                        [ngClass]="[purchaseTab ? 'active' : '']" (click)="tabshow('purchase')"
+                                        data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false"
+                                        style='cursor:pointer;'>Orders </a>
+                                </li>
+                                <li class="ml-5"><i class="flaticon-review f-24"></i> <a
+                                        [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"
+                                        role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>
+                                    <i class="mdi mdi-account"></i> Plans
+                                </a></li>
+
+                            </ul>
 
                         </li>
                         <li class="nav-item"><i class="flaticon-checklist f-24"></i> <a

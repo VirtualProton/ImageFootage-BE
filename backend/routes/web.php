@@ -154,7 +154,8 @@ Route::get('/deleteproductpeoples/{id}', 'ProductImagePeoplesController@deletePr
 Route::get('/editproductpeoples/{id}', 'ProductImagePeoplesController@editProductPeoples');
 Route::post('/updateproductpeoples', 'ProductImagePeoplesController@updateProductPeoples');
 //orders related
-Route::get('/user_orders', 'ProductOrdersController@userOrderList');
+Route::get('/orders', 'ProductOrdersController@index');
+Route::get('/user_orders/{id}', 'ProductOrdersController@userOrderList');
 Route::get('/userListapi', 'ProductOrdersController@userListapi');
 
 //Product  Orientations
