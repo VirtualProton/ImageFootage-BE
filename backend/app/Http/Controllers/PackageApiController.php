@@ -1,0 +1,41 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Package;
+use App\Models\UserPackage;
+use Auth;
+class PackageApiController extends Controller
+{
+  public function packageList(){
+       $all_package_list = Package::get()->toArray();
+       //print_r($all_package_list); die;
+      $packagelist = [];
+      if(count($all_package_list)>0) {
+          foreach ($all_package_list as $eachpacage) {
+              if ($eachpacage['package_plan'] == 1) {
+                  $plan = 'download_pack';
+              } else if ($eachpacage['package_plan'] == 2) {
+                  if ($eachpacage['package_expiry_yearly'] == 0) {
+                      $plan = 'monthly_pack';
+                  } else {
+                      $plan = 'yearly_pack';
+                  }
+              }
+              if ($eachpacage['package_type'] == 'Image') {
+                  $packagelist[$eachpacage['package_type']][$plan][] = $eachpacage;
+              } else {
+                  if ($eachpacage['pacage_size'] == '1') {
+                      $packagelist[$eachpacage['package_type']][$plan]['HD'][] = $eachpacage;
+                  }else{
+                      $packagelist[$eachpacage['package_type']][$plan]['4K'][] = $eachpacage;
+                  }
+              }
+          }
+      }
+      echo json_encode(["status"=>"success",'data'=>$packagelist]);
+ }
+
+
+}

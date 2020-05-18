@@ -1,0 +1,237 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\Modules;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Roles;
+use App\Models\Department;
+use App\Models\Admin;
+use App\Models\RolesModulesMapping;
+use Illuminate\Support\Facades\Response;
+
+
+class SubAdminController extends Controller
+{
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin')->except('login','logout');
+
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $this->Admin = new Admin();
+        $agentlist=$this->Admin->getAgentData();
+        return view('admin.subadmin.index',compact('agentlist'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $title = "Add Admin/Agent";
+        $roles= Roles::where('status','=','A')->get();
+        $deparments= Department::where('status','=','A')->get();
+        return view('admin.subadmin.create', compact('title','deparments','roles'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $this->validate($request, [
+            'department'   => 'required',
+            'role' => 'required',
+            'name' =>'required',
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+        ]);
+
+        $this->Admin = new Admin();
+        if($this->Admin->save_admin($request)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent has been created successfully !!!");
+        } else {
+            return redirect("admin/subadmin/create")->with("error", "Due to some error, Admin/Agent is not registered yet. Please try again!");
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $title = "Add Admin/Agent";
+        $roles= Roles::where('status','=','A')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $this->Admin = new Admin();
+        $agent_data=$this->Admin->getAgentData($id);
+        return view('admin.subadmin.edit', compact('title','deparments','roles','agent_data'));
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'department'   => 'required',
+            'role' => 'required',
+            'name' =>'required',
+            'email'=>'required|email',
+            'password'=>'sometimes|nullable|min:6',
+        ]);
+
+        $this->Admin = new Admin();
+        if($this->Admin->update_admin($request,$id)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent has been updated successfully !!!");
+        } else {
+            return redirect("admin/subadmin/$id/edit")->with("error", "Due to some error, Admin/Agent is not updated yet. Please try again!");
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $delagent = Admin::find($id);
+        $delagent->delete();
+       // redirect
+       return redirect('admin/subadmin')->with('success', 'Successfully deleted the admin/agent!');
+
+    }
+
+    /**
+     * Changing the status of subadmin user.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function status($type,$id)
+    {
+        $title = "Change Status Admin/Agent";
+        $this->Admin = new Admin();
+        if($this->Admin->change_status($type,$id)){
+            return redirect("admin/subadmin")->with("success", "Admin/Agent status has been changed successfully !!!");
+        } else {
+            return redirect("admin/subadmin")->with("error", "Due to some error, Admin/Agent status is not changed yet. Please try again!");
+        }
+    }
+    /**
+     * Give access managemnt to roles as per department.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function access_management(){
+        $title = "Access Management";
+        $roles= Roles::where('status','=','A')->where('id','<>','1')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $modules = Modules::where('parent_module_id','=','0')->where('id','<>','1')->select('module_name','id')->get();
+        return view('admin.subadmin.access_management', compact('title','deparments','roles','modules'));
+
+    }
+    public function save_access(Request $request){
+         $data = $request->all();
+         if(count($data)>0){
+             foreach($data['access_management'] as $k=>$eachData){
+                 $is_view='0';
+                 $is_edit='0';
+                 $is_delete='0';
+                 $is_add='0';
+                 if(isset($eachData["'view'"]) && $eachData["'view'"]=='on'){
+                     $is_view ='1';
+                 }
+                 if(isset($eachData["'add'"]) && $eachData["'add'"]=='on'){
+                     $is_add='1';
+                 }
+                 if(isset($eachData["'edit'"]) && $eachData["'edit'"]=='on'){
+                     $is_edit='1';
+                 }
+                 if(isset($eachData["'delete'"]) && $eachData["'delete'"]=='on'){
+                     $is_delete='1';
+                 }
+                 $count= RolesModulesMapping::where('department_id',$data['department'])
+                                      ->where('role_id',$data['role'])
+                                      ->where('module_id',$k)->count();
+                 if($count==0){
+                     RolesModulesMapping::insert(['department_id'=>$data['department'],'role_id'=>$data['role'],'module_id'=>$k,
+                         'can_add'=>$is_add,'can_edit'=>$is_edit,'can_view'=>$is_view,'can_delete'=>$is_delete]);
+                 }else{
+                    $updated = RolesModulesMapping::where('department_id',$data['department'])
+                         ->where('role_id',$data['role'])
+                         ->where('module_id',$k)
+                         ->update(['can_add'=>$is_add,'can_edit'=>$is_edit,'can_view'=>$is_view,'can_delete'=>$is_delete]);
+
+                 }
+
+             }
+             return redirect("admin/subadmin/access_management")->with("success", "Access has been added/Modified successfully !!!");
+         }
+
+    }
+
+    public function mapping_data(Request $request){
+        $data = $request->all();
+        $modules = Modules::where('parent_module_id', '=', '0')->where('id', '<>', '1')->select('module_name', 'id')->get();
+        $access= RolesModulesMapping::select('module_id','can_add','can_edit','can_view','can_delete')->where('department_id',$data['department'])
+            ->where('role_id',$data['role'])
+            ->get()
+            ->groupBy('module_id')
+            ->toArray();
+        //print_r($access);die;
+        if(count($access)>0) {
+            $viewRendered = view('admin.subadmin.access_management_edit', compact('modules','access'))->render();
+            return Response::json(['html'=>$viewRendered]);
+        }else{
+            $access = [];
+            $viewRendered = view('admin.subadmin.access_management_edit', compact('modules','access'))->render();
+            return Response::json(['html'=>$viewRendered]);
+        }
+
+    }
+
+}

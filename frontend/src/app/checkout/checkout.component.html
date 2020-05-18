@@ -1,0 +1,251 @@
+<div class="loader-bg align-items-center" *ngIf="loadingData">
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
+</div>
+
+
+<section class="pt-50 mt-50" appNoRightClick>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-6">
+                <div class="card shadow" *ngIf="!paymentShow">
+                    <form class="loignForm p-5" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                        <h3 class="f-20 mb-3">BILLING ADDRESS</h3>
+                        <div class="row form-group">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>First Name</label>
+                                <input type="text" formControlName="first_name"
+                                       [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
+                                       class="form-control rounded-0" [value]="firstname">
+                                <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.first_name.errors.required">First Name is required</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>Last Name</label>
+                                <input type="text" formControlName="last_name" id="lname"
+                                       [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"
+                                       class="form-control" [value]="lastname">
+                                <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <textarea class="form-control rounded-0" rows="2" style="min-height:70px;"
+                                      [ngClass]="{ 'is-invalid': submitted && f.address.errors }"
+                                      formControlName="address" [ngModel]="address"></textarea>
+                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Address is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Country</label>
+                            <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
+                                    formControlName="country" (change)="onChangeCountry($event.target.value)">
+                                <option value="">--Select Country--</option>
+                                <option *ngFor="let country of countryInfo; let i = index"
+                                        value="{{country.id}}">{{country.name}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                <div *ngIf="f.country.errors.required">Country is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>State/province</label>
+                            <select class="form-control" formControlName="state"
+                                    [ngClass]="{ 'is-invalid': submitted && f.state.errors }"
+                                    (change)="onChangeState($event.target.value)">
+                                <option value="" selected>--Select State--</option>
+                                <option *ngFor="let state of stateInfo; let j = index"
+                                        value="{{state.id}}">{{state.state}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">State is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <select class="form-control" formControlName="city"
+                                    [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
+                                    (change)="onChangeCity($event.target.value)">
+                                <option value="" selected>--Select City--</option>
+                                <option *ngFor="let city of cityInfo; let k = index"
+                                        value="{{city.id}}">{{city.name}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Zipcode</label>
+                            <input type="text" class="form-control" formControlName="pincode"
+                                   [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" [value]="postal_code">
+                            <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                                <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
+                                <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number
+                                    should be 6 digits
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" formControlName="terms" id="termscond"
+                                   value="1" [ngClass]="{ 'is-invalid': submitted && f.terms.errors }">
+                            <label class="custom-control-label" for="termscond"><a routerLink="/terms">Terms and
+                                Condition</a></label>
+                            <div *ngIf="submitted && f.terms.errors" class="invalid-feedback">
+                                <div *ngIf="f.terms.errors.required"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group pt-3">
+                            <button type="submit" [disabled]="loading"
+                                    class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Proceed to
+                                Payment </strong></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card shadow" *ngIf="paymentShow">
+                    <h3 class="f-20 ml-3 mb-6 mt-35">PAYMENT INFORMATION</h3>
+                    <!--                <form  [formGroup]="checkoutForm">-->
+                    <div class="" *ngIf="paymentShow">
+                        <div class="row bt-5 mr-3 float-right">
+                            <a (click)="editAddress()"><i class="fa fa-edit"></i></a>
+                        </div>
+                        <div class="row ml-4 mb-10">
+                            <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('atom')">
+                                <label class="mb-0" style="cursor: pointer">
+                                    <!--                                <input type="radio" formControlName="paymentGatway"  name="paymentGatway" value="atom" checked="checked">-->
+                                    <img src="/assets/images/atom.png" alt="atom">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row ml-4 mb-10">
+                            <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('payu')">
+                                <label class="mb-0" style="cursor: pointer">
+                                    <!--                                <input type="radio"    name="paymentGatway" value="payu" >-->
+                                    <img src="/assets/images/payu.png" alt="payumoney">
+                                </label>
+                            </div>
+
+                            <!--                        <div [innerHTML]="payuData"></div>-->
+                        </div>
+
+                        <div class="row ml-4 mb-10">
+                            <div class="card shadow-sm text-center p-2" (click)="onSubmitPayment('rozerpay')">
+                                <label class="mb-0" style="cursor: pointer">
+                                    <!--                                <input type="radio" formControlName="paymentGatway"  id="customRadio2" name="paymentGatway" value="rozerpay">-->
+                                    <img src="/assets/images/rozorpay.png" alt="Rozorpay">
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--                </form>-->
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-7 col-sm-6">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table cart-table checkout-table">
+                            <thead class="f-16">
+                            <tr>
+                                <th colspan="3"><h3 class="f-18">CART</h3>
+                                    <p class="mb-0">{{wishListDataItems.length}} Items</p></th>
+                                <th align="right" class="text-right">
+                                    <button class="btn btn-default rounded-0" (click)="goToWishList()">Edit</button>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let checkout of wishListDataItems;let i= index">
+
+                                <td width="25%" align="center" *ngIf="checkout.product_web=='2'">
+                                    ( {{checkout.product.product_id}} )<br/>
+                                    <div class="product-info">
+                                        <img src="{{checkout.product_thumb}}" alt="product-img"
+                                             style="object-fit: cover;width: 100%;">
+                                    </div>
+                                </td>
+                                <td width="25%" align="center" *ngIf="checkout.product_web=='3'">
+                                    ( {{checkout.product.product_id}} )<br/>
+                                    <div class="product-info">
+                                        <video [poster]="'https://p5iconsp.s3-accelerate.amazonaws.com/'+checkout.product_main_footage"
+                                               controls controlsList="nodownload" onmouseover="this.play()"
+                                               onmouseout="this.load()" style="object-fit: cover;width: 100%;">
+                                            <source src="{{checkout.product_thumb}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </td>
+
+
+                                <td width="50%">
+                                    <p class="mb-1 text-black" style="display: inline-block;">
+                                        <strong>{{checkout.product_name}} #{{checkout.cart_product_id}}</strong>
+
+                                        <!--                                        <a href="javascript:void()" data-toggle="popover"  data-html="true" title="Image 2916217 - Large (2592 X 3872px)$75.00-->
+                                        <!--" data-placement="right" data-content='-->
+                                        <!-- <p class="mb-0 f-12"><b>Size: X-Large (6720 X 4480PX)</b></p>-->
+                                        <!--<p class="mb-0  f-12">By <b>Thomas Pickard</b></p>-->
+                                        <!--                           <p class="f-12">A royalty free license for advertising, promotional and editorial use for one user. Print copies are limited to 500,000 and web use is unlimited.</p>'><i class="fa fa-exclamation-circle"></i></a>-->
+
+                                        <!--                                    </p>-->
+                                    <p class="mb-1">
+                                        <strong>Size:</strong>{{checkout.standard_type}}  {{checkout.standard_size}}</p>
+
+
+                                    <!-- <div class="clearfix"></div>
+                                    <div class="mt-2">
+
+                                    <a href="#" class="btn btn-danger btn-sm f-12"><i class="fa fa-times-circle"></i> Remove</a>
+                                     <a href="#" class="btn btn-success btn-sm f-12 text-white"><i class="fa fa-heart"></i> Wishlist</a>
+                                   </div> -->
+                                </td>
+                                <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}}
+                                    INR</strong></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="text-black">
+                            <tr class="f-20">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>TOTAL</strong></td>
+                                <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>
+                            </tr>
+                            <tr class="f-20">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>Taxes</strong></td>
+                                <td align="right"><strong>{{showTax()}} INR</strong></td>
+                            </tr>
+                            <tr class="f-16">
+                                <td colspan="2"></td>
+                                <td align="right"><strong>BALANCE DUE</strong></td>
+                                <td align="right"><strong>{{showTotalPrice() + showTax() }} INR</strong></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>

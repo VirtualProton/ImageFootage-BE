@@ -1,0 +1,989 @@
+<div class="loader-bg align-items-center" *ngIf="loadingData">
+    <!--    <div class="loader">-->
+    <!--        Loading-->
+    <!--        <span></span>-->
+    <!--    </div>-->
+    <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
+</div>
+
+
+
+ <!-- advanched search style="display:none" -->
+   <div class="container" [ngClass]="{ 'fixed-top': scrollEle }">
+	<div class="row">
+		<div class="col-md-12">
+            <div class="input-group" id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
+                <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);">
+                                <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
+                                <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
+                                  <div class="form-group">
+                             <span class="col-md-12" >
+                     	   <span class="row" style="margin-top: -20px;">
+                            <span class="col-md-8" >
+                            <select class="form-control select-css" id="category" name="category" style="color:#000;" [(ngModel)]="category">
+                                <option   [selected]="productType == 1" value="1">Images Only</option>
+                               <option [selected]="productType == 2" value="2">Footages Only</option>
+                               <option [selected]="editorial === 'editorial' && productType==1" value="3" >Editorial Images</option>
+                               <option [selected]="editorial === 'editorial' && productType==2 " value="4" >Editorial Footages</option>
+                            </select>
+                            </span>
+                            <span class="col-md-4">
+                                <span class="pull-right">
+                                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;    background-color: #fcbe11;    border-radius: 5px;
+    border: 1px solid #fcbe11;" >Apply</button>
+                                    <button type="button" class="btn btn-primary" (click)="reset(documentEditForm)" style=" background-color: #fcbe11;border-radius: 5px;
+    border: 1px solid #fcbe11;">Clear</button>
+                                 </span>
+                            </span>
+                        </span>
+                      </span>
+                      </div>
+
+                    <div class="row" style="font-size:14px;" *ngIf="productType != 2">
+                    <!--<div class="col-sm-6">
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSummer" value="summer" checked> Summer </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonWinter" value="winter"> Winter </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall </label>
+            <label class="radio-inline"> <input type="radio" name="season" id="seasonSpringFall" value="spring-fall" disabled> Spring-Fall  Spring Fall </label>
+        </div>-->
+                    <div class="col-md-6" style="border-right:1px solid #808080;">
+                        <div class=" col-md-12"  >
+                            <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Color</label>
+                           
+                            <!--<div class="row">-->
+                            <span class="boxing_filters">
+                                <input name="color" [value]="color"
+                                       [style.background]="color"
+                                       [cpOKButton]="true"
+                                       [cpSaveClickOutside]="false"
+                                       [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+                                       [(colorPicker)]="color" style="    width: 100%; border-radius: 5px !important;"/>
+                            </span>
+                                <!--                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">-->
+                                <!--                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;-->
+                                <!--                            </span>-->
+
+                           <!-- </div>-->
+
+                        </div>
+                        <div class=" col-md-12"  >
+                            <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Color Tolerance</label>
+                            <span class="boxing_filters">
+                           <label class="radio-inline" for="category"  >
+                                <input type="radio" name="tolerance" value="2" class="" [checked]="true"  ngModel> Exact (less results) &nbsp;
+                             </label>
+                             <label class="radio-inline" for="category"  >
+                                <input type="radio" name="tolerance" value="9" class="" ngModel> Approx (more results) &nbsp;
+                             </label>
+                             <label class="radio-inline" for="category"  >
+                                <input type="radio" name="tolerance" value="5" class="" ngModel> Standard &nbsp;
+                             </label>
+                           </span>
+
+                        </div>
+                         
+                        <div class="col-md-12" >
+                         <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Orientations</label>
+                         
+                         <span class="boxing_filters">
+                         <label class="radio-inline" for="category"  *ngFor="let orientation of leftsideData?.product_orientations">
+                                <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
+                          </label>
+                          </span>
+                         
+                         
+                         
+                      </div>
+                      
+                  			<div class=" col-md-12" >
+                     <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Image Types</label>
+                     <span class="boxing_filters">
+                     <label class="radio-inline" for="category"  *ngFor="let imageTypes of leftsideData?.product_imagetypes">
+                                <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
+                             </label>
+                     </span>
+                     
+
+                  </div>
+                       
+
+                       
+                        
+                        </div>
+                        <div class="col-md-6">
+                        <div class=" col-md-12">
+                         	 <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Gender</label>
+                             <span class="boxing_filters">
+                                 <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
+                                    <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
+                                 </label>
+                             </span>
+                        </div>
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Ethnicity</label>
+                        <span class="boxing_filters">
+                        	<label class="radio-inline" for="category"  *ngFor="let ethinicities of leftsideData?.product_ethinicities">
+                            <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                            </label>
+                        </span>
+                        </div>
+                        <div class="col-md-12">
+                         <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">People</label>
+                         <span class="boxing_filters">
+                             <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
+                              <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                             </label>
+                         </span>
+                        </div>
+                        <div class="col-md-12">
+                        <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Locations</label>
+                        <span class="boxing_filters">
+                            <label class="radio-inline" for="category"  *ngFor="let locations of leftsideData?.product_locations">
+                            <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                            </label>
+                        </span>
+                        </div>
+                        
+                        <!--<div class="col-md-2">
+
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">People</label>
+                         &nbsp;
+
+                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                        <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>-->
+                        <!--<div class="col-md-2">
+
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">Locations</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let locations of leftsideData.product_locations"   >
+                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>-->
+                        
+                        <!--<div class="col-md-2">
+                        <div class="form-group" >
+                         <label for="category" class="" style="color:#feaa0c;">Ethnicity</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class="">
+                        <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                        </div>
+                         </div>
+                        </div>-->
+                        </div>
+ 
+                   </div>
+                    
+					<div class="row" style="font-size:14px;" *ngIf="productType == 2">
+                          <div class="col-md-6" style="border-right:1px solid #808080;">
+                              <div class="col-md-12" >
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Resolution</label>
+                                  <span class="boxing_filters">
+                                  <label class="radio-inline" for="category"  *ngFor="let res of resolutions;">
+                                <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
+
+                             </label>
+                             </span>
+                                 
+                              </div>
+                              <div class="form-group col-md-12" >
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Duration (In minutes)</label>
+                                  &nbsp;
+                                  <div class="row">
+                                      <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
+                                  </div>
+                              </div>
+
+                              <div class=" col-md-12" >
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">FPS</label>
+                                  <span class="boxing_filters">
+                                   <label class="radio-inline" for="category"  *ngFor="let fps of fpsValues;">
+                                <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
+
+                             </label>
+                             </span>
+                    
+
+                              </div>
+
+                          </div>
+
+                          <div class="col-md-6">
+
+                              <div class=" col-md-12"  >
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">People</label>
+                                  <span class="boxing_filters">
+                                 <label class="radio-inline" for="category"  *ngFor="let peoples of leftsideData?.product_peoples">
+                                <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
+
+                             </label>
+								</span>
+                                  
+
+                              </div>
+                              <div class=" col-md-12"  >
+                                  <label for="category" class="" style="color:#333;margin-bottom: 0.2rem;font-weight: bold;">Gender</label>
+                                  <span class="boxing_filters">
+                                   <label class="radio-inline" for="category"  *ngFor="let gender of leftsideData?.product_gender">
+                                <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
+
+                             </label>
+                                  </span>
+
+                              </div>
+                          </div>
+                         
+                      </div>
+                       <div class="row" style="color:#fff;">
+                    	
+                  		<!--<div class="col-md-4">
+                  			<div class="form-group" >
+                     <label for="category" class="" style="color:#feaa0c;">Image Sizes</label><br />
+                     &nbsp;
+                    <div for="category"  *ngFor="let imagesizes of leftsideData.product_imagesizes" class="" >
+                    <input type="radio" name="image_size" value="{{imagesizes.imagesize_id}}" class="" ngModel> {{imagesizes.imagesize_name}}  &nbsp;
+                    </div>
+                  </div>
+                  		</div>-->
+<!--                        <div class="col-md-4">-->
+<!--                  <div class="form-group" style="color:#fff;">-->
+<!--                     <label for="category" class="" >Sort Types</label><br />-->
+<!--                     &nbsp;-->
+<!--                    <div for="category"  *ngFor="let sorttype of leftsideData.product_sorttype" class="" >-->
+<!--                    <input type="checkbox" value="{{sorttype.sorttype_id}}" class=""> {{sorttype.sorttype_name}}  &nbsp;-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  </div>-->
+                     </div>
+                   
+                                
+                                </form>
+                            </div>
+                        </div>
+                        <button (click)="documentEditForm.ngSubmit.emit()"  class="btn btn-primary" style="background: #dfdddd;border: 1px solid #dfdddd;"><span class="fa fa-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+	</div>
+
+        
+     <!--<div class="container"  style="position:fixed;z-index:2;">
+      <div class="row">
+        <div class="col-lg-9 offset-lg-4 col-sm-8 offset-sm-2 col-12">
+
+          <div class="input-group" id="adv-search">
+          <form class="col-md-12" #myform = "ngForm" (ngSubmit)="filters(myform)">
+          <div class="col-md-12">
+          <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-search" name="search" placeholder="Search for snippets" style="height: 48px;color: #000;border-bottom: 1px solid #80808082;border-left: 1px solid #80808082; border-top: 1px solid #80808082;background:#fff;" [(ngModel)]="keywordEle"  aria-label="Text input with dropdown button" />
+            </div>
+            <div class="col-md-6" style="margin-left: -10px;">
+            <div class="input-group-btn">
+              <div class="btn-group" role="group">
+                <div class="dropdown dropdown-lg">
+                  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: #feaa0c; border: 1px solid #feaa0c;border-right:1px solid #fff;">Filters
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" role="menu" style=" background:#1d1d1d;margin-right:-300px;" *ngIf="leftsideData">
+                     <div class="form-group">
+                     <span class="col-md-12" >
+                     	<span class="row" style="margin-top: -20px;">
+                            <span class="col-md-8" >
+                            <select class="form-control" id="category" name="category" style="color:#fff;background:#1d1d1d;" [(ngModel)]="category">
+                                <option   [selected]="productType == 1" value="1">Images Only</option>
+                               <option [selected]="productType == 2" value="2">Footages Only</option>
+                               <option [selected]="editorial === 'editorial'" value="3" >Editorial</option>
+                            </select>
+                            </span>
+                            <span class="col-md-4">
+                                <span class="pull-right">
+                                    <button type="submit" class="btn btn-primary" style="margin-right:10px;background-color:#feaa0c;border-radius: 5px;" >Apply</button>
+                                    <button type="button" class="btn btn-primary" (click)="reset(myform)" style="background-color:#feaa0c;border-radius: 5px;">Clear</button>
+                                 </span>
+                            </span>
+                        </span>
+                      </span>
+                      </div>
+
+                    <div class="row" style="font-size:11px;" *ngIf="productType != 2">
+                    <div class="col-md-6" style="border-right:1px solid #808080;">
+                         <div class="form-group col-md-12" style="color:#fff;">
+                         <label for="category" class="" style="color:#feaa0c;">Gender</label>
+                         &nbsp;
+                         <div class="row">
+                        <span for="category"  *ngFor="let gender of leftsideData.product_gender" class="col-md-4">
+                        	
+                        <input type="radio" name="gender" value="{{gender.gender_id}}" class="" ngModel> {{gender.gender_name}}  &nbsp;
+                        
+                        </span>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-12" style="color:#fff;">
+                         <label for="category" class="" style="color:#feaa0c;">Orientations</label>
+                         &nbsp;
+                         <div class="row">
+                        <span for="category"  *ngFor="let orientation of leftsideData.product_orientations" class="col-md-4">
+                        <input type="radio" name="orientation" value="{{orientation.orientation_id}}" class="" ngModel> {{orientation.orientation_name}}  &nbsp;
+                        </span>
+                        </div>
+                      </div>
+                      
+                  			<div class="form-group col-md-12" style="color:#fff;">
+                     <label for="category" class="" style="color:#feaa0c;">Image Types</label>
+                     &nbsp;
+                     <div class="row">
+                    <span for="category"  *ngFor="let imageTypes of leftsideData.product_imagetypes" class="col-md-4">
+                    <input type="radio" name="imagetype" value="{{imageTypes.imagetype_id}}" class="" ngModel> {{imageTypes.imagetype_name}}  &nbsp;
+                    </span>
+                    </div>
+
+                  </div>
+                       
+                          <div class="form-group col-md-12" style="color:#fff;" >
+                             <label for="category" class="" style="color:#feaa0c;">Color</label>
+                             &nbsp;
+                             <div class="row">
+                            <span for="category"  *ngFor="let colors of leftsideData.product_colors" class="col-md-3">
+                            <input type="radio" name="color" value="{{colors.pcolor_id}}" class="" ngModel> {{colors.pcolor_name}}  &nbsp;
+                            </span>
+                            </div>
+
+                          </div>
+                       
+                        
+                        </div>
+                        
+                        <div class="col-md-2">
+
+                        <div class="form-group" style="color:#fff;" >
+                         <label for="category" class="" style="color:#feaa0c;">People</label>
+                         &nbsp;
+
+                        <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                        <input type="radio" name="people" value="{{peoples.people_id}}" class="" ngModel> {{peoples.people_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>
+                        <div class="col-md-2">
+
+                        <div class="form-group" style="color:#fff;" >
+                         <label for="category" class="" style="color:#feaa0c;">Locations</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let locations of leftsideData.product_locations"   >
+                        <input type="radio" name="locations" value="{{locations.location_id}}" class="" ngModel> {{locations.location_name}}  &nbsp;
+                        </div>
+
+                      </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                        <div class="form-group" style="color:#fff;">
+                         <label for="category" class="" style="color:#feaa0c;">Ethnicity</label>
+                         &nbsp;
+                        <div for="category"  *ngFor="let ethinicities of leftsideData.product_ethinicities" class="">
+                        <input type="radio" name="ethinicity" value="{{ethinicities.ethinicity_id}}" class="" ngModel> {{ethinicities.ethinicity_name}}  &nbsp;
+                        </div>
+                         </div>
+                        </div>
+ 
+                   </div>
+                      <div class="row" style="font-size:11px;" *ngIf="productType == 2">
+                          <div class="col-md-6" style="border-right:1px solid #808080;">
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">Resolution</label>
+                                  &nbsp;
+                                  <div class="row">
+                        <span for="category"  *ngFor="let res of resolutions;" class="col-md-4">
+
+                        <input type="checkbox" name="resolution" value="{{res}}" class="" ngModel (change)="onCheckboxChange($event,'resolution')"> {{res}}  &nbsp;
+
+                        </span>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">Duration</label>
+                                  &nbsp;
+                                  <div class="row">
+                                      <ng5-slider [(value)]="durvalue" [(highValue)]="durhighValue" [options]="options"></ng5-slider>
+                                  </div>
+                              </div>
+
+                              <div class="form-group col-md-12" style="color:#fff;">
+                                  <label for="category" class="" style="color:#feaa0c;">FPS</label>
+                    <div class="row">
+                    <span for="category"  *ngFor="let fps of fpsValues;" class="col-md-4">
+                    <input type="checkbox" name="fps" value="{{fps}}" class="" ngModel (change)="onCheckboxChange($event,'fps')"> {{fps}}  &nbsp;
+                    </span>
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+                          <div class="col-md-2">
+
+                              <div class="form-group" style="color:#fff;" >
+                                  <label for="category" class="" style="color:#feaa0c;">People</label>
+                                  &nbsp;
+
+                                  <div for="category"  *ngFor="let peoples of leftsideData.product_peoples"   >
+                                      <input type="checkbox" name="people" value="{{peoples.people_id}}" class="" ngModel (change)="onCheckboxChange($event,'people')"> {{peoples.people_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+                          <div class="col-md-2">
+
+                              <div class="form-group" style="color:#fff;" >
+                                  <label for="category" class="" style="color:#feaa0c;">Gender</label>
+                                  &nbsp;
+                                  <div for="category"  *ngFor="let gender of leftsideData.product_gender"   >
+                                      <input type="checkbox" name="gender" value="{{gender.gender_id}}" class="" ngModel (change)="onCheckboxChange($event,'gender')"> {{gender.gender_name}}  &nbsp;
+                                  </div>
+
+                              </div>
+                          </div>
+
+
+
+                      </div>
+
+                   
+
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="background: #feaa0c;border: 1px solid #feaa0c;"><span class="fa fa-search" aria-hidden="true"></span></button>
+              </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    
+    <!-- end advanced search -->
+<div class="bg-dark search_menu_l"  style="/*background: #151414*/background:#313e35 !important; !important; /*position: fixed;*/width: 100%;z-index:1;margin-top: 19px;" >
+    <ul class="search_menu search_menu col-md-6 m-auto col-sm-6" style="width:390px">
+        <li [class]="searchData.curated == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(2)">RELEVANCE</a></li>
+       <li [class]="searchData.letest == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(1)">LATEST</a></li>
+       <li [class]="searchData.populer == 1 ? 'active' : ' '"><a href="javascript:void(0)" (click)="onTabClick(3)">POPULAR</a></li>
+    </ul>
+    
+    
+    
+</div>
+
+<div class="site-wrap" >
+  <div  [ngClass]="show == true ? 'page-wrapper chiller-theme toggled' : 'page-wrapper chiller-theme'">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" (click)="show=!show" style="font-size: 17px;color:#fff;">
+      <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+    </a>
+
+        <!-- Sidebar -->
+
+       <!-- <nav id="sidebar" class="sidebar" *ngIf="show">-->
+
+
+<!--  <div class="sidebar-content">-->
+<!--    <perfect-scrollbar>-->
+<!--      <div class="sidebar-header">-->
+<!--      <div class="col-md-12">-->
+<!--      <div class="row">-->
+<!--      <div class="col-md-10"><a style="color:#fff;">FILTERS</a></div>-->
+<!--        <div class="col-md-2"><a (click)="toggle()" class="" style="cursor:pointer;color:#fff;font-size: 17px;"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a></div>-->
+<!--        </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--     <div class="sidebar-profile" >-->
+<!--       <a id="show-sidebar" class="btn btn-sm btn-dark" href="javascript:void(0)" >-->
+<!--      <i class="fas fa-bars"></i>-->
+<!--    </a>-->
+<!--       &lt;!&ndash; <div class="user-pic">-->
+<!--          <img class="img-responsive img-rounded" src="assets/img/user.jpg" alt="User picture">-->
+<!--        </div>&ndash;&gt;-->
+<!--        <div class="user-info" *ngIf="currentUser">-->
+<!--         &lt;!&ndash; <span class="user-name">Jhon-->
+<!--            <strong>Smith</strong>-->
+<!--          </span>-->
+<!--          <span class="user-role">Administrator</span>-->
+<!--          <span class="user-status">-->
+<!--            <i class="fa fa-circle"></i>-->
+<!--            <span>Online</span>-->
+<!--          </span>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12" *ngIf="!footerCssEle">-->
+<!--      		<form class="search_m header_serach mt-3 mb-3">-->
+<!--              <div class="input-group search-bar">-->
+<!--                  <div class="input-group-btn" ngbDropdown >-->
+<!--                  <select class="btn btn-secondary" (change)="searchDropDownClick($event.target.value)">-->
+<!--                  	<option [selected]="productType == 1" value="1"><br />Images Only<br /></option>-->
+<!--                    <option [selected]="productType == 2" value="2">Footages Only<br /></option>-->
+<!--                    <option [selected]="productType == 3" value="3">Editorial<br /></option>-->
+<!--                  </select>-->
+<!--                     &lt;!&ndash; <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle >-->
+<!--                        <span *ngIf='productType == 3'>Photos + Videos</span>-->
+<!--                        <span *ngIf='productType == 1'>Images Only</span>-->
+<!--                        <span *ngIf='productType == 2'>Footages Only</span>-->
+<!--                      </button>-->
+<!--                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu" style="margin-top:90px;">-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Images Only</a>-->
+<!--                        <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Footages Only</a>-->
+<!--                      </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                  -->
+<!--                  <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">-->
+<!--                  <i class="fa fa-search" (click)="onKeydown($event)"  style="cursor:pointer;"></i>-->
+<!--            </div>-->
+<!--      		</form>-->
+<!--    </div>-->
+<!--      -->
+<!--&lt;!&ndash;      <div class="sidebar-menu">&ndash;&gt;-->
+<!--&lt;!&ndash;      &lt;!&ndash;<div class="sidebar-header"> &ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="btn-group btn-group-toggle search-select" data-toggle="buttons">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label  [class]="searchData.productType == 1 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(1)" style="font-size:15px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="radio"  name="options" [(ngModel)]="searchData.productType" value="1">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"> <i class="fa fa-camera"></i>&nbsp; IMAGES </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"></p> &ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <label  [class]="searchData.productType == 2 ? 'btn btn-dark active' : 'btn btn-dark'" (click)="searchDropDownClick(2)" style="font-size:15px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="radio" name="options" [(ngModel)]="searchData.productType" value="2">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0"> <i class="fa fa-video"></i>&nbsp; FOOTAGES </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="mb-0">   </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </label>  &ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;          <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu1=!sidebarSubmenu1">  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span> People</span>              &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                   <div class="sidebar-submenu" *ngIf="sidebarSubmenu1">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let peoples of leftsideData.product_peoples">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('people',peoples.people_id) ? 'active' : ' '"  (click)="onSideMenuClick('people',peoples.people_id)">{{peoples.people_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu2=!sidebarSubmenu2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-shopping-cart"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Gender</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu sidebar-submenu-btn" *ngIf="sidebarSubmenu2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <a href="javascript:void(0)" [ngClass]="getSideBarClassName('gender',gender.gender_id) ? 'btn btn-dark active' : 'btn btn-dark'"  *ngFor="let gender of leftsideData.product_gender" (click)="onSideMenuClick('gender',gender.gender_id)"> &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      {{gender.gender_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu3=!sidebarSubmenu3">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="far fa-gem"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Ethnicity</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu3">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let ethinicities of leftsideData.product_ethinicities">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('ethinicity',ethinicities.ethinicity_id) ? 'active' : ' '"  (click)="onSideMenuClick('ethinicity',ethinicities.ethinicity_id)">{{ethinicities.ethinicity_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu6=!sidebarSubmenu6">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <span>Orientations</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu6">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          <li *ngFor="let orientation of leftsideData.product_orientations">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                              <a href="javascript:void(0)"  [ngClass]="getSideBarClassName('orientation',orientation.orientation_id) ? 'active' : ' '"  (click)="onSideMenuClick('orientation',orientation.orientation_id)">{{orientation.orientation_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu4=!sidebarSubmenu4">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-chart-line"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Location</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu4">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li  *ngFor="let locations of leftsideData.product_locations">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('locations',locations.location_id) ? 'active' : ' '"  (click)="onSideMenuClick('locations',locations.location_id)">{{locations.location_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                     </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6" (click)="sidebarSubmenu5=!sidebarSubmenu5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Color</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li  *ngFor="let colors of leftsideData.product_colors">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('colors',colors.pcolor_id) ? 'active' : ' '"  (click)="onSideMenuClick('colors',colors.pcolor_id)">{{colors.pcolor_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                     &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;                 <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu7=!sidebarSubmenu7">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Image Types</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu7">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let imageTypes of leftsideData.product_imagetypes">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imageTypes',imageTypes.imagetype_id) ? 'active' : ' '"    (click)="onSideMenuClick('imageTypes',imageTypes.imagetype_id)">{{imageTypes.imagetype_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu8=!sidebarSubmenu8">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <span>Image Sizes</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <div class="sidebar-submenu" *ngIf="sidebarSubmenu8">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <li *ngFor="let imagesizes of leftsideData.product_imagesizes">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <a href="javascript:void(0)" [ngClass]="getSideBarClassName('imagesizes',imagesizes.imagesize_id) ? 'active' : ' '"  (click)="onSideMenuClick('imagesizes',imagesizes.imagesize_id)">{{imagesizes.imagesize_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <li class="sidebar-dropdown">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <a href="javascript:void(0)" class="text-white fw-6"  (click)="sidebarSubmenu9=!sidebarSubmenu9">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <i class="fa fa-globe"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <span>Sort Types</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="sidebar-submenu" *ngIf="sidebarSubmenu9">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      <ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <li *ngFor="let sorttype of leftsideData.product_sorttype">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                          <a href="javascript:void(0)" [ngClass]="getSideBarClassName('sorttype',sorttype.sorttype_id) ? 'active' : ' '" (click)="onSideMenuClick('sorttype',sorttype.sorttype_id)">{{sorttype.sorttype_name}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                      </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;          </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </perfect-scrollbar>-->
+<!--  </div>-->
+  <!--<div class="sidebar-footer">
+    <div class="dropdown" dropdown>
+
+      <a href="#" dropdownToggle>
+        <i class="fa fa-bell"></i>
+        <span class="badge badge-pill badge-warning notification">5</span>
+      </a>
+      <div class="dropdown-menu notifications" *dropdownMenu>
+        <div class="notifications-header">
+          <i class="fa fa-bell"></i>
+          Notifications
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-check text-success border border-success"></i>
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                6 minutes ago
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-exclamation text-info border border-info"></i>
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                Today
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="notification-content">
+            <div class="icon">
+              <i class="fas fa-exclamation-triangle text-warning border border-warning"></i>
+
+            </div>
+            <div class="content">
+              <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+              <div class="notification-time">
+                Yesterday
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center" href="#">View all notifications</a>
+      </div>
+    </div>
+    <div class="dropdown" dropdown>
+      <a href="#" dropdownToggle>
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
+      </a>
+      <div class="dropdown-menu messages" *dropdownMenu>
+        <div class="messages-header">
+          <i class="fa fa-envelope"></i>
+          Messages
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+
+        </a>
+        <a class="dropdown-item" href="#">
+          <div class="message-content">
+            <div class="pic">
+              <img src="assets/img/user.jpg" alt="">
+            </div>
+            <div class="content">
+              <div class="message-title">
+                <strong> Jhon doe</strong>
+              </div>
+              <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. In totam explicabo</div>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center" href="#">View all messages</a>
+
+      </div>
+    </div>
+    <div class="dropdown" dropdown>
+      <a href="#" dropdownToggle>
+        <i class="fa fa-cog"></i>
+        <span class="badge-sonar"></span>
+      </a>
+      <div class="dropdown-menu" *dropdownMenu>
+        <a class="dropdown-item" href="#">My profile</a>
+        <a class="dropdown-item" href="#">Help</a>
+        <a class="dropdown-item" href="#">Setting</a>
+      </div>
+    </div>
+    <div>
+      <a href="#">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+  </div>-->
+<!--</nav>-->
+
+
+        <!-- /#sidebar-wrapper -->
+  
+<!-- mt-5 -->
+    <main class="page-content mt-0">
+        <main class="main-content bg-white" style='/*margin-top:60px*/' *ngIf="totalproduct>0">
+           <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors" 
+           bind-style.background = "productType == 2 ? '#fff' : '#fff'">
+               <p><small bind-style.color = "productType == 2 ? '#000' :''"><span style="color:#fcbe11;">{{totalproduct | number:'2.'}}</span> Exclusive Royalty-Free <span *ngIf="productType == 1"> Images </span> <span *ngIf="productType == 2"> Footages </span>
+                   <span *ngIf="productType == 1 && editorial === 'editorial'"> Editorial </span> <span *ngIf="productType == 2 && editorial === 'editorial'"> Editorial </span>
+                   <!--photos and videos--> <span *ngIf="keywordEle !=''">for {{keywordEle}} </span></small></p>
+            <span class="f-12 black_font" bind-style.color = "productType == 2 ? '#000' :''">Related:</span> 
+            <span class="related_key mt-10 tags">
+             <a href="/search?type={{searchData.productType}}&keyword={{keys}}" class="" title="{{keys}}" *ngFor="let keys of keyword" bind-style.background = "productType == 2 ? '#000' : '#000'">{{keys}}</a>
+            </span>
+          </div> 
+          <div class="clearfix"></div>
+         <div class="site-wrap  containetr-fluid" *ngIf="productType != 2">
+         <!-- mt-5 -->
+         <!--<ng-masonry-grid
+                    [masonryOptions]="{animationEffect: 'effect-1', transitionDuration: '0.8s', gutter: 5,fitWidth: true }" 
+                    [useAnimation]="true"
+                    [useImagesLoaded]="true"
+                    
+                    style='margin-left:50px;' class='main-content' >
+
+      <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let aosimges of aoslSliderImages; let i = index;" (click)="removeItem($event)" > 
+       
+        <span  class=" photo-item" >
+                        <div class="">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
+
+                            <div class="photo-text-more">
+                         
+                          <p class="icons_thum2">
+                            
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                        </p>
+                        </div>
+                        </div>
+                      </span>
+                      
+      </ng-masonry-grid-item>
+    </ng-masonry-grid>-->
+
+
+<!-- Grid row -->
+<div class="gallery" id="gallery">
+  <!-- Grid column -->
+  <div class="mb-3 pics animation all 2 imgg" *ngFor="let aosimges of aoslSliderImages; let i = index;">
+    <span *ngIf="editorial === 'editorial'" style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;cursor:pointer;">Editorial</span>
+    <img class="img-fluid" *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" alt="Card image cap" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="cursor:pointer;">
+    <div class="photo-text-more forimgic" >
+                         
+                          <p class="icons_thum2" >
+                            
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist" ><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Cart"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a  style='cursor:pointer;' matTooltip="Add to Cart"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                        </p>
+                        </div>
+  </div>
+  <!-- Grid column -->
+</div>
+<!-- Grid row -->
+         </div>
+         <div class="clearfix"></div>
+          <div class="photos"><!-- pt-5 mt-5 -->
+
+              <div class="row align-items-stretch" >
+<!--                  data-aos="fade-up" data-aos-delay="200"-->
+                 <div [ngClass]="getClassName(aosimges)"   *ngFor="let aosimges of aoslSliderImages;let i= index">
+
+                      <!--<span  class=" photo-item" >
+                        <div class="">
+                            <img *ngIf="aosimges.product_main_type == 'Image'" src="{{aosimges.product_thumbnail}}" alt="Image" class="img-fluid" (click)="onNavigate('/detail/',aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)">
+
+                            <div class="photo-text-more">
+
+                          <p class="icons_thum">
+
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a href="#" style='cursor:pointer;'  ><i class="fa fa-plus"></i></a></span>
+                        </p>
+                        </div>
+                        </div>
+                      </span>-->
+                      <!--routerLink="/detail/{{aosimges.api_product_id}}/{{aosimges.product_web}}/{{aosimges.product_main_type}}" d-block-->
+                      <span  *ngIf="aosimges.product_main_type != 'Image'"  class="photo-item ">
+                  <!-- <span style="position:absolute;margin-left:10px;margin-top:5px;color: #ffbe0b;"><i class="fa fa-video-camera" aria-hidden="true"></i></span>-->
+                          <video  width="400" height="300" [muted]="'muted'" [poster]="aosimges.product_thumbnail" #htmlVideoElement controlsList="nodownload"  onmouseover="this.play()" onmouseout="this.load()"  (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)" style="width: 100% !important;background: #33252540;/*object-fit: cover;*/ object-fit: scale-down;" class="for_mobileresponsive">
+                              <source src="{{aosimges.product_main_image}}" type="video/mp4">
+                              Your browser does not support the video tag.
+                          </video>
+                          <p class="icons_thum1" >
+                        	<!--<span><a href=""><i class="fa fa-image"></i></a></span>-->
+                            <span *ngIf="!currentUser"><a href="#" style='cursor:pointer;' (click)="clickLoginPopup()" matTooltip="Add to Wishlist" style="color: #fcbe11;"><i class="fa fa-heart"></i></a></span>
+                            <span *ngIf="currentUser"><a style='cursor:pointer;'  (click)="addtolightbox(aosimges)" matTooltip="Add to Wishlist"><i class="fa fa-heart" [ngClass]="aosimges.class"></i></a></span>
+                            <span *ngIf="!currentUser"><a href="#" matTooltip="Add to Cart" style='cursor:pointer;' (click)="clickLoginPopup()" style="color: #fcbe11;"><i class="fa fa-plus"></i></a></span>
+                            <span *ngIf="currentUser"><a style="cursor:pointer;color: #fcbe11;" matTooltip="Add to Cart" (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"><i class="fa fa-plus"></i></a></span>
+                        </p>
+                          <!-- <iframe  *ngIf="aosimges.mimetype != 'image/jpeg'" src="https://www.youtube.com/embed/xcJtL7QggTI?rel=0&amp;autoplay=0&mute=1" webkitallowfullscreen mozallowfullscreen allowfullscreen height="300" width="100%"></iframe>  -->
+                          <div class="photo-text-more" >
+                       	  <div class="photo-text-more" >
+                        <br />
+                        
+                      </div>
+                      </div>
+                      </span>
+                  </div>
+              </div>
+<!--              <div class="col-md-5 col-sm-6 col-12 m-auto pagination_d" *ngIf="aoslSliderImages.length !=0 && productType == 2" >-->
+<!--                  <ngb-pagination [collectionSize]="aoslSliderImages.length"  [pageSize]="pageSize"-->
+<!--                  [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="onPageChange($event)"-->
+<!--                  [boundaryLinks]="true"></ngb-pagination>-->
+<!-- </div>-->
+          </div>
+            <div  infiniteScroll
+                  [infiniteScrollDistance]="4"
+                  [infiniteScrollUpDistance]="1.5"
+                  [infiniteScrollThrottle]="150"
+                  (scrolled)="onScrollDown()"
+                  (scrolledUp)="onScrollUp()">
+                <div *ngIf="totalproduct>30 && totalproduct!=aoslSliderImages.length">
+                    Loading...
+                    <span></span>
+                </div>
+                <div *ngIf="totalproduct==aoslSliderImages.length">
+                    That's All
+                </div>
+            </div>
+
+        </main>
+        <main class="main-content" style='/*margin-top:60px*/' *ngIf="noprductFound">
+            <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors"
+                 bind-style.background = "productType == 2 ? '#fff' : '#000'">
+                <h1 *ngIf="productType==1" style="color:red;margin-top:200px;text-align:center">No Images Found</h1>
+                <h1 *ngIf="productType==2" style="color:red;margin-top:200px;text-align:center">No Footage Found </h1>
+            </div>
+        </main>
+    </main>
+
+  </div>
+</div>
+<ng-container *ngIf="showloginPopup" >
+  <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+</ng-container>
