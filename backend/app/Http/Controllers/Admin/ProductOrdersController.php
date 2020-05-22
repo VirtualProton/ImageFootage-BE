@@ -21,21 +21,22 @@ class ProductOrdersController extends Controller
 
 	   //return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
        $this->User = new User;
-       $userlist= $this->User->getUserData();
+       $userlist = $this->User->getUserData();
        return view('admin.orders.index',compact('userlist'));
        //return view('admin.orders.orderlist');
   }
     public function userOrderList($id){
-         return view('admin.orders.orderlist');
+         return view('admin.orders.orderlist',compact('id'));
     }
 
-  public function userListapi(){
+  public function userListapi($id){
       $all_orders_list= Orders::with(['items'=>function($query){
           $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
       }])->with('user')
           ->with('country')
           ->with('state')
           ->with('city')
+          ->where('user_id',$id)
           ->orderBy('id','desc')
           ->get()->toArray();
       return response()->json($all_orders_list);
