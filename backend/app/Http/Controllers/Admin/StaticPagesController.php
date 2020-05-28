@@ -9,6 +9,10 @@ use Auth;
 
 class StaticPagesController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
 	public function createStaticPage(){
 		 return view('admin.staticpages.createstaticpage');
 	}

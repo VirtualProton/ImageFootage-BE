@@ -7,6 +7,10 @@ use App\Models\ProductImageSizes;
 
 class ProductImageSizesController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductImageSize(){
 	   return view('admin.product.addproductimagesizes');
    }

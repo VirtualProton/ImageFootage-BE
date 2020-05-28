@@ -7,6 +7,10 @@ use App\Models\ProductEthinicities;
 
 class ProductEthinicitiesController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductGender(){
 	   return view('admin.product.addproductethinicities');
    }

@@ -7,6 +7,10 @@ use App\Models\ProductColors;
 
 class ProductColorController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductColor(){
 	   return view('admin.product.addproductcolor');
    }

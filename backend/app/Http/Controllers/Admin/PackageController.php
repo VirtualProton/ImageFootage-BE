@@ -7,10 +7,14 @@ use App\Models\Package;
 use Auth;
 class PackageController extends Controller
 {
-   public function createPackage(){
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
+  	public function createPackage(){
 	    return view('admin.package.createpackage');
-  }
-  public function addPackage(Request $request){
+  	}
+  	public function addPackage(Request $request){
 	   $this->validate($request, [
 		 	'package_name'=>'required',
 			'package_price'=>'required',

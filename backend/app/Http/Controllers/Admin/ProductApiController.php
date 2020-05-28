@@ -8,10 +8,15 @@ use App\Models\ApiQuota;
 use Auth;
 class ProductApiController extends Controller
 {
-   public function addApiQuota(){
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
+
+   	public function addApiQuota(){
 	    return view('admin.package.apiquota');
-  }
-  public function insertApiQuota(Request $request){
+  	}
+  	public function insertApiQuota(Request $request){
 	   $this->validate($request, [
 		 	'api_provider'=>'required',
 			'api_amount'=>'required'

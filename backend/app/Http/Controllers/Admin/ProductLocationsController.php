@@ -7,6 +7,10 @@ use App\Models\ProductLocations;
 
 class ProductLocationsController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductLocation(){
 	   return view('admin.product.addproductlocation');
    }

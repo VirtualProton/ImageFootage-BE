@@ -6,6 +6,10 @@ use App\Models\ImageSortTypes;
 
 class ProductImageSortTypesController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addImageSortTypes(){
 	   return view('admin.product.addimagesorttypes');
    }

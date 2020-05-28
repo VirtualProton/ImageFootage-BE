@@ -8,6 +8,11 @@ use Auth;
 
 class ProductSubCategoryController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
+	
 	public function index(){
 	   $ProductCategory = new ProductCategory;
 	   $all_produstcategory_list=$ProductCategory->where('category_status', 'Active')->get()->toArray();

@@ -12,6 +12,11 @@ use Mail;
 use App\Http\TnnraoSms\TnnraoSms;
 class ContributorController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
+	
 	public function index(){
 		return view('admin.contributor.addcontributor');
 	}

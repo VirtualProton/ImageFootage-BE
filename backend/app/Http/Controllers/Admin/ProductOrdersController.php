@@ -9,6 +9,10 @@ use App\Models\User;
 use Auth;
 class ProductOrdersController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function index(){
 //	   $all_orders_list= Orders::with(['items'=>function($query){
 //                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');

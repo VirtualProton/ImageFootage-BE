@@ -7,6 +7,10 @@ use App\Models\ProductOrientations;
 
 class ProductImageOrientationsController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductOrientations(){
 	   return view('admin.product.addproductorientations');
    }

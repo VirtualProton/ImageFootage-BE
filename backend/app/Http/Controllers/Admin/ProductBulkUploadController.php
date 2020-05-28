@@ -31,6 +31,11 @@ use App\Models\ImageSortTypes;
 
 class ProductBulkUploadController extends Controller
 {
+
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function uploadCSV(){
 	   $contributor=new Contributor;
 	   $all_contributor_list=$contributor->where('contributor_status', 'Active')->get()->toArray();

@@ -35,6 +35,10 @@ use Mail;
 
 class ProductController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
     /**
      * Display a listing of the resource.
      *

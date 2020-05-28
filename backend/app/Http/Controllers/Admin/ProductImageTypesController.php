@@ -7,6 +7,10 @@ use App\Models\ProductImageTypes;
 
 class ProductImageTypesController extends Controller
 {
+	public function __construct()
+	{
+        $this->middleware('admin')->except('login','logout');
+	}
    public function addProductImageType(){
 	   return view('admin.product.addproductimagetypes');
    }
