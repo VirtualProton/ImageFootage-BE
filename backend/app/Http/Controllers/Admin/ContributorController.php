@@ -77,7 +77,9 @@ class ContributorController extends Controller
 				$name = time().'.'.$image->getClientOriginalExtension();
 				$file_path='/uploads/idproof/';
 				$destinationPath = public_path($file_path);
-				$image->move($destinationPath, $name);	
+				$image->move($destinationPath, $name);
+			 	// $contributor_update->contributor_idproof=$name;
+
     		 }
 			 $contributorid=strtolower($firstThreeCharacters.$firstThreeCharactersType.$last_id);
 			 $contributor_update = Contributor::find($last_id);

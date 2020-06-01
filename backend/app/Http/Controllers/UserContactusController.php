@@ -167,7 +167,7 @@ class UserContactusController extends Controller
                 try {
                     $fileupresult = $uploader->upload();
                     $name = $fileupresult['ObjectURL'];
-                    $contributor->contributor_bank =$name;
+                    $contributor->contributor_idproof =$name;
                 } catch (MultipartUploadException $e) {
                     echo $e->getMessage() . "\n";
                 }

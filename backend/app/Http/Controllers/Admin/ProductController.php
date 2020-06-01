@@ -37,7 +37,7 @@ class ProductController extends Controller
 {
 	public function __construct()
 	{
-        $this->middleware('admin')->except('login','logout');
+        //$this->middleware('admin')->except('login','logout');
 	}
     /**
      * Display a listing of the resource.
@@ -945,6 +945,51 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 	   $all_produst_list=$product->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->leftJoin('imagefootage_productimages', 'imagefootage_productimages.image_product_id', '=', 'imagefootage_products.id')->get()->toArray();
 	   return json_encode($all_produst_list);
    }
+
+      //api functions
+   public function getAddProduct(){
+   		//echo "hi"; die;
+   		$contributor=new Contributor;
+		$result['all_contributor_list']=$contributor->where('contributor_status', 'Active')->get()->toArray();
+		$ProductCategory = new ProductCategory;
+	    $result['all_produstcategory_list']=$ProductCategory->where('category_status', 'Active')->get()->toArray();
+		$ProductSubCategory= new ProductSubCategory;
+		$result['all_produstsubcategory_list']=$ProductSubCategory->where('subcategory_status', 'Active')->get()->toArray();
+		$productColors=new ProductColors;
+		$result['all_produstcolors_list']=$productColors->where('status', '1')->get()->toArray();
+		$productGenders=new ProductGenders;
+		$result['all_productgender_list']=$productGenders->where('status', '1')->get()->toArray();
+		$productImageTypes=new ProductImageTypes;
+		$result['all_productimagetypes_list']=$productImageTypes->where('status', '1')->get()->toArray();
+		$productImageSizes=new ProductImageSizes;
+		$result['all_productimagesize_list']=$productImageSizes->where('status', '1')->get()->toArray();
+		$productAgeWises=new ProductAgeWises;
+		$result['all_productagewises_list']=$productAgeWises->where('status', '1')->get()->toArray();
+		$productEthinicities=new ProductEthinicities;
+		$result['all_productethinicities_list']=$productEthinicities->where('status', '1')->get()->toArray();
+		$productLocations=new ProductLocations;
+		$result['all_productlocations_list']=$productLocations->where('status', '1')->get()->toArray();
+		$productPeoples=new ProductPeoples;
+		$result['all_productPeoples_list']=$productPeoples->where('status', '1')->get()->toArray();
+		$imageResolution=new ImageResolution;
+		$result['all_productresolution_list']=$imageResolution->where('status', '1')->get()->toArray();
+		$productOrientations= new ProductOrientations;
+		$result['all_productorientations_list']=$productOrientations->where('status', '1')->get()->toArray();
+		$imageSortTypes=new ImageSortTypes;
+		$result['all_isorttypes_list']=$imageSortTypes->where('status', '1')->get()->toArray();
+		$result['title'] = "Add Product";
+
+		
+		return json_encode($result);
+
+   }
+
+   public function postAddProduct(){
+   		echo "hi postAddProduct"; die;
+   		
+
+   }
+   
 
   public function getproduct($product_id){
 	$products = DB::table('imagefootage_products')
