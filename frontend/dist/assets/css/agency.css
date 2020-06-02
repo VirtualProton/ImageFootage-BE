@@ -7,7 +7,8 @@
 body {
   overflow-x: hidden;
   /*font-family: 'Roboto Slab', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 p {
@@ -34,7 +35,8 @@ h5,
 h6 {
   font-weight: 700;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .page-section {
@@ -54,7 +56,8 @@ h6 {
   margin-bottom: 75px;
   text-transform: none;
   /*font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -87,7 +90,8 @@ img::-moz-selection {
 
 .btn {
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-weight: 700;
 }
 
@@ -124,13 +128,15 @@ img::-moz-selection {
   border: 0;
   background-color: #fed136;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-brand {
   color: #fed136;
  /* font-family: 'Kaushan Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
- font-family:Open Sans,Helvetica,Arial,sans-serif;
+ /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
@@ -144,7 +150,8 @@ img::-moz-selection {
   letter-spacing: 1px;
   color: white;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
@@ -198,7 +205,8 @@ header.masthead .intro-text .intro-lead-in {
   line-height: 22px;
   margin-bottom: 25px;
   /*font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 header.masthead .intro-text .intro-heading {
@@ -207,7 +215,8 @@ header.masthead .intro-text .intro-heading {
   line-height: 50px;
   margin-bottom: 25px;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -221,7 +230,8 @@ header.masthead .intro-text .intro-heading {
     line-height: 40px;
     margin-bottom: 25px;
     /*font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-	font-family:Open Sans,Helvetica,Arial,sans-serif;
+	/*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   }
   header.masthead .intro-text .intro-heading {
     font-size: 75px;
@@ -229,7 +239,8 @@ header.masthead .intro-text .intro-heading {
     line-height: 75px;
     margin-bottom: 50px;
     /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-	font-family:Open Sans,Helvetica,Arial,sans-serif;
+	/*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   }
 }
 
@@ -302,7 +313,8 @@ header.masthead .intro-text .intro-heading {
   font-style: italic;
   margin: 0;
   /*font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #portfolio * {
@@ -634,28 +646,32 @@ section#contact ::-webkit-input-placeholder {
   font-weight: 700;
   color: #ced4da;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact :-moz-placeholder {
   font-weight: 700;
   color: #ced4da;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact ::-moz-placeholder {
   font-weight: 700;
   color: #ced4da;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact :-ms-input-placeholder {
   font-weight: 700;
   color: #ced4da;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .footer {
@@ -668,7 +684,8 @@ section#contact :-ms-input-placeholder {
   line-height: 40px;
   text-transform: none;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .footer ul.quicklinks {
@@ -677,7 +694,8 @@ section#contact :-ms-input-placeholder {
   margin-bottom: 0;
   text-transform: none;
   /*font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';*/
-  font-family:Open Sans,Helvetica,Arial,sans-serif;
+  /*font-family:Open Sans,Helvetica,Arial,sans-serif;*/
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 ul.social-buttons {

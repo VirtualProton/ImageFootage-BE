@@ -245,9 +245,11 @@ app.controller('ordersController', function($scope, $http,$location) {
     $scope.orderslist = {};
     $scope.products = {};
     $('#loading').show();
+    var userid = window.location.pathname.split("/").pop();
     $http({
         method: 'GET',
-        url: base_url+'userListapi',
+        url: base_url+'userListapi/'+userid,
+
     }).then(function (response){
         $('#loading').hide();
          $scope.orderslist = response.data;

@@ -2,10 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/imagefootagenew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imagefootagenew.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/public/images/IF_Watermark_White.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/public/images/IMGPM85027.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/public/images/cpw-converted and-taken 27 sec.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/public/images/customers_template-c34b2c04a5f5e2757d13323101578812.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/public/images/logoimage_new_old.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/IF_Logo_Final.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/IF_Logo_White_Final.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/IF_Watermark_Grey.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/IF_Watermark_White.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/fevicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/favicon_old.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/ProductOrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/ProductOrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/dist/js/invoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/dist/js/invoice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/images/logoimage_new.png" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/images/logoimage_new.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/assets/css/agency.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/assets/css/agency.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/assets/css/agency.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/assets/css/agency.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/dist/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/hero.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/favicon.ico" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,6 +347,7 @@
       <workItem from="1584523874382" duration="1648000" />
       <workItem from="1584775066175" duration="1161000" />
       <workItem from="1584942596484" duration="357000" />
+      <workItem from="1591103839420" duration="295000" />
     </task>
     <servers />
   </component>
@@ -337,14 +360,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="129" y="61" key="MergeDialog" timestamp="1584525033212">
+    <state x="129" y="61" key="MergeDialog" timestamp="1591103951439">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033212" />
-    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1584525033222">
+    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103951439" />
+    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1591103951439">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033222" />
+    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103951439" />
     <state x="184" y="7" key="SettingsEditor" timestamp="1584775117910">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -353,14 +376,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1584525053312" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1584942644087">
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1591103870578">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584942644087" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103870578" />
     <state x="484" y="156" key="git4idea.merge.GitMergeDialog" timestamp="1584524351990">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="484" y="156" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584524351990" />
+    <state x="317" y="168" key="git4idea.merge.GitPullDialog" timestamp="1591103892842">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="317" y="168" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103892842" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -372,7 +399,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/frontend/src/app/contact-us/contact-us.component.html</url>
-          <line>37</line>
+          <line>36</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

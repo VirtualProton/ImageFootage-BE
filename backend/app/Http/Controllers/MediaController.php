@@ -35,10 +35,16 @@ class MediaController extends Controller
            $media_id = decrypt($media_id);
            $product_details_data = $imageMedia->get_media_info($media_id);
            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
-
-		   $img = Image::make($product_details_data['media']['preview_url_no_wm']);
+           $size = getimagesize($product_details_data['media']['preview_url_no_wm']);
+           $height = $size[1];
+           $width = $size[0];
+           $left =0;
+           if($width>300){
+               $left = $width-300;
+           }
+           $img = Image::make($product_details_data['media']['preview_url_no_wm']);
     		// insert watermark at bottom-right corner with 10px offset 
-    		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
+    		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'top-left',$left/2,$height/2);
 			$time=time();
 			$img->save(public_path('images/dump/'.$time.'.jpg'));
 			$img->encode('jpg');

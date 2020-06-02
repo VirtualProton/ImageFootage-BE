@@ -80,19 +80,12 @@ class AuthController extends Controller
 				$cname=$request->input('first_name');
 				$cemail=$request->input('email');
 				$cont_url=url('/active_user_account').'/'.$cemail;
-			 //$body.='<a href="'.$cont_url.'">Click here to verify account</a>';
-			 //$body.="Thanks & Regards,<br>Image Footage Team.";
-			 /*$data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+			 
+			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
 				 Mail::send('createusermail', $data, function($message) use($data) {
 				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
-			 }); */
-			 $sm='info@imagefootage.com';
-			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
-				 Mail::send('createusermail',$data,function($message) use($data,$sm) {
-				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
-			 });
-			 
-              return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
+			 }); 
+                 return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
             }
@@ -104,12 +97,12 @@ class AuthController extends Controller
         $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
 			
-			$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
-		 	return $res;
-           // $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+			//$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
+		 	//return $res;
+            $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
 		   	//$credentials = ['email'=> $request['userData']['email']];
-            //$token = auth()->attempt($credentials);
-            //return $this->respondWithToken($token);
+            $token = auth()->attempt($credentials);
+            return $this->respondWithToken($token);
 		}else{
 		    if($request['userData']['provider']=='google'){
                 $save_data = new User();
@@ -134,14 +127,18 @@ class AuthController extends Controller
                 $save_data->email = $request['userData']['email'];
                 $save_data->first_name = $request['userData']['name'];
                 $save_data->user_name = $request['userData']['name'];
-                $save_data->fb_token = $request['userData']['idToken'];
+                $save_data->password = Hash::make('123456');
+                $save_data->fb_token = $request['userData']['token'];
                 $save_data->profile_photo = $request['userData']['image'];
                 $save_data->provider = $request['userData']['provider'];
                 $save_data->type = 'U';
                 $result = $save_data->save();
                 if($result){
-                   $res = User::where('email','=',$request['userData']['email'])->first()->toArray();
-                   return $res;
+                    $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
+                    $token = auth()->attempt($credentials);
+                    return $this->respondWithToken($token);
+                   //$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
+                   //return $res;
                 }
 				
 			}
