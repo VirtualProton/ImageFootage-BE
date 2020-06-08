@@ -40,6 +40,7 @@ export class HeroSearchComponent implements OnInit {
   page:number = 1;
   public currentUser: any;
   pageSize:number = 40;
+  mobileFilters:boolean = false;
   sidebarSubmenu1:boolean = false;
   slidebarPeopleMenu:any=[];
   sidebarSubmenu2:boolean = false;
