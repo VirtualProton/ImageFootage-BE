@@ -17,8 +17,8 @@
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);">
+                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;" (click)="onoroffilters()"><span class="caret"></span>FILTERS</button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);" *ngIf="mobileFilters">
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
