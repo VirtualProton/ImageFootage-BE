@@ -11,8 +11,8 @@
  <!-- advanched search style="display:none" -->
    <div class="container" [ngClass]="{ 'fixed-top': scrollEle }">
 	<div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
+		<div class="col-md-12 d-none d-lg-block">
+            <div class="input-group  " id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
                 <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -277,6 +277,16 @@
                         <button (click)="documentEditForm.ngSubmit.emit()"  class="btn btn-primary" style="background: #dfdddd;border: 1px solid #dfdddd;"><span class="fa fa-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
+            </div>
+          </div>
+        </div>
+	</div>
+     <div class="container" [ngClass]="{ 'fixed-top': scrollEle }">
+	<div class="row">
+		<div class="col-md-12 d-lg-none">
+            <div class="input-group  " id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
+                <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
+                
             </div>
           </div>
         </div>
