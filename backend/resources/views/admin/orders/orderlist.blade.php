@@ -66,6 +66,9 @@
      <td><a target="_blank" href="<%orders['invoice']%>" ng-show="orders['invoice']">Download</a></td>
      <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td>
  </tr>
+ <tr>
+     <td colspan="15" ng-if="!orderslist" class="text-center">No Orders Found !!</td>
+ </tr>
 
 {{--@endforeach--}}
 </tbody>

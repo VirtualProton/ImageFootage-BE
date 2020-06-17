@@ -28,6 +28,7 @@ class FootageApi {
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
     public function search($keyword,$getKeyword,$limit=30,$page=0){
+
          //print_r($getKeyword); die;
         $serach = $keyword['search'];
         $editorial = 0;

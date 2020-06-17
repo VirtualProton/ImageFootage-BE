@@ -78,6 +78,7 @@ Route::group([
     Route::post('atomPayInvoiceResponsePlan', 'PaymentController@atomPayInvoiceResponsePlan');
     Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
+   ;
 });
 
 Route::group([

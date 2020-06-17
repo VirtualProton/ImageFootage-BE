@@ -211,6 +211,7 @@ Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
 Route::post('/create_invoice','InvoiceController@create_invoice');
 Route::post('/change_invoice_status','InvoiceController@change_invoice_status');
+Route::get('/subscribers','SubscribersController@index');
 
 
 
