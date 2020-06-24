@@ -1,141 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/SubscribersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/imagefootagenew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imagefootagenew.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/CronController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/CronController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/views/admin/orders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/views/admin/orders/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/resources/views/admin/orders/orderlist.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/resources/views/admin/orders/orderlist.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/images/loader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/images/loader.gif" afterDir="false" />
-    </list>
-    <ignored path="$PROJECT_DIR$/frontend/node_modules/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php-laravel/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/barryvdh/laravel-dompdf/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/beyondcode/laravel-dump-server/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/composer/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/dnoegel/php-xdg-base-dir/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/cache/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/inflector/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/instantiator/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/lexer/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/dompdf/dompdf/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/dragonmantank/cron-expression/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/egulias/email-validator/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/erusev/parsedown/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/evenement/evenement/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/fideloper/proxy/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/filp/whoops/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/fzaninotto/faker/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/guzzle/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/promises/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/psr7/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/hamcrest/hamcrest-php/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/intervention/image/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-color/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-highlighter/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/framework/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/tinker/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/laravelcollective/html/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/lcobucci/jwt/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/league/flysystem/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/maatwebsite/excel/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/complex/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/matrix/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/mockery/mockery/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/monolog/monolog/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/mtdowling/jmespath.php/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/myclabs/deep-copy/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/namshi/jose/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/nesbot/carbon/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/neutron/temporary-filesystem/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/nikic/php-parser/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/nunomaduro/collision/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/opis/closure/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/paragonie/random_compat/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/pbmedia/laravel-ffmpeg/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/manifest/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/version/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-font-lib/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-svg-lib/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/php-ffmpeg/php-ffmpeg/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-common/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-docblock/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/type-resolver/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpoffice/phpspreadsheet/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpoption/phpoption/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpspec/prophecy/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-code-coverage/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-file-iterator/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-text-template/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-timer/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-token-stream/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/phpunit/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/psr/container/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/psr/http-message/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/psr/log/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/psr/simple-cache/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/psy/psysh/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/ralouphie/getallheaders/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/ramsey/uuid/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/razorpay/razorpay/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/riazxrazor/payumoney/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/rmccue/requests/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sabberworm/php-css-parser/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/code-unit-reverse-lookup/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/comparator/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/diff/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/environment/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/exporter/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/global-state/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-enumerator/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-reflector/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/recursion-context/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/resource-operations/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/version/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/swiftmailer/swiftmailer/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/console/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/css-selector/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/debug/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/error-handler/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher-contracts/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/filesystem/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/finder/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-kernel/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/mime/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-ctype/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-iconv/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-idn/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-mbstring/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php56/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php72/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php73/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-util/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/process/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/routing/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/service-contracts/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation-contracts/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/var-dumper/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/theseer/tokenizer/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/tijsverkoyen/css-to-inline-styles/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/tymon/jwt-auth/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/unisharp/laravel-ckeditor/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/vlucas/phpdotenv/" />
-    <ignored path="$PROJECT_DIR$/backend/vendor/webmozart/assert/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,108 +27,6 @@
     <expand />
     <select />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/Admin/SubscribersController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="14" column="119" selection-start-line="14" selection-start-column="119" selection-end-line="14" selection-end-column="119" />
-              <folding>
-                <element signature="e#45#81#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/routes/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="80" column="3" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/routes/web.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3468">
-              <caret line="213" column="24" selection-start-line="213" selection-start-column="13" selection-end-line="213" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/PackageApiController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/CronController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1275">
-              <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Models/Product.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2924">
-              <caret line="177" selection-start-line="177" selection-end-line="177" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1666">
-              <caret line="322" selection-start-line="322" selection-end-line="322" />
-              <folding>
-                <element signature="e#2527#9107#0#PHP" />
-                <element signature="e#10214#11618#0#PHP" />
-                <element signature="e#11622#14087#0#PHP" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/FrontuserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -272,40 +36,39 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Roy</find>
-      <find>menu</find>
-      <find>font-f</find>
-      <find>font-family</find>
-      <find>rgb</find>
-      <find>bg-black</find>
-      <find>bg</find>
-      <find>container-</find>
-      <find>bg-</find>
-      <find>Related</find>
-      <find>users</find>
-      <find>user_orders</find>
-      <find>Pur</find>
-      <find>Purc</find>
-      <find>Ima</find>
-      <find>index</find>
-      <find>userOrderList</find>
-      <find>js</find>
-      <find>ordersController</find>
-      <find>As</find>
-      <find>ng-reflect-scroll-ele</find>
-      <find>scrollE</find>
-      <find>As Real</find>
-      <find>scrollEle</find>
-      <find>SearchController</find>
-      <find>url</find>
-      <find>orders</find>
-      <find>subscriber</find>
-      <find>get_media_info_cron</find>
-      <find>subsc</find>
+      <find>updateproductcategory</find>
+      <find>all</find>
+      <find>otp</find>
+      <find>payment</find>
+      <find>salt</find>
+      <find>Enter Addre</find>
+      <find>bolt</find>
+      <find>checkoutForm</find>
+      <find>form</find>
+      <find>priv</find>
+      <find>launchBOLT</find>
+      <find>fetch</find>
+      <find>web</find>
+      <find>closeLoginPopupForReg</find>
+      <find>sidebar</find>
+      <find>body</find>
+      <find>account-list</find>
+      <find>back</find>
+      <find>nav</find>
+      <find>tab</find>
+      <find>currentUser</find>
+      <find>profile</find>
+      <find>userProfile</find>
+      <find>get</find>
+      <find>pro</find>
+      <find>pay</find>
+      <find>image</find>
+      <find>add</find>
+      <find>hideLoginPopup</find>
+      <find>wish</find>
     </findStrings>
     <replaceStrings>
       <replace>images/img_4.jpg</replace>
-      <replace>footage</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\xampp\htdocs\imagefootagenew\frontend</dir>
@@ -314,63 +77,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/frontend/src/app/order-confirmation/order-confirmation.component.ts" />
-        <option value="$PROJECT_DIR$/frontend/src/app/pricing/pricing.component.ts" />
-        <option value="$PROJECT_DIR$/frontend/src/app/reset-password/reset-password.component.ts" />
-        <option value="$PROJECT_DIR$/frontend/src/app/sign-up/sign-up.component.ts" />
-        <option value="$PROJECT_DIR$/frontend/src/app/wishlist/wishlist.component.ts" />
-        <option value="$PROJECT_DIR$/backend/app/Models/Product.php" />
-        <option value="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.ts" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/Product.php" />
-        <option value="$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php" />
-        <option value="$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.ts" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/dashboard/dashboard.blade.php" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/subadmin/index.blade.php" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/subadmin/access_management_edit.blade.php" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/subadmin/access_management.blade.php" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/SubAdminController.php" />
-        <option value="$PROJECT_DIR$/frontend/src/assets/css/main.css" />
-        <option value="$PROJECT_DIR$/frontend/src/assets/css/agency.css" />
-        <option value="$PROJECT_DIR$/frontend/src/index.html" />
-        <option value="$PROJECT_DIR$/frontend/src/assets/css/agency.min.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/heroes/heroes.component.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/lightbox/lightbox.component.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/product-pricing/product-pricing.component.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/wishlist/wishlist.component.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.css" />
-        <option value="$PROJECT_DIR$/frontend/src/assets/css/style.css" />
-        <option value="$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.html" />
-        <option value="$PROJECT_DIR$/frontend/src/app/hero-search/hero-search.component.html" />
-        <option value="$PROJECT_DIR$/backend/storage/framework/views/0cfaa200d97b6b227ff828f5857f6a082b7f7c70.php" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/user/index.blade.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/AuthController.php" />
-        <option value="$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.ts" />
-        <option value="$PROJECT_DIR$/frontend/src/app/user-profile/user-profile.component.html" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/MediaController.php" />
-        <option value="$PROJECT_DIR$/backend/public/dist/js/invoice.js" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/ProductOrdersController.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-2/invoice.js" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/orders/orderlist.blade.php" />
-        <option value="$PROJECT_DIR$/../eyewear/csv_create.php" />
-        <option value="$USER_HOME$/Downloads/fwdshopifyapiwork/product_create.php" />
-        <option value="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" />
-        <option value="$PROJECT_DIR$/frontend/src/app/header/header.component.html" />
-        <option value="$PROJECT_DIR$/frontend/src/app/app.component.html" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php" />
-        <option value="$PROJECT_DIR$/frontend/src/app/hero.service.ts" />
-        <option value="$PROJECT_DIR$/backend/resources/views/admin/orders/index.blade.php" />
-        <option value="$PROJECT_DIR$/backend/routes/web.php" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/CronController.php" />
-        <option value="$PROJECT_DIR$/backend/routes/api.php" />
-        <option value="$PROJECT_DIR$/backend/app/Http/Controllers/Admin/SubscribersController.php" />
-      </list>
-    </option>
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
@@ -494,405 +200,7 @@
       <path value="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="1940" />
-    <option name="height" value="1100" />
-  </component>
   <component name="ProjectId" id="1YkAkKMogKAIGTobTGq2UHgsrPg" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="PantherMedia" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="orders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Illuminate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Illuminate" type="462c0819:PsiDirectoryNode" />
-              <item name="Database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Illuminate" type="462c0819:PsiDirectoryNode" />
-              <item name="Database" type="462c0819:PsiDirectoryNode" />
-              <item name="Eloquent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="footage-licence-agreement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="footer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="header" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="hero-detail" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="hero-search" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="heroes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="licence-agreement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="licenseagreement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="lightbox" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="messages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="order-confirmation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="pricing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="privacy-policy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="product-pricing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="reset-password" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="scroll" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="sign-up" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="terms-and-conditions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="user-profile" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imagefootagenew" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-              <item name="PHP Runtime" type="20ee2d1f:SyntheticLibraryElementNode" />
-            </path>
-            <path>
-              <item name="imagefootagenew" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-              <item name="PHP Runtime" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="standard" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -903,7 +211,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/app/Http/Controllers/Admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -918,27 +226,15 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\imagefootagenew\backend\app\Http\Controllers\Admin" />
-      <recent name="C:\xampp\htdocs\imagefootagenew\backend\resources\views\admin\orders" />
-      <recent name="C:\xampp\htdocs\imagefootagenew\backend\resources\views\admin\subadmin" />
       <recent name="C:\xampp\htdocs\imagefootagenew\backend\resources\views" />
       <recent name="C:\xampp\htdocs\imagefootagenew\backend\resources\views\email" />
+      <recent name="C:\xampp\htdocs\imagefootagenew\frontend\src\assets\images" />
+      <recent name="C:\xampp\htdocs\imagefootagenew\frontend\src\assets\css" />
+      <recent name="C:\xampp\htdocs\imagefootagenew\backend\app\Models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\imagefootagenew\backend\app\Models" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -1024,97 +320,9 @@
       <workItem from="1584523874382" duration="1648000" />
       <workItem from="1584775066175" duration="1161000" />
       <workItem from="1584942596484" duration="357000" />
-      <workItem from="1585104707180" duration="40884000" />
-      <workItem from="1585488220866" duration="1906000" />
-      <workItem from="1585584620390" duration="5000" />
-      <workItem from="1585584881996" duration="17939000" />
-      <workItem from="1585738134204" duration="54611000" />
-      <workItem from="1585996176202" duration="689000" />
-      <workItem from="1586021819931" duration="14908000" />
-      <workItem from="1586106214868" duration="30659000" />
-      <workItem from="1586328296331" duration="710000" />
-      <workItem from="1586348674779" duration="41330000" />
-      <workItem from="1586501919581" duration="8955000" />
-      <workItem from="1586548580410" duration="12584000" />
-      <workItem from="1586754706600" duration="73878000" />
-      <workItem from="1587055152635" duration="14847000" />
-      <workItem from="1587106238192" duration="3376000" />
-      <workItem from="1587142182750" duration="2845000" />
-      <workItem from="1587314126853" duration="12671000" />
-      <workItem from="1587487081162" duration="4471000" />
-      <workItem from="1587634984005" duration="833000" />
-      <workItem from="1587641387737" duration="6459000" />
-      <workItem from="1587884151487" duration="38589000" />
-      <workItem from="1588138132370" duration="3890000" />
-      <workItem from="1588351904399" duration="6121000" />
-      <workItem from="1588432903844" duration="48396000" />
-      <workItem from="1588758743066" duration="9840000" />
-      <workItem from="1589174071035" duration="30000" />
-      <workItem from="1589219018314" duration="1774000" />
-      <workItem from="1589274404397" duration="1558000" />
-      <workItem from="1589314209596" duration="10272000" />
-      <workItem from="1589651444135" duration="235000" />
-      <workItem from="1589953158314" duration="24488000" />
-      <workItem from="1590383369155" duration="895000" />
-      <workItem from="1590403462965" duration="837000" />
-      <workItem from="1590405285149" duration="5356000" />
-      <workItem from="1590512023260" duration="803000" />
-      <workItem from="1590907481564" duration="4492000" />
-      <workItem from="1590923863231" duration="12182000" />
-      <workItem from="1591519411138" duration="2559000" />
-      <workItem from="1592240515074" duration="1430000" />
+      <workItem from="1591103839420" duration="362000" />
     </task>
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="532667000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2818792" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3286119" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="TypeScript" order="10" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49798658" visible="true" weight="0.29886687" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50201344" side_tool="true" weight="0.45042494" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" weight="0.04832215" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2865772" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3286119" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="TypeScript" order="10" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49798658" visible="true" weight="0.29745042" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50201344" side_tool="true" weight="0.45042494" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" weight="0.04832215" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1124,55 +332,15 @@
       </list>
     </option>
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="WindowStateProjectService">
-    <state x="129" y="61" key="MergeDialog" timestamp="1584525033212">
+    <state x="129" y="61" key="MergeDialog" timestamp="1591103951439">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033212" />
-    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1584525033222">
+    <state x="129" y="61" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103951439" />
+    <state x="395" y="81" key="MultipleFileMergeDialog" timestamp="1591103951439">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584525033222" />
+    <state x="395" y="81" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103951439" />
     <state x="184" y="7" key="SettingsEditor" timestamp="1584775117910">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -1181,401 +349,37 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="98" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1584525053312" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1584942644087">
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1591103870578">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584942644087" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1591103870578" />
     <state x="484" y="156" key="git4idea.merge.GitMergeDialog" timestamp="1584524351990">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="484" y="156" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1584524351990" />
+    <state x="317" y="168" key="git4idea.merge.GitPullDialog" timestamp="1591104198146">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="317" y="168" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1591104198146" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/frontend/src/app/contact-us/contact-us.component.html</url>
           <line>36</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/frontend/src/app/hero.service.ts</url>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/invoice.js" />
-    <entry file="file://$PROJECT_DIR$/backend/public/test.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../eyewear/csv_importer.php" />
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/_types.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/resources/views/admin/orders/orderlist.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../eyewear/db.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="30" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../eyewear/modify-home-slider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="64" selection-start-line="64" selection-end-line="67" selection-end-column="36" />
-          <folding>
-            <element signature="e#163#296#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/resources/views/admin/layouts/default.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="66" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/messages.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="193" column="29" selection-start-line="193" selection-start-column="29" selection-end-line="193" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/fwdshopifyapiwork/product_create.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../eyewear/csv_create.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/product-pricing/product-pricing.component.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/product-pricing/product-pricing.component.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/sign-up/sign-up.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/fwdshopifyapiwork/products.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/resources/views/admin/partials/script.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="41" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/public/dist/js/invoice.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3961">
-          <caret line="247" column="59" selection-start-line="247" selection-start-column="4" selection-end-line="247" selection-end-column="59" />
-          <folding>
-            <element signature="e#116#205#0" />
-            <element signature="e#8036#8271#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret column="12345" selection-start-column="12345" selection-end-column="12345" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="98" selection-start-column="89" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="60" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/header/header.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#111#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/footer/footer.component.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/scroll/scroll.component.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="78" column="41" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
-          <folding>
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#div#0;n#div#2;n#!!top" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#1;n#div#0;n#div#0;n#div#0;n#main#0;n#div#2;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero-detail/hero-detail.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/heroes/heroes.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/app.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="46" column="35" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Pond5/FootageApi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="136" column="20" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
-          <folding>
-            <element signature="e#32#73#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/app-routing.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/SearchController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="188" selection-start-line="188" selection-end-line="188" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/app/hero.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="471" column="27" selection-start-line="471" selection-start-column="27" selection-end-line="471" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Models/Account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-          <folding>
-            <element signature="e#30#69#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Models/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="72" column="8" lean-forward="true" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/resources/views/admin/orders/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/Admin/ProductOrdersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/ChangePasswordController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="71" selection-end-column="4" />
-          <folding>
-            <element signature="e#422#2720#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/UserContactusController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3128">
-          <caret line="200" column="20" selection-start-line="200" selection-start-column="20" selection-end-line="200" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/Admin/SubscribersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="14" column="119" selection-start-line="14" selection-start-column="119" selection-end-line="14" selection-end-column="119" />
-          <folding>
-            <element signature="e#45#81#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" column="3" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3468">
-          <caret line="213" column="24" selection-start-line="213" selection-start-column="13" selection-end-line="213" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/PackageApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/AuthController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/MediaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/CronController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Models/Product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2924">
-          <caret line="177" selection-start-line="177" selection-end-line="177" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/PantherMedia/ImageApi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1666">
-          <caret line="322" selection-start-line="322" selection-end-line="322" />
-          <folding>
-            <element signature="e#2527#9107#0#PHP" />
-            <element signature="e#10214#11618#0#PHP" />
-            <element signature="e#11622#14087#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app/Http/Controllers/FrontuserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

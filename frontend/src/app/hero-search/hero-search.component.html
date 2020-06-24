@@ -11,14 +11,14 @@
  <!-- advanched search style="display:none" -->
    <div class="container" [ngClass]="{ 'fixed-top': scrollEle }">
 	<div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
+		<div class="col-md-12 d-none d-lg-block">
+            <div class="input-group  " id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
                 <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;"><span class="caret"></span>FILTERS</button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);">
+                            <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height:48px;" (click)="onoroffilters()"><span class="caret"></span>FILTERS</button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="background:rgba(204, 202, 202, 0.95);" *ngIf="mobileFilters">
                                 <form class="form-horizontal"  role="form" #documentEditForm = "ngForm" (ngSubmit)="filters(documentEditForm)">
                                 <input type="hidden" [(ngModel)]="keywordEle" name="search" value="{{keywordEle}}" />
                                   <div class="form-group">
@@ -277,6 +277,16 @@
                         <button (click)="documentEditForm.ngSubmit.emit()"  class="btn btn-primary" style="background: #dfdddd;border: 1px solid #dfdddd;"><span class="fa fa-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
+            </div>
+          </div>
+        </div>
+	</div>
+     <div class="container" [ngClass]="{ 'fixed-top': scrollEle }">
+	<div class="row">
+		<div class="col-md-12 d-lg-none">
+            <div class="input-group  " id="adv-search" style="margin-top: 66px;    border: 1px solid #80808070;    border-top-right-radius: 5px;border-bottom-right-radius: 5px;">
+                <input type="text" class="form-control" placeholder="Search for snippets" [(ngModel)]="keywordEle" (ngModelChange)="modelChange($event)" style="height:48px;font-size: 19px;" />
+                
             </div>
           </div>
         </div>
