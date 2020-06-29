@@ -157,6 +157,8 @@ Route::post('/updateproductpeoples', 'ProductImagePeoplesController@updateProduc
 Route::get('/orders', 'ProductOrdersController@index');
 Route::get('/users/user_orders/{id}', 'ProductOrdersController@userOrderList');
 Route::get('/userListapi/{id}', 'ProductOrdersController@userListapi');
+//subscriber
+Route::get('/getSubscribers', 'SubscribersController@getSubscribers');
 
 //Product  Orientations
 Route::get('/add_product_orientations ', 'ProductImageOrientationsController@addProductOrientations');

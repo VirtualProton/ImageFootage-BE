@@ -559,3 +559,24 @@ app.controller('invoiceController', function($scope, $http, $location) {
 
     }
 });
+
+app.controller('ordersController', function($scope, $http,$location) {
+    $scope.subscriberlist = {};
+    $scope.products = {};
+    $('#loading').show();
+    $http({
+        method: 'GET',
+        url: base_url+'getSubscribers',
+    }).then(function (response){
+        $('#loading').hide();
+        $scope.subscriberlist = response.data;
+    },function (error){
+        $('#loading').hide();
+    });
+    $scope.showProduct = function(products) {
+        $scope.products = products;
+        console.log($scope.products);
+        $('#modal-default').modal('show');
+    }
+
+});
