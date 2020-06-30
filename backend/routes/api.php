@@ -82,7 +82,8 @@ Route::group([
 
     Route::get('/add_products_api', 'Admin\ProductController@getAddProduct');
     Route::post('/add_products_api', 'Admin\ProductController@postAddProduct');
-
+    Route::get('/update_products_api/{id}', 'Admin\ProductController@getUpdateProduct');
+    Route::post('/update_products_api', 'Admin\ProductController@postUpdateProduct');
 });
 
 Route::group([
