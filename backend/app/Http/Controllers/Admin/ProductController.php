@@ -37,7 +37,7 @@ class ProductController extends Controller
 {
 	public function __construct()
 	{
-        //$this->middleware('admin')->except('login','logout');
+        $this->middleware('admin')->except('login','logout');
 	}
     /**
      * Display a listing of the resource.
@@ -435,10 +435,12 @@ class ProductController extends Controller
     }
 
    public function productsList(){
+   		//echo "hi"; die;
 	  $product = new Product;
 	  $all_produst_list = Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->paginate(20);	  
 	  //$all_produst_list=$product->adminAllProductList();
 	  //$all_produst_list=array();
+	  // print_r(count($all_produst_list)); die;
 	  $title = "Product List";
       return view('admin.product.productlist', ['products' => $all_produst_list]);
    }
@@ -785,6 +787,7 @@ class ProductController extends Controller
 		$del_result=Product::find($id)->delete();
 		$del_result=ProductImages::where('image_product_id',$id)->delete();
 		if($del_result){
+		// echo "del"; die;
 			if(isset($product['product_main_image']) && !empty($product['product_main_image'])){
 				//File::delete($product_url);
 			$imgarray=explode('https://imgfootage.s3.us-east-2.amazonaws.com/',$product['product_main_image']);
@@ -807,9 +810,12 @@ class ProductController extends Controller
 				}
 				
 			}
-			return back()->with('success','Product deleated successfully');
+			// return back()->with('success','Product deleated successfully');
+			return redirect('admin/all_products')->with('success','Product deleated successfully');
 		}else{
-			 return back()->with('warning','Some problem occured.');
+				// echo "hi"; die;
+			 // return back()->with('warning','Some problem occured.');
+			return redirect('admin/all_products')->with('warning','Some problem occured.');
 		}
     }
 	public function get_relatedsubcat(Request $request){
@@ -913,7 +919,9 @@ class ProductController extends Controller
 		foreach($product_sort_types_array as $key=>$val1){
 			$filtersort_typessarray[]=$val1['filter_type_id'];
 		}
-		$product_details=Product::find($id)->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
+		$product_details=Product::where('id', $id)->leftJoin('imagefootage_productcategory', 'imagefootage_productcategory.category_id', '=', 'imagefootage_products.product_category')->leftJoin('imagefootage_productsubcategory', 'imagefootage_productsubcategory.subcategory_id', '=', 'imagefootage_products.product_subcategory')->get()->toArray();
+
+		// print_r($product_details); die;
 		return view('admin.product.viewproduct', ['product' => $product_details,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'filterethinicitiesarray'=>$filterethinicitiesarray,'filterlocationsarray'=>$filterlocationsarray,'productPeoples'=>$all_productPeoples_list,'filterpeoplessarray'=>$filterpeoplessarray,'imageResolution'=>$all_productresolution_list,'productOrientations'=>$all_productorientations_list,'imageSortTypes'=>$all_isorttypes_list,'filterproductorientationsarray'=>$filterproductorientationsarray,'filterresolutionarray'=>$filterresolutionarray,'filtersort_typessarray'=>$filtersort_typessarray]);
 	}
 	public function html_email() {
