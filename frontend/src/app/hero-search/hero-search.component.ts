@@ -250,6 +250,10 @@ export class HeroSearchComponent implements OnInit {
                                   this.maintainAosSlider();
                               }else{
                                   //alert("No Result Found");
+                                  this.totalproduct = aoslSliderImages.total;
+                                  this.perpage = aoslSliderImages.perpage;
+                                  this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                                  this.aoslSliderImages = aoslSliderImages.imgfootage;
                                   this.noprductFound = true;
                               }
                                  //  this.spinner.hide();
@@ -586,7 +590,12 @@ export class HeroSearchComponent implements OnInit {
                         this.maintainAosSlider();
                     }else{
                         //alert("Result Not Found");
+                        this.aoslSliderImages = aoslSliderImages.imgfootage;
+                        this.totalproduct = aoslSliderImages.total;
+                        this.perpage = aoslSliderImages.perpage;
+                        this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
                         this.noprductFound = true;
+
                     }
                     //  this.spinner.hide();
 

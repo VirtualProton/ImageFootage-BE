@@ -26,8 +26,8 @@ class SubscribersController extends Controller
             ])->whereHas("plans", function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
-       echo "<pre>";
-       print_r($userlist); die;
+       //echo "<pre>";
+       //print_r($userlist); die;
         return view('admin.subscribers.index', compact('userlist'));
         //return view('admin.orders.orderlist');
     }

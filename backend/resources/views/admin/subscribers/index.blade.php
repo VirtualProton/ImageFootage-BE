@@ -1,10 +1,12 @@
 @extends('admin.layouts.default')
 @section('styles')
     <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+
+
 @endsection
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" ng-controller="subscribersController">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -16,7 +18,7 @@
             </ol>
         </section>
         <!-- Main content -->
-        <section class="content" >
+        <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary" style="overflow-x:auto;">
@@ -24,47 +26,95 @@
                             <h3 class="box-title">Subscribers List</h3>
                         </div>
                         @include('admin.partials.message')
-                        <table id="example2" class="table table-bordered table-striped dataTable">
-                            <thead>
-                            <th>User Name</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Mobile</th>
-                            <th>Packages</th>
-                            </thead>
-                            <tbody>
-                            {{--  //@foreach($orderlists as $orders)--}}
+                        <div class="box-body">
+                            <div class="box-group" id="accordion">
+                                <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                                @if(count($userlist) > 0)
+                                    <table class="col-sm-12 table table-bordered table-striped dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>User Name</th>
+                                            <th>Name</th>
+                                            <th>Title</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
 
-                            <tr ng-if="subscriberlist" ng-repeat="subscribers in subscriberlist">
-                                <td><%orders['user_name']%></td>
-                                <td><%orders['first_name']%> <%orders['last_name']%></td>
-                                <td><%orders['email']%> </td>
-                                <td><%orders['mobile']%></td>
-                                <td><%orders['order_total']%></td>
-                                <td><%orders['created_at']%></td>
-                                <td><%orders['order_status']%></td>
-                                <td><%orders['paymentgatway']%></td>
+                                        @foreach($userlist as $k=>$user)
+                                                     <tr role="row" <?php if($k % 2 == 0){ ?> class="even"
+                                                        <?php }else{ ?> class="odd" <?php } ?>>
+                                                        <td>{{$k+1}}</td>
+                                                        <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}"
+                                                               target="_blank">{{$user['user_name']}}</a></td>
+                                                        <td>{{$user['first_name']}} {{$user['last_name']}}</td>
+                                                        <td>{{$user['title']}}</td>
+                                                        <td>{{$user['email']}}</td>
+                                                        <td>{{$user['mobile']}}</td>
+                                                        <td><?php echo $user['city']['name'] . " " . $user['state']['state'] . " " . $user['country']['name'] ?></td>
+                                                        <td>
+                                                            <a data-toggle="collapse" data-parent="#accordion"
+                                                               href="#collapse{{$user['id']}}" aria-expanded="false"
+                                                               class=""><i class="fa fa-plus"
+                                                                           aria-hidden="true"></i></a> &nbsp; &nbsp;
+                                                        </td>
+                                                    </tr>
 
-                                <td><%orders['bill_firstname']%> <%orders['bill_lastname']%></td>
-                                <td><%orders['bill_address1']%></td>
-                                <td><%orders['city']['name']%></td>
-                                <td><%orders['state']['state']%></td>
+                                               <tr id="collapse{{$user['id']}}" class="panel-collapse collapse" aria-expanded="false" >
+                                                   <td colspan="8">
+                                                        <table class="col-sm-12 table table-bordered table-striped dataTable">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>SN</th>
+                                                                <th>Plan Name</th>
+                                                                <th>Plan Price</th>
+                                                                <th>Plan Type</th>
+                                                                <th>Plan Download Count</th>
+                                                                <th>No of Download</th>
+                                                                <th>Transaction ID</th>
+                                                                <th>Start Date</th>
+                                                                <th>Expire Date</th>
+                                                                <th>Invoice</th>
+                                                                <th>Show Downloads</th>
+                                                            </tr>
+                                                            </thead>
+                                                            @if(count($user['plans']) > 0 )
+                                                                @foreach($user['plans'] as $key=>$eachPlan)
+                                                                    <tr role="row" class="odd">
+                                                                        <td>{{$key+1}}</td>
+                                                                        <td>
+                                                                            <a target="_blank">{{$eachPlan['package_name']}}
+                                                                        </td>
+                                                                        <td>{{$eachPlan['package_price']}}</td>
+                                                                        <td>{{$eachPlan['package_type']}}</td>
+                                                                        <td>{{$eachPlan['package_products_count']}}</td>
+                                                                        <td>{{$eachPlan['downloaded_product']}}</td>
+                                                                        <td>{{$eachPlan['transaction_id']}}</td>
+                                                                        <td>{{$eachPlan['created_at']}}</td>
+                                                                        <td>{{$eachPlan['package_expiry_date_from_purchage']}}</td>
+                                                                        <td><a href="{{$eachPlan['invoice']}}"
+                                                                               target="_blank">Invoice</a></td>
+                                                                        <td>
+                                                                            <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i
+                                                                                        class="fa fa-cloud-download"
+                                                                                        aria-hidden="true"></i></a>
+                                                                            &nbsp; &nbsp;
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
 
-                                <td><%orders['country']['name']%></td>
-                                <td><%orders['bill_zip']%></td>
-                                <td><a target="_blank" href="<%orders['invoice']%>" ng-show="orders['invoice']">Download</a></td>
-                                <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td>
-                            </tr>
-                            <tr>
-                                <td colspan="15" ng-if="!orderslist" class="text-center">No Orders Found !!</td>
-                            </tr>
-
-                            {{--@endforeach--}}
-                            </tbody>
-                        </table>
+                                                        </table>
+                                                    </td>
+                                               </tr>
+                                           @endforeach
+                                        @endif
+                                    </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,28 +138,29 @@
                             <th>Product Name</th>
                             <th>Size</th>
                             <th>Price</th>
+                            <th>Download Date</th>
                             <thead>
-                            <tbody>
-                            <tr ng-repeat="item in products">
-                                <td ng-show="item['product_web']=='2'"> Image </td>
-                                <td ng-show="item['product_web']=='3'">Footage</td>
-                                <td ng-show="item['product_web']=='2'">
-                                    <img src="<%item['product_thumb']%>" width="150" height="100">
-                                </td>
-                                <td ng-show="item['product_web']=='3'">
-                                    <video controls controlsList="nodownload" onmouseover="this.play()"
-                                           onmouseout="this.load()" width="150" height="150">
-                                        <source src="<%item['product_thumb']%>"
-                                                type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                            <tbody id="downloadData">
+                            {{--                            <tr ng-repeat="item in products">--}}
+                            {{--                                <td ng-show="item['product_web']=='2'"> Image </td>--}}
+                            {{--                                <td ng-show="item['product_web']=='3'">Footage</td>--}}
+                            {{--                                <td ng-show="item['product_web']=='2'">--}}
+                            {{--                                    <img src="<%item['product_thumb']%>" width="150" height="100">--}}
+                            {{--                                </td>--}}
+                            {{--                                <td ng-show="item['product_web']=='3'">--}}
+                            {{--                                    <video controls controlsList="nodownload" onmouseover="this.play()"--}}
+                            {{--                                           onmouseout="this.load()" width="150" height="150">--}}
+                            {{--                                        <source src="<%item['product_thumb']%>"--}}
+                            {{--                                                type="video/mp4">--}}
+                            {{--                                        Your browser does not support the video tag.--}}
+                            {{--                                    </video>--}}
 
-                                </td>
-                                <td><%item['product_id']%> </td>
-                                <td><%item['product_name']%> </td>
-                                <td><%item['standard_size']%> </td>
-                                <td><%item['standard_price']%></td>
-                            </tr>
+                            {{--                                </td>--}}
+                            {{--                                <td><%item['product_id']%> </td>--}}
+                            {{--                                <td><%item['product_name']%> </td>--}}
+                            {{--                                <td><%item['standard_size']%> </td>--}}
+                            {{--                                <td><%item['standard_price']%></td>--}}
+                            {{--                            </tr>--}}
                             </tbody>
                         </table>
                     </div>
@@ -129,13 +180,17 @@
 @endsection
 
 @section('scripts')
+
     <script>
-        // $(function () {
-        //
-        //   $('#example2').DataTable();
-        //
-        //
-        // });
+
+        $(function () {
+            $('#subscriber').DataTable();
+        });
+
+        function downloads(data) {
+            console.log(data);
+
+        }
 
     </script>
 @endsection
