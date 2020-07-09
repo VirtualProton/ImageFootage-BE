@@ -10,7 +10,9 @@ class FootageApi {
 
 
      public function  __construct(){
-              if (App::environment('local')) {
+              $envoirement = App::environment();
+              $envoirement = 'prod';
+              if ($envoirement=='local') {
                   $this->api_key =  '22frBD55299';
                   $this->api_secret= 'v72OkjirkV6D299';
                   $this->url = "https://reseller-preprod.pond5.com";
@@ -168,6 +170,30 @@ class FootageApi {
             $contents = json_decode($response, true);
             return $contents;
         }
+  }
+
+  public function getclipdata($footage_id){
+
+      $clip_cmd = array();
+      $clip_cmd['itemid'] = $footage_id;
+      $clip_cmd["secret"] = $this->api_secret;
+      $clip_cmd["key"] =  $this->api_key;
+      $data_req = json_encode($clip_cmd);
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => $this->url.'/api/getclipdata',
+          CURLOPT_USERAGENT => '',
+          CURLOPT_POST => 1,
+          CURLOPT_POSTFIELDS => $clip_cmd
+      ]);
+      // Send the request & save response to $resp
+      $response = curl_exec($curl);
+      curl_close($curl);
+      $contents = json_decode($response, true);
+      return $contents;
+
   }
 
 

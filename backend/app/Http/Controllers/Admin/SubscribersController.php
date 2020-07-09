@@ -14,8 +14,6 @@ class SubscribersController extends Controller
 {
     public function index()
     {
-        // echo "hello";
-       // DB::enableQueryLog();
         $userlist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')
             ->with('state')
             ->with('city')
@@ -26,9 +24,8 @@ class SubscribersController extends Controller
             ])->whereHas("plans", function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
-       //echo "<pre>";
-       //print_r($userlist); die;
-        return view('admin.subscribers.index', compact('userlist'));
+
+            return view('admin.subscribers.index', compact('userlist'));
         //return view('admin.orders.orderlist');
     }
 

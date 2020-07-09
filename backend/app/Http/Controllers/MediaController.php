@@ -66,11 +66,12 @@ class MediaController extends Controller
            $media_id = decrypt($media_id);
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
-           $product_details_data = $footageMedia->search($keyword,[]);
-           if (isset($product_details_data['items'][0]['id'])) {
-               $pond_id_withprefix = $product_details_data['items'][0]['id'];
-               if (strlen($product_details_data['items'][0]['id']) < 9) {
-                   $add_zero = 9 - (strlen($product_details_data['items'][0]['id']));
+           $product_details_data = $footageMedia->getclipdata($media_id);
+           //print_r($product_details_data);
+           if (isset($product_details_data['clip_data']['pic_objectid'])) {
+               $pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
+               if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
+                   $add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
                    for ($i = 0; $i < $add_zero; $i++) {
                        $pond_id_withprefix = "0" . $pond_id_withprefix;
                    }
@@ -78,7 +79,7 @@ class MediaController extends Controller
                $b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
                $downlaod_image= '';
                if (count($product_details_data) > 0) {
-                      $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                    $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                }
 
            }
