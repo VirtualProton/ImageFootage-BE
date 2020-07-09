@@ -437,7 +437,7 @@ class ProductController extends Controller
    public function productsList(){
    		//echo "hi"; die;
 	  $product = new Product;
-	  $all_produst_list = Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->paginate(100);	  
+	  $all_produst_list = Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->orderBy('id', 'DESC')->paginate(100);  
 	  //$all_produst_list=$product->adminAllProductList();
 	  //$all_produst_list=array();
 	  // print_r(count($all_produst_list)); die;

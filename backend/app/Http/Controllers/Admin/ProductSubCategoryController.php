@@ -31,7 +31,8 @@ class ProductSubCategoryController extends Controller
 		$ProductSubCategory->subcategory_added_on=date('Y-m-d H:i:s');
 		$result=$ProductSubCategory->save();
 		if($result){
-          return back()->with('success','Product Subcategory added successfully');
+          // return back()->with('success','Product Subcategory added successfully');
+          return redirect('admin/all_product_subcategory/')->with('success','Product Subcategory added successfully');
 		}else{
 		  return back()->with('warning','Some problem occured.');
 		}
@@ -77,7 +78,8 @@ class ProductSubCategoryController extends Controller
 							 );
 		 $result = ProductSubCategory::where('subcategory_id',$request->product_subcategory_id)->update($update_array);
 		 if($result){
-				return back()->with('success','Product Subcategory updated successful');
+				// return back()->with('success','Product Subcategory updated successful');
+                return redirect('admin/all_product_subcategory/')->with('success','Product Subcategory updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }

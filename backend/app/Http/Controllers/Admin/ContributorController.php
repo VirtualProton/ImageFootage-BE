@@ -167,7 +167,8 @@ class ContributorController extends Controller
 					$image->move($destinationPath, $name);
 					$update_array['contributor_idproof']=$name;
 				}
-				return back()->with('success','Contributor updated successful');
+				// return back()->with('success','Contributor updated successful');
+				return redirect('admin/contributor_list/')->with('success','Contributor updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }

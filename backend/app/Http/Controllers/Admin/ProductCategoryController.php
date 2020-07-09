@@ -32,7 +32,9 @@ class ProductCategoryController extends Controller
 		$ProductCategory->category_added_on=date('Y-m-d H:i:s');
 		$result=$ProductCategory->save();
 		if($result){
-          return back()->with('success','Product Category added successfully');
+          // return back()->with('success','Product Category added successfully');
+		  return redirect('admin/all_product_category/')->with('success','Product Category added successfully');
+          
 		}else{
 		  return back()->with('warning','Some problem occured.');
 		}
@@ -77,7 +79,8 @@ class ProductCategoryController extends Controller
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);
 		
 		 if($result){
-				return back()->with('success','Product Category updated successful');
+				// return back()->with('success','Product Category updated successful');
+		  		return redirect('admin/all_product_category/')->with('success','Product Category updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
