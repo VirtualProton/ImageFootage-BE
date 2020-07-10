@@ -707,63 +707,62 @@
                                 <span class="col-md-7">{{detailPageInfo[3]}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Duration #</span>
+                                <span class="col-md-4">Duration</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{msToTime(detailPageInfo[0].clip_data.pim_aut_duration_ms)}} </span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Frame Rate #</span>
+                                <span class="col-md-4">Frame Rate</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{detailPageInfo[0].clip_data.pim_aut_fps}} fps </span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Location #</span>
+                                <span class="col-md-4">Location</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{detailPageInfo[0].clip_data.pic_location_country}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Uses #</span>
+                                <span class="col-md-4">License</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pisc_single_use_license === null ? 'No' : 'Yes'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Uses</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{detailPageInfo[0].clip_data.ed === false ? 'Commercial' : 'Editorial'}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Model Relesed #</span>
+                                <span class="col-md-4">Model Relesed</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{detailPageInfo[0].clip_data.modelreleased === false ? 'No' : 'Yes'}}</span>
                             </div>
-                            <div class="row-fluid">
-                                <span class="col-md-4">License #</span>
-                                <span class="col-md-1">:</span>
-                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pisc_single_use_license === null ? 'No' : 'Yes'}}</span>
-                            </div>
-
-                            <div class="row-fluid">
-                                <span class="col-md-4">Property Relesed #</span>
+                           <div class="row-fluid">
+                                <span class="col-md-4">Property Relesed</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{detailPageInfo[0].clip_data.propertyreleased === false ? 'No' : 'Yes'}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Average Bit Rate #</span>
+                                <span class="col-md-4">Average Bit Rate</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7"></span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Bit Depth #</span>
+                                <span class="col-md-4">Bit Depth</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7"> </span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Looping #</span>
+                                <span class="col-md-4">Looping</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('KCA0700') === true ? 'Yes' : 'No'}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Alpha Matte #</span>
+                                <span class="col-md-4">Alpha Matte</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('vidmatte') === true ? 'Yes' : 'No'}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Alpha Channel #</span>
+                                <span class="col-md-4">Alpha Channel</span>
                                 <span class="col-md-1">:</span>
                                 <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('KCT0200') === true ? 'Yes' : 'No'}} </span>
                             </div>

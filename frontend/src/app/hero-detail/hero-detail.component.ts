@@ -247,6 +247,7 @@ export class HeroDetailComponent implements OnInit {
         this.loadingData = true;
         this.addedCartItem = !this.addedCartItem;
         this.token = localStorage.getItem('currentUser');
+        delete productinfo['4'];
 
         let cartval = {
            "product_info":productinfo,

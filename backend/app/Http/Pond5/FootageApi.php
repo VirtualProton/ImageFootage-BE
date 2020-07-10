@@ -11,7 +11,6 @@ class FootageApi {
 
      public function  __construct(){
               $envoirement = App::environment();
-              $envoirement = 'prod';
               if ($envoirement=='local') {
                   $this->api_key =  '22frBD55299';
                   $this->api_secret= 'v72OkjirkV6D299';
