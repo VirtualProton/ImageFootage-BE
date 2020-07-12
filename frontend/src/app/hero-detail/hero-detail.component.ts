@@ -65,6 +65,11 @@ export class HeroDetailComponent implements OnInit {
     pagenumber:number =0;
     packeagechoose:any=[];
     refrencemodel:any ='';
+    milliseconds:any;
+    hours:any;
+    minutes:any;
+    seconds:any;
+
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -100,7 +105,7 @@ export class HeroDetailComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
       });
-      console.log(this.currentUser);
+      //console.log(this.currentUser);
       //let category = this.route.snapshot.paramMap.get('cat');
       //let imgtype =  this.route.snapshot.paramMap.get('webtype');
      // this.prodid =  this.route.snapshot.paramMap.get('id');
@@ -170,7 +175,7 @@ export class HeroDetailComponent implements OnInit {
              //this.base64changefunction(this.detailPageInfo['media']['preview_url_no_wm']);
          }else if(this.webtype==3){
              this.detailPageInfo = data;
-             let keywords  = this.detailPageInfo[0].items[0].kw;
+             let keywords  = this.detailPageInfo[0].clip_data.pic_keywords;
              this.keyword = keywords.split(",").map(item => item.trim());
              if(this.detailPageInfo[3]){
                  this.getimagedownloadSample(this.detailPageInfo[3]);
@@ -242,6 +247,7 @@ export class HeroDetailComponent implements OnInit {
         this.loadingData = true;
         this.addedCartItem = !this.addedCartItem;
         this.token = localStorage.getItem('currentUser');
+        delete productinfo['4'];
 
         let cartval = {
            "product_info":productinfo,
@@ -254,7 +260,7 @@ export class HeroDetailComponent implements OnInit {
 
       this.heroService.addcartItemsData(cartval)
             .subscribe(data => {
-                console.log(data);
+               // console.log(data);
 				this.checkoutArray.push(cartval);
                 if(data["status"]=='1'){
                     this.loadingData =false;
@@ -273,7 +279,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
    checkPriceTotal(selectedPrice){
-        console.log(selectedPrice);
+        //console.log(selectedPrice);
         this.currunt_selected_price = selectedPrice.price*80;
         this.total = this.currunt_selected_price;
        this.extended_price =0;
@@ -289,7 +295,7 @@ export class HeroDetailComponent implements OnInit {
     }
 
     checkPriceTotalFootage(selectedPrice){
-        console.log(selectedPrice);
+        //console.log(selectedPrice);
         this.currunt_selected_price = selectedPrice.pr;
         this.total = this.currunt_selected_price;
         this.standard= selectedPrice;
@@ -353,7 +359,7 @@ export class HeroDetailComponent implements OnInit {
     }
 
     addtolightbox(id){
-        console.log(id);
+       // console.log(id);
 		let element = document.getElementById('adtow')
         if (!this.currentUser) {
             this.showloginPopup = true;
@@ -438,7 +444,7 @@ export class HeroDetailComponent implements OnInit {
 
         this.heroService.download(cartval)
             .subscribe(data => {
-                console.log(data);
+               // console.log(data);
                 if(data) {
                     if (type == 3) {
                         this.loadingData = false;
@@ -457,7 +463,7 @@ export class HeroDetailComponent implements OnInit {
             });
     }
     downloadselect(productinfo,cartproduct,total,extended,type,selected){
-        console.log(selected);
+        //console.log(selected);
         this.loadingData = true;
         this.token = localStorage.getItem('currentUser');
         this.refrencemodel.close();
@@ -470,10 +476,10 @@ export class HeroDetailComponent implements OnInit {
             "type":type,
             "package":selected
         };
-        console.log(cartval);
+        //console.log(cartval);
         this.heroService.download(cartval)
             .subscribe(data => {
-                console.log(data);
+                //console.log(data);
                 if(data) {
                     if (type == 3) {
                         this.loadingData = false;
@@ -505,7 +511,7 @@ export class HeroDetailComponent implements OnInit {
                 //this.relatedData=relatedData;
 
             });
-            console.log(this.relatedData);
+            //console.log(this.relatedData);
 
         }
 
@@ -528,5 +534,18 @@ export class HeroDetailComponent implements OnInit {
             //     );
 
         }
+    }
+
+    msToTime(duration) {
+        this.milliseconds = (duration % 1000) ;
+        this.seconds = Math.floor((duration / 1000) % 60);
+        this.minutes = Math.floor((duration / (1000 * 60)) % 60);
+        this.hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+        this.hours = (this.hours < 10) ? "0" + this.hours : this.hours;
+        this.minutes = (this.minutes < 10) ? "0" + this.minutes : this.minutes;
+        this.seconds = (this.seconds < 10) ? "0" + this.seconds : this.seconds;
+
+        return this.hours + ":" + this.minutes + ":" + this.seconds + "." + this.milliseconds;
     }
 }

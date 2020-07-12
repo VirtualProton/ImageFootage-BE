@@ -180,26 +180,27 @@ class Product extends Model
     }
 
     public function savePond5Image($data,$category_id){
-        //dd($data);
-        foreach($data['items'] as $eachmedia){
-            if(isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id'];
-                if(strlen($eachmedia['id'])<9){
-                 $add_zero = 9 - (strlen($eachmedia['id']));
+
+            $eachmedia = $data['clip_data'];
+       // foreach($data['clip_data'] as $eachmedia){
+            if(isset($eachmedia['pic_objectid'])) {
+                $pond_id_withprefix = $eachmedia['pic_objectid'];
+                if(strlen($eachmedia['pic_objectid'])<9){
+                 $add_zero = 9 - (strlen($eachmedia['pic_objectid']));
                    for($i=0;$i<$add_zero;$i++){
                        $pond_id_withprefix =  "0".$pond_id_withprefix;
                    }
                 }
                 $media = array(
                     'product_id' => "",
-                    'api_product_id' => $eachmedia['id'],
+                    'api_product_id' => $eachmedia['pic_objectid'],
                     'product_category' => $category_id,
-                    'product_title' => $eachmedia['n'],
+                    'product_title' => $eachmedia['pic_name'],
                     'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/".$pond_id_withprefix."_iconl.jpeg",
                     'product_main_image' => $data['icon_base'].$pond_id_withprefix."_main_l.mp4",
-                    'product_description' => $eachmedia['desc'],
+                    'product_description' => $eachmedia['pic_description'],
                     'product_size' => '',
-                    "product_keywords" => $eachmedia['kw'],
+                    "product_keywords" => $eachmedia['pic_keywords'],
                     'product_status' => "Active",
                     'product_main_type' => "Footage",
                     'product_sub_type' => "Photo",
@@ -211,7 +212,7 @@ class Product extends Model
                 );
                 // print_r($media); die;
                 $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $eachmedia['id'])
+                    ->where('api_product_id', $eachmedia['pic_objectid'])
                     ->get()
                     ->toArray() ;
                 if (count($data2)==0) {
@@ -228,7 +229,7 @@ class Product extends Model
                     return $data2[0]->product_id;
                 }
             }
-        }
+        //}
 
     }
 

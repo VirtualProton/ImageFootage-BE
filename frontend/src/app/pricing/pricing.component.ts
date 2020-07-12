@@ -323,4 +323,8 @@ export class PricingComponent implements OnInit {
             });
     }
 
+    changePlan(){
+      this.paymentShow = false;
+    }
+
 }

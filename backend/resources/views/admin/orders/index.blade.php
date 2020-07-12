@@ -5,11 +5,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          Orders List By User
+          User List with Order
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Lead/Contact/User List</li>
+        <li class="active">User List with Order</li>
       </ol>
     </section>
     <section class="content">
@@ -17,7 +17,7 @@
         	<div class="col-md-12">
          		<div class="box" style="overflow: auto;">
                 <div class="box-header">
-                  <h3 class="box-title"> Orders List</h3>
+                  <h3 class="box-title"> User List</h3>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
@@ -31,8 +31,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>Offline Orders</th>
-                <th>Online Orders</th>
+                <th colspan="2">Sale Type</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,13 +39,12 @@
                     @foreach($userlist as $k=>$user)
                 <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
-                  <td>{{$user['user_name']}}</td>
+                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}" target="_blank">{{$user['user_name']}}</a></td>
                   <td>{{$user['first_name']}} {{$user['last_name']}}</td>
-                  <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>
                   <td>{{$user['mobile']}}</td>
-                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}" target="_blank">Offline Orders</a></td>
-                  <td><a href="{{ url('admin/users/user_orders/'.$user['id'])}}" target="_blank">Online Orders</a></td>
+                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}" target="_blank">Offline Sale</a></td>
+                  <td><a href="{{ url('admin/users/user_orders/'.$user['id'])}}" target="_blank">Online Sale</a></td>
                 </tr>
                 @endforeach
                 @endif

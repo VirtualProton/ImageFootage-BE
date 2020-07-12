@@ -23,7 +23,7 @@
              <!-- /.box-header -->
              <div class="box-body">
 
-            <table id="account" class="table table-bordered table-striped dataTable " class="col-sm-12">
+            <table id="account" class="col-sm-12 table table-bordered table-striped dataTable" >
                 <thead>
                 <tr >
                 <th>SN</th>

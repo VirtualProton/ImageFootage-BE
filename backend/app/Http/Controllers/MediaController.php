@@ -35,10 +35,16 @@ class MediaController extends Controller
            $media_id = decrypt($media_id);
            $product_details_data = $imageMedia->get_media_info($media_id);
            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
-
-		   $img = Image::make($product_details_data['media']['preview_url_no_wm']);
-    		// insert watermark at bottom-right corner with 10px offset 
-    		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'bottom-right', 10, 10);
+           $size = getimagesize($product_details_data['media']['preview_url_no_wm']);
+           $height = $size[1];
+           $width = $size[0];
+           $left =0;
+           if($width>300){
+               $left = $width-300;
+           }
+           $img = Image::make($product_details_data['media']['preview_url_no_wm']);
+    		// insert watermark at bottom-right corner with 10px offset
+    		$downlaod_image1=$img->insert(public_path('images/logoimage_new.png'), 'top-left',$left/2,$height/2);
 			$time=time();
 			$img->save(public_path('images/dump/'.$time.'.jpg'));
 			$img->encode('jpg');
@@ -60,11 +66,12 @@ class MediaController extends Controller
            $media_id = decrypt($media_id);
            $keyword['search'] = $media_id;
            $footageMedia = new FootageApi();
-           $product_details_data = $footageMedia->search($keyword,[]);
-           if (isset($product_details_data['items'][0]['id'])) {
-               $pond_id_withprefix = $product_details_data['items'][0]['id'];
-               if (strlen($product_details_data['items'][0]['id']) < 9) {
-                   $add_zero = 9 - (strlen($product_details_data['items'][0]['id']));
+           $product_details_data = $footageMedia->getclipdata($media_id);
+           //print_r($product_details_data);
+           if (isset($product_details_data['clip_data']['pic_objectid'])) {
+               $pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
+               if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
+                   $add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
                    for ($i = 0; $i < $add_zero; $i++) {
                        $pond_id_withprefix = "0" . $pond_id_withprefix;
                    }
@@ -72,7 +79,7 @@ class MediaController extends Controller
                $b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
                $downlaod_image= '';
                if (count($product_details_data) > 0) {
-                      $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                    $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                }
 
            }

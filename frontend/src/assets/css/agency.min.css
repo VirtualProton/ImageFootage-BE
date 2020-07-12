@@ -6,7 +6,7 @@
 body {
     overflow-x: hidden; /*font-family: Open Sans,Helvetica,Arial,sans-serif;*/
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 p {
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     /*font-family: Open Sans,Helvetica,Arial,sans-serif;*/
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .page-section {
@@ -50,8 +50,10 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: none;
     /*font-family: Open Sans,Helvetica,Arial,sans-serif;*/
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
+
+#adv-search>input{padding:10px; border-radius:5px 0px 0px 5px;}
 
 @media (min-width: 768px) {
     section {
@@ -83,7 +85,7 @@ img::-moz-selection {
 
 .btn {
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-weight: 700
 }
 
@@ -108,7 +110,7 @@ img::-moz-selection {
 }
 
 #mainNav {
-    background-color: #000
+    background-color: #1c1c1e;
 }
 
 #mainNav .navbar-toggler {
@@ -120,13 +122,13 @@ img::-moz-selection {
     border: 0;
     background-color: #fed136;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-brand {
     color: #fed136;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
@@ -140,7 +142,7 @@ img::-moz-selection {
     letter-spacing: 1px;
     color: #fff;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
@@ -162,13 +164,20 @@ img::-moz-selection {
     }
 
     #mainNav .navbar-nav .nav-item .nav-link {
-        padding: 0.5em 1em !important
+        padding: 0.5em 1em !important;
+        border-radius: 25px !important;
+        font-weight: 500;
+    }
+    a.nav-link.js-scroll-trigger.btn.rounded-0.btn-outline-white:hover {
+        background: #c2983d;
+        color: #201e2b !important;
+        border-color:#c2983d;
     }
 
     #mainNav.navbar-shrink {
         padding-top: 0;
         padding-bottom: 0;
-        background-color: #000
+        background-color: #1c1c1e;
     }
 
     #mainNav.navbar-shrink .navbar-brand {
@@ -207,7 +216,7 @@ header.masthead .intro-text .intro-heading {
     line-height: 50px;
     margin-bottom: 25px;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -231,7 +240,7 @@ header.masthead .intro-text .intro-heading {
         line-height: 75px;
         margin-bottom: 50px;
         /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-         font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     }
 }
 
@@ -303,7 +312,7 @@ header.masthead .intro-text .intro-heading {
     font-style: italic;
     margin: 0;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 #portfolio * {
@@ -340,7 +349,7 @@ header.masthead .intro-text .intro-heading {
     font-style: italic;
     margin: 20px 0 30px;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .portfolio-modal .modal-content ul.list-inline {
@@ -641,28 +650,28 @@ section#contact ::-webkit-input-placeholder {
     font-weight: 700;
     color: #ced4da;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact :-moz-placeholder {
     font-weight: 700;
     color: #ced4da;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact ::-moz-placeholder {
     font-weight: 700;
     color: #ced4da;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 section#contact :-ms-input-placeholder {
     font-weight: 700;
     color: #ced4da;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .footer {
@@ -675,7 +684,7 @@ section#contact :-ms-input-placeholder {
     line-height: 40px;
     text-transform: none;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .footer ul.quicklinks {
@@ -684,7 +693,7 @@ section#contact :-ms-input-placeholder {
     margin-bottom: 0;
     text-transform: none;
     /*font-family: Open Sans, Helvetica, Arial, sans-serif;*/
-     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 ul.social-buttons {
@@ -706,4 +715,67 @@ ul.social-buttons li a {
 
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
     background-color: #fed136
+}
+
+.btn-outline-primary:hover {
+    background: #4285F4;
+    color: #fff!important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+
+}
+
+.btn-outline-danger {
+    border: 1px solid #D0021B ;
+    color: #D0021B !important;
+    background-color: transparent;
+}
+
+.btn-outline-danger:hover {
+    background: #D0021B ;
+    color: #fff !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+
+}
+.btn-outline-success {
+    border: 1px solid #068F4D;
+    color: #068F4D!important;
+    background-color: transparent;
+}
+.btn-outline-success:hover {
+    background:  #068F4D;
+    color: #fff !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+
+}
+
+.btn-outline-warning {
+    border: 1px solid #c2993f;
+    color: #c2993f!important;
+    background-color: transparent;
+}
+.btn-outline-warning:hover {
+    background:#fb3;
+    color: #000 !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+
+}
+.btn-outline-dark {
+    color: #211f2a;
+    background-color: transparent;
+    background-image: none;
+    border-color: #211f2a;
+}
+
+.btn-outline-dark:hover{
+    background: #211f2a;
+    color: #fff;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+
+.btn-outline-secondary {
+    color: #6c757d;
+    background-color: transparent;
+    background-image: none;
+    border-color: #6c757d;
 }
