@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" [ngClass]="{ 'navbar-shrink': scrollEle }" id="mainNav" appNoRightClick>
   <div class="container-fluid">
    
-    <a class="navbar-brand js-scroll-trigger" href=""><!--Image Footage--><img src="assets/images/logoimage_new.png" width="200px" /></a>
+    <a class="navbar-brand js-scroll-trigger" href=""><!--Image Footage--><img src="assets/images/IF_Logo_Final.png" width="200px" /></a>
    
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
     (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" 
@@ -86,10 +86,10 @@
           (click)="clickLoginPopup()"><i class="fa fa-user"></i> User</a>
         </li>
 		<!-- btn-outline-white -->
-        <li class="nav-item" *ngIf="!currentUser">
+        <!--<li class="nav-item" *ngIf="!currentUser">
         
           <a class="nav-link js-scroll-trigger btn  rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/contributor-sign-up" style="margin-left: 10px;"><i class="fa fa-user"></i> Contributor</a>
-        </li>
+        </li>-->
 
 
 
@@ -169,6 +169,7 @@
     </div>
   </nav>
   -->
+
 
 <ng-container *ngIf="showloginPopup">
   <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>

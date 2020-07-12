@@ -155,8 +155,10 @@ Route::get('/editproductpeoples/{id}', 'ProductImagePeoplesController@editProduc
 Route::post('/updateproductpeoples', 'ProductImagePeoplesController@updateProductPeoples');
 //orders related
 Route::get('/orders', 'ProductOrdersController@index');
-Route::get('/user_orders/{id}', 'ProductOrdersController@userOrderList');
-Route::get('/userListapi', 'ProductOrdersController@userListapi');
+Route::get('/users/user_orders/{id}', 'ProductOrdersController@userOrderList');
+Route::get('/userListapi/{id}', 'ProductOrdersController@userListapi');
+//subscriber
+Route::get('/getSubscribers', 'SubscribersController@getSubscribers');
 
 //Product  Orientations
 Route::get('/add_product_orientations ', 'ProductImageOrientationsController@addProductOrientations');
@@ -211,6 +213,7 @@ Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
 Route::post('/create_invoice','InvoiceController@create_invoice');
 Route::post('/change_invoice_status','InvoiceController@change_invoice_status');
+Route::get('/subscribers','SubscribersController@index');
 
 
 

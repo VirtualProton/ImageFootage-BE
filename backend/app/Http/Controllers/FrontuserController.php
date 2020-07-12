@@ -55,7 +55,7 @@ class FrontuserController extends Controller {
                 echo '{"status":"0","message":"Allready this product is in your cart."}';
             }
         }else if($request['product']['type']=='3'){
-            $product_id = $request['product']['product_info'][0]['items'][0]['id'];
+            $product_id = $request['product']['product_info'][0]['clip_data']['pic_objectid'];
             $product_type = "Footage";
             $tokens=json_decode($request['product']['token'],true);
             $product_addedby = $tokens['Utype'];
@@ -65,14 +65,14 @@ class FrontuserController extends Controller {
                 $Usercart->cart_product_id=$product_id;
                 $Usercart->cart_product_type= $product_type;
                 $Usercart->cart_added_by= $product_addedby;
-                $Usercart->standard_type= $request['product']['product_info'][0]['items'][0]['pf'];
+                $Usercart->standard_type= $request['product']['selected_product']['size'];
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= $request['product']['product_info'][0]['items'][0]['filesize'];
+                $Usercart->standard_size= $request['product']['selected_product']['size'];
                 $Usercart->standard_price = $request['product']['selected_product']['pr'];
                 $Usercart->total= $request['product']['total'];
-                $Usercart->product_name= $request['product']['product_info'][0]['items'][0]['pf'];
+                $Usercart->product_name= $request['product']['product_info'][0]['clip_data']['n'];
                 $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
-                $Usercart->product_desc= $request['product']['product_info'][0]['items'][0]['desc'];
+                $Usercart->product_desc= $request['product']['product_info'][0]['clip_data']['pic_description'];
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_main_footage = $request['product']['product_info'][2];
                 $Usercart->product_json= json_encode($request['product']['product_info'][0]);

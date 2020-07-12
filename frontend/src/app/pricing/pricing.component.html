@@ -6,593 +6,502 @@
     <div class="loader2"><img src="assets/images/loader.gif" width="300px"></div>
 </div>
 <!--<section class="purple-gradient">-->
-
-<!--    <div class="container">-->
-<!--        <div class="text-white text-center">-->
-<!--            <h1 class="text-white">Images for every project, plans for every budget</h1>-->
-<!--            <p>Access over 320 million images with 1,65,000 new images added every day.</p>-->
-<!--        </div>-->
-
-<!--        <h3 class="text-white pt-5 pb-3">Plans for individuals</h3>-->
-
-<!--        <div class="row" *ngIf="!paymentShow">-->
-
-<!--            <div class="col-lg-9 col-md-8 col-sm-8" *ngIf="yearly">-->
-<!--                <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-header text-center">-->
-<!--                        <h3 class="text-center" >Value priced annual plans</h3>-->
-
-<!--                        <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>-->
-<!--                    </div>-->
-
-<!--                    <div class="card-body">-->
-<!--                        <div class="row">-->
-
-<!--                            <div class="col-lg-6 col-md-6 col-sm-6">-->
-<!--                                <p>Includes <b>ImageFootage Editor Pro</b></p>-->
-
-<!--                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>-->
-<!--                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>-->
-<!--                                <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>-->
-
-<!--                                <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>-->
-
-<!--                            </div>-->
-
-<!--                            <div class="col-lg-6 col-md-6 col-sm-6">-->
-<!--                                <table class="table table-hover">-->
-
-<!--                                    <tbody>-->
-<!--                                    <tr *ngFor="let pack of plansData.yearly_pack;let i= index">-->
-<!--                                        <td class="border-top-0">-->
-
-<!--                                            <label class="custmLable">-->
-<!--                                            <span class="float-left">-->
-<!--                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>-->
-<!--                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>-->
-<!--                                            <span class="float-right">-->
-<!--                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>-->
-<!--                                                 <p class="f-12 mb-0"> per image</p>-->
-<!--                                            </span>-->
-<!--                                                <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">-->
-<!--                                                <span class="checkmark"></span>-->
-<!--                                            </label>-->
-<!--                                        </td>-->
-
-<!--                                    </tr>-->
-<!--                                    <tr><td class="border-top-0">-->
-<!--                                        <span style="color:red;" *ngIf="submitted2 && g.subplan.errors && g.subplan.errors.required" >Please select a plan</span>-->
-<!--                                        &lt;!&ndash;                                   <label class="custmLable">&ndash;&gt;-->
-<!--                                        &lt;!&ndash;                                   <span class="invalid-feedback">&ndash;&gt;-->
-<!--                                        &lt;!&ndash;                                    <span > </span>&ndash;&gt;-->
-
-<!--                                        &lt;!&ndash;                                </span>&ndash;&gt;-->
-<!--                                        &lt;!&ndash;                                   </label>&ndash;&gt;-->
-<!--                                    </td>-->
-
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
-
-
-<!--                            <div class="form-group pt-3 m-auto">-->
-<!--                                <button type="submit" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
-<!--                                <p class="pt-3"><a (click)="showprice()">See Monthly Pricing</a></p>-->
-
-<!--                            </div>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
+<!--  <div class="container" *ngIf="paymentShow==false">-->
+<!--  <div class="switch switch-yellow">-->
+<!--      <input type="radio" class="switch-input" name="view3" value="week3" id="week3" checked>-->
+<!--      <label for="week3" class="switch-label switch-label-off" (click)="showpriceimg()">Images</label>-->
+<!--      <input type="radio" class="switch-input" name="view3" value="month3" id="month3">-->
+<!--      <label for="month3" class="switch-label switch-label-on" (click)="showpricefoot()">Footages</label>-->
+<!--      <span class="switch-selection"></span>-->
+<!--    </div>-->
+<!--    <div class="text-white text-center">-->
+<!--  &lt;!&ndash;<h1 class="text-white">Images for every project, plans for every budget</h1>-->
+<!--  <p>Access over 320 million images with 1,65,000 new images added every day.</p>&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash;<h3 class="text-white pt-5 pb-3">Plans for individuals</h3>&ndash;&gt;-->
+<!--<div class="row justify-content-center" *ngIf="pimages">-->
+<!--  <div class="col-lg-4 col-md-5 col-sm-5">-->
+<!--  -->
+<!--  <div class="card">-->
+<!--    <div class="card-header text-center">-->
+<!--     <h3 class="text-center" style="color:#000;">Subscriptions Plans</h3>-->
+<!--     <p class="mb-1" style="color:#000;">Royalty Free Images</p>-->
+<!--   </div>-->
+<!--   <div class="card-body">-->
+<!--    <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()" *ngIf="monthly">-->
+<!--     <div class="row">-->
+<!--      <div class="col-md-12">-->
+<!--      <h5 class='text-center'>Monthly Packs</h5>-->
+<!--     -->
+<!--       <table class="table table-hover">-->
+<!--         -->
+<!--         <tbody>-->
+<!--           <tr *ngFor="let pack of plansData.monthly_pack;let i= index">-->
+<!--             <td class="border-top-0">-->
+<!--               -->
+<!--               <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--                    <b class="f-14">{{pack.package_name}}</b>-->
+<!--                </span>-->
+<!--                <span class="float-right">-->
+<!--                    <b class="f-14">INR {{pack.package_price}}</b>-->
+<!--				</span>-->
+<!--              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">-->
+<!--              <span class="checkmark"></span>-->
+<!--            </label>-->
+<!--             </td>-->
+<!--            -->
+<!--           </tr>-->
+<!--         </tbody>-->
+<!--       </table>-->
+<!--       -->
+<!--     </div>-->
+<!--     -->
+<!--   </div>-->
+<!--   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">-->
+<!--                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   -->
+<!--                             <p class="pt-3"><a  (click)="showprice()" style="color:#000;">See Annual Pricing</a></p>            -->
+<!--     </div>-->
+<!--     </form>-->
+<!--     <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()" *ngIf="yearly">-->
+<!--     <div class="row">-->
+<!--      <div class="col-md-12">-->
+<!--     		<h5 class='text-center' >Annual Packs</h5>-->
+<!--       <table class="table table-hover">-->
+<!--         -->
+<!--         <tbody>-->
+<!--           <tr *ngFor="let pack of plansData.yearly_pack;let i= index">-->
+<!--             <td class="border-top-0">-->
+<!--               -->
+<!--               <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--                    <b class="f-14">{{pack.package_name}}</b>-->
+<!--                </span>-->
+<!--                <span class="float-right">-->
+<!--                    <b class="f-14">INR {{pack.package_price}}</b>-->
+<!--				</span>-->
+<!--              <input  type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.subplan.errors }">-->
+<!--              <span class="checkmark"></span>-->
+<!--            </label>-->
+<!--             </td>-->
+<!--            -->
+<!--           </tr>-->
+<!--         </tbody>-->
+<!--       </table>-->
+<!--       -->
+<!--     </div>-->
+<!--     -->
+<!--   </div>-->
+<!--   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">-->
+<!--                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   -->
+<!--                             <p class="pt-3"><a (click)="showprice()" style="color:#000;">See Monthly Pricing</a></p>            -->
+<!--     </div>-->
+<!--     </form>-->
+<!--   </div>-->
+<!--</div>-->
+<!--  </div>-->
+<!--  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">-->
+<!--  -->
+<!--  <div class="card">-->
+<!--    <div class="card-header text-center">-->
+<!--     <h3 class="text-center " style="color:#000;">Download Packs</h3>-->
+<!--     <p class="mb-1" style="color:#000;">Royalty Free Images</p>-->
+<!--   </div>-->
+<!--   <div class="card-body">-->
+<!--     <div class="row">-->
+<!--     <form [formGroup]="planform" (ngSubmit)="onSubmit()" class="col-md-12">-->
+<!--     <h5 class="text-center">Download Within A Year</h5>-->
+<!--       <table class="table table-hover">-->
+<!--         -->
+<!--         <tbody>-->
+<!--           <tr *ngFor="let pack of plansData.download_pack;let i= index">-->
+<!--             <td class="border-top-0">-->
+<!--               <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--                    <b class="f-14">{{pack.package_name}}</b><small></small>-->
+<!--                </span>-->
+<!--                <span class="float-right">-->
+<!--                    <b class="f-14">INR {{pack.package_price}}</b>-->
+<!--                </span>-->
+<!--                  <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">-->
+<!--                  <span class="checkmark"></span>-->
+<!--               </label>-->
+<!--             </td>-->
+<!--            -->
+<!--           </tr>-->
+<!--       </tbody>-->
+<!--       </table>-->
+<!--       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">-->
+<!-- <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
+<!-- <p class="pt-3"><a style='color:#fff;'>See Monthly Pricing</a></p>  -->
+<!--   </div>-->
+<!--   	 </form>-->
+<!-- </div>-->
+<!--   </div>-->
+<!--</div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="row justify-content-center" *ngIf="pfootages">-->
+<!--	 <div class="col-lg-4 col-md-5 col-sm-5">-->
+<!--  -->
+<!--  <div class="card">-->
+<!--    <div class="card-header text-center">-->
+<!--     <h3 class="text-center" style="color:#000;">HD(1080) Footages</h3>-->
+<!--   </div>-->
+<!--   <div class="card-body">-->
+<!--    <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">-->
+<!--     <div class="row" style="margin-top: -21px;">-->
+<!--      <div class="col-md-12">-->
+<!--      -->
+<!--       <table class="table">-->
+<!--         -->
+<!--         <tbody>-->
+<!--         <tr>-->
+<!--             <td style="margin:3px 9px 5px 2px;" >-->
+<!--                                    <span class="row" style="color:#938b76;font-weight: 700;">-->
+<!--                                        <span class="col-md-6 text-right">-->
+<!--                                            Individual-->
+<!--                                        </span>-->
+<!--                                        <span class="col-md-6 text-left">-->
+<!--                                        &nbsp;&nbsp;&nbsp;INR 11500 -->
+<!--                                        </span>-->
+<!--                                    </span>-->
+<!--              </td>-->
+<!--         </tr>-->
+<!--           <tr *ngFor="let pack of footageplansData.download_pack.HD;let i= index">-->
+<!--             <td class="border-top-0">-->
+<!--               -->
+<!--               <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--                    <b class="f-14">{{pack.package_name}}</b>-->
+<!--                </span>-->
+<!--                <span class="float-right">-->
+<!--                    <b class="f-14">INR {{pack.package_price}}</b>-->
+<!--				</span>-->
+<!--              <input  type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">-->
+<!--              <span class="checkmark"></span>-->
+<!--            </label>-->
+<!--             </td>-->
+<!--            -->
+<!--           </tr>-->
+<!--         </tbody>-->
+<!--       </table>-->
+<!--       -->
+<!--     </div>-->
+<!--     -->
+<!--   </div>-->
+<!--   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">-->
+<!--                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>     </div>-->
+<!--     </form>-->
+<!--     -->
+<!--   </div>-->
+<!--</div>-->
+<!--  </div>-->
+<!--  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">-->
+<!--  -->
+<!--  <div class="card">-->
+<!--    <div class="card-header text-center">-->
+<!--     <h3 class="text-center " style="color:#000;">4K Footages</h3>-->
+<!--   </div>-->
+<!--   <div class="card-body">-->
+<!--     <div class="row" style="margin-top: -21px;">-->
+<!--     <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()" class="col-md-12">-->
+<!--       <table class="table ">-->
+<!--         -->
+<!--         <tbody>-->
+<!--         <tr>-->
+<!--            <td style="margin:3px 9px 5px 2px;" >-->
+<!--                            <span class="row" style="color:#938b76;font-weight: 700;">-->
+<!--                                <span class="col-md-6 text-right">-->
+<!--                                	Individual-->
+<!--                                </span>-->
+<!--                                <span class="col-md-6 text-left">-->
+<!--                                	&nbsp;&nbsp;&nbsp;INR 16500 -->
+<!--                                </span>-->
+<!--                            </span>-->
+<!--            </td>-->
+<!--         </tr>-->
+<!--           <tr *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">-->
+<!--           -->
+<!--           -->
+<!--           -->
+<!--        -->
+<!--           -->
+<!--           -->
+<!--           -->
+<!--             <td class="border-top-0">-->
+<!--               <label class="custmLable">-->
+<!--                <span class="float-left">-->
+<!--                    <b class="f-14">{{pack.package_name}}</b><small></small>-->
+<!--                </span>-->
+<!--                <span class="float-right">-->
+<!--                    <b class="f-14">INR {{pack.package_price}}</b>-->
+<!--                </span>-->
+<!--                  <input type="radio"  type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">-->
+<!--                  <span class="checkmark"></span>-->
+<!--               </label>-->
+<!--             </td>-->
+<!--            -->
+<!--           </tr>-->
+<!--            -->
+<!--           -->
+<!--           -->
+<!--         </tbody>-->
+<!--       </table>-->
+<!--       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">-->
+<!-- <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
+<!--   </div>-->
+<!--   	 </form>-->
+<!-- </div>-->
+<!--   </div>-->
+<!--</div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="container"  *ngIf="paymentShow">-->
+<!--        <div class="row justify-content-center">-->
+<!--            &lt;!&ndash;Monthly packs!&ndash;&gt;-->
+<!--            <div class="col-md-3 pricing hvr-float" style="height: 377px;">-->
+<!--                <div class="klausheader" style="height: 110px;">-->
+<!--                    <h5>{{selectedPlanType}}</h5>-->
 <!--                </div>-->
-<!--                </form>-->
-
-<!--            </div>-->
-<!--            <div class="col-lg-9 col-md-8 col-sm-8" *ngIf="monthly">-->
-<!--                <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-header text-center">-->
-<!--                            <h3 class="text-center">Value priced monthly plans</h3>-->
-<!--                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>-->
-<!--                        </div>-->
-
-<!--                        <div class="card-body">-->
-<!--                            <div class="row">-->
-
-<!--                                <div class="col-lg-6 col-md-6 col-sm-6">-->
-<!--                                    <p>Includes <b>ImageFootage Editor Pro</b></p>-->
-
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>-->
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>-->
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>-->
-
-<!--                                    <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>-->
-
-<!--                                </div>-->
-
-<!--                                <div class="col-lg-6 col-md-6 col-sm-6">-->
-
-<!--                                    <table class="table table-hover"  >-->
-
-<!--                                        <tbody>-->
-<!--                                        <tr *ngFor="let pack of plansData.monthly_pack;let i= index">-->
-<!--                                            <td class="border-top-0">-->
-
-<!--                                                <label class="custmLable">-->
-<!--                                            <span class="float-left">-->
-<!--                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/month</span>-->
-<!--                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>-->
-<!--                                                    <span class="float-right">-->
-<!--                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>-->
-<!--                                                 <p class="f-12 mb-0"> per image</p>-->
-<!--                                            </span>-->
-<!--                                                    <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">-->
-<!--                                                    <span class="checkmark"></span>-->
-<!--                                                </label>-->
-<!--                                            </td>-->
-
-<!--                                        </tr>-->
-<!--                                        <tr><td class="border-top-0">-->
-<!--                                            <span style="color:red;" *ngIf="submitted2 && g.subplan.errors && g.subplan.errors.required" >Please select a plan</span>-->
-<!--                                            &lt;!&ndash;                                   <label class="custmLable">&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                   <span class="invalid-feedback">&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                    <span > </span>&ndash;&gt;-->
-
-<!--                                            &lt;!&ndash;                                </span>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                   </label>&ndash;&gt;-->
-<!--                                        </td>-->
-
-<!--                                        </tbody>-->
-<!--                                    </table>-->
-
-<!--                                </div>-->
-
-
-<!--                                <div class="form-group pt-3 m-auto">-->
-<!--                                    <button type="submit" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
-<!--                                     <p class="pt-3"><a (click)="showprice()">See Annual Pricing</a></p>-->
-<!--                                </div>-->
-
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-
-<!--            </div>-->
-
-
-<!--            <div class="col-lg-3 col-md-4 col-sm-4 pl-0 pr-0">-->
-<!--                    <div class="card">-->
-<!--                    <div class="card-header text-center">-->
-<!--                        <h3 class="text-center f-20">Prepaid image pack</h3>-->
-<!--                        <p class="mb-1">Get images on demand.</p><p class="mb-0"> Download within a year.</p>-->
-<!--                    </div>-->
-<!--                    <div class="card-body">-->
-<!--                        <form [formGroup]="planform" (ngSubmit)="onSubmit()">-->
-<!--                        <div class="row">-->
-<!--                         <table class="table table-hover">-->
-<!--                                <tbody>-->
-<!--                                <tr *ngFor="let pack of plansData.download_pack;let i= index">-->
-<!--                                    <td class="border-top-0">-->
-<!--                                        <label class="custmLable">-->
-<!--                                            <span class="float-left">-->
-<!--                                                <b class="f-14">{{pack.package_name}}</b><span class="f-12">/within year</span>-->
-<!--                                                 <p class="f-12 mb-0"><b>INR {{pack.package_price}}</b></p></span>-->
-<!--                                            <span class="float-right">-->
-<!--                                                 <b class="f-14">INR {{showperImgPrice(pack)}}</b>-->
-<!--                                                 <p class="f-12 mb-0"> per image</p>-->
-<!--                                            </span>-->
-<!--                                            <input type="radio" name="plan" formControlName="plan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-
-<!--                                </tr>-->
-<!--                               <tr><td class="border-top-0">-->
-<!--                                   <span style="color:red;" *ngIf="submitted && f.plan.errors" >Please select a plan</span>-->
-<!--&lt;!&ndash;                                   <label class="custmLable">&ndash;&gt;-->
-<!--&lt;!&ndash;                                   <span class="invalid-feedback">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <span > </span>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                </span>&ndash;&gt;-->
-<!--&lt;!&ndash;                                   </label>&ndash;&gt;-->
-<!--                               </td>-->
-<!--                               </tr>-->
-<!--                                </tbody>-->
-
-<!--                            </table>-->
-<!--                            <div class="m-auto pt-5">-->
-<!--                                <button type="submit" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Buy Now</button>-->
-<!--                            </div>-->
-
-<!--                        </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
+<!--                <div class="klaus_features skinoneklaus_features">-->
+<!--                    <li>{{selectedData.package_name}} => INR {{selectedData.package_price}}</li>-->
 <!--                </div>-->
 <!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="row" *ngIf="paymentShow">-->
-
-<!--            <div class="col-lg-9 col-md-8 col-sm-8">-->
-
-<!--                    <div class="card">-->
-<!--                        <div class="card-header text-center">-->
-<!--                            <h3 class="text-center" >Plan You have choosed.</h3>-->
-
-<!--                            <p>Save up to 40% with an annual plan, charged monthly. Early cancellation fee may apply.</p>-->
-<!--                        </div>-->
-
-<!--                        <div class="card-body">-->
-<!--                            <div class="row">-->
-
-<!--                                <div class="col-lg-6 col-md-6 col-sm-6">-->
-<!--                                    <p>Includes <b>ImageFootage Editor Pro</b></p>-->
-
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Create social media posts, promotions, and more in minutes</p>-->
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i>  Choose from hundreds of templates or customize an image</p>-->
-<!--                                    <p class="d-flex items-center"><i class="icon-check pr-3"> </i> Access professional design elements and time-saving features</p>-->
-
-<!--                                    <p><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>-->
-
-<!--                                </div>-->
-
-<!--                                <div class="col-lg-6 col-md-6 col-sm-6">-->
-<!--                                    <table class="table table-hover">-->
-
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td class="border-top-0">-->
-<!--                                                {{selectedPlanType}}-->
-<!--                                           <label class="custmLable">-->
-<!--                                            <span class="float-left">-->
-<!--                                                <b class="f-14">{{selectedData.package_name}}</b><span class="f-12">/month</span>-->
-<!--                                                 <p class="f-12 mb-0"><b>INR {{selectedData.package_price}}</b></p></span>-->
-<!--                                                    <span class="float-right">-->
-<!--                                                 <b class="f-14">INR {{showperImgPrice(selectedData)}}</b>-->
-<!--                                                 <p class="f-12 mb-0"> per image</p>-->
-<!--                                            </span>-->
-<!--&lt;!&ndash;                                                    <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}"  class="form-control rounded-0"  [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <span class="checkmark"></span>&ndash;&gt;-->
-<!--                                                </label>-->
-<!--                                            </td>-->
-
-<!--                                        </tr>-->
-
-
-<!--                                        </tbody>-->
-<!--                                    </table>-->
-<!--                                </div>-->
-
-
-
-
-<!--                            </div>-->
-<!--                        </div>-->
+<!--            &lt;!&ndash;End Monthly Packs!&ndash;&gt;-->
+<!--            &lt;!&ndash;Annual Packs!&ndash;&gt;-->
+<!--            <div class="col-md-3 pricing hvr-float" style="height: 377px;">-->
+<!--                <div class="klausheader" style="height: 110px;">-->
+<!--                    <h5>Payment Method</h5>-->
+<!--                </div>-->
+<!--                <div class="klaus_features skinoneklaus_features">-->
+<!--                    <div class="text-center m-auto">-->
+<!--                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid cursor-pointer" (click)="purchagePlanPayment('atom')" width="120">-->
 <!--                    </div>-->
-
-<!--            </div>-->
-<!--           <div class="col-lg-3 col-md-4 col-sm-4 pl-0 pr-0">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-header text-center">-->
-<!--                        <h3 class="text-center f-20">Prepaid image pack</h3>-->
-<!--                        <p class="mb-1">PAYMENT INFORMATION</p><p class="mb-0"></p>-->
+<!--                    <div class="text-center m-auto">-->
+<!--                        <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid cursor-pointer" (click)="purchagePlanPayment('payu')" width="120">-->
 <!--                    </div>-->
-<!--                    <div class="card-body">-->
-<!--                        <div class="text-center m-auto">-->
-<!--                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">-->
-<!--                        </div>-->
-<!--                        <div class="text-center m-auto">-->
-<!--                         <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">-->
-<!--                         </div>-->
-<!--                        <div class="text-center m-auto">-->
-<!--                         <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')">-->
-<!--                       </div>-->
+<!--                    <div class="text-center m-auto">-->
+<!--                        <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid cursor-pointer" (click)="purchagePlanPayment('rozerpay')" width="120">-->
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
+<!--            &lt;!&ndash;End Annual Packs!&ndash;&gt;-->
 <!--        </div>-->
 <!--    </div>-->
 <!--</section>-->
-
-<section class="purple-gradient">
-
-  <div class="container" *ngIf="paymentShow==false">
-  <div class="switch switch-yellow">
-      <input type="radio" class="switch-input" name="view3" value="week3" id="week3" checked>
-      <label for="week3" class="switch-label switch-label-off" (click)="showpriceimg()">Images</label>
-      <input type="radio" class="switch-input" name="view3" value="month3" id="month3">
-      <label for="month3" class="switch-label switch-label-on" (click)="showpricefoot()">Footages</label>
-      <span class="switch-selection"></span>
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="banner-content text-center">
+        <h1>Pricing, made simple.</h1>
+        <p>We are a privately owned group offering a variety of services that include,
+            <br/>
+            stock imagery,stock footage, photography
+        </p>
     </div>
-    <div class="text-white text-center">
-  <!--<h1 class="text-white">Images for every project, plans for every budget</h1>
-  <p>Access over 320 million images with 1,65,000 new images added every day.</p>-->
-</div>
+</section>
+<div class="pt-5 pb-5" style="background: #475057">
+    <div class="container" *ngIf="paymentShow==false">
+        <div class="col-lg-8 col-md-8 col-sm-10 m-auto">
+            <div class="text-center">
+                <h2 class="f-36 text-white">OUR PLANS</h2>
+                <p class="text-gray">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
+                </p>
+                <div class="switch switch-yellow">
+                    <input type="radio" class="switch-input" name="view3" value="week3" id="week3" checked>
+                    <label for="week3" class="switch-label switch-label-off" (click)="showpriceimg()">Images</label>
+                    <input type="radio" class="switch-input" name="view3" value="month3" id="month3">
+                    <label for="month3" class="switch-label switch-label-on" (click)="showpricefoot()">Footages</label>
+                    <span class="switch-selection"></span>
+                </div>
+            </div>
+        </div>
 
-<!--<h3 class="text-white pt-5 pb-3">Plans for individuals</h3>-->
+<!--        Images-->
+        <div class="pricing-tables attached" *ngIf="pimages">
+            <div class="row flex-center">
 
-<div class="row justify-content-center" *ngIf="pimages">
-  <div class="col-lg-4 col-md-5 col-sm-5">
-  
-  <div class="card">
-    <div class="card-header text-center">
-     <h3 class="text-center" style="color:#000;">Subscriptions Plans</h3>
-     <p class="mb-1" style="color:#000;">Royalty Free Images</p>
-   </div>
+<!--            Monthly-->
 
-   <div class="card-body">
-    <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()" *ngIf="monthly">
-     <div class="row">
-      <div class="col-md-12">
-      <h5 class='text-center'>Monthly Packs</h5>
-     
-       <table class="table table-hover">
-         
-         <tbody>
-           <tr *ngFor="let pack of plansData.monthly_pack;let i= index">
-             <td class="border-top-0">
-               
-               <label class="custmLable">
-                <span class="float-left">
-                    <b class="f-14">{{pack.package_name}}</b>
-                </span>
-                <span class="float-right">
-                    <b class="f-14">INR {{pack.package_price}}</b>
-				</span>
-              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
-              <span class="checkmark"></span>
-            </label>
-             </td>
-            
-           </tr>
+                <div class="col-sm-3 col-md-3">
+                    <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()">
+                    <div class="plan  first">
+                        <div class="head">
+                            <h2>Subscriptions Plans</h2>
+                            <h6>Royalty Free Images</h6>
+                            <div><span class="text-success f-14">Monthly Packs</span></div>
+                        </div>
+                        <ul class="item-list">
+                            <li *ngFor="let pack of plansData.monthly_pack;let i= index">
+                             <span class="float-left">
+                             <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
+                             </span>
+                                <span class="float-left ml-10">  {{pack.package_name}}</span>
+                                <span> INR {{pack.package_price}} </span>
 
-         </tbody>
-       </table>
-       
-     </div>
-
-
-     
-   </div>
-   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
-                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   
-                             <p class="pt-3"><a  (click)="showprice()" style="color:#000;">See Annual Pricing</a></p>            
-     </div>
-     </form>
-     <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()" *ngIf="yearly">
-     <div class="row">
-      <div class="col-md-12">
-     		<h5 class='text-center' >Annual Packs</h5>
-       <table class="table table-hover">
-         
-         <tbody>
-           <tr *ngFor="let pack of plansData.yearly_pack;let i= index">
-             <td class="border-top-0">
-               
-               <label class="custmLable">
-                <span class="float-left">
-                    <b class="f-14">{{pack.package_name}}</b>
-                </span>
-                <span class="float-right">
-                    <b class="f-14">INR {{pack.package_price}}</b>
-				</span>
-              <input  type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.subplan.errors }">
-              <span class="checkmark"></span>
-            </label>
-             </td>
-            
-           </tr>
-
-         </tbody>
-       </table>
-       
-     </div>
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-dark">Order Now !</button>
+                    </div>
+                    </form>
+                </div>
 
 
-     
-   </div>
-   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
-                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>   
-                             <p class="pt-3"><a (click)="showprice()" style="color:#000;">See Monthly Pricing</a></p>            
-     </div>
-     </form>
-   </div>
-</div>
-  </div>
+<!--            Yearly-->
+
+
+                <div class="col-sm-3 col-md-3 ">
+                    <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">
+                    <div class="plan recommended">
+                        <div class="head">
+                            <h2>Subscriptions Plans</h2>
+                            <h6>Royalty Free Images</h6>
+                            <div><span class="text-white f-14">Annual Packs</span></div>
+                        </div>
+                        <ul class="item-list">
+                            <li *ngFor="let pack of plansData.yearly_pack;let i= index">
+                                <div>
+                                    <div class="float-left">
+                           <span>
+                           <input  type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.subplan.errors }">
+                           </span>
+                                        <span class="ml-10">  {{pack.package_name}}</span>
+                                    </div>
+                                    <div><span class=""> INR {{pack.package_price}} </span>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-white">Order Now !</button>
+                    </div>
+                    </form>
+                </div>
+
+
+<!--            Download-->
+
+
+                <div class="col-sm-3 col-md-3">
+                    <form [formGroup]="planform" (ngSubmit)="onSubmit()" class="col-md-12">
+                    <div class="plan last">
+                        <div class="head">
+                            <h2>Download Packs</h2>
+                            <h6>Royalty Free Images</h6>
+                            <div><span class="text-success f-14">Download Within A Year</span></div>
+                        </div>
+                        <ul class="item-list">
+                            <li *ngFor="let pack of plansData.download_pack;let i= index">
+                     <span class="float-left">
+                     <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
+                     </span>
+                                <span class="float-left ml-10">  {{pack.package_name}}</span>
+                                <span> INR {{pack.package_price}} </span>
+
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-dark">Order Now !</button>
+                    </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <!-- row-->
+        </div>
+        <div class="pricing-tables attached" *ngIf="pfootages">
+            <div class="row flex-center">
+
+<!--            HD Footage-->
+
+                <div class="col-sm-3 col-md-3">
+                    <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
+                    <div class="plan  first">
+                        <div class="head">
+                            <h2>HD(1080) Footages</h2>
+                        </div>
+                        <ul class="item-list">
+                            <li>
+                                <span class="float-left ml-10">Individual</span>
+                                <span> INR 11500 </span>
+                            </li>
+                            <li *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
+                             <span class="float-left">
+                              <input  type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
+
+                             </span>
+                                <span class="float-left ml-10">  {{pack.package_name}}</span>
+                                <span> INR {{pack.package_price}} </span>
+
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-dark">Order Now !</button>
+                    </div>
+                    </form>
+                </div>
+
+
+<!--            4K Footage-->
+
+                <div class="col-sm-3 col-md-3 ">
+                    <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()" class="col-md-12">
+                    <div class="plan recommended">
+                        <div class="head">
+                            <h2>4K Footages</h2>
+                         </div>
+                        <ul class="item-list">
+                            <li>
+                                <span class="float-left ml-10">Individual</span>
+                                <span> INR 16500 </span>
+                            </li>
+                            <li *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
+                                <div>
+                                    <div class="float-left">
+                           <span>
+                            <input type="radio"  type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
+                           </span>
+                                        <span class="ml-10">  {{pack.package_name}}</span>
+                                    </div>
+                                    <div><span class=""> INR {{pack.package_price}} </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-white">Order Now !</button>
+                    </div>
+                    </form>
+                </div>
 
 
 
-  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">
-  
-  <div class="card">
-    <div class="card-header text-center">
-     <h3 class="text-center " style="color:#000;">Download Packs</h3>
-     <p class="mb-1" style="color:#000;">Royalty Free Images</p>
-   </div>
-
-   <div class="card-body">
-     <div class="row">
-     <form [formGroup]="planform" (ngSubmit)="onSubmit()" class="col-md-12">
-     <h5 class="text-center">Download Within A Year</h5>
-       <table class="table table-hover">
-         
-         <tbody>
-           <tr *ngFor="let pack of plansData.download_pack;let i= index">
-             <td class="border-top-0">
-               <label class="custmLable">
-                <span class="float-left">
-                    <b class="f-14">{{pack.package_name}}</b><small></small>
-                </span>
-                <span class="float-right">
-                    <b class="f-14">INR {{pack.package_price}}</b>
-                </span>
-                  <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
-                  <span class="checkmark"></span>
-               </label>
-             </td>
-            
-           </tr>
-       </tbody>
-       </table>
-       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
- <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>
- <p class="pt-3"><a style='color:#fff;'>See Monthly Pricing</a></p>  
-   </div>
-   	 </form>
- </div>
-   </div>
-</div>
-  </div>
-</div>
-<div class="row justify-content-center" *ngIf="pfootages">
-	 <div class="col-lg-4 col-md-5 col-sm-5">
-  
-  <div class="card">
-    <div class="card-header text-center">
-     <h3 class="text-center" style="color:#000;">HD(1080) Footages</h3>
-   </div>
-
-   <div class="card-body">
-    <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()">
-     <div class="row" style="margin-top: -21px;">
-      <div class="col-md-12">
-      
-       <table class="table">
-         
-         <tbody>
-         <tr>
-             <td style="margin:3px 9px 5px 2px;" >
-                                    <span class="row" style="color:#938b76;font-weight: 700;">
-                                        <span class="col-md-6 text-right">
-                                            Individual
-                                        </span>
-                                        <span class="col-md-6 text-left">
-                                        &nbsp;&nbsp;&nbsp;INR 11500 
-                                        </span>
-                                    </span>
-              </td>
-         </tr>
-           <tr *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
-             <td class="border-top-0">
-               
-               <label class="custmLable">
-                <span class="float-left">
-                    <b class="f-14">{{pack.package_name}}</b>
-                </span>
-                <span class="float-right">
-                    <b class="f-14">INR {{pack.package_price}}</b>
-				</span>
-              <input  type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
-              <span class="checkmark"></span>
-            </label>
-             </td>
-            
-           </tr>
-
-         </tbody>
-       </table>
-       
-     </div>
-
-
-     
-   </div>
-   <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
-                             <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>     </div>
-     </form>
-     
-   </div>
-</div>
-  </div>
-  <div class="col-lg-4 col-md-5 col-sm-5 pl-0 pr-0">
-  
-  <div class="card">
-    <div class="card-header text-center">
-     <h3 class="text-center " style="color:#000;">4K Footages</h3>
-   </div>
-
-   <div class="card-body">
-     <div class="row" style="margin-top: -21px;">
-     <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()" class="col-md-12">
-       <table class="table ">
-         
-         <tbody>
-         <tr>
-            <td style="margin:3px 9px 5px 2px;" >
-                            <span class="row" style="color:#938b76;font-weight: 700;">
-                                <span class="col-md-6 text-right">
-                                	Individual
-                                </span>
-                                <span class="col-md-6 text-left">
-                                	&nbsp;&nbsp;&nbsp;INR 16500 
-                                </span>
-                            </span>
-            </td>
-         </tr>
-           <tr *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
-           
-           
-           
-        
-           
-           
-           
-             <td class="border-top-0">
-               <label class="custmLable">
-                <span class="float-left">
-                    <b class="f-14">{{pack.package_name}}</b><small></small>
-                </span>
-                <span class="float-right">
-                    <b class="f-14">INR {{pack.package_price}}</b>
-                </span>
-                  <input type="radio"  type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
-                  <span class="checkmark"></span>
-               </label>
-             </td>
-            
-           </tr>
-
-            
-
-           
-           
-
-         </tbody>
-       </table>
-       <div class="form-group pt-3 m-auto col-lg-6 col-md-6 col-sm-6">
- <button type="submit" class="btn btn-danger btn-rounded pl-4 pr-4 btn-block text-white p-3 text-uppercase">Buy Now</button>
-   </div>
-   	 </form>
- </div>
-   </div>
-</div>
-  </div>
-</div>
-</div>
-<div class="container"  *ngIf="paymentShow">
+            </div>
+            <!-- row-->
+        </div>
+    </div>
+    <div class="container"  *ngIf="paymentShow">
         <div class="row justify-content-center">
             <!--Monthly packs!-->
-            <div class="col-md-3 pricing hvr-float" style="height: 377px;">
-                <div class="klausheader" style="height: 110px;">
+            <div class="col-md-3 plan  hvr-float" style="height: 377px;">
+                <div class="head" style="height: 110px;">
                     <h5>{{selectedPlanType}}</h5>
                 </div>
-                <div class="klaus_features skinoneklaus_features">
-                    <li>{{selectedData.package_name}} => INR {{selectedData.package_price}}</li>
-
+                <div>{{selectedData.package_name}} => INR {{selectedData.package_price}} </div>
+                <div>
+                    <button type="button" (click)="changePlan()" style="margin-top:130px;"  class="btn btn-dark">Change Plan</button>
                 </div>
-
             </div>
             <!--End Monthly Packs!-->
 
             <!--Annual Packs!-->
-            <div class="col-md-3 pricing hvr-float" style="height: 377px;">
-                <div class="klausheader" style="height: 110px;">
+            <div class="col-md-3 plan recommended hvr-float" style="height: 377px;">
+                <div class="head" >
                     <h5>Payment Method</h5>
                 </div>
 
                 <div class="klaus_features skinoneklaus_features">
-                    <div class="text-center m-auto">
+                    <div class="text-center mt-3">
                         <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid cursor-pointer" (click)="purchagePlanPayment('atom')" width="120">
                     </div>
                     <div class="text-center m-auto">
@@ -609,521 +518,6 @@
         </div>
 
     </div>
-</section>
-
-
-
-<!--<section class="contact-page-area section-gap" >-->
-<!--    appNoRightClick-->
-
-  <!--  <div *ngIf="paymentShow==false">-->
-  <!--  <tabs>
-    
-        <tab tabTitle="Images">-->
-        	
-           
- <!--           <div class="container" >
-            
-                <div class="row justify-content-center">-->
-                	<!--<div class='col-md-12' style="    margin-bottom: 15px;">
-    			<div class="row">
-                    <div class="col-md-6" style="text-align:center;">
-                       <span class="fordesk_plan sub_plans"> Subscriptions Plans </span>
-                    </div>
-                    <div class="col-md-6 " style="text-align:center;">
-                        <span class="down_plans dpm">Download Packs</span>
-                    </div>
-     			</div>
-    		</div>-->
-                    <!--Monthly packs!-->
-                    <!--<div class="col-md-3 pricing hvr-float">
-                        <div class="klausheader">
-                           
-                            <h5>Monthly Packs</h5>
-                            <span class="klaus_package">Royalty Free Images</span>
-                           
-                        </div>
-                        <form [formGroup]="subscriptionmonthlyform" (ngSubmit)="onSubmitmonthsubscription()">
-                        <div class="klaus_features skinoneklaus_features" *ngFor="let pack of plansData.monthly_pack;let i= index">
-                            <li style="margin:3px 9px 5px 2px;">
-                            <span class="row">
-                            <span class="col-md-6">
-                            <input type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }" /> {{pack.package_name}} </span>  <span class="col-md-6 text-right" >INR {{pack.package_price}}</span> </span></li>
-
-                        </div>
-                            <span style="color:red;" *ngIf="submitted3 && h.submplan.errors && h.submplan.errors.required" >Please select a plan</span>
-                        <div class="klaus_getaquote skinonegetquote">
-                            <li>
-                                <button type="submit" [disabled]="submitted3 && h.submplan.errors && h.submplan.errors.required" >Buy Now</button>
-                            </li>
-                        </div>
-                        </form>
-                    </div>-->
-                    <!--End Monthly Packs!-->
-
-                    <!--Annual Packs!-->
-                    <!--<div class="col-md-3 pricing hvr-float">
-                        <div class="klausheader">
-                            
-                            <h5>Annual Packs</h5>
-                            <span class="klaus_package">Royalty Free Images</span>
-                            
-                        </div>
-                        <form [formGroup]="subscriptionform" (ngSubmit)="onSubmitsubscription()">
-                        <div class="klaus_features skinoneklaus_features"  *ngFor="let pack of plansData.yearly_pack;let i= index">
-                            <li style="margin:3px 9px 5px 2px;">
-                            <span class="row">
-                            <span class="col-md-6">
-                            <input type="radio" name="subplan"  formControlName="subplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && g.subplan.errors }" /> {{pack.package_name}} </span> <span class="col-md-6 text-right">INR {{pack.package_price}}</span> </span> </li>
-                        </div>
-                            <span style="color:red;" *ngIf="submitted2 && g.subplan.errors && g.subplan.errors.required" >Please select a plan</span>
-                        <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
-                        </form>
-                    </div>-->
-                    <!--End Annual Packs!-->
-
-                    <!--Begin Plan Business!-->
-                    <!--<div class="col-md-3 pricing hvr-float">
-                        <div class="klausheader">
-                        <div class="klaus_featured skinonebg">Featured</div>
-                        <h5>Business</h5>
-                        <span class="klaus_package">package</span>
-                        <span class="klaus_price skinonecolor">39,95 $</span>
-                        <p>/per month</p>
-                        </div>
-
-                        <div class="klaus_features skinoneklaus_features">
-                        <li><i class="fa fa-check-circle"></i> Design + HTML5 </li>
-                        <li class="klaus_plancolor"><i class="fa fa-check-circle"></i> One Page Scroll-down Layout</li>
-                        <li><i class="fa fa-check-circle"></i> Pricing is for 5 vert. sections</li>
-                        <li class="klaus_plancolor"><i class="fa fa-times-circle"></i> Responsive / Mobile Ready</li>
-                        <li><i class="fa fa-times-circle"></i> Bootstrap Framework</li>
-                        <li class="klaus_plancolor"><i class="fa fa-times-circle"></i> CSS3 &amp; jQuery Powered</li>
-                        </div>
-
-                        <div class="klaus_getaquote skinonegetquote"><li><a href="http://bryanmaxim.com/envato/klaus/preview/klaus-v1.html#">GET A QUOTE</a></li></div>
-                    </div>-->
-                    <!--End Plan Business!-->
-
-                    <!--Download Within a Year!-->
-                    <!--<div class="col-md-3 pricing skinoneultimate hvr-float">
-                        <div class="klausheader skinoneucolor">
-                           
-                            <h5>Download Within a Year</h5>
-                            <span class="klaus_package">Royalty Free Images</span>
-                            
-                        </div>
-                        <form [formGroup]="planform" (ngSubmit)="onSubmit()">
-                        <div class="klaus_features skinoneklaus_features skinoneucolor" *ngFor="let pack of plansData.download_pack;let i= index">
-                            <li style="margin:3px 9px 5px 2px;">
-                            <span class="row">
-                            <span class="col-md-6">
-                            <input  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }"/> {{pack.package_name}} </span>  <span class="col-md-6 text-right" > INR {{pack.package_price}} </span> </span></li>
-                        </div>
-                            <span style="color:red;" *ngIf="submitted && f.plan.errors" >Please select a plan</span>
-                        <div class="klaus_getaquote skinonegetquote skinoneucolorget"><li><button type="submit" style="background: #fff;
-                        color: #0f960f !important;">Buy Now</button></li></div>
-                        </form>
-                    </div>-->
-                    <!--End Download Within a Year!-->
-
-<!--
-                </div>
-
-            </div>-->
-            <!--End Container!-->
-       <!-- </tab>
-        <tab tabTitle="Footages">
-           
-            <div class="container" >
-                <div class="row justify-content-center" *ngIf="footageplansData?.download_pack">
-                    
-                    <div class="col-md-3 pricing hvr-float" style="height: 400px; border-right: 0px solid #f0f0f0;">
-                        <div class="klausheader" style="height: 78px;    background: #313e35;">
-                            <h5 style="color: #fff;">HD(1080) Footages</h5>
-                        </div>
-                        <form [formGroup]="footagehdform" (ngSubmit)="onSubmitfoothd()" >
-                       
-                            <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
-                            <li style="margin:3px 9px 5px 2px;" *ngIf="i==0">
-                                <span class="row" style="color:#938b76;font-weight: 700;">
-                                    <span class="col-md-6 text-right">
-                                        Individual
-                                    </span>
-                                    <span class="col-md-6 text-left">
-                                    &nbsp;&nbsp;&nbsp;INR 11500 
-                                    </span>
-                                </span>
-                        	</li>
-                            <li style="margin:3px 9px 5px 2px;">
-                            <span class="row">
-                            <span class="col-md-6">
-                            <input type="radio" name="hdfplan"  formControlName="hdfplan" value="{{pack.package_id}}" /> {{pack.package_name}} </span>  <span class="col-md-6 text-right" >INR {{pack.package_price}} </span> </span></li>
-                             </div>
-                            <span style="color:red;" *ngIf="submitted4 && i.hdfplan.errors && i.hdfplan.errors.required" >Please select a plan</span>
-                          <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
-                        </form>
-                    </div>
-
-                  
-                    <div class="col-md-3 pricing hvr-float" style="height: 400px;border-right: 0px solid #f0f0f0;">
-                        <div class="klausheader" style="height: 78px;    background: #313e35;">
-                            <h5 style="color: #fff;">4K Footages</h5>
-                        </div>
-                        <form [formGroup]="footagekform" (ngSubmit)="onSubmitfk()" >
-                        
-                        <div class="klaus_features skinoneklaus_features" *ngFor="let pack of footageplansData.download_pack['4K'];let i= index" >
-                        <li style="margin:3px 9px 5px 2px;" *ngIf="i==0">
-                            <span class="row" style="color:#938b76;font-weight: 700;">
-                                <span class="col-md-6 text-right">
-                                	Individual
-                                </span>
-                                <span class="col-md-6 text-left">
-                                	&nbsp;&nbsp;&nbsp;INR 16500 
-                                </span>
-                            </span>
-                        </li>
-                            <li style="margin:3px 9px 5px 2px;">
-                            <span class="row">
-                            <span class="col-md-6">
-                            <input type="radio" name="kfplan"  formControlName="kfplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted5 && j.kfplan.errors }" /> {{pack.package_name}} </span>  <span class="col-md-6 text-right" >INR {{pack.package_price}}  </span> </span></li>
-
-                        </div>
-                            <span style="color:red;" *ngIf="submitted5 && j.kfplan.errors && j.kfplan.errors.required" >Please select a plan</span>
-                        <div class="klaus_getaquote skinonegetquote"><li><button type="submit" >Buy Now</button></li></div>
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-           
-        </tab>
-
-
-    </tabs>-->
-  <!--  </div>-->
-    <!-- Start Container -->
-    <!--<div class="container"  *ngIf="paymentShow">
-        <div class="row justify-content-center">
-           
-            <div class="col-md-3 pricing hvr-float" style="height: 377px;">
-                <div class="klausheader" style="height: 110px;">
-                    <h5>{{selectedPlanType}}</h5>
-                </div>
-                <div class="klaus_features skinoneklaus_features">
-                    <li>{{selectedData.package_name}} => INR {{selectedData.package_price}}</li>
-
-                </div>
-
-            </div>
-           
-            <div class="col-md-3 pricing hvr-float" style="height: 365px;">
-                <div class="klausheader" style="height: 110px;">
-                    <h5>Payment Method</h5>
-                </div>
-
-                <div class="klaus_features skinoneklaus_features">
-                    <div class="text-center m-auto">
-                        <img src="/assets/images/atom.png" alt="atom" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')" width="110">
-                    </div>
-                    <div class="text-center m-auto">
-                        <img src="/assets/images/payu.png" alt="payumoney" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')" width="110">
-                    </div>
-                    <div class="text-center m-auto">
-                        <img src="/assets/images/rozorpay.png" alt="Rozorpay" class="mb-3 img-fluid" (click)="purchagePlanPayment('atom')" width="110">
-                    </div>
-                </div>
-
-            </div>
-           
-
-        </div>
-
-    </div>-->
-    <!--End Container!-->
-
-<!--</section>-->
-
-<ng-container *ngIf="showloginPopup">
-    <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
-</ng-container>
-
-<!--<section class="pt-5 pb-0">-->
-<!--    <div class="container">-->
-
-<!--        <h3>Plans for multiple users</h3>-->
-<!--        <p>Give your team the workflow tools and legal coverage they need to create their best work.</p>-->
-
-
-<!--        <div class="row">-->
-<!--            <div class="col-lg-6 col-md-6 col-sm-6">-->
-
-<!--                <div class="card  card-shadow">-->
-<!--                    <div class="card-header text-center">-->
-<!--                        <h3 class="text-center">Teams</h3>-->
-<!--                        <p class="mb-1">Share 750 images with your team each month and get tools to enable collaboration.</p>-->
-<!--                        <p class="mb-1"><a href="http://webtechssolutions.com/imgfootage/individual-plans.html#">Learn more</a></p>-->
-<!--                    </div>-->
-
-<!--                    <div class="card-body">-->
-<!--                        <div class="row">-->
-
-
-<!--                            <table class="table table-hover">-->
-<!--                                <tbody>-->
-<!--                                <tr>-->
-<!--                                    <td class="border-top-0">-->
-
-<!--                                        <label class="custmLable">-->
-<!--                <span class="float-left">-->
-<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
-<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
-
-<!--                                            <span class="float-right">-->
-
-<!--<b class="f-14">US$ 0.27</b>-->
-<!--<p class="f-12 mb-0"> per image</p>-->
-
-<!--</span>-->
-<!--                                            <input type="radio" name="radio">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-
-<!--                                </tr>-->
-
-<!--                                <tr>-->
-<!--                                    <td>-->
-
-<!--                                        <label class="custmLable">-->
-<!--                <span class="float-left">-->
-<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
-<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
-
-<!--                                            <span class="float-right">-->
-
-<!--<b class="f-14">US$ 0.27</b>-->
-<!--<p class="f-12 mb-0"> per image</p>-->
-
-<!--</span>-->
-<!--                                            <input type="radio" name="radio">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-
-<!--                                </tr>-->
-
-<!--                                <tr>-->
-<!--                                    <td>-->
-
-<!--                                        <label class="custmLable">-->
-<!--                <span class="float-left">-->
-<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
-<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
-
-<!--                                            <span class="float-right">-->
-
-<!--<b class="f-14">US$ 0.27</b>-->
-<!--<p class="f-12 mb-0"> per image</p>-->
-
-<!--</span>-->
-<!--                                            <input type="radio" name="radio">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-
-<!--                                </tr>-->
-
-<!--                                <tr>-->
-<!--                                    <td>-->
-
-<!--                                        <label class="custmLable">-->
-<!--                <span class="float-left">-->
-<!--<b class="f-14">750 images</b><span class="f-12">/mo</span>-->
-<!--<p class="f-12 mb-0"><b>US$ 199</b>/mo</p></span>-->
-
-<!--                                            <span class="float-right">-->
-
-<!--<b class="f-14">US$ 0.27</b>-->
-<!--<p class="f-12 mb-0"> per image</p>-->
-
-<!--</span>-->
-<!--                                            <input type="radio" name="radio">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-
-<!--                                </tr>-->
-
-<!--                                </tbody>-->
-<!--                            </table>-->
-
-
-
-<!--                            <div class="form-group pt-3 m-auto">-->
-<!--                                <button type="button" class="btn btn-danger btn-rounded pl-5 pr-5 btn-block text-white p-3 text-uppercase">Buy Now</button>-->
-
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-
-<!--            <div class="col-lg-6 col-md-6 col-sm-6 pl-0 pr-0">-->
-
-<!--                <div class="card card-shadow">-->
-<!--                    <div class="card-header text-center">-->
-<!--                        <h3 class="text-center f-20">Enterprise</h3>-->
-<!--                        <p class="mb-1">For large organizations needing an enterprise workflow, specific licenses, and VIP service.</p>-->
-<!--                    </div>-->
-
-<!--                    <div class="card-body">-->
-
-
-<!--                        <div class="text-center m-auto">-->
-
-<!--                            <img src="./Image Footage_files/atom.png" class="mb-3 img-fluid">-->
-<!--                        </div>-->
-<!--                        <div class="text-center m-auto">-->
-<!--                            <img src="./Image Footage_files/payu.png" class="mb-3 img-fluid">-->
-<!--                        </div>-->
-<!--                        <div class="text-center m-auto">-->
-<!--                            <img src="./Image Footage_files/rozorpay.png" class="mb-3 img-fluid">-->
-<!--                        </div>-->
-
-<!--                        <div class="clearfix"></div>-->
-
-<!--                        <div class="m-auto pt-5 text-center">-->
-<!--                            <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Learn More</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
-
-
-<!--<div class="bg-light pt-5 pb-5">-->
-<!--    <div class="container">-->
-<!--        <h2 class="f-24">A simple guide to our plans</h2>-->
-<!--        <table class="table">-->
-<!--            <tbody>-->
-
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td class="text-center"><h5>Individual</h5></td>-->
-<!--                <td class="text-center"><h5>Teams</h5></td>-->
-<!--                <td class="text-center"><h5>Enterprise</h5></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Full access to millions of images  </td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Create and share collections <i class="fa fa-question-circle-o f-16" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create and share collections"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Free plugins for your most used programs</td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Create designs with basic editing features</td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Create designs with basic editing features</td>-->
-<!--                <td class="text-center">With subscription plans</td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Create designs with basic editing features</td>-->
-<!--                <td class="text-center"></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-
-<!--            <tr>-->
-<!--                <td>Create designs with basic editing features</td>-->
-<!--                <td class="text-center"></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--                <td class="text-center"><i class="flaticon-checked"></i></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-
-<!--        </table>-->
-
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--<div class="License-bg pt-5 pb-5">-->
-
-<!--    <div class="container ">-->
-
-<!--        <h3 class="text-white pb-4">Our licenses protect over 1.5 million customers worldwide.</h3>-->
-
-<!--        <ul class="text-white">-->
-<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Unlimited digital reproduction</b></li>-->
-<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Worldwide usage</b></li>-->
-<!--            <li class="pb-3"><i class="flaticon-checked"></i> <b class="text-white">Extended rights with enhanced and enterprise licenses</b></li>-->
-<!--        </ul>-->
-<!--        <button type="button" class="btn btn-danger btn-rounded pl-5 pr-5 text-white p-3 text-uppercase">Compare License</button>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--<div class="pt-5 pb-5">-->
-
-<!--    <div class="container">-->
-<!--        <h3>Still have questions? We're here to help.</h3>-->
-<!--        <div class="row mt-3">-->
-<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
-<!--                <div class="card text-center p-3">-->
-<!--                    <i class="fa fa-question-circle-o f-46"></i>-->
-<!--                    <h3 class="pt-5">FAQ</h3>-->
-<!--                    <p>Explore our frequently asked questions section.</p>-->
-<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">View FAQ</button>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
-<!--                <div class="card text-center p-3">-->
-<!--                    <i class="fa fa-headphones f-46"></i>-->
-<!--                    <h3 class="pt-5">Give us a call</h3>-->
-<!--                    <p>EYour local phone number: 000 111 1234 388</p>-->
-<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Call Us</button>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="col-lg-4 col-md-4 col-sm-4">-->
-<!--                <div class="card text-center p-3">-->
-<!--                    <i class="fa fa-envelope f-46"></i>-->
-<!--                    <h3 class="pt-5">Send us a message</h3>-->
-<!--                    <p>We'll get back to you.</p>-->
-<!--                    <button type="button" class="btn btn-outline-dark btn-rounded pl-4 pr-4">Email Usxxxx</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+    <ng-container *ngIf="showloginPopup">
+        <app-login [openLoginPopup]="showloginPopup" (closeLoginPopup)="hideLoginPopup($event)"></app-login>
+    </ng-container>

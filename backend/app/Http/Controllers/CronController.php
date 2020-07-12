@@ -77,7 +77,7 @@ class CronController extends Controller
         DB::enableQueryLog();
         $products = Product::where('product_web','=','2')
                     ->whereIn('product_category',$cat)
-                    //->whereRaw("date(updated_at) < '2020-04-02'")
+                    ->whereRaw("date(updated_at) < '2020-07-02'")
                     ->orderBy('id','desc')
                     ->get()
                     ->toArray();
@@ -87,7 +87,7 @@ class CronController extends Controller
             $keyword['search'] = $perproduct['api_product_id'];
             //echo $keyword['search'];
             $pantherMediaImages = new ImageApi();
-            $pantharmediaData = $pantherMediaImages->get_media_info_cron($keyword['search']);
+            $pantharmediaData = $pantherMediaImages->get_media_info($keyword['search']);
             //echo "<pre>";
             //print_r($pantharmediaData); die;
             if(count($pantharmediaData) > 0){
