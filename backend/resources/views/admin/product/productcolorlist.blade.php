@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Products List
+        Colors List
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Products List</li>
+        <li class="active">Colors List</li>
       </ol>
     </section>
 
@@ -25,7 +25,7 @@
         	<div class="col-md-12">
          		<div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
-                  <h3 class="box-title">Products List</h3>
+                  <h3 class="box-title">Colors List</h3>
                 </div>
 
                 @include('admin.partials.message')
