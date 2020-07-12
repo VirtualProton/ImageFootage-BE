@@ -2,6 +2,125 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01d4367b-51fe-4701-867a-a2e10ff98a99" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/frontend/node_modules/karma/config.tpl.js/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/aws/aws-sdk-php-laravel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/barryvdh/laravel-dompdf/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/beyondcode/laravel-dump-server/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/composer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dnoegel/php-xdg-base-dir/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/cache/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/inflector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/instantiator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/doctrine/lexer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dompdf/dompdf/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/dragonmantank/cron-expression/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/egulias/email-validator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/erusev/parsedown/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/evenement/evenement/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/fideloper/proxy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/filp/whoops/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/fzaninotto/faker/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/guzzle/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/promises/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/guzzlehttp/psr7/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/hamcrest/hamcrest-php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/intervention/image/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-color/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-highlighter/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/framework/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravel/tinker/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/laravelcollective/html/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/lcobucci/jwt/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/league/flysystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/maatwebsite/excel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/complex/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/markbaker/matrix/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/mockery/mockery/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/monolog/monolog/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/mtdowling/jmespath.php/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/myclabs/deep-copy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/namshi/jose/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nesbot/carbon/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/neutron/temporary-filesystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nikic/php-parser/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/nunomaduro/collision/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/opis/closure/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/paragonie/random_compat/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/pbmedia/laravel-ffmpeg/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/manifest/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phar-io/version/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-font-lib/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phenx/php-svg-lib/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/php-ffmpeg/php-ffmpeg/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-common/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/reflection-docblock/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpdocumentor/type-resolver/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpoffice/phpspreadsheet/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpoption/phpoption/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpspec/prophecy/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-code-coverage/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-file-iterator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-text-template/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-timer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/php-token-stream/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/phpunit/phpunit/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/container/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/http-message/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/log/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psr/simple-cache/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/psy/psysh/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/ralouphie/getallheaders/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/ramsey/uuid/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/razorpay/razorpay/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/riazxrazor/payumoney/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/rmccue/requests/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sabberworm/php-css-parser/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/code-unit-reverse-lookup/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/comparator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/diff/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/environment/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/exporter/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/global-state/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-enumerator/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/object-reflector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/recursion-context/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/resource-operations/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/sebastian/version/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/swiftmailer/swiftmailer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/console/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/css-selector/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/debug/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/error-handler/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/event-dispatcher-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/filesystem/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/finder/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-foundation/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/http-kernel/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/mime/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-ctype/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-iconv/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-intl-idn/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-mbstring/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php56/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php72/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php73/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/polyfill-util/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/process/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/routing/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/service-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/translation-contracts/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/symfony/var-dumper/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/theseer/tokenizer/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/tijsverkoyen/css-to-inline-styles/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/tymon/jwt-auth/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/unisharp/laravel-ckeditor/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/vlucas/phpdotenv/" />
+    <ignored path="$PROJECT_DIR$/backend/vendor/webmozart/assert/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -200,7 +319,32 @@
       <path value="$PROJECT_DIR$/backend/vendor/alchemy/binary-driver" />
     </include_path>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1100" />
+  </component>
   <component name="ProjectId" id="1YkAkKMogKAIGTobTGq2UHgsrPg" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="imagefootage" type="b2602c69:ProjectViewProjectNode" />
+              <item name="imagefootage" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -235,6 +379,18 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\imagefootagenew\backend\app\Models" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -321,8 +477,36 @@
       <workItem from="1584775066175" duration="1161000" />
       <workItem from="1584942596484" duration="357000" />
       <workItem from="1591103839420" duration="362000" />
+      <workItem from="1594536761944" duration="465000" />
     </task>
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="465000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
