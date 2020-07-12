@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'http://localhost/imagefootage/backend/api/';  // URL to web api
+    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -169,7 +169,7 @@ export class HeroService {
         const url = `${this.heroesUrl}login`;
         return this.http.post<any>(url, {email, password}, this.httpOptions).pipe(
             map(user => {
-               	 console.log(user);
+               	 //console.log(user);
                 localStorage.setItem('currentUser', JSON.stringify(user));
 				//console.log(localStorage.getItem('currentUser.utype'))
                 this.currentUserSubject.next(user);
@@ -183,7 +183,7 @@ export class HeroService {
         const url = `${this.heroesUrl}fbLogin`;
         return this.http.post<any>(url, {userData}, this.httpOptions).pipe(
             map(user => {
-                console.log(user);
+              //  console.log(user);
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
@@ -196,7 +196,7 @@ export class HeroService {
         const url = `${this.heroesUrl}signup`
         return this.http.post(url, usrData, this.httpOptions).pipe(
             map(userInfo => {
-                console.log(userInfo);
+                //console.log(userInfo);
                 if (userInfo['status'] == '1') {
                     localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
                     this.currentUserSubject.next(userInfo['userdata']);
@@ -237,7 +237,7 @@ export class HeroService {
         const url = `${this.heroesUrl}requestChangePassword`
         return this.http.post(url, {mobile,user_otp,user_password,user_rpassword}, this.httpOptions).pipe(
             map(userInfo => {
-                console.log(userInfo);
+                //console.log(userInfo);
                 return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
@@ -281,7 +281,7 @@ export class HeroService {
     }
 
     getDetailPagedetails(id: number, webtype: number, type: any): Observable<detailPageInfo> {
-        console.log(id);
+        //console.log(id);
         //const url = `api/detailPageInfo/?${id}`;
         const url = `${this.heroesUrl}details/${id}/${webtype}/${type}`;
         return this.http.get<detailPageInfo>(url).pipe(
@@ -309,7 +309,7 @@ export class HeroService {
 
         return this.http.post<any>(url, {product}, options).pipe(
             map(cart => {
-                console.log(cart);
+               // console.log(cart);
 
                 //this.currentUserSubject.next(cart);
                 return cart;
@@ -319,7 +319,7 @@ export class HeroService {
     }
 
     removeCartItemsData(product: any): Observable<userData> {
-        console.log(product);
+       // console.log(product);
         const url = `${this.heroesUrl}delete_cart_item`;
         //let tokenData =JSON.parse(product.token);
         let headers = new HttpHeaders({
@@ -328,7 +328,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, {product}, options).pipe(
             map(cart => {
-                console.log(cart);
+                //console.log(cart);
                 return cart;
             }),
             catchError(this.handleError<userData>(`unable to get data`))
@@ -346,7 +346,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, tokenData, options).pipe(
             map(cart => {
-                console.log(cart);
+                //console.log(cart);
 
                 //this.currentUserSubject.next(cart);
                 return cart;
@@ -540,7 +540,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, {id}, options).pipe(
             map(orderDetails => {
-                console.log(orderDetails);
+               // console.log(orderDetails);
 
                 //this.currentUserSubject.next(cart);
                 return orderDetails;
@@ -597,7 +597,7 @@ export class HeroService {
 		var passdata={"otp":otp,"email":email,"password":usrData.password,"cpassword":usrData.confirm_password}
         return this.http.post(url, passdata, this.httpOptions).pipe(
             map(userInfo => {
-                console.log(userInfo);
+                //console.log(userInfo);
                 /*if (userInfo['status'] == '1') {
                     localStorage.setItem('currentUser', JSON.stringify(userInfo['userdata']));
                     this.currentUserSubject.next(userInfo['userdata']);
@@ -613,7 +613,7 @@ export class HeroService {
 		var pasdata={"old_pass":usrData.old_password,"password":usrData.password,"cpassword":usrData.confirm_password,"userid":userid};
         return this.http.post(url, pasdata, this.httpOptions).pipe(
             map(userInfo => {
-                console.log(userInfo);
+                //console.log(userInfo);
                 return userInfo;
             }),
             catchError(this.handleError<any>(`unable to register data`))
@@ -626,7 +626,7 @@ export class HeroService {
         const url = `${this.heroesUrl}userOrders/` + tokenData.Utype;
         return this.http.get<any>(url).pipe(
             map(orders => {
-                console.log(orders);
+                //console.log(orders);
 
                 //this.currentUserSubject.next(cart);
                 return orders;
@@ -647,7 +647,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, tokenData, options).pipe(
             map(lightBox => {
-                console.log(lightBox);
+                //console.log(lightBox);
 
                 //this.currentUserSubject.next(cart);
                 return lightBox;
@@ -666,7 +666,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, tokenData, options).pipe(
             map(lightBox => {
-                console.log(lightBox);
+                //console.log(lightBox);
 
                 //this.currentUserSubject.next(cart);
                 return lightBox;
@@ -685,7 +685,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, {product,tokenData}, options).pipe(
             map(lightBox => {
-                console.log(lightBox);
+               // console.log(lightBox);
 
                 //this.currentUserSubject.next(cart);
                 return lightBox;
@@ -704,7 +704,7 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, {product,tokenData}, options).pipe(
             map(lightBox => {
-                console.log(lightBox);
+               // console.log(lightBox);
 
                 //this.currentUserSubject.next(cart);
                 return lightBox;
@@ -792,7 +792,7 @@ export class HeroService {
 
         return this.http.post<any>(url, {product}, options).pipe(
             map(download => {
-                console.log(download);
+                //console.log(download);
 
                 //this.currentUserSubject.next(cart);
                 return download;
@@ -817,7 +817,7 @@ export class HeroService {
 
         return this.http.post<any>(url, {product}, options).pipe(
             map(download => {
-                console.log(download);
+                //console.log(download);
 
                 //this.currentUserSubject.next(cart);
                 return download;
@@ -834,8 +834,6 @@ export class HeroService {
         let options = {headers: headers};
         return this.http.post<any>(url, {productID}, options).pipe(
             map(downloadfootage => {
-                console.log(downloadfootage);
-
                 //this.currentUserSubject.next(cart);
                 return downloadfootage;
             }),

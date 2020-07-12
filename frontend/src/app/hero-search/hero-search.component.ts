@@ -40,6 +40,7 @@ export class HeroSearchComponent implements OnInit {
   page:number = 1;
   public currentUser: any;
   pageSize:number = 40;
+  mobileFilters:boolean = false;
   sidebarSubmenu1:boolean = false;
   slidebarPeopleMenu:any=[];
   sidebarSubmenu2:boolean = false;
@@ -184,7 +185,13 @@ export class HeroSearchComponent implements OnInit {
 	  public modelChange(str: string): void {
     		this.keywordEle = str;
   	  }
-
+	onoroffilters(event){
+		if(this.mobileFilters == false){
+			this.mobileFilters = true;
+		}else if(this.mobileFilters == true){
+			this.mobileFilters = false;
+		}
+  	}
       searchDropDownClick(type){
         this.loadingData=true;
         this.searchData.productType=type;
@@ -243,6 +250,10 @@ export class HeroSearchComponent implements OnInit {
                                   this.maintainAosSlider();
                               }else{
                                   //alert("No Result Found");
+                                  this.totalproduct = aoslSliderImages.total;
+                                  this.perpage = aoslSliderImages.perpage;
+                                  this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                                  this.aoslSliderImages = aoslSliderImages.imgfootage;
                                   this.noprductFound = true;
                               }
                                  //  this.spinner.hide();
@@ -579,7 +590,12 @@ export class HeroSearchComponent implements OnInit {
                         this.maintainAosSlider();
                     }else{
                         //alert("Result Not Found");
+                        this.aoslSliderImages = aoslSliderImages.imgfootage;
+                        this.totalproduct = aoslSliderImages.total;
+                        this.perpage = aoslSliderImages.perpage;
+                        this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
                         this.noprductFound = true;
+
                     }
                     //  this.spinner.hide();
 

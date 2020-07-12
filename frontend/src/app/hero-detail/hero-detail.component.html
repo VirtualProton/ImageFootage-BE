@@ -20,13 +20,14 @@
                             <!-- data-aos="fade-up" -->
                             <div>
                                 <!-- photo-item -->
-                                <a class="d-block " style="text-align: center;">
+                                <a class="d-block selectedsrc" style="text-align: center;">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image"
                                          class="img-fluid">
                                 </a>
-                                <span class="pull-left"
-                                      style="margin-left:133px;font-size: 15px;">{{imagefootId}}</span>
-                                <div style="float: right;margin-right: 128px;font-height:18px;">
+                                <div class="pl-3 pr-3">
+                                    <span class="pull-left">{{imagefootId}}</span>
+
+                                    <span class="pull-right">
                                     <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download"
                                        style="font-size: 24px;"><i class="fas fa-download" matTooltip="Sample Download"></i></a> &nbsp;&nbsp;
                                     <a (click)="addtolightbox(imagefootId)"
@@ -34,6 +35,7 @@
                                        *ngIf="vfound"><i class="fas fa-heart" matTooltip="Add to Wishlist"></i></a>
                                     <a (click)="addtolightbox(imagefootId)" style="cursor:pointer;font-size: 24px;"
                                        title="Wishlist" id='adtow' *ngIf="!vfound" matTooltip="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                </span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -71,7 +73,6 @@
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xl-4 col-lg-4 pt-3 cart_right pl-3 mt-3" *ngIf="detailPageInfo">
-
                     <div class="p-3">
                         <ul class="nav nav-tabs mytabs">
                             <li class="nav-item">
@@ -86,7 +87,6 @@
                                 <a class="nav-link" [ngClass]="[ extendedTab ? 'active' : '']" data-toggle="tab"
                                    (click)="tabshow('2')">Extended License</a>
                             </li>
-
                         </ul>
 
                         <!-- Tab panes -->
@@ -95,14 +95,14 @@
                                 <p class="text-white text-uppercase lsp-1 f-14 pt-3">standard Royalty Free Licenses</p>
 
                                 <div class="btn-group btn-group-toggle mb-1 col-md-12" data-toggle="buttons">
-                                	<div class="row">
-                                    	<label class="btn btn-dark col-md-3" *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
-                                        <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
-                                        <p class="f-12" style="overflow:auto;">{{cost.description}}</p>
-                                        <!-- | currency:'INR'-->
-                                        <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
-                                        <span class="f-11">{{cost.width}} x {{cost.height}}</span>
-                                    </label>
+                                    <div class="row">
+                                        <label class="btn btn-dark col-md-3" *ngFor="let cost of detailPageInfo.articles.singlebuy_list.singlebuy[0].sizes.article;let i=index;let first=first;">
+                                            <input type="radio" name="options" id="option{{i}}" autocomplete="off" [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotal(cost)" style="display:none;">
+                                            <p class="f-12" style="overflow:auto;">{{cost.description}}</p>
+                                            <!-- | currency:'INR'-->
+                                            <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i> {{cost.price*80  | number }}</p>
+                                            <span class="f-11">{{cost.width}} x {{cost.height}}</span>
+                                        </label>
                                     </div>
                                 </div>
                                 <p>
@@ -132,9 +132,9 @@
 
                                     </label>
                                     <p>
-                                        <small><span class="text-warning">Extended Use Only</span> <span
-                                                style="cursor:pointer;" (click)="open(content1)">Learn More</span>
-                                        </small>
+                                        <span class="mr-2">Extended Use Only</span>
+                                        <span class="text-warning fw-7" style="cursor:pointer;" (click)="open(content1)">Learn More</span>
+
                                     </p>
                                 </div>
 
@@ -497,8 +497,8 @@
                     <div class="cartItem" *ngIf="detailPageInfo">
                         <!-- p-3 -->
                         <div class="">
-                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].items[0].n}} </p>
-                            <p class="pl-3">{{detailPageInfo[0].items[0].desc}}</p>
+                            <p class="text-white f-20 mb-0 pt-3 pl-3">{{detailPageInfo[0].clip_data.pic_name}} </p>
+                            <p class="pl-3">{{detailPageInfo[0].clip_data.pic_description}}</p>
                             <!-- data-aos="fade-up" -->
                             <div>
                                 <a class="d-block">
@@ -520,13 +520,13 @@
                                 <!--&lt;!&ndash;                                            <span class="meta">{{detailPageInfo.photoCount}}</span>&ndash;&gt;-->
                                 <!--                                        </div>-->
                                 <!--                                    </div>-->
-                                <span class="pull-left"
-                                      style="margin-left:133px;font-size: 15px;">{{detailPageInfo[3]}}</span>
-                                <div style="float: right;margin-right: 128px;font-height:18px;">
+                                <div class="pl-3 pr-3">
+                                    <span class="pull-left">{{detailPageInfo[3]}}</span>
+                                    <span class="pull-right">
                                     <a href="{{detailPageInfo[4]}}" download="{{detailPageInfo[3]+'.mp4'}}"
                                        title="Download" style="font-size: 24px;"><i class="fas fa-download" matTooltip="Sample Download"></i></a>
                                     &nbsp;&nbsp;
-                                    <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
+                                        <!-- <a (click)="addtolightbox(detailPageInfo[3])" style="cursor:pointer;" title="Wishlist" {{ found }}><i class="fas fa-heart"></i></a>-->
 
                                     <a (click)="addtolightbox(detailPageInfo[3])"
                                        style="cursor:pointer;color:red;font-size: 24px;" title="Wishlist" id='adtow'
@@ -534,8 +534,7 @@
                                     <a (click)="addtolightbox(detailPageInfo[3])"
                                        style="cursor:pointer;font-size: 24px;" title="Wishlist" id='adtow'
                                        *ngIf="!vfound"><i class="fas fa-heart" matTooltip="Add to Wishlist"></i></a>
-
-
+                                </span>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -546,7 +545,7 @@
                                 <div class="related_key">
                                     <input type="checkbox" id="expend"/>
                                     <div class="medium-12 small-12 columns smalldesc tags">
-                                        <a href="/search?type=2&keyword={{keys}}" class=" f-12" title="{{keys}}"
+                                        <a href="/search?type=2&keyword={{keys}}" class=" f-12 label-outline-light" title="{{keys}}"
                                            *ngFor="let keys of keyword">{{keys}}</a>
                                     </div>
                                     <label class="rmore" for="expend" *ngIf="keyword.length > 10">See more</label>
@@ -576,7 +575,7 @@
 
                                 <div class="btn-group btn-group-toggle mb-1" data-toggle="buttons">
                                     <label class="btn btn-dark"
-                                           *ngFor="let cost of detailPageInfo[0].items[0].versions;let i=index;let first=first;">
+                                           *ngFor="let cost of detailPageInfo[0].clip_data.versions;let i=index;let first=first;">
                                         <input type="radio" name="options" id="option{{i}}" autocomplete="off"
                                                [class]="i==0 ? 'checked' : ''" (click)="checkPriceTotalFootage(cost)">
                                         <p class="f-12">{{cost.size}}</p>
@@ -700,7 +699,7 @@
                             <div class="row-fluid">
                                 <span class="col-md-4">Credit</span>
                                 <span class="col-md-1">:</span>
-                                <span class="col-md-7">{{detailPageInfo[0].items[0].artistname}}</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pu_username}}</span>
                             </div>
                             <div class="row-fluid">
                                 <span class="col-md-4">Product ID</span>
@@ -708,29 +707,66 @@
                                 <span class="col-md-7">{{detailPageInfo[3]}}</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Duration #</span>
+                                <span class="col-md-4">Duration</span>
                                 <span class="col-md-1">:</span>
-                                <span class="col-md-7">{{detailPageInfo[0].items[0].dur}}</span>
+                                <span class="col-md-7">{{msToTime(detailPageInfo[0].clip_data.pim_aut_duration_ms)}} </span>
                             </div>
                             <div class="row-fluid">
-                                <span class="col-md-4">Date created</span>
+                                <span class="col-md-4">Frame Rate</span>
                                 <span class="col-md-1">:</span>
-                                <span class="col-md-7">{{detailPageInfo[0].items[0].date}}</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pim_aut_fps}} fps </span>
                             </div>
-                            <!--                            <div class="row">-->
-                            <!--                                <div class="col-md-4">License type</div>-->
-                            <!--                                <div class="col-md-1">:</div>-->
-                            <!--                                <div class="col-md-7">Standard</div>-->
-                            <!--                            </div>-->
-                            <!--<div class="row">
-                                <div class="col-md-3">Release info :</div>
-                                <div class="col-md-9">Not released. More information</div>
-                            </div>-->
                             <div class="row-fluid">
-                                <span class="col-md-4">Max file size</span>
+                                <span class="col-md-4">Location</span>
                                 <span class="col-md-1">:</span>
-                                <span class="col-md-7">{{detailPageInfo[0].items[0].filesize}}</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pic_location_country}}</span>
                             </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">License</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.pisc_single_use_license === null ? 'No' : 'Yes'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Uses</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.ed === false ? 'Commercial' : 'Editorial'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Model Relesed</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.modelreleased === false ? 'No' : 'Yes'}}</span>
+                            </div>
+                           <div class="row-fluid">
+                                <span class="col-md-4">Property Relesed</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{detailPageInfo[0].clip_data.propertyreleased === false ? 'No' : 'Yes'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Average Bit Rate</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7"></span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Bit Depth</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7"> </span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Looping</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('KCA0700') === true ? 'Yes' : 'No'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Alpha Matte</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('vidmatte') === true ? 'Yes' : 'No'}}</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="col-md-4">Alpha Channel</span>
+                                <span class="col-md-1">:</span>
+                                <span class="col-md-7">{{ detailPageInfo[0].clip_data.pic_keywords_cb.includes('KCT0200') === true ? 'Yes' : 'No'}} </span>
+                            </div>
+
                         </div>
 
                     </div>
@@ -743,7 +779,7 @@
                     <div class="row mx-auto my-auto mb-5">
 
 
-                        <h3 class="col-md-12" style="color: #fcbe11;">Related Footages
+                        <h3 class="col-md-12"><b>Related Footages</b>
                             <hr/>
                         </h3>
 
@@ -784,7 +820,7 @@
                                    #htmlVideoElement controlsList="nodownload" onmouseover="this.play()"
                                    onmouseout="this.load()"
                                    (click)="onNavigate('/detail/',aosimges.slug,aosimges.api_product_id,aosimges.product_web,aosimges.product_main_type)"
-                                   style="width: 100% !important;background: #7d494957;/*object-fit: cover;*/ object-fit: scale-down;cursor:pointer;">
+                                   style="width: 100% !important;background: #7d494957;object-fit: cover; /*object-fit: scale-down;*/cursor:pointer; padding: 10px;">
                               <source src="{{aosimges.product_main_image}}" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
