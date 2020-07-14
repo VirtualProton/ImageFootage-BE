@@ -80,10 +80,10 @@ Route::group([
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
 
 
-    Route::get('/add_products_api', 'Admin\ProductController@getAddProduct');
-    Route::post('/add_products_api', 'Admin\ProductController@postAddProduct');
-    Route::get('/update_products_api/{id}', 'Admin\ProductController@getUpdateProduct');
-    Route::post('/update_products_api', 'Admin\ProductController@postUpdateProduct');
+    Route::get('/add_products_api', 'ProductApiController@getAddProduct');
+    Route::post('/add_products_api', 'ProductApiController@postAddProduct');
+    Route::get('/update_products_api/{id}', 'ProductApiController@getUpdateProduct');
+    Route::post('/update_products_api', 'ProductApiController@postUpdateProduct');
 });
 
 Route::group([
