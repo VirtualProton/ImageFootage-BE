@@ -150,13 +150,16 @@
                       
                       <div class="row form-group mb-5">
                           <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" formControlName="iagree" [ngClass]="{ 'is-invalid': submitted && f.iagree.errors }" id="customCheck">
-                              <label class="custom-control-label" for="customCheck"> Make me an Approved Client* with the ability to license and download images online without a credit card.</label>
+                              <input type="checkbox" class="custom-control-input" formControlName="iagree" [ngClass]="{ 'is-invalid': submitted && f.iagree.errors }" id="customCheck" ngModel required>
+                              <label class="custom-control-label" for="customCheck">Terms & Conditions</label>
                               <div *ngIf="submitted && f.iagree.errors" class="invalid-feedback">
                                   <div *ngIf="f.iagree.errors.required">Please accept Terms & Conditions</div>
                               </div>   
                           </div>
+                         
+                         
                       </div>
+                       
                     
                       <div class="row form-group text-center">
                         <div class="col-md-12">

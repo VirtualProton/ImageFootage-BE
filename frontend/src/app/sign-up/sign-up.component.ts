@@ -32,6 +32,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
+	 iagree:['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -46,7 +47,7 @@ export class SignUpComponent implements OnInit {
         city: ['', Validators.required],
         pincode:['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
         address:['', Validators.required],
-        iagree:['', Validators.required],
+       
 
 
     }, {
