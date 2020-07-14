@@ -172,7 +172,7 @@ Route::post('/updateproductorientations', 'ProductImageOrientationsController@up
 //Product  Sort Types
 Route::get('/add_product_sort_type', 'ProductImageSortTypesController@addImageSortTypes');
 Route::post('/addproduct_sort_type_process', 'ProductImageSortTypesController@addImageSortTypesProcess');
-Route::get('/product_sort_type_list', 'ProductImaesController@ImageSortTypesList');
+Route::get('/product_sort_type_list', 'ProductImageSortTypesController@ImageSortTypesList');
 Route::get('/product_sort_type_status/{status}/{id}', 'ProductImageSortTypesController@changeImageSortTypeStatus');
 Route::get('/deleteproductsorttype/{id}', 'ProductImageSortTypesController@deleteImageSortTypes');
 Route::get('/editproductsort_type/{id}', 'ProductImageSortTypesController@editImageSortTypes');
