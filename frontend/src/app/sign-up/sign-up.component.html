@@ -251,7 +251,7 @@ To read the complete Terms, please see below.
                           <div class="custom-control custom-checkbox">
                               
                               <label class="" for="customCheck"    ><input type="checkbox" class="" formControlName="iagree" [ngClass]="{ 'is-invalid': submitted && f.iagree.errors }" id="customCheck" ngModel required></label>
-                              <span (click)="open(termsandcond)" style="cursor:pointer;margin-left: 10px;">Terms & Conditions</span>
+                              <span (click)="open(termsandcond)" style="cursor:pointer;margin-left: 10px;color: #e43216;">Terms & Conditions</span>
                               <div *ngIf="submitted && f.iagree.errors" class="invalid-feedback">
                                   <div *ngIf="f.iagree.errors.required">Please accept Terms & Conditions</div>
                               </div>   
