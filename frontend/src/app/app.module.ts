@@ -106,7 +106,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	MatExpansionModule,
     Ng5SliderModule,
     ColorPickerModule,
-    MatTooltipModule
+    MatTooltipModule,
+	FormsModule
 
 	    
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -151,6 +152,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	MasonryLayoutComponent*/
 
   ],
+ 
   exports:[LoginComponent],
   providers: [
     {

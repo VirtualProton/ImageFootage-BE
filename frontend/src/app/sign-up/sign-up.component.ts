@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { imageFooterHelper } from '../_helpers/image-footer-helper';
 import { HeroService } from '../hero.service';
 import { first } from 'rxjs/operators';
+import {NgbModule ,NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import Swal from "sweetalert2";
 
 @Component({
@@ -13,6 +14,7 @@ import Swal from "sweetalert2";
     encapsulation: ViewEncapsulation.None
 })
 export class SignUpComponent implements OnInit {
+	closeResult: string;
     registerForm: FormGroup;
     loading = false;
     submitted = false;
@@ -27,11 +29,12 @@ export class SignUpComponent implements OnInit {
   constructor( private formBuilder: FormBuilder,
       private authenticationService: HeroService,
       private router: Router,
-      private dataHelper:imageFooterHelper) { }
+      private dataHelper:imageFooterHelper,private modalService: NgbModal) { }
 
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
+	 iagree:['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -46,7 +49,7 @@ export class SignUpComponent implements OnInit {
         city: ['', Validators.required],
         pincode:['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
         address:['', Validators.required],
-        iagree:['', Validators.required],
+       
 
 
     }, {
@@ -180,7 +183,24 @@ export class SignUpComponent implements OnInit {
                     this.loading = false;
                 });
   }
-
+  /* for bootstrop model */
+  open(content) {
+    this.modalService.open(content, { size: 'lg',backdrop: 'static',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+   private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  /* end model */
   clickLoginPopup(){
     this.showloginPopup = true;
   }
