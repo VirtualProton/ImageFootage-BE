@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-3 col-sm-3 col-md-3">
                 <div class="card shadow p-3">
-                    <p class="f-18"><b>My Account</b></p>
+                    <p class="f-18"><b>Edit Account</b></p>
                     <div class="account-list nav nav-pills faq-nav border-0 z-depth-0" id="faq-tabs" role="tablist"
                          aria-orientation="vertical">
                         <li class="nav-item active"><i class="flaticon-user-1 f-24"></i><a
@@ -18,11 +18,11 @@
                                 role="tab" aria-controls="tab1" aria-selected="true" style='cursor:pointer;'>
                             <i class="mdi mdi-help-circle"></i> Profile
                         </a></li>
-<!--                        <li class="nav-item"><i class="flaticon-review f-24"></i> <a-->
-<!--                                [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"-->
-<!--                                role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>-->
-<!--                            <i class="mdi mdi-account"></i> Plans-->
-<!--                        </a></li>-->
+                        <!--                        <li class="nav-item"><i class="flaticon-review f-24"></i> <a-->
+                        <!--                                [ngClass]="[plansTab ? 'active' : '']" (click)="tabshow('plans')" data-toggle="pill"-->
+                        <!--                                role="tab" aria-controls="tab2" aria-selected="false" style='cursor:pointer;'>-->
+                        <!--                            <i class="mdi mdi-account"></i> Plans-->
+                        <!--                        </a></li>-->
 
                         <!--                        <li class="nav-item"><i class="flaticon-wallet-1 f-24"></i> <a  [ngClass]="[billingTab ? 'active' : '']"   (click)="tabshow('billing')" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">-->
                         <!--                            <i class="mdi mdi-account-settings"></i> Billing-->
@@ -31,8 +31,8 @@
                                 [ngClass]="[purchaseTab ? 'active' : '']" (click)="toggle()"
                                 data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false"
                                 style='cursor:pointer;'>
-                              <i class="fa fa-angle-double-right" *ngIf="!prchage"></i>
-                              <i class="fa fa-angle-double-down" *ngIf="prchage"></i>
+                            <i class="fa fa-angle-double-right" *ngIf="!prchage"></i>
+                            <i class="fa fa-angle-double-down" *ngIf="prchage"></i>
                             Purchase History
                         </a>
                             <ul *ngIf="prchage">
@@ -65,7 +65,7 @@
 
                         <div class="card shadow">
                             <div class="pt-3 pb-3 pl-5 pr-5">
-                                <p class="f-18"><b>User details</b> <a class="text-primary f-20 pl-3" (click)="tabshow('edit-profile')"><i
+                                <p class="f-18"><b>User details</b> <a href="#" class="text-primary f-20 pl-3" (click)="editprofile()"><i
                                         class="fa fa-edit" ></i></a></p>
                                 <div class="p-3">
                                     <div class="row">
@@ -101,7 +101,7 @@
 
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Mobile</p>
+                                            <p class="text-muted">Phone No </p>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">State </p>
+                                            <p class="text-muted">City </p>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
@@ -145,7 +145,7 @@
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
-                                            <p class="text-black fw-6">{{profileData.country.name}}  </p>
+                                            <p class="text-black fw-6">{{profileData.country.name}} {{profileData.postal_code}}  </p>
                                         </div>
 
                                     </div>
@@ -377,7 +377,7 @@
                                         <tr *ngIf="profileData.plans?.length == 0">
                                         <td colspan="8">U have not subscribed any plans.Please subscribe</td>
                                         </tr>
-             
+
                        <ng-container *ngFor="let  plan of profileData.plans; index as i">
                         <tr data-toggle="collapse" [attr.data-target]="'#demo'+i" data-parent="#myTable">
                             <td>{{i+1}}</td>
@@ -390,12 +390,12 @@
                             <td *ngIf="plan.package_expiry_yearly==1">1 Year Plan subscription</td>
                             <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==1">1 Month Plan subscription</td>
                             <td *ngIf="plan.package_expiry_yearly==0 && plan.package_expiry==0">1 Year Download Plan</td>
-                            
+
                         </tr>
                         <tr [attr.id]="'demo' + i" class="collapse">
                                 <td colspan="6" class="hiddenRow"><div>Demo1</div> </td>
                         </tr>
-   
+
 					</ng-container>-->
 
 
@@ -471,7 +471,7 @@
                                             <th>Size</th>
                                             <th>Price</th>
                                             <th>Download</th>
-                                           </tr>
+                                        </tr>
                                         <tr *ngFor="let orderitem of order_items;let j= index">
                                             <td>{{j + 1}}</td>
                                             <td>
@@ -506,195 +506,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <div [ngClass]="[editprofileTab ? 'tab-pane show active' : '']" *ngIf="editprofileTab && profileData"
-                         id="editprofile" role="tabpanel" aria-labelledby="tab1">
-
-                        <div class="card shadow">
-                            <div class="pt-3 pb-3 pl-5 pr-5">
-                                <p class="f-18"><b>Edit details</b></p>
-                                <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()"  class="mt-5 pt-5">
-                                <div class="p-3">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">First Name </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <input type="text" formControlName="first_name"
-                                                   [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
-                                                   class="form-control rounded-0" [value]="firstname">
-                                            <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
-                                                <div *ngIf="f.first_name.errors.required">First Name is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Last Name </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <input type="text" formControlName="last_name"
-                                                   [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }"
-                                                   class="form-control rounded-0" [value]="lastname">
-                                            <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-                                                <div *ngIf="f.last_name.errors.required">Last Name is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">User ID </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <p class="text-black fw-6">{{profileData.user_name}}</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">E-mail </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <p class="text-black fw-6">{{profileData.email}}</p>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Mobile</p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-
-                                            <input type="text" formControlName="first_name"
-                                                   [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }"
-                                                   class="form-control rounded-0" [value]="mobile">
-                                            <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
-                                                <div *ngIf="f.mobile.errors.required">Mobile Number is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Address </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-
-                                            <textarea class="form-control rounded-0" rows="2" style="min-height:70px;"
-                                                      [ngClass]="{ 'is-invalid': submitted && f.address.errors }"
-                                                      formControlName="address" [ngModel]="address"></textarea>
-                                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                                                <div *ngIf="f.address.errors.required">Address is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Country </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
-                                                    formControlName="country" (change)="onChangeCountry($event.target.value)">
-                                                <option value="">--Select Country--</option>
-                                                <option *ngFor="let country of countryInfo; let i = index"
-                                                        value="{{country.id}}">{{country.name}}</option>
-                                            </select>
-                                            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                                                <div *ngIf="f.country.errors.required">Country is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">City </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <select class="form-control" formControlName="state"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.state.errors }"
-                                                    (change)="onChangeState($event.target.value)">
-                                                <option value="" selected>--Select State--</option>
-                                                <option *ngFor="let state of stateInfo; let j = index"
-                                                        value="{{state.id}}">{{state.state}}</option>
-                                            </select>
-                                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
-                                                <div *ngIf="f.state.errors.required">State is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">City </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <select class="form-control" formControlName="city"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
-                                                    (change)="onChangeCity($event.target.value)">
-                                                <option value="" selected>--Select City--</option>
-                                                <option *ngFor="let city of cityInfo; let k = index"
-                                                        value="{{city.id}}">{{city.name}}</option>
-                                            </select>
-                                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                                                <div *ngIf="f.city.errors.required">City is required</div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted">Postal Code </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <input type="text" class="form-control" formControlName="pincode"
-                                                   [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" [value]="postal_code">
-                                            <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
-                                                <div *ngIf="f.pincode.errors.required">ZipCode is required</div>
-                                                <div *ngIf="f.pincode.errors.minlength || f.pincode.errors.maxlength">ZipCode number
-                                                    should be 6 digits
-                                                </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xl-3">
-                                            <p class="text-muted"> </p>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
-
-                                            <button type="submit"
-                                                    class="btn btn-success btn-block text-white p-3 text-uppercase" style="width:100px;"><strong>Update</strong></button>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-
-
-                    </div>
+                    <app-edit-profile></app-edit-profile>
                 </div>
             </div>
         </div>
