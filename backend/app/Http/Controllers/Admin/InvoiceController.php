@@ -8,6 +8,7 @@ use App\Models\Common;
 use DB;
 use Mail;
 use PDF;
+use App\Models\User;
 
 
 class InvoiceController extends Controller
@@ -119,6 +120,13 @@ class InvoiceController extends Controller
          if(!empty($data['quotation_id']) && isset($data['status'])){
              return $this->Common->change_invoice_status($data['quotation_id'],$data['status']);
          }
+     }
+
+     public function purchase_orders(){
+        $this->User = new User;
+        $userlist = $this->User->getPurchaseOrders();
+        return view('admin.invoice.purchase_orders',compact('userlist'));
+
      }
 
 }
