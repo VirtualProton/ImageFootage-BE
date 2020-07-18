@@ -105,6 +105,14 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    public function getPurchaseOrders($id=NULL){
+        if($id==''){
+        return User::with('account')->paginate(100);  
+        }else{
+         return User::with('account')->where('id','=',$id)->first()->toArray();
+        }
+    }
+
     public function update_user($data,$id){
         try{
                $save_data =  User::find($id);

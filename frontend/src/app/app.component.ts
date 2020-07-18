@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, OnDestroy, Inject } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute, Event, NavigationEnd } from '@angular/router';
 import { Location, DOCUMENT } from "@angular/common";
 import { Subscription } from 'rxjs';
@@ -15,19 +16,36 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 export class AppComponent implements OnInit, OnDestroy {
   scrollPosition: number = 0;
-
+  closeResult: string;
   constructor(private router: Router
     , private actRoute: ActivatedRoute
     , private spinner: NgxSpinnerService
     , @Inject(DOCUMENT) private document: Document
-  ) {
+	,private modalService: NgbModal) {
   }
   title = 'Image Footage';
   private sub: Subscription;
   footerEle: boolean = true;
   dashboardEle: boolean = false;
   navIsFixed: boolean;
-
+  /* for bootstrop model */
+	open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  /* end model */
   ngOnInit() {
     /*if (environment.production) {
 	   if (location.protocol === 'http:') {

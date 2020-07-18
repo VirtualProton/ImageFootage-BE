@@ -165,4 +165,11 @@ table tr th {
 table tr td {
     font-size:12px;
 }
+
+.form-control:active, .form-control:focus {
+    color: #000 !important;
+    box-shadow: none;
+    outline: none;
+    border-color: #fff;
+}
 /*.account-list>li>a.active{color:#ef6c57}*/
