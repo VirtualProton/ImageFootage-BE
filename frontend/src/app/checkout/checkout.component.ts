@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import {imageFooterHelper} from "../_helpers/image-footer-helper";
 import { NgxSpinnerService } from "ngx-spinner";
+import {NgbModule ,NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 declare var Razorpay: any;
 
 @Component({
@@ -15,7 +16,7 @@ declare var Razorpay: any;
   encapsulation: ViewEncapsulation.None
 })
 export class CheckoutComponent implements OnInit {
-
+  closeResult: string;
   checkoutForm: FormGroup;
   wishListDataItems:Array<cartItemData>=[];
   priceArray:any=[];
@@ -40,7 +41,7 @@ export class CheckoutComponent implements OnInit {
   hash:any='';
   rozResponse:any ='';
   public currentUser: any;
-  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService) {
+  constructor(private authenticationService: HeroService,private router: Router, private formBuilder: FormBuilder,private dataHelper:imageFooterHelper,private spinner: NgxSpinnerService,private modalService: NgbModal) {
       this.authenticationService.currentUser.subscribe(x => {
           this.currentUser = x;
           if(!this.currentUser){
@@ -300,6 +301,24 @@ export class CheckoutComponent implements OnInit {
                 window.location.href = data.url;
             });
     }
+	  /* for bootstrop model */
+  open(content) {
+    this.modalService.open(content, { size: 'lg',backdrop: 'static',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+   private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  /* end model */
 
 
 }
