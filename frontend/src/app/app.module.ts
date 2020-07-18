@@ -59,6 +59,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 
 
 
@@ -146,7 +148,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ProductPricingComponent,
     NoRightClickDirective,
     ScrollComponent,
-    FootageLicenceAgreementComponent
+    FootageLicenceAgreementComponent,
+    EditProfileComponent,
+    ProfileMenuComponent
     /*,
 	MasonryLayoutComponent*/
 
