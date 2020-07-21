@@ -112,7 +112,7 @@ To read the complete Terms, please see below.
           
           <div class="col-md-12 pt-3 regform"  data-aos="fade-up">
             <h2 class="mb-4 text-center">Create your Image Footage account</h2>
-            <p class="text-center">Already have an account? <a (click)="clickLoginPopup()">Login</a></p>
+            <p class="text-center">Already have an account? <a (click)="clickLoginPopup()" style="color: blue;cursor:pointer;">Login</a></p>
             <p class="text-right">All (*) fields are mandatory.</p>
   
                     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"  class="mt-5 pt-5">
@@ -179,11 +179,11 @@ To read the complete Terms, please see below.
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                          <label class="">Phone*</label>
-                          <input type="text" id="phne" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" class="form-control text-white">
-                          <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                          <label class="">Phone</label>
+                          <input type="text" id="phne" formControlName="phoneNumber"  class="form-control text-white">
+                          <!--<div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
                             <div *ngIf="f.phoneNumber.errors.required">PhoneNumber is required</div>
-                          </div>
+                          </div>-->
                         </div>
                         
                         <div class="col-md-4 col-sm-4">

@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit {
         occupation: ['', Validators.required],
         company: ['', Validators.required],
         mobileNumber: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/) ]],
-        phoneNumber: ['', Validators.required],
+       
         country: ['', Validators.required],
         state: ['', Validators.required],
         city: ['', Validators.required],
