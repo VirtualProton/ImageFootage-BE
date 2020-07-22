@@ -137,7 +137,7 @@ class UserController extends Controller
 		if($count>0){
 			$update = User::where('mobile',$request['user_mobile'])->update(['password'=>Hash::make($request['user_password'])]);
 			if($update){
-				return response()->json(['status'=>'1','message' => 'Password changed successfully '], 200);
+				return response()->json(['status'=>'1','message' => ' Password Succesfully changed, Please Log In using new password'], 200);
 			}else{
 				return response()->json(['status'=>'0','message' => 'Some problem occured !!!'], 200);
 			}

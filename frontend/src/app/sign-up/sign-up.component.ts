@@ -166,6 +166,7 @@ export class SignUpComponent implements OnInit {
 						  }
 					  }else{
 					  	 	 this.loadingData =false;
+							 Swal.fire('', "Registration successful", 'success');
 							 this.router.navigate(['/']);
 					  }
 
