@@ -103,6 +103,7 @@ class ContributorController extends Controller
 	}
 	public function contributorList(){
 		$contributor = new Contributor;
+	   // $all_contributor_list=Contributor::orderBy('contributor_id', 'DESC')->get()->toArray();
 	   $all_contributor_list=$contributor->all()->toArray();
        return view('admin.contributor.contributorlist', ['contributor' => $all_contributor_list]);
 	}
@@ -119,6 +120,13 @@ class ContributorController extends Controller
 		$contributor_data=Contributor::find($id)->toArray();
         return view('admin.contributor.editcontributor', ['contributor'=>$contributor_data]);
     }
+
+    public function viewContributor($id)
+    {   $contributor=new Contributor;
+		$contributor_data=Contributor::find($id)->toArray();
+        return view('admin.contributor.viewcontributor', ['contributor'=>$contributor_data]);
+    }
+
 	public function editcontributor(Request $request){
 		$name='';
 		 $this->validate($request, [

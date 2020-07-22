@@ -8,7 +8,7 @@
       Admin/Agent List
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Accounts</li>
       </ol>
     </section>
@@ -41,7 +41,7 @@
                     @foreach($agentlist as $k=>$agent)
                 <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
-                  <td>{{$agent['name']}}</td>
+                  <td><a href="{{ URL::to('admin/subadmin/view/'.$agent['id']) }}">{{$agent['name']}}</a></td>
                   <td>{{$agent['email']}}</td>
                   <td>{{$agent['mobile']}}</td>
                   <td>{{$agent['department']['department']}}</td>

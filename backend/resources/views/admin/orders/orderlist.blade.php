@@ -11,7 +11,7 @@
         Orders List
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Orders List</li>
       </ol>
     </section>

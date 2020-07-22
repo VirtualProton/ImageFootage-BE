@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Auth::routes();
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
@@ -29,6 +29,7 @@ Route::get('/subadmin/access_management', 'SubAdminController@access_management'
 Route::post('/save_access', 'SubAdminController@save_access');
 Route::post('/subadmin/mapping_data', 'SubAdminController@mapping_data');
 
+Route::get('/subadmin/view/{id}', 'SubAdminController@view');
 Route::resource('/subadmin', 'SubAdminController');
 Route::get('/product/{status}/{id}', 'ProductController@changeProductStatus');
 Route::get('/deleteproduct/{id}', 'ProductController@destroy');
@@ -59,6 +60,7 @@ Route::get('/contributor_list', 'ContributorController@contributorList');
 Route::get('/contributor_status/{status}/{id}', 'ContributorController@changeContributorStatus');
 Route::get('/updatecontributor/{id}', 'ContributorController@updateContributor');
 Route::post('/editcontributor', 'ContributorController@editcontributor');
+Route::get('/viewcontributor/{id}', 'ContributorController@viewcontributor');
 Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
 Route::post('/request_for_contributorpass/{id}', 'ContributorController@requestForContributorPass');
 Route::get('/contributorotpvalidate/{id}', 'ContributorController@contVerifyRegisteriedOtp');
@@ -186,6 +188,7 @@ Route::post('/produt_bulk_upload', 'ProductBulkUploadController@importCSV');
 Route::get('/products_api', 'ProductController@productListApi');
 //end api
 Route::get('/accounts/status/{status}/{id}', 'AccountController@status');
+Route::get('/accounts/view/{id}', 'AccountController@show');
 
 Route::resource('/accounts', 'AccountController');
 
