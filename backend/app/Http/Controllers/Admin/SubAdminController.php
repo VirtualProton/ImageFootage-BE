@@ -103,6 +103,17 @@ class SubAdminController extends Controller
 
     }
 
+    public function view($id)
+    {
+        $title = "Add Admin/Agent";
+        $roles= Roles::where('status','=','A')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $this->Admin = new Admin();
+        $agent_data=$this->Admin->getAgentData($id);
+        return view('admin.subadmin.view', compact('title','deparments','roles','agent_data'));
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

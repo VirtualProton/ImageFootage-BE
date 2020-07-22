@@ -14,7 +14,7 @@
         Contributor List
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Contributor List</li>
       </ol>
     </section>
@@ -48,7 +48,8 @@
                     <tr>
   <td>{{ $contributor['contributor_id'] }} </td>
   <td>{{ $contributor['contributor_memberid'] }} </td>
-  <td>{{ $contributor['contributor_name'] }} </td>
+
+  <td><a href="{{ url('admin/viewcontributor/'.$contributor['contributor_id']) }}">{{ $contributor['contributor_name'] }} </a></td>
   <td>{{ $contributor['contributor_email'] }} </td>
   <td><img src="{{URL::asset('uploads/idproof/'.$contributor['contributor_idproof'])}}" alt="Id Proof" width="100"> </td>
   <td>{{ $contributor['contributor_type'] }} </td>
