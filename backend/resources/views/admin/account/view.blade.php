@@ -6,19 +6,18 @@
 
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Add Account</h3><a href="{{ URL::to('admin/accounts') }}" class="btn pull-right">Back</a>
+              <h3 class="box-title">View Account</h3><a href="{{ URL::to('admin/accounts') }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/accounts'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+            {!! Form::open(array('url' => URL::to('admin/accounts/'.$account_data['id']),  'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
               @include('admin.partials.message')
-
               <div class="box-body">
               <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Account Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name">
+                  <input disabled="ture" type="text" class="form-control" name="account_name" id="account_name" placeholder="Name" value="<?php echo $account_data['account_name']?>">
                   {{ csrf_field() }}
                 </div>
                   </div>
@@ -27,7 +26,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                  <input disabled="ture"  type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $account_data['email']?>">
                 </div>
                   </div>
                 </div>
@@ -35,7 +34,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                  <input disabled="ture"  type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $account_data['phone']?>">
                 </div>
                   </div>
                 </div>
@@ -43,7 +42,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Website</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="website" id="website" placeholder="Website">
+                  <input disabled="ture"  type="text" class="form-control" name="website" id="website" placeholder="Website" value="<?php echo $account_data['website']?>">
                 </div>
             </div>
                 </div>
@@ -53,11 +52,11 @@
 
                   <div class="col-sm-4">
                 <div class="form-group">
-                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
+                 <select disabled = "true" class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
                     <option  value="">Select</option>
                     @if(count($countries) > 0)
                     @foreach($countries as $country)
-                    <option value={{$country->id}}>{{$country->name}}</option>
+                    <option value={{$country->id}} <?php if($account_data['bill_country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -70,9 +69,13 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
+                  <select disabled = "true" class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
                     <option value="">Select</option>
-
+                    @if(count($states) > 0)
+                    @foreach($states as $state)
+                    <option value={{$state->id}} <?php if($account_data['bill_state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                   </div>
@@ -84,9 +87,13 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="bill_city" id="bill_city">
+                  <select  disabled = "true" class="form-control" name="bill_city" id="bill_city">
                     <option value="">Select</option>
-
+                    @if(count($cities) > 0)
+                    @foreach($cities as $city)
+                    <option value={{$city->id}} <?php if($account_data['bill_city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                   </div>
@@ -95,7 +102,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Billing Address</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"></textarea>
+                  <textarea disabled = "true"  name="bill_address" id="bill_address" style="width:422px;height:74px;"><?php echo $account_data['bill_address']?></textarea>
                 </div>
                   </div>
                 </div>
@@ -103,7 +110,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Billing Postal</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code">
+                  <input disabled="ture"  type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code" value="<?php echo $account_data['bill_postal']?>">
                 </div>
                   </div>
                 </div>
@@ -113,11 +120,11 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="industry_type_id" id="industry_type_id">
+                  <select disabled = "true" class="form-control" name="industry_type_id" id="industry_type_id">
                     <option value="">Select</option>
                     @if(count($industry_types) > 0)
                     @foreach($industry_types as $types)
-                    <option value={{$types->id}}>{{$types->name}}</option>
+                    <option value={{$types->id}} <?php if($account_data['industry_type_id']==$types->id){echo 'selected="selected"';}?>>{{$types->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -125,16 +132,16 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Currency</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Curruncy</label>
 
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="curruncy_id" id="curruncy_id">
+                  <select disabled = "true" class="form-control" name="curruncy_id" id="curruncy_id">
                     <option value="">Select</option>
                     @if(count($curruncies) > 0)
                     @foreach($curruncies as $cur)
-                    <option value={{$cur->id}}>{{$cur->name}}</option>
+                    <option value={{$cur->id}} <?php if($account_data['curruncy_id']==$cur->id){echo 'selected="selected"';}?>>{{$cur->name}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -148,13 +155,13 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="global_region" id="global_region">
+                  <select disabled = "true" class="form-control" name="global_region" id="global_region">
                     <option value="">Select</option>
-                    <option value="AS">AS</option>
-                    <option value="UAE">UAE</option>
-                    <option value="US">US</option>
-                    <option value="UK">UK</option>
-                    <option value="AU">AU</option>
+                    <option value="AS" <?php if($account_data['global_region']=='AS'){echo 'selected="selected"';}?>>AS</option>
+                    <option value="UAE" <?php if($account_data['global_region']=='UAE'){echo 'selected="selected"';}?>>UAE</option>
+                    <option value="US" <?php if($account_data['global_region']=='US'){echo 'selected="selected"';}?>>US</option>
+                    <option value="UK" <?php if($account_data['global_region']=='UK'){echo 'selected="selected"';}?>>UK</option>
+                    <option value="AU" <?php if($account_data['global_region']=='AU'){echo 'selected="selected"';}?>>AU</option>
 
                   </select>
                 </div>
@@ -165,7 +172,7 @@
 
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="IN" readonly placeholder="Postal Code">
+                  <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="IN" disabled="ture" placeholder="Postal Code">
                 </div>
                   </div>
                 </div>
@@ -173,11 +180,10 @@
 </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{{ URL::previous() }}">
-                <button type="button" class="btn btn-default">Cancel</button></a>
-                <!-- <button type="button" class="btn btn-default">Cancel</button> -->
-                {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
-              </div>
+                <!-- <a href="{{ URL::to('admin/accounts') }}"> -->
+                <!-- <button type="button" class="btn btn-default">Cancel</button></a> -->
+<!--                 {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
+ -->              </div>
               <!-- /.box-footer -->
               {!! Form::close() !!}
           </div>
@@ -297,7 +303,7 @@ $(document).ready(function ($) {
                 curruncy_id: {
                     validators: {
                         notEmpty: {
-                            message: 'Currency is required'
+                            message: 'Curruncy is required'
                         }
                     }
                 },

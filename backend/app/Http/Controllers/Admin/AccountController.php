@@ -77,11 +77,18 @@ class AccountController extends Controller
     public function show($id)
     {
         $title = "Show Accounts";
+        $this->Country = new Country();
+        $this->Common = new Common();
+        $countries = $this->Country->getcountrylist();
+
+        $industry_types =$this->Common->getIndustryTypes();
+        $curruncies = $this->Common->getCurruncy();
         $this->Account = new Account();
-        $account_data =    $this->Account->getAccountDataForShow($id);
-        print_r($account_data);
-        die();
-        return view('admin.account.show', compact('title','account_data'));
+        $account_data =    $this->Account->getAccountData($id);
+        $states = $this->Country->getState('country_id',$account_data['bill_country']);
+        $cities = $this->Country->getCity('state_id',$account_data['bill_state']);
+        // return view('admin.account.view', compact('title','account_data'));
+        return view('admin.account.view', compact('title','countries','industry_types','curruncies','account_data','states','cities'));
     }
 
     /**

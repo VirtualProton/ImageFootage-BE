@@ -20,11 +20,10 @@
                             <!-- data-aos="fade-up" -->
                             <div>
                                 <!-- photo-item -->
-                                <a class="d-block selectedsrc" style="text-align: center;">
+                                <span class="d-block selectedsrc" style="text-align: center;">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image"
                                          class="img-fluid">
-                                </a>
-                                <div class="pl-3 pr-3">
+                                         <div class="pl-3 pr-3">
                                     <span class="pull-left">{{imagefootId}}</span>
 
                                     <span class="pull-right">
@@ -37,6 +36,8 @@
                                        title="Wishlist" id='adtow' *ngIf="!vfound" matTooltip="Add to Wishlist"><i class="fas fa-heart"></i></a>
                                 </span>
                                 </div>
+                                </span>
+                                
                             </div>
                             <div class="clearfix"></div>
                             <div class="p-4">
