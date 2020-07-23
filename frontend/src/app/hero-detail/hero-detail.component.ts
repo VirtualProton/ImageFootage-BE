@@ -179,7 +179,7 @@ export class HeroDetailComponent implements OnInit {
              this.keyword = keywords.split(",").map(item => item.trim());
              if(this.detailPageInfo[3]){
                  this.getimagedownloadSample(this.detailPageInfo[3]);
-             }
+             }		 
 
          }
 
@@ -230,6 +230,14 @@ export class HeroDetailComponent implements OnInit {
       });
       
   }
+   showMoreItems()
+   {
+   	 if(document.getElementById("loadmore").innerHTML=="See More"){
+     	document.getElementById("loadmore").innerHTML = "See Less"; 
+	 }else if(document.getElementById("loadmore").innerHTML=="See Less"){
+	 	document.getElementById("loadmore").innerHTML = "See More"; 
+	 }	       
+   }
 
   /*getClassName(ele){
     return 'col-6 col-md-'+ele.eleClass+' col-lg-'+ele.eleClass;
