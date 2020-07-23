@@ -202,7 +202,7 @@
 </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="button" class="btn btn-default">Cancel</button>
+                <a href="{{ URL::previous() }}"><button type="button" class="btn btn-default">Cancel</button></a>
                 {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
               </div>
               <!-- /.box-footer -->

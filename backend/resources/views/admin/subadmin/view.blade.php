@@ -7,14 +7,14 @@
       Admin/Agent List</h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"> Edit Admin/Agent List</li>
+        <li class="active"> View Product Peoples</li>
       </ol>
     </section>
 <section class="content">
 
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Edit Admin/Agent</h3><a href="{{ URL::to('admin/subadmin') }}" class="btn pull-right">Back</a>
+              <h3 class="box-title">View Admin/Agent</h3><a href="{{ URL::to('admin/subadmin') }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -27,7 +27,7 @@
 
                   <div class="col-sm-4">
                 <div class="form-group">
-                 <select class="form-control" name="department" id="department">
+                 <select disabled = "ture" class="form-control" name="department" id="department">
                     <option  value="">Select</option>
                     @if(count($deparments) > 0)
                     @foreach($deparments as $depatment)
@@ -44,7 +44,7 @@
                   <div class="col-sm-4">
                   <div class="form-group">
 
-                  <select class="form-control" name="role" id="role">
+                  <select disabled = "ture" class="form-control" name="role" id="role">
                     <option value="">Select</option>
                     @if(count($roles) > 0)
                     @foreach($roles as $role)
@@ -59,7 +59,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="<?php echo $agent_data['name']; ?>">
+                  <input disabled = "ture" type="text" class="form-control" name="name" id="name" placeholder="Name" value="<?php echo $agent_data['name']; ?>">
                 </div>
                   </div>
                 </div>
@@ -67,7 +67,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>">
+                  <input disabled = "ture" type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>">
                 </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                  <input disabled = "ture" type="password" class="form-control" name="password" id="password" placeholder="Password">
                 </div>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php echo $agent_data['mobile']?>">
+                  <input disabled = "ture" type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php echo $agent_data['mobile']?>">
                 </div>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <textarea name="address" id="address" style="width:422px;height:74px;"><?php echo $agent_data['address']?></textarea>
+                  <textarea disabled = "ture" name="address" id="address" style="width:422px;height:74px;"><?php echo $agent_data['address']?></textarea>
                 </div>
                   </div>
                 </div>
@@ -102,9 +102,8 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <a href="{{ URL::previous() }}"><button type="button" class="btn btn-default">Cancel</button></a>
-<!--                 <button type="button" class="btn btn-default">Cancel</button>
- -->                {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
-              </div>
+<!--                 {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
+ -->              </div>
               <!-- /.box-footer -->
               {!! Form::close() !!}
           </div>

@@ -40,7 +40,7 @@ class Account  extends Authenticatable
     public function getAccountData($id=NULL){
 
         if($id==''){
-        return Account::get()->toArray();
+        return Account::orderBy('id', 'DESC')->get()->toArray();
         }else{
          return Account::where('id','=',$id)->first()->toArray();
         }
