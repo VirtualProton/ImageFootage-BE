@@ -49,7 +49,7 @@
                                         <a href="/search?type=1&keyword={{keys}}" class=" f-12" title="{{keys}}"
                                            *ngFor="let keys of keyword">{{keys}}</a>
                                     </div>
-                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10">See more</label>
+                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10" id="loadmore" (click)="showMoreItems()">See more</label>
                                 </div>
                             </div>
                         </div>
@@ -144,6 +144,9 @@
                                 <small><span class="text-warning">Editorial Use Only </span> <span
                                         style="cursor:pointer;" (click)="open(content)">Learn More</span></small>
                             </p>
+                            
+                            
+                            
 
                         </div>
 
@@ -547,10 +550,14 @@
                                     <input type="checkbox" id="expend"/>
                                     <div class="medium-12 small-12 columns smalldesc tags">
                                         <a href="/search?type=2&keyword={{keys}}" class=" f-12 label-outline-light" title="{{keys}}"
-                                           *ngFor="let keys of keyword">{{keys}}</a>
+                                           *ngFor="let keys of keyword ">{{keys}}</a>
                                     </div>
-                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10">See more</label>
+                                    <label class="rmore" for="expend" *ngIf="keyword.length > 10" (click)="showMoreItems()" id="loadmore">See More</label>
+                                  
                                 </div>
+                               
+                                
+
                             </div>
                         </div>
 
