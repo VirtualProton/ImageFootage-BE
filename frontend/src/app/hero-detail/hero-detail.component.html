@@ -18,13 +18,14 @@
                             <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}}</p>
                             <p>{{detailPageInfo.metadata.description}}</p>
                             <!-- data-aos="fade-up" -->
-                            <div>
+                            <div style="text-align: center;">
                                 <!-- photo-item -->
-                                <span class="d-block selectedsrc" style="text-align: center;">
+                                <div  style="display: inline-block">
                                     <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image"
-                                         class="img-fluid">
+                                         class="img-fluid" >          
+                                         
                                          <div class="pl-3 pr-3">
-                                    <span class="pull-left">{{imagefootId}}</span>
+                                    <div class="pull-left">{{imagefootId}}</div>
 
                                     <span class="pull-right">
                                     <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download"
@@ -36,7 +37,7 @@
                                        title="Wishlist" id='adtow' *ngIf="!vfound" matTooltip="Add to Wishlist"><i class="fas fa-heart"></i></a>
                                 </span>
                                 </div>
-                                </span>
+                                </div>
                                 
                             </div>
                             <div class="clearfix"></div>
