@@ -13,19 +13,16 @@
 
                 <div class="col-md-8 col-sm-8 col-xl-8 col-lg-8">
                     <div class="cartItem" *ngIf="detailPageInfo">
-
                         <div class="p-3">
                             <p class="text-white f-20 mb-0 pt-1">{{detailPageInfo.metadata.title}}</p>
                             <p>{{detailPageInfo.metadata.description}}</p>
                             <!-- data-aos="fade-up" -->
-                            <div style="text-align: center;">
+                            <div style="text-align:center;">
                                 <!-- photo-item -->
-                                <div  style="display: inline-block">
-                                    <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image"                  class="img-fluid" >          
-                                         
-                                         <div class="pl-3 pr-3">
+                                <div  style="display:inline-block">
+                                    <img src="{{detailPageInfo.media.preview_url_no_wm}}" #element alt="Image" class="img-fluid" >       
+                                    <div class="pl-3 pr-3">
                                     <div class="pull-left">{{imagefootId}}</div>
-
                                     <span class="pull-right">
                                     <a href="{{filePreview}}" download="{{imagefootId+'.jpg'}}" title="Download"
                                        style="font-size: 24px;"><i class="fas fa-download" matTooltip="Sample Download"></i></a> &nbsp;&nbsp;
