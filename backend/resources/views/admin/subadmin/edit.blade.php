@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Location</label>
                   <div class="col-sm-4">
                   <div class="form-group">
                   <textarea name="address" id="address" style="width:422px;height:74px;"><?php echo $agent_data['address']?></textarea>

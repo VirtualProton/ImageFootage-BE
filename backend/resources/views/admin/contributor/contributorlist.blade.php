@@ -33,13 +33,13 @@
 
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
-                        <th>Id</th>
-                        <th>Member Id</th>
+                        <th>Sl. No</th>
+                        <th>Contributor Id</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>ID Proof</th>
-                        <th>Type</th>
-                        <th>Created At</th>
+                        <th>Type of Contributor</th>
+                        <th>Created On</th>
                         <th>Actions</th>
                     </thead>
 
@@ -62,19 +62,19 @@
 
             <a href="{{ url('admin/updatecontributor/'.$contributor['contributor_id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             <a href="{{ url('admin/deletecontributor/'.$contributor['contributor_id']) }}" title="Deleate" onclick="return confirm('Are you sure you want to delete this contributor?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            <a class="reset_cont_pass" cont_id='{{ $contributor['contributor_id'] }}'>Reset Password</a>
+            <a class="reset_cont_pass" cont_id='{{ $contributor['contributor_id'] }}'>Delect Account</a>
             </td>
  </tr>
 @endforeach
                     </tbody>
                     <tfoot>
-                        <th>Id</th>
-                        <th>Member Id</th>
+                        <th>Sl. No</th>
+                        <th>Contributor Id</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>ID Proof</th>
-                        <th>Type</th>
-                        <th>Created At</th>
+                        <th>Type of Contributor</th>
+                        <th>Created On</th>
                         <th>Actions</th>
                     </tfoot>
                 </table>

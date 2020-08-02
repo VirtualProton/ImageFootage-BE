@@ -18,6 +18,9 @@ class Account  extends Authenticatable
             $account = new Account();
             $account->account_name = $data->account_name;
             $account->email = $data->email;
+            $account->contact_name = $data->contact_name;
+            $account->title = $data->title;
+            $account->mobile = $data->mobile;
             $account->phone = $data->phone;
             $account->website = $data->website;
             $account->bill_address = $data->bill_address;
@@ -52,6 +55,9 @@ class Account  extends Authenticatable
             $account->id = $id;
             $account->account_name = $data->account_name;
             $account->email = $data->email;
+            $account->contact_name = $data->contact_name;
+            $account->title = $data->title;
+            $account->mobile = $data->mobile;
             $account->phone = $data->phone;
             $account->website = $data->website;
             $account->bill_address = $data->bill_address;

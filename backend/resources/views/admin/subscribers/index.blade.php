@@ -40,7 +40,7 @@
                                             <th>Email</th>
                                             <th>Mobile</th>
                                             <th>Address</th>
-                                            <th>Action</th>
+                                            <th>View more</th>
                                         </tr>
                                         </thead>
 
@@ -96,7 +96,7 @@
                                                                         <td>{{$eachPlan['created_at']}}</td>
                                                                         <td>{{$eachPlan['package_expiry_date_from_purchage']}}</td>
                                                                         <td><a href="{{$eachPlan['invoice']}}"
-                                                                               target="_blank">Invoice</a></td>
+                                                                               target="_blank">Download</a></td>
                                                                         <td>
                                                                             <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i
                                                                                         class="fa fa-cloud-download"
@@ -193,4 +193,16 @@
         }
 
     </script>
+        <!-- <script>
+
+            $(document).ready(function () {
+            $(".content").hide();
+            $(".show_hide").on("click", function () {
+                var txt = $(".content").is(':visible') ? 'Read More' : 'Read Less';
+                $(".show_hide").text(txt);
+                $(this).next('.content').slideToggle(200);
+                });
+            });
+    </script> -->
+
 @endsection

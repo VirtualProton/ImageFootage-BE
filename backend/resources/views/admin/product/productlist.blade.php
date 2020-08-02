@@ -33,15 +33,15 @@
 
                 <table id="example2" class="table table-bordered table-hover">
                 	<thead>
-                        <th>Id</th>
+                        <th>Sl. No</th>
                         <th>Product Id</th>
                         <th>Category</th>
-                        <th>Subcategory</th>
-                        <th>Owner</th>
-                        <th>Vertical</th>
+                        <!-- <th>Subcategory</th> -->
+                        <!-- <th>Owner</th> -->
+                        <th>License Type</th>
                         <th>Keywords</th>
                         <th>Type</th>
-                        <th>Product</th>
+                        <th>Product Type</th>
                         <th>Added On</th>
                         <?php /*?><th>Actions</th><?php */?>
                     </thead>
@@ -52,8 +52,8 @@
                       <td>{{ $product['id'] }}</td>
                       <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['product_id'] }}</a> </td>
                       <td>{{ $product['category_name'] }} </td>
-                      <td>{{ $product['subcategory_name'] }} </td>
-                      <td>{{ $product['product_owner'] }} </td>
+                      <!-- <td>{{ $product['subcategory_name'] }} </td> -->
+                      <!-- <td>{{ $product['product_owner'] }} </td> -->
                       <td>{{ $product['product_vertical'] }} </td>
                       <td ><span style="width:300px;display: flex;overflow:auto;">{{ $product['product_keywords'] }}</span> </td>
                       <td>{{ $product['product_main_type'] }} </td>
@@ -89,15 +89,15 @@
 @endforeach
                     </tbody>
                     <tfoot>
-                        <th>Id</th>
+                        <th>Sl. No</th>
                         <th>Product Id</th>
                         <th>Category</th>
-                        <th>Subcategory</th>
-                        <th>Owner</th>
-                        <th>Vertical</th>
+                        <!-- <th>Subcategory</th> -->
+                        <!-- <th>Owner</th> -->
+                        <th>License Type</th>
                         <th>Keywords</th>
                         <th>Type</th>
-                        <th>Product</th>
+                        <th>Product Type</th>
                         <th>Added On</th>
                         <?php /*?><th>Actions</th><?php */?>
                     </tfoot>

@@ -336,7 +336,8 @@ class ProductController extends Controller
 			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
 			 $productimages->save();
 			 
-			 return back()->with('success','Product Upload successful');
+			 // return back()->with('success','Product Upload successful');
+			return redirect('admin/all_products')->with('success','Product Upload successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');
 		 }
@@ -941,7 +942,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 	   }
 	   $result = Product::where('id',$request->prod_id)->update($update_array);
 	   if($result){
-		   echo 'Product status changed success.';
+		   echo 'Product verification is successful';
 	   }else{
 		   echo 'Some problem occured.';
 	   }
