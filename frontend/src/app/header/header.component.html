@@ -1,174 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" [ngClass]="{ 'navbar-shrink': scrollEle }" id="mainNav" appNoRightClick>
-  <div class="container-fluid">
-   
-    <a class="navbar-brand js-scroll-trigger" href=""><!--Image Footage--><img src="assets/images/IF_Logo_Final.png" width="200px" /></a>
-   
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
-    (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" 
-    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      Menu
-      <i class="fas fa-bars"></i>
-    </button>
-    
-    <!-- #page-top <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4" *ngIf="!footerCssEle">
-      <form class="search_m header_serach mt-3 mb-3">
-          <div class="input-group search-bar">
-              <div class="input-group-btn" ngbDropdown >
-                  <button type="button" class="btn btn-secondary" id="dropdownBasic1" ngbDropdownToggle>
-                    <span *ngIf='productType == 3'>Photos + Videos</span>
-                    <span *ngIf='productType == 1'>Photos Only</span>
-                    <span *ngIf='productType == 2'>Videos Only</span>
-                  </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(3)" ngbDropdownItem>Photos + Videos</a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(1)" ngbDropdownItem><i class=""></i> Photos Only</a>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="searchDropDownClick(2)" ngbDropdownItem>Videos Only</a>
-                  </div>
-              </div>
-              
-              <input type="text" [(ngModel)]="keywordEle" [ngModelOptions]="{standalone: true}" #ctrl="ngModel" (keydown)="onKeydown($event)"  class="form-control" aria-label="Text input with dropdown button">
-              <i class="fa fa-search"></i>
-        </div>
-      </form>
-    </div>-->
 
-
-
-    <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isCollapsed">
-      <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',sideBar:false}"  >Images</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:2,keyword:'',sideBar:false}">Footage</a>
-        </li>
-        <li class="nav-item">
-        <!--<a class="nav-link js-scroll-trigger" href="{{ forimgredi}}/search?type=1&keyword=&cat=editorial&sideBar=false" >Editorial</a>-->
-<!--          [routerLink]="['/search']" [queryParams]="{type:1,keyword:'',cat:'editorial',sideBar:false}"-->
-          <a class="nav-link js-scroll-trigger" (click)="selectEditorialType(editorial)">Editorial</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
-        </li>
-         <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Wishlist<!--<img src="../assets/images/arrow icon.png" style='width:70px;margin-top:-12px;' />--></a>
-        </li>
-
-        <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" routerLink="/cart"><i class="fa fa-shopping-cart"></i></a>
-        </li>
-        <li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><i class="fa fa-shopping-cart"></i></a>
-        </li>
-
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link js-scroll-trigger" href="#team"><i class="fa fa-heart"></i> wishlist</a>-->
-<!--        </li>-->
-
-
-        <!--<li class="nav-item" *ngIf="!currentUser">
-       <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()"><img src="../assets/images/log in icon.png" style='width:70px;margin-top:-15px;' />       Login</a>
-        </li>-->
-
-        <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" [routerLink]="['/user-profile']"><i class="fa fa-user-circle-o"></i></a>
-        </li>
-        <li class="nav-item" *ngIf="currentUser">
-          <a class="nav-link js-scroll-trigger" (click)="logout()">Logout</a>
-        </li>
-        <!--<li class="nav-item" *ngIf="!currentUser">
-          <a class="nav-link js-scroll-trigger btn btn-outline-white rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp"><i class="fa fa-user"></i> User</a>
-        </li>-->        
-        <li class="nav-item" *ngIf="!currentUser">
-        <!--btn-outline-white-->
-          <a class="nav-link js-scroll-trigger btn  rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" 
-          (click)="clickLoginPopup()"><i class="fa fa-user"></i> User</a>
-        </li>
-		<!-- btn-outline-white -->
-        <!--<li class="nav-item" *ngIf="!currentUser">
-        
-          <a class="nav-link js-scroll-trigger btn  rounded-0 " [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/contributor-sign-up" style="margin-left: 10px;"><i class="fa fa-user"></i> Contributor</a>
-        </li>-->
-
-
-
-        <!--        <li class="nav-item">-->
-<!--          <a class="nav-link js-scroll-trigger" routerLink="/pricing">Pricing</a>-->
-<!--        </li>-->
-<!--        -->
-<!--        <li class="nav-item" *ngIf="currentUser">-->
-<!--          <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item" *ngIf="!currentUser">-->
-<!--          <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()">Cart</a>-->
-<!--        </li>-->
-<!--        -->
-<!--        <li class="nav-item" *ngIf="!currentUser">-->
-<!--          <a class="nav-link js-scroll-trigger"  (click)="clickLoginPopup()">Login</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item" *ngIf="currentUser">-->
-<!--          <a class="nav-link js-scroll-trigger"  (click)="logout()">Logout</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item"  *ngIf="!currentUser">-->
-<!--          <a class="nav-link js-scroll-trigger" [ngClass]="{ 'btn btn-outline-white rounded-0': dashboardCssEle }" routerLink="/signUp">Sign Up</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item" *ngIf="currentUser">-->
-<!--            <a class="nav-link js-scroll-trigger"  routerLink="/wishlist">wishlist</a>-->
-<!--        </li>     -->
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-  <!-- Navigation 
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container-fluid">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Image Footage</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" [routerLink]="['/search']" [queryParams]="{type:1,keyword:''}">Images</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger"  [routerLink]="['/search']" [queryParams]="{type:2,keyword:''}">Footage</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" routerLink="/about">Editorial</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" routerLink="/team">Pricing</a>
-          </li>
-          
-          <li class="nav-item" *ngIf="currentUser">
-            <a class="nav-link js-scroll-trigger" routerLink="/wishlist">Cart</a>
-          </li>
-          <li class="nav-item" *ngIf="!currentUser">
-            <a class="nav-link js-scroll-trigger" (click)="clickLoginPopup()">Cart</a>
-          </li>
-          
-          <li class="nav-item" *ngIf="!currentUser">
-            <a class="nav-link js-scroll-trigger"  (click)="clickLoginPopup()">Login</a>
-          </li>
-          <li class="nav-item" *ngIf="currentUser">
-            <a class="nav-link js-scroll-trigger"  (click)="logout()">Logout</a>
-          </li>
-          <li class="nav-item"  *ngIf="!currentUser">
-            <a class="nav-link js-scroll-trigger" routerLink="/signUp">Sign Up</a>
-          </li>
-          <li class="nav-item" *ngIf="currentUser">
-              <a class="nav-link js-scroll-trigger"  routerLink="/wishlist">wishlist</a>
-            </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  -->
+         <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Image Footage</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav text-uppercase ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link js-scroll-trigger" href="#team"><i class="fa fa-shopping-cart"></i></a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link js-scroll-trigger" href="#services">Support</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link js-scroll-trigger" href="#portfolio">Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link js-scroll-trigger" href="#about">Sign Up</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
 
 
 <ng-container *ngIf="showloginPopup">
