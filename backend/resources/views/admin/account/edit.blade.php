@@ -23,13 +23,42 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $account_data['email']?>">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $account_data['email']?>">
+                      </div>
+                    </div>
                 </div>
-                  </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Contact Name</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="contact_name" id="contact_name" placeholder="Contact Name" value="<?php echo $account_data['contact_name']?>">
+                      </div>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<?php echo $account_data['title']?>">
+                      </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile" value="<?php echo $account_data['mobile']?>">
+                      </div>
+                    </div>
+                </div>
+
+
                   <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
                   <div class="col-sm-4">

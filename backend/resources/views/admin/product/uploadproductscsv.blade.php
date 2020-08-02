@@ -31,9 +31,9 @@
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
                   <div class="form-group">
-                      <label for="exampleInputEmail1">Product Bank/Owner Name </label>
+                      <label for="exampleInputEmail1">Contributor ID/Owner Name </label>
                        <select class="form-control" name="owner_name" id="owner_name">
-                      <option value="">--Product Bank/Owner Name--</option>
+                      <option value="">--Contributor ID/Owner Name--</option>
                         @foreach($contributor as $contributor)
                         <option value="{{ $contributor['contributor_memberid'] }}" >{{ $contributor['contributor_name'] }}</option>
                         @endforeach
@@ -43,7 +43,7 @@
                        @endif
                     </div>
                    <div class="form-group">
-                      <label for="exampleInputEmail1">Product Sort Type </label>
+                      <label for="exampleInputEmail1">Upload file</label>
                       <input type="file" class="form-control" name="product_csv" id="product_csv" >
                        @if ($errors->has('product_csv'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('product_csv') }}</div>

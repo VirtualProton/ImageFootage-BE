@@ -39,16 +39,33 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Product Bank/Owner Name </label>
-                       <select class="form-control" name="owner_name" id="owner_name">
-                      <option value="">--Product Bank/Owner Name--</option>
+                      <input type="text" list="owners" class="form-control" name="owner_name" id="owner_name">
+                      <!-- <datalist id="owners">
+
+                        <option>Volvo</option>
+                        <option>Saab</option>
+                        <option>Audi</option>
+                      </datalist> -->
+                       <!-- <select class="form-control" name="owner_name" id="owner_name"> -->
+                        <datalist id="owners">
+                        <option value="">--Product Bank/Owner Name--</option>
                         @foreach($contributor as $contributor)
                         <option value="{{ $contributor['contributor_memberid'] }}" >{{ $contributor['contributor_name'] }}</option>
                         @endforeach
-                      </select>
+                        </datalist>
+                      <!-- </select> -->
                        @if ($errors->has('owner_name'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('owner_name') }}</div>
                        @endif
                     </div>
+
+                    <datalist id="cars">
+                      <option>Volvo</option>
+                      <option>Saab</option>
+                      <option>Mercedes</option>
+                      <option>Audi</option>
+                    </datalist>
+
                     <div class="form-group">
                       <label for="exampleInputEmail1">License Type </label>
                       <select class="form-control" name="license_type" id="license_type">
@@ -285,15 +302,15 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Small </label>
-                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Product Bank/Owner Name">
+                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Medium </label>
-                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Product Bank/Owner Name">
+                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Large </label>
-                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Product Bank/Owner Name">
+                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Extra Large </label>

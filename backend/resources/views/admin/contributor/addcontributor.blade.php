@@ -106,7 +106,7 @@
                     @endif
                     <div class="form-group">
                       <label for="exampleInputEmail1">Bank Account Number</label>
-                      <input type="text" class="form-control" name="bank_account_number" id="bank_account_number" placeholder="Bank Account Number">
+                      <input type="number" class="form-control" name="bank_account_number" id="bank_account_number" placeholder="Bank Account Number">
                     </div>
                     @if ($errors->has('bank_account_number'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('bank_account_number') }}</div>

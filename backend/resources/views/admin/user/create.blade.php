@@ -49,10 +49,10 @@
                 </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Contact Owner</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Company Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="contact_owner" id="contact_owner" placeholder="Contact Owner">
+                  <input type="text" class="form-control" name="contact_owner" id="contact_owner" placeholder="Company Name">
                 </div>
                 </div>
                 </div>
@@ -166,7 +166,7 @@
                 </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
                   <div class="col-sm-4">
@@ -179,7 +179,7 @@
                   </select>
                 </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
