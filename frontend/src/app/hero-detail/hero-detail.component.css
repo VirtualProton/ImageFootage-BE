@@ -29,7 +29,6 @@ transition: all 350ms ease; }
 -webkit-transform: scale(1);
 -ms-transform: scale(1);
 transform: scale(1); }
-
 @media (max-width: 450px) {
 .gallery {
 -webkit-column-count: 1;
