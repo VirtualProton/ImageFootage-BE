@@ -48,7 +48,7 @@
                           </div>
 
                       </td>
-                      <td width="25%" align="right"><p class="f-18 text-black"><strong>{{wishList.total | number }} INR</strong></p>
+                      <td width="25%" align="right"><p class="f-18 text-black"><strong>{{wishList.total | currency:'INR':true}} </strong></p>
 
                       </td>
                   </tr>
@@ -76,9 +76,9 @@
                 </div>
                  <div class="col-md-8 col-sm-8 col-lg-8">
                   <ul class="list-unstyled text-right text-black f-18 text-black">
-                    <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">{{showTotalPrice()}} INR</span></li>
-                    <li class="pb-5 fw-6 ">Taxes <span class="d-inline-block w-100px">{{showTax()}} INR</span></li>
-                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">{{showTotalPrice() + showTax()}} INR</span></li>
+                    <li class="pb-3 fw-6 ">Sub Total <span class="d-inline-block w-100px">{{showTotalPrice() | currency:'INR':true}} </span></li>
+                    <li class="pb-5 fw-6 ">Taxes <span class="d-inline-block w-100px">{{showTax()  | currency:'INR':true}} </span></li>
+                    <li class="pb-2 fw-8 f-22">Grand Total <span class="d-inline-block w-100px">{{showTotalPrice() + showTax() | currency:'INR':true}} </span></li>
                   </ul>
                   </div>
                   </div>

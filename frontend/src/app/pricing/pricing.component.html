@@ -339,7 +339,7 @@
                              <input  type="radio" name="submplan"  formControlName="submplan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && h.submplan.errors }">
                              </span>
                                 <span class="float-left ml-10">  {{pack.package_name}}</span>
-                                <span> INR {{pack.package_price}} </span>
+                                <span>  {{pack.package_price | currency:'INR':true}} </span>
 
                             </li>
                         </ul>
@@ -369,7 +369,7 @@
                            </span>
                                         <span class="ml-10">  {{pack.package_name}}</span>
                                     </div>
-                                    <div><span class=""> INR {{pack.package_price}} </span>
+                                    <div><span class=""> {{pack.package_price | currency:'INR':true}} </span>
                                     </div>
                                 </div>
 
@@ -398,7 +398,7 @@
                      <input type="radio"  type="radio" name="plan"  formControlName="plan" value="{{pack.package_id}}" [ngClass]="{ 'is-invalid': submitted && f.plan.errors }">
                      </span>
                                 <span class="float-left ml-10">  {{pack.package_name}}</span>
-                                <span> INR {{pack.package_price}} </span>
+                                <span> {{pack.package_price | currency:'INR':true}} </span>
 
                             </li>
                         </ul>
@@ -425,7 +425,7 @@
                         <ul class="item-list">
                             <li>
                                 <span class="float-left ml-10">Individual</span>
-                                <span> INR 11500 </span>
+                                <span> {{"11500" | currency:'INR':true}} </span>
                             </li>
                             <li *ngFor="let pack of footageplansData.download_pack.HD;let i= index">
                              <span class="float-left">
@@ -433,7 +433,7 @@
 
                              </span>
                                 <span class="float-left ml-10">  {{pack.package_name}}</span>
-                                <span> INR {{pack.package_price}} </span>
+                                <span>  {{pack.package_price | currency:'INR':true}} </span>
 
                             </li>
                         </ul>
@@ -454,7 +454,7 @@
                         <ul class="item-list">
                             <li>
                                 <span class="float-left ml-10">Individual</span>
-                                <span> INR 16500 </span>
+                                <span> {{"16500" | currency:'INR':true}}  </span>
                             </li>
                             <li *ngFor="let pack of footageplansData.download_pack['4K'];let i= index">
                                 <div>
@@ -464,7 +464,7 @@
                            </span>
                                         <span class="ml-10">  {{pack.package_name}}</span>
                                     </div>
-                                    <div><span class=""> INR {{pack.package_price}} </span>
+                                    <div><span class=""> {{pack.package_price | currency:'INR':true}} </span>
                                     </div>
                                 </div>
                             </li>
@@ -473,8 +473,6 @@
                     </div>
                     </form>
                 </div>
-
-
 
             </div>
             <!-- row-->
@@ -487,7 +485,7 @@
                 <div class="head" style="height: 110px;">
                     <h5>{{selectedPlanType}}</h5>
                 </div>
-                <div>{{selectedData.package_name}} => INR {{selectedData.package_price}} </div>
+                <div>{{selectedData.package_name}} => {{selectedData.package_price | currency:'INR':true}} </div>
                 <div>
                     <button type="button" (click)="changePlan()" style="margin-top:130px;"  class="btn btn-dark">Change Plan</button>
                 </div>

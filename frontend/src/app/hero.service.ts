@@ -21,7 +21,7 @@ import {MessageService} from './message.service';
 export class HeroService {
     //https://imagefootage.com/backend/api/ For Live
     //http://localhost/imagefootagenew/backend/api/ For Local
-    private heroesUrl = 'https://imagefootage.com/backend/api/';  // URL to web api
+    private heroesUrl = 'http://imagefootage.com/backend/api/';  // URL to web api
     private localhostUrl = 'http://localhost/imagefootagenew/backend/api/';
     private carouselImagesUrl = 'api/carouselImages';
     private aosImagesUrl = 'api/aosImages';
@@ -875,6 +875,22 @@ export class HeroService {
         );
 
     }
+
+    updateProfile(profileData:any):Observable<any> {
+        const url = `${this.heroesUrl}update_profile`;
+        let tokenData = JSON.parse(localStorage.getItem('currentUser'));
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenData.access_token
+        });
+        let options = {headers: headers};
+        return this.http.post<any>(url, {profileData,tokenData}, options).pipe(
+            map(profileData => {
+                return profileData;
+            }),
+            catchError(this.handleError<userData>(`unable to get data`))
+        );
+    }
 }
 
-
+ 

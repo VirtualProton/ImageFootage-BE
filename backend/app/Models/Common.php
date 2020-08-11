@@ -271,10 +271,10 @@ class Common extends Model
         //     $message->to($data["email"])
         //     ->subject($data["subject"]);
         // });
-    }catch(JWTException $exception){
-        $this->serverstatuscode = "0";
-        $this->serverstatusdes = $exception->getMessage();
-    }
+            }catch(JWTException $exception){
+                $this->serverstatuscode = "0";
+                $this->serverstatusdes = $exception->getMessage();
+            }
     if (Mail::failures()) {
          $this->statusdesc  =   "Error sending mail";
          $this->statuscode  =   "0";
