@@ -34,7 +34,7 @@
                         <th>Product Category</th>
                         <th>Product Category Alignment</th>
                         <th>Keywords</th>
-                        <th>Is Display HomePage</th>
+                        <th>Want to Display on Home</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>
@@ -70,7 +70,7 @@
                         <th>Product Category</th>
                         <th>Product Category Order</th>
                         <th>Keywords</th>
-                        <th>Is Display HomePage</th>
+                        <th>Want to Display on Home</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </tfoot>

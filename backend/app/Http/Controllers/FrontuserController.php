@@ -52,7 +52,7 @@ class FrontuserController extends Controller {
                     echo '{"status":"0","message":"Some problem occured."}';
                 }
             }else{
-                echo '{"status":"0","message":"Allready this product is in your cart."}';
+                echo '{"status":"0","message":"Already this product is in your cart."}';
             }
         }else if($request['product']['type']=='3'){
             $product_id = $request['product']['product_info'][0]['clip_data']['pic_objectid'];
