@@ -53,12 +53,13 @@ export class ChangePasswordComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data2 => {
-				if(data2.status==1){
-				    Swal.fire('', data2.message, 'success');
-					this.router.navigate(['/']);
-				}else if(data2.status==0){
-                    Swal.fire('', data2.message, 'error');
-				}
+              if(data2.status==1){
+                  Swal.fire('', data2.message, 'success');
+                  this.authenticationService.logout();
+                  this.router.navigate(['/']);
+              }else if(data2.status==0){
+                  Swal.fire('', data2.message, 'error');
+              }
               this.loadingData = false;
             },
             error => {

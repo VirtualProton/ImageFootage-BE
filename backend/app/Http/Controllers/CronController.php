@@ -73,28 +73,30 @@ class CronController extends Controller
     }
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);
-        $cat=[53,54,55,56,57,3,4,5,40,15,8,10,12,17,20,23,13,24,26,31,52,34];
+        $cat=[53,54,55,56,57,14,3,4,5,12,15,40,8,10,17,20,23,24,26,31,52,34,51,42,43];
         DB::enableQueryLog();
         $products = Product::where('product_web','=','2')
                     ->whereIn('product_category',$cat)
-                    ->whereRaw("date(updated_at) < '2020-07-02'")
+                    ->whereRaw("date(updated_at) < '2020-08-02'")
                     ->orderBy('id','desc')
                     ->get()
                     ->toArray();
         //dd(DB::getQueryLog());
-       // print_r($products); die;
+        //print_r($products); 
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];
             //echo $keyword['search'];
             $pantherMediaImages = new ImageApi();
-            $pantharmediaData = $pantherMediaImages->get_media_info($keyword['search']);
-            //echo "<pre>";
-            //print_r($pantharmediaData); die;
-            if(count($pantharmediaData) > 0){
+            $pantharmediaData = $pantherMediaImages->get_media_infoNew($keyword['search']);
+            
+            if(isset($pantharmediaData['stat'])){
+            if($pantharmediaData['stat'] != 'fail') {
                 $this->product->updatePantherImage($pantharmediaData);
-              }
-
-            //print_r($pantharmediaData); die;
+            }else{
+                Product::where('api_product_id', '=', $perproduct['api_product_id'])->update(['thumb_update_status' => 0]);
+            } 
+        }
+         //print_r($pantharmediaData); die;
 
         }
 

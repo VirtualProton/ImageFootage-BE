@@ -111,13 +111,30 @@ export class CheckoutComponent implements OnInit {
   getUserAddress(){
     this.authenticationService.getUserAddress()
       .subscribe(data => {
+        let billing_address = localStorage.getItem('billing_address');
+      
+        if(billing_address == null || billing_address===undefined){
+          this.onChangeCountry(data.data.country);
+          this.onChangeState(data.data.state);
+          this.checkoutForm = this.formBuilder.group({
+            first_name: [data.data.first_name, Validators.required],
+            last_name: [data.data.last_name, Validators.required],
+            address: [data.data.address, Validators.required],
+            country: [data.data.country, Validators.required],
+            state: [data.data.state, Validators.required],
+            city: [data.data.city, Validators.required],
+            pincode: [data.data.pincode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+            terms: [false, Validators.requiredTrue]
+          });
+        }  
 		  this.firstname=data.data.first_name;
 		  this.lastname=data.data.last_name;
 		  this.address=data.data.address;
 		  this.country=data.data.country;
-          this.state=data.data.state;
-          this.city=data.data.city;
-          this.postal_code=data.data.postal_code;
+      this.state=data.data.state;
+      this.city=data.data.city;
+      this.postal_code=data.data.postal_code;
+      
       });
   }
     get f() { return this.checkoutForm.controls; }

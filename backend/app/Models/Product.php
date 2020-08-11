@@ -61,6 +61,8 @@ class Product extends Model
                 if($serach==$data[0]['product_id'] && count($data)==1){
                    //if($data[0]['product_web']=='2'){
                         $url = 'detail/'.$data[0]['api_product_id'].'/'.$data[0]['product_web']."/".$data[0]['product_main_type'];
+                        $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
+                        $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'],true);
                         $data = array('code'=>1,'url'=>$url,'data'=>$data);
                    //}else{
 
@@ -171,7 +173,8 @@ class Product extends Model
                             'product_title' => $data['metadata']['title'],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'width_thumb' => $imgData[0],
-                            'height_thumb' => $imgData[1]
+                            'height_thumb' => $imgData[1],
+                            'thumb_update_status' =>  1
                         ]);
                     echo "Updated". $data['media']['id'];
                 }
@@ -240,11 +243,12 @@ class Product extends Model
         $data =   DB::table('imagefootage_products as pr')
             //->where('pr.product_web','2')
             //->where('pr.width_thumb','<>',NULL)
-            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','category_id','product_main_type','width_thumb','height_thumb')
+            ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','category_id','product_main_type','width_thumb','height_thumb','thumb_update_status')
             ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
             //->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
              //   'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
              ->where('pc.is_display_home','=','1')
+             ->where('pr.thumb_update_status','=','1')
              ->whereRaw("date(pr.updated_at) >= '2020-05-01'")
              ->orderBy('pc.category_order','asc')
              ->inRandomOrder()

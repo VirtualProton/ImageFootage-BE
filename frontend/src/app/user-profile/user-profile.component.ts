@@ -33,9 +33,10 @@ export class UserProfileComponent implements OnInit {
   address:string='';
   city:string='';
   mobile:number ;
+  phone:number;
   state:string='';
   country:string='';
-  postal_code:string='';
+  postal_code:any='';
     submitted = false;
     stateInfo: any[] = [];
     countryInfo: any[] = [];
@@ -58,7 +59,6 @@ export class UserProfileComponent implements OnInit {
     if (document.body.scrollTop > 10 ||     
     document.documentElement.scrollTop > 10) {
       document.getElementById('navbarResponsive').classList.remove('show');
-      //document.getElementById('paragraph').classList.add('green');
     }
   }
   ngOnInit() {
@@ -74,6 +74,7 @@ export class UserProfileComponent implements OnInit {
                 this.lastname=data.data.last_name;
                 this.address=data.data.address;
                 this.mobile=data.data.mobile;
+                this.phone=data.data.phone;
                 this.country=data.data.country;
                 this.state=data.data.state;
                 this.city=data.data.city;
@@ -92,40 +93,15 @@ export class UserProfileComponent implements OnInit {
 
             });
     this.tabshow(tab);
-    if(this.profileData){
-      this.editProfileForm = this.formBuilder.group({
-          first_name: [this.profileData.first_name, Validators.required],
-          last_name: [this.profileData.last_name, Validators.required],
-          mobile: [this.profileData.mobile, Validators.required],
-          address: [this.profileData.address, Validators.required],
-          country: [this.profileData.country, Validators.required],
-          state: [this.profileData.state, Validators.required],
-          city: [this.profileData.city, Validators.required],
-          pincode: [this.profileData.pincode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-
-      });
-  }else {
-    this.editProfileForm = this.formBuilder.group({
-        first_name: ['', Validators.required],
-        last_name: ['', Validators.required],
-        mobile: ['', Validators.required],
-        address: ['', Validators.required],
-        country: ['', Validators.required],
-        state: ['', Validators.required],
-        city: ['', Validators.required],
-        pincode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-    });
-}
+    
   }
 
     get f() { return this.editProfileForm.controls; }
     getCountries(){
         this.authenticationService.allCountries().
         subscribe(
-            data2 => {
-                //this.countryInfo=data2.Countries;
-                this.countryInfo=data2;
-                //console.log('Data:', this.countryInfo);
+            data2 => {   
+                this.countryInfo=data2;  
             },
             err => console.log(err),
             () => console.log('complete')
@@ -134,53 +110,31 @@ export class UserProfileComponent implements OnInit {
 
     onChangeCountry(countryValue) {
         this.loadingData = true;
-
-        //  console.log(this.countryInfo[countryValue]);
         this.authenticationService.allstates(countryValue).
         subscribe(
             data2 => {
-                //this.countryInfo=data2.Countries;
+               
                 this.stateInfo=data2;
                 this.loadingData = false;
-                //console.log('Data:', this.countryInfo);
+               
             },
             err => console.log(err),
             () => console.log('complete')
         )
-
-        // this.registerForm.controls['country'].setValue(this.countryInfo[countryValue].CountryName);
-        // this.stateInfo=this.countryInfo[countryValue].States;
-        // this.cityInfo=this.stateInfo[0].Cities;
-        //  console.log(this.cityInfo);
     }
-    onChangeCity(cityValue){
-        // console.log(this.cityInfo[cityValue]);
-        // this.registerForm.controls['city'].setValue(this.cityInfo[cityValue]);
-    }
+   
     onChangeState(stateValue) {
         this.loadingData = true;
-        // let billing_address = localStorage.getItem('billing_address');
-        // if(billing_address) {
-        //     var billing_state = JSON.parse(billing_address);
-        //     billing_state['city'] = '';
-        //     localStorage.setItem('billing_address', JSON.stringify(billing_state));
-        // }
-        // console.log(this.stateInfo[stateValue]);
         this.authenticationService.allCities(stateValue).
         subscribe(
             data2 => {
-                //this.countryInfo=data2.Countries;
                 this.cityInfo=data2;
                 this.loadingData = false;
-                //console.log('Data:', this.countryInfo);
             },
             err => console.log(err),
             () => console.log('complete')
         )
-
-        // this.registerForm.controls['state'].setValue(this.stateInfo[stateValue].StateName);
-        // this.cityInfo=this.stateInfo[stateValue].Cities;
-        // console.log(this.cityInfo);j
+       
     }
   tabshow(type){
     if(type=='profile'){
@@ -189,6 +143,7 @@ export class UserProfileComponent implements OnInit {
       this.plansTab = false;
       this.billingTab = false;
       this.purchaseTab = false;
+      this.editprofileTab = false;
     }else if(type=='plans'){
       this.location.go('plans')
       this.profileTab = false;
@@ -216,6 +171,36 @@ export class UserProfileComponent implements OnInit {
         this.billingTab = false;
         this.purchaseTab = false;
         this.editprofileTab = true;
+        this.onChangeCountry(this.profileData.country.id);
+        this.onChangeState(this.profileData.state.id);
+        if(this.profileData){
+         
+          this.editProfileForm = this.formBuilder.group({
+              first_name: [this.profileData.first_name, Validators.required],
+              last_name: [this.profileData.last_name, Validators.required],
+              mobile: [this.profileData.mobile, Validators.required],
+              phone: [this.profileData.phone, [Validators.minLength(6), Validators.maxLength(13)]],
+              address: [this.profileData.address, Validators.required],
+              country: [this.profileData.country.id, Validators.required],
+              state: [this.profileData.state.id, Validators.required],
+              city: [this.profileData.city.id, Validators.required],
+              pincode: [this.profileData.postal_code, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+    
+          });
+      }else {
+        this.editProfileForm = this.formBuilder.group({
+            first_name: ['', Validators.required],
+            last_name: ['', Validators.required],
+            mobile: ['', Validators.required],
+            phone: ['', [Validators.minLength(6), Validators.maxLength(13)]],
+            address: ['', Validators.required],
+            country: ['', Validators.required],
+            state: ['', Validators.required],
+            city: ['', Validators.required],
+            pincode: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+        });
+    }
+     
     }
 
   }
@@ -263,7 +248,41 @@ export class UserProfileComponent implements OnInit {
   toggle(){
     this.prchage = ! this.prchage;
   }
-
+  
+  onSubmit() {
+    this.loadingData = true;
+    this.submitted = true;
+    //console.log(this.checkoutForm);
+    // stop here if form is invalid
+    if (this.editProfileForm.invalid) {
+        console.log('at invalid');
+        this.loadingData = false;
+        return;
+    }
+    
+    //this.loadingData = false;
+    this.heroService.updateProfile(this.editProfileForm.value)
+      .subscribe(data => {
+        this.loadingData = false;
+        if(data.status =='fail') {    
+          Swal.fire('', "Profile Data not updated", 'error');
+        } else {
+          this.profileData =  data.data;
+          this.firstname=data.data.first_name;
+          this.lastname=data.data.last_name;
+          this.lastname=data.data.last_name;
+          this.address=data.data.address;
+          this.mobile=data.data.mobile;
+          this.phone=data.data.phone;
+          this.country=data.data.country;
+          this.state=data.data.state;
+          this.city=data.data.city;
+          this.postal_code=data.data.postal_code;
+          Swal.fire('', "Profile Data has been Updated", 'success');
+        }
+    });
+    
+}
 
 
 }
