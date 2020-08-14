@@ -198,12 +198,47 @@
                 </div>
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Local Region</label>
-
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="IN" readonly placeholder="Postal Code">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="domestic_region" name="domestic_region" value="<?php echo $account_data['domestic_region']?>" readonly placeholder="Postal Code">
+                      </div>
+                    </div>
                 </div>
-                  </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Bank Name</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="bank_name" name="bank_name" value="<?php echo $account_data['bank_name']?>" placeholder="Bank Name">
+                      </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Account Holder Name</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="account_holder_name" name="account_holder_name" value="<?php echo $account_data['account_holder_name']?>" placeholder="Account Holder Name">
+                      </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Account Number</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="account_number" name="account_number" value="<?php echo $account_data['account_number']?>"  placeholder="Account Number">
+                      </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">IFSC</label>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="ifsc" name="ifsc" value="<?php echo $account_data['ifsc']?>"  placeholder="IFSC">
+                      </div>
+                    </div>
                 </div>
 
 </div>

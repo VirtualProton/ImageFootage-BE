@@ -9,6 +9,8 @@ use DB;
 use Mail;
 use PDF;
 use App\Models\User;
+use App\Models\Package;
+
 
 
 class InvoiceController extends Controller
@@ -75,9 +77,15 @@ class InvoiceController extends Controller
     return response()->json(compact('this'));
   }
 
-  public function quotation($user_id){
-        return view('admin.invoice.quotation',compact('user_id'));   
- }
+  public function quotation($user_id)
+  {
+    $package = new Package;
+    $monthly_image_package_list=$package->where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
+    // print_r($all_package_list);  die;
+    return view('admin.invoice.quotation', compact('user_id'), ['packages' => $monthly_image_package_list]);
+
+    // return view('admin.invoice.quotation',compact('user_id'));   
+  }
 
   public function saveInvoice(Request $request){
       // $data = $request->input();

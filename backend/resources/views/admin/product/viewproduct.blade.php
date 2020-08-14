@@ -28,7 +28,7 @@
                   <h3 class="box-title">Product Id : {{ $product[0]['product_id'] }}</h3>
                   <input type="hidden" value="{{ $product[0]['id'] }}" id="product_id" />
                   <span class="pull-right">
-                  <button class="btn vbutton" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button>
+                  <button class="btn vbutton" id="verifybuttion" type="Verify" @if($product[0]['product_verification']=='Verify') style="background:#090;color:#fff;" @endif>Verify</button>
                   
                   <button class="btn btn-info" data-toggle="collapse" data-target="#demo" type="Reject">Reject</button>
                   <a class="btn btn-info" href="{{ url('admin/editproduct/'.$product[0]['id']) }}"  type="Edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
@@ -316,12 +316,21 @@
 			alert('Reason is required.');
 			return false;
 		}
+    if(btn_type=='Reject' && message !=''){
+      alert('Message has been sent.');
+      return true;
+    }
         $.ajax({
 			url: '{{ url("admin/update_product_verify") }}',
 			type: 'POST',
 			data: {'prod_id':prod_id,'_token':csrf,'type':btn_type,'message':message},
 			success:function(data){
+        // $("#verifybuttion").css("background:#090;color:#fff;");
+        $("#verifybuttion").css("background-color", "#090");
+        $("#verifybuttion").css("color", "#fff");
+
 				alert(data);
+
 			}
 		});
     });

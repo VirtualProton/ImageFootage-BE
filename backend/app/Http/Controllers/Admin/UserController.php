@@ -8,6 +8,8 @@ use App\Models\Country;
 use App\Models\Common;
 use App\Models\User;
 use App\Models\Account;
+use App\Models\Admin;
+
 use DB;
 
 class UserController extends Controller
@@ -46,7 +48,10 @@ class UserController extends Controller
     {
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
-        $accountlist=$this->Account->getAccountData();
+        // $accountlist=$this->Account->getAccountData();
+                $this->Admin = new Admin();
+
+        $accountlist=$this->Admin->getAgentData();
         return view('admin.user.create', compact('title','countries','accountlist'));
     }
 
@@ -58,6 +63,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $title = "Add Lead/User/Account";
+        $countries = $this->Country->getcountrylist();
+        // $accountlist=$this->Account->getAccountData();
+                $this->Admin = new Admin();
+
+        $accountlist=$this->Admin->getAgentData();
+        $user = User::where('email', $request['email'])->get()->toArray();
+        $user['id'] = $user[0]['id'];
+        $user['email'] = $user[0]['email'];
+        // echo "<pre>";print_r($user[0]['id']); die;
+        if(!empty($user)){
+           // return redirect("admin/users/create")->with("user", $user[0]['id']); 
+            return view('admin.user.create', compact('title','countries','accountlist', 'user'));
+
+        }
+        // echo "<pre>"; print_r($user); die;
+        $this->validate($request, [
+            'email' => 'required|email|unique:imagefootage_users|max:255',
+
+        ]);
         if($this->User->save_user($request)){
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
         } else {
@@ -117,6 +142,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user_data =    $this->User->getUserData($id);
+        // print_r($user_data['email']); die;
+        $this->validate($request, [
+            'email' => 'required|email|unique:imagefootage_users,email,'.$id,
+
+        ]);
 
         if($this->User->update_user($request,$id)){
             return redirect("admin/users")->with("success", "Account has been updated successfully !!!");

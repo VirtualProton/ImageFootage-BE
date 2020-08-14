@@ -1,4 +1,4 @@
-base_url ='/imagefootagenew/backend/admin/';
+base_url ='/imagefootage/backend/admin/';
 app= angular.module('imageFootage', [], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');

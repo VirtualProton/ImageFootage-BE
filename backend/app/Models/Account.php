@@ -32,6 +32,10 @@ class Account  extends Authenticatable
             $account->curruncy_id = $data->curruncy_id;
             $account->global_region = $data->global_region;
             $account->domestic_region = $data->domestic_region;
+            $account->bank_name = $data->bank_name;
+            $account->account_holder_name = $data->account_holder_name;
+            $account->account_number = $data->account_number;
+            $account->ifsc = $data->ifsc;
             $account->save();
        }catch (Exception $e) {
         report($e);
@@ -69,6 +73,10 @@ class Account  extends Authenticatable
             $account->curruncy_id = $data->curruncy_id;
             $account->global_region = $data->global_region;
             $account->domestic_region = $data->domestic_region;
+            $account->bank_name = $data->bank_name;
+            $account->account_holder_name = $data->account_holder_name;
+            $account->account_number = $data->account_number;
+            $account->ifsc = $data->ifsc;
             $account->save();
 
        }catch (Exception $e) {

@@ -27,35 +27,11 @@
 										</div>
 									</div>
 									<!-- /.col-lg-6 (nested) -->
+																		<!-- /.col-lg-6 (nested) -->
 									<div class="">
 										<div class="form-group">
 											
 											<label class="margin-right">
-												<input type="radio"    value="Images" name="selection_type" checked="checked">
-												Images 
-											  </label>
-											  <label class="margin-right">
-												<input type="radio"  value="Footage" name="selection_type" >
-												Footage
-											  </label>											
-										</div>
-									</div>
-																		<!-- /.col-lg-6 (nested) -->
-									<div class="">
-										<div class="form-group">
-											<label class="margin-right">
-												<input type="radio"  value="Subscription"  name="quotation_type" checked="checked">
-												Subscription 
-											  </label>
-											  <label class="margin-right">
-												<input type="radio"  value="Download_Packs" name="quotation_type" >
-												Download Packs
-											  </label>
-											  <label class="margin-right">
-											  <input type="radio"  value="custom"  name="quotation_type" >
-												Custom
-											  </label>
-											<!-- <label class="margin-right">
 												<input type="radio"  ng-value="Subscription"  name="quotation_type" ng-model="quotation_type">
 												Subscription 
 											  </label>
@@ -66,32 +42,9 @@
 											  <label class="margin-right">
 											  <input type="radio"  ng-value="custom"  name="quotation_type"  ng-model="quotation_type" ng-checked="true">
 												Custom
-											  </label> -->
+											  </label>
 											
 										</div>
-										<div class="">
-											<div class="form-group">
-												
-												<label class="margin-right">
-													<input type="radio"    value="Monthly" name="plan_type" checked="checked">
-													Monthly 
-												  </label>
-												  <label class="margin-right">
-													<input type="radio"  value="Annual" name="plan_type" >
-													Annual
-												  </label>											
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="sub_total">Plan Name</label>
-											<select id="myDropdown" required=""  class="form-control" ng-model="product.pro_size" >
-												<option value="" selected="">--Select a plan--</option>
-                    							@foreach($packages as $k=>$package)
-												<option value="{{$package['package_price']}}">{{$package['package_name']}}</option>
-                                                @endforeach
-											</select>
-										</div>
-
 									</div>
 									</div>
 						<div class="col-lg-6 col-md-6 col-xs-6 text-right">	
@@ -120,9 +73,9 @@
 								</div>
 								<div class="form-group">
 									<span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-									<span ng-show="!product.thumbnail_image"> <input multiple class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
+									<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
 								</div>
-								<!-- <div class="form-group">
+								<div class="form-group">
 									
 									<label for="sub_total">Image Size</label>
 									<select  required=""  class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)">
@@ -134,8 +87,8 @@
 										<option value="Custom">Custom</option>
 									</select>
 									
-								</div> -->
-								<!-- <div class="form-group">
+								</div>
+								<div class="form-group">
 									
 									<label for="pro_type">Image type</label>
 									<select  required="" class="form-control" ng-model="product.pro_type">
@@ -145,7 +98,7 @@
 										
 									</select>
 									
-								</div> -->
+								</div>
 								
 							<!-- start main div for the oriduct id --->	
 					<div>
@@ -153,7 +106,7 @@
 					<div>
 								<div class="form-group">
 								 <label for="sub_total">Sub Total</label>
-								<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);">
+								<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);" >
 					</div>	
 
 						</div>	
@@ -330,29 +283,7 @@
     @section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script>
-
-$("#myDropdown").change(function () {
-    var selectedValue = $(this).val();
-    // $("#subtotal").val($(this).find("option:selected").attr("value"))
-    $("input[type='text'][name='price']").removeClass( "ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required").addClass( "ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" );
-    $("input[type='text'][name='price']").val($(this).find("option:selected").attr("value"))
-
-});
-	
-// $('#num').on('keyup',function() {
-//   var key = $(this).val(),
-//       result = obj[key],
-//       $text = $('#text')
-//   if (result != undefined) {
-//     $text.val(result);
-//   } else {
-//     $text.val('');
-//   }
-// })
-
 
 $(document).ready(function ($) {
 

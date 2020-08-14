@@ -110,7 +110,37 @@ class SubAdminController extends Controller
         $deparments= Department::where('status','=','A')->get();
         $this->Admin = new Admin();
         $agent_data=$this->Admin->getAgentData($id);
-        return view('admin.subadmin.view', compact('title','deparments','roles','agent_data'));
+
+
+        // echo "<pre>"; print_r($agent_data); die;
+
+        $department_id = $agent_data['department_id'];
+        $role_id = $agent_data['role_id'];
+
+        $agent_data_modules = RolesModulesMapping::where('department_id', $department_id)->where('role_id', $role_id)->get();
+        // echo "<pre>"; print_r($agent_data_modules); die;
+
+
+        $modules = Modules::all()->toArray();
+        // echo "<pre>"; print_r($modules); die;
+
+        $modules_array = array();
+        foreach($modules as $module){
+            $modules_array[$module['id']] = $module['module_name'];
+
+        }
+        // echo "<pre>"; print_r($modules_array); die;
+        
+
+        foreach($agent_data_modules as $k => $agent_data_module){
+            $agent_data_module['module_name'] = $modules_array[$agent_data_module['module_id']];
+ 
+        }
+
+        // echo "<pre>"; print_r($agent_data_modules); die;
+
+
+        return view('admin.subadmin.view', compact('title','deparments','roles','agent_data', 'agent_data_modules'));
 
     }
 

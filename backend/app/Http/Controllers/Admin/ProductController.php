@@ -335,9 +335,10 @@ class ProductController extends Controller
 			 $productimages->image_added_on=date('Y-m-d H:i:s');
 			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
 			 $productimages->save();
+			 // print($product->id); die;
 			 
 			 // return back()->with('success','Product Upload successful');
-			return redirect('admin/all_products')->with('success','Product Upload successful');
+			return redirect('admin/viewproduct/'.$product->id)->with('success','Product Upload successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');
 		 }
