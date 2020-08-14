@@ -526,7 +526,7 @@ export class HeroSearchComponent implements OnInit {
   }
   onNavigate(link,slug,pid,pweb,prod_type){
 		//for redirect
-		alert(link+pid+'/'+pweb+'/'+prod_type);
+		//alert(link+pid+'/'+pweb+'/'+prod_type);
 
 		window.location.href=link+slug+'?webtype='+pweb+'&type='+prod_type.toLowerCase()+'&prod_id='+pid+'&cat='+this.searchData.search.toLowerCase();
   }
