@@ -104,10 +104,11 @@ class UserController extends Controller
 			$sm=$request['email']['user_email'];
 			$update_array=array('otp'=>$randnum);
 		    $result = User::where('email',$request['email']['user_email'])->update($update_array);
-			$url='https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
+			$url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
 			$data = array('url'=>$url,'email'=>$request['email']['user_email']);
-				 Mail::send('forgotpassword', $data, function($message) use($data,$sm) {
-				 	$message->to($sm,'Image Footage')->subject('Image Footage Forgot Password');
+				 Mail::send('email.forgotpassword', $data, function($message) use($data) {
+                     $message->to($data['email'], '')->subject('Image Footage Forget Password')
+                        ->from('admin@imagefootage.com', 'Imagefootage');
 				  });
             $result = ['status'=>1,'message'=>'Check your email for reset password link.'];
         }else{
@@ -161,6 +162,36 @@ class UserController extends Controller
             echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
         }
 
+    }
+
+    public function update_profile (Request $request){
+        $data = $request->all();
+        if(count($data['profileData']) > 0 && count($data['tokenData']) > 0){
+
+            $update = User::where('id', '=' , $data['tokenData']['Utype'])
+                            ->update([
+                                    'first_name' => $data['profileData']['first_name'],
+                                    'last_name' => $data['profileData']['last_name'],
+                                    'mobile' => $data['profileData']['mobile'],
+                                    'phone' => $data['profileData']['phone'],
+                                    'address' => $data['profileData']['address'],
+                                    'country' => $data['profileData']['country'],
+                                    'state' => $data['profileData']['state'],
+                                    'city' => $data['profileData']['city'],
+                                    'postal_code' => $data['profileData']['pincode'],
+                                ]);
+             $userlist = User::where('id', '=', $data['tokenData']['Utype'])
+                                ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code')
+                                ->with('country')
+                                ->with('state')
+                                ->with('city')
+                                ->first()
+                                ->toArray();
+            echo json_encode(['status'=>"success", 'data'=>$userlist]);
+        } else {
+            echo json_encode(['status'=>"fail", 'data'=>'', 'message'=>'Some error happened']);
+        }
+        
     }
 
 }

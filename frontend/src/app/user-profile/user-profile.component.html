@@ -111,6 +111,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3 col-sm-3 col-xl-3">
+                                            <p class="text-muted">Phone</p>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xl-9">
+
+                                            <p class="text-black fw-6">{{profileData.phone}}</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xl-3">
                                             <p class="text-muted">Address </p>
                                         </div>
                                         <div class="col-md-9 col-sm-9 col-xl-9">
@@ -163,7 +173,7 @@
                             </div>
                         </div>
 
-                        <div class="card shadow mt-2">
+                        <!-- <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <p class="f-18 pl-5 pr-5"><b>Preferences</b></p>
                                 <hr>
@@ -191,10 +201,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
-                        <div class="card shadow mt-2">
+                        <!-- <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Language Preference</b></p>
@@ -215,10 +225,10 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
-                        <div class="card shadow mt-2">
+                        <!-- <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Display Preferences</b></p>
@@ -244,10 +254,10 @@
                             </div>
 
 
-                        </div>
+                        </div> -->
 
 
-                        <div class="card shadow mt-2">
+                        <!-- <div class="card shadow mt-2">
                             <div class="pt-3 pb-3 pl-0 pr-0">
                                 <div class="pl-5 pr-5">
                                     <p class="text-black fw-6"><b>Delete account</b></p>
@@ -255,7 +265,7 @@
                                     <a href="#" class="btn btn-danger">Delete my account</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div [ngClass]="[plansTab ? 'tab-pane show active' : '']" id="plans" *ngIf="plansTab"
                          role="tabpanel" aria-labelledby="tab2">
@@ -575,11 +585,27 @@
                                         <div class="col-md-9 col-sm-9 col-xl-9">
 
 
-                                            <input type="text" formControlName="first_name"
+                                            <input type="text" formControlName="mobile"
                                                    [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }"
                                                    class="form-control rounded-0" [value]="mobile">
                                             <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
                                                 <div *ngIf="f.mobile.errors.required">Mobile Number is required</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xl-3">
+                                            <p class="text-muted">Phone</p>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xl-9">
+                                            <input type="text" formControlName="phone"
+                                                   [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+                                                   class="form-control rounded-0" [value]="phone">
+                                            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback"> 
+                                                <div *ngIf="f.phone.errors.minlength || f.phone.errors.maxlength">ZipCode number
+                                                    Please enter Correct Phone Number between 6 to 13.
+                                                </div>
                                             </div>
                                         </div>
 
@@ -680,12 +706,10 @@
                                         <div class="col-md-3 col-sm-3 col-xl-3">
                                             <p class="text-muted"> </p>
                                         </div>
-                                        <div class="col-md-9 col-sm-9 col-xl-9">
+                                        <div class="col-md-3 col-sm-3 col-xl-3">
 
                                             <button type="submit"
-                                                    class="btn btn-success btn-block text-white p-3 text-uppercase" style="width:100px;"><strong>Update</strong></button>
-
-
+                                                    class="btn btn-success btn-block text-white p-3 text-uppercase"><strong>Update</strong></button>
                                         </div>
                                     </div>
                                 </div>

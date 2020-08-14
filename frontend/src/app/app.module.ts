@@ -63,7 +63,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { NewhomeComponent } from './newhome/newhome.component';
 
-
 // Configs 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [

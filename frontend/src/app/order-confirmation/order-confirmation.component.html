@@ -55,20 +55,20 @@
                                     <td>
                                         <p><b>Sub Total</b></p>
                                     </td>
-                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax}} INR</b></td>
+                                    <td><b>{{OrderDetailData.order_total - OrderDetailData.tax | currency:'INR':true}} </b></td>
                                 </tr>
 
                                 <tr>
                                     <td>
                                         <p><b>Charges</b></p>
                                     </td>
-                                    <td><b>{{OrderDetailData.tax}} INR</b></td>
+                                    <td><b>{{OrderDetailData.tax | currency:'INR':true}} </b></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <h4><b>Total</b></h4>
                                     </td>
-                                    <td><h4><b>{{OrderDetailData.order_total}}</b></h4></td>
+                                    <td><h4><b>{{OrderDetailData.order_total | currency:'INR':true}}</b></h4></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -129,7 +129,7 @@
                                         <td class="text-right">
                                             <span class="text-success">Product Price :</span>
                                         </td>
-                                        <td>{{itemdata.standard_price}} INR</td>
+                                        <td>{{itemdata.standard_price | currency:'INR':true}} </td>
                                     </tr>
                                  </tbody>
                                 </table>
@@ -140,23 +140,11 @@
                     </div>
 
 
-
                 </div>
 
-
             </div>
-
-
-
-
-
-
         </div>
 
         <div class="clearfix"></div>
-
-
-
-
     </div>
 </section>

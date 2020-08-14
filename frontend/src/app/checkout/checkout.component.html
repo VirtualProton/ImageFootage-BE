@@ -310,8 +310,8 @@ To read the complete Terms, please see below.
                                      <a href="#" class="btn btn-success btn-sm f-12 text-white"><i class="fa fa-heart"></i> Wishlist</a>
                                    </div> -->
                                 </td>
-                                <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total}}
-                                    INR</strong></p>
+                                <td width="25%" align="right"><p class="f-16 text-black"><strong>{{checkout.total | currency:'INR':true}}
+                                    </strong></p>
                                 </td>
                             </tr>
                             </tbody>
@@ -319,17 +319,17 @@ To read the complete Terms, please see below.
                             <tr class="f-20">
                                 <td colspan="2"></td>
                                 <td align="right"><strong>TOTAL</strong></td>
-                                <td align="right"><strong>{{showTotalPrice()}} INR</strong></td>
+                                <td align="right"><strong>{{showTotalPrice()  | currency:'INR':true}} </strong></td>
                             </tr>
                             <tr class="f-20">
                                 <td colspan="2"></td>
                                 <td align="right"><strong>Taxes</strong></td>
-                                <td align="right"><strong>{{showTax()}} INR</strong></td>
+                                <td align="right"><strong>{{showTax() | currency:'INR':true}} </strong></td>
                             </tr>
                             <tr class="f-16">
                                 <td colspan="2"></td>
                                 <td align="right"><strong>BALANCE DUE</strong></td>
-                                <td align="right"><strong>{{showTotalPrice() + showTax() }} INR</strong></td>
+                                <td align="right"><strong>{{showTotalPrice() + showTax()  | currency:'INR':true }} </strong></td>
                             </tr>
                             </tfoot>
                         </table>

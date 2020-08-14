@@ -24,6 +24,7 @@ use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
+use App\Http\TnnraoSms\TnnraoSms;
 use PDF;
 
 
@@ -748,7 +749,7 @@ class PaymentController extends Controller
 
     public function invoiceWithemailPlan($OrderData,$transaction){
         ini_set('max_execution_time',0);
-        $pdf = PDF::loadHTML(view('email.plan_invoice',['orders' => $OrderData]));
+        $pdf = PDF::loadHTML(view('email.plan_invoice_email',['orders' => $OrderData]));
         $fileName = $transaction."_web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $s3Client = new S3Client([
@@ -773,8 +774,36 @@ class PaymentController extends Controller
                 ->update(['invoice'=>$pdf_path]);
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }
+       if($OrderData['package_plan']==1){
+            $plan = 'Download Pack For 1 year';
+         }else{
+            if ($OrderData['package_expiry_yearly'] == 0) {
+               $plan = 'Subscription Pack For 1 Month';
+            } else {
+               $plan = 'Subscription Pack For 1 Year';
+            }
+         }
+         if ($OrderData['package_type'] != 'Image') {
+            if($OrderData['pacage_size']==1){
+                $pkgName = $OrderData['package_name']." HD ".$plan;
+            }else{
+                $pkgName = $OrderData['package_name']." 4K ".$plan;
+            }
+         }else{
+                $pkgName = $OrderData['package_name']." ".$plan;
+         }
+      
+        $message = "Thanks for purchasing ".$pkgName.". Your plan with transaction ID ".$OrderData['transaction_id'] ." will be expire on ". date("F , d Y h:i:s a",strtotime($OrderData['package_expiry_date_from_purchage']))."  \n Thanks \n Imagefootage Team";
+        $smsClass = new TnnraoSms;
+        $smsClass->sendSms($message, $OrderData['user']['mobile']);
         SendPlanEmail::dispatch($OrderData);
 
+    }
+
+    public function emailHtml(){
+        $pdf = PDF::loadHTML(view('email.plan'));
+        $fileName = "web_plan_invoice.pdf";
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
     }
 
 }

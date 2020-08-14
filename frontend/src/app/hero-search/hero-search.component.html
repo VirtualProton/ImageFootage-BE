@@ -977,8 +977,8 @@
             <main class="main-content" style='/*margin-top:60px*/' *ngIf="noprductFound">
                 <div style="width: 100%; z-index: 9999;  top:132px;left:19%;padding: 10px;" class="black_font backgroung_colors"
                      bind-style.background = "productType == 2 ? '#fff' : '#000'">
-                    <h1 *ngIf="productType==1" style="color:red;margin-top:200px;text-align:center">No Images Found</h1>
-                    <h1 *ngIf="productType==2" style="color:red;margin-top:200px;text-align:center">No Footage Found </h1>
+                    <h3 *ngIf="productType==1" style="color:red;margin-top:200px;text-align:center">No suitable results found on the keyword. Please try with other Keywords.</h3>
+                    <h3 *ngIf="productType==2" style="color:red;margin-top:200px;text-align:center">No suitable results found on the keyword. Please try with other Keywords.</h3>
                 </div>
             </main>
         </main>

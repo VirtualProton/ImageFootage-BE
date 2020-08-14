@@ -58,7 +58,8 @@ class ImageApi {
     }
 
  public function getAccessKey(){
-    $this->nonce = $this->str_random();
+   // $this->nonce = $this->str_random();
+    $this->nonce = "imagefootage";
     $this->timestamp = str_replace('+0000','UTC', gmdate(DATE_RSS));
     $data = $this->timestamp.$this->api_key.$this->nonce;
     $access_key = hash_hmac('sha1', $data, $this->api_secret);
@@ -320,6 +321,91 @@ class ImageApi {
 
       }
   }
+
+  public function get_media_infoNew($media_id){
+    $this->access_key = $this->getAccessKey();
+
+   try{
+
+    // $clip_cmd = [
+    //     'api_key' => $this->api_key,
+    //     'access_key' => $this->access_key,
+    //     'timestamp' => $this->timestamp,
+    //     'nonce' => $this->nonce,
+    //     'algo' => $this->algo,
+    //     'content_type'=>'application/json',
+    //     'lang'=>'en',
+    //     'id_media'=>$media_id,
+    //     'show_articles'=>'yes',
+    //     'show_top10_keywords'=>'yes'
+    // ];
+    //$time = str_replace(',', '%2C', $this->timestamp);
+    $time2 = str_replace(' ', '%20', $this->timestamp);
+    //$time3 = str_replace(':', '%3A', $time2);
+    
+    $clip_cmd = 'api_key='.$this->api_key.
+        '&access_key='. $this->access_key.
+        '&nonce='. $this->nonce.
+        '&algo=' . $this->algo.
+        '&timestamp='.$time2.
+        '&content_type=application/json&lang=en&id_media='.$media_id.
+        '&show_articles=yes&show_top10_keywords=yes';
+
+    $data_req = $clip_cmd;
+    $curl = curl_init();
+    $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
+
+    // Set some options - we are passing in a useragent too here
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'http://rest.panthermedia.net/v1.0/get-media-info',
+        CURLOPT_POST=> TRUE,
+        CURLOPT_MAXREDIRS => 20,
+        CURLOPT_POSTFIELDS => $data_req,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_USERAGENT => $ua,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Accept-Version'=>'1.0',
+            'Accept-Encoding' => 'gzip, deflate'
+        ),
+    ]);
+    // Send the request & save response to $resp
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $contents = json_decode($response, true);
+    return $contents;
+   } catch (\RuntimeException $ex) {
+   // var_dump($e->getTrace());
+    die(sprintf('Http error %s with code %d', $ex->getMessage(), $ex->getCode()));
+   }
+    // echo $this->access_key; die;
+    // $client = new Client(); //GuzzleHttp\Client
+    // $response = $client->post('http://rest.panthermedia.net/get-media-info', [
+    //     'headers'=>[
+    //         'Content-Type' => 'application/x-www-form-urlencoded',
+    //         'Accept-Version'=>'1.0'
+    //     ],
+    //     'form_params' => [
+    //         'api_key' => $this->api_key,
+    //         'access_key' => $this->access_key,
+    //         'timestamp' => $this->timestamp,
+    //         'nonce' => $this->nonce,
+    //         'algo' => $this->algo,
+    //         'content_type'=>'application/json',
+    //         'lang'=>'en',
+    //         'id_media'=>$media_id,
+    //         'show_articles'=>'yes',
+    //         'show_top10_keywords'=>'yes'
+    //     ]
+    // ]);
+    // if ($response->getBody()) {
+    //     $contents = json_decode($response->getBody(), true);
+    //     //$contents = $response->getBody();
+    //     return $contents;
+
+    // }
+}
+
 
 }
 
