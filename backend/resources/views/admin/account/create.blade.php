@@ -18,7 +18,8 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Account Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name">
+                  <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Name" required="required">
+
                   {{ csrf_field() }}
                 </div>
                   </div>
@@ -28,7 +29,7 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        <input required="required" type="text" class="form-control" name="email" id="email" placeholder="Email">
                       </div>
                     </div>
                 </div>
@@ -37,7 +38,7 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Contact Name</label>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="contact_name" id="contact_name" placeholder="Contact Name">
+                        <input required="required" type="text" class="form-control" name="contact_name" id="contact_name" placeholder="Contact Name">
                       </div>
                     </div>
                 </div>
@@ -46,7 +47,7 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                        <input required="required" type="text" class="form-control" name="title" id="title" placeholder="Title">
                       </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile">
+                        <input required="required" type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile">
                       </div>
                     </div>
                 </div>
@@ -65,17 +66,17 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                  <input required="required" type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
                 </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Website</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="website" id="website" placeholder="Website">
-                </div>
-            </div>
+                      <div class="col-sm-4">
+                          <div class="form-group">
+                          <input required="required" type="text" class="form-control" name="website" id="website" placeholder="Website">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -200,6 +201,49 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label for="inputPassword3" id='hideshow' class="col-sm-5 control-label" >Click to add Bank Details</label>
+                                  <!-- <input type='button'  value='hide/show'> -->
+
+                </div>
+                <div id="bank_details" style="display: none">
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Bank Name</label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="Bank Name">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Account Holder Name</label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="account_holder_name" id="account_holder_name" placeholder="Account Holder Name">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Account Number</label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="account_number" id="account_number" placeholder="Account Number">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">IFSC</label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="ifsc" id="ifsc" placeholder="IFSC">
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
 </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -220,7 +264,28 @@
     @section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<!-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
 <script>
+
+  jQuery(document).ready(function(){
+    jQuery('#hideshow').on('click', function(event) {        
+        jQuery('#bank_details').slideToggle();
+    });
+});
+
+//   $('#toggle_icon').toggle(function() {
+
+//     $('#toggle_icon').text('-');
+//     $('#bank_details').slideToggle();
+
+// }, function() {
+
+//     $('#toggle_icon').text('+');
+//     $('#bank_details').slideToggle();
+
+// });
+
 
 $(document).ready(function ($) {
 

@@ -249,10 +249,14 @@ class ImageApi {
                 $products[0]['thumbnail_image'] = str_replace('http','https',$media['media']['preview_url_no_wm']);
                 $products[0]['type'] = "Royalty Free";
                 $products[0]['product_web'] = "2";
-                $products[0]['small_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']*80;
-                $products[0]['medium_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][2]['price']*80;;
-                $products[0]['large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][3]['price']*80;;
-                $products[0]['x_large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][4]['price']*80;;
+                $products[0]['small_size'] = (isset($media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']))?$media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']*80:"";
+                $products[0]['medium_size'] = (isset($media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][2]['price']))?$media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][2]['price']*80:"";;
+                $products[0]['large_size'] = (isset($media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][3]['price']))?$media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][3]['price']*80:"";;
+                $products[0]['x_large_size'] = (isset($media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][4]['price']))?$media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][4]['price']*80:"";;
+                // $products[0]['small_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][1]['price']*80;
+                // $products[0]['medium_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][2]['price']*80;;
+                // $products[0]['large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][3]['price']*80;;
+                // $products[0]['x_large_size'] = $media['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][4]['price']*80;;
             //}
             return $products;
         }

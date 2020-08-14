@@ -13,7 +13,18 @@
             {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
               @include('admin.partials.message')
 
+                
+
               <div class="box-body">
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                    <div class="form-group">
+                  @if(isset($user))
+                  <span ><a href="{{url('admin/users/invoices/'.$user['id'])}}">{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}'{{$user['email']}}' User Already Exists, Please Click to see the details</a></span>
+                  @endif
+                </div>
+              </div>
+                </div>
               <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-4">
@@ -67,7 +78,7 @@
                     <option value="">Select</option>
                     @if(count($accountlist) > 0)
                     @foreach($accountlist as $account)
-                    <option value={{ $account['id'] }}>{{$account['account_name']}}</option>
+                    <option value={{ $account['id'] }}>{{$account['name']}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -219,6 +230,18 @@
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
 <script>
 
+  $("#first_name").on('change keyup paste', function() {
+  $("#user_name").val($(this).val())
+    // alert('hi');
+    // console.log('I am pretty sure the text box changed');
+  });
+// $("#first_name").change(function () {
+//     var selectedValue = $(this).val();
+//     // $("#subtotal").val($(this).find("option:selected").attr("value"))
+//     $("input[type='text'][name='price']").removeClass( "ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required").addClass( "ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" );
+//     $("input[type='text'][name='user_name']").val($(this).attr("value"))
+
+// });
 $(document).ready(function ($) {
 
    // Example Validataion Standard Mode

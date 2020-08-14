@@ -97,7 +97,7 @@ class ContributorController extends Controller
 				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
 			 });
 			 // return back()->with('success','Contributor added successful');
-			return redirect('admin/contributor_list')->with('success','Contributor added successful');
+			return redirect('admin/updatecontributor/'.$last_id)->with('success','Contributor added successful');
 		 }else{
 			 return back()->with('warning','Some problem occured.');
 		 }

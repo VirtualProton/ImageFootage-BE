@@ -97,6 +97,18 @@
                 </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Access Control</label>
+                  <div class="col-sm-4">
+                    <p>
+                    @foreach ($agent_data_modules as $agent_data_module)
+                      <li>{{$agent_data_module['module_name']}} : {!! "&nbsp;" !!}{{$agent_data_module['can_add']?"Can Add":"Can't Add"}},{!! "&nbsp;" !!}  {{$agent_data_module['can_edit']?"Can Edit":"Can't Edit"}}, {!! "&nbsp;" !!} {{$agent_data_module['can_view']?"Can View":"Can't View"}}, {!! "&nbsp;" !!} {{$agent_data_module['can_delete']?"Can Delete":"Can't Delete"}}</li>
+                      
+
+                    @endforeach
+                  </p>
+                  </div>
+                </div>
 
 </div>
               <!-- /.box-body -->

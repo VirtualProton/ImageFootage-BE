@@ -35,6 +35,7 @@
                 	<thead>
                         <th>Sl. No</th>
                         <th>Product Id</th>
+                        <th>Product Owner</th>
                         <th>Category</th>
                         <!-- <th>Subcategory</th> -->
                         <!-- <th>Owner</th> -->
@@ -51,6 +52,7 @@
                     <tr>
                       <td>{{ $product['id'] }}</td>
                       <td><a href="{{ url('admin/viewproduct/'.$product['id']) }}">{{ $product['product_id'] }}</a> </td>
+                      <td>{{ $product['product_owner'] }}</td>
                       <td>{{ $product['category_name'] }} </td>
                       <!-- <td>{{ $product['subcategory_name'] }} </td> -->
                       <!-- <td>{{ $product['product_owner'] }} </td> -->

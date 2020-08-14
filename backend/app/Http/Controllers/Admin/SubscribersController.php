@@ -12,6 +12,11 @@ use DB;
 
 class SubscribersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except('login','logout');
+    }
+
     public function index()
     {
         $userlist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')

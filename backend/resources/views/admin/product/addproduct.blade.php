@@ -314,7 +314,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Extra Large </label>
-                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Product Bank/Owner Name">
+                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputFile">Product</label>
