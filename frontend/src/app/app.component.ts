@@ -64,6 +64,11 @@ export class AppComponent implements OnInit, OnDestroy {
         } else {
           this.dashboardEle = false;
         }
+        if (event.url == "/new-home") {
+          this.dashboardEle = true;
+        } else {
+          this.dashboardEle = false;
+        }
       }
 	  window.scrollTo(0, 0)
     })

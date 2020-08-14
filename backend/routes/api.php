@@ -84,6 +84,7 @@ Route::group([
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
     Route::get('/update_products_api/{id}', 'ProductApiController@getUpdateProduct');
     Route::post('/update_products_api', 'ProductApiController@postUpdateProduct');
+    Route::get('emailHtml', 'PaymentController@emailHtml');
 });
 
 Route::group([
@@ -105,9 +106,6 @@ Route::group([
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
     Route::post('downloadindi', 'MediaController@downloadindi');
-	Route::post('getuseraddress','UserController@getUserAddress');
-	
-
-
-
+    Route::post('getuseraddress','UserController@getUserAddress');
+    Route::post('update_profile','UserController@update_profile');
 });

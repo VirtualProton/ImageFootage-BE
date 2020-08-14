@@ -61,8 +61,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
-
-
+import { NewhomeComponent } from './newhome/newhome.component';
 
 // Configs 
 export function getAuthServiceConfigs() {
@@ -151,7 +150,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ScrollComponent,
     FootageLicenceAgreementComponent,
     EditProfileComponent,
-    ProfileMenuComponent
+    ProfileMenuComponent,
+	NewhomeComponent
     /*,
 	MasonryLayoutComponent*/
 

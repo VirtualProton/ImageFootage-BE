@@ -236,6 +236,29 @@ export class HeroSearchComponent implements OnInit {
                                   //   window.location.href = aoslSliderImages['url']
                               //}else {
                               this.loadingData = false;
+                              
+                              if(this.productType == 1){
+                                if(aoslSliderImages.stat == 'fail'){
+                                  this.totalproduct = aoslSliderImages.total;
+                                  this.perpage = aoslSliderImages.perpage;
+                                  this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                                  this.aoslSliderImages = aoslSliderImages.imgfootage;
+                                  this.noprductFound = true;
+                                } else {
+                                  this.noprductFound = false;
+                                  this.totalproduct = aoslSliderImages.total;
+                                  this.perpage = aoslSliderImages.perpage;
+                                  this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                                  this.aoslSliderImages = aoslSliderImages.imgfootage;
+                                  let type = this.aoslSliderImages["0"].product_keywords;
+                                  this.keyword = type.split(',', 9);
+                                  if(aoslSliderImages.tp==1){
+                                      this.searchData.search = this.keyword[0];
+                                  }
+                                  this.maintainAosSlider();
+                                }
+                              } else {
+                              
                               if(aoslSliderImages.imgfootage.length !=0) {
                                   this.noprductFound = false;
                                   this.totalproduct = aoslSliderImages.total;
@@ -256,6 +279,7 @@ export class HeroSearchComponent implements OnInit {
                                   this.aoslSliderImages = aoslSliderImages.imgfootage;
                                   this.noprductFound = true;
                               }
+                            }
                                  //  this.spinner.hide();
 
 
@@ -579,6 +603,24 @@ export class HeroSearchComponent implements OnInit {
                     //   window.location.href = aoslSliderImages['url']
                     //}else {
                     this.loadingData = false;
+                    if(this.productType == 1){
+                    if(aoslSliderImages.stat == 'fail'){
+                      this.aoslSliderImages = aoslSliderImages.imgfootage;
+                      this.totalproduct = aoslSliderImages.total;
+                      this.perpage = aoslSliderImages.perpage;
+                      this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                      this.noprductFound = true;
+                    }else {
+                      this.noprductFound = false;
+                      this.totalproduct = aoslSliderImages.total;
+                      this.perpage = aoslSliderImages.perpage;
+                      this.totalpages = Math.ceil(aoslSliderImages.total / aoslSliderImages.perpage);
+                      this.aoslSliderImages = aoslSliderImages.imgfootage;
+                      let type = this.aoslSliderImages["0"].product_keywords;
+                      this.keyword = type.split(',', 9);
+                      this.maintainAosSlider();
+                    }
+                  } else {
                     if(aoslSliderImages.imgfootage.length !=0) {
                         this.noprductFound = false;
                         this.totalproduct = aoslSliderImages.total;
@@ -597,6 +639,7 @@ export class HeroSearchComponent implements OnInit {
                         this.noprductFound = true;
 
                     }
+                  }
                     //  this.spinner.hide();
 
 

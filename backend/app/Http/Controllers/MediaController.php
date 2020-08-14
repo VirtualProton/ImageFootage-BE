@@ -153,6 +153,7 @@ class MediaController extends Controller
               }
           }
       }
+      echo $download;
 
       if($download==1) {
           if ($allFields['product']['type'] == 3) {
@@ -171,8 +172,8 @@ class MediaController extends Controller
                           'id_media' => $allFields['product']['selected_product']['id'],
                           'download_url' => $product_details_data['url'],
                           'downloaded_date' => date('Y-m-d H:i:s'),
-                          'product_name' => $allFields['product']['product_info'][0]['items'][0]['pf'],
-                          'product_desc' => $allFields['product']['product_info'][0]['items'][0]['desc'],
+                          'product_name' => $allFields['product']['product_info'][0]['clip_data']['pic_name'],
+                          'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
                           'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
                           'web_type' => $allFields['product']['type'],
                           'product_size' => $allFields['product']['selected_product']['size'],
