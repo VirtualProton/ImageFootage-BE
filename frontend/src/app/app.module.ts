@@ -61,7 +61,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
-import { NewhomeComponent } from './newhome/newhome.component';
+import { OwlModule } from 'ngx-owl-carousel';  
 
 // Configs 
 export function getAuthServiceConfigs() {
@@ -98,27 +98,28 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-	TabModule,
+    TabModule,
     NoopAnimationsModule,
-	SocialLoginModule,
-	PerfectScrollbarModule,
-	NgMasonryGridModule,
+    SocialLoginModule,
+    PerfectScrollbarModule,
+    NgMasonryGridModule,
     InfiniteScrollModule,
-	MatExpansionModule,
+    MatExpansionModule,
     Ng5SliderModule,
     ColorPickerModule,
     MatTooltipModule,
-	FormsModule
+    FormsModule,
+    OwlModule
 
-	    
+
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, { dataEncapsulation: false }
     // )
-  ],
-  declarations: [
+    ],
+    declarations: [
     AppComponent,
     DashboardComponent,
     HeroesComponent,
@@ -151,7 +152,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FootageLicenceAgreementComponent,
     EditProfileComponent,
     ProfileMenuComponent,
-	NewhomeComponent
+  
     /*,
 	MasonryLayoutComponent*/
 

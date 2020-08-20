@@ -631,7 +631,7 @@ export class HeroSearchComponent implements OnInit {
                         this.keyword = type.split(',', 9);
                         this.maintainAosSlider();
                     }else{
-                        //alert("Result Not Found");
+                        // ("Result Not Found");
                         this.aoslSliderImages = aoslSliderImages.imgfootage;
                         this.totalproduct = aoslSliderImages.total;
                         this.perpage = aoslSliderImages.perpage;

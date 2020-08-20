@@ -24,7 +24,7 @@ import { ChangeResetPasswordComponent } from './change-reset-password/change-res
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProductPricingComponent } from './product-pricing/product-pricing.component';
 import { FootageLicenceAgreementComponent } from './footage-licence-agreement/footage-licence-agreement.component'
-import { NewhomeComponent } from './newhome/newhome.component';
+
 const routes: Routes = [
  // { path: '/', redirectTo: '', pathMatch: 'full' },
   { path: '', component: DashboardComponent },
@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'product-pricing', component: ProductPricingComponent },
   { path: 'footage-license', component: FootageLicenceAgreementComponent },
-   { path: 'new-home', component: NewhomeComponent },
+
 ];
 
 @NgModule({
