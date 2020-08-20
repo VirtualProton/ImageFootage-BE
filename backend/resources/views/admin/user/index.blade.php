@@ -45,7 +45,7 @@
                     @foreach($userlist as $k=>$user)
                 <tr role="row" class="odd">
                   <td>{{$k+1}}</td>
-                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}" target="_blank">{{$user['user_name']}}</td>
+                  <td><a href="{{ url('admin/users/invoices/'.$user['id'])}}">{{$user['user_name']}}</td>
                   <td>{{$user['first_name']}} {{$user['last_name']}}</td>
                   <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>

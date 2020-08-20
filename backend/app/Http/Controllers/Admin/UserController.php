@@ -111,7 +111,9 @@ class UserController extends Controller
         $this->Account = new Account();
         $account_invoices =    $this->Account->getAccountInvoices($id);
         $user_id = $id;
-        return view('admin.account.invoices', compact('title','account_invoices','user_id'));
+        $user = User::find($id);
+        //print_r($user); die;
+        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user'));
     }
 
     /**
