@@ -32,7 +32,20 @@ export class DashboardComponent implements OnInit {
   categoryname:string ='';
   selectedcat:string ='';
   selectedCategory:string =   localStorage.getItem('searchCategory');
-
+  categoriesHome:any = []; 
+ 
+  SlideOptions = {center: false,
+    items: 4,
+    loop: true,
+    stagePadding: 0,
+    margin: 0,
+    autoplay: false,
+    nav: false,
+    dots: true
+    //navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
+   
+  };  
+  CarouselOptions = { items: 3, dots: true, nav: true , center: true };  
   constructor(private heroService: HeroService,
     private dataHelper:imageFooterHelper,
     private myElement: ElementRef,
@@ -96,6 +109,8 @@ ngOnInit() {
             _carouselSliderArray.push(_carouselSlider3);
 
                 this.carouselSliderImages = _carouselSliderArray; ;
+                console.log(data);
+                this.categoriesHome = data;
 
     });
     //console.log( this.carouselSliderImages);
