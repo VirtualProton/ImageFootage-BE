@@ -9,6 +9,8 @@ use App\Models\Common;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Admin;
+use App\Models\City;
+use App\Models\State;
 
 use DB;
 
@@ -111,9 +113,34 @@ class UserController extends Controller
         $this->Account = new Account();
         $account_invoices =    $this->Account->getAccountInvoices($id);
         $user_id = $id;
+        // echo $user_id; die;
         $user = User::find($id);
+        // echo $user->account_manager_id; die;
+        $this->Admin = new Admin();
+        $account_manager = $this->Admin->getAgentData($user->account_manager_id);
+        if(!empty($account_manager)){
+            $account_manager_name = $account_manager['name'];
+        }else{
+            $account_manager_name = "";
+        }
+
+        $city = City::where('id', $user->city)->first();
+        $city_name = $city['name'];
+
+        $state = State::where('id', $user->state)->first();
+        $state_name = $state['state'];
+
+        $country = Country::where('id', $user->country)->first();
+        $country_name = $country['name'];
+
+        $user_plans = $this->User->userPlans($user_id);
+
+
+        // echo "<pre>";print_r($user_plans); die;
+        // echo "<pre>";print_r($account_manager['name']); die;
+        // echo "<pre>";print_r($user); die;
         //print_r($user); die;
-        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user'));
+        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans'));
     }
 
     /**

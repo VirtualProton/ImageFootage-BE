@@ -18,221 +18,12 @@
         	<div class="col-md-12">
          		<div class="box">
                 <div class="box-header">
-                  
+                  <h3 class="box-title">Quotation/Invoices List</h3>
                   <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice</strong></a>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
-             <div class="tabs">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#users" role="tab" data-toggle="tab">
-                        <icon class="fa fa-home"></icon>User Info
-                    </a>
-                </li>
-                <li>
-                    <a href="#posts" role="tab" data-toggle="tab" onclick="postsDataTables()">
-                        <i class="fa fa-user"></i>Sale
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-            <div class="tab-pane fade active in" id="users">
-              <div class="box-body">
-          <table id="info" class="account table table-bordered table-striped dataTable" class="col-sm-12">
-                <thead>
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Account Info</h4>
-                  <div class="form-group col-sm-12">
-                  <h5>User Id : {{$user->id}}</h5>
-                  <h5>Deactivated ? : {{$user->status=1?"No":"Yes"}}</h5>
-                  <h5>Password : 
-                    <input type="password" class="" name="" id="" value="{{$user->password}}"><button>reset</button>
-                  </h5>
-                  <h5>First Name : {{$user->first_name}}</h5>
-                  <h5>Last Name : {{$user->last_name}}</h5>
-                  <h5>Email : <input  type="text" class="" name="" id="" value="{{$user->email}}"><button>Change Email</button></h5>
-                  <!-- <h5>Email Verified : {{$user->last_name}}</h5> -->
-                  <h5>Date Registered : {{date('d-m-Y', strtotime($user->created_at))}}</h5>
-                  <h5>Dedicated Account Manager : {{$account_manager_name}}</h5>
-                  </div>
-
-
-
-
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Personal Info</h4>
-                  <div class="form-group col-sm-12">
-                    <h5>Company : {{$user->company}}</h5>
-                    <h5>Occupation : {{$user->occupation}}</h5>
-                    <h5>Address : {{$user->address}}</h5>
-                    <h5>City : {{$city_name}}</h5>
-                    <h5>State : {{$state_name}}</h5>
-                    <h5>Country : {{$country_name}}</h5>
-                    <h5>Postal Code : {{$user->postal_code}}</h5>
-                    <h5>Phone : {{$user->phone}}</h5>
-                  </div>
-
-
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Other Info</h4>
-                  <div class="form-group col-sm-12">
-                    <h5>Partner ? : </h5>
-                    <h5>White List User ? : </h5>
-                    <h5>Black List User ? : </h5>
-                    <h5>Checkout Frozen : </h5>
-                    <h5>Allow Download Certificate : </h5>
-                    <h5>Enable Subs Multi-logins ? : </h5>
-                    <h5>Preferred Contact Methid : </h5>
-                    <h5 >Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
-                    
-                  </div>
-
-
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Created By</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-            </table>
-          </div>
-            </div>
-        <div class="tab-pane fade" id="posts">
              <div class="box-body">
-
-
-              <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
-                <thead>
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Subscription Plans</h4>
-                  <div class="col-md-12">
-                    <ul>
-                      @foreach($user_plans as $plan)
-                      @if($plan['package_plan'] == "2")
-                      <li>Plans Name: {{$plan['package_name']}}</li>
-                      <li>Plans Description: {{$plan['package_description']}}</li>
-                      <li>Plans Type: {{$plan['package_type']}}</li>
-                      <li>Plans Expiry: {{$plan['package_expiry_date_from_purchage']}}</li>
-                      <li>Plans Carry Forward: {{$plan['package_pcarry_forward']}}</li>
-                      <br>
-                      @endif
-                      @endforeach
-                    </ul>
-                  </div>
-
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Download Pack</h4>
-                  <div class="col-md-12">
-                    <ul>
-                      @foreach($user_plans as $plan)
-                      @if($plan['package_plan'] == "1")
-                      <li>Plans Name: {{$plan['package_name']}}</li>
-                      <li>Plans Description: {{$plan['package_description']}}</li>
-                      <li>Plans Type: {{$plan['package_type']}}</li>
-                      <li>Plans Expiry: {{$plan['package_expiry_date_from_purchage']}}</li>
-                      <li>Plans Carry Forward: {{$plan['package_pcarry_forward']}}</li>
-                      <br>
-                      @endif
-                      @endforeach
-                    </ul>
-                  </div>
-
-
-                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Quotation/Invoices List</h4>
-                <tr>
-                <th>Sl No</th>
-                <th>Trans Id</th>
-                <!-- <th>Invoice/Quotation Number</th> -->
-                <!-- <th>Email ID</th> -->
-                <!-- <th>Expiry Invoices</th> -->
-                <th>Inv Date</th>
-                <th>Amount</th>
-                <th>Payment</th>
-                <th>Payment Mode</th>
-                <th>Transaction Type Custom</th>
-                <!-- <th>Download Quotation</th> -->
-                <!-- <th>Download Invoice</th> -->
-                <!-- <th>Action</th> -->
-                </tr>
-                </thead>
-                <tbody>
-                    @if(count($account_invoices) > 0)
-                    @foreach($account_invoices as $k=>$invioces)
-                    @if($invioces['invoice_type']==3)
-                <tr role="row" class="odd">
-                  <td>{{$k+1}}</td>
-                  <td>
-                      @if($invioces['proforma_type']==2)
-                        @if($invioces['invoice_url'])
-                          <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a><br>
-                          <a href="{{$invioces['invoice_url']}}" target="_blank">IN{{$invioces['invoice_name']}}</a>
-                        @else
-                          IN{{$invioces['invoice_name']}}
-                        @endif
-                      @else
-                       @if($invioces['quotation_url'])
-                        <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a>
-                        @else
-                          Q{{$invioces['invoice_name']}}
-                        @endif
-                      @endif
-
-                  </td>
-                  <!-- <td>{{$invioces['invoice_name']}}</td> -->
-                  <!-- <td>{{$invioces['email_id']}}</td> -->
-                  <!-- <td>{{$invioces['expiry_invoices']}} Days</td> -->
-                    <td>{{$invioces['created']}}</td>
-                    <td>{{$invioces['total']}}</td>
-                  <td>
-                  <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
-                      <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
-                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Paid</option>
-                      <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
-                      <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
-                    </select>
-               </td>
-               <td>{{$invioces['payment_mode']}}</td>
-               <td>
-                @if($invioces['invoice_type']==3)
-                  Custom
-                @endif
-               </td>
-                 <!-- <td>
-                     @if($invioces['quotation_url'])
-                     <a href="{{$invioces['quotation_url']}}" target="_blank">Download</a>
-                     @endif
-                 </td>
-                    <td>
-                        @if($invioces['invoice_url'])
-                            <a href="{{$invioces['invoice_url']}}" target="_blank">Download</a>
-                        @endif
-                    </td> -->
-
-               <!-- <td>
-                   <?php if($invioces['status']!=3){ ?>
-                  <a href="{{ url('admin/edit_quotation/'.$invioces['id']) }}" title="Edit Quotation"><i class="fa fa-check" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                  <a href="javascript:void(0);" ng-click="create_invoice({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
-      }
-      }
-{{--                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>--}}
-
-                  <?php } ?>
-                    <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
-                        </form> -->
-                  <!-- </td> --> 
-                </tr>
-                @endif
-                @endforeach
-                @endif
-
-              </table>
-
-
-
             <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                 <thead>
                 <tr>
@@ -289,7 +80,7 @@
                </td>
                <td>{{$invioces['payment_mode']}}</td>
                <td>
-                @if($invioces['invoice_type']==1)
+                @if($invioces['invoice_type']==2)
                   Subscription
                 @endif
                </td>
@@ -383,7 +174,7 @@
                </td>
                <td>{{$invioces['payment_mode']}}</td>
                <td>
-                @if($invioces['invoice_type']==2)
+                @if($invioces['invoice_type']==1)
                   Download
                 @endif
                </td>
@@ -420,13 +211,101 @@
 
               </table>
 
-              
+              <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+                <thead>
+                <tr>
+                <th>Sl No</th>
+                <th>Trans Id</th>
+                <!-- <th>Invoice/Quotation Number</th> -->
+                <!-- <th>Email ID</th> -->
+                <!-- <th>Expiry Invoices</th> -->
+                <th>Inv Date</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Payment Mode</th>
+                <th>Transaction Type Custom</th>
+                <!-- <th>Download Quotation</th> -->
+                <!-- <th>Download Invoice</th> -->
+                <!-- <th>Action</th> -->
+                </tr>
+                </thead>
+                <tbody>
+                    @if(count($account_invoices) > 0)
+                    @foreach($account_invoices as $k=>$invioces)
+                    @if($invioces['invoice_type']==3)
+                <tr role="row" class="odd">
+                  <td>{{$k+1}}</td>
+                  <td>
+                      @if($invioces['proforma_type']==2)
+                        @if($invioces['invoice_url'])
+                          <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a><br>
+                          <a href="{{$invioces['invoice_url']}}" target="_blank">IN{{$invioces['invoice_name']}}</a>
+                        @else
+                          IN{{$invioces['invoice_name']}}
+                        @endif
+                      @else
+                       @if($invioces['quotation_url'])
+                        <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a>
+                        @else
+                          Q{{$invioces['invoice_name']}}
+                        @endif
+                      @endif
+
+                  </td>
+                  <!-- <td>{{$invioces['invoice_name']}}</td> -->
+                  <!-- <td>{{$invioces['email_id']}}</td> -->
+                  <!-- <td>{{$invioces['expiry_invoices']}} Days</td> -->
+                    <td>{{$invioces['created']}}</td>
+                    <td>{{$invioces['total']}}</td>
+                  <td>
+                  <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
+                      <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
+                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Paid</option>
+                      <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
+                      <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
+                    </select>
+               </td>
+               <td>{{$invioces['payment_mode']}}</td>
+               <td>
+                @if($invioces['invoice_type']==3)
+                  Custom
+                @endif
+               </td>
+                 <!-- <td>
+                     @if($invioces['quotation_url'])
+                     <a href="{{$invioces['quotation_url']}}" target="_blank">Download</a>
+                     @endif
+                 </td>
+                    <td>
+                        @if($invioces['invoice_url'])
+                            <a href="{{$invioces['invoice_url']}}" target="_blank">Download</a>
+                        @endif
+                    </td> -->
+
+               <!-- <td>
+                   <?php if($invioces['status']!=3){ ?>
+                  <a href="{{ url('admin/edit_quotation/'.$invioces['id']) }}" title="Edit Quotation"><i class="fa fa-check" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                  <a href="javascript:void(0);" ng-click="create_invoice({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
+      }
+      }
+{{--                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>--}}
+
+                  <?php } ?>
+                    <form action="{{ route('accounts.destroy', $invioces['id']) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
+                        </form> -->
+                  <!-- </td> --> 
+                </tr>
+                @endif
+                @endforeach
+                @endif
+
+              </table>
 
 
               </div>
-              </div>
-    </div>
-</div>
             </div>
             </div>
         </div>
