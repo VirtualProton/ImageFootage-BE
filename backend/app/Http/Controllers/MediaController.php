@@ -133,6 +133,7 @@ class MediaController extends Controller
         //print_r($allFields); die;
         $tokens=json_decode($allFields['product']['token'],true);
         $id = $tokens['Utype'];
+        $pacakeg_id = $allFields['product']['package'];
         if($allFields['product']['type']==2){
             $flag ='Image';
         }else{
@@ -141,6 +142,7 @@ class MediaController extends Controller
         $pacakegalist= UserPackage::whereIn('payment_status',['Completed','Transction Success'])
             ->where('user_id','=',$id)
             ->where('package_type','=',$flag)
+            ->where('id', '=', $pacakeg_id)
             ->where('package_expiry_date_from_purchage','>',Now())
             //->select()
             ->get()->toArray();
@@ -153,7 +155,7 @@ class MediaController extends Controller
               }
           }
       }
-      echo $download;
+    
 
       if($download==1) {
           if ($allFields['product']['type'] == 3) {
@@ -186,6 +188,7 @@ class MediaController extends Controller
                       UserProductDownload::insert($dataInsert);
                       UserPackage::where('user_id','=',$id)
                           ->where('package_type','=',$flag)
+                          ->where('id', '=', $pacakeg_id)
                           ->update([
                               'downloaded_product'=> DB::raw('downloaded_product+1'),
                               'updated_at' => date('Y-m-d H:i:s')
