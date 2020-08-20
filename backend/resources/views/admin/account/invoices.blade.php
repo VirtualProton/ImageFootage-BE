@@ -13,6 +13,7 @@
       </ol>
     </section>
     <section class="content" ng-co>
+      <?php //echo "<pre>"; print_r($account_invoices); die; ?>
         <div class="row">
         	<div class="col-md-12">
          		<div class="box">
@@ -26,17 +27,18 @@
             <table id="account" class="table table-bordered table-striped dataTable" class="col-sm-12">
                 <thead>
                 <tr>
-                <th>SN</th>
-                <th>Proforma Type</th>
-                <th>Invoice/Quotation Number</th>
-                <th>Email ID</th>
-                <th>Expiry Invoices</th>
-                <th>Quotation Created</th>
-                <th>Invoice Created</th>
-                <th>Status</th>
-                <th>Download Quotation</th>
-                <th>Download Invoice</th>
-                <th>Action</th>
+                <th>Sl No</th>
+                <th>Trans Id</th>
+                <!-- <th>Invoice/Quotation Number</th> -->
+                <!-- <th>Email ID</th> -->
+                <!-- <th>Expiry Invoices</th> -->
+                <th>Inv Date</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Payment Mode</th>
+                <!-- <th>Download Quotation</th> -->
+                <!-- <th>Download Invoice</th> -->
+                <!-- <th>Action</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -46,26 +48,27 @@
                   <td>{{$k+1}}</td>
                   <td>
                       @if($invioces['proforma_type']==2)
-                          Invoice
+                        IN{{$invioces['invoice_name']}}
                       @else
-                          Quotation
+                        Q{{$invioces['invoice_name']}}
                       @endif
 
                   </td>
-                  <td>{{$invioces['invoice_name']}}</td>
-                  <td>{{$invioces['email_id']}}</td>
-                  <td>{{$invioces['expiry_invoices']}} Days</td>
+                  <!-- <td>{{$invioces['invoice_name']}}</td> -->
+                  <!-- <td>{{$invioces['email_id']}}</td> -->
+                  <!-- <td>{{$invioces['expiry_invoices']}} Days</td> -->
                     <td>{{$invioces['created']}}</td>
-                    <td>{{$invioces['invoice_created']}}</td>
+                    <td>{{$invioces['total']}}</td>
                   <td>
                   <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
                       <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
-                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Approved</option>
+                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Paid</option>
                       <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
                       <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
                     </select>
                </td>
-                 <td>
+               <td>{{$invioces['payment_mode']}}</td>
+                <!--  <td>
                      @if($invioces['quotation_url'])
                      <a href="{{$invioces['quotation_url']}}" target="_blank">Download</a>
                      @endif
@@ -74,12 +77,14 @@
                         @if($invioces['invoice_url'])
                             <a href="{{$invioces['invoice_url']}}" target="_blank">Download</a>
                         @endif
-                    </td>
+                    </td> -->
 
-               <td>
+               <!-- <td>
                    <?php if($invioces['status']!=3){ ?>
                   <a href="{{ url('admin/edit_quotation/'.$invioces['id']) }}" title="Edit Quotation"><i class="fa fa-check" aria-hidden="true"></i></a> &nbsp;&nbsp;
                   <a href="javascript:void(0);" ng-click="create_invoice({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
+      }
+      }
 {{--                  <a href="{{ url('admin/invoice/'.$invioces['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>--}}
 
                   <?php } ?>
@@ -88,7 +93,7 @@
                         @csrf
                         <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
                         </form> -->
-                  </td>
+                  <!-- </td> --> 
                 </tr>
                 @endforeach
                 @endif

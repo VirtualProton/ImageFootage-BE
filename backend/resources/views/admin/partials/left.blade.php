@@ -24,81 +24,11 @@
       </form><?php */?>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      @if(Auth::guard('admins')->user()->id =='11')
+      <?php $user = Auth::guard('admins')->user();?>
+
+      @if($user->role_id =='1')
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-
-        @if(count($modules)>0)
-        @foreach($modules as $eachmodule)
-            @if($eachmodule['id']== '5')
-              <li class="treeview @if($eachmodule['id']== '5') active @endif">
-          <a href="#">
-          <i class="{{$eachmodule['module_icon']}}" aria-hidden="true"></i>
-
-            <span>{{$eachmodule['module_name']}}</span>
-        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-                @endif
-
-          @if(count($eachmodule['submodules']) > 0)
-
-              <ul class="treeview-menu">
-                @foreach($eachmodule['submodules'] as $submodule)
-                  <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
-                @endforeach
-              </ul>
-
-
-
-         @endif
-        </li>
-        @endforeach
-        @endif
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Products</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_products') }}"><i class="fa fa-circle-o"></i> List Product</a></li>
-            <li><a href="{{ url('admin/add_product') }}"><i class="fa fa-circle-o"></i> Add Product</a></li>
-          </ul>
-        </li> -->
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Product Category</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_product_category') }}"><i class="fa fa-circle-o"></i>Product Category List</a></li>
-            <li><a href="{{ url('admin/add_product_category') }}"><i class="fa fa-circle-o"></i> Add Product Category</a></li>
-          </ul>
-        </li> -->
-        <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Product Sub Category</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_product_sudcategory') }}"><i class="fa fa-circle-o"></i>Product Sub Category List</a></li>
-            <li><a href="{{ url('admin/add_product_subcategory') }}"><i class="fa fa-circle-o"></i> Add Product Sub Category</a></li>
-          </ul>
-        </li> -->
-
-      </ul>
-      @endif
-      @if(Auth::guard('admins')->user()->id !='11')
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-
+        <li class="header">MAIN NAVIGATION </li>
         @if(count($modules)>0)
           @foreach($modules as $eachmodule)
            <li class="treeview @if($eachmodule['id']== $parent_id) active @endif">
@@ -107,59 +37,75 @@
 
                   <span>{{$eachmodule['module_name']}}</span>
                   <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
                 </a>
-
                 @if(count($eachmodule['submodules']) > 0)
-
                   <ul class="treeview-menu">
                     @foreach($eachmodule['submodules'] as $submodule)
                       <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
                     @endforeach
                   </ul>
-
                 @endif
-              </li>
-            @endforeach
-          @endif
-          <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Products</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_products') }}"><i class="fa fa-circle-o"></i> List Product</a></li>
-            <li><a href="{{ url('admin/add_product') }}"><i class="fa fa-circle-o"></i> Add Product</a></li>
-          </ul>
-        </li> -->
-          <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Product Category</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_product_category') }}"><i class="fa fa-circle-o"></i>Product Category List</a></li>
-            <li><a href="{{ url('admin/add_product_category') }}"><i class="fa fa-circle-o"></i> Add Product Category</a></li>
-          </ul>
-        </li> -->
-          <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Product Sub Category</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('admin/all_product_sudcategory') }}"><i class="fa fa-circle-o"></i>Product Sub Category List</a></li>
-            <li><a href="{{ url('admin/add_product_subcategory') }}"><i class="fa fa-circle-o"></i> Add Product Sub Category</a></li>
-          </ul>
-        </li> -->
+            </li>
+          @endforeach
+        @endif
+      </ul>
+      @endif
+      @if($user->role_id =='2')
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION </li>
+        @if(count($modules)>0)
+          @foreach($modules as $eachmodule)
+           <li class="treeview @if($eachmodule['id']== $parent_id) active @endif">
+                <a href="#">
+                  <i class="{{$eachmodule['module_icon']}}" aria-hidden="true"></i>
 
+                  <span>{{$eachmodule['module_name']}}</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                @if(count($eachmodule['submodules']) > 0)
+                  <ul class="treeview-menu">
+                    @foreach($eachmodule['submodules'] as $submodule)
+                      <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                    @endforeach
+                  </ul>
+                @endif
+            </li>
+          @endforeach
+        @endif
+      </ul>
+      @endif
+      @if($user->role_id =='3')
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION </li>
+        @if(count($modules)>0)
+          @foreach($modules as $eachmodule)
+          @if($eachmodule['module_name'] != 'Users')
+           <li class="treeview @if($eachmodule['id']== $parent_id) active @endif">
+                <a href="#">
+                  <i class="{{$eachmodule['module_icon']}}" aria-hidden="true"></i>
+
+                  <span>{{$eachmodule['module_name']}}</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                @if(count($eachmodule['submodules']) > 0)
+                  <ul class="treeview-menu">
+                    @foreach($eachmodule['submodules'] as $submodule)
+                    @if($submodule['module_name'] != 'Add Client User')
+                      <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                    @endif
+                    @endforeach
+                  </ul>
+                @endif
+            </li>
+            @endif
+          @endforeach
+        @endif
       </ul>
       @endif
     </section>

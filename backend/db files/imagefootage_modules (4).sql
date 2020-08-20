@@ -1,0 +1,153 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 20, 2020 at 02:54 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.7
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `imagefootage`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `imagefootage_modules`
+--
+
+CREATE TABLE `imagefootage_modules` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `module_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_module_id` int(11) NOT NULL,
+  `status` enum('A','I') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'A' COMMENT '1=>Active,0=>Inactiive',
+  `sort_order` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `module_icon` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `imagefootage_modules`
+--
+
+INSERT INTO `imagefootage_modules` (`id`, `module_name`, `url`, `parent_module_id`, `status`, `sort_order`, `created_at`, `updated_at`, `module_icon`) VALUES
+(1, 'Admin User Management', 'subadmin', 0, 'A', 10, '2019-09-05 15:37:53', '2019-09-05 15:37:59', 'fa fa-user-circle-o'),
+(2, 'List Admin', 'subadmin', 1, 'A', NULL, '2019-09-05 15:39:02', '2019-09-05 15:39:09', NULL),
+(3, 'Add Admin', 'subadmin/create', 1, 'A', NULL, '2019-09-05 15:40:32', '2019-09-05 15:40:40', NULL),
+(4, 'Products', 'all_products', 0, 'A', 2, '2019-09-05 15:44:39', '2019-09-05 15:44:48', 'fa fa-th'),
+(5, 'Clients', NULL, 0, 'A', 1, NULL, NULL, 'fa fa-user'),
+(6, 'Contributors', NULL, 0, 'A', 3, NULL, NULL, 'fa fa-address-book'),
+(7, 'Subscriptions', NULL, 0, 'A', 7, NULL, NULL, 'fa fa-thumbs-up'),
+(8, 'Plans and Packages', NULL, 0, 'A', 6, NULL, NULL, 'fa fa-usd'),
+(9, 'Biddings', NULL, 0, 'I', 11, NULL, NULL, 'fa fa-handshake-o'),
+(10, 'Transactions', NULL, 0, 'A', 8, NULL, NULL, 'fa fa-university'),
+(11, 'Reports', NULL, 0, 'A', 9, NULL, NULL, 'fa fa-line-chart'),
+(12, 'History Check', NULL, 0, 'I', 11, NULL, NULL, 'fa fa-calendar-check-o'),
+(13, 'Purchases', NULL, 0, 'A', 12, NULL, NULL, 'fa fa-shopping-cart'),
+(14, 'Reminder', NULL, 0, 'I', 13, NULL, NULL, 'fa fa-clock-o'),
+(15, 'Categories', NULL, 0, 'A', 5, NULL, NULL, 'fa fa-bars'),
+(16, 'Filters', NULL, 0, 'A', 14, NULL, NULL, 'fa fa-filter'),
+(17, 'Keywords', NULL, 0, 'I', 15, NULL, NULL, 'fa fa-key'),
+(18, 'Authentication/Verificatio', NULL, 0, 'I', 16, NULL, NULL, 'fa fa-lock'),
+(19, 'Staff Users', 'accounts', 82, 'A', 1, NULL, NULL, NULL),
+(20, 'Contributor List', 'contributor_list', 6, 'A', NULL, NULL, NULL, NULL),
+(21, 'Companies', NULL, 6, 'I', NULL, NULL, NULL, NULL),
+(22, 'Subscribers', 'subscribers', 7, 'A', NULL, NULL, NULL, NULL),
+(23, 'User', NULL, 9, 'A', NULL, NULL, NULL, NULL),
+(24, 'Product', NULL, 9, 'A', NULL, NULL, NULL, NULL),
+(25, 'Search', NULL, 10, 'I', NULL, NULL, NULL, NULL),
+(26, 'Invoices', 'send_invoice', 10, 'A', NULL, NULL, NULL, NULL),
+(27, 'PO', 'purchase_orders', 10, 'A', NULL, NULL, NULL, NULL),
+(28, 'History', NULL, 10, 'A', NULL, NULL, NULL, NULL),
+(29, 'Users', NULL, 12, 'A', NULL, NULL, NULL, NULL),
+(30, 'Products', NULL, 12, 'A', NULL, NULL, NULL, NULL),
+(31, 'Purchases', NULL, 12, 'A', NULL, NULL, NULL, NULL),
+(32, 'Contribution', NULL, 12, 'A', NULL, NULL, NULL, NULL),
+(33, 'Purchase', NULL, 14, 'A', NULL, NULL, NULL, NULL),
+(34, 'Subscription', NULL, 14, 'A', NULL, NULL, NULL, NULL),
+(35, 'Renewal', NULL, 14, 'A', NULL, NULL, NULL, NULL),
+(36, 'Quality Check', NULL, 17, 'A', NULL, NULL, NULL, NULL),
+(37, 'Arrangement', NULL, 17, 'A', NULL, NULL, NULL, NULL),
+(38, 'User Profile', NULL, 18, 'A', NULL, NULL, NULL, NULL),
+(39, 'Contributor', NULL, 18, 'A', NULL, NULL, NULL, NULL),
+(40, 'Product', NULL, 18, 'A', NULL, NULL, NULL, NULL),
+(41, 'List Product', 'all_products', 4, 'A', NULL, NULL, NULL, NULL),
+(42, 'Add Product', 'add_product', 4, 'A', NULL, NULL, NULL, NULL),
+(43, 'List Category', 'all_product_category', 15, 'A', NULL, NULL, NULL, NULL),
+(44, 'Add Category', 'add_product_category', 15, 'A', NULL, NULL, NULL, NULL),
+(45, 'List Subcategory', 'all_product_subcategory', 15, 'A', NULL, NULL, NULL, NULL),
+(46, 'Add Subcategory', 'add_product_subcategory', 15, 'A', NULL, NULL, NULL, NULL),
+(47, 'Access Managment', 'subadmin/access_management', 1, 'A', NULL, NULL, NULL, NULL),
+(48, 'Add Contributor', 'add_contributor', 6, 'A', NULL, NULL, NULL, NULL),
+(49, 'Create  Package', 'create_package', 8, 'A', NULL, NULL, NULL, NULL),
+(50, 'Client Users', 'users', 5, 'A', 3, NULL, NULL, NULL),
+(51, 'Opportunities', 'opportunities', 5, 'I', 5, NULL, NULL, NULL),
+(52, 'Package List', 'package_list', 8, 'A', NULL, NULL, NULL, NULL),
+(53, 'Static Pages', NULL, 0, 'A', 13, NULL, NULL, 'fa fa-internet-explorer'),
+(54, 'Add Pages', 'create_static_pages', 53, 'A', NULL, NULL, NULL, NULL),
+(55, 'Add Staff User', 'accounts/create', 82, 'A', 2, NULL, NULL, NULL),
+(56, 'Pages List', 'static_pages_list', 53, 'A', NULL, NULL, NULL, NULL),
+(57, 'Add Client User', 'users/create', 5, 'A', 4, NULL, NULL, NULL),
+(58, 'Add Opportunities', 'opportunities/create', 5, 'I', 6, NULL, NULL, NULL),
+(59, 'Add Product Colors', 'add_product_colors', 16, 'A', NULL, NULL, NULL, NULL),
+(60, 'Product Color List', 'product_colors_list', 16, 'A', NULL, NULL, NULL, NULL),
+(61, 'Add Product Gender', 'add_product_gender', 16, 'A', NULL, NULL, NULL, NULL),
+(62, 'Product Gender List', 'product_gender_list', 16, 'A', NULL, NULL, NULL, NULL),
+(63, 'Add Product Ethinicities', 'add_product_ethinicities', 16, 'A', NULL, NULL, NULL, NULL),
+(64, 'Product Ethinicities List', 'product_ethinicities_list', 16, 'A', NULL, NULL, NULL, NULL),
+(65, 'Add Product Locations', 'add_product_locations', 16, 'A', NULL, NULL, NULL, NULL),
+(66, 'Product Locations List', 'product_locations_list', 16, 'A', NULL, NULL, NULL, NULL),
+(67, 'Add Product Image Sizes', 'add_product_image_sizes', 16, 'A', NULL, NULL, NULL, NULL),
+(68, 'Product Image Sizes List', 'product_image_sizes_list', 16, 'A', NULL, NULL, NULL, NULL),
+(69, 'Add Product Image Types', 'add_product_image_types', 16, 'A', NULL, NULL, NULL, NULL),
+(70, 'Product Image Types List', 'product_image_types_list', 16, 'A', NULL, NULL, NULL, NULL),
+(71, 'Add Product Image Peoples', 'add_product_image_peoples', 16, 'A', NULL, NULL, NULL, NULL),
+(72, 'Product Image Peoples List', 'product_image_peoples_list', 16, 'A', NULL, NULL, NULL, NULL),
+(73, 'Add Product Orientations ', 'add_product_orientations', 16, 'A', NULL, NULL, NULL, NULL),
+(74, 'Product Orientations List', 'product_orientations_list', 16, 'A', NULL, NULL, NULL, NULL),
+(75, 'Add Product Sort Type', 'add_product_sort_type', 16, 'A', NULL, NULL, NULL, NULL),
+(76, 'Product Sort Type List', 'product_sort_type_list', 16, 'A', NULL, NULL, NULL, NULL),
+(77, 'Bulk Upload', NULL, 0, 'A', 4, NULL, NULL, 'fa fa-cloud-upload'),
+(78, 'Upload Products CSV', 'upload_products_csv', 77, 'A', NULL, NULL, NULL, NULL),
+(79, 'Orders', 'orders', 13, 'A', NULL, NULL, NULL, NULL),
+(80, 'api quota', 'add_api_quota', 8, 'A', NULL, NULL, NULL, NULL),
+(81, 'api quota list', 'api_quota_list', 8, 'A', NULL, NULL, NULL, NULL),
+(82, 'Users', NULL, 0, 'A', 1, NULL, NULL, 'fa fa-user');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `imagefootage_modules`
+--
+ALTER TABLE `imagefootage_modules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `imagefootage_modules`
+--
+ALTER TABLE `imagefootage_modules`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
