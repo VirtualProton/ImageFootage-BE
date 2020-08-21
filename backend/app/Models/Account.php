@@ -123,7 +123,7 @@ class Account  extends Authenticatable
          // ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
           ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
           ->where('imagefootage_performa_invoices.user_id','=',$id)
-          ->orderBy('imagefootage_performa_invoices.id','desc')
+          ->orderBy('imagefootage_performa_invoices.id','asc')
           ->get()
           ->toArray();
           //dd(DB::getQueryLog());

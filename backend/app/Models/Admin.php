@@ -43,7 +43,7 @@ class Admin  extends Authenticatable
         if($id==''){
         return Admin::where('id','<>','1')->with('role')->with('department')->get()->toArray();
         }else{
-         return Admin::where('id','=',$id)->with('role')->with('department')->first()->toArray();
+         return Admin::where('id','=',$id)->with('role')->with('department')->first();
         }
     }
 
