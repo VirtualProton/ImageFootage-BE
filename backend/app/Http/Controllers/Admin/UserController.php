@@ -11,6 +11,7 @@ use App\Models\Account;
 use App\Models\Admin;
 use App\Models\City;
 use App\Models\State;
+use App\Models\Comment;
 
 use DB;
 
@@ -135,12 +136,30 @@ class UserController extends Controller
 
         $user_plans = $this->User->userPlans($user_id);
 
+        $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')
+            ->with('state')
+            ->with('city')
+            ->where('id', $user_id)
+            ->with(['plans' => function ($query) {
+                $query->whereIn('payment_status', ['Completed', 'Transction Success'])
+                    ->with('downloads');
+            }
+            ])->whereHas("plans", function ($query) {
+                $query->whereIn('payment_status', ['Completed', 'Transction Success']);
+            })->get()->toArray();
+
+        $agentlist=$this->Account->getAccountData();
+
+        $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
+
+
+        // echo "<pre>";print_r($comments); die;
 
         // echo "<pre>";print_r($user_plans); die;
         // echo "<pre>";print_r($account_manager['name']); die;
         // echo "<pre>";print_r($user); die;
         //print_r($user); die;
-        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans'));
+        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'));
     }
 
     /**

@@ -8,6 +8,7 @@ use Auth;
 use Image;
 use File;
 use App\Models\Contributor;
+use App\Models\User;
 use Mail;
 use App\Http\TnnraoSms\TnnraoSms;
 class ContributorController extends Controller
@@ -308,5 +309,59 @@ class ContributorController extends Controller
 		}else{
 			return back()->with('warning','Some thing went wrong.');
 		}
+	}
+
+	public function ajaxRequestForUserPass($id){
+		$TnnraoSms=new TnnraoSms;
+		$user = new User;
+	    $all_users_list=$user->where('id', $id)->get()->toArray();
+		// return response()->json($all_users_list);
+		$name=$all_users_list[0]['user_name'];
+		$cemail=$all_users_list[0]['email'];
+		$cmobile=$all_users_list[0]['mobile'];
+		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+			srand((double)microtime()*1000000); 
+			$i = 0; 
+			$pass = '' ; 
+			while ($i <= 7) { 
+				$num = rand() % 33; 
+				$tmp = substr($chars, $num, 1); 
+				$pass = $pass . $tmp; 
+				$i++; 
+			}
+		 $update_array=array('otp'=>$pass,
+							 'updated_at'=>date('Y-m-d H:i:s')
+							 );
+		 $result = User::where('id',$id)->update($update_array);
+		 if($result){
+			  $messagemob1="Your Imagefootage Authentication Key :-".$pass;
+			  $TnnraoSms->sendSms($messagemob1,$cmobile);
+			 $cont_url=url('admin/contributorotpreset/').'/'.$id;
+				 $data = array('cname'=>$name,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
+					 Mail::send('contributorresetpass', $data, function($message) use($data) {
+					 $message->to($data['cemail'],$data['cname'])->subject('Password');
+			});
+
+			$resp =array();
+			$resp['statusdesc'] = "Password Reset Successfully!!";
+            $resp['statuscode'] = "1";
+		    
+		    return response()->json(compact('resp'));
+
+			//return back()->with('success','Password request rised successfully');
+		 }
+		 else
+		 {
+		 	$resp =array();
+		 	$resp['statusdesc']  =   "Error in Password Reset";
+            $resp['statuscode']   =   "0";
+
+            
+		    
+		    return response()->json(compact('resp'));
+
+			 //return back()->with('warning','Some problem occured.');
+		 }
+		
 	}
 }
