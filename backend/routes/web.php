@@ -66,6 +66,8 @@ Route::post('/editcontributor', 'ContributorController@editcontributor');
 Route::get('/viewcontributor/{id}', 'ContributorController@viewcontributor');
 Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
 Route::post('/request_for_contributorpass/{id}', 'ContributorController@requestForContributorPass');
+Route::post('/ajaxRequestForUserPass/{id}', 'ContributorController@ajaxRequestForUserPass');
+
 Route::get('/contributorotpvalidate/{id}', 'ContributorController@contVerifyRegisteriedOtp');
 Route::post('/contributorotpvalidateprocess', 'ContributorController@contVerifyRegisteriedOtpprocess');
 Route::get('/contributor_set_password/{id}', 'ContributorController@contSetPassword');
@@ -214,6 +216,7 @@ Route::post('/sendmail','InvoiceController@sendmail');
 Route::get('/product/{id}', 'ProductController@getproduct');
 //custom Invoice routes
 Route::get('/users/invoices/{id}', 'UserController@invoices');
+Route::post('/users/comments/', 'InvoiceController@comments');
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/edit_quotation/{id}', 'InvoiceController@edit_quotation');
 Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');

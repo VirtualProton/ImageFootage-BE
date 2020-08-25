@@ -9,7 +9,10 @@ use DB;
 use Mail;
 use PDF;
 use App\Models\User;
+use App\Models\Comment;
 use App\Models\Package;
+use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 
 
@@ -136,5 +139,41 @@ class InvoiceController extends Controller
         return view('admin.invoice.purchase_orders',compact('userlist'));
 
      }
+
+     public function comments(Request $request){
+
+      $this->validate($request, [
+            'subject' => 'required|max:100',
+            'user_id' => 'required',
+            'comment' => 'required|max:190',
+            'status' => 'required',
+            'agent_id' => 'required',
+            'expiry' => 'required',
+
+        ]);
+      
+      $comment = new Comment();
+
+      $comment['user_id'] = $request->user_id;
+      $comment['subject'] = $request->subject;
+      $comment['comment'] = $request->comment;
+      $comment['status'] = $request->status;
+      $comment['agent_id'] = $request->agent_id;
+      $comment['created_by'] = $request->created_by;
+      $comment['expiry'] = $request->expiry;
+
+      // $start_day = Carbon::parse($request->created_at); //get a carbon instance with created_at as date
+      // $expiry_day = $start_day->addMonths($request->user_selected_months);
+
+      // print_r($comment['expiry']); die;
+      $expiry_date = Carbon::now()->addDays($comment['expiry']);
+      $comment['expiry'] = $expiry_date;
+
+
+      $comment->save();
+      return Redirect::back()->with('success', 'Comment Saved');  
+
+     }
+
 
 }
