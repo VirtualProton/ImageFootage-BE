@@ -147,18 +147,28 @@ class MediaController extends Controller
             //->select()
             ->get()->toArray();
         $download = 0;
+        $downoad_type = 0;
 
       if(count($pacakegalist)>0){
           foreach($pacakegalist as $perpack){
               if($perpack['downloaded_product'] < $perpack['package_products_count']){
                   $download =1;
               }
+              if ($allFields['product']['type'] == 3) {
+                  if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
+                      $downoad_type = 1;
+                  } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
+                      $downoad_type = 1;
+                  }
+              }
           }
       }
-    
 
       if($download==1) {
           if ($allFields['product']['type'] == 3) {
+              if($downoad_type == 0){
+                  return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
+              }
               $footageMedia = new FootageApi();
               $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
 
@@ -201,6 +211,8 @@ class MediaController extends Controller
               $product_details_data = $imageMedia->download($allFields, $id);
               return response()->json($product_details_data);
           }
+      } else {
+            return response()->json(['status' => '0', 'message' => 'Download pack limit has been over already !!']);
       }
     }
 

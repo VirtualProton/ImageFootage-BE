@@ -452,11 +452,15 @@ export class HeroDetailComponent implements OnInit {
 
         this.heroService.download(cartval)
             .subscribe(data => {
-               // console.log(data);
+                //console.log(data);
                 if(data) {
                     if (type == 3) {
                         this.loadingData = false;
-                         window.location.href = data['url'];
+                        if(data['status'] && data['status'] == '0') {
+                            Swal.fire('', data['message'], 'error');
+                        } else{  
+                            window.location.href = data['url'];
+                        }    
                     } else {
                         if (data["stat"] == 'ok') {
                             this.loadingData = false;
@@ -487,11 +491,15 @@ export class HeroDetailComponent implements OnInit {
         //console.log(cartval);
         this.heroService.download(cartval)
             .subscribe(data => {
-                //console.log(data);
+                console.log(data);
                 if(data) {
                     if (type == 3) {
                         this.loadingData = false;
-                        window.location.href = data['url'];
+                        if(data['status'] && data['status'] == '0') {
+                            Swal.fire('', data['message'], 'error');
+                        } else{
+                            window.location.href = data['url'];
+                        }      
                     } else {
                         if (data["stat"] == 'ok') {
                             this.loadingData = false;

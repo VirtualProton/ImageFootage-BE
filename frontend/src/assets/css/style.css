@@ -1095,8 +1095,8 @@ video.for_mobile {
   width: 100%;
   padding: 20px;
   background: #c1cbc3;}
-.search_m select.btn.btn-secondary {border-radius:0px 10px 10px 0px;}
-.search_m input.form-control {border-radius:0px 0px 0px 0px !important;}
+.search_m select.btn.btn-secondary {border-radius:6px 0px 0px 6px !important;}
+.search_m input.form-control {border-radius:0px 6px 6px 0px !important;}
 .search_m {
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
