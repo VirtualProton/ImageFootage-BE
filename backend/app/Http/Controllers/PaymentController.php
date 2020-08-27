@@ -385,6 +385,7 @@ class PaymentController extends Controller
         $packge->package_pcarry_forward = $allFields['plan']['package_pcarry_forward'];
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
+        $packge->pacage_size = $allFields['plan']['pacage_size'];        
         $packge->created_at = date('Y-m-d H:i:s');
         if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
