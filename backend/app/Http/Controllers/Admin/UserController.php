@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Models\Country;
 use App\Models\Common;
 use App\Models\User;
@@ -38,7 +39,6 @@ class UserController extends Controller
     public function index()
     {
         $userlist=$this->User->getUserData();
-        //dd($userlist);
         return view('admin.user.index',compact('userlist'));
     }
 
@@ -51,9 +51,7 @@ class UserController extends Controller
     {
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
-        // $accountlist=$this->Account->getAccountData();
-                $this->Admin = new Admin();
-
+        $this->Admin = new Admin();
         $accountlist=$this->Admin->getAgentData();
         return view('admin.user.create', compact('title','countries','accountlist'));
     }
@@ -68,23 +66,16 @@ class UserController extends Controller
     {
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
-        // $accountlist=$this->Account->getAccountData();
-                $this->Admin = new Admin();
-
+        $this->Admin = new Admin();
         $accountlist=$this->Admin->getAgentData();
         $user = User::where('email', $request['email'])->get()->toArray();
         $user['id'] = $user[0]['id'];
         $user['email'] = $user[0]['email'];
-        // echo "<pre>";print_r($user[0]['id']); die;
         if(!empty($user)){
-           // return redirect("admin/users/create")->with("user", $user[0]['id']); 
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
-
         }
-        // echo "<pre>"; print_r($user); die;
         $this->validate($request, [
             'email' => 'required|email|unique:imagefootage_users|max:255',
-
         ]);
         if($this->User->save_user($request)){
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
@@ -114,26 +105,21 @@ class UserController extends Controller
         $this->Account = new Account();
         $account_invoices =    $this->Account->getAccountInvoices($id);
         $user_id = $id;
-        // echo $user_id; die;
         $user = User::find($id);
-        // echo $user->account_manager_id; die;
+
         $this->Admin = new Admin();
-        $account_manager = $this->Admin->getAgentData($user->account_manager_id);
-        if(!empty($account_manager)){
+        if(!empty($user->account_manager_id)){
+            $account_manager = $this->Admin->getAgentData($user->account_manager_id);
             $account_manager_name = $account_manager['name'];
         }else{
             $account_manager_name = "";
         }
-
         $city = City::where('id', $user->city)->first();
         $city_name = $city['name'];
-
         $state = State::where('id', $user->state)->first();
         $state_name = $state['state'];
-
         $country = Country::where('id', $user->country)->first();
         $country_name = $country['name'];
-
         $user_plans = $this->User->userPlans($user_id);
 
         $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')
@@ -149,16 +135,8 @@ class UserController extends Controller
             })->get()->toArray();
 
         $agentlist=$this->Account->getAccountData();
-
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
 
-
-        // echo "<pre>";print_r($comments); die;
-
-        // echo "<pre>";print_r($user_plans); die;
-        // echo "<pre>";print_r($account_manager['name']); die;
-        // echo "<pre>";print_r($user); die;
-        //print_r($user); die;
         return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'));
     }
 
@@ -190,13 +168,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_data =    $this->User->getUserData($id);
-        // print_r($user_data['email']); die;
+        $user_data = $this->User->getUserData($id);
         $this->validate($request, [
             'email' => 'required|email|unique:imagefootage_users,email,'.$id,
 
         ]);
-
         if($this->User->update_user($request,$id)){
             return redirect("admin/users")->with("success", "Account has been updated successfully !!!");
         } else {
@@ -214,9 +190,7 @@ class UserController extends Controller
     {
         $delagent = User::find($id);
         $delagent->delete();
-       // redirect
-       return redirect('admin/users')->with('success', 'Successfully deleted the admin/agent!');
-
+        return redirect('admin/users')->with('success', 'Successfully deleted the admin/agent!');
     }
 
     /**
@@ -234,9 +208,4 @@ class UserController extends Controller
             return redirect("admin/users")->with("error", "Due to some error, User status is not changed yet. Please try again!");
         }
     }
-
-
-    
-
-
 }

@@ -1674,7 +1674,6 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
             ->union($products)
             ->get()
 			->toArray();
-		//dd($crm_products);
 	 if(count($crm_products)==0){
 		    $imageMedia = new ImageApi();
 			$product_details = $imageMedia->get_media_info($product_id);

@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\PantherMedia\ImageApi;
-use App\Http\Pond5\FootageApi;
-use App\Models\Product;
+
 use App\Models\Common;
-use  App\Models\ProductCategory;
+use App\Models\Product;
+use App\Http\Pond5\FootageApi;
+use App\Models\ProductCategory;
+use App\Http\PantherMedia\ImageApi;
+
 use CORS;
 
 class CronController extends Controller
@@ -28,48 +30,31 @@ class CronController extends Controller
 
     public function pantherImageUpload(){
         ini_set('max_execution_time', 0);
-        //$product = new Product();
-        //$all_products = $product->getProducts($keyword);
         $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
         foreach($home_categories as $percategory){
-        $keyword['search'] = $percategory;
-        $pantherMediaImages = new ImageApi();
-        $pantharmediaData = $pantherMediaImages->search($keyword);
-        //echo "<pre>";
-        //print_r($pantharmediaData); die;
-        $common = new Common();
-        $category_id = $common->checkCategory($percategory);
-        if(count($pantharmediaData) > 0){
-            $this->product->savePantherImage($pantharmediaData,$category_id);
-        }    
+            $keyword['search'] = $percategory;
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData = $pantherMediaImages->search($keyword);
 
-        //print_r($pantharmediaData); die;
-
-    }
-        //return array('api'=>$pantharmediaData);
+            $common = new Common();
+            $category_id = $common->checkCategory($percategory);
+            if(count($pantharmediaData) > 0){
+                $this->product->savePantherImage($pantharmediaData,$category_id);
+            }
+        } 
     }
 
     public function pantherImageUploadCategory(){
         ini_set('max_execution_time', 0);
-        //$product = new Product();
-        //$all_products = $product->getProducts($keyword);
-       // $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
-         $categories = ProductCategory::get()->toArray();
+        $categories = ProductCategory::get()->toArray();
         foreach($categories as $percategory){
             $keyword['search'] = $percategory['category_name'];
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword);
-            //echo "<pre>";
-            //print_r($pantharmediaData); die;
-
             if(count($pantharmediaData) > 0){
                 $this->product->savePantherImage($pantharmediaData,$percategory['category_id']);
             }
-
-            //print_r($pantharmediaData); die;
-
         }
-        //return array('api'=>$pantharmediaData);
     }
     public function pantherImageUpdate(){
         ini_set('max_execution_time', 0);

@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Common;
+
 use DB;
-use Mail;
 use PDF;
-use App\Models\User;
-use App\Models\Comment;
-use App\Models\Package;
-use Illuminate\Support\Facades\Redirect;
+use Mail;
 use Carbon\Carbon;
 
-
+use App\Models\User;
+use App\Models\Common;
+use App\Models\Package;
+use App\Models\Comment;
 
 class InvoiceController extends Controller
 {
@@ -62,6 +62,7 @@ class InvoiceController extends Controller
         Mail::send('mail', $data, function($message)use($data,$pdf) {
         $message->to($data["email"])
         ->subject($data["subject"])
+        ->from('admin@imagefootage.com', 'Imagefootage')
         ->attachData($pdf->output(), "invoice.pdf");
         });
     }catch(JWTException $exception){
@@ -82,19 +83,14 @@ class InvoiceController extends Controller
 
   public function quotation($user_id)
   {
-    $package = new Package;
-    $monthly_image_package_list=$package->where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
-    // print_r($all_package_list);  die;
-    return view('admin.invoice.quotation', compact('user_id'), ['packages' => $monthly_image_package_list]);
-
-    // return view('admin.invoice.quotation',compact('user_id'));   
+    $userDetail = User::find($user_id);
+    $monthly_image_package_list = Package::where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
+    return view('admin.invoice.quotation', compact('userDetail'), ['packages' => $monthly_image_package_list]); 
   }
 
   public function saveInvoice(Request $request){
-      // $data = $request->input();
       $data = json_decode(request()->getContent(), true);
       return $this->Common->save_proforma($data);
-      //print_r($data); die;
   }
 
   public function invoice($user_id,$invoice_id){
@@ -174,6 +170,16 @@ class InvoiceController extends Controller
       return Redirect::back()->with('success', 'Comment Saved');  
 
      }
+
+    public function saveSubscriptionInvoice(Request $request){
+        $data = json_decode(request()->getContent(), true);
+        return $this->Common->save_subscription_proforma($data);
+    }
+
+    public function saveDownloadInvoice(Request $request){
+        $data = json_decode(request()->getContent(), true);
+        return $this->Common->save_download_proforma($data);
+    }
 
 
 }

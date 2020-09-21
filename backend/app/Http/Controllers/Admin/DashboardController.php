@@ -23,29 +23,13 @@ class DashboardController extends Controller
 
    public function dashboard(){
         $user = Auth::guard('admins')->user();
-        // echo "<pre>"; print_r($user); die;
-        
+
         $title = "Dashboard";
-        $orders = DB::table('imagefootage_orders')
-                    // ->where('order_status','=','2')
-                    ->get();
-
-        $users = DB::table('imagefootage_users')
-                    // ->where('','=','')
-                    ->get();
-
-        $products = DB::table('imagefootage_products')
-                    // ->where('','=','')
-                    ->get();
-        $subs = DB::table('imagefootage_user_package')
-                    // ->where('','=','')
-                    ->groupBy('user_id')
-                    ->get();
-        $subspercentage = (count($subs)*100)/count($users);
-
-        // $comments = Comment::Where('agent_id', )
-
-        // print_r(count($subs)); die;
+        $orders = DB::table('imagefootage_orders')->count();
+        $users = DB::table('imagefootage_users')->count();
+        $products = DB::table('imagefootage_products')->count();
+        $subs = DB::table('imagefootage_user_package') ->groupBy('user_id')->count();
+        $subspercentage = ($subs*100)/$users;
 
         $data['orders'] = $orders;
         $data['products'] = $products;

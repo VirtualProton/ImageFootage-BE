@@ -23,7 +23,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{count($data['orders'])}}</h3>
+              <h3>{{$data['orders']}}</h3>
 
               <p>New Orders</p>
             </div>
@@ -53,7 +53,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{count($data['users'])}}</h3>
+              <h3>{{$data['users']}}</h3>
 
               <p>User Registrations</p>
             </div>
@@ -68,7 +68,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>{{count($data['products'])}}</h3>
+              <h3>{{$data['products']}}</h3>
 
               <p>Products</p>
             </div>

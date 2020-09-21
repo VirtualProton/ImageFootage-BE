@@ -1,24 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\ProductImages;
-use Aws\Exception\MultipartUploadException;
-use Aws\S3\MultipartUploader;
-use Aws\S3\S3Client;
 use Illuminate\Http\Request;
-use App\Models\Usercontactus;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+
 use Mail;
 use Image;
 use File;
-use App\Http\TnnraoSms\TnnraoSms;
-use App\Models\Contributor;
+
+use App\Models\City;
 use App\Models\User;
+use App\Models\State;
+use App\Models\Country;
+use App\Models\Contributor;
+use App\Models\Usercontactus;
+use App\Models\ProductImages;
+
+use Aws\S3\S3Client;
+use Aws\S3\MultipartUploader;
+use Aws\Exception\MultipartUploadException;
+
+use App\Http\TnnraoSms\TnnraoSms;
 
 class UserContactusController extends Controller
 {
@@ -53,40 +56,30 @@ class UserContactusController extends Controller
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
 		$email= User::where('id','=',$user_id)->first()->email;
-		  //echo Hash::make($old_pass); exit();
 		
 		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
-			 exit();
 		}
 		if(!isset($password) && empty($password)){
 			 return response()->json(['status'=>'0','message' => 'Password is required.'], 200);
-			 exit();
 		}
 		if(!isset($cpassword) && empty($cpassword)){
 			 return response()->json(['status'=>'0','message' => 'Confirm Password is required.'], 200);
-			 exit();
 		}
 		if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
-			  exit();
 		}
-		  $credentials = ['email'=>$email, 'password'=>$old_pass];
+		$credentials = ['email'=>$email, 'password'=>$old_pass];
           if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
-			 exit();
-        }else{
-		$result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
-		if($result){
-				 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
-				 exit();
-		}else{
-				 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
-			 	 exit();	
-		}
-	}
-		
-
+                return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
+            }else{
+                $result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
+                if($result){
+                        return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
+                }else{
+                        return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
+                }
+	        }
 	}
 
     public function getCountyStatesCityList(){
@@ -172,7 +165,6 @@ class UserContactusController extends Controller
                     echo $e->getMessage() . "\n";
                 }
             }
-
             $result = $contributor->save();
             if($result){
                 $cont_url= url('emailVerification?key='.$hkey);
@@ -251,30 +243,23 @@ class UserContactusController extends Controller
 		 $cpassword=$request->cpassword;
 		 if(!isset($password) && empty($password)){
 			 return response()->json(['status'=>'0','message' => 'Password is required.'], 200);
-			 exit();
 		 }
 		 if(!isset($cpassword) && empty($cpassword)){
 			 return response()->json(['status'=>'0','message' => 'Confirm Password is required.'], 200);
-			 exit();
 		 }
 		 if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
-			  exit();
 		 }
 		 $check_otp=User::where('email',$email)->where('otp',$otp)->first();
 		 if(isset($check_otp) && !empty($check_otp)){
 			 $result=User::where('email',$email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
 			 if($result){
 				 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
-				 exit();
 			 }else{
-				 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
-			 	 exit();	
+				 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);	
 			 }
 		 }else{
-			 return response()->json(['status'=>'0','message' => 'Wrong OTP'], 200);
-			 exit();			 
-		 }
-		
+			 return response()->json(['status'=>'0','message' => 'Wrong OTP'], 200);			 
+		}	
 	}
 }
