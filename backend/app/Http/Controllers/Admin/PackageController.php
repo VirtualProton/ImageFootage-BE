@@ -96,4 +96,33 @@ class PackageController extends Controller
 			 return back()->with('warning','Some problem occured.');
 		}
   }
+
+	public function plans(Request $request){
+		//print_r($request->all()); die;
+		$data = $request->all();
+		if(count($data) > 0) {
+			if($data['quotation_type'] == 'download'){
+				$package = Package::where('package_plan', '1');
+				if($data['prod_type'] == 'foot'){
+					$package->where('package_type', '=', 'Footage');
+				} else{
+					$package->where('package_type', '=', 'Image');
+				}
+			} else {
+				$package = Package::where('package_plan', '2');
+				$package->where('package_type', '=', 'Image');
+				if($data['product_dur'] == 'monthly') {
+					$package->where('package_expiry', '=', '1');
+				} else {
+					$package->where('package_expiry', '=', '0');
+				}
+			}
+		}
+		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry')->where('package_status', '=', 'Active')->get()->toArray();
+		if(count($all_package_list) > 0){
+			echo json_encode(["status"=>"success",'data'=>$all_package_list]);
+		} else {
+			echo json_encode(["status"=>"fail", 'data'=>'']);
+		}
+	}
 }

@@ -14,6 +14,7 @@ use App\Http\AtomPay\TransactionRequest;
 use App\Http\AtomPay\TransactionResponse;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\Package;
 
 class Common extends Model
 {
@@ -109,185 +110,185 @@ class Common extends Model
 
     public function save_proforma($data){
 
-        ini_set('max_execution_time', 0);
-
-        $selected_taxes = array();
-       
-        if(isset($data['SGST']) && $data['SGST']==1){
-            $selected_taxes['SGST']='1';
-        }else{
-            $selected_taxes['SGST']='0';
-        } 
+            ini_set('max_execution_time', 0);
+            //echo "<pre>"; print_r($data); die;
+            $selected_taxes = array();
         
-        if(isset($data['CGST']) && $data['CGST']==1){
-            $selected_taxes['CGST']='1';
-        }else{
-            $selected_taxes['CGST']='0';
-        }
-        if(isset($data['IGST']) && $data['IGST']==1){
-            $selected_taxes['IGST']='1';
-        }else{
-            $selected_taxes['IGST']='0';
-        }
-        if(isset($data['IGSTT']) && $data['IGSTT']==1){
-            $selected_taxes['IGSTT']='1';
-        }else{
-            $selected_taxes['IGSTT']='0';
-        }
+            if(isset($data['SGST']) && $data['SGST']==1){
+                $selected_taxes['SGST']='1';
+            }else{
+                $selected_taxes['SGST']='0';
+            } 
+            
+            if(isset($data['CGST']) && $data['CGST']==1){
+                $selected_taxes['CGST']='1';
+            }else{
+                $selected_taxes['CGST']='0';
+            }
+            if(isset($data['IGST']) && $data['IGST']==1){
+                $selected_taxes['IGST']='1';
+            }else{
+                $selected_taxes['IGST']='0';
+            }
+            if(isset($data['IGSTT']) && $data['IGSTT']==1){
+                $selected_taxes['IGSTT']='1';
+            }else{
+                $selected_taxes['IGSTT']='0';
+            }
 
-        $insert = array(
-            'user_id'=> $data['uid'],
-            'email_id'=> $data['email'],
-            'invoice_name'=>$this->random_numbers(),
-            'created'=>date('Y-m-d'),
-            'modified'=>date('Y-m-d H:i:s'),
-            'job_number'=>$data['po'],
-            'promo_code'=>'',
-            'tax'=> $data['tax'],
-            'tax_selected'=> json_encode($selected_taxes),
-            'total'=>$data['total'],
-            'status'=>'0',
-            'invoice_type'=>'3',
-            'proforma_type'=>'1',
-            'expiry_invoices'=>$data['expiry_date'],
-            'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+                    $insert = array(
+                        'user_id'=> $data['uid'],
+                        'email_id'=> $data['email'],
+                        'invoice_name'=> $this->random_numbers(),
+                        'created'=>date('Y-m-d'),
+                        'modified'=>date('Y-m-d H:i:s'),
+                        'job_number'=>$data['po'],
+                        'promo_code'=>'',
+                        'tax'=> $data['tax'],
+                        'tax_selected'=> json_encode($selected_taxes),
+                        'total'=>$data['total'],
+                        'status'=>'0',
+                        'invoice_type'=>'3',
+                        'proforma_type'=>'1',
+                        'expiry_invoices'=>$data['expiry_date'],
+                        'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
 
-    );
+                );
         //DB::beginTransaction();
         //try{
 
-        DB::table('imagefootage_performa_invoices')->insert($insert);   
-        $id = DB::getPdo()->lastInsertId();
-        if(count($data['products'])>0) {
-            foreach ($data['products']['product'] as $eachproduct) {
+                    DB::table('imagefootage_performa_invoices')->insert($insert);   
+                    $id = DB::getPdo()->lastInsertId();
+                    if(count($data['products'])>0) {
+                        foreach ($data['products']['product'] as $eachproduct) {
 
-                if (isset($eachproduct['newuploadimage']) && count($eachproduct['newuploadimage']) > 0) {
+                            if (isset($eachproduct['newuploadimage']) && count($eachproduct['newuploadimage']) > 0) {
 
-                    $name = "invoice_" . time() . '_' . $eachproduct['newuploadimage'][0]['name'];
+                                $name = "invoice_" . time() . '_' . $eachproduct['newuploadimage'][0]['name'];
 
-                    $type = "image/png";
-//                $base64blob = base64_encode($eachproduct['newuploadimage'][0]['url']);
-//                $datauri = "data:$type;base64,$base64blob";
-//
-//                //file_put_contents('', file_get_contents($eachproduct['newuploadimage'][0]['url']));
-//				$files2bucketemp= file_get_contents($eachproduct['newuploadimage'][0]['url']);
-//				$file_path='invoice/image';
-//
-//				$destinationPath = public_path($file_path);
-//				//$image->move($destinationPath, $name);
-//				$s3Client = new S3Client([
-//					/*'profile' => 'default',*/
-//					'region' => 'us-east-2',
-//					'version' => '2006-03-01'
-//				]);
-//				// Use multipart upload
-//				//print_r($files2bucketemp);
-//				//exit();
-//				$finelname=$file_path.$name;
-//				$source = $files2bucketemp;
-//				$uploader = new MultipartUploader($s3Client, $source, [
-//					'bucket' => 'imgfootage',
-//					'key' => $finelname,
-//				]);
+                                $type = "image/png";
+            //                $base64blob = base64_encode($eachproduct['newuploadimage'][0]['url']);
+            //                $datauri = "data:$type;base64,$base64blob";
+            //
+            //                //file_put_contents('', file_get_contents($eachproduct['newuploadimage'][0]['url']));
+            //				$files2bucketemp= file_get_contents($eachproduct['newuploadimage'][0]['url']);
+            //				$file_path='invoice/image';
+            //
+            //				$destinationPath = public_path($file_path);
+            //				//$image->move($destinationPath, $name);
+            //				$s3Client = new S3Client([
+            //					/*'profile' => 'default',*/
+            //					'region' => 'us-east-2',
+            //					'version' => '2006-03-01'
+            //				]);
+            //				// Use multipart upload
+            //				//print_r($files2bucketemp);
+            //				//exit();
+            //				$finelname=$file_path.$name;
+            //				$source = $files2bucketemp;
+            //				$uploader = new MultipartUploader($s3Client, $source, [
+            //					'bucket' => 'imgfootage',
+            //					'key' => $finelname,
+            //				]);
 
-//				try {
-//					$fileupresult = $uploader->upload();
-//				} catch (MultipartUploadException $e) {
-//					echo $e->getMessage() . "\n";
-//                }
-//                $image = $fileupresult['ObjectURL'];
-                } else {
-                    $image = $eachproduct['image'];
+            //				try {
+            //					$fileupresult = $uploader->upload();
+            //				} catch (MultipartUploadException $e) {
+            //					echo $e->getMessage() . "\n";
+            //                }
+            //                $image = $fileupresult['ObjectURL'];
+                            } else {
+                                $image = $eachproduct['image'];
+                            }
+                            $insert_product = array(
+                                'invoice_id' => $id,
+                                'user_id' => $data['uid'],
+                                'product_id' => $eachproduct['name'],
+                                'product_type' => $eachproduct['pro_type'],
+                                'product_size' => $eachproduct['pro_size'],
+                                'product_image' => $image,
+                                'subtotal' => $eachproduct['price'],
+                                'status' => "1",
+                                'product_web' => 'imagefootage'
+                            );
+                            DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
+
+                        }
+                        if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                            Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                        }
+
+                            $dataForEmail  = $this->getData($id,$data['uid']); 
+                            //print_r($dataForEmail); die;
+                            //$data["email"]="amitpathak.bansal@gmail.com";
+                            //$data["client_name"]="Test email";
+                            $dataForEmail = json_decode(json_encode($dataForEmail), true);
+                            //print_r($dataForEmail); die;
+                            $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
+                            $data["email"] = $data['email'];
+                            $data["invoice"] = $dataForEmail[0]['invoice_name'];
+
+                        //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;
+
+                            $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail]));
+                            $fileName = $data["invoice"]."_quotation.pdf";
+                            $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+                            try{
+                                Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
+                                $message->to($data["email"])
+                                ->from('admin@imagefootage.com', 'Imagefootage')
+                                ->subject($data["subject"])
+                                ->attachData($pdf->output(), $fileName);
+                                });
+
+                                $s3Client = new S3Client([
+                                    /*'profile' => 'default',*/
+                                    'region' => 'us-east-2',
+                                    'version' => '2006-03-01'
+                                ]);
+                                // Use multipart upload
+                                //print_r($files2bucketemp);
+                                //exit();
+                                $path ='quotation/'.$fileName;
+                            // $source = file_get_contents(storage_path('app/public/pdf'). '/' . $fileName);
+                                $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+                                $uploader = new MultipartUploader($s3Client, $source, [
+                                    'bucket' => 'imgfootage',
+                                    'key' => $path,
+                                ]);
+                            try {
+                                    $fileupresult = $uploader->upload();
+                                } catch (MultipartUploadException $e) {
+                                    echo $e->getMessage() . "\n";
+                                }
+                                $pdf_path = $fileupresult['ObjectURL'];
+                                if(!empty($pdf_path)){
+                                    DB::table('imagefootage_performa_invoices')
+                                        ->where('id','=',$id)
+                                        ->update(['quotation_url'=>$pdf_path]);
+                                    unlink(storage_path('app/public/pdf'). '/' . $fileName);
+                                }
+                                // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {
+                    //     $message->to($data["email"])
+                    //     ->subject($data["subject"]);
+                    // });
+                        }catch(JWTException $exception){
+                            $this->serverstatuscode = "0";
+                            $this->serverstatusdes = $exception->getMessage();
+                        }
+                if (Mail::failures()) {
+                    $this->statusdesc  =   "Error sending mail";
+                    $this->statuscode  =   "0";
+                }else{
+                    $this->statusdesc  =   "Quotation sent Succesfully";
+                    $this->statuscode  =   "1";
                 }
-                $insert_product = array(
-                    'invoice_id' => $id,
-                    'user_id' => $data['uid'],
-                    'product_id' => $eachproduct['name'],
-                    'product_type' => $eachproduct['pro_type'],
-                    'product_size' => $eachproduct['pro_size'],
-                    'product_image' => $image,
-                    'subtotal' => $eachproduct['price'],
-                    'status' => "1",
-                    'product_web' => 'imagefootage'
-                );
-                DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
-
+                return response()->json(compact('this')); 
             }
-            if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
-            }
-
-                $dataForEmail  = $this->getData($id,$data['uid']); 
-                //print_r($dataForEmail); die;
-                //$data["email"]="amitpathak.bansal@gmail.com";
-                //$data["client_name"]="Test email";
-                $dataForEmail = json_decode(json_encode($dataForEmail), true);
-                //print_r($dataForEmail); die;
-                $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
-                $data["email"] = $data['email'];
-                $data["invoice"] = $dataForEmail[0]['invoice_name'];
-
-              //echo view('email.quotation', ['quotation' => $dataForEmail])->render(); die;
-
-                $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail]));
-                $fileName = $data["invoice"]."_quotation.pdf";
-                $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
-                try{
-                    Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
-                    $message->to($data["email"])
-                    //->from('admin@imagefootage.com')
-                    ->subject($data["subject"])
-                    ->attachData($pdf->output(), $fileName);
-                    });
-
-                    $s3Client = new S3Client([
-                        /*'profile' => 'default',*/
-                        'region' => 'us-east-2',
-                        'version' => '2006-03-01'
-                    ]);
-                    // Use multipart upload
-                    //print_r($files2bucketemp);
-                    //exit();
-                    $path ='quotation/'.$fileName;
-                   // $source = file_get_contents(storage_path('app/public/pdf'). '/' . $fileName);
-                    $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
-                    $uploader = new MultipartUploader($s3Client, $source, [
-                        'bucket' => 'imgfootage',
-                        'key' => $path,
-                    ]);
-                  try {
-                        $fileupresult = $uploader->upload();
-                    } catch (MultipartUploadException $e) {
-                        echo $e->getMessage() . "\n";
-                    }
-                    $pdf_path = $fileupresult['ObjectURL'];
-                    if(!empty($pdf_path)){
-                        DB::table('imagefootage_performa_invoices')
-                            ->where('id','=',$id)
-                            ->update(['quotation_url'=>$pdf_path]);
-                        unlink(storage_path('app/public/pdf'). '/' . $fileName);
-                    }
-                    // Mail::send('email.quotation', ['quotation' => $dataForEmail], function ($message) use($data) {
-        //     $message->to($data["email"])
-        //     ->subject($data["subject"]);
-        // });
-            }catch(JWTException $exception){
-                $this->serverstatuscode = "0";
-                $this->serverstatusdes = $exception->getMessage();
-            }
-    if (Mail::failures()) {
-         $this->statusdesc  =   "Error sending mail";
-         $this->statuscode  =   "0";
-    }else{
-        $this->statusdesc  =   "Quotation sent Succesfully";
-        $this->statuscode  =   "1";
-    }
-    return response()->json(compact('this')); 
-   }
-        //}catch (\Exception $e){
-           // DB::rollback();
-        //}
-        //return $id; 
+                    //}catch (\Exception $e){
+                    // DB::rollback();
+                    //}
+                    //return $id; 
     }
 
     public function getData($invoice_id,$user_id){
@@ -296,6 +297,24 @@ class Common extends Model
            $all_datas = DB::table('imagefootage_performa_invoices')
             ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname')
             ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
+            ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
+            ->where('imagefootage_performa_invoices.id','=',$invoice_id)
+            ->where('imagefootage_performa_invoices.user_id','=',$user_id)
+            ->join('countries as cn','cn.id','=','usr.country')
+            ->join('states as st','st.id','=','usr.state')
+            ->join('cities as ct','ct.id','=','usr.city')
+            ->get()
+            ->toArray();
+            //dd(DB::getQueryLog());
+            return  $all_datas;
+      }
+    }
+    public function getSubData($invoice_id,$user_id){
+        if(!empty($invoice_id) && !empty($user_id) ){
+           // DB::enableQueryLog();
+           $all_datas = DB::table('imagefootage_performa_invoices')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
+            ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
             ->where('imagefootage_performa_invoices.user_id','=',$user_id)
@@ -359,9 +378,9 @@ class Common extends Model
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
             Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
                 $message->to($data["email"])
-                    //->from('admin@imagefootage.com')
-                    ->subject($data["subject"])
-                    ->attachData($pdf->output(), $fileName);
+                            ->from('admin@imagefootage.com', 'Imagefootage')
+                            ->subject($data["subject"])
+                            ->attachData($pdf->output(), $fileName);
             });
 
             $s3Client = new S3Client([
@@ -369,11 +388,7 @@ class Common extends Model
                 'region' => 'us-east-2',
                 'version' => '2006-03-01'
             ]);
-            // Use multipart upload
-            //print_r($files2bucketemp);
-            //exit();
             $path ='invoice/'.$fileName;
-            // $source = file_get_contents(storage_path('app/public/pdf'). '/' . $fileName);
             $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
@@ -415,6 +430,253 @@ class Common extends Model
             $resp['statuscode']   =   "0";
         }
         return response()->json(compact('resp'));
+    }
+
+    public function save_subscription_proforma($data){
+
+        ini_set('max_execution_time', 0);
+        //echo "<pre>"; print_r($data); die;
+        $selected_taxes = array();
+    
+        if(isset($data['GSTS']) && $data['GSTS']==1){
+            $selected_taxes['GST']='1';
+        }else{
+            $selected_taxes['GST']='0';
+        } 
+
+               
+                $allFields = Package::find($data['plan_id']['package_id']);
+                $packge = new UserPackage();
+                $packge->user_id = $data['uid'];               
+                $packge->package_id = $allFields['package_id'];
+                $packge->package_name = $allFields['package_name'];
+                $packge->package_price = $allFields['package_price'];
+                $packge->package_description = $allFields['package_description'];
+                $packge->package_products_count = $allFields['package_products_count'];
+                $packge->package_type = $allFields['package_type'];
+                $packge->package_permonth_download = $allFields['package_permonth_download'];
+                $packge->package_expiry = $allFields['package_expiry'];
+                $packge->package_plan = $allFields['package_plan'];
+                $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
+                $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
+                $packge->pacage_size = $allFields['pacage_size'];        
+                $packge->created_at = date('Y-m-d H:i:s');
+                if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
+                    $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
+                }else{
+                    $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry_yearly']." years"));
+                }
+                $packge->save();
+                $insert = array(
+                    'user_id'=> $data['uid'],
+                    'email_id'=> $data['email'],
+                    'invoice_name'=> $this->random_numbers(),
+                    'invoice_type'=> '1',
+                    'created'=>date('Y-m-d'),
+                    'modified'=>date('Y-m-d H:i:s'),
+                    'job_number'=>$data['po'],
+                    'promo_code'=>'',
+                    'tax'=> $data['tax'],
+                    'tax_selected'=> "GST",
+                    'total'=>$data['total'],
+                    'status'=>'0', 
+                    'proforma_type' => '1',
+                    'package_id' => $packge->id,
+                    'expiry_invoices'=>$data['expiry_date'],
+                    'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+
+                );
+
+                DB::table('imagefootage_performa_invoices')->insert($insert);   
+                $id = DB::getPdo()->lastInsertId();
+              
+                   
+                    // if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                    //     Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                    // }
+
+                        $dataForEmail  = $this->getSubData($id,$data['uid']); 
+                       
+                        $dataForEmail = json_decode(json_encode($dataForEmail), true);  
+                        //echo "<pre>";
+                        //print_r($dataForEmail);    die;                  
+                        $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
+                        $data["email"] =   $data['email'];
+                        $data["invoice"] = $dataForEmail[0]['invoice_name'];
+
+                    
+                        $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0]]));
+                        $fileName = $data["invoice"]."subscription_quotation.pdf";
+                        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+                        try{
+                            Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
+                            $message->to($data["email"])
+                            ->from('admin@imagefootage.com', 'Imagefootage')
+                            ->subject($data["subject"])
+                            ->attachData($pdf->output(), $fileName);
+                            });
+
+                            $s3Client = new S3Client([
+                                /*'profile' => 'default',*/
+                                'region' => 'us-east-2',
+                                'version' => '2006-03-01'
+                            ]);
+                           
+                            $path ='quotation/'.$fileName;
+                            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+                            $uploader = new MultipartUploader($s3Client, $source, [
+                                'bucket' => 'imgfootage',
+                                'key' => $path,
+                            ]);
+                        try {
+                                $fileupresult = $uploader->upload();
+                            } catch (MultipartUploadException $e) {
+                                echo $e->getMessage() . "\n";
+                            }
+                            $pdf_path = $fileupresult['ObjectURL'];
+                            if(!empty($pdf_path)){
+                                DB::table('imagefootage_performa_invoices')
+                                    ->where('id','=',$id)
+                                    ->update(['quotation_url'=>$pdf_path]);
+                                unlink(storage_path('app/public/pdf'). '/' . $fileName);
+                            }
+                      
+                    }catch(JWTException $exception){
+                        $this->serverstatuscode = "0";
+                        $this->serverstatusdes = $exception->getMessage();
+                    }
+                    if (Mail::failures()) {
+                        $this->statusdesc  =   "Error sending mail";
+                        $this->statuscode  =   "0";
+                    }else{
+                        $this->statusdesc  =   "Subscription Quotation sent Succesfully";
+                        $this->statuscode  =   "1";
+                    }
+                return response()->json(compact('this'));               
+    }
+
+
+public function save_download_proforma($data){
+
+            ini_set('max_execution_time', 0);
+            //echo "<pre>"; print_r($data); die;
+            $selected_taxes = array();
+
+            if(isset($data['GSTS']) && $data['GSTS']==1){
+                $selected_taxes['GST']='1';
+            }else{
+                $selected_taxes['GST']='0';
+            } 
+
+            $allFields = Package::find($data['plan_id']['package_id']);
+            $packge = new UserPackage();
+            $packge->user_id = $data['uid'];               
+            $packge->package_id = $allFields['package_id'];
+            $packge->package_name = $allFields['package_name'];
+            $packge->package_price = $allFields['package_price'];
+            $packge->package_description = $allFields['package_description'];
+            $packge->package_products_count = $allFields['package_products_count'];
+            $packge->package_type = $allFields['package_type'];
+            $packge->package_permonth_download = $allFields['package_permonth_download'];
+            $packge->package_expiry = $allFields['package_expiry'];
+            $packge->package_plan = $allFields['package_plan'];
+            $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
+            $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
+            $packge->pacage_size = $allFields['pacage_size'];        
+            $packge->created_at = date('Y-m-d H:i:s');
+            if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
+                $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
+            }else{
+                $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry_yearly']." years"));
+            }
+            $packge->save();
+            $insert = array(
+                'user_id'=> $data['uid'],
+                'email_id'=> $data['email'],
+                'invoice_name'=> $this->random_numbers(),
+                'invoice_type'=> '2',
+                'created'=>date('Y-m-d'),
+                'modified'=>date('Y-m-d H:i:s'),
+                'job_number'=>$data['po'],
+                'promo_code'=>'',
+                'tax'=> $data['tax'],
+                'tax_selected'=> "GST",
+                'total'=>$data['total'],
+                'status'=>'0', 
+                'proforma_type' => '1',
+                'package_id' => $packge->id,
+                'expiry_invoices'=>$data['expiry_date'],
+                'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+
+            );
+
+            DB::table('imagefootage_performa_invoices')->insert($insert);   
+            $id = DB::getPdo()->lastInsertId();
+          
+               
+                // if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                //     Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                // }
+
+                    $dataForEmail  = $this->getSubData($id,$data['uid']); 
+                   
+                    $dataForEmail = json_decode(json_encode($dataForEmail), true);  
+                    //echo "<pre>";
+                    //print_r($dataForEmail);    die;                  
+                    $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
+                    $data["email"] =   $data['email'];
+                    $data["invoice"] = $dataForEmail[0]['invoice_name'];
+
+                
+                    $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0]]));
+                    $fileName = $data["invoice"]."download_quotation.pdf";
+                    $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+                    try{
+                        Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
+                        $message->to($data["email"])
+                        ->from('admin@imagefootage.com', 'Imagefootage')
+                        ->subject($data["subject"])
+                        ->attachData($pdf->output(), $fileName);
+                        });
+
+                        $s3Client = new S3Client([
+                            /*'profile' => 'default',*/
+                            'region' => 'us-east-2',
+                            'version' => '2006-03-01'
+                        ]);
+                       
+                        $path ='quotation/'.$fileName;
+                        $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+                        $uploader = new MultipartUploader($s3Client, $source, [
+                            'bucket' => 'imgfootage',
+                            'key' => $path,
+                        ]);
+                    try {
+                            $fileupresult = $uploader->upload();
+                        } catch (MultipartUploadException $e) {
+                            echo $e->getMessage() . "\n";
+                        }
+                        $pdf_path = $fileupresult['ObjectURL'];
+                        if(!empty($pdf_path)){
+                            DB::table('imagefootage_performa_invoices')
+                                ->where('id','=',$id)
+                                ->update(['quotation_url'=>$pdf_path]);
+                            unlink(storage_path('app/public/pdf'). '/' . $fileName);
+                        }
+                  
+                }catch(JWTException $exception){
+                    $this->serverstatuscode = "0";
+                    $this->serverstatusdes = $exception->getMessage();
+                }
+                if (Mail::failures()) {
+                    $this->statusdesc  =   "Error sending mail";
+                    $this->statuscode  =   "0";
+                }else{
+                    $this->statusdesc  =   "Download Quotation sent Succesfully";
+                    $this->statuscode  =   "1";
+                }
+            return response()->json(compact('this'));             
+  
     }
 
 }
