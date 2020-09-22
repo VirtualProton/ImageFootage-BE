@@ -122,6 +122,13 @@ class InvoiceController extends Controller
          }
      }
 
+     public function create_invoice_subcription(Request $request) {
+        $data = $request->all();
+        if(!empty($data['quotation_id'])){
+            return $this->Common->create_invoice_subscription($data['quotation_id'],$data['user_id']);
+        }
+     }
+
      public function change_invoice_status(Request $request){
          $data = $request->all();
          if(!empty($data['quotation_id']) && isset($data['status'])){

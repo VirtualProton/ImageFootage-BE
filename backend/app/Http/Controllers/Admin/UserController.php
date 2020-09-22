@@ -106,6 +106,8 @@ class UserController extends Controller
         $account_invoices =    $this->Account->getAccountInvoices($id);
         $user_id = $id;
         $user = User::find($id);
+        //echo "<pre>";
+        //print_r($account_invoices); die;
 
         $this->Admin = new Admin();
         if(!empty($user->account_manager_id)){

@@ -12,7 +12,7 @@
         <li class="active">Quotation/Invoices List</li>
       </ol>
     </section>
-    <section class="content" ng-co>
+    <section class="content">
       <?php //echo "<pre>"; print_r($account_invoices); die; ?>
         <div class="row">
         	<div class="col-md-12">

@@ -120,13 +120,13 @@ class Account  extends Authenticatable
       if($id>0){
           $data = DB::table('imagefootage_performa_invoices')
           ->select('imagefootage_performa_invoices.*')
-         // ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
+          //->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
           ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+          //->leftJoin('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
           ->where('imagefootage_performa_invoices.user_id','=',$id)
-          ->orderBy('imagefootage_performa_invoices.id','asc')
+          ->orderBy('imagefootage_performa_invoices.id','desc')
           ->get()
           ->toArray();
-          //dd(DB::getQueryLog());
           $data = json_decode(json_encode($data), True);
           return $data ;   
         }else{

@@ -1663,35 +1663,59 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
   //  }
 
   public function getproduct($product_id){
-	$products = DB::table('imagefootage_products')
-		->select('product_id','product_title','product_main_image','product_vertical','product_price_small','product_price_medium'
-		,'product_price_large','product_price_extralarge','product_web','api_product_id')
-        ->where('product_id',$product_id);
-        
-     $crm_products = DB::table('imagefootage_crm_products')
-            ->select('product_code','name','thumbnail_image','type','small_size','medium_size','large_size','x_large_size','product_web','api_product_id')
-            ->where('product_code',$product_id)
-            ->union($products)
-            ->get()
-			->toArray();
-	 if(count($crm_products)==0){
-		    $imageMedia = new ImageApi();
-			$product_details = $imageMedia->get_media_info($product_id);
-			$prices = $imageMedia->getPriceFromList($product_details);
-            return json_encode($prices);
-	 }else{
-	     if($crm_products[0]->product_web=='2'){
-             $imageMedia = new ImageApi();
-             $product_details = $imageMedia->get_media_info($crm_products[0]->api_product_id);
-             //dd($product_details);
-             $prices = $imageMedia->getPriceFromList($product_details,$crm_products[0]->product_code);
-             return json_encode($prices);
-            // dd($prices);
-         }else{
-             return json_encode($crm_products);
-         }
+	$type  = $_REQUEST['type'] ;
+	if($type == 'Image') {
+			$products = DB::table('imagefootage_products')
+				->select('product_id','product_title','product_main_image','product_vertical','product_price_small','product_price_medium'
+				,'product_price_large','product_price_extralarge','product_web','api_product_id')
+				->where('product_id',$product_id);
+				
+			$crm_products = DB::table('imagefootage_crm_products')
+					->select('product_code','name','thumbnail_image','type','small_size','medium_size','large_size','x_large_size','product_web','api_product_id')
+					->where('product_code',$product_id)
+					->union($products)
+					->get()
+					->toArray();
+			if(count($crm_products)==0){
+					$imageMedia = new ImageApi();
+					$product_details = $imageMedia->get_media_info($product_id);
+					$prices = $imageMedia->getPriceFromList($product_details);
+					return json_encode($prices);
+			}else{
+				if($crm_products[0]->product_web=='2'){
+					$imageMedia = new ImageApi();
+					$product_details = $imageMedia->get_media_info($crm_products[0]->api_product_id);
+					//dd($product_details);
+					$prices = $imageMedia->getPriceFromList($product_details,$crm_products[0]->product_code);
+					return json_encode($prices);
+					// dd($prices);
+				}else{
+					return json_encode($crm_products);
+				}
 
-	 }   		
+			}
+		} else {
+			$footages = DB::table('imagefootage_products')->select('api_product_id')->where('product_id', $product_id)->get();
+			
+			if(count($footages) > 0 ){
+				$product_id  = $footages[0]->api_product_id;
+			}
+			$footageMedia = new FootageApi();
+			$product_details_data = $footageMedia->getclipdata($product_id);
+			if (isset($product_details_data['clip_data']['pic_objectid'])) {
+				$pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
+				if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
+					$add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
+					for ($i = 0; $i < $add_zero; $i++) {
+						$pond_id_withprefix = "0" . $pond_id_withprefix;
+					}
+				}
+				$b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
+				$downlaod_image= '';
+			}
+			$product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg');
+			return json_encode($product_details);
+		}  		
          
   }
 
