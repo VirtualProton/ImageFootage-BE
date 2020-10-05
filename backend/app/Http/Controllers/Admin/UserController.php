@@ -13,6 +13,10 @@ use App\Models\Admin;
 use App\Models\City;
 use App\Models\State;
 use App\Models\Comment;
+use App\Models\Usercart;
+use Carbon\Carbon;
+
+
 
 use DB;
 
@@ -220,4 +224,25 @@ class UserController extends Controller
         // echo "<pre>"; print_r($userlist); die;
         return view('admin.user.newregistrants',compact('userlist'));
     }
+
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userCart()
+    {
+        $date = new \DateTime();
+        $date->modify('-1 hours');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+
+        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
+        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
+
+        echo "<pre>"; print_r($userCart); die;
+        // echo "<pre>"; print_r($userlist); die;
+        return view('admin.user.usercart',compact('userlist'));
+    }
+
+    
 }
