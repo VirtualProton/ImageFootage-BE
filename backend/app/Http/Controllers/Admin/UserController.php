@@ -208,4 +208,16 @@ class UserController extends Controller
             return redirect("admin/users")->with("error", "Due to some error, User status is not changed yet. Please try again!");
         }
     }
+
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function newRegistrants()
+    {
+        $userlist=$this->User->getNewRegistrants();
+        // echo "<pre>"; print_r($userlist); die;
+        return view('admin.user.newregistrants',compact('userlist'));
+    }
 }
