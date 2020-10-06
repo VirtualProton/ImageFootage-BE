@@ -12,8 +12,7 @@
         <li class="active">Quotation/Invoices List</li>
       </ol>
     </section>
-    <section class="content" ng-co>
-      <?php //echo "<pre>"; print_r($account_invoices); die; ?>
+    <section class="content">
         <div class="row">
         	<div class="col-md-12">
          		<div class="box">
@@ -88,12 +87,8 @@
                       <h5>Allow Download Certificate : </h5>
                       <h5>Enable Subs Multi-logins ? : </h5>
                       <h5>Preferred Contact Methid : </h5>
-                      <h5 >Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
-                      
+                      <h5 >Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5> 
                     </div>
-
-
-                  
                   </thead>
                   <tbody>
                     
@@ -165,10 +160,6 @@
                                 ?> -->
                                 <td>{{$comment['created_at']}}</td>
                                 <td>{{$comment['expiry']}}</td>
-
-
-
-
                             </tr>
                             @endforeach
                           
@@ -200,64 +191,74 @@
                 <th>Payment</th>
                 <th>Payment Mode</th>
                 <th>Transaction Type Custom</th>
+                <th>Action</th>
                 <!-- <th>Activation Date</th>
                 <th>Expiry Date</th>
-                <th>Available Download</th> -->
-
-                
+                <th>Available Download</th> -->     
                 </tr>
                 </thead>
                 <tbody>
                     @if(count($account_invoices) > 0)
-                    @foreach($account_invoices as $k=>$invioces)
-                    @if($invioces['invoice_type']==3)
-                <tr role="row" class="odd">
-                  <td>{{$k+1}}</td>
-                  <td>
-                      @if($invioces['proforma_type']==2)
-                        @if($invioces['invoice_url'])
-                          <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a><br>
-                          <a href="{{$invioces['invoice_url']}}" target="_blank">IN{{$invioces['invoice_name']}}</a>
-                        @else
-                          IN{{$invioces['invoice_name']}}
-                        @endif
-                      @else
-                       @if($invioces['quotation_url'])
-                        <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a>
-                        @else
-                          Q{{$invioces['invoice_name']}}
-                        @endif
-                      @endif
+                      @foreach($account_invoices as $k=>$invioces)
+                        
+                            <tr role="row" class="odd">
+                              <td>{{$k+1}}</td>
+                              <td>
+                                  @if($invioces['proforma_type']==2)
+                                    @if($invioces['invoice_url'])
+                                      <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a><br>
+                                      <a href="{{$invioces['invoice_url']}}" target="_blank">IN{{$invioces['invoice_name']}}</a>
+                                    @else
+                                      IN{{$invioces['invoice_name']}}
+                                    @endif
+                                  @else
+                                  @if($invioces['quotation_url'])
+                                    <a href="{{$invioces['quotation_url']}}" target="_blank">Q{{$invioces['invoice_name']}}</a>
+                                    @else
+                                      Q{{$invioces['invoice_name']}}
+                                    @endif
+                                  @endif
 
-                  </td>
-                  
-                    <td>{{$invioces['created']}}</td>
-                    <td>{{$invioces['total']}}</td>
-                  <td>
-                  <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
-                      <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
-                      <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Paid</option>
-                      <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
-                      <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
-                    </select>
-               </td>
-               <td>{{$invioces['payment_mode']}}</td>
-               <td>
-                @if($invioces['invoice_type']==3)
-                  Custom
-                @endif
-               </td>
-                 
-                </tr>
-                @endif
-                @endforeach
+                              </td>
+                              
+                                <td>{{$invioces['created']}}</td>
+                                <td>{{$invioces['total']}}</td>
+                              <td>
+                              <select <?php if($invioces['status']==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces['id']}},{{$invioces['status']}})">
+                                  <option value="0"  <?php if($invioces['status'] =='0'){ echo "Selected";} ?>>Pending</option>
+                                  <option value="1" <?php if($invioces['status'] =='1'){ echo "Selected";} ?>>Paid</option>
+                                  <option value="2" <?php if($invioces['status'] =='2'){ echo "Selected";} ?>>Purched</option>
+                                  <option value="3"  <?php if($invioces['status'] =='3'){ echo "Selected";} ?>>Cancel</option>
+                                </select>
+                          </td>
+                          <td>{{$invioces['payment_mode']}}</td>
+                          <td>
+                            @if($invioces['invoice_type']==3)
+                              Custom
+                            @elseif ($invioces['invoice_type']==2)
+                              Download
+                            @else  
+                              Subscription
+                            @endif
+                          </td>
+                          @if($invioces['status'] != 3)
+                            <td>
+                                @if($invioces['invoice_type'] == 3)
+                                  <a href="javascript:void(0);" ng-click="create_invoice({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Quotation to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                @else
+                                  <a href="javascript:void(0);" ng-click="create_invoice_subscription({{$invioces['id']}},{{$user_id}})" title="Send Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Quotation to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                @endif
+                            </td>
+                          @endif
+                            
+                            </tr>
+                     
+                      @endforeach
                 @endif
 
               </table>
 
-
-
-            <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+            <!-- <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                 <div class="form-group">
                   <h5 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}Transaction Type Subscription And Download</h5>
                 </div>
@@ -274,7 +275,7 @@
                     <th>Expire Date</th>
                     <th>Invoice</th>
                     <!-- <th>Show Downloads</th> -->
-                </tr>
+                <!-- </tr>
                 </thead>
                 <tbody>
                    @if(count($userPlanslist) > 0 )
@@ -297,7 +298,7 @@
                         @endforeach
                     @endif
 
-              </table>             
+              </table>              --> 
 
 
               </div>

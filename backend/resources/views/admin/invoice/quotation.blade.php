@@ -69,20 +69,33 @@
                         <div class="row">
                            <div class="col-sm-12">
                               <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
+                              <div class="form-group">
+                                    <label class="">Product Type <%$index+1%> (Image/Footage)</label>
+                                       <select  required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
+                                          <option value="">--Select a Type--</option>
+                                          <option value="Image">Image</option>
+                                          <option value="Footage">Footage</option>
+                                       </select>    
+                                    <div>
+                                    </div>
+                                 </div>
                                  <div class="form-group">
-                                    <label class="">Image <%$index+1%> (Product ID)</label>
+                                    <label class=""><%product.type%> <%$index+1%> (Product ID)</label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
                                     <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
                                     <div>
                                     </div>
                                  </div>
-                                 <div class="form-group">
+                                 <div class="form-group" ng-show="product.type=='Image'">
                                     <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
                                     <span ng-show="!product.thumbnail_image"> <input multiple class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
                                  </div>
+                                 <div class="form-group" ng-show="product.type =='Footage'">
+                                    <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
+                                 </div>
                                  <div class="form-group">
-                                    <label for="sub_total">Image Size</label>
-                                    <select  required=""  class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)">
+                                    <label for="sub_total"><%product.type%> Size</label>
+                                    <select  required=""  class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
                                        <option value="" selected="">--Select a size--</option>
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
@@ -90,10 +103,15 @@
                                        <option value="X-Large">XX-Large</option>
                                        <option value="Custom">Custom</option>
                                     </select>
+                                    <select  required=""  class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
+                                       <option value="" selected="">--Select a size--</option>
+                                       <option value="HD">HD</option>
+                                       <option value="4k">4K</option>
+                                    </select>
                                  </div>
-                                 <div class="form-group">
-                                    <label for="pro_type">Image type</label>
-                                    <select  required="" class="form-control" ng-model="product.pro_type">
+                                 <div class="form-group" ng-show="product.type=='Image'">
+                                    <label for="pro_type"><%product.type%> type</label>
+                                    <select  required="" class="form-control" ng-model="product.pro_type" >
                                        <option value="">--Select a Type--</option>
                                        <option value="right_managed">Right Managed</option>
                                        <option value="royalty_free">Royality Free</option>

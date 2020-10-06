@@ -291,6 +291,7 @@ class Common extends Model
                     //return $id; 
     }
 
+   
     public function getData($invoice_id,$user_id){
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
@@ -418,6 +419,57 @@ class Common extends Model
 
     }
 
+    public function create_invoice_subscription($quotation_id,$user_id){
+        $dataForEmail = $this->getSubData($quotation_id,$user_id);
+        $dataForEmail = json_decode(json_encode($dataForEmail), true);
+       
+        $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0]]));
+        $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $data["subject"] = "Invoice (".$dataForEmail[0]['invoice_name'].")";
+        $data["email"] = $dataForEmail[0]['email_id'];
+        $data["invoice"] = $dataForEmail[0]['invoice_name'];
+            Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
+                $message->to($data["email"])
+                            ->from('admin@imagefootage.com', 'Imagefootage')
+                            ->subject($data["subject"])
+                            ->attachData($pdf->output(), $fileName);
+            });
+
+            $s3Client = new S3Client([
+                /*'profile' => 'default',*/
+                'region' => 'us-east-2',
+                'version' => '2006-03-01'
+            ]);
+            $path ='invoice/'.$fileName;
+            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+            $uploader = new MultipartUploader($s3Client, $source, [
+                'bucket' => 'imgfootage',
+                'key' => $path,
+            ]);
+            try {
+                $fileupresult = $uploader->upload();
+            } catch (MultipartUploadException $e) {
+                echo $e->getMessage() . "\n";
+            }
+            $pdf_path = $fileupresult['ObjectURL'];
+            if(!empty($pdf_path)){
+                DB::table('imagefootage_performa_invoices')
+                    ->where('id','=',$quotation_id)
+                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s')]);
+                unlink(storage_path('app/public/pdf'). '/' . $fileName);
+            }
+            $resp =array();
+        if (Mail::failures()) {
+            $resp['statusdesc']  =   "Error sending mail";
+            $resp['statuscode']   =   "0";
+        }else{
+            $resp['statusdesc']  =   "Invoice sent Succesfully";
+            $resp['statuscode']  =   "1";
+        }
+        return response()->json(compact('resp'));
+    }
+
     public function change_invoice_status($quotation_id,$status){
         $update = Invoice::where('id','=',$quotation_id)
                 ->update(['status'=>$status]);
@@ -491,15 +543,38 @@ class Common extends Model
                 $id = DB::getPdo()->lastInsertId();
               
                    
-                    // if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                    //     Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
-                    // }
+                    if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                        Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                    }
 
                         $dataForEmail  = $this->getSubData($id,$data['uid']); 
                        
-                        $dataForEmail = json_decode(json_encode($dataForEmail), true);  
-                        //echo "<pre>";
-                        //print_r($dataForEmail);    die;                  
+                        $dataForEmail = json_decode(json_encode($dataForEmail), true); 
+                        $transactionRequest = new TransactionRequest();
+                        //Setting all values here
+                        $transactionRequest->setMode($this->mode);
+                        $transactionRequest->setLogin($this->login);
+                        $transactionRequest->setPassword($this->password);
+                        $transactionRequest->setProductId($this->atomprodId);
+                        $transactionRequest->setAmount($dataForEmail[0]['total']);
+                        $transactionRequest->setTransactionCurrency("INR");
+                        $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+                
+                        $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+                        $transactionRequest->setClientCode($this->clientcode);
+                        $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+                        $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+                        $transactionDate = str_replace(" ", "%20", $datenow);
+                        $transactionRequest->setTransactionDate($transactionDate);
+                        $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+                        $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+                        $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+                        $transactionRequest->setCustomerBillingAddress("India");
+                        $transactionRequest->setCustomerAccount($data['uid']);
+                        $transactionRequest->setReqHashKey($this->atomRequestKey);
+                        $url = $transactionRequest->getPGUrl();
+                        $dataForEmail[0]['payment_url'] = $url; 
+                                       
                         $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
                         $data["email"] =   $data['email'];
                         $data["invoice"] = $dataForEmail[0]['invoice_name'];
@@ -612,20 +687,46 @@ public function save_download_proforma($data){
 
             DB::table('imagefootage_performa_invoices')->insert($insert);   
             $id = DB::getPdo()->lastInsertId();
-          
+           
                
-                // if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                //     Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
-                // }
+                if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                    Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                }
 
                     $dataForEmail  = $this->getSubData($id,$data['uid']); 
                    
                     $dataForEmail = json_decode(json_encode($dataForEmail), true);  
+                   
+                    $transactionRequest = new TransactionRequest();
+                    //Setting all values here
+                    $transactionRequest->setMode($this->mode);
+                    $transactionRequest->setLogin($this->login);
+                    $transactionRequest->setPassword($this->password);
+                    $transactionRequest->setProductId($this->atomprodId);
+                    $transactionRequest->setAmount($dataForEmail[0]['total']);
+                    $transactionRequest->setTransactionCurrency("INR");
+                    $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+            
+                    $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+                    $transactionRequest->setClientCode($this->clientcode);
+                    $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+                    $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+                    $transactionDate = str_replace(" ", "%20", $datenow);
+                    $transactionRequest->setTransactionDate($transactionDate);
+                    $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+                    $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+                    $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+                    $transactionRequest->setCustomerBillingAddress("India");
+                    $transactionRequest->setCustomerAccount($data['uid']);
+                    $transactionRequest->setReqHashKey($this->atomRequestKey);
+                    $url = $transactionRequest->getPGUrl();
+                    $dataForEmail[0]['payment_url'] = $url;
                     //echo "<pre>";
                     //print_r($dataForEmail);    die;                  
                     $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
                     $data["email"] =   $data['email'];
                     $data["invoice"] = $dataForEmail[0]['invoice_name'];
+
 
                 
                     $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0]]));
