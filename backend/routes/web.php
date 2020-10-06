@@ -234,6 +234,9 @@ Route::post('/create_invoice_subcription','InvoiceController@create_invoice_subc
 //Route::get('login', 'Admin\DashboardController@login');
 //Route::post('admin_login_process', 'Admin\DashboardController@admin_login_process');
 //Route::get('logout', 'Admin\DashboardController@logout');
+Route::get('/new_registrants', 'UserController@newRegistrants');
+Route::get('/user_cart', 'UserController@userCart');
+
 });
 Route::get('emailVerification','UserContactusController@emailVerification');
 Route::get('payu/{id}','PaymentController@payu');

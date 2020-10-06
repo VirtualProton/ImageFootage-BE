@@ -20,7 +20,7 @@
                     <div class="col-sm-4">
                     <div class="form-group">
                   @if(isset($user))
-                  <span ><a href="{{url('admin/users/invoices/'.$user['id'])}}">{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}'{{$user['email']}}' User Already Exists, Please Click to see the details</a></span>
+                  <span ><a href="{{url('admin/users/invoices/'.$user[0]['id'])}}">{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}'{{$user[0]['email']}}' User Already Exists, Click for details</a></span>
                   @endif
                 </div>
               </div>
@@ -210,6 +210,24 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">GST No</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="gst" id="gst" placeholder="Gst No">
+                </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">PAN No</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="pan" id="pan" placeholder="Pan No">
+                </div>
+                  </div>
+                </div>
+
 </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -318,16 +336,16 @@ $(document).ready(function ($) {
                 }
               }
              },
-             extension: {
-              validators: {
-                notEmpty: {
-                  message: 'The Extention is required and cannot be empty'
-                },
-                digits: {
-                    message: 'Please enter only digits'
-                }
-              }
-             },
+             // extension: {
+             //  validators: {
+             //    notEmpty: {
+             //      message: 'The Extention is required and cannot be empty'
+             //    },
+             //    digits: {
+             //        message: 'Please enter only digits'
+             //    }
+             //  }
+             // },
             email: {
                  validators: {
                 notEmpty: {
@@ -383,17 +401,32 @@ $(document).ready(function ($) {
                         }
                     }
                 },
-                description: {
+                // description: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Description is required'
+                //         }
+                //     }
+                // },
+                // notes: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Notes is required'
+                //         }
+                //     }
+                // },
+
+                gst: {
                     validators: {
                         notEmpty: {
-                            message: 'Description is required'
+                            message: 'Gst is required'
                         }
                     }
                 },
-                notes: {
+                pan: {
                     validators: {
                         notEmpty: {
-                            message: 'Notes is required'
+                            message: 'Pan is required'
                         }
                     }
                 },

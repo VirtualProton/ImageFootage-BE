@@ -14,4 +14,8 @@ class Usercart extends Model
     public function product(){
         return $this->hasOne(Product::class,'api_product_id', 'cart_product_id');
     }
+
+    public function user(){
+        return $this->hasOne(User::class,'id', 'cart_added_by');
+    }
 }

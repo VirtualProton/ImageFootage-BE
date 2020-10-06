@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -93,6 +95,8 @@ class User extends Authenticatable implements JWTSubject
                $save_data->type = $data->type;
                $save_data->notes = $data->notes;
                $save_data->description = $data->description;
+               $save_data->gst = $data->gst;
+               $save_data->pan = $data->pan;
                $save_data->save();
           }catch (Exception $e) {
            report($e);
@@ -141,6 +145,8 @@ class User extends Authenticatable implements JWTSubject
                $save_data->type = $data->type;
                $save_data->notes = $data->notes;
                $save_data->description = $data->description;
+               $save_data->gst = $data->gst;
+               $save_data->pan = $data->pan;
                $save_data->save();
           }catch (Exception $e) {
            report($e);
@@ -206,4 +212,11 @@ class User extends Authenticatable implements JWTSubject
     // {
     //     $this->attributes['password'] = bcrypt($value);
     // }
+
+
+    public function getNewRegistrants(){
+
+     return User::with('plans')->whereDate('created_at', Carbon::today())->get();
+
+    }
 }
