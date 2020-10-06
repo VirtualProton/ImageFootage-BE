@@ -112,7 +112,7 @@
                                             <p class="f-12" style="overflow:auto;">{{cost.description}}</p>
                                             <!-- | currency:'INR'-->
                                             <p class="f-15 mb-0" style="margin-top: -4px;"> <i class="fa fa-inr"></i>
-                                                {{cost.price*80  | number }}</p>
+                                                {{cost.price  | number }}</p>
                                             <span class="f-11">{{cost.width}} x {{cost.height}}</span>
                                         </label>
                                     </div>
@@ -565,10 +565,7 @@
                                     </div>
                                     <label class="rmore" for="expend" *ngIf="keyword.length > 10" (click)="showMoreItems()" id="loadmore">See More</label>
                                   
-                                </div>
-                               
-                                
-
+                                </div>                    
                             </div>
                         </div>
 
