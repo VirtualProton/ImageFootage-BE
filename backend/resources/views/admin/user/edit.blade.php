@@ -66,7 +66,7 @@
                     <option value="">Select</option>
                     @if(count($accountlist) > 0)
                     @foreach($accountlist as $account)
-                    <option value={{ $account['id'] }} <?php if($user_data['account_manager_id']==$account['id']){echo 'selected="selected"';}?>>{{$account['account_name']}}</option>
+                    <option value={{ $account['id'] }} <?php if($user_data['account_manager_id']==$account['id']){echo 'selected="selected"';}?>>{{$account['name']}}</option>
                     @endforeach
                     @endif
                   </select>
@@ -206,6 +206,25 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">GST No</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="gst" id="gst" placeholder="Gst No" value="<?php echo $user_data['gst']?>">
+                </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">PAN No</label>
+                  <div class="col-sm-4">
+                  <div class="form-group">
+                  <input type="text" class="form-control" name="pan" id="pan" placeholder="Pan No" value="<?php echo $user_data['pan']?>">
+                </div>
+                  </div>
+                </div>
+
+
 </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -301,16 +320,16 @@ $(document).ready(function ($) {
                 }
               }
              },
-             extension: {
-              validators: {
-                notEmpty: {
-                  message: 'The Extention is required and cannot be empty'
-                },
-                digits: {
-                    message: 'Please enter only digits'
-                }
-              }
-             },
+             // extension: {
+             //  validators: {
+             //    notEmpty: {
+             //      message: 'The Extention is required and cannot be empty'
+             //    },
+             //    digits: {
+             //        message: 'Please enter only digits'
+             //    }
+             //  }
+             // },
             email: {
                  validators: {
                 notEmpty: {
@@ -366,17 +385,32 @@ $(document).ready(function ($) {
                         }
                     }
                 },
-                description: {
+                // description: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Description is required'
+                //         }
+                //     }
+                // },
+                // notes: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Notes is required'
+                //         }
+                //     }
+                // },
+
+                gst: {
                     validators: {
                         notEmpty: {
-                            message: 'Description is required'
+                            message: 'Gst is required'
                         }
                     }
                 },
-                notes: {
+                pan: {
                     validators: {
                         notEmpty: {
-                            message: 'Notes is required'
+                            message: 'Pan is required'
                         }
                     }
                 },

@@ -73,8 +73,8 @@ class UserController extends Controller
         $this->Admin = new Admin();
         $accountlist=$this->Admin->getAgentData();
         $user = User::where('email', $request['email'])->get()->toArray();
-        $user['id'] = $user[0]['id'];
-        $user['email'] = $user[0]['email'];
+        //$user['id'] = $user[0]['id'];
+        //$user['email'] = $user[0]['email'];
         if(!empty($user)){
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
         }
@@ -155,7 +155,9 @@ class UserController extends Controller
         $title = "Edit Lead/User/Contact";
 
         $countries = $this->Country->getcountrylist();
-        $accountlist=$this->Account->getAccountData();
+        // $accountlist=$this->Account->getAccountData();
+        $this->Admin = new Admin();
+        $accountlist=$this->Admin->getAgentData();
         $user_data =    $this->User->getUserData($id);
         $states = $this->Country->getState('country_id',$user_data['country']);
         $cities = $this->Country->getCity('state_id',$user_data['state']);
