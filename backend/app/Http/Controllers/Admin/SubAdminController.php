@@ -11,6 +11,9 @@ use App\Models\Admin;
 use App\Models\RolesModulesMapping;
 use Illuminate\Support\Facades\Response;
 
+use App\Models\Country;
+
+
 
 class SubAdminController extends Controller
 {
@@ -47,7 +50,11 @@ class SubAdminController extends Controller
         $title = "Add Admin/Agent";
         $roles= Roles::where('status','=','A')->get();
         $deparments= Department::where('status','=','A')->get();
-        return view('admin.subadmin.create', compact('title','deparments','roles'));
+        
+        $this->Country = new Country();
+        $countries = $this->Country->getcountrylist();
+
+        return view('admin.subadmin.create', compact('title','countries','deparments','roles'));
     }
 
     /**
@@ -63,10 +70,14 @@ class SubAdminController extends Controller
             'department'   => 'required',
             'role' => 'required',
             'name' =>'required',
-            'email'=>'required|email',
+            'bill_country' =>'required',
+            'bill_state' =>'required',
+            // 'email'=>'required|email',
+            'email' => 'required|email|unique:imagefootage_admins|max:255',
             'password'=>'required|min:6',
         ]);
 
+        // print_r($request->all()); die;
         $this->Admin = new Admin();
         if($this->Admin->save_admin($request)){
             return redirect("admin/subadmin")->with("success", "Admin/Agent has been created successfully !!!");

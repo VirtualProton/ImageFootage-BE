@@ -28,6 +28,8 @@ class Admin  extends Authenticatable
             $admin->mobile = $data->mobile;
             $admin->address = $data->address;
             $admin->role_id = $data->role;
+            $admin->country = $data->bill_country;
+            $admin->state = $data->bill_state;
             $admin->department_id = $data->department;
             $admin->password =Hash::make($data->password);
             $admin->save();
