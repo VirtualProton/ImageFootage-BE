@@ -13,6 +13,10 @@ use App\Models\Admin;
 use App\Models\City;
 use App\Models\State;
 use App\Models\Comment;
+use App\Models\Usercart;
+use Carbon\Carbon;
+
+
 
 use DB;
 
@@ -69,8 +73,8 @@ class UserController extends Controller
         $this->Admin = new Admin();
         $accountlist=$this->Admin->getAgentData();
         $user = User::where('email', $request['email'])->get()->toArray();
-        $user['id'] = $user[0]['id'];
-        $user['email'] = $user[0]['email'];
+        //$user['id'] = $user[0]['id'];
+        //$user['email'] = $user[0]['email'];
         if(!empty($user)){
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
         }
@@ -151,7 +155,9 @@ class UserController extends Controller
         $title = "Edit Lead/User/Contact";
 
         $countries = $this->Country->getcountrylist();
-        $accountlist=$this->Account->getAccountData();
+        // $accountlist=$this->Account->getAccountData();
+        $this->Admin = new Admin();
+        $accountlist=$this->Admin->getAgentData();
         $user_data =    $this->User->getUserData($id);
         $states = $this->Country->getState('country_id',$user_data['country']);
         $cities = $this->Country->getCity('state_id',$user_data['state']);
@@ -208,4 +214,37 @@ class UserController extends Controller
             return redirect("admin/users")->with("error", "Due to some error, User status is not changed yet. Please try again!");
         }
     }
+
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function newRegistrants()
+    {
+        $userlist=$this->User->getNewRegistrants();
+        // echo "<pre>"; print_r($userlist); die;
+        return view('admin.user.newregistrants',compact('userlist'));
+    }
+
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userCart()
+    {
+        $date = new \DateTime();
+        $date->modify('-1 hours');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+
+        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
+        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
+
+        echo "<pre>"; print_r($userCart); die;
+        // echo "<pre>"; print_r($userlist); die;
+        return view('admin.user.usercart',compact('userlist'));
+    }
+
+    
 }

@@ -63,6 +63,7 @@
                 </div>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-4">
@@ -71,6 +72,36 @@
                 </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+
+                  <div class="col-sm-4">
+                <div class="form-group">
+                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
+                    <option  value="">Select</option>
+                    @if(count($countries) > 0)
+                    @foreach($countries as $country)
+                    <option value={{$country->id}}>{{$country->name}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
+                    <option value="">Select</option>
+
+                  </select>
+                </div>
+                  </div>
+                </div>
+
 
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
@@ -197,5 +228,32 @@ $(document).ready(function ($) {
     })();
 
 });
+
+function getstate(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#bill_state').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
 </script>
 @stop
