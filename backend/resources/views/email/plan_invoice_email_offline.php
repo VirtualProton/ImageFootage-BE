@@ -50,7 +50,7 @@
                     <tbody>
                         <tr>
                             <td width="50%" style="border: none;">
-                                <h1>hi <br/>This is an Estimate</h1>
+                                <h1>hi <br/>Invoice</h1>
                             </td>
                             <td width="50%" style="border: none;">
                                 <p style="float:right;"><img src="http://imagefootage.com/assets/images/IF_Logo_Final.png"
@@ -71,7 +71,7 @@
                <p>Phone:&nbsp;<strong><?php echo $orders['mobile'] ?></strong>&nbsp;</p>
                </td>
                <td>
-               <p>Estimate Number &nbsp;No.:&nbsp;<strong><?php echo "Q".$orders['invoice_name'] ?></strong>&nbsp;</p>
+               <p>Estimate Number &nbsp;No.:&nbsp;<strong><?php echo "IN".$orders['invoice_name'] ?></strong>&nbsp;</p>
                <p>Estimate Date &nbsp;:&nbsp;<strong><?php echo date("F , d Y h:i:s a",strtotime($orders['invicecreted'])) ?></strong>&nbsp;</p>
                <!-- <p>Plan Expiry Date &nbsp;:&nbsp;<strong><?php //echo date("F , d Y h:i:s a",strtotime($orders['package_expiry_date_from_purchage'])) ?></strong>&nbsp;</p> -->
                <p>Place:&nbsp;<strong><?php echo $orders['statename']?> &ndash; <?php echo $orders['countryname'] ?></strong>&nbsp;</p>
@@ -123,7 +123,7 @@
                <p>Add:&nbsp;GST @ 12%&nbsp;</p>
                </td>
                <td>
-               <p><a href="<?php echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p>
+               <p>Paid</p>
                </td>
                </tr>
                <tr>

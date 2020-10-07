@@ -34,6 +34,14 @@ class MediaController extends Controller
            $imageMedia = new ImageApi();
            $media_id = decrypt($media_id);
            $product_details_data = $imageMedia->get_media_info($media_id);
+           
+           $product_details_data['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'] = [
+                ["name" => 'web', "description" => "Web", "price" => "550", "width" => "141", "height" => "94"], 
+                ["name" => 'medium', "description" => "Medium", "price" => "2500", "width" => "148", "height" => "98"],
+                ["name" => 'large', "description" => "Large", "price" => "3500", "width" => "297", "height" => "198"],
+                ["name" => 'xxl', "description" => "XXL", "price" => "4600", "width" => "360", "height" => "240"]
+            ];
+           
            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
            $size = getimagesize($product_details_data['media']['preview_url_no_wm']);
            $height = $size[1];
@@ -49,7 +57,7 @@ class MediaController extends Controller
 			$img->save(public_path('images/dump/'.$time.'.jpg'));
 			$img->encode('jpg');
 			$type = 'jpg';
-			$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
+            $downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
 			unlink(public_path('images/dump/'.$time.'.jpg'));
            if (count($product_details_data) > 0) {
                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);

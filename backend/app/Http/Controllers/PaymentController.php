@@ -612,6 +612,26 @@ class PaymentController extends Controller
         }
     }
 
+    public function atomSubPayInvoiceResponse(){
+        $transactionResponse = new TransactionResponse();
+        $transactionResponse->setRespHashKey($this->atomResponseKey);
+        if($transactionResponse->validateResponse($_POST)){
+            if(count($_POST)>0){
+                if($_POST['f_code']=='Ok'){
+                    DB::table('imagefootage_performa_invoices')->where('invoice_name',$_POST['mer_txn'])
+                        ->update(['payment_mode'=>$_POST['discriminator'],
+                            'payment_status'=>'Transction Success','payment_response'=>json_encode($_POST)]);
+                    return redirect($this->baseurl.'/invoiceConfirmation/'.encrypt($_POST['mer_txn']));
+                }else{
+                    return redirect($this->baseurl.'/invoiceFailed/'.encrypt($_POST['mer_txn']));
+                }
+            }else{
+                return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
+            }
+        } else {
+                echo "Invalid Signature";
+        }
+    }
     public function invoiceConfirmation($id){
          $invoice_id = decrypt($id);
          $dataForEmail = $this->getData($invoice_id);

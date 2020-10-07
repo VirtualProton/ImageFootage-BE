@@ -20,11 +20,12 @@ app.controller('quotatationController', function($scope, $http, $location) {
         pro_type: "",
         id: "",
         image: "",
-        price: ""
+        price: "",
+        type: "Image"
     }];
     $scope.quotation_type_var = 'custom';
     $scope.addProduct = function() {
-        var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "" };
+        var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", type:"Image" };
         $scope.quotation.product.push(newProduct);
     }
 
@@ -34,26 +35,30 @@ app.controller('quotatationController', function($scope, $http, $location) {
     }
     $scope.prices = [];
     $scope.getproduct = function(product) {
-        console.log(product);
+        
         if(product.name != ''){
         $('#loading').show();
             var index = $scope.quotation.product.indexOf(product);
             $http({
                 method: 'GET',
-                url: base_url + 'product/' + product.name,
+                url: base_url + 'product/' + product.name +'?type='+ product.type,
             }).then(function(response) {
 
                 if (response.status == '200' && response.statusText == 'OK') {
                     $('#loading').hide();
-                    $scope.quotation.product[index].name = response.data[0].product_code;
-                    $scope.quotation.product[index].id = response.data[0].id;
-                    if (response.data[0].type == "Royalty Free") {
-                        $scope.quotation.product[index].pro_type = "royalty_free";
+                    if(product.type == 'Image'){
+                            $scope.quotation.product[index].name = response.data[0].product_code;
+                            $scope.quotation.product[index].id = response.data[0].id;
+                            if (response.data[0].type == "Royalty Free") {
+                                $scope.quotation.product[index].pro_type = "royalty_free";
+                            } else {
+                                $scope.quotation.product[index].pro_type = "right_managed";
+                            }
+                            $scope.quotation.product[index].image = response.data[0].thumbnail_image;
+                            $scope.prices[index] = response.data[0];
                     } else {
-                        $scope.quotation.product[index].pro_type = "right_managed";
+                        
                     }
-                    $scope.quotation.product[index].image = response.data[0].thumbnail_image;
-                    $scope.prices[index] = response.data[0];
                 }
             }, function(error) {
                 $('#loading').hide();
@@ -263,8 +268,6 @@ app.controller('quotatationController', function($scope, $http, $location) {
         $scope.subsc_total = total + subtotal;
     }
     
-    
-
     $scope.submitQuotation = function() {
         console.log($scope.quotation);
         console.log($scope);
@@ -428,6 +431,10 @@ app.controller('quotatationController', function($scope, $http, $location) {
         }, function(error) {
             $('#loading').hide();
         });
+    }
+
+    $scope.checkProduct = function(product_type){
+        console.log(product_type);
     }
 });
 
@@ -762,6 +769,26 @@ app.controller('invoiceController', function($scope, $http, $location) {
             $http({
                 method: 'POST',
                 url: base_url + 'create_invoice',
+                data: { quotation_id: quotation_id, user_id: user_id }
+            }).then(function(result) {
+                $('#loading').hide();
+                if (result.data.resp.statuscode == '1') {
+                    alert(result.data.resp.statusdesc);
+                } else {
+                    alert(result.data.resp.statusdesc);
+                }
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
+    }
+
+    $scope.create_invoice_subscription = function(quotation_id, user_id) {
+        if (confirm('Do you want to send invoice for this quotation ?')) {
+            $('#loading').show();
+            $http({
+                method: 'POST',
+                url: base_url + 'create_invoice_subcription',
                 data: { quotation_id: quotation_id, user_id: user_id }
             }).then(function(result) {
                 $('#loading').hide();

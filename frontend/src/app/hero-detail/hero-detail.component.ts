@@ -165,7 +165,9 @@ export class HeroDetailComponent implements OnInit {
     this.heroService.getDetailPagedetails(this.id,this.webtype,this.type)
       .subscribe(data => {
          //console.log(data);
+       
          if(this.webtype==2){
+            
              this.detailPageInfo = data[0];
              this.imagefootId = data[1];
              let keywords  = this.detailPageInfo['metadata']['keywords_top10'];
@@ -288,7 +290,7 @@ export class HeroDetailComponent implements OnInit {
 
    checkPriceTotal(selectedPrice){
         //console.log(selectedPrice);
-        this.currunt_selected_price = selectedPrice.price*80;
+        this.currunt_selected_price = selectedPrice.price;
         this.total = this.currunt_selected_price;
        this.extended_price =0;
        this.standard=selectedPrice;
