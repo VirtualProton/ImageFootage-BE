@@ -4,10 +4,10 @@
 <div class="content-wrapper">
   <section class="content-header">
       <h1>
-      Admin/Agent List</h1>
+      Admin/Agent</h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"> Edit Admin/Agent List</li>
+        <li class="active"> Edit Admin/Agent</li>
       </ol>
     </section>
 <section class="content">
@@ -79,6 +79,62 @@
                 </div>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Country</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
+                    <option value="">Select</option>
+                    @if(count($countries) > 0)
+                    @foreach($countries as $country)
+                    <option value={{$country->id}} <?php if($agent_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+
+                <!-- <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="country" id="country">
+                    <option value="">Select</option>
+                    @if(count($countries) > 0)
+                    @foreach($countries as $country)
+                    <option value={{$role->id}} <?php if($agent_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div> -->
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
+
+                  <div class="col-sm-4">
+                  <div class="form-group">
+
+                  <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
+                    <option value="">Select</option>
+                    @if(count($states) > 0)
+                    @foreach($states as $state)
+                    <option value={{$state->id}} <?php if($agent_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                  </div>
+                </div>
+
+
 
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
@@ -202,5 +258,32 @@ $(document).ready(function ($) {
     })();
 
 });
+
+function getstate(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#bill_state').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
 </script>
 @stop

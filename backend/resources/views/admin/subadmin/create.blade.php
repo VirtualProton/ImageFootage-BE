@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="content-wrapper">
+  <section class="content-header">
+      <h1>
+      Admin/Agent</h1>
+      <ol class="breadcrumb">
+        <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"> Add Admin/Agent</li>
+      </ol>
+    </section>
 <section class="content">
 
 <div class="box box-info">
