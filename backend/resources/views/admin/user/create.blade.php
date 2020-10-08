@@ -11,12 +11,12 @@
             <!-- /.box-header -->
             <!-- form start -->
             {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
-              @include('admin.partials.message')
-
+<!--               @include('admin.partials.message')
+ -->
                 
 
               <div class="box-body">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <div class="col-sm-4">
                     <div class="form-group">
                   @if(isset($user))
@@ -24,12 +24,13 @@
                   @endif
                 </div>
               </div>
-                </div>
+                </div> -->
               <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
+                  <input type="text" class="form-control" value="{{ old('first_name') }}" name="first_name" id="first_name" placeholder="First Name">
+                  {!! $errors->first('first_name', '<p class="help-block">:message</p>') !!}
                   {{ csrf_field() }}
                 </div>
                   </div>
@@ -38,7 +39,8 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Last Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
+                  <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" id="last_name" placeholder="Last Name">
+                  {!! $errors->first('last_name', '<p class="help-block">:message</p>') !!}
                 </div>
                   </div>
                 </div>
@@ -47,7 +49,8 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                  <input type="text" class="form-control" name="title" value="{{ old('title') }}" id="title" placeholder="Title">
+                  {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
                 </div>
                   </div>
                 </div>
@@ -55,7 +58,8 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">User Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="user_name" id="user_name" placeholder="User Name">
+                  <input type="text" class="form-control" name="user_name" value="{{ old('user_name') }}" id="user_name" placeholder="User Name">
+                  {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
                 </div>
                 </div>
                 </div>
@@ -63,7 +67,8 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Company Name</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="contact_owner" id="contact_owner" placeholder="Company Name">
+                  <input type="text" class="form-control" name="contact_owner" value="{{ old('contact_owner') }}" id="contact_owner" placeholder="Company Name">
+                  {!! $errors->first('contact_owner', '<p class="help-block">:message</p>') !!}
                 </div>
                 </div>
                 </div>
@@ -78,7 +83,14 @@
                     <option value="">Select</option>
                     @if(count($accountlist) > 0)
                     @foreach($accountlist as $account)
-                    <option value={{ $account['id'] }}>{{$account['name']}}</option>
+
+                      @if (old('account_manager_id') == $account['id'])
+                        <option value="{{ $account['id'] }}" selected>{{$account['name']}}</option>
+                      @else
+                        <option value="{{ $account['id'] }}">{{$account['name']}}</option>
+                      @endif
+
+                    <!-- <option value={{ $account['id'] }}>{{$account['name']}}</option> -->
                     @endforeach
                     @endif
                   </select>
@@ -89,7 +101,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                  <input type="text" class="form-control" id="phone" value="{{ old('phone') }}" name="phone" placeholder="Phone">
                 </div>
                   </div>
                 </div>
@@ -97,7 +109,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+                  <input type="text" class="form-control" id="mobile" value="{{ old('mobile') }}" name="mobile" placeholder="Mobile">
                 </div>
                   </div>
                 </div>
@@ -105,7 +117,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Extension</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="extension" name="extension" placeholder="Extension">
+                  <input type="text" class="form-control" id="extension" value="{{ old('extension') }}" name="extension" placeholder="Extension">
                 </div>
                   </div>
                 </div>
@@ -113,7 +125,10 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                  <!-- <input type="text" class="form-control" name="email" id="email" placeholder="Email"> -->
+                  <input type="text" name="email"  value="{{ old('email') }}" id="email"  class="form-control"/>
+                  {!! $errors->first('email', '<p class="alert-danger">:message</p>') !!}
+
                 </div>
                   </div>
                 </div>
@@ -127,7 +142,12 @@
                     <option  value="">Select</option>
                     @if(count($countries) > 0)
                     @foreach($countries as $country)
-                    <option value={{$country->id}}>{{$country->name}}</option>
+                      @if (old('bill_country') == $country->id)
+                        <option value="{{ $country->id }}" selected>{{$country->name}}</option>
+                      @else
+                        <option value="{{ $country->id }}">{{$country->name}}</option>
+                      @endif
+                      <!-- <option value={{$country->id}}>{{$country->name}}</option> -->
                     @endforeach
                     @endif
                   </select>
@@ -165,7 +185,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;"></textarea>
+                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;">{{ old('bill_address') }}</textarea>
                 </div>
                   </div>
                 </div>
@@ -173,7 +193,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Postal</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" id="bill_postal" name="bill_postal" placeholder="Postal Code">
+                  <input type="text" class="form-control" id="bill_postal" value="{{ old('bill_postal') }}" name="bill_postal" placeholder="Postal Code">
                 </div>
                   </div>
                 </div>
@@ -191,7 +211,7 @@
                 </div>
                   </div>
                 </div> -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
                   <div class="col-sm-4">
@@ -208,13 +228,13 @@
                   <textarea class="form-control" id="description" name="description" placeholder="Description"></textarea>
                 </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">GST No</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="gst" id="gst" placeholder="Gst No">
+                  <input type="text" class="form-control" name="gst" value="{{ old('gst') }}" id="gst" placeholder="Gst No">
                 </div>
                   </div>
                 </div>
@@ -223,7 +243,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">PAN No</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="pan" id="pan" placeholder="Pan No">
+                  <input type="text" class="form-control" name="pan" value="{{ old('pan') }}" id="pan" placeholder="Pan No">
                 </div>
                   </div>
                 </div>
