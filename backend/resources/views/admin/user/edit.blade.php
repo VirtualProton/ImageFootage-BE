@@ -187,7 +187,7 @@
                 </div>
                   </div>
                 </div> -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
                   <div class="col-sm-4">
@@ -204,7 +204,7 @@
                   <textarea class="form-control" id="description" name="description" placeholder="Description"><?php echo $user_data['description']?></textarea>
                 </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">GST No</label>

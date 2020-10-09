@@ -110,7 +110,15 @@ class SubAdminController extends Controller
         $deparments= Department::where('status','=','A')->get();
         $this->Admin = new Admin();
         $agent_data=$this->Admin->getAgentData($id);
-        return view('admin.subadmin.edit', compact('title','deparments','roles','agent_data'));
+        // echo "<pre>"; print_r($agent_data); die;
+        $this->Country = new Country();
+        $states = $this->Country->getState('country_id',$agent_data['country']);
+        // echo "<pre>"; print_r($states); die;
+
+        $this->Country = new Country();
+        $countries = $this->Country->getcountrylist();
+
+        return view('admin.subadmin.edit', compact('title','countries','states','deparments','roles','agent_data'));
 
     }
 
@@ -170,6 +178,8 @@ class SubAdminController extends Controller
             'role' => 'required',
             'name' =>'required',
             'email'=>'required|email',
+            'bill_country' =>'required',
+            'bill_state' =>'required',
             'password'=>'sometimes|nullable|min:6',
         ]);
 

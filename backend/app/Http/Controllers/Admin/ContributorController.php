@@ -22,14 +22,15 @@ class ContributorController extends Controller
 		return view('admin.contributor.addcontributor');
 	}
 	public function addcontributor(Request $request){
-		/*$this->validate($request, [
+		$this->validate($request, [
 		 	'contributor_name'=>'required',
             'contributor_email'   => 'required',
-            'contributor_password' => 'required',
-			'contributor_confirm_password' => 'required|same:contributor_password',
+            'contributor_mobile' => 'required',
+            // 'contributor_password' => 'required',
+			// 'contributor_confirm_password' => 'required|same:contributor_password',
 			'contributor_idproof'=>'required|file',
 			'contributor_type'=>'required'
-        ]); */
+        ]); 
 		//echo 'here'; exit();
 			$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 			srand((double)microtime()*1000000); 

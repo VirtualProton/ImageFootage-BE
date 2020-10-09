@@ -68,6 +68,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email|unique:imagefootage_users|max:255',
+        ]);
+
+        return back()
+        ->withInput();
+        // ->withErrors(['name.required', 'Name is required']);
+
+
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
         $this->Admin = new Admin();
@@ -78,9 +87,7 @@ class UserController extends Controller
         if(!empty($user)){
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
         }
-        $this->validate($request, [
-            'email' => 'required|email|unique:imagefootage_users|max:255',
-        ]);
+        
         if($this->User->save_user($request)){
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
         } else {
