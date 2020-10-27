@@ -46,12 +46,16 @@ class HourlyUpdate extends Command
 
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
 
-        $a = 'vasiuddin@conceptualpictures.com';
-        Mail::raw("This is automatically generated Hourly Update", function($message) use ($a)
-        {
-           $message->from('mb.vasi@gmail.com');
-           $message->to($a)->subject('Hourly Update');
-        });
-       $this->info('Hourly Update has been send successfully');
+        if(!empty($userCart)){
+            $a = 'vasiuddin@conceptualpictures.com';
+            Mail::raw("This is automatically generated Hourly Update", function($message) use ($a)
+            {
+                $message->from('admin@imagefootage.com');
+                $message->to($a)->subject('Hourly Update');
+            });
+            $this->info('Hourly Update has been send successfully');
+        }
+
+        
        }
 }

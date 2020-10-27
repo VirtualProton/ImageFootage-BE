@@ -255,5 +255,54 @@ class UserController extends Controller
         return view('admin.user.usercart',compact('userlist'));
     }
 
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function abandoned_cart()
+    {
+        // echo "hi"; die;
+        date_default_timezone_set('Asia/Kolkata');
+        $userlist=$this->User->getUserData();
+        $date = new \DateTime();
+        //print_r($date); echo "<br>";
+        $date->modify('-60 minutes');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+        //echo $formatted_date; die;
+
+        // $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->groupBy('cart_added_by')->toArray();
+        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
+        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
+
+        // echo "<pre>"; print_r($userCart); die;
+        return view('admin.user.abandonedcart',compact('userCart'));
+        // echo "<pre>"; print_r($userlist); die;
+        //return view('admin.user.usercart',compact('userlist'));
+    }
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function changeAbandonedCartStatus(Request $request, $id)
+    {
+        // print_r($request->status); die;
+
+        $status = $request->status;
+        DB::table('imagefootage_usercart')
+            ->where('cart_id', $id)
+            ->update(['status' => $status]);
+
+            return redirect("admin/abandoned_cart")->with("success", "Abandoned Cart is updated successfully !!!");
+        // $cart_data = Usercart::where('cart_id', $id)->get()->toArray();
+        // $cart_data['status'] = $status;
+        // $cart_data->update();
+
+       // echo "<pre>"; print_r($cart_data); die;
+
+
+    }
+    
     
 }
