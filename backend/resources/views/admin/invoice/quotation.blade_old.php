@@ -450,9 +450,9 @@ function getcity(data){
             type: 'POST'
             });
 }
-$( function() {
-    $( "#poDate" ).datepicker();
-  } );
+$(function() {
+	$("#poDate").datepicker();
+});
 </script>
 
 @stop

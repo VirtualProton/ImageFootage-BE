@@ -53,7 +53,7 @@
                                 <h1>hi <br/>Invoice</h1>
                             </td>
                             <td width="50%" style="border: none;">
-                                <p style="float:right;"><img src="http://imagefootage.com/assets/images/IF_Logo_Final.png"
+                                <p style="float:right;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png"
                                         width="200px"></p>
                             </td>
                         </tr>
@@ -69,6 +69,8 @@
                <p>Address:&nbsp;<strong> <?php echo $orders['address'] ?></strong></p>
                <p><strong><?php echo $orders['cityname'] ?>&nbsp;&nbsp;  <?php echo $orders['statename'] ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?></strong></p>
                <p>Phone:&nbsp;<strong><?php echo $orders['mobile'] ?></strong>&nbsp;</p>
+               <p>GST:&nbsp;<strong><?php echo $orders['gst'] ?></strong>&nbsp;</p>
+               <p>PAN:&nbsp;<strong><?php echo $orders['pan'] ?></strong>&nbsp;</p>
                </td>
                <td>
                <p>Estimate Number &nbsp;No.:&nbsp;<strong><?php echo "IN".$orders['invoice_name'] ?></strong>&nbsp;</p>
@@ -103,28 +105,39 @@
                   echo $orders['package_name']." ".$plan;
                }
                ?>
-               </strong>&nbsp;</p>
+               </strong>&nbsp;
+               Quantity:&nbsp;<?php  echo $orders['package_products_count'] ?> <br />
+               </p>
                </td>
                </tr>
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Amount (INR) :- <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Add:&nbsp;GST @ 12%&nbsp;- <?php echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>    
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <p><strong>In words :- Rupees <?php echo $amount_in_words ?> ONLY</strong>&nbsp;</p>
+                    </td>
+                </tr>           
                <tr>
-               <td>
-               <ul>
-               <li>
-               <strong> <?php echo $orders['package_name']." ".$plan; ?><br />
-               Quantity:&nbsp;<?php  echo $orders['package_products_count'] ?> <br /></li>
-               </ul>
-               </td>
-               <td>
-               <p><strong>INR&nbsp;</strong><strong><?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
-               </td>
-               </tr>
-               <tr>
-               <td>
-               <p>Add:&nbsp;GST @ 12%&nbsp;</p>
-               </td>
-               <td>
-               <p>Paid</p>
-               </td>
+                <td colspan="2">
+                 <?php if($payment_method == 'online') { ?>   
+                            <p><?php echo ucfirst($payment_method) ?> :- &nbsp;&nbsp; <a href="<?php echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p>
+                 <?php } else { ?>
+                            <p><?php echo ucfirst($payment_method) ?></p>
+                 <?php } ?>
+                </td>
                </tr>
                <tr>
                <td colspan="2">

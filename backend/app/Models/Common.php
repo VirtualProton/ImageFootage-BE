@@ -314,7 +314,7 @@ class Common extends Model
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
            $all_datas = DB::table('imagefootage_performa_invoices')
-            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','usr.gst', 'usr.pan','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.id as package_id','imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
             ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
@@ -419,11 +419,39 @@ class Common extends Model
 
     }
 
-    public function create_invoice_subscription($quotation_id,$user_id){
+    public function create_invoice_subscription($quotation_id,$user_id, $po, $po_date, $payment_method){
         $dataForEmail = $this->getSubData($quotation_id,$user_id);
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
+        $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
        
-        $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0]]));
+         if ($payment_method == 'online') {
+            $transactionRequest = new TransactionRequest();
+            //Setting all values here
+            $transactionRequest->setMode($this->mode);
+            $transactionRequest->setLogin($this->login);
+            $transactionRequest->setPassword($this->password);
+            $transactionRequest->setProductId($this->atomprodId);
+            $transactionRequest->setAmount($dataForEmail[0]['total']);
+            $transactionRequest->setTransactionCurrency("INR");
+            $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+    
+            $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+            $transactionRequest->setClientCode($this->clientcode);
+            $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+            $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+            $transactionDate = str_replace(" ", "%20", $datenow);
+            $transactionRequest->setTransactionDate($transactionDate);
+            $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+            $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+            $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+            $transactionRequest->setCustomerBillingAddress("India");
+            $transactionRequest->setCustomerAccount($user_id);
+            $transactionRequest->setReqHashKey($this->atomRequestKey);
+            $url = $transactionRequest->getPGUrl();
+            $dataForEmail[0]['payment_url'] = $url;
+         }
+            $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
+        
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $data["subject"] = "Invoice (".$dataForEmail[0]['invoice_name'].")";
@@ -456,7 +484,10 @@ class Common extends Model
             if(!empty($pdf_path)){
                 DB::table('imagefootage_performa_invoices')
                     ->where('id','=',$quotation_id)
-                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s')]);
+                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s'), 'job_number'=> $po, 'po_detail'=>$po_date, 'payment_method' => $payment_method]);
+                DB::table('imagefootage_user_package')
+                    ->where('id','=', $dataForEmail[0]['package_id'])
+                    ->update(['status'=> 0,'order_type'=>'2']);       
                 unlink(storage_path('app/public/pdf'). '/' . $fileName);
             }
             $resp =array();
@@ -487,7 +518,7 @@ class Common extends Model
     public function save_subscription_proforma($data){
 
         ini_set('max_execution_time', 0);
-        //echo "<pre>"; print_r($data); die;
+        
         $selected_taxes = array();
     
         if(isset($data['GSTS']) && $data['GSTS']==1){
@@ -511,7 +542,9 @@ class Common extends Model
                 $packge->package_plan = $allFields['package_plan'];
                 $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
                 $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
-                $packge->pacage_size = $allFields['pacage_size'];        
+                $packge->pacage_size = $allFields['pacage_size'];
+                $packge->status = 0; 
+                $packge->order_type = 2;           
                 $packge->created_at = date('Y-m-d H:i:s');
                 if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
                     $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
@@ -524,9 +557,9 @@ class Common extends Model
                     'email_id'=> $data['email'],
                     'invoice_name'=> $this->random_numbers(),
                     'invoice_type'=> '1',
-                    'created'=>date('Y-m-d'),
+                    'created'=>date('Y-m-d H:i:s'),
                     'modified'=>date('Y-m-d H:i:s'),
-                    'job_number'=>$data['po'],
+                    //'job_number'=>$data['po'],
                     'promo_code'=>'',
                     'tax'=> $data['tax'],
                     'tax_selected'=> "GST",
@@ -535,7 +568,7 @@ class Common extends Model
                     'proforma_type' => '1',
                     'package_id' => $packge->id,
                     'expiry_invoices'=>$data['expiry_date'],
-                    'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+                    //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
 
                 );
 
@@ -550,30 +583,7 @@ class Common extends Model
                         $dataForEmail  = $this->getSubData($id,$data['uid']); 
                        
                         $dataForEmail = json_decode(json_encode($dataForEmail), true); 
-                        $transactionRequest = new TransactionRequest();
-                        //Setting all values here
-                        $transactionRequest->setMode($this->mode);
-                        $transactionRequest->setLogin($this->login);
-                        $transactionRequest->setPassword($this->password);
-                        $transactionRequest->setProductId($this->atomprodId);
-                        $transactionRequest->setAmount($dataForEmail[0]['total']);
-                        $transactionRequest->setTransactionCurrency("INR");
-                        $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
-                
-                        $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
-                        $transactionRequest->setClientCode($this->clientcode);
-                        $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
-                        $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
-                        $transactionDate = str_replace(" ", "%20", $datenow);
-                        $transactionRequest->setTransactionDate($transactionDate);
-                        $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
-                        $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
-                        $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
-                        $transactionRequest->setCustomerBillingAddress("India");
-                        $transactionRequest->setCustomerAccount($data['uid']);
-                        $transactionRequest->setReqHashKey($this->atomRequestKey);
-                        $url = $transactionRequest->getPGUrl();
-                        $dataForEmail[0]['payment_url'] = $url; 
+                        
                                        
                         $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
                         $data["email"] =   $data['email'];
@@ -657,7 +667,9 @@ public function save_download_proforma($data){
             $packge->package_plan = $allFields['package_plan'];
             $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
             $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
-            $packge->pacage_size = $allFields['pacage_size'];        
+            $packge->pacage_size = $allFields['pacage_size'];
+            $packge->status = 0; 
+            $packge->order_type = 2;       
             $packge->created_at = date('Y-m-d H:i:s');
             if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
                 $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
@@ -670,9 +682,9 @@ public function save_download_proforma($data){
                 'email_id'=> $data['email'],
                 'invoice_name'=> $this->random_numbers(),
                 'invoice_type'=> '2',
-                'created'=>date('Y-m-d'),
+                'created'=>date('Y-m-d H:i:s'),
                 'modified'=>date('Y-m-d H:i:s'),
-                'job_number'=>$data['po'],
+                //'job_number'=>$data['po'],
                 'promo_code'=>'',
                 'tax'=> $data['tax'],
                 'tax_selected'=> "GST",
@@ -681,7 +693,7 @@ public function save_download_proforma($data){
                 'proforma_type' => '1',
                 'package_id' => $packge->id,
                 'expiry_invoices'=>$data['expiry_date'],
-                'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+                //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
 
             );
 
@@ -697,30 +709,30 @@ public function save_download_proforma($data){
                    
                     $dataForEmail = json_decode(json_encode($dataForEmail), true);  
                    
-                    $transactionRequest = new TransactionRequest();
-                    //Setting all values here
-                    $transactionRequest->setMode($this->mode);
-                    $transactionRequest->setLogin($this->login);
-                    $transactionRequest->setPassword($this->password);
-                    $transactionRequest->setProductId($this->atomprodId);
-                    $transactionRequest->setAmount($dataForEmail[0]['total']);
-                    $transactionRequest->setTransactionCurrency("INR");
-                    $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+                    // $transactionRequest = new TransactionRequest();
+                    // //Setting all values here
+                    // $transactionRequest->setMode($this->mode);
+                    // $transactionRequest->setLogin($this->login);
+                    // $transactionRequest->setPassword($this->password);
+                    // $transactionRequest->setProductId($this->atomprodId);
+                    // $transactionRequest->setAmount($dataForEmail[0]['total']);
+                    // $transactionRequest->setTransactionCurrency("INR");
+                    // $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
             
-                    $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
-                    $transactionRequest->setClientCode($this->clientcode);
-                    $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
-                    $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
-                    $transactionDate = str_replace(" ", "%20", $datenow);
-                    $transactionRequest->setTransactionDate($transactionDate);
-                    $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
-                    $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
-                    $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
-                    $transactionRequest->setCustomerBillingAddress("India");
-                    $transactionRequest->setCustomerAccount($data['uid']);
-                    $transactionRequest->setReqHashKey($this->atomRequestKey);
-                    $url = $transactionRequest->getPGUrl();
-                    $dataForEmail[0]['payment_url'] = $url;
+                    // $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+                    // $transactionRequest->setClientCode($this->clientcode);
+                    // $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+                    // $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+                    // $transactionDate = str_replace(" ", "%20", $datenow);
+                    // $transactionRequest->setTransactionDate($transactionDate);
+                    // $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+                    // $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+                    // $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+                    // $transactionRequest->setCustomerBillingAddress("India");
+                    // $transactionRequest->setCustomerAccount($data['uid']);
+                    // $transactionRequest->setReqHashKey($this->atomRequestKey);
+                    // $url = $transactionRequest->getPGUrl();
+                    // $dataForEmail[0]['payment_url'] = $url;
                     //echo "<pre>";
                     //print_r($dataForEmail);    die;                  
                     $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
@@ -778,6 +790,119 @@ public function save_download_proforma($data){
                 }
             return response()->json(compact('this'));             
   
+    }
+
+
+    public function convert_number_to_words($number) {
+
+        $hyphen      = '-';
+        $conjunction = ' and ';
+        $separator   = ', ';
+        $negative    = 'negative ';
+        $decimal     = ' point ';
+        $dictionary  = array(
+            0                   => 'zero',
+            1                   => 'one',
+            2                   => 'two',
+            3                   => 'three',
+            4                   => 'four',
+            5                   => 'five',
+            6                   => 'six',
+            7                   => 'seven',
+            8                   => 'eight',
+            9                   => 'nine',
+            10                  => 'ten',
+            11                  => 'eleven',
+            12                  => 'twelve',
+            13                  => 'thirteen',
+            14                  => 'fourteen',
+            15                  => 'fifteen',
+            16                  => 'sixteen',
+            17                  => 'seventeen',
+            18                  => 'eighteen',
+            19                  => 'nineteen',
+            20                  => 'twenty',
+            30                  => 'thirty',
+            40                  => 'fourty',
+            50                  => 'fifty',
+            60                  => 'sixty',
+            70                  => 'seventy',
+            80                  => 'eighty',
+            90                  => 'ninety',
+            100                 => 'hundred',
+            1000                => 'thousand',
+            1000000             => 'million',
+            1000000000          => 'billion',
+            1000000000000       => 'trillion',
+            1000000000000000    => 'quadrillion',
+            1000000000000000000 => 'quintillion'
+        );
+
+        if (!is_numeric($number)) {
+            return false;
+        }
+
+        if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
+            // overflow
+            trigger_error(
+                'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
+                E_USER_WARNING
+            );
+            return false;
+        }
+
+        if ($number < 0) {
+            return $negative . Self::convert_number_to_words(abs($number));
+        }
+
+        $string = $fraction = null;
+
+        if (strpos($number, '.') !== false) {
+            list($number, $fraction) = explode('.', $number);
+        }
+
+        switch (true) {
+            case $number < 21:
+                $string = $dictionary[$number];
+                break;
+            case $number < 100:
+                $tens   = ((int) ($number / 10)) * 10;
+                $units  = $number % 10;
+                $string = $dictionary[$tens];
+                if ($units) {
+                    $string .= $hyphen . $dictionary[$units];
+                }
+                break;
+            case $number < 1000:
+                $hundreds  = $number / 100;
+                $remainder = $number % 100;
+                $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+                if ($remainder) {
+                    $string .= $conjunction . Self::convert_number_to_words($remainder);
+                }
+                break;
+            default:
+                $baseUnit = pow(1000, floor(log($number, 1000)));
+                $numBaseUnits = (int) ($number / $baseUnit);
+                $remainder = $number % $baseUnit;
+                $string = Self::convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+                if ($remainder) {
+                    $string .= $remainder < 100 ? $conjunction : $separator;
+                    $string .= Self::convert_number_to_words($remainder);
+                }
+                break;
+        }
+
+        if (null !== $fraction && is_numeric($fraction)) {
+            $string .= $decimal;
+            $words = array();
+            foreach (str_split((string) $fraction) as $number) {
+                $words[] = $dictionary[$number];
+            }
+            $string .= implode(' ', $words);
+        }
+
+        return $string;
     }
 
 }

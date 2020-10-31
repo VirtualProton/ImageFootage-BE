@@ -53,7 +53,7 @@
                                 <h1>hi <br/>This is an Estimate</h1>
                             </td>
                             <td width="50%" style="border: none;">
-                                <p style="float:right;"><img src="http://imagefootage.com/assets/images/IF_Logo_Final.png"
+                                <p style="float:right;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png"
                                         width="200px"></p>
                             </td>
                         </tr>
@@ -123,7 +123,7 @@
                <p>Add:&nbsp;GST @ 12%&nbsp;</p>
                </td>
                <td>
-               <p><a href="<?php echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p>
+               <!-- <p><a href="<?php //echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p> -->
                </td>
                </tr>
                <tr>

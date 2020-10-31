@@ -53,7 +53,7 @@
                                 <h1>hi <br/>Invoice</h1>
                             </td>
                             <td width="50%" style="border: none;">
-                                <p style="float:right;"><img src="http://imagefootage.com/assets/images/IF_Logo_Final.png"
+                                <p style="float:right;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png"
                                         width="200px"></p>
                             </td>
                         </tr>
