@@ -86,6 +86,7 @@ Route::group([
     Route::get('/update_products_api/{id}', 'ProductApiController@getUpdateProduct');
     Route::post('/update_products_api', 'ProductApiController@postUpdateProduct');
     Route::get('emailHtml', 'PaymentController@emailHtml');
+    Route::get('categoryWiseData','SearchController@categoryWiseData');
 });
 
 Route::group([

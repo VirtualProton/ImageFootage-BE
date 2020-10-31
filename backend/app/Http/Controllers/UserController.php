@@ -29,6 +29,7 @@ class UserController extends Controller
                         ->with('city')
                         ->with(['plans'=> function ($query) {
                             $query->whereIn('payment_status',['Completed','Transction Success'])
+                            ->whereRaw('package_products_count > downloaded_product')
                                 ->with('downloads');
                        }
                        ])

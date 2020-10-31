@@ -12,6 +12,9 @@ app.controller('quotatationController', function($scope, $http, $location) {
     $scope.title = "Send Quotation";
     $scope.quotation = {};
     $scope.po = '';
+    $scope.subsc_expiry_time = '30';
+    $scope.expiry_time = '30';
+    $scope.download_expiry = '30';
 
     //$scope.uid
     $scope.quotation.product = [{
@@ -34,8 +37,7 @@ app.controller('quotatationController', function($scope, $http, $location) {
         $scope.quotation.product.splice(index, 1);
     }
     $scope.prices = [];
-    $scope.getproduct = function(product) {
-        
+    $scope.getproduct = function(product) {  
         if(product.name != ''){
         $('#loading').show();
             var index = $scope.quotation.product.indexOf(product);
@@ -127,26 +129,29 @@ app.controller('quotatationController', function($scope, $http, $location) {
             subtotalvalue += Number(subtotal[j].price);
 
         }
-        var intialtotal = $scope.tax;
-        if (type == 'SGST') {
-            total = (subtotalvalue * (6) / 100);
-        } else if (type == 'CGST') {
-            total = (subtotalvalue * (6) / 100);
-        } else if (type == 'IGST') {
-            total = (subtotalvalue * (12) / 100);
-        } else if (type == 'IGSTT') {
-            total = (subtotalvalue * (18) / 100);
-        }
+        //var intialtotal = $scope.tax;
+        // if (type == 'SGST') {
+        //     total = (subtotalvalue * (6) / 100);
+        // } else if (type == 'CGST') {
+        //     total = (subtotalvalue * (6) / 100);
+        // } else if (type == 'IGST') {
+        //     total = (subtotalvalue * (12) / 100);
+        // } else if (type == 'IGSTT') {
+        //     total = (subtotalvalue * (18) / 100);
+        // }
 
         if (tax_percent == true) {
-            total = intialtotal + total;
+            //total = intialtotal + total;
+            if (type == 'GST') {
+                total = (subtotalvalue * (12) / 100);
+            }
         } else {
 
-            if (intialtotal > total) {
-                total = intialtotal - total;
-            } else {
+            // if (intialtotal > total) {
+            //     total = intialtotal - total;
+            // } else {
                 total = 0;
-            }
+            //}
 
         }
         subtotal = Number(subtotalvalue);
@@ -283,6 +288,17 @@ app.controller('quotatationController', function($scope, $http, $location) {
     $scope.submitDownload = function(){
         console.log($scope.quotation);
         console.log($scope);
+        if(!$scope.selected_plan){
+            alert("Please select Plan"); 
+            return false;  
+        } else if (!$scope.downloadprice) {
+            alert("Please enter Subtotal"); 
+            return false;
+        } else if (!$scope.GSTD) {
+            alert("Please check GST"); 
+            return false;
+        } else {
+
         $('#loading').show();
       
         var sendData = {
@@ -290,14 +306,14 @@ app.controller('quotatationController', function($scope, $http, $location) {
             "quotation_type": $scope.quotation_type_var,
             "plan_id": $scope.selected_plan,
             "plan_type_var": $scope.plan_type_var,
-            "po": $scope.poDownload,
-            "poDate": $scope.downloadpoDate,
+            //"po": $scope.poDownload,
+            //"poDate": $scope.downloadpoDate,
             "expiry_date": $scope.download_expiry,
             "tax": $scope.taxdownload,
             "total": $scope.total_download,
             "subscription_subtotal": $scope.downloadprice,
             "GSTS": $scope.GSTD,            
-            "email": $scope.download_email_id,    
+            "email": $('#download_email_id').val(),   
         }
         console.log(sendData);
         console.log($scope.quotation);
@@ -305,28 +321,39 @@ app.controller('quotatationController', function($scope, $http, $location) {
         // angular.forEach($scope.quotation[0],function(file){
         //     fd.append('file',file);
         // });
-        $http({
-            method: 'POST',
-            url: base_url + 'saveDownloadInvoice',
-            data: sendData,
-            headers: { 'Content-Type': undefined },
-        }).then(function(response) {
-            $('#loading').hide();
-            if (response.data.this.statuscode == '1') {
-                alert(response.data.this.statusdesc);
-            } else {
-                alert(response.data.this.statusdesc);
-            }
-            window.location = base_url + 'users/invoices/' + $('#uid').val();
-           
-        }, function(error) {
-            $('#loading').hide();
-        });
+            $http({
+                method: 'POST',
+                url: base_url + 'saveDownloadInvoice',
+                data: sendData,
+                headers: { 'Content-Type': undefined },
+            }).then(function(response) {
+                $('#loading').hide();
+                if (response.data.this.statuscode == '1') {
+                    alert(response.data.this.statusdesc);
+                } else {
+                    alert(response.data.this.statusdesc);
+                }
+                window.location = base_url + 'users/invoices/' + $('#uid').val();
+            
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
     }
 
     $scope.submitSubscription = function(){
         console.log($scope.quotation);
         console.log($scope);
+        if(!$scope.selected_plan){
+            alert("Please select Plan"); 
+            return false;  
+        } else if (!$scope.subscriptionprice) {
+            alert("Please enter Subtotal"); 
+            return false;
+        } else if (!$scope.GSTS) {
+            alert("Please check GST"); 
+            return false;
+        } else {
         $('#loading').show();
       
         var sendData = {
@@ -334,14 +361,14 @@ app.controller('quotatationController', function($scope, $http, $location) {
             "quotation_type": $scope.quotation_type_var,
             "plan_id": $scope.selected_plan,
             "plan_type_var": $scope.plan_type_var,
-            "po": $scope.subsc_po,
-            "poDate": $scope.subsc_poDate,
+            //"po": $scope.subsc_po,
+            //"poDate": $scope.subsc_poDate,
             "expiry_date": $scope.subsc_expiry_time,
             "tax": $scope.subsc_tax,
             "total": $scope.subsc_total,
             "subscription_subtotal": $scope.subscriptionprice,
             "GSTS": $scope.GSTS,            
-            "email": $scope.subsc_email_id,            
+            "email": $('#subsc_email_id').val(),            
         }
         console.log(sendData);
         console.log($scope.quotation);
@@ -349,32 +376,33 @@ app.controller('quotatationController', function($scope, $http, $location) {
         // angular.forEach($scope.quotation[0],function(file){
         //     fd.append('file',file);
         // });
-        $http({
-            method: 'POST',
-            url: base_url + 'saveSubscriptionInvoice',
-            data: sendData,
-            headers: { 'Content-Type': undefined },
-        }).then(function(response) {
-            $('#loading').hide();
-            if (response.data.this.statuscode == '1') {
-                alert(response.data.this.statusdesc);
-            } else {
-                alert(response.data.this.statusdesc);
-            }
-            window.location = base_url + 'users/invoices/' + $('#uid').val();
-            // $scope.quotation.product[index].name = response.data[0].product_code;
-            // $scope.quotation.product[index].id = response.data[0].id;
-            // if(response.data[0].type =="Royalty Free"){
-            //     $scope.quotation.product[index].pro_type = "royalty_free";
-            // }else{
-            //     $scope.quotation.product[index].pro_type = "right_managed";
-            // }
-            // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
-            // $scope.prices[index] = response.data[0];
-            //}
-        }, function(error) {
-            $('#loading').hide();
-        });
+            $http({
+                method: 'POST',
+                url: base_url + 'saveSubscriptionInvoice',
+                data: sendData,
+                headers: { 'Content-Type': undefined },
+            }).then(function(response) {
+                $('#loading').hide();
+                if (response.data.this.statuscode == '1') {
+                    alert(response.data.this.statusdesc);
+                } else {
+                    alert(response.data.this.statusdesc);
+                }
+                window.location = base_url + 'users/invoices/' + $('#uid').val();
+                // $scope.quotation.product[index].name = response.data[0].product_code;
+                // $scope.quotation.product[index].id = response.data[0].id;
+                // if(response.data[0].type =="Royalty Free"){
+                //     $scope.quotation.product[index].pro_type = "royalty_free";
+                // }else{
+                //     $scope.quotation.product[index].pro_type = "right_managed";
+                // }
+                // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
+                // $scope.prices[index] = response.data[0];
+                //}
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
     }
 
     $scope.submitCustom = function(){
@@ -387,8 +415,8 @@ app.controller('quotatationController', function($scope, $http, $location) {
             "quotation_type": $scope.quotation_type_var,
             "products": $scope.quotation,
             "promoCode": $scope.promoCode,
-            "po": $scope.po,
-            "poDate": $scope.poDate,
+            //"po": $scope.po,
+            //"poDate": $scope.poDate,
             "expiry_date": $scope.expiry_time,
             "tax": $scope.tax,
             "total": $scope.total,
@@ -762,7 +790,8 @@ app.controller('editquotatationController', function($scope, $http, $location) {
 
 });
 app.controller('invoiceController', function($scope, $http, $location) {
-
+    $scope.quotationObj = {};
+    $scope.payment_method = '';
     $scope.create_invoice = function(quotation_id, user_id) {
         if (confirm('Do you want to send invoice for this quotation ?')) {
             $('#loading').show();
@@ -783,23 +812,39 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
     }
 
-    $scope.create_invoice_subscription = function(quotation_id, user_id) {
+    $scope.create_invoice_subscription = function(quotation, user_id) {
+        console.log(quotation);
+        $scope.quotationObj = quotation;
+        $scope.quotation_user = user_id;
+       
+    }
+
+    $scope.send_invoice = function(quotation_id, user_id) {
+        if(!$scope.po) {
+            alert("Please add job/po ref no.");
+        } else if(!$scope.poDate){
+            alert("Please add Expiry Date.");
+        } else if(!$scope.payment_method){
+            alert("Please select payment method.");
+        } else {
         if (confirm('Do you want to send invoice for this quotation ?')) {
             $('#loading').show();
-            $http({
-                method: 'POST',
-                url: base_url + 'create_invoice_subcription',
-                data: { quotation_id: quotation_id, user_id: user_id }
-            }).then(function(result) {
-                $('#loading').hide();
-                if (result.data.resp.statuscode == '1') {
-                    alert(result.data.resp.statusdesc);
-                } else {
-                    alert(result.data.resp.statusdesc);
-                }
-            }, function(error) {
-                $('#loading').hide();
-            });
+                $http({
+                    method: 'POST',
+                    url: base_url + 'create_invoice_subcription',
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method}
+                }).then(function(result) {
+                    $('#loading').hide();
+                    if (result.data.resp.statuscode == '1') {
+                        alert(result.data.resp.statusdesc);
+                    } else {
+                        alert(result.data.resp.statusdesc);
+                    }
+                    window.location.reload();
+                }, function(error) {
+                    $('#loading').hide();
+                });
+            }
         }
     }
 

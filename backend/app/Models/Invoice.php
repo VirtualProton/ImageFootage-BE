@@ -25,4 +25,7 @@ class Invoice extends Model
     public function state(){
         return $this->hasOne(State::class,'id', 'bill_state');
     }
+    public function user_package(){
+        return $this->hasOne(UserPackage::class,'id', 'package_id');
+    }
 }
