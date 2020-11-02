@@ -14,6 +14,10 @@ use App\Models\City;
 use App\Models\State;
 use App\Models\Comment;
 use App\Models\Usercart;
+use App\Models\Orders;
+use App\Models\UserPackage;
+
+
 use Carbon\Carbon;
 
 
@@ -304,5 +308,35 @@ class UserController extends Controller
 
     }
     
+    public function newClientSales(){
+
+      // $orders = Orders::all()->unique('user_id')->toArray();
+
+        // $orders = DB::table('imagefootage_orders')
+        //          ->select('*', DB::raw('count(*) as total'))
+        //          // ->select('*')
+        //          ->groupBy('user_id')
+        //          ->where(DB::raw('count(*) as total'),1)
+        //          ->get();
+
+        $orders1 = Orders::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
+
+        $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
+
+
+        $orders = array_merge($orders1,$orders2);
+        // echo "<pre>";print_r($orders); die;
+
+        $userlist = array();
+        foreach($orders as $order){
+                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
+                    $userlist[] = $order;
+                }
+
+        }
+
+        return view('admin.user.clientfirstsale',compact('userlist'));
+
+    }
     
 }

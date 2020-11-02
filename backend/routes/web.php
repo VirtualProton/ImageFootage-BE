@@ -237,6 +237,7 @@ Route::post('/create_invoice_subcription','InvoiceController@create_invoice_subc
 Route::get('/new_registrants', 'UserController@newRegistrants');
 Route::get('/user_cart', 'UserController@userCart');
 Route::get('/abandoned_cart', 'UserController@abandoned_cart');
+Route::get('/new_client_sales', 'UserController@newClientSales');
 Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCartStatus');
 
 });
