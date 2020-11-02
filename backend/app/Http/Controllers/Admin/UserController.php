@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+use DB;
+use Carbon\Carbon;
 
 use App\Models\Country;
 use App\Models\Common;
@@ -18,11 +23,8 @@ use App\Models\Orders;
 use App\Models\UserPackage;
 
 
-use Carbon\Carbon;
 
 
-
-use DB;
 
 class UserController extends Controller
 {
@@ -117,13 +119,10 @@ class UserController extends Controller
     public function invoices($id)
     {
         $title = "Show Invoices";
-        $this->Account = new Account();
-        $account_invoices =    $this->Account->getAccountInvoices($id);
+
         $user_id = $id;
         $user = User::find($id);
-        //echo "<pre>";
-        //print_r($account_invoices); die;
-
+        $this->Account = new Account();
         $this->Admin = new Admin();
         if(!empty($user->account_manager_id)){
             $account_manager = $this->Admin->getAgentData($user->account_manager_id);
@@ -153,8 +152,26 @@ class UserController extends Controller
 
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
-
-        return view('admin.account.invoices', compact('title','account_invoices','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'));
+        DB::enableQueryLog();
+        $account_quotations = DB::table('imagefootage_performa_invoices')
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
+                    ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
+                    ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+                    ->where('imagefootage_performa_invoices.user_id','=', $id)
+                    ->where('imagefootage_performa_invoices.proforma_type', '=', '1')
+                    ->orderBy('imagefootage_performa_invoices.id', 'desc')
+                    ->simplePaginate('10');
+        $account_invoices = DB::table('imagefootage_performa_invoices')
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
+                    ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
+                    ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+                    ->where('imagefootage_performa_invoices.user_id','=', $id)
+                    ->where('imagefootage_performa_invoices.proforma_type', '=', '2')
+                    ->orderBy('imagefootage_performa_invoices.id', 'desc')
+                    ->simplePaginate('10');        
+        //dd(DB::getQueryLog());                      
+        //print_r($account_invoices); die;                     
+        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
     }
 
     /**

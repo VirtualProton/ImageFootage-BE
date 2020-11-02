@@ -406,4 +406,47 @@ class Product extends Model
          }
        return $id;
    }
+
+   public function categoryWiseData() {
+    ini_set('max_execution_time',0);
+    $final_data = [];
+    $home = [];
+    $data =  DB::table('imagefootage_products as pr')   
+                ->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','category_name','category_id','product_main_type','width_thumb','height_thumb','thumb_update_status')
+                ->join('imagefootage_productcategory as pc','pc.category_id','=','pr.product_category')
+                ->where('pc.is_display_home','=','1')
+                ->where('pr.thumb_update_status','=','1')
+                ->whereRaw("date(pr.updated_at) >= '2020-05-01'")
+                ->orderBy('pc.category_order','asc')
+                ->inRandomOrder()
+                ->get()
+                ->groupBy("category_name")
+                ->map(function($product) {
+                return $product->take(Product::HomeLimit);
+                });
+            //echo "<pre>";print_r($data->toArray()); die;
+            foreach($data as $k=>$perdata){
+                // $final_data[$k] = (array)$perdata;
+                // $imgData =getimagesize($perdata->product_thumbnail);
+                // $final_data[$k]['width_img'] = $imgData[0];
+                // $final_data[$k] ['height_img']= $imgData[1];
+                // $final_data[$k]['attr'] = $imgData[3];
+                foreach($perdata as $j=>$eachproduct) {
+                    if($eachproduct->product_web == '2' ){
+                        $home[$k]["images"][$j] = $eachproduct;
+                        $home[$k]["images"][$j]->api_product_id = encrypt($eachproduct->api_product_id);
+                        $home[$k]["images"][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
+                    } else {
+                        $home[$k]["footages"][$j] = $eachproduct;
+                        $home[$k]["footages"][$j]->api_product_id = encrypt($eachproduct->api_product_id);
+                        $home[$k]["footages"][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
+                    }
+                   
+                    // if($j<4){
+                    //     array_push($home,$data[$k][$j]);
+                    // }
+                }
+            }
+            return $home;
+    }
 }

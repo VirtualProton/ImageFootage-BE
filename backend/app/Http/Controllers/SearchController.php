@@ -223,5 +223,9 @@ class SearchController extends Controller
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
-
+    public function categoryWiseData() {
+        $product = new Product();
+        $all_products = $product->categoryWiseData();
+        return $all_products;
+    }
 }
