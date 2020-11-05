@@ -48,6 +48,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(UserPackage::class,'user_id', 'id');
     }
 
+    //i added this to include orders
+    public function orders(){
+        return $this->hasMany(Orders::class,'user_id', 'id');
+    }
+
     public function userPlans($id){
         return UserPackage::where('user_id',$id)->get()->toArray();
     }

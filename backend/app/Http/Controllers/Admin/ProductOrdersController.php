@@ -14,19 +14,19 @@ class ProductOrdersController extends Controller
         $this->middleware('admin')->except('login','logout');
 	}
    public function index(){
-//	   $all_orders_list= Orders::with(['items'=>function($query){
-//                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-//            }])->with('user')
-//           ->with('country')
-//           ->with('state')
-//           ->with('city')
-//           ->orderBy('id','desc')
-//           ->get()->toArray();
-
-	   //return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
-       $this->User = new User;
-       $userlist = $this->User->getUserData();
-       return view('admin.orders.index',compact('userlist'));
+	   $all_orders_list= Orders::with(['items'=>function($query){
+                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+           }])->with('user')
+          ->with('country')
+          ->with('state')
+          ->with('city')
+          ->orderBy('id','desc')
+          ->get()->toArray();
+          // echo "<pre>";print_r($all_orders_list); die;
+	   return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
+       // $this->User = new User;
+       // $userlist = $this->User->getUserData();
+       // return view('admin.orders.index',compact('userlist'));
        //return view('admin.orders.orderlist');
   }
     public function userOrderList($id){

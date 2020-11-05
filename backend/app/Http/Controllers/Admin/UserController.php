@@ -142,6 +142,7 @@ class UserController extends Controller
             ->with('state')
             ->with('city')
             ->where('id', $user_id)
+            ->with('orders')//i added this to include orders
             ->with(['plans' => function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success'])
                     ->with('downloads');
@@ -149,6 +150,8 @@ class UserController extends Controller
             ])->whereHas("plans", function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
+
+          // echo "<pre>"; print_r($userPlanslist); die;
 
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
@@ -341,18 +344,27 @@ class UserController extends Controller
         $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
 
 
-        $orders = array_merge($orders1,$orders2);
-        // echo "<pre>";print_r($orders); die;
+        // $orders = array_merge($orders1,$orders2);
 
-        $userlist = array();
-        foreach($orders as $order){
+        $userlist1 = array();
+        foreach($orders1 as $order){
                 if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
-                    $userlist[] = $order;
+                    $userlist1[] = $order;
                 }
 
         }
 
-        return view('admin.user.clientfirstsale',compact('userlist'));
+        $userlist2 = array();
+        foreach($orders2 as $order){
+                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
+                    $userlist2[] = $order;
+                }
+
+        }
+        // echo "<pre>";print_r($userlist1); 
+        // echo "<pre>";print_r($userlist2); die;
+
+        return view('admin.user.clientfirstsale',compact('userlist1', 'userlist2'));
 
     }
     

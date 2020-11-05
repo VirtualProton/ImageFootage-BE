@@ -27,7 +27,7 @@
                 <table id="example2" class="table table-bordered table-striped dataTable " class="col-sm-12">
                 	<thead>
 <th>User Name</th>
-<th>Invoice</th>
+<th>Transaction ID</th>
 <th>Subtotal</th>
 <th>Tax</th>
 <th>Total</th>
@@ -39,17 +39,18 @@
 <th>Bill city</th>
 <!-- <th>Bill State</th>
 <th>Billing Country</th> -->
-<th>Billing Zip</th>
-<!-- <th>Invoice</th> -->
-<!-- <th>Action</th> -->
-</thead>
+<th>Product Id</th>
+<th>Item</th>
+
+<!-- <th>Action</th>
+ --></thead>
  <tbody>
 @foreach($orderlists as $orders)
 
  <!-- <tr ng-if="orderslist" ng-repeat="orders in orderslist"> -->
  <tr>
      <td><a href="{{ url('admin/users/invoices/'.$orders['user']['id'])}}" target="_blank">{{$orders['user']['user_name']}}</a></td>
-     <td><a target="_blank" href="{{$orders['invoice']}}" ng-show="{{$orders['invoice']}}">Download</a></td>
+     <td>{{$orders['txn_id']}}</td>
      <td>{{$orders['order_total'] - $orders['tax'] }}</td>
      <td>{{$orders['tax']}}</td>
      <td>{{$orders['order_total']}}</td>
@@ -64,9 +65,15 @@
 
      <td>{{$orders['country']['name']}}</td> -->
      <td>{{$orders['bill_zip']}}</td>
-     <!-- <td><a target="_blank" href="<%orders['invoice']" ng-show="orders['invoice']">Download</a></td> -->
-     <!-- <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td> -->
- </tr>
+     <td>{{$orders['items'][0]['product_id']}}</td>
+     @if(isset($orders['items'][0]['product_thumb']))
+     <td><img src="{{$orders['items'][0]['product_thumb']}}" width="150" height="100"></td>
+     @else
+     <td></td>
+     @endif
+
+<!--      <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td>
+ --> </tr>
  <!-- <tr>
      <td colspan="15" ng-if="!orderslist" class="text-center">No Orders Found !!</td>
  </tr> -->
@@ -99,28 +106,26 @@
                          <th>Price</th>
                          <thead>
                          <tbody>
-                            @foreach($orders['items'] as $item)
                              <tr ng-repeat="item in products">
                                                          <td ng-show="item['product_web']=='2'"> Image </td>
                                                          <td ng-show="item['product_web']=='3'">Footage</td>
                                                          <td ng-show="item['product_web']=='2'">
-                                                             <img src="{{$item['product_thumb']}}" width="150" height="100">
+                                                             <img src="<%item['product_thumb']%>" width="150" height="100">
                                                          </td>
                                                          <td ng-show="item['product_web']=='3'">
                                                              <video controls controlsList="nodownload" onmouseover="this.play()"
                                                                                                        onmouseout="this.load()" width="150" height="150">
-                                                                 <source src="{{$item['product_thumb']}}"
+                                                                 <source src="<%item['product_thumb']%>"
                                                                          type="video/mp4">
                                                                  Your browser does not support the video tag.
                                                              </video>
 
                                                          </td>
-                                                         <td>{{$item['product_id']}} </td>
-                                                         <td>{{$item['product_name']}} </td>
-                                                         <td>{{$item['standard_size']}} </td>
-                                                         <td>{{$item['standard_price']}}</td>
+                                                         <td><%item['product_id']%> </td>
+                                                         <td><%item['product_name']%> </td>
+                                                         <td><%item['standard_size']%> </td>
+                                                         <td><%item['standard_price']%></td>
                                                      </tr>
-                                                     @endforeach
                           </tbody>
                      </table>
                  </div>
