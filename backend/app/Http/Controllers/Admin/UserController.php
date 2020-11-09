@@ -19,6 +19,11 @@ use App\Models\City;
 use App\Models\State;
 use App\Models\Comment;
 use App\Models\Usercart;
+use App\Models\Orders;
+use App\Models\UserPackage;
+
+
+
 
 
 class UserController extends Controller
@@ -137,6 +142,7 @@ class UserController extends Controller
             ->with('state')
             ->with('city')
             ->where('id', $user_id)
+            ->with('orders')//i added this to include orders
             ->with(['plans' => function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success'])
                     ->with('downloads');
@@ -144,6 +150,8 @@ class UserController extends Controller
             ])->whereHas("plans", function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
+
+          // echo "<pre>"; print_r($userPlanslist); die;
 
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
@@ -320,5 +328,44 @@ class UserController extends Controller
 
     }
     
+    public function newClientSales(){
+
+      // $orders = Orders::all()->unique('user_id')->toArray();
+
+        // $orders = DB::table('imagefootage_orders')
+        //          ->select('*', DB::raw('count(*) as total'))
+        //          // ->select('*')
+        //          ->groupBy('user_id')
+        //          ->where(DB::raw('count(*) as total'),1)
+        //          ->get();
+
+        $orders1 = Orders::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
+
+        $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
+
+
+        // $orders = array_merge($orders1,$orders2);
+
+        $userlist1 = array();
+        foreach($orders1 as $order){
+                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
+                    $userlist1[] = $order;
+                }
+
+        }
+
+        $userlist2 = array();
+        foreach($orders2 as $order){
+                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
+                    $userlist2[] = $order;
+                }
+
+        }
+        // echo "<pre>";print_r($userlist1); 
+        // echo "<pre>";print_r($userlist2); die;
+
+        return view('admin.user.clientfirstsale',compact('userlist1', 'userlist2'));
+
+    }
     
 }

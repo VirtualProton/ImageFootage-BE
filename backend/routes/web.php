@@ -237,6 +237,13 @@ Route::post('/create_invoice_subcription','InvoiceController@create_invoice_subc
 Route::get('/new_registrants', 'UserController@newRegistrants');
 Route::get('/user_cart', 'UserController@userCart');
 Route::get('/abandoned_cart', 'UserController@abandoned_cart');
+Route::get('/new_client_sales', 'UserController@newClientSales');
+Route::get('/quotation_report', 'InvoiceController@quotationReport');
+Route::get('/quotation_cancel/{id}', 'InvoiceController@quotationCancel');
+Route::get('/outstanding_report', 'InvoiceController@outstandingReport');
+
+
+
 Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCartStatus');
 
 });
