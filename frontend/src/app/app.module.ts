@@ -68,15 +68,13 @@ export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig( [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider("509349303296309")
-		  // live 509349303296309
-		  // test 396074584437141
+          provider: new FacebookLoginProvider("1086071061826163")
         },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider("1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com")
-		  // amit 167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com
-		  // aksrinivas 1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com
+          provider: new GoogleLoginProvider("167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com")
+          // amit 167319950494-feg723qt2cnhkugetigtguo6314tog9r.apps.googleusercontent.com
+          // aksrinivas 1015801520785-q9mr6cas6mkp5l13l27dm9ke7ejhv9la.apps.googleusercontent.com
         }
       ]
   );

@@ -122,18 +122,17 @@ export class HeroDetailComponent implements OnInit {
                   data => {
                       this.profileData = data.data;
                        if(this.profileData["plans"]){
-
-                          if(this.webtype==3){
-                              var ptype= 'Footage';
-                          }else{
-                              var ptype='Image';
-                          }
-                          this.profileData["plans"].forEach(ele=>{
-                              if(ele.package_type==ptype) {
-                                  this.packeagechoose.push(ele);
-                              }
-                          })
-
+                            
+                                if(this.webtype==3){
+                                    var ptype= 'Footage';
+                                }else{
+                                    var ptype='Image';
+                                }
+                                this.profileData["plans"].forEach(ele=>{
+                                    if(ele.package_type==ptype && ele.package_products_count > ele.downloaded_product) {
+                                        this.packeagechoose.push(ele);
+                                    }
+                                })
                       }
                       //this.loadingData = false;
                   },
@@ -298,7 +297,7 @@ export class HeroDetailComponent implements OnInit {
 
     addExtendedPriceTotal(selectedPrice){
 
-        this.extended_price = selectedPrice.price*80;
+        this.extended_price = selectedPrice.price;
         this.total =  this.extended_price;
         this.currunt_selected_price = 0;
         this.extended=selectedPrice;

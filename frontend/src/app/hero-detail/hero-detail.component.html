@@ -1040,7 +1040,7 @@
 
         <select (change)="downloadselect(detailPageInfo,standard,total,extended,webtype,$event.target.value)">
             <option value="">--Select Plan--</option>
-            <option *ngFor="let pkg of packeagechoose; let i = index" value="{{pkg.id}}">{{pkg.package_description}}
+            <option *ngFor="let pkg of packeagechoose; let i = index" value="{{pkg.id}}"> {{pkg.package_description}} ( {{pkg.downloaded_product}} Downloaded)
             </option>
         </select>
 

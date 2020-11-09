@@ -41,7 +41,7 @@ class UserContactusController extends Controller
         if($result){
 			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message);
 				 Mail::send('contactusmailbody',$data,function($message) use($data,$sm) {
-				 $message->to('srinivask@conceptualpictures.com','Image Footage')
+				 $message->to('shilpi@conceptualpictures.com','Image Footage')
                      ->from($sm,'Admin Imagefootage')
                      ->subject('Contact us request from Image Footage');
 			 });

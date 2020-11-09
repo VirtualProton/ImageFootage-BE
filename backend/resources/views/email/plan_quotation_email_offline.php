@@ -103,29 +103,31 @@
                   echo $orders['package_name']." ".$plan;
                }
                ?>
-               </strong>&nbsp;</p>
+               </strong>&nbsp; <br>
+                Quantity:&nbsp;<?php echo $orders['package_products_count'] ?>
+               </p>
                </td>
                </tr>
                <tr>
-               <td>
-               <ul>
-               <li>
-               <strong> <?php echo $orders['package_name']." ".$plan; ?><br />
-               Quantity:&nbsp;<?php  echo $orders['package_products_count'] ?> <br /></li>
-               </ul>
-               </td>
-               <td>
-               <p><strong>INR&nbsp;</strong><strong><?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
-               </td>
-               </tr>
-               <tr>
-               <td>
-               <p>Add:&nbsp;GST @ 12%&nbsp;</p>
-               </td>
-               <td>
-               <!-- <p><a href="<?php //echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p> -->
-               </td>
-               </tr>
+                    <td colspan="2">
+                    <p><strong>Amount (INR) :- <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Add:&nbsp;GST @ 12%&nbsp;- <?php echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>    
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <p><strong>In words :- Rupees <?php echo $amount_in_words ?> ONLY</strong>&nbsp;</p>
+                    </td>
+                </tr>
                <tr>
                <td colspan="2">
                <p><a href="http://about:blank/"><strong>S</strong><strong>tandard</strong><strong>&nbsp;Team Licensing Terms</strong></a><a href="http://about:blank/"><strong>:</strong></a>&nbsp;</p>

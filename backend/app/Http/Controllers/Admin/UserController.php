@@ -155,7 +155,7 @@ class UserController extends Controller
 
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
-        DB::enableQueryLog();
+        
         $account_quotations = DB::table('imagefootage_performa_invoices')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
@@ -171,9 +171,10 @@ class UserController extends Controller
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
-                    ->simplePaginate('10');        
-        //dd(DB::getQueryLog());                      
-        //print_r($account_invoices); die;                     
+                    ->simplePaginate('10');
+        //echo "<pre>";                    
+        //print_r($account_invoices->toArray()); 
+        //die;                     
         return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
     }
 

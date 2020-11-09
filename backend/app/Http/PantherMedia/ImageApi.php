@@ -258,153 +258,142 @@ class ImageApi {
         }
   }
 
-  public function download($data,$id){
-      $this->access_key = $this->getAccessKey();
-      // echo $this->access_key; die;
-      if(count($data['product']['selected_product'])>0){
-         $id = $data['product']['selected_product']['id'];
-      }else{
-          $id = $data['product']['extended']['id'];
-      }
-      $client = new Client(); //GuzzleHttp\Client
-      $response = $client->post('http://rest.panthermedia.net/download-media', [
-          'headers'=>[
-              'Content-Type' => 'application/x-www-form-urlencoded',
-              'Accept-Version'=>'1.0'
-          ],
-          'form_params' => [
-              'api_key' => $this->api_key,
-              'access_key' => $this->access_key,
-              'timestamp' => $this->timestamp,
-              'nonce' => $this->nonce,
-              'algo' => $this->algo,
-              'content_type'=>'application/json',
-              'lang'=>'en',
-              'id_media'=> $data['product']['product_info']['media']['id'],
-              'id_article'=>$id,
-              'test'=>'yes'
-          ]
-      ]);
-      if ($response->getBody()) {
-          $contents = json_decode($response->getBody(), true);
-          $redownload = $contents['download_status']['id_download'];
-          //print_r($contents); die;
-
-          $client2 = new Client(); //GuzzleHttp\Client
-          $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
-              'headers'=>[
-                  'Content-Type' => 'application/x-www-form-urlencoded',
-                  'Accept-Version'=>'1.0'
-              ],
-              'form_params' => [
-                  'api_key' => $this->api_key,
-                  'access_key' => $this->access_key,
-                  'timestamp' => $this->timestamp,
-                  'nonce' => $this->nonce,
-                  'algo' => $this->algo,
-                  'content_type'=>'application/json',
-                  'lang'=>'en',
-                  'id_media'=> $data['product']['product_info']['media']['id'],
-                  'queue_hash'=>$contents['download_status']['queue_hash'],
-                  'test'=>'yes'
-              ]
-          ]);
-        if ($response2->getBody()) {
-            echo $this->timestamp;
-            echo "<br/>";
-            echo $this->access_key;
-            $downloadcontents = json_decode($response2->getBody());
-            print_r($downloadcontents);
-            die;
-            return $downloadcontents;
+    public function download($data,$id){
+        $this->access_key = $this->getAccessKey();
+        // echo $this->access_key; die;
+        if(count($data['product']['selected_product'])>0){
+            $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
+        }else{
+            $id = $data['product']['product_info']['media']['id'];
         }
 
-      }
-  }
+        $client = new Client(); //GuzzleHttp\Client
+        $response = $client->post('http://rest.panthermedia.net/download-media', [
+            'headers'=>[
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Version'=>'1.0'
+            ],
+            'form_params' => [
+                'api_key' => $this->api_key,
+                'access_key' => $this->access_key,
+                'timestamp' => $this->timestamp,
+                'nonce' => $this->nonce,
+                'algo' => $this->algo,
+                'content_type'=>'application/json',
+                'lang'=>'en',
+                'id_media'=> $data['product']['product_info']['media']['id'],
+                'id_article'=>$id,
+                'test'=>'yes'
+            ]
+        ]);
+        if ($response->getBody()) {
+            $contents = json_decode($response->getBody(), true);
+            $redownload = $contents['download_status']['id_download'];
+            //print_r($contents); die;
 
-  public function get_media_infoNew($media_id){
-    $this->access_key = $this->getAccessKey();
+            $client2 = new Client(); //GuzzleHttp\Client
+            $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
+                'headers'=>[
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Accept-Version'=>'1.0'
+                ],
+                'form_params' => [
+                    'api_key' => $this->api_key,
+                    'access_key' => $this->access_key,
+                    'timestamp' => $this->timestamp,
+                    'nonce' => $this->nonce,
+                    'algo' => $this->algo,
+                    'content_type'=>'application/json',
+                    'lang'=>'en',
+                    'id_media'=> $data['product']['product_info']['media']['id'],
+                    'queue_hash'=>$contents['download_status']['queue_hash'],
+                    'callback_url' => 'http://localhost/imagefootage/backend/api/callback_download',
+                    'test'=>'yes'
+                ]
+            ]);
+            if ($response2->getBody()) {
+            // echo $this->timestamp;
+                //echo "<br/>";
+            // echo $this->access_key;
+                $downloadcontents = json_decode($response2->getBody());
+                print_r($downloadcontents); die;
+            // die;
+                return $downloadcontents;
+            }
 
-   try{
+        }
+    }
 
-    // $clip_cmd = [
-    //     'api_key' => $this->api_key,
-    //     'access_key' => $this->access_key,
-    //     'timestamp' => $this->timestamp,
-    //     'nonce' => $this->nonce,
-    //     'algo' => $this->algo,
-    //     'content_type'=>'application/json',
-    //     'lang'=>'en',
-    //     'id_media'=>$media_id,
-    //     'show_articles'=>'yes',
-    //     'show_top10_keywords'=>'yes'
-    // ];
-    //$time = str_replace(',', '%2C', $this->timestamp);
-    $time2 = str_replace(' ', '%20', $this->timestamp);
-    //$time3 = str_replace(':', '%3A', $time2);
-    
-    $clip_cmd = 'api_key='.$this->api_key.
-        '&access_key='. $this->access_key.
-        '&nonce='. $this->nonce.
-        '&algo=' . $this->algo.
-        '&timestamp='.$time2.
-        '&content_type=application/json&lang=en&id_media='.$media_id.
-        '&show_articles=yes&show_top10_keywords=yes';
+    public function get_media_infoNew($media_id){
+            $this->access_key = $this->getAccessKey();
+            try{
+                    $time2 = str_replace(' ', '%20', $this->timestamp);
+                    $clip_cmd = 'api_key='.$this->api_key.
+                        '&access_key='. $this->access_key.
+                        '&nonce='. $this->nonce.
+                        '&algo=' . $this->algo.
+                        '&timestamp='.$time2.
+                        '&content_type=application/json&lang=en&id_media='.$media_id.
+                        '&show_articles=yes&show_top10_keywords=yes';
+                        $data_req = $clip_cmd;
+                        $curl = curl_init();
+                        $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
+                        // Set some options - we are passing in a useragent too here
+                        curl_setopt_array($curl, [
+                            CURLOPT_URL => 'http://rest.panthermedia.net/v1.0/get-media-info',
+                            CURLOPT_POST=> TRUE,
+                            CURLOPT_MAXREDIRS => 20,
+                            CURLOPT_POSTFIELDS => $data_req,
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_USERAGENT => $ua,
+                            CURLOPT_HTTPHEADER => array(
+                                'Content-Type' => 'application/x-www-form-urlencoded',
+                                'Accept-Version'=>'1.0',
+                                'Accept-Encoding' => 'gzip, deflate'
+                            ),
+                        ]);
+                        // Send the request & save response to $resp
+                        $response = curl_exec($curl);
+                        curl_close($curl);
+                        $contents = json_decode($response, true);
+                        return $contents;
+                } catch (\RuntimeException $ex) {
+                    die(sprintf('Http error %s with code %d', $ex->getMessage(), $ex->getCode()));
+            }
+    }
 
-    $data_req = $clip_cmd;
-    $curl = curl_init();
-    $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
+    public function downloadCallback() {
+        $client2 = new Client(); //GuzzleHttp\Client
+        $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
+            'headers'=>[
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Version'=>'1.0'
+            ],
+            'form_params' => [
+                'api_key' => $this->api_key,
+                'access_key' => $this->access_key,
+                'timestamp' => $this->timestamp,
+                'nonce' => $this->nonce,
+                'algo' => $this->algo,
+                'content_type'=>'application/json',
+                'lang'=>'en',
+                'id_media'=> $contents['download_status']['$data']['media']['id'],
+                'queue_hash'=>$contents['download_status']['queue_hash'],
+                'callback_url' => 'https://imagefootage.com/backend/api/callback_download',
+                'test'=>'yes'
+            ]
+        ]);
+      if ($response2->getBody()) {
+          //echo $this->timestamp;
+          //echo "<br/>";
+          //echo $this->access_key;
+          $downloadcontents = json_decode($response2->getBody());
+          print_r($downloadcontents);
+          die;
+          return $downloadcontents;
+        }
 
-    // Set some options - we are passing in a useragent too here
-    curl_setopt_array($curl, [
-        CURLOPT_URL => 'http://rest.panthermedia.net/v1.0/get-media-info',
-        CURLOPT_POST=> TRUE,
-        CURLOPT_MAXREDIRS => 20,
-        CURLOPT_POSTFIELDS => $data_req,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_USERAGENT => $ua,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Accept-Version'=>'1.0',
-            'Accept-Encoding' => 'gzip, deflate'
-        ),
-    ]);
-    // Send the request & save response to $resp
-    $response = curl_exec($curl);
-    curl_close($curl);
-    $contents = json_decode($response, true);
-    return $contents;
-   } catch (\RuntimeException $ex) {
-   // var_dump($e->getTrace());
-    die(sprintf('Http error %s with code %d', $ex->getMessage(), $ex->getCode()));
-   }
-    // echo $this->access_key; die;
-    // $client = new Client(); //GuzzleHttp\Client
-    // $response = $client->post('http://rest.panthermedia.net/get-media-info', [
-    //     'headers'=>[
-    //         'Content-Type' => 'application/x-www-form-urlencoded',
-    //         'Accept-Version'=>'1.0'
-    //     ],
-    //     'form_params' => [
-    //         'api_key' => $this->api_key,
-    //         'access_key' => $this->access_key,
-    //         'timestamp' => $this->timestamp,
-    //         'nonce' => $this->nonce,
-    //         'algo' => $this->algo,
-    //         'content_type'=>'application/json',
-    //         'lang'=>'en',
-    //         'id_media'=>$media_id,
-    //         'show_articles'=>'yes',
-    //         'show_top10_keywords'=>'yes'
-    //     ]
-    // ]);
-    // if ($response->getBody()) {
-    //     $contents = json_decode($response->getBody(), true);
-    //     //$contents = $response->getBody();
-    //     return $contents;
-
-    // }
-}
+    }
 
 
 }

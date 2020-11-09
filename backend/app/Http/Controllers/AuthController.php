@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','fbLogin']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -93,7 +93,7 @@ class AuthController extends Controller
 			 
 			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
 				 Mail::send('createusermail', $data, function($message) use($data) {
-				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
+				 $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
 			 }); 
                  return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
             } else {
@@ -103,7 +103,7 @@ class AuthController extends Controller
             return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
         }
     }
-	public function fbLogin(Request $request){
+	public function socialLogin(Request $request){
         $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
 			
@@ -149,11 +149,8 @@ class AuthController extends Controller
                     return $this->respondWithToken($token);
                    //$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
                    //return $res;
-                }
-				
+                }	
 			}
-
-
 			//return response()->json(['error' => 'Please register to login.'], 401);
 		}
        
@@ -202,31 +199,34 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        if(auth()->user()) {
+                $plans = UserPackage::where('user_id','=',auth()->user()->id)->where('package_expiry_date_from_purchage','>',Now())->whereIn('payment_status',['Completed','Transction Success'])
+                         ->get()->toArray();
+                $image_download=0;
+                $footage_download=0;
+                if(count($plans)>0){
 
-         $plans = UserPackage::where('user_id','=',auth()->user()->id)->where('package_expiry_date_from_purchage','>',Now())->whereIn('payment_status',['Completed','Transction Success'])
-            ->get()->toArray();
-        $image_download=0;
-        $footage_download=0;
-         if(count($plans)>0){
-
-            foreach($plans as $plan){
-                if($plan['package_type']=='Image'){
-                    $image_download=1;
-                }else if($plan['package_type']=='Footage'){
-                    $footage_download=1;
+                    foreach($plans as $plan){
+                        if($plan['package_type']=='Image'){
+                            $image_download=1;
+                        }else if($plan['package_type']=='Footage'){
+                            $footage_download=1;
+                        }
+                    }
                 }
-            }
-         }
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' =>  20,
-            'user' => auth()->user()->first_name,
-            'Utype' => auth()->user()->id,
-            'image_downlaod'=>$image_download,
-            'footage_downlaod'=>$footage_download
+                return response()->json([
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' =>  20,
+                    'user' => auth()->user()->first_name,
+                    'Utype' => auth()->user()->id,
+                    'image_downlaod'=>$image_download,
+                    'footage_downlaod'=>$footage_download
 
-        ]);
+                ]);
+            } else {
+                return null;
+            }
     }
 
     public function authenticate(Request $request)
