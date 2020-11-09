@@ -179,8 +179,8 @@ export class HeroService {
         );
     }
 
-    fbLogin(userData: any): Observable<userData> {
-        const url = `${this.heroesUrl}fbLogin`;
+    socialLogin(userData: any): Observable<userData> {
+        const url = `${this.heroesUrl}socialLogin`;
         return this.http.post<any>(url, {userData}, this.httpOptions).pipe(
             map(user => {
               //  console.log(user);

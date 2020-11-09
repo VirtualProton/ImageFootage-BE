@@ -65,15 +65,15 @@ export class LoginComponent implements OnInit {
         console.log(socialPlatform+" sign in data : " , userData);
         // Now sign-in with userData
         console.log(userData.name);
-		console.log(userData.email);
-		//fbLogin
-		  this.authenticationService.fbLogin(userData)
+		    console.log(userData.email);
+		    //socialLogin
+		  this.authenticationService.socialLogin(userData)
               .pipe(first())
               .subscribe(
                   data => {
                     console.log(data);
-                     if(data==undefined){
-                         Swal.fire('', "You are non registered user", 'warning');
+                     if(data==undefined || data == null){
+                         Swal.fire('', "You are non registered or already registered user", 'warning');
                      }else{
                          this.closeLoginPopup.emit(true);
                      }

@@ -289,10 +289,10 @@
                               </td>
                               <td>{{$invioces->invoice_created}}</td>
                               <td>{{$invioces->total}}</td>
-                              <td>{{$invioces->total}}</td>
+                              <td>{{$invioces->package_description}}</td>
                               <td>{{$invioces->payment_method}}</td>
                               <td>
-                                <?php if($invioces->status =='0'){ 
+                                <?php if($invioces->status =='0'){
                                       echo "Pending";
                                 } else if($invioces->status =='1') {
                                       echo "Paid";

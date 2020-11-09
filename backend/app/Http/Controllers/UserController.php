@@ -23,19 +23,23 @@ class UserController extends Controller
    public function userProfile($id){
 
 	   $send_data = [];
-       $userlist= User::where('id',$id)
-                        ->with('country')
-                        ->with('state')
-                        ->with('city')
-                        ->with(['plans'=> function ($query) {
-                            $query->whereIn('payment_status',['Completed','Transction Success'])
-                            ->whereRaw('package_products_count > downloaded_product')
-                                ->with('downloads');
-                       }
-                       ])
+        $userlist= User::where('id',$id)
+                    ->with('country')
+                    ->with('state')
+                    ->with('city')
+                    ->with(['plans'=> function ($query) {
+                        $query->whereIn('payment_status',['Completed','Transction Success'])
+                            //->whereRaw('package_products_count > downloaded_product')
+                            ->orderBy('id', 'desc')
+                            ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                            ->with(['downloads' => function($down_query){
+                                $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
+                            }]);
+                        }
+                    ]) 
                     ->get()->toArray();
-            //print_r($userlist); die;
-       if(count($userlist)>0){
+       
+        if(count($userlist)>0){
 	          foreach($userlist as $user){
                   $send_data['first_name'] =$user['first_name'];
                   $send_data['last_name'] =$user['last_name'];
