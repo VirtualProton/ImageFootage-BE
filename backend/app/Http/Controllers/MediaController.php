@@ -52,15 +52,16 @@ class MediaController extends Controller
                 $left = $width - 300;
             }
 
-            $img = Image::make($product_details_data['media']['preview_url_no_wm']);
+            //$img = Image::make($product_details_data['media']['preview_url_no_wm']);
             // insert watermark at bottom-right corner with 10px offset
-            $downlaod_image1 = $img->insert(public_path('images/logoimage_new.png'), 'top-left', intval($left / 2), intval($height / 2));
+            //$downlaod_image1 = $img->insert(public_path('images/logoimage_new.png'), 'top-left', intval($left / 2), intval($height / 2));
             $time = time();
-            $img->save(public_path('images/dump/' . $time . '.jpg'));
-            $img->encode('jpg');
+            //$img->save(public_path('images/dump/' . $time . '.jpg'));
+            //$img->encode('jpg');
             $type = 'jpg';
-            $downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
-            unlink(public_path('images/dump/' . $time . '.jpg'));
+            $downlaod_image = '';
+            //$downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
+           // unlink(public_path('images/dump/' . $time . '.jpg'));
 
             if (count($product_details_data) > 0) {
                 $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
@@ -263,5 +264,10 @@ class MediaController extends Controller
         $b64image = base64_encode(file_get_contents($main_image));
         $downlaod_image = 'data:video/mp4;base64,' . $b64image;
         return response()->json($downlaod_image);
+    }
+
+    public function callback_download(Request $request){
+        echo "<pre>"; 
+        print_r($request->all()); die;
     }
 }

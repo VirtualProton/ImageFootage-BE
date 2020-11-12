@@ -173,3 +173,12 @@ table tr td {
     border-color: #fff;
 }
 /*.account-list>li>a.active{color:#ef6c57}*/
+
+.inactive_row  {
+    background-color: rgb(243, 49, 49);
+    color: black;
+}
+.active_row  {
+    background-color:rgb(181, 238, 181);
+
+}

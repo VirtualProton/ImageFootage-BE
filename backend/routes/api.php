@@ -66,7 +66,7 @@ Route::group([
     Route::post('validUser', 'UserController@validUser');
 	Route::post('validMobileUser', 'UserController@validMobileUser');
 	Route::post('requestChangePassword', 'UserController@requestChangePassword');
-	Route::post('fbLogin','AuthController@fbLogin');
+	Route::post('socialLogin','AuthController@socialLogin');
 	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
 	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
@@ -110,4 +110,5 @@ Route::group([
     Route::post('downloadindi', 'MediaController@downloadindi');
     Route::post('getuseraddress','UserController@getUserAddress');
     Route::post('update_profile','UserController@update_profile');
+    Route::post('callback_download','MediaController@callback_download');
 });
