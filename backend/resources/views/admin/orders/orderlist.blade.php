@@ -37,8 +37,8 @@
 <th>Bill Full Name</th>
 <th>Billing Address</th>
 <th>Bill city</th>
-<!-- <th>Bill State</th>
-<th>Billing Country</th> -->
+<th>Bill State</th>
+<!-- <th>Billing Country</th> -->
 <th>Billing Zip</th>
 <!-- <th>Invoice</th> -->
 <!-- <th>Action</th> -->
@@ -60,9 +60,9 @@
      <td>{{$orders['bill_firstname']}} {{$orders['bill_lastname']}}</td>
      <td>{{$orders['bill_address1']}}</td>
      <td>{{$orders['city']['name']}}</td>
-     <!-- <td>{{$orders['state']['state']}}</td>
+     <td>{{$orders['state']['state']}}</td>
 
-     <td>{{$orders['country']['name']}}</td> -->
+     <!-- <td>{{$orders['country']['name']}}</td> -->
      <td>{{$orders['bill_zip']}}</td>
      <!-- <td><a target="_blank" href="<%orders['invoice']" ng-show="orders['invoice']">Download</a></td> -->
      <!-- <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td> -->

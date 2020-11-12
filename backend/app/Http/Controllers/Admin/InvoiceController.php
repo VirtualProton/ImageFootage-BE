@@ -18,6 +18,7 @@ use App\Models\Package;
 use App\Models\Comment;
 use App\Models\Invoice;
 use App\Models\Orders;
+use Auth;
 
 
 class InvoiceController extends Controller
@@ -201,8 +202,15 @@ class InvoiceController extends Controller
     }
 
     public function quotationReport(){
+        $user = Auth::guard('admins')->user();
+        $userState = $user->state;
         // $user_id = 1;
         $quotations = Invoice::where('invoice_url', null)->where('status', '<>', 3)->get()->toArray();
+
+        // if($user->department['department'] == 'Sales'){
+
+        //     $quotations = Invoice::where('invoice_url', null)->where('status', '<>', 3)->where('state', $userState)->get()->toArray();
+        // }
         // echo "<pre>"; print_r($quotations); die;
 
         return view('admin.invoice.quotationsReport', compact('quotations'));
@@ -231,7 +239,7 @@ class InvoiceController extends Controller
 
 
     public function outstandingReport(){
-
+        $user = Auth::guard('admins')->user();
         $all_orders_list= Orders::with(['items'=>function($query){
                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
            }])->with('user')
@@ -242,7 +250,20 @@ class InvoiceController extends Controller
           ->orWhere('order_status', null)
           ->orderBy('id','desc')
           ->get()->toArray();
+         // echo "<pre>"; print_r($all_orders_list); die;
 
+          if($user->department['department'] == 'Sales'){
+
+            $all_orders_list= Orders::with(['items'=>function($query){
+                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+           }])->with('user')
+          ->with('country')
+          ->with('state')
+          ->with('city')
+          ->where('bill_state', $user->state)
+          ->orderBy('id','desc')
+          ->get()->toArray();
+        }
 
         // echo "<pre>";print_r($all_orders_list); die;
         return view('admin.invoice.orderlist', ['orderlists' => $all_orders_list]);

@@ -21,6 +21,8 @@ use App\Models\Comment;
 use App\Models\Usercart;
 use App\Models\Orders;
 use App\Models\UserPackage;
+use Auth;
+
 
 
 
@@ -186,6 +188,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
         $title = "Edit Lead/User/Contact";
 
         $countries = $this->Country->getcountrylist();
@@ -287,11 +293,14 @@ class UserController extends Controller
      */
     public function abandoned_cart()
     {
+        $user = Auth::guard('admins')->user();
+        $userState = $user->state;
+        // print_r($user->state); echo "<br>";
+
         // echo "hi"; die;
         date_default_timezone_set('Asia/Kolkata');
         $userlist=$this->User->getUserData();
         $date = new \DateTime();
-        //print_r($date); echo "<br>";
         $date->modify('-60 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
         //echo $formatted_date; die;
@@ -299,6 +308,25 @@ class UserController extends Controller
         // $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->groupBy('cart_added_by')->toArray();
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
         //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
+        if($user->department['department'] == 'Sales'){
+
+            // Usercart::where('cart_added_on', '>',$formatted_date)
+            //   ->with('user', function ($query) {
+            //       $query->where('state','=','3');
+            //   })
+            //   ->with('product')
+            //   ->get(); 
+
+              $userCart = Usercart::whereHas('user', function($q) use($userState){
+              $q->where('state', $userState);
+              })
+              ->where('cart_added_on', '>',$formatted_date)
+              ->with('product')
+              ->with('user')
+              ->get()
+              ->toArray();
+          
+        }
 
         // echo "<pre>"; print_r($userCart); die;
         return view('admin.user.abandonedcart',compact('userCart'));
@@ -331,6 +359,8 @@ class UserController extends Controller
     
     public function newClientSales(){
 
+        $user = Auth::guard('admins')->user();
+        $userState = $user->state;
       // $orders = Orders::all()->unique('user_id')->toArray();
 
         // $orders = DB::table('imagefootage_orders')
@@ -344,6 +374,26 @@ class UserController extends Controller
 
         $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
 
+        if($user->department['department'] == 'Sales'){ 
+
+              $orders1 = Orders::whereHas('user', function($q) use($userState){
+              $q->where('state', $userState);
+              })
+              ->with('user')
+              ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
+              ->get()
+              ->toArray();
+
+              $orders2 = UserPackage::whereHas('user', function($q) use($userState){
+              $q->where('state', $userState);
+              })
+              ->with('user')
+              ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
+              ->get()
+              ->toArray();
+          
+        }
+        // echo "<pre>"; print_r($orders1); die;
 
         // $orders = array_merge($orders1,$orders2);
 

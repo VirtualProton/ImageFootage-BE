@@ -57,6 +57,12 @@ class PackageController extends Controller
   		}
   }
   public function updatePackage($id){
+
+  	$user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
+        
 	   $package = new Package;
 	   $package_data=$package->where('package_id',$id)->get()->toArray();
 	   return view('admin.package.editpackage', ['package' => $package_data]);

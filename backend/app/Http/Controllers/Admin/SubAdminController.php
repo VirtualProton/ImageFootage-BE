@@ -12,6 +12,7 @@ use App\Models\RolesModulesMapping;
 use Illuminate\Support\Facades\Response;
 
 use App\Models\Country;
+use Auth;
 
 
 
@@ -105,6 +106,10 @@ class SubAdminController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
         $title = "Add Admin/Agent";
         $roles= Roles::where('status','=','A')->get();
         $deparments= Department::where('status','=','A')->get();
@@ -294,6 +299,58 @@ class SubAdminController extends Controller
             return Response::json(['html'=>$viewRendered]);
         }
 
+    }
+
+
+    public function editProfile($id){
+        
+
+        $user = Auth::guard('admins')->user();
+        $title = "Add Admin/Agent";
+        $roles= Roles::where('status','=','A')->get();
+        $deparments= Department::where('status','=','A')->get();
+        $this->Admin = new Admin();
+        $agent_data=$this->Admin->getAgentData($id);
+        // echo "<pre>"; print_r($agent_data); die;
+        $this->Country = new Country();
+        $states = $this->Country->getState('country_id',$agent_data['country']);
+        // echo "<pre>"; print_r($states); die;
+
+        $this->Country = new Country();
+        $countries = $this->Country->getcountrylist();
+
+
+        return view('admin.subadmin.editprofile', compact('title','countries','states','deparments','roles','agent_data'));
+        echo "<pre>"; print_r($user); die;
+        // echo "hi"; die;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'department'   => 'required',
+            'role' => 'required',
+            'name' =>'required',
+            'email'=>'required|email',
+            'bill_country' =>'required',
+            'bill_state' =>'required',
+            'password'=>'sometimes|nullable|min:6',
+        ]);
+
+        $this->Admin = new Admin();
+        if($this->Admin->update_admin($request,$id)){
+            return redirect("admin/edit_profile/$id")->with("success", "Profile has been updated successfully !!!");
+        } else {
+            return redirect("admin/edit_profile/$id")->with("error", "Due to some error, Admin/Agent is not updated yet. Please try again!");
+        }
     }
 
 }

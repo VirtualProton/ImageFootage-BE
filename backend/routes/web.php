@@ -245,6 +245,9 @@ Route::get('/outstanding_report', 'InvoiceController@outstandingReport');
 
 
 Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCartStatus');
+Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
+Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
+
 
 });
 Route::get('emailVerification','UserContactusController@emailVerification');
