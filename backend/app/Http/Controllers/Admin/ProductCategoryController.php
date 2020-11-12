@@ -63,6 +63,10 @@ class ProductCategoryController extends Controller
     }
 	 public function updateProduct($id)
     {
+    	$user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
 		$productcategory=ProductCategory::find($id)->toArray();
         return view('admin.product.editproductcategory', ['productcategory' => $productcategory]);
     }

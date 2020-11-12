@@ -45,6 +45,11 @@ class ProductApiController extends Controller
   		}
   }
   public function updateApiQuata($id){
+
+  	$user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
 	   $ApiQuota = new ApiQuota;
 	   $package_data=$ApiQuota->where('api_id',$id)->get()->toArray();
 	   return view('admin.package.editapiquata', ['package' => $package_data]);

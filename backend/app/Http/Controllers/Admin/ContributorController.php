@@ -118,8 +118,15 @@ class ContributorController extends Controller
 		  return back()->with('warning','Some problem occured.');
 		}
     }
-	 public function updateContributor($id)
-    {   $contributor=new Contributor;
+	
+	public function updateContributor($id)
+    {   
+    	$user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
+
+    	$contributor=new Contributor;
 		$contributor_data=Contributor::find($id)->toArray();
         return view('admin.contributor.editcontributor', ['contributor'=>$contributor_data]);
     }

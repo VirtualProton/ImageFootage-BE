@@ -344,7 +344,12 @@ class ProductController extends Controller
 		 }
     }
     public function updateProduct($id)
-    {   $contributor=new Contributor;
+    {   
+    	$user = Auth::guard('admins')->user();
+        if($user->role['role'] !='Super Admin'){
+          return back()->with('success','You dont have acess to edit.');
+        }
+    	$contributor=new Contributor;
 		$all_contributor_list=$contributor->where('contributor_status', 'Active')->get()->toArray();
 		$product=Product::find($id)->toArray();
 		$ProductCategory = new ProductCategory;

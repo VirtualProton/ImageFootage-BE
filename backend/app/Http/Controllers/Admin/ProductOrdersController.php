@@ -14,6 +14,9 @@ class ProductOrdersController extends Controller
         $this->middleware('admin')->except('login','logout');
 	}
    public function index(){
+
+   		$user = Auth::guard('admins')->user();
+   		// echo "<pre>"; print_r($user->state); die;
 	   $all_orders_list= Orders::with(['items'=>function($query){
                    $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
            }])->with('user')
@@ -23,6 +26,18 @@ class ProductOrdersController extends Controller
           ->orderBy('id','desc')
           ->get()->toArray();
           // echo "<pre>";print_r($all_orders_list); die;
+   		if($user->department['department'] == 'Sales'){
+
+   			$all_orders_list= Orders::with(['items'=>function($query){
+                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+           }])->with('user')
+          ->with('country')
+          ->with('state')
+          ->with('city')
+          ->where('bill_state', $user->state)
+          ->orderBy('id','desc')
+          ->get()->toArray();
+   		}
 	   return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
        // $this->User = new User;
        // $userlist = $this->User->getUserData();
