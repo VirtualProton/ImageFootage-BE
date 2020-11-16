@@ -80,8 +80,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:imagefootage_users|max:255',
         ]);
 
-        return back()
-        ->withInput();
+        // return back()
+        // ->withInput();
         // ->withErrors(['name.required', 'Name is required']);
 
 
