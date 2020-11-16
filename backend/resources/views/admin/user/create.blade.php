@@ -11,8 +11,8 @@
             <!-- /.box-header -->
             <!-- form start -->
             {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
-<!--               @include('admin.partials.message')
- -->
+              @include('admin.partials.message')
+
                 
 
               <div class="box-body">
