@@ -1,3 +1,3 @@
 Hello ,
 
- Please find attachment of invoice.
+ Please find attachment of Quotation.

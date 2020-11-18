@@ -22,6 +22,8 @@ use App\Models\Usercart;
 use App\Models\Orders;
 use App\Models\UserPackage;
 use Auth;
+use Mail;
+
 
 
 
@@ -80,6 +82,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:imagefootage_users|max:255',
         ]);
 
+        
         // return back()
         // ->withInput();
         // ->withErrors(['name.required', 'Name is required']);
@@ -92,11 +95,17 @@ class UserController extends Controller
         $user = User::where('email', $request['email'])->get()->toArray();
         //$user['id'] = $user[0]['id'];
         //$user['email'] = $user[0]['email'];
+        // print_r($user); die;
         if(!empty($user)){
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
         }
         
+            $data['email'] = $request->email;
+            $data['name'] = $request->first_name.' '.$request->last_name;
+            $data['text'] ="You are added as a client.";
+            $this->sendmail($data);
         if($this->User->save_user($request)){
+
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
         } else {
             return redirect("admin/users/create")->with("error", "Due to some error, Laed/User/Contact is not registered yet. Please try again!");
@@ -417,6 +426,44 @@ class UserController extends Controller
 
         return view('admin.user.clientfirstsale',compact('userlist1', 'userlist2'));
 
+    }
+
+
+    public function sendmail($request)
+    {
+
+        $data["email"] = $request['email'];
+        $data["text"] =  $request['text'];
+        //print_r($data); die;
+        // $data["subject"]=$request->get("subject");
+        ini_set('max_execution_time', 0);
+        //$data["email"]="amitpathak.bansal@gmail.com";
+        //$data["client_name"]="Test email";
+        $data["subject"] = "Registration Email";
+
+        // $pdf = PDF::loadHTML($data["text"]);
+
+        try {
+            Mail::send('registrationemail', $data, function ($message) use ($data) {
+              // echo "<pre>";print_r($data); die;
+                $message->to($data["email"])
+                    ->subject($data["subject"])
+                    ->from('admin@imagefootage.com', 'Imagefootage');
+                    // ->attachData($pdf->output(), "invoice.pdf");
+            });
+        } catch (JWTException $exception) {
+            $this->serverstatuscode = "0";
+            $this->serverstatusdes = $exception->getMessage();
+        }
+        if (Mail::failures()) {
+            $this->statusdesc  =   "Error sending mail";
+            $this->statuscode  =   "0";
+        } else {
+
+            $this->statusdesc  =   "Email sent Succesfully";
+            $this->statuscode  =   "1";
+        }
+        return response()->json(compact('this'));
     }
     
 }
