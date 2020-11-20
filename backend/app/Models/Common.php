@@ -573,6 +573,8 @@ class Common extends Model
 
         );
 
+        
+
         DB::table('imagefootage_performa_invoices')->insert($insert);   
         $id = DB::getPdo()->lastInsertId();
                    
@@ -586,11 +588,31 @@ class Common extends Model
         $dataForEmail = json_decode(json_encode($dataForEmail), true); 
         
         $transactionRequest = new TransactionRequest();
-        $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
-        $url = $transactionRequest->getPGUrl();
+            //Setting all values here
+            $transactionRequest->setMode($this->mode);
+            $transactionRequest->setLogin($this->login);
+            $transactionRequest->setPassword($this->password);
+            $transactionRequest->setProductId($this->atomprodId);
+            $transactionRequest->setAmount($dataForEmail[0]['package_price']);
+            $transactionRequest->setTransactionCurrency("INR");
+            $transactionRequest->setTransactionAmount($dataForEmail[0]['package_price']);
+    
+            $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+            $transactionRequest->setClientCode($this->clientcode);
+            $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+            $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+            $transactionDate = str_replace(" ", "%20", $datenow);
+            $transactionRequest->setTransactionDate($transactionDate);
+            $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+            $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+            $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+            $transactionRequest->setCustomerBillingAddress("India");
+            $transactionRequest->setCustomerAccount($data['uid']);
+            $transactionRequest->setReqHashKey($this->atomRequestKey);
+            $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
 
-        // print_r($dataForEmail); die;
+        // print_r($transactionRequest); die;
                        
         $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
         $data["email"] =   $data['email'];
