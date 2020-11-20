@@ -125,17 +125,17 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                    <p><strong>GST extra&nbsp;- <?php echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    <p><strong>GST extra&nbsp; <?php //echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
                     </td>
                 </tr>    
-                <tr>
+                <!-- <tr>
                     <td colspan="2">
                     <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td colspan="2">
-                    <p><strong>In words Amount + GST :- Rupees <?php echo $amount_in_words ?> ONLY</strong>&nbsp;</p>
+                    <p><strong>In words Amount :- Rupees <?php echo $package_price_in_words ?> ONLY </strong>&nbsp;</p>
                     </td>
                 </tr>
                <tr>
@@ -186,6 +186,11 @@
                
                <li>Payment can be made in favour of&nbsp;<strong>M/s. Conceptual Pictures Worldwide Private Limited</strong>.&nbsp;<br />A. Through&nbsp;A/c.&nbsp;Payee Cheques/DD payable at Hyderabad&nbsp;<br />B.&nbsp;&nbsp;RTGS/NEFT to&nbsp;<strong>A/c. No. 50200000502220</strong>,&nbsp;<strong>HDFC Bank Ltd</strong>, Vijay Nagar Branch, Hyderabad&nbsp;<br />IFSC Code:&nbsp;<strong>HDFC0001998</strong>.&nbsp;</li>
               
+               <li>For online payments please click the link below<br>
+                   <p><a href="<?php echo $orders['payment_url']; ?>" target="_blank" style="font-size: 14px;color:Red;">Payment Link</a></p>
+                </li>
+
+
                <li>All disputes are subject to Hyderabad Jurisdiction.&nbsp;</li>
                </ul>
 

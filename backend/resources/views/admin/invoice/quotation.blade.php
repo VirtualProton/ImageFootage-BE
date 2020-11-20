@@ -115,7 +115,7 @@
                                     <select required="" class="form-control" ng-model="product.pro_type">
                                        <option value="">--Select a Type--</option>
                                        <option value="right_managed">Right Managed</option>
-                                       <option value="royalty_free">Royality Free</option>
+                                       <option value="royalty_free">Royalty Free</option>
                                     </select>
                                  </div>
                                  <div>

@@ -528,127 +528,116 @@ class Common extends Model
         } 
 
                
-        $allFields = Package::find($data['plan_id']['package_id']);
-        $packge = new UserPackage();
-        $packge->user_id = $data['uid'];               
-        $packge->package_id = $allFields['package_id'];
-        $packge->package_name = $allFields['package_name'];
-        $packge->package_price = $allFields['package_price'];
-        $packge->package_description = $allFields['package_description'];
-        $packge->package_products_count = $allFields['package_products_count'];
-        $packge->package_type = $allFields['package_type'];
-        $packge->package_permonth_download = $allFields['package_permonth_download'];
-        $packge->package_expiry = $allFields['package_expiry'];
-        $packge->package_plan = $allFields['package_plan'];
-        $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
-        $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
-        $packge->pacage_size = $allFields['pacage_size'];
-        $packge->status = 0; 
-        $packge->order_type = 2;           
-        $packge->created_at = date('Y-m-d H:i:s');
-        if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
-            $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
-        }else{
-            $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry_yearly']." years"));
-        }
-        $packge->save();
-                
-        $insert = array(
-            'user_id'=> $data['uid'],
-            'email_id'=> $data['email'],
-            'invoice_name'=> $this->random_numbers(),
-            'invoice_type'=> '1',
-            'created'=>date('Y-m-d H:i:s'),
-            'modified'=>date('Y-m-d H:i:s'),
-            //'job_number'=>$data['po'],
-            'promo_code'=>'',
-            'tax'=> $data['tax'],
-            'tax_selected'=> "GST",
-            'total'=>$data['total'],
-            'status'=>'0', 
-            'proforma_type' => '1',
-            'package_id' => $packge->id,
-            'expiry_invoices'=>$data['expiry_date'],
-            //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
+                $allFields = Package::find($data['plan_id']['package_id']);
+                $packge = new UserPackage();
+                $packge->user_id = $data['uid'];               
+                $packge->package_id = $allFields['package_id'];
+                $packge->package_name = $allFields['package_name'];
+                $packge->package_price = $allFields['package_price'];
+                $packge->package_description = $allFields['package_description'];
+                $packge->package_products_count = $allFields['package_products_count'];
+                $packge->package_type = $allFields['package_type'];
+                $packge->package_permonth_download = $allFields['package_permonth_download'];
+                $packge->package_expiry = $allFields['package_expiry'];
+                $packge->package_plan = $allFields['package_plan'];
+                $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
+                $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
+                $packge->pacage_size = $allFields['pacage_size'];
+                $packge->status = 0; 
+                $packge->order_type = 2;           
+                $packge->created_at = date('Y-m-d H:i:s');
+                if($allFields['package_expiry'] !=0 && $allFields['package_expiry_yearly']==0){
+                    $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry']." months"));
+                }else{
+                    $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry_yearly']." years"));
+                }
+                $packge->save();
+                $insert = array(
+                    'user_id'=> $data['uid'],
+                    'email_id'=> $data['email'],
+                    'invoice_name'=> $this->random_numbers(),
+                    'invoice_type'=> '1',
+                    'created'=>date('Y-m-d H:i:s'),
+                    'modified'=>date('Y-m-d H:i:s'),
+                    //'job_number'=>$data['po'],
+                    'promo_code'=>'',
+                    'tax'=> $data['tax'],
+                    'tax_selected'=> "GST",
+                    'total'=>$data['total'],
+                    'status'=>'0', 
+                    'proforma_type' => '1',
+                    'package_id' => $packge->id,
+                    'expiry_invoices'=>$data['expiry_date'],
+                    //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
 
-        );
+                );
 
-        DB::table('imagefootage_performa_invoices')->insert($insert);   
-        $id = DB::getPdo()->lastInsertId();
+                DB::table('imagefootage_performa_invoices')->insert($insert);   
+                $id = DB::getPdo()->lastInsertId();
+              
                    
-        if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-            Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
-        }
+                    if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                        Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                    }
 
-        $dataForEmail  = $this->getSubData($id,$data['uid']);
-
-        
-        $dataForEmail = json_decode(json_encode($dataForEmail), true); 
-        
-        $transactionRequest = new TransactionRequest();
-        $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
-        $url = $transactionRequest->getPGUrl();
-        $dataForEmail[0]['payment_url'] = $url;
-
-        // print_r($dataForEmail); die;
+                        $dataForEmail  = $this->getSubData($id,$data['uid']); 
                        
-        $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
-        $data["email"] =   $data['email'];
-        $data["invoice"] = $dataForEmail[0]['invoice_name'];
-        $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
-        $package_price_in_words   =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
+                        $dataForEmail = json_decode(json_encode($dataForEmail), true); 
+                        
+                                       
+                        $data["subject"] = "Subscription Quotation (".$dataForEmail[0]['invoice_name'].")";
+                        $data["email"] =   $data['email'];
+                        $data["invoice"] = $dataForEmail[0]['invoice_name'];
 
+                    
+                        $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0]]));
+                        $fileName = $data["invoice"]."subscription_quotation.pdf";
+                        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+                        try{
+                            Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
+                            $message->to($data["email"])
+                            ->from('admin@imagefootage.com', 'Imagefootage')
+                            ->subject($data["subject"])
+                            ->attachData($pdf->output(), $fileName);
+                            });
 
-
-    
-        $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
-        $fileName = $data["invoice"]."subscription_quotation.pdf";
-        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
-        try{
-            Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
-                $message->to($data["email"])
-                ->from('admin@imagefootage.com', 'Imagefootage')
-                ->subject($data["subject"])
-                ->attachData($pdf->output(), $fileName);
-            });
-
-            $s3Client = new S3Client([
-                /*'profile' => 'default',*/
-                'region' => 'us-east-2',
-                'version' => '2006-03-01'
-            ]);
-            
-            $path ='quotation/'.$fileName;
-            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
-            $uploader = new MultipartUploader($s3Client, $source, [
-                'bucket' => 'imgfootage',
-                'key' => $path,
-            ]);
-        try {
-                $fileupresult = $uploader->upload();
-            } catch (MultipartUploadException $e) {
-                echo $e->getMessage() . "\n";
-            }
-            $pdf_path = $fileupresult['ObjectURL'];
-            if(!empty($pdf_path)){
-                DB::table('imagefootage_performa_invoices')
-                    ->where('id','=',$id)
-                    ->update(['quotation_url'=>$pdf_path]);
-                unlink(storage_path('app/public/pdf'). '/' . $fileName);
-            }
-        
-    }catch(JWTException $exception){
-        $this->serverstatuscode = "0";
-        $this->serverstatusdes = $exception->getMessage();
-    }
-    if (Mail::failures()) {
-        $this->statusdesc  =   "Error sending mail";
-        $this->statuscode  =   "0";
-    }else{
-        $this->statusdesc  =   "Subscription Quotation sent Succesfully";
-        $this->statuscode  =   "1";
-    }
-    return response()->json(compact('this'));               
+                            $s3Client = new S3Client([
+                                /*'profile' => 'default',*/
+                                'region' => 'us-east-2',
+                                'version' => '2006-03-01'
+                            ]);
+                           
+                            $path ='quotation/'.$fileName;
+                            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+                            $uploader = new MultipartUploader($s3Client, $source, [
+                                'bucket' => 'imgfootage',
+                                'key' => $path,
+                            ]);
+                        try {
+                                $fileupresult = $uploader->upload();
+                            } catch (MultipartUploadException $e) {
+                                echo $e->getMessage() . "\n";
+                            }
+                            $pdf_path = $fileupresult['ObjectURL'];
+                            if(!empty($pdf_path)){
+                                DB::table('imagefootage_performa_invoices')
+                                    ->where('id','=',$id)
+                                    ->update(['quotation_url'=>$pdf_path]);
+                                unlink(storage_path('app/public/pdf'). '/' . $fileName);
+                            }
+                      
+                    }catch(JWTException $exception){
+                        $this->serverstatuscode = "0";
+                        $this->serverstatusdes = $exception->getMessage();
+                    }
+                    if (Mail::failures()) {
+                        $this->statusdesc  =   "Error sending mail";
+                        $this->statuscode  =   "0";
+                    }else{
+                        $this->statusdesc  =   "Subscription Quotation sent Succesfully";
+                        $this->statuscode  =   "1";
+                    }
+                return response()->json(compact('this'));               
     }
 
 
@@ -719,14 +708,40 @@ public function save_download_proforma($data){
                     $dataForEmail  = $this->getSubData($id,$data['uid']); 
                    
                     $dataForEmail = json_decode(json_encode($dataForEmail), true);  
-
-                    $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
-                         
+                   
+                    // $transactionRequest = new TransactionRequest();
+                    // //Setting all values here
+                    // $transactionRequest->setMode($this->mode);
+                    // $transactionRequest->setLogin($this->login);
+                    // $transactionRequest->setPassword($this->password);
+                    // $transactionRequest->setProductId($this->atomprodId);
+                    // $transactionRequest->setAmount($dataForEmail[0]['total']);
+                    // $transactionRequest->setTransactionCurrency("INR");
+                    // $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+            
+                    // $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+                    // $transactionRequest->setClientCode($this->clientcode);
+                    // $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+                    // $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+                    // $transactionDate = str_replace(" ", "%20", $datenow);
+                    // $transactionRequest->setTransactionDate($transactionDate);
+                    // $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+                    // $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+                    // $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+                    // $transactionRequest->setCustomerBillingAddress("India");
+                    // $transactionRequest->setCustomerAccount($data['uid']);
+                    // $transactionRequest->setReqHashKey($this->atomRequestKey);
+                    // $url = $transactionRequest->getPGUrl();
+                    // $dataForEmail[0]['payment_url'] = $url;
+                    //echo "<pre>";
+                    //print_r($dataForEmail);    die;                  
                     $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
                     $data["email"] =   $data['email'];
                     $data["invoice"] = $dataForEmail[0]['invoice_name'];
 
-                    $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words'=> $amount_in_words]));
+
+                
+                    $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0]]));
                     $fileName = $data["invoice"]."download_quotation.pdf";
                     $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
                     try{
