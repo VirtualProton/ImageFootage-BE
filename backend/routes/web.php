@@ -213,7 +213,7 @@ Route::get('/purchase_orders', 'InvoiceController@purchase_orders');
 
 
 Route::post('/sendmail','InvoiceController@sendmail');
-Route::get('/product/{id}', 'ProductController@getproduct');
+//Route::get('/product/{id}', 'ProductController@getproduct');
 //custom Invoice routes
 Route::get('/users/invoices/{id}', 'UserController@invoices');
 Route::post('/users/comments/', 'InvoiceController@comments');

@@ -243,7 +243,8 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 		'Image' => Intervention\Image\Facades\Image::class,
-		'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
+        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
+        'Helper' => App\Helpers\Helper::class,
     ],
 
 ];

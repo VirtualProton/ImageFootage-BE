@@ -8,7 +8,7 @@ app = angular.module('imageFootage', [], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
-app.controller('quotatationController', function($scope, $http, $location) {
+app.controller('quotatationController', function($scope, $http, $location, fileReader) {
     $scope.title = "Send Quotation";
     $scope.quotation = {};
     $scope.po = '';
@@ -24,29 +24,34 @@ app.controller('quotatationController', function($scope, $http, $location) {
         id: "",
         image: "",
         price: "",
+        footage: "",
         type: "Image"
     }];
     $scope.quotation_type_var = 'custom';
     $scope.addProduct = function() {
-        var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", type:"Image" };
+        var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image" };
         $scope.quotation.product.push(newProduct);
     }
-
+     
+    $scope.$on("fileProgress", function(e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+      });
+      
     $scope.removeProduct = function(product) {
         var index = $scope.quotation.product.indexOf(product);
         $scope.quotation.product.splice(index, 1);
     }
     $scope.prices = [];
     $scope.getproduct = function(product) {  
-        if(product.name != ''){
+    if(product.name != ''){
         $('#loading').show();
             var index = $scope.quotation.product.indexOf(product);
             $http({
                 method: 'GET',
-                url: base_url + 'product/' + product.name +'?type='+ product.type,
+                url:  'https://imagefootage.com/backend/api/product/' + product.name +'?type='+ product.type,
             }).then(function(response) {
-
-                if (response.status == '200' && response.statusText == 'OK') {
+                console.log(response);
+                if (response.status == '200') {
                     $('#loading').hide();
                     if(product.type == 'Image'){
                             $scope.quotation.product[index].name = response.data[0].product_code;
@@ -59,7 +64,13 @@ app.controller('quotatationController', function($scope, $http, $location) {
                             $scope.quotation.product[index].image = response.data[0].thumbnail_image;
                             $scope.prices[index] = response.data[0];
                     } else {
-                        
+                        $scope.quotation.product[index].name = response.data[0].clip_data.id;
+                        $scope.quotation.product[index].id = response.data[0].clip_data.n;
+                        $scope.quotation.product[index].image = "https://p5iconsp.s3-accelerate.amazonaws.com/"+response.data[2];
+                        $scope.quotation.product[index].footage = "https://p5resellerp.s3-accelerate.amazonaws.com/"+response.data[1];
+                        $scope.prices[index] = response.data[0].clip_data.versions;
+                        console.log($scope.prices[index]);
+                        //$scope.quotation.product[index] = response.data[0];
                     }
                 }
             }, function(error) {
@@ -72,41 +83,35 @@ app.controller('quotatationController', function($scope, $http, $location) {
         console.log(product);
         var index = $scope.quotation.product.indexOf(product);
         console.log($scope.prices);
-        if (product.pro_type == "royalty_free") {
-            var amount = 0;
-            if (product.pro_size == "Small") {
-                //amount = $scope.prices[index].small_size;
-                amount = small_price;
-            } else if (product.pro_size == "Medium") {
-                //amount = $scope.prices[index].medium_size;
-                amount = medium_price;
-            } else if (product.pro_size == "Large") {
-                //amount = $scope.prices[index].large_size;
-                amount = large_price;
-            } else if (product.pro_size == "X-Large") {
-                //amount = $scope.prices[index].x_large_size;
-                amount = extra_large_price;
-            } else {
-                amount = 1;
-            }
+        if(product.type == 'Image') {
+            if (product.pro_type == "royalty_free") {
+                var amount = 0;
+                if (product.pro_size == "Small") {
+                    //amount = $scope.prices[index].small_size;
+                    amount = small_price;
+                } else if (product.pro_size == "Medium") {
+                    //amount = $scope.prices[index].medium_size;
+                    amount = medium_price;
+                } else if (product.pro_size == "Large") {
+                    //amount = $scope.prices[index].large_size;
+                    amount = large_price;
+                } else if (product.pro_size == "X-Large") {
+                    //amount = $scope.prices[index].x_large_size;
+                    amount = extra_large_price;
+                } else {
+                    amount = 1;
+                }
+            } 
         } else {
-
-            // var priceList = vm.formData.priceList;
-            // if(value=="Small"){
-            //     amount=priceList[0].small;
-            // }else if(value=="Medium"){
-            //     amount=priceList[1].medium;
-            // }else if(value=="Large"){
-            //     amount=priceList[2].large;
-            // }else if(value=="X-Large"){
-            //     amount=priceList[3].xlarge;
-            // }else{
-            //     amount=0;
-            // }
+            for(let i=0; i< $scope.prices[index].length; i++) {
+                if(product.pro_size == $scope.prices[index][i].size){
+                    amount = $scope.prices[index][i].pr;
+                }
+            } 
+            console.log(amount);
         }
         $scope.quotation.product[index].price = amount;
-
-        //$scope.getTheTotal(vm.formData.names,index);
+        $scope.getTheTotal();
     }
     /* Subscription and Download  */
     $scope.tax = 0;
@@ -118,6 +123,16 @@ app.controller('quotatationController', function($scope, $http, $location) {
     $scope.quotation_type_set = function(type) {
         $scope.search = false;
         $scope.quotation_type_var = type;        
+    }
+    $scope.getTheTotal = function() {
+        var subtotal = $scope.quotation.product;
+        var subtotalvalue = 0;
+        var total = 0;
+        for (var j = 0; j < subtotal.length; j++) {
+            subtotalvalue += Number(subtotal[j].price);
+        }  
+        subtotal = Number(subtotalvalue);
+        $scope.total = subtotal;
     }
     $scope.checkThetax = function(tax_percent, type) {
 
@@ -197,9 +212,12 @@ app.controller('quotatationController', function($scope, $http, $location) {
         $scope.selected_plan = selectedPlanData;
         if(type == 'download'){
             $scope.downloadprice = selectedPlanData["package_price"];
+            $scope.total_download = selectedPlanData["package_price"];
         }else {
             $scope.subscriptionprice = selectedPlanData["package_price"];
+            $scope.subsc_total =  selectedPlanData["package_price"];
         }
+        
        
     }
     
@@ -420,12 +438,8 @@ app.controller('quotatationController', function($scope, $http, $location) {
             "expiry_date": $scope.expiry_time,
             "tax": $scope.tax,
             "total": $scope.total,
-            "SGST": $scope.SGST,
-            "CGST": $scope.CGST,
-            "IGST": $scope.IGST,
-            "IGSTT": $scope.IGSTT,
-            "email": $scope.email,
-            "image1": $('#file1')[0].files[0]
+            "GST": $scope.SGST,
+            "email": $('#email_id').val()
         }
         console.log(sendData);
         console.log($scope.quotation);
@@ -602,7 +616,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         var index = $scope.quotation.product.indexOf(product);
         $http({
             method: 'GET',
-            url: base_url + 'product/' + product.name,
+            url: + 'product/' + product.name,
         }).then(function(response) {
 
             if (response.status == '200' && response.statusText == 'OK') {
@@ -741,7 +755,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
             "expiry_date": $scope.expiry_time,
             "tax": $scope.tax,
             "total": $scope.total,
-            "SGST": $scope.SGST,
+            "GST": $scope.GST,
             "CGST": $scope.CGST,
             "IGST": $scope.IGST,
             "IGSTT": $scope.IGSTT,
@@ -792,24 +806,28 @@ app.controller('editquotatationController', function($scope, $http, $location) {
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};
     $scope.payment_method = '';
-    $scope.create_invoice = function(quotation_id, user_id) {
-        if (confirm('Do you want to send invoice for this quotation ?')) {
-            $('#loading').show();
-            $http({
-                method: 'POST',
-                url: base_url + 'create_invoice',
-                data: { quotation_id: quotation_id, user_id: user_id }
-            }).then(function(result) {
-                $('#loading').hide();
-                if (result.data.resp.statuscode == '1') {
-                    alert(result.data.resp.statusdesc);
-                } else {
-                    alert(result.data.resp.statusdesc);
-                }
-            }, function(error) {
-                $('#loading').hide();
-            });
-        }
+    $scope.create_invoice = function(quotation, user_id) {
+        console.log(quotation);
+        $scope.quotationObjCus = quotation;
+        $scope.quotation_user_cus = user_id;
+        console.log($scope.quotationObjCus);
+        // if (confirm('Do you want to send invoice for this quotation ?')) {
+        //     $('#loading').show();
+        //     $http({
+        //         method: 'POST',
+        //         url: base_url + 'create_invoice',
+        //         data: { quotation_id: quotation_id, user_id: user_id }
+        //     }).then(function(result) {
+        //         $('#loading').hide();
+        //         if (result.data.resp.statuscode == '1') {
+        //             alert(result.data.resp.statusdesc);
+        //         } else {
+        //             alert(result.data.resp.statusdesc);
+        //         }
+        //     }, function(error) {
+        //         $('#loading').hide();
+        //     });
+        // }
     }
 
     $scope.create_invoice_subscription = function(quotation, user_id) {
@@ -870,6 +888,77 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
 
     }
+});
+
+app.directive("ngFileSelect", function(fileReader, $timeout) {
+    return {
+      scope: {
+        ngModel: '='
+      },
+      link: function($scope, el) {
+        function getFile(file) {
+          fileReader.readAsDataUrl(file, $scope)
+            .then(function(result) {
+              $timeout(function() {
+                $scope.ngModel = result;
+              });
+            });
+        }
+
+        el.bind("change", function(e) {
+          var file = (e.srcElement || e.target).files[0];
+          getFile(file);
+        });
+      }
+    };
+  });
+
+app.factory("fileReader", function($q, $log) {
+    var onLoad = function(reader, deferred, scope) {
+        return function() {
+            scope.$apply(function() {
+            deferred.resolve(reader.result);
+            });
+        };
+    };
+
+    var onError = function(reader, deferred, scope) {
+        return function() {
+        scope.$apply(function() {
+            deferred.reject(reader.result);
+        });
+        };
+    };
+
+    var onProgress = function(reader, scope) {
+        return function(event) {
+        scope.$broadcast("fileProgress", {
+            total: event.total,
+            loaded: event.loaded
+        });
+        };
+    };
+
+    var getReader = function(deferred, scope) {
+        var reader = new FileReader();
+        reader.onload = onLoad(reader, deferred, scope);
+        reader.onerror = onError(reader, deferred, scope);
+        reader.onprogress = onProgress(reader, scope);
+        return reader;
+    };
+
+    var readAsDataURL = function(file, scope) {
+        var deferred = $q.defer();
+    
+        var reader = getReader(deferred, scope);
+        reader.readAsDataURL(file);
+    
+        return deferred.promise;
+    };
+
+    return {
+        readAsDataUrl: readAsDataURL
+    };
 });
 
 app.controller('ordersController', function($scope, $http, $location) {
