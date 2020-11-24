@@ -44,11 +44,16 @@
 <!-- <th>Action</th> -->
 </thead>
  <tbody>
+
 @foreach($orderlists as $orders)
 
  <!-- <tr ng-if="orderslist" ng-repeat="orders in orderslist"> -->
  <tr>
-     <td><a href="{{ url('admin/users/invoices/'.$orders['user']['id'])}}" target="_blank">{{$orders['user']['user_name']}}</a></td>
+     <td>
+        @if(isset($orders['user']['id']))
+            <a href="{{ url('admin/users/invoices/'.$orders['user']['id'])}}" target="_blank">{{$orders['user']['user_name']}}</a>
+        @endif
+    </td>
      <td><a target="_blank" href="{{$orders['invoice']}}" ng-show="{{$orders['invoice']}}">Download</a></td>
      <td>{{$orders['order_total'] - $orders['tax'] }}</td>
      <td>{{$orders['tax']}}</td>
@@ -141,11 +146,8 @@
 
   @section('scripts')
   <script>
-   $(function () {
-  
+   $(function () { 
      $('#example2').DataTable();
-  
-  
    });
 
 </script>

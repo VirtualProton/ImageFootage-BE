@@ -37,7 +37,9 @@ class ProductOrdersController extends Controller
           ->where('bill_state', $user->state)
           ->orderBy('id','desc')
           ->get()->toArray();
-   		}
+		   }
+		   //echo "<pre>";
+		   //print_r($all_orders_list); die;
 	   return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
        // $this->User = new User;
        // $userlist = $this->User->getUserData();

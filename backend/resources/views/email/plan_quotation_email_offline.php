@@ -77,6 +77,8 @@
                    <p>Address:&nbsp;<strong> <?php echo $orders['address'] ?></strong></p>
                    <p><strong><?php echo $orders['cityname'] ?>&nbsp;&nbsp;  <?php echo $orders['statename'] ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?></strong></p>
                    <p>Phone:&nbsp;<strong><?php echo $orders['mobile'] ?></strong>&nbsp;</p>
+                   <p>GST:&nbsp;<strong><?php echo $orders['gst'] ?></strong>&nbsp;</p>
+                   <p>PAN:&nbsp;<strong><?php echo $orders['pan'] ?></strong>&nbsp;</p>
                  </td>
 
                  <td width="50%">

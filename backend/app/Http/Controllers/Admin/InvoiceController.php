@@ -104,8 +104,6 @@ class InvoiceController extends Controller
     {
         if (!empty($invoice_id)) {
             $data = $this->Common->getData($invoice_id, $user_id);
-            //echo "<pre>";
-            //print_r($data); die;
             return view('admin.invoice.invoice', compact('user_id'));
         }
     }
@@ -265,7 +263,7 @@ class InvoiceController extends Controller
           ->get()->toArray();
         }
 
-        // echo "<pre>";print_r($all_orders_list); die;
+         //echo "<pre>";print_r($all_orders_list); die;
         return view('admin.invoice.orderlist', ['orderlists' => $all_orders_list]);
     }
 }

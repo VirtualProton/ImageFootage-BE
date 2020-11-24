@@ -89,10 +89,15 @@
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-                                    <span ng-show="!product.thumbnail_image"> <input multiple class="form-control" type="file" name="file<%$index+1%>" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;"></span>
+                                    <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
-                                    <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
+                                    <span ng-show="product.image">
+                                    <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
+                                       <source type="video/mp4" src="<%product.footage%>"> 
+                                       Your browser does not support the video tag. 
+                                    </video>
+                                 </span>
                                  </div>
                                  <div class="form-group">
                                     <label for="sub_total"><%product.type%> Size</label>
@@ -106,8 +111,7 @@
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
-                                       <option value="HD">HD</option>
-                                       <option value="4k">4K</option>
+                                       <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
                                     </select>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
@@ -122,7 +126,7 @@
                                     <div>
                                        <div class="form-group">
                                           <label for="sub_total">Sub Total</label>
-                                          <input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);">
+                                          <input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
                                        </div>
                                     </div>
                                  </div>

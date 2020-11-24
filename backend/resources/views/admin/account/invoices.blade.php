@@ -233,7 +233,7 @@
                                 @if($quotations->status != 3)
                                 <a href="{{ url('admin/edit_quotation/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                 @if($quotations->invoice_type == 3)
-                                <a href="javascript:void(0);" ng-click="create_invoice({{$quotations->id}},{{$user_id}})" title="Convert to Invoice"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                 @else
                                 <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                 @endif
@@ -332,56 +332,105 @@
               </div>
             </div>
           </div>
-          <div class="modal" id="modal-default" style="padding-right: 16px;">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Create Invoice</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <div class="col-sm-6">
-                    <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
-                    <p><strong>User Name :</strong> {{$user->user_name}}</p>
-                    <p><strong>Package :</strong> <%quotationObj.package_description%></p>
-                    <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                    <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p>
-                    <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
-                    <p><strong>Discount :</strong> </p>
-                    <p><strong>Tax :</strong> <%quotationObj.tax%></p>
-                    <p><strong>Total :</strong> <%quotationObj.total%></p>
-                  </div>
-                  <div class="col-sm-6">
-                    <p><strong>Method : </strong>
-                      <select class="form-group" name="payment_method" ng-model="payment_method">
-                        <option value="">Select Method</option>
-                        <option value="chq">Cheque</option>
-                        <option value="online">Online</option>
-                      </select>
-                    </p>
-                    <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
-                    <p><strong>Street :</strong> {{$user->address}}</p>
-                    <p><strong>City :</strong> {{$city_name}}</p>
-                    <p><strong>State :</strong> {{$state_name}}</p>
-                    <p><strong>Zip Code :</strong> {{$user->postal_code}}</p>
-                    <p><strong>Country :</strong> {{$country_name}}</p>
-                    <p><strong>Agent :</strong> {{Auth::guard('admins')->user()->name}}</p>
-                    <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
-                  </div>
+          <div class="modal" id="modal-default" style="padding-right: 16px;"> 
+                  <%quotationObj %>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">Create Invoice</h4>
                 </div>
-                <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
+                      <p><strong>User Name :</strong> {{$user->user_name}}</p>
+                      <p><strong>Package :</strong> <%quotationObj.package_description%></p>
+                      <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
+                      <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p>
+                      <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
+                      <p><strong>Discount :</strong> </p>
+                      <p><strong>Tax :</strong> <%quotationObj.tax%></p>
+                      <p><strong>Total :</strong> <%quotationObj.total%></p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p><strong>Method : </strong>
+                        <select class="form-group" name="payment_method" ng-model="payment_method">
+                          <option value="">Select Method</option>
+                          <option value="chq">Cheque</option>
+                          <option value="online">Online</option>
+                        </select>
+                      </p>
+                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
+                      <p><strong>Street :</strong> {{$user->address}}</p>
+                      <p><strong>City :</strong> {{$city_name}}</p>
+                      <p><strong>State :</strong> {{$state_name}}</p>
+                      <p><strong>Zip Code :</strong> {{$user->postal_code}}</p>
+                      <p><strong>Country :</strong> {{$country_name}}</p>
+                      <p><strong>Agent :</strong> {{Auth::guard('admins')->user()->name}}</p>
+                      <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                    </div>
+                  </div>
+                  <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
-              </div>
+              <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
           </div>
-          <!-- /.modal-dialog -->
-        </div>
+          <div class="modal" id="modal-default_custom" style="padding-right: 16px;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">Create Invoice</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
+                      <p><strong>User Name :</strong> {{$user->user_name}}</p>
+                      <p><strong>Package :</strong> <%quotationObj.package_description%></p>
+                      <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
+                      <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p>
+                      <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
+                      <p><strong>Discount :</strong> </p>
+                      <p><strong>Tax :</strong> <%quotationObj.tax%></p>
+                      <p><strong>Total :</strong> <%quotationObj.total%></p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p><strong>Method : </strong>
+                        <select class="form-group" name="payment_method" ng-model="payment_method">
+                          <option value="">Select Method</option>
+                          <option value="chq">Cheque</option>
+                          <option value="online">Online</option>
+                        </select>
+                      </p>
+                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
+                      <p><strong>Street :</strong> {{$user->address}}</p>
+                      <p><strong>City :</strong> {{$city_name}}</p>
+                      <p><strong>State :</strong> {{$state_name}}</p>
+                      <p><strong>Zip Code :</strong> {{$user->postal_code}}</p>
+                      <p><strong>Country :</strong> {{$country_name}}</p>
+                      <p><strong>Agent :</strong> {{Auth::guard('admins')->user()->name}}</p>
+                      <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                    </div>
+                  </div>
+                  <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+          </div>
         </section>
       </div>
     @endsection
