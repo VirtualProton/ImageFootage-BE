@@ -916,7 +916,7 @@ public function save_download_proforma($data){
             throw new \Exception('did not match data URI with image data');
         }
         
-        $fullname = time().'.'.$type;
+        $fullname = rand().time().'.'.$type;
         
         if(file_put_contents(public_path('image/').$fullname, $data)){
             $s3Client = new S3Client([
