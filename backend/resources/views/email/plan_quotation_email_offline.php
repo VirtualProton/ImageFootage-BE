@@ -122,22 +122,29 @@
                </tr>
                <tr>
                     <td colspan="2">
-                    <p><strong>Amount (INR) :- <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong>&nbsp;</p>
+                    <p><strong>Amount (INR) :- <?php echo number_format($orders['package_price'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                @if(!empty($orders['tax']))
+                <tr>
+                    <td colspan="2">
+                    <p><strong>GST extra&nbsp; <?php echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    </td>
+                </tr>
+                @endif  
+                <tr>
+                    <td colspan="2">
+                    <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                    <p><strong>GST extra&nbsp; <?php //echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    <p><strong>In words Total Amount :- Rupees <?php echo $amount_in_words ?> ONLY </strong>&nbsp;</p>
                     </td>
-                </tr>    
-                <!-- <tr>
-                    <td colspan="2">
-                    <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($orders['total'], 2) ?></strong>&nbsp;</p>
-                    </td>
-                </tr> -->
+                </tr>
                 <tr>
                     <td colspan="2">
-                    <p><strong>In words Amount :- Rupees <?php echo $package_price_in_words ?> ONLY </strong>&nbsp;</p>
+                    <p><strong>In words Package Amount :- Rupees <?php echo $package_price_in_words ?> ONLY </strong>&nbsp;</p>
                     </td>
                 </tr>
                <tr>

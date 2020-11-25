@@ -108,9 +108,10 @@ class InvoiceController extends Controller
         }
     }
 
-    public function edit_quotation($quotation_id)
+    public function edit_quotation($user_id,$quotation_id)
     {
-        return view('admin.invoice.edit_quotation');
+        $userDetail = User::find($user_id);
+        return view('admin.invoice.edit_quotation', compact('userDetail'));
     }
 
     public function edit_quotation_data(Request $request)

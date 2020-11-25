@@ -312,9 +312,6 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         } else if (!$scope.downloadprice) {
             alert("Please enter Subtotal"); 
             return false;
-        } else if (!$scope.GSTD) {
-            alert("Please check GST"); 
-            return false;
         } else {
 
         $('#loading').show();
@@ -367,9 +364,6 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             return false;  
         } else if (!$scope.subscriptionprice) {
             alert("Please enter Subtotal"); 
-            return false;
-        } else if (!$scope.GSTS) {
-            alert("Please check GST"); 
             return false;
         } else {
         $('#loading').show();
@@ -590,7 +584,9 @@ app.controller('editquotatationController', function($scope, $http, $location) {
                 pro_type: value.product_type,
                 id: value.id,
                 image: value.product_image,
-                price: value.subtotal
+                price: value.subtotal,
+                footage: "",
+                type: value.type
             };
             $scope.quotation.product.push(obj);
         });
