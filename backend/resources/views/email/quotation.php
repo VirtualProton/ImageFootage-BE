@@ -93,7 +93,7 @@
                    <p>Place:&nbsp;<strong><?php echo $quotation[0]['statename']?> &ndash; <?php echo $quotation[0]['countryname'] ?></strong>&nbsp;</p>
                  </td>
                </tr>
-
+               <tr><td colspan="2"><br/><br/></td></tr>
                <tr>
                   <td colspan="2">
                      <table width="100%" class="bordered width-100pc">
@@ -119,11 +119,13 @@
                     <p><strong>Amount (INR) :- <?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong>&nbsp;</p>
                     </td>
                 </tr>
+                @if(!empty($quotation[0]['tax']))
                 <tr>
                     <td colspan="2">
-                    <p><strong>GST extra&nbsp; <?php //echo number_format($orders['tax'], 2) ?></strong>&nbsp;</p>
+                    <p><strong>GST extra&nbsp; <?php echo number_format($quotation[0]['tax'], 2) ?></strong>&nbsp;</p>
                     </td>
-                </tr>    
+                </tr>
+                @endif     
                 <!-- <tr>
                     <td colspan="2">
                     <p><strong>Total Invoice Amount (INR) :- <?php echo number_format($quotation[0]['total'], 2) ?></strong>&nbsp;</p>

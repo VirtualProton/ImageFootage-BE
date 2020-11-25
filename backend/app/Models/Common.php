@@ -145,7 +145,7 @@ class Common extends Model
             //echo "<pre>"; print_r($data['products']); die; 
             foreach ($data['products']['product'] as $eachproduct) {  
                 if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) { 
-                       $image = $eachproduct['product_image'];
+                       $image = $eachproduct['image'];
                 } else{
                        $image = $this->imagesaver($eachproduct['image']);    
                 }
@@ -154,6 +154,7 @@ class Common extends Model
                     'user_id' => $data['uid'],
                     'product_id' => $eachproduct['name'],
                     'product_type' => $eachproduct['pro_type'],
+                    'type' => $eachproduct['type'],
                     'product_size' => $eachproduct['pro_size'],
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
@@ -175,9 +176,9 @@ class Common extends Model
             $transactionRequest->setLogin($this->login);
             $transactionRequest->setPassword($this->password);
             $transactionRequest->setProductId($this->atomprodId);
-            $transactionRequest->setAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
+            $transactionRequest->setAmount($dataForEmail[0]['total']);
             $transactionRequest->setTransactionCurrency("INR");
-            $transactionRequest->setTransactionAmount($dataForEmail[0]['total']+$dataForEmail[0]['tax']);
+            $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
             $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
             $transactionRequest->setClientCode($this->clientcode);
@@ -227,12 +228,12 @@ class Common extends Model
                     } catch (MultipartUploadException $e) {
                         echo $e->getMessage() . "\n";
                     }
-                    $pdf_path = $fileupresult['ObjectURL'];
+                $pdf_path = $fileupresult['ObjectURL']; 
                 if(!empty($pdf_path)){
                     DB::table('imagefootage_performa_invoices')
                         ->where('id','=',$id)
                         ->update(['quotation_url'=>$pdf_path]);
-                    //unlink(storage_path('app/public/pdf'). '/' . $fileName);
+                    unlink(storage_path('app/public/pdf'). '/' . $fileName);
                 }
             }catch(JWTException $exception){
                 $this->serverstatuscode = "0";
@@ -547,15 +548,15 @@ class Common extends Model
         
         $dataForEmail = json_decode(json_encode($dataForEmail), true); 
         
-        $transactionRequest = new TransactionRequest();
+            $transactionRequest = new TransactionRequest();
             //Setting all values here
             $transactionRequest->setMode($this->mode);
             $transactionRequest->setLogin($this->login);
             $transactionRequest->setPassword($this->password);
             $transactionRequest->setProductId($this->atomprodId);
-            $transactionRequest->setAmount($dataForEmail[0]['package_price']);
+            $transactionRequest->setAmount($dataForEmail[0]['total']);
             $transactionRequest->setTransactionCurrency("INR");
-            $transactionRequest->setTransactionAmount($dataForEmail[0]['package_price']);
+            $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
     
             $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
             $transactionRequest->setClientCode($this->clientcode);
@@ -570,7 +571,7 @@ class Common extends Model
             $transactionRequest->setCustomerAccount($data['uid']);
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
-        $dataForEmail[0]['payment_url'] = $url;
+            $dataForEmail[0]['payment_url'] = $url;
 
         // print_r($transactionRequest); die;
                        
@@ -697,15 +698,41 @@ public function save_download_proforma($data){
 
                     $dataForEmail  = $this->getSubData($id,$data['uid']); 
                    
-                    $dataForEmail = json_decode(json_encode($dataForEmail), true);  
+                    $dataForEmail = json_decode(json_encode($dataForEmail), true);
+                    $transactionRequest = new TransactionRequest();
+                    //Setting all values here
+                    $transactionRequest->setMode($this->mode);
+                    $transactionRequest->setLogin($this->login);
+                    $transactionRequest->setPassword($this->password);
+                    $transactionRequest->setProductId($this->atomprodId);
+                    $transactionRequest->setAmount($dataForEmail[0]['total']);
+                    $transactionRequest->setTransactionCurrency("INR");
+                    $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+            
+                    $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
+                    $transactionRequest->setClientCode($this->clientcode);
+                    $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
+                    $datenow = date("d/m/Y h:m:s",strtotime($dataForEmail[0]['invicecreted']));
+                    $transactionDate = str_replace(" ", "%20", $datenow);
+                    $transactionRequest->setTransactionDate($transactionDate);
+                    $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
+                    $transactionRequest->setCustomerEmailId($dataForEmail[0]['email']);
+                    $transactionRequest->setCustomerMobile($dataForEmail[0]['mobile']);
+                    $transactionRequest->setCustomerBillingAddress("India");
+                    $transactionRequest->setCustomerAccount($data['uid']);
+                    $transactionRequest->setReqHashKey($this->atomRequestKey);
+                    $url = $transactionRequest->getPGUrl();
+                    $dataForEmail[0]['payment_url'] = $url;  
 
                     $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
+                    $package_price_in_words   =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
                          
                     $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
                     $data["email"] =   $data['email'];
                     $data["invoice"] = $dataForEmail[0]['invoice_name'];
+                    
 
-                    $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words'=> $amount_in_words]));
+                    $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words'=> $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
                     $fileName = $data["invoice"]."download_quotation.pdf";
                     $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
                     try{
