@@ -21,14 +21,9 @@ use App\Models\Comment;
 use App\Models\Usercart;
 use App\Models\Orders;
 use App\Models\UserPackage;
+use App\Models\Invoice;
 use Auth;
 use Mail;
-
-
-
-
-
-
 
 class UserController extends Controller
 {
@@ -149,7 +144,7 @@ class UserController extends Controller
         $country_name = $country['name'];
         $user_plans = $this->User->userPlans($user_id);
 
-        $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')
+        $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country', 'company')->with('country')
             ->with('state')
             ->with('city')
             ->where('id', $user_id)
@@ -167,7 +162,7 @@ class UserController extends Controller
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
         
-        $account_quotations = DB::table('imagefootage_performa_invoices')
+        $account_quotations = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
@@ -175,7 +170,7 @@ class UserController extends Controller
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '1')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
                     ->simplePaginate('10');
-        $account_invoices = DB::table('imagefootage_performa_invoices')
+        $account_invoices = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
@@ -184,7 +179,7 @@ class UserController extends Controller
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
                     ->simplePaginate('10');
         //echo "<pre>";                    
-        //print_r($account_invoices->toArray()); 
+        //print_r($account_quotations->toArray()); 
         //die;                     
         return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
     }

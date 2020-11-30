@@ -259,7 +259,7 @@ class Common extends Model
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
            $all_datas = DB::table('imagefootage_performa_invoices')
-            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','usr.gst','usr.pan','ct.name as cityname','st.state as statename','cn.name as countryname')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','imagefootage_performa_invoice_items.*','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.description','usr.gst','usr.pan','usr.company','ct.name as cityname','st.state as statename','cn.name as countryname')
             ->join('imagefootage_performa_invoice_items','imagefootage_performa_invoice_items.invoice_id','=','imagefootage_performa_invoices.id')
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
@@ -277,7 +277,7 @@ class Common extends Model
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
            $all_datas = DB::table('imagefootage_performa_invoices')
-            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','usr.gst', 'usr.pan','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.id as package_id','imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','usr.gst', 'usr.pan','usr.company','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.id as package_id','imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
             ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
@@ -387,7 +387,7 @@ class Common extends Model
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
         $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
        
-         if ($payment_method == 'online') {
+         //if ($payment_method == 'online') {
             $transactionRequest = new TransactionRequest();
             //Setting all values here
             $transactionRequest->setMode($this->mode);
@@ -412,7 +412,7 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
-         }
+         //}
             $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
         
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
@@ -792,41 +792,41 @@ public function save_download_proforma($data){
         $negative    = 'negative ';
         $decimal     = ' point ';
         $dictionary  = array(
-            0                   => 'zero',
-            1                   => 'one',
-            2                   => 'two',
-            3                   => 'three',
-            4                   => 'four',
-            5                   => 'five',
-            6                   => 'six',
-            7                   => 'seven',
-            8                   => 'eight',
-            9                   => 'nine',
-            10                  => 'ten',
-            11                  => 'eleven',
-            12                  => 'twelve',
-            13                  => 'thirteen',
-            14                  => 'fourteen',
-            15                  => 'fifteen',
-            16                  => 'sixteen',
-            17                  => 'seventeen',
-            18                  => 'eighteen',
-            19                  => 'nineteen',
-            20                  => 'twenty',
-            30                  => 'thirty',
-            40                  => 'fourty',
-            50                  => 'fifty',
-            60                  => 'sixty',
-            70                  => 'seventy',
-            80                  => 'eighty',
-            90                  => 'ninety',
-            100                 => 'hundred',
-            1000                => 'thousand',
-            1000000             => 'million',
-            1000000000          => 'billion',
-            1000000000000       => 'trillion',
-            1000000000000000    => 'quadrillion',
-            1000000000000000000 => 'quintillion'
+            0                   => 'Zero',
+            1                   => 'One',
+            2                   => 'Two',
+            3                   => 'Three',
+            4                   => 'Four',
+            5                   => 'Five',
+            6                   => 'Six',
+            7                   => 'Seven',
+            8                   => 'Eight',
+            9                   => 'Nine',
+            10                  => 'Ten',
+            11                  => 'Eleven',
+            12                  => 'Twelve',
+            13                  => 'Thirteen',
+            14                  => 'Fourteen',
+            15                  => 'Fifteen',
+            16                  => 'Sixteen',
+            17                  => 'Seventeen',
+            18                  => 'Eighteen',
+            19                  => 'Nineteen',
+            20                  => 'Twenty',
+            30                  => 'Thirty',
+            40                  => 'Fourty',
+            50                  => 'Fifty',
+            60                  => 'Sixty',
+            70                  => 'Seventy',
+            80                  => 'Eighty',
+            90                  => 'Nnety',
+            100                 => 'Hundred',
+            1000                => 'Thousand',
+            1000000             => 'Million',
+            1000000000          => 'Billion',
+            1000000000000       => 'Trillion',
+            1000000000000000    => 'Quadrillion',
+            1000000000000000000 => 'Quintillion'
         );
 
         if (!is_numeric($number)) {

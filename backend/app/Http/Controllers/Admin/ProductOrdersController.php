@@ -13,54 +13,48 @@ class ProductOrdersController extends Controller
 	{
         $this->middleware('admin')->except('login','logout');
 	}
-   public function index(){
-
+   	public function index(){
    		$user = Auth::guard('admins')->user();
-   		// echo "<pre>"; print_r($user->state); die;
-	   $all_orders_list= Orders::with(['items'=>function($query){
-                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-           }])->with('user')
-          ->with('country')
-          ->with('state')
-          ->with('city')
-          ->orderBy('id','desc')
-          ->get()->toArray();
-          // echo "<pre>";print_r($all_orders_list); die;
-   		if($user->department['department'] == 'Sales'){
+	    $all_orders_list = Orders::with(['items'=>function($query){
+                   			$query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+						}])->with('user')
+						->with('country')
+						->with('state')
+						->with('city')
+						->orderBy('id','desc')
+						->get()
+						->toArray();
 
-   			$all_orders_list= Orders::with(['items'=>function($query){
-                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-           }])->with('user')
-          ->with('country')
-          ->with('state')
-          ->with('city')
-          ->where('bill_state', $user->state)
-          ->orderBy('id','desc')
-          ->get()->toArray();
-		   }
-		   //echo "<pre>";
-		   //print_r($all_orders_list); die;
-	   return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
-       // $this->User = new User;
-       // $userlist = $this->User->getUserData();
-       // return view('admin.orders.index',compact('userlist'));
-       //return view('admin.orders.orderlist');
-  }
+   		if($user->department['department'] == 'Sales'){
+				$all_orders_list = Orders::with(['items'=>function($query){
+						$query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+					}])->with('user')
+					->with('country')
+					->with('state')
+					->with('city')
+					->where('bill_state', $user->state)
+					->orderBy('id','desc')
+					->get()->toArray();
+		    }
+		  
+	    return view('admin.orders.orderlist', ['orderlists' => $all_orders_list]);
+       
+  	}
     public function userOrderList($id){
          return view('admin.orders.orderlist',compact('id'));
     }
 
   public function userListapi($id){
-      $all_orders_list= Orders::with(['items'=>function($query){
-          $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-      }])->with('user')
-          ->with('country')
-          ->with('state')
-          ->with('city')
-          ->where('user_id',$id)
-          ->orderBy('id','desc')
-          ->get()->toArray();
-      return response()->json($all_orders_list);
+      	$all_orders_list= Orders::with(['items'=>function($query){
+          					$query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
+      					}])->with('user')
+						->with('country')
+						->with('state')
+						->with('city')
+						->where('user_id',$id)
+						->orderBy('id','desc')
+						->get()->toArray();
+     	 return response()->json($all_orders_list);
   }
   public function addPackage(Request $request){
 	   $this->validate($request, [
