@@ -862,6 +862,36 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
     }
 
+    $scope.send_invoice_cus = function(quotation_id, user_id) {
+        if(!$scope.poCustom) {
+            alert("Please add job/po ref no.");
+        } else if(!$scope.poDateCustom){
+            alert("Please add Expiry Date.");
+        } else if(!$scope.payment_method){
+            alert("Please select payment method.");
+        } else {
+        if (confirm('Do you want to send invoice for this quotation ?')) {
+            $('#loading').show();
+                $http({
+                    method: 'POST',
+                    url: base_url + 'create_invoice_subcription',
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method}
+                }).then(function(result) {
+                    $('#loading').hide();
+                    if (result.data.resp.statuscode == '1') {
+                        alert(result.data.resp.statusdesc);
+                    } else {
+                        alert(result.data.resp.statusdesc);
+                    }
+                    window.location.reload();
+                }, function(error) {
+                    $('#loading').hide();
+                });
+            }
+        }
+    }
+
+
     $scope.change_status = function(status, quotation_id) {
         if (confirm('Do you want to change the status of invoice/quotation')) {
             console.log(status);
