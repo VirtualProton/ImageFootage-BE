@@ -333,7 +333,6 @@
             </div>
           </div>
           <div class="modal" id="modal-default" style="padding-right: 16px;"> 
-                  <%quotationObj %>
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -393,15 +392,15 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <div class="col-sm-6">
-                      <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
+                    
+                      <p><strong>Trasaction Id :</strong> Q<%quotationObjCus.invoice_name%></p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
-                      <p><strong>Package :</strong> <%quotationObj.package_description%></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                      <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p>
-                      <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
+                      <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p>
+                      <p><strong>Subtotal :</strong> <%quotationObjCus.total - quotationObjCus.tax%></p>
                       <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong> <%quotationObj.tax%></p>
-                      <p><strong>Total :</strong> <%quotationObj.total%></p>
+                      <p><strong>Tax :</strong> <%quotationObjCus.tax%></p>
+                      <p><strong>Total :</strong> <%quotationObjCus.total%></p>
                     </div>
                     <div class="col-sm-6">
                       <p><strong>Method : </strong>
@@ -411,7 +410,7 @@
                           <option value="online">Online</option>
                         </select>
                       </p>
-                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
+                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-group"></p>
                       <p><strong>Street :</strong> {{$user->address}}</p>
                       <p><strong>City :</strong> {{$city_name}}</p>
                       <p><strong>State :</strong> {{$state_name}}</p>
@@ -421,11 +420,25 @@
                       <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                        <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
+                          <tr ng-repeat="item in quotationObjCus.items">
+                            <td style="padding:5px;"><%item.type%></td>
+                            <td style="padding:5px;"><img src="<%item.product_image%>" width="150px" /></td>
+                            <td style="padding:5px;"><%item.product_id%></td>
+                            <td style="padding:5px;"><%item.product_size%></td>
+                            <td style="padding:5px;"><%item.total%></td>
+                          </tr>
+                        </table>
+                    </div>  
+                  </div>
+
                   <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(quotationObjCus.id, quotation_user)">Confirm Submission</button>
                 </div>
               </div>
               <!-- /.modal-content -->
@@ -442,6 +455,7 @@
   //     });
   //  })
   $(function() {
+    
     var url = window.location.href;
     var activeTab = url.substring(url.indexOf("#!#") + 3);
 
@@ -506,6 +520,12 @@
       autoclose: true,
       format: "yyyy/mm/dd"
     }).attr("autocomplete", "off");
+
+    $("#poDateCustom").datepicker({
+      autoclose: true,
+      format: "yyyy/mm/dd"
+    }).attr("autocomplete", "off");
+    
   });
 
   //  $("#resetButton").click(function(e) {
