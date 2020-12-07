@@ -874,8 +874,8 @@ app.controller('invoiceController', function($scope, $http, $location) {
             $('#loading').show();
                 $http({
                     method: 'POST',
-                    url: base_url + 'create_invoice_subcription',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method}
+                    url: base_url + 'create_invoice',
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {

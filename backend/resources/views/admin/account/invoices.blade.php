@@ -438,7 +438,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(quotationObjCus.id, quotation_user)">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(quotationObjCus.id, quotation_user_cus)">Confirm Submission</button>
                 </div>
               </div>
               <!-- /.modal-content -->

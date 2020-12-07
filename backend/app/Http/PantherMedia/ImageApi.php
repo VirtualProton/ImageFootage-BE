@@ -354,6 +354,7 @@ class ImageApi {
                         ]);
                         // Send the request & save response to $resp
                         $response = curl_exec($curl);
+                        //print_r($response); die;
                         curl_close($curl);
                         $contents = json_decode($response, true);
                         return $contents;

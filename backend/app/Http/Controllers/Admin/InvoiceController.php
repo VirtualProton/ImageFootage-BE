@@ -126,7 +126,7 @@ class InvoiceController extends Controller
     {
         $data = $request->all();
         if (!empty($data['quotation_id'])) {
-            return $this->Common->create_invoice($data['quotation_id'], $data['user_id']);
+            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $data['po'], $data['po_date'], $data['payment_method']);
         }
     }
 
