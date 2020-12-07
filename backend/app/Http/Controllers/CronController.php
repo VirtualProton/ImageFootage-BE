@@ -61,18 +61,25 @@ class CronController extends Controller
         $cat=[53,54,55,56,57,14,3,4,5,12,15,40,8,10,17,20,23,24,26,31,52,34,51,42,43];
         DB::enableQueryLog();
         $products = Product::where('product_web','=','2')
+                    ->select('api_product_id')
                     ->whereIn('product_category',$cat)
-                    ->whereRaw("date(updated_at) < '2020-11-04'")
+                    ->whereRaw("date(updated_at) < '2020-12-04'")
                     ->orderBy('id','desc')
                     ->get()
                     ->toArray();
         //dd(DB::getQueryLog());
-        //print_r($products); 
+        //echo "<pre>";
+        //print_r($products); die;
         foreach($products as $perproduct){
             $keyword['search'] = $perproduct['api_product_id'];
             //echo $keyword['search'];
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->get_media_infoNew($keyword['search']);
+            // echo "<pre>";
+            // echo $keyword['search'];
+            // echo "hello";
+            // print_r($pantharmediaData); 
+            // die;
             
             if(isset($pantharmediaData['stat'])){
             if($pantharmediaData['stat'] != 'fail') {

@@ -306,10 +306,12 @@ class Common extends Model
         }
     }
 
-    public function create_invoice($quotation_id,$user_id){
+    public function create_invoice($quotation_id,$user_id, $po, $po_date, $payment_method){
+        ini_set('max_execution_time', 0);
         $dataForEmail = $this->getData($quotation_id,$user_id);
 
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
+        $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $transactionRequest = new TransactionRequest();
         //Setting all values here
         $transactionRequest->setMode($this->mode);
@@ -334,7 +336,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail]));
+        $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $data["subject"] = "Invoice (".$dataForEmail[0]['invoice_name'].")";
