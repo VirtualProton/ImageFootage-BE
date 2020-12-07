@@ -79,7 +79,7 @@
                      <tr>
                            <td width="50%" style="border: none;">
                               <h1 style="font-size: 50px; margin-bottom: -25px">hello </h1>
-                              <h2>THIS IS YOUR ESTIMATE</h2>
+                              <h2>THIS IS YOUR TAX INVOICE</h2>
                            </td>
                            <td width="50%" style="border: none;">
                               <p style="float:right;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png"
@@ -177,9 +177,9 @@
                            <td colspan="4" width="609">
                            <p><strong>Payment Instructions:</strong></p>
                            <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; License Rights are only assigned on payment of this invoice</p>
-                           <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment should be made Immediate from the date of download of the image(s) and can be sent to: <br /> <strong>Image Footage</strong>, # 10-3-89, R5 Chambers, 3rd Floor, Above Mohammed Khan Jewellers Building, Opposite Pillar No. 2, Humayun Nagar, Near Sarojini Devi Eye Hospital, Mehdipatnam &ndash; Hyderabad &ndash; 500028, Telangana.</p>
+                           <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment should be made Immediate from the date of download of the image(s) and can be sent to: <br /> <strong>Conceptual Pictures Worldwide Pvt Ltd</strong>, # 10-3-89, R5 Chambers, 3rd Floor, Above Mohammed Khan Jewellers Building, Opposite Pillar No. 2, Humayun Nagar, Near Sarojini Devi Eye Hospital, Mehdipatnam &ndash; Hyderabad &ndash; 500028, Telangana.</p>
                            <p>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If not paid within credit period allowed, <strong>interest @ 24%</strong> will be charged.</p>
-                           <p>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment can be made in favour of <strong>Image Footage</strong>.<br /> A.&nbsp; Through A/c. Payee Cheques/DD payable at Hyderabad<br /> B. &nbsp;RTGS/NEFT to <strong>A/c. No. 50200000502220</strong>, <strong>HDFC Bank Ltd</strong>, Vijay Nagar Branch, Hyderabad<br /> IFSC Code: <strong>HDFC0001998</strong>.</p>
+                           <p>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment can be made in favour of <strong>Conceptual Pictures Worldwide Pvt Ltd</strong>.<br /> A.&nbsp; Through A/c. Payee Cheques/DD payable at Hyderabad<br /> B. &nbsp;RTGS/NEFT to <strong>A/c. No. 50200000502220</strong>, <strong>HDFC Bank Ltd</strong>, Vijay Nagar Branch, Hyderabad<br /> IFSC Code: <strong>HDFC0001998</strong>.</p>
                            <p>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Goods once sold cannot be replaced or returned.</p>
                            <p>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</p>
                            <p>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All disputes are subject to Hyderabad Jurisdiction.</p>

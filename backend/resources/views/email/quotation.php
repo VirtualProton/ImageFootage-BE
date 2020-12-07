@@ -174,14 +174,13 @@
                               <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; License Rights are only assigned on payment of
                                  this invoice</p>
                               <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment should be made Immediate from the date of
-                                 download of the image(s) and can be sent to: <br /> <strong>Image Footage</strong>, #
+                                 download of the image(s) and can be sent to: <br /> <strong>Conceptual Pictures Worldwide Pvt Ltd</strong>, #
                                  10-3-89, R5 Chambers, 3rd Floor, Above Mohammed Khan Jewellers Building, Opposite Pillar
                                  No. 2, Humayun Nagar, Near Sarojini Devi Eye Hospital, Mehdipatnam &ndash; Hyderabad
                                  &ndash; 500028, Telangana.</p>
                               <p>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If not paid within credit period allowed,
                                  <strong>interest @ 24%</strong> will be charged.</p>
-                              <p>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment can be made in favour of <strong>Image
-                                       Footage</strong>.<br /> A.&nbsp; Through A/c. Payee Cheques/DD payable at
+                              <p>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment can be made in favour of <strong>Conceptual Pictures Worldwide Pvt Ltd</strong>.<br /> A.&nbsp; Through A/c. Payee Cheques/DD payable at
                                  Hyderabad<br /> B. &nbsp;RTGS/NEFT to <strong>A/c. No. 50200000502220</strong>,
                                  <strong>HDFC Bank Ltd</strong>, Vijay Nagar Branch, Hyderabad<br /> IFSC Code:
                                  <strong>HDFC0001998</strong>.</p>
