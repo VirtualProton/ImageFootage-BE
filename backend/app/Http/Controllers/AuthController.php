@@ -35,7 +35,17 @@ class AuthController extends Controller
      */
     public function login()
     {
+        $validator = \Validator::make(request()->all(), [
+            'email' => 'required',
+            'password' => 'required',          
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 200);
+        }
+
         $credentials = request(['email', 'password']);
+        // print_r($credentials); die;
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Email or password does\'t exist'], 401);
         }
@@ -55,6 +65,24 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
+        $validator = \Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'occupation' => 'required',
+            'company' => 'required',
+            'mobile' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'pincode' => 'required',
+           
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 200);
+        }  
+
 		$user = $request->all();
 		$count = User::where('email','=',$request->input('email'))->count();
 		if($count==0) {

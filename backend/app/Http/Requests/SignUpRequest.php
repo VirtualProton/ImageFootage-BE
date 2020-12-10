@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SignUpRequest extends FormRequest
 {
@@ -16,6 +18,12 @@ class SignUpRequest extends FormRequest
         return true;
     }
 
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +33,7 @@ class SignUpRequest extends FormRequest
     {
         return [
             'first_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:imagefootage_users|max:255',
             'password' => 'required'
         ];
     }
