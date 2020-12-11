@@ -253,24 +253,91 @@ class Product extends Model
              ->orderBy('pc.category_order','asc')
              ->inRandomOrder()
 
-            //->limit(Product::HomeLimit)
+            // ->limit(Product::HomeLimit)
             ->get()
             ->groupBy("category_name")
             ->map(function($product) {
               return $product->take(Product::HomeLimit);
+              // return $product->take(4);
            });
 
+            
+        // print_r(count($data)); die;
+        // print_r($data); die;
 
-//
+        // foreach($data as $dat){
+
+        //     foreach($dat as $da){
+        //         echo "<pre>"; print_r($da); die;
+
+        //         $check_url_status = $this->check_urls($da->product_thumbnail);
+        //         if ($check_url_status != '200'){
+        //             $da->product_thumbnail = $da->product_main_image;
+
+                    
+
+        //             }
+
+        //     }
+
+        // }
+        
+        
+
         //$data = (array)$data;
         $home = [];
+            //$n = 0;
+           
         foreach($data as $k=>$perdata){
+                // $n2 = 0;
+                // $n++;
+            
                 // $final_data[$k] = (array)$perdata;
                 // $imgData =getimagesize($perdata->product_thumbnail);
                  //$final_data[$k]['width_img'] = $imgData[0];
                // $final_data[$k] ['height_img']= $imgData[1];
                 //$final_data[$k]['attr'] = $imgData[3];
             foreach($perdata as $j=>$eachproduct) {
+                //$n2++;
+
+
+
+                    // $ch = curl_init();
+                    // curl_setopt($ch, CURLOPT_URL, $eachproduct->product_main_image);
+                    // curl_setopt($ch, CURLOPT_HEADER, 1);
+                    // curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
+                    // $data2 = curl_exec($ch);
+                    // $headers = curl_getinfo($ch);
+                    // curl_close($ch);
+
+                    // if ($headers['http_code'] != '200')
+                    $ldate = date('d');
+                    // echo $ldate;
+                    // die;
+                    if($ldate == "28" || $ldate == "29" ||  $ldate == "30" ||  $ldate == "31" ||  $ldate == "1")
+                    {
+                        $eachproduct->product_thumbnail = $eachproduct->product_main_image; 
+                    }
+
+                    // if($n<=8)
+                    // {
+                    //     if($n2<=4)
+                    //     {
+                    //         //echo $n; echo $k; echo $n2; echo "<br>";
+
+
+                    //         $file_headers = get_headers($eachproduct->product_thumbnail); 
+                    //         if(!$file_headers || $file_headers[0] != '200')
+                    //         {
+                    //             $eachproduct->product_thumbnail = $eachproduct->product_main_image;               
+
+                    //         }
+
+                    //     }
+                        
+                    // }
+                    // echo "<pre>"; print_r($eachproduct); die;
+
                  $data[$k][$j]->api_product_id = encrypt($eachproduct->api_product_id);
                  $data[$k][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
                  if($j<4){
@@ -278,8 +345,8 @@ class Product extends Model
                  }
 
               }
+          
             }
-
          return [$data,$home];
    }
 
@@ -448,5 +515,18 @@ class Product extends Model
                 }
             }
             return $home;
+    }
+
+    public function check_urls($url) {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        $headers = curl_getinfo($ch);
+        curl_close($ch);
+
+        return $headers['http_code'];
     }
 }
