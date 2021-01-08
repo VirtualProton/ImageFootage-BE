@@ -44,6 +44,7 @@
                         <th>Expiry</th>
                         <th>Downloads Per Month</th>
                         <th>Carry Forward</th>
+                        <th>Home View</th>
                         <th>Actions</th>
                     </thead>
 
@@ -74,6 +75,12 @@
       </td>
   <td>{{ $packages['package_permonth_download'] }}</td>
   <td>{{ $packages['package_pcarry_forward'] }}</td>
+  <td>@if($packages['home_view'] =='1')
+        <a href="{{ url('admin/package/home/0/'.$packages['package_id']) }}" title="Hide"><i class="fa fa-home" aria-hidden="true" style="color:#090;"></i> </a>
+         @elseif($packages['home_view'] =='0')
+          <a href="{{ url('admin/package/home/1/'.$packages['package_id']) }}" title="Show"><i class="fa fa-home" aria-hidden="true" style="color:#F00;"></i></a>
+        @endif
+  </td>
   <td>  @if($packages['package_status'] =='Active')
   			<a href="{{ url('admin/package/Inactive/'.$packages['package_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
          @elseif($packages['package_status'] =='Inactive')
@@ -97,6 +104,7 @@
                         <th>Expiry</th>
                         <th>Downloads Per Month</th>
                         <th>Carry Forward</th>
+                        <th>Home View</th>
                         <th>Actions</th>
                     </tfoot>
                 </table>

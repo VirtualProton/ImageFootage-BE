@@ -56,6 +56,16 @@ class PackageController extends Controller
 		  return back()->with('warning','Some problem occured.');
   		}
   }
+
+  public function changePackageHomeView($view,$id){
+  		//echo $view; die;
+	  	$result = Package::where('package_id',$id)->update(array('home_view'=>$view));
+		if($result){
+          return back()->with('success','Package Home View changed successful');
+		}else{
+		  return back()->with('warning','Some problem occured.');
+  		}
+  }
   public function updatePackage($id){
 
   	$user = Auth::guard('admins')->user();
