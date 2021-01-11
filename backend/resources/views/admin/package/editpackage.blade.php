@@ -34,11 +34,22 @@
                   <div class="form-group">
                       <label for="exampleInputEmail1">Package Plan </label>
                       <select class="form-control" name="package_plan" id="package_plan">
-                      <option value="Normal" @if($package[0]['package_plan']=='1') selected="selected" @endif >Download Pack</option>
-                      <option value="Pro" @if($package[0]['package_plan']=='2') selected="selected" @endif >Subscription</option>
+                      <option value="1" @if($package[0]['package_plan']=='1') selected="selected" @endif >Download Pack</option>
+                      <option value="2" @if($package[0]['package_plan']=='2') selected="selected" @endif >Subscription</option>
                       </select>
                        @if ($errors->has('package_plan'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
+                       @endif
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">HD/4k </label>
+                      <select class="form-control" name="pacage_size" id="pacage_size">
+                      <option value="1" @if($package[0]['pacage_size']=='1') selected="selected" @endif >HD</option>
+                      <option value="2" @if($package[0]['pacage_size']=='2') selected="selected" @endif >4K</option>
+                      </select>
+                       @if ($errors->has('pacage_size'))
+                          <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
                        @endif
                     </div>
                    <div class="form-group">
