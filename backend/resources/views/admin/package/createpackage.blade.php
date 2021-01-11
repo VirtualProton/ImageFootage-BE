@@ -40,6 +40,17 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
                        @endif
                     </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">HD/4K </label>
+                      <select class="form-control" name="pacage_size" id="pacage_size">
+                      <option value="1">HD</option>
+                      <option value="2">4K</option>
+                      </select>
+                       @if ($errors->has('package_plan'))
+                          <div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
+                       @endif
+                    </div>
                    <div class="form-group">
                       <label for="exampleInputEmail1">Package Name </label>
                       <input type="text" class="form-control" name="package_name" id="package_name" placeholder="Package name">

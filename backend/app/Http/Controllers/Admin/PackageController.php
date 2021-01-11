@@ -35,6 +35,7 @@ class PackageController extends Controller
 		$package->package_expiry_yearly=$request->package_expiry_year;
 		$package->package_permonth_download =$request->package_month_count;
 		$package->package_pcarry_forward =$request->products_carry_forward;
+		$package->pacage_size =$request->pacage_size;
 		$package->package_addedby=Auth::guard('admins')->user()->id;
 		$result=$package->save();
 		if($result){
@@ -95,6 +96,7 @@ class PackageController extends Controller
 							 'package_permonth_download'=>$request->package_month_count,
 							 'package_pcarry_forward'=>$request->products_carry_forward,
 							 'package_expiry_yearly'=>$request->package_expiry_year,
+							 'pacage_size'=>$request->pacage_size,
 							 'updated_at'=>date('Y-m-d H:i:s')
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);
