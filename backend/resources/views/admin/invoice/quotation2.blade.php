@@ -17,7 +17,7 @@
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
-                                    <label>UID</label>
+                                    <label>UID.</label>
                                     <input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
                                     <input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
                                  </div>
@@ -83,10 +83,17 @@
                                  <div class="form-group">
                                     <label class=""><%product.type%> <%$index+1%> (Product ID)</label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
-                                    <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <input type="text" class="form-control" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
                                     <div>
                                     </div>
                                  </div>
+                                 <!-- <div class="form-group">
+                                    <label class=""><%product.type%> <%$index+1%> (Product ID)</label>
+                                    <input type="hidden" class="form-control" ng-model="product.id">
+                                    <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <div>
+                                    </div>
+                                 </div> -->
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
                                     <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
@@ -210,7 +217,7 @@
                                     </div> */ ?>
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value ="{{$userDetail->email}}">
-                                    <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value ="1">
+                                    <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value ="2">
                                     <label for="expiry">Expiry Period</label><br>
                                     <input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
                                     <input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days

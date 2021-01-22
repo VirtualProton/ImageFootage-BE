@@ -433,7 +433,8 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             "tax": $scope.tax,
             "total": $scope.total,
             "GST": $scope.SGST,
-            "email": $('#email_id').val()
+            "email": $('#email_id').val(),
+            "flag": $('#flag').val()
         }
         console.log(sendData);
         console.log($scope.quotation);

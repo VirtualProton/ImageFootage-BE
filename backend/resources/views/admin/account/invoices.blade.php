@@ -15,7 +15,8 @@
             <div class="col-md-12">
               <div class="box" style="padding-left: 10px;padding-right: 10px;">
                 <div class="box-header">
-                  <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice</strong></a>
+                  <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice</strong></a><br>
+                  <a href="{{ url('admin/quotation2/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice 2</strong></a>
                 </div>
                 @include('admin.partials.message')
                 <div class="tabs">

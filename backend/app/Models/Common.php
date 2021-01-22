@@ -122,6 +122,7 @@ class Common extends Model
         $insert = array(
             'user_id'=> $data['uid'],
             'email_id'=> $data['email'],
+            'flag'=> $data['flag'],
             'invoice_name'=> $this->random_numbers(),
             'created'=>date('Y-m-d'),
             'modified'=>date('Y-m-d H:i:s'),
