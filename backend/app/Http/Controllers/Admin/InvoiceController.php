@@ -94,9 +94,18 @@ class InvoiceController extends Controller
         return view('admin.invoice.quotation', compact('userDetail'), ['packages' => $monthly_image_package_list]);
     }
 
+    public function quotation2($user_id)
+    {
+        $userDetail = User::find($user_id);
+        $monthly_image_package_list = Package::where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
+        return view('admin.invoice.quotation2', compact('userDetail'), ['packages' => $monthly_image_package_list]);
+    }
+
     public function saveInvoice(Request $request)
     {
+        // echo "hi"; die;
         $data = json_decode(request()->getContent(), true);
+        // print_r($data); die;
         return $this->Common->save_proforma($data);
     }
 

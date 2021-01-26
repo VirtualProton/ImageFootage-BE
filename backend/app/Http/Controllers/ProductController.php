@@ -1682,17 +1682,27 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 					->get()
 					->toArray();
 			if(count($crm_products)==0){
-					$imageMedia = new ImageApi();
-					$product_details = $imageMedia->get_media_info($product_id);
-					$prices = $imageMedia->getPriceFromList($product_details);
-					return json_encode($prices);
+					try{
+						$imageMedia = new ImageApi();
+						$product_details = $imageMedia->get_media_info($product_id);
+						$prices = $imageMedia->getPriceFromList($product_details);
+						return json_encode($prices);
+					} catch(\Exception $e){
+						// return json_encode($e->getMessage());
+						return response("image not found", 410);
+					}
 			}else{
 				if($crm_products[0]->product_web=='2'){
-					$imageMedia = new ImageApi();
-					$product_details = $imageMedia->get_media_info($crm_products[0]->api_product_id);
-					//dd($product_details);
-					$prices = $imageMedia->getPriceFromList($product_details,$crm_products[0]->product_code);
-					return json_encode($prices);
+					try{
+						$imageMedia = new ImageApi();
+						$product_details = $imageMedia->get_media_info($crm_products[0]->api_product_id);
+						//dd($product_details);
+						$prices = $imageMedia->getPriceFromList($product_details,$crm_products[0]->product_code);
+						return json_encode($prices);
+					} catch(\Exception $e){
+						// return json_encode($e->getMessage());
+						return response("image not found", 410);
+					}
 					// dd($prices);
 				}else{
 					return json_encode($crm_products);
