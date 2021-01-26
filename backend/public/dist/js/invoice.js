@@ -49,6 +49,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             $http({
                 method: 'GET',
                 url:  'https://imagefootage.com/backend/api/product/' + product.name +'?type='+ product.type,
+                // url:  'http://localhost/imagefootage/backend/api/product/' + product.name +'?type='+ product.type,
             }).then(function(response) {
                 console.log(response);
                 if (response.status == '200') {
@@ -74,6 +75,8 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
                     }
                 }
             }, function(error) {
+                $('#product_1').val('');
+                alert('image not found');
                 $('#loading').hide();
             });
         }    
