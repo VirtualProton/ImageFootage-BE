@@ -12,6 +12,9 @@ use App\Models\Contributor;
 use Illuminate\Support\Facades\Hash;
 use CORS;
 
+use Stevebauman\Location\Facades\Location;
+
+
 class FrontuserController extends Controller {
 
 
@@ -224,5 +227,70 @@ class FrontuserController extends Controller {
 		}else{
 			echo '{"status":"0","data":{},"message":"Some problem occured."}';
 		}
+	}
+
+
+	// Function to get the client IP address
+	public function getIpAddress() {
+	    $ipaddress = '';
+	    if (getenv('HTTP_CLIENT_IP'))
+	        $ipaddress = getenv('HTTP_CLIENT_IP');
+	    else if(getenv('HTTP_X_FORWARDED_FOR'))
+	        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+	    else if(getenv('HTTP_X_FORWARDED'))
+	        $ipaddress = getenv('HTTP_X_FORWARDED');
+	    else if(getenv('HTTP_FORWARDED_FOR'))
+	        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+	    else if(getenv('HTTP_FORWARDED'))
+	       $ipaddress = getenv('HTTP_FORWARDED');
+	    else if(getenv('REMOTE_ADDR'))
+	        $ipaddress = getenv('REMOTE_ADDR');
+	    else
+	        $ipaddress = 'UNKNOWN';
+	    return $this->ip_details($ipaddress);
+	}
+
+
+	public function ip_details() 
+	{
+		$ipaddress = '';
+	    if (getenv('HTTP_CLIENT_IP'))
+	        $ipaddress = getenv('HTTP_CLIENT_IP');
+	    else if(getenv('HTTP_X_FORWARDED_FOR'))
+	        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+	    else if(getenv('HTTP_X_FORWARDED'))
+	        $ipaddress = getenv('HTTP_X_FORWARDED');
+	    else if(getenv('HTTP_FORWARDED_FOR'))
+	        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+	    else if(getenv('HTTP_FORWARDED'))
+	       $ipaddress = getenv('HTTP_FORWARDED');
+	    else if(getenv('REMOTE_ADDR'))
+	        $ipaddress = getenv('REMOTE_ADDR');
+	    else
+	        $ipaddress = 'UNKNOWN';
+
+		// print_r($request->all()); die;
+		// $this->validate($request, [
+		//  	'ip'=>'required'
+  //       ]);
+
+  //       if($validation->fails()){
+  //       	echo "hi"; die;
+
+	 //    } else{
+	    
+	 //    $IPaddress = $request->ip;
+		// print_r($IPaddress); die;
+		// print_r($IPaddress); die;
+
+	    $position = Location::get($ipaddress);
+	    // $position = Location::get('49.204.183.130');
+
+	    // print_r($position); die;
+    	return json_encode($position);
+
+
+		
+			
 	}
 }
