@@ -112,4 +112,8 @@ Route::group([
     Route::post('getuseraddress','UserController@getUserAddress');
     Route::post('update_profile','UserController@update_profile');
     Route::post('callback_download','MediaController@callback_download');
+
+    Route::get('getIpAddress','FrontuserController@getIpAddress');
+    Route::get('getLocationDetails','FrontuserController@ip_details');
+
 });

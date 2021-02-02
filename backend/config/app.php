@@ -183,6 +183,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
 		Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class,
 
     ],
 
@@ -245,6 +246,7 @@ return [
 		'Image' => Intervention\Image\Facades\Image::class,
         'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
         'Helper' => App\Helpers\Helper::class,
+        'Location' => Stevebauman\Location\Facades\Location::class,
     ],
 
 ];

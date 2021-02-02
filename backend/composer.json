@@ -22,6 +22,7 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "razorpay/razorpay": "2.*",
         "riazxrazor/payumoney": "^1.0",
+        "stevebauman/location": "^6.0",
         "tymon/jwt-auth": "dev-develop",
         "unisharp/laravel-ckeditor": "^4.7"
     },
