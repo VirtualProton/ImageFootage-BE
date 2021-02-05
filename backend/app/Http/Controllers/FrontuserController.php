@@ -293,4 +293,34 @@ class FrontuserController extends Controller {
 		
 			
 	}
+
+
+	public function getCurrencies()
+	{
+		$api_url_usd = 'https://api.exchangeratesapi.io/latest?base=USD';
+		// $api_url = 'https://api.exchangeratesapi.io/latest?base=USD';
+
+		// Read JSON file
+		$json_data = file_get_contents($api_url_usd);
+
+		// Decode JSON data into PHP array
+		$response_data = json_decode($json_data);
+
+		$usd = $response_data->rates->INR;
+
+		$api_url_eur = 'https://api.exchangeratesapi.io/latest?base=EUR';
+		// $api_url = 'https://api.exchangeratesapi.io/latest?base=USD';
+
+		// Read JSON file
+		$json_data = file_get_contents($api_url_eur);
+
+		// Decode JSON data into PHP array
+		$response_data = json_decode($json_data);
+
+		$eur = $response_data->rates->INR;
+
+		
+		
+
+	}
 }

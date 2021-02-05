@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
 
         //
-        Commands\HourlyUpdate::class
+        Commands\HourlyUpdate::class,
+        Commands\CurrencyUpdate::class
 
     ];
 
@@ -30,6 +31,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('hour:update')
+                ->hourly();
+        $schedule->command('currency:update')
                 ->hourly();
     }
 
