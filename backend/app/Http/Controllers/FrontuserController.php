@@ -12,6 +12,9 @@ use App\Models\Contributor;
 use Illuminate\Support\Facades\Hash;
 use CORS;
 
+use App\Models\Currency;
+
+
 use Stevebauman\Location\Facades\Location;
 
 
@@ -282,15 +285,61 @@ class FrontuserController extends Controller {
 	 //    $IPaddress = $request->ip;
 		// print_r($IPaddress); die;
 		// print_r($IPaddress); die;
+		$usd = Currency::where('name','USD')->first();
+		$eur = Currency::where('name','EURO')->first();
+		// print_r($usd['cur_value']); die;
 
 	    $position = Location::get($ipaddress);
-	    // $position = Location::get('49.204.183.130');
+	    // $position = Location::get('23.235.60.92'); //us
+	    // $position = Location::get('51.158.22.211');
+	    // print_r($position['countryCode']); die;
+	    if(!empty($position)){
+		    if($position->countryCode=='US'){
+		    	$position->currencyValue = $usd['cur_value'];
+		    }
+		}
+		if(!empty($position)){
+			$code = $position->countryCode;
+		    if($code=="AT" || $code=="BE" || $code=="BG" || $code=="HR"|| $code=="CY" || $code=="CZ"|| $code=="DK"|| $code=="EE"|| $code=="FI"|| $code=="FR"|| $code=="DE"|| $code=="GR"|| $code=="HU"|| $code=="IE"|| $code=="IT"|| $code=="LV"|| $code=="LT"|| $code=="LU"|| $code=="MT"|| $code=="NL"|| $code=="PO"|| $code=="PT"|| $code=="RO"|| $code=="SK"|| $code=="SI"|| $code=="ES"|| $code=="SE")
+		    {
+		    	$position->currencyValue = $eur['cur_value'];
+		    }
+		}
 
-	    // print_r($position); die;
     	return json_encode($position);
 
 
 		
 			
+	}
+
+
+	public function getCurrencies()
+	{
+		$api_url_usd = 'https://api.exchangeratesapi.io/latest?base=USD';
+		// $api_url = 'https://api.exchangeratesapi.io/latest?base=USD';
+
+		// Read JSON file
+		$json_data = file_get_contents($api_url_usd);
+
+		// Decode JSON data into PHP array
+		$response_data = json_decode($json_data);
+
+		$usd = $response_data->rates->INR;
+
+		$api_url_eur = 'https://api.exchangeratesapi.io/latest?base=EUR';
+		// $api_url = 'https://api.exchangeratesapi.io/latest?base=USD';
+
+		// Read JSON file
+		$json_data = file_get_contents($api_url_eur);
+
+		// Decode JSON data into PHP array
+		$response_data = json_decode($json_data);
+
+		$eur = $response_data->rates->INR;
+
+		
+		
+
 	}
 }

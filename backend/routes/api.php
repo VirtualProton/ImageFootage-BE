@@ -115,5 +115,6 @@ Route::group([
 
     Route::get('getIpAddress','FrontuserController@getIpAddress');
     Route::get('getLocationDetails','FrontuserController@ip_details');
+    Route::get('getCurrencies','FrontuserController@getCurrencies');
 
 });
