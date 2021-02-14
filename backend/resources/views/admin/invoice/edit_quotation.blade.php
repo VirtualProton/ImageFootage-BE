@@ -1,211 +1,225 @@
 @extends('admin.layouts.default')
 
 @section('content')
-<div class="content-wrapper" ng-controller="editquotatationController">
-<section class="content">
-<div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title"><%title%></h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-                @include('admin.partials.message')
+	<div class="content-wrapper" ng-controller="editquotatationController">
+		<section class="content">
+			<div class="box box-info">
+					<div class="box-header with-border">
+					<h3 class="box-title"><%title%></h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+						@include('admin.partials.message')
 
-              <div class="box-body">
-               
-              <div class="panel-body">
-						<form role="form" name="downloadOnBehalf" method="post"  class="" enctype="multipart/form-data" ng-submit="submitQuotation()">
-						<div class="row">
-						<div class="">
-							<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="col-lg-6 col-md-6 col-xs-6">
-									<div class="form-group">
-										<label>UID</label>
-										<input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
-										<input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
-									<div class="form-group">
-										<label class="margin-right">
-										<input type="radio" value="custom" name="quotation_type" checked="checked" ng-click="quotation_type_set('custom')">
-										Custom
-										</label>
-									</div>
-								</div>
-							</div>
-							</div>
-                     	</div>		
-						<div class="">
+					<div class="box-body">
+					
+					<div class="panel-body">
+								<form role="form" name="downloadOnBehalf" method="post"  class="" enctype="multipart/form-data" ng-submit="submitQuotation()">
 								<div class="row">
-								<div class="col-sm-12">
-									<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
-										<div class="form-group">
-											<label class="">Product Type <%$index+1%> (Image/Footage)</label>
-											<select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
-											<option value="">--Select a Type--</option>
-											<option value="Image">Image</option>
-											<option value="Footage">Footage</option>
-											</select>
-											<div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class=""><%product.type%> <%$index+1%> (Product ID)</label>
-											<input type="hidden" class="form-control" ng-model="product.id">
-											<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
-											<div>
-											</div>
-										</div>
-										<div class="form-group" ng-show="product.type=='Image'">
-											<span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-											<span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
-										</div>
-										<div class="form-group" ng-show="product.type =='Footage'">
-											<span ng-show="product.image">
-											<video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
-											<source type="video/mp4" src="<%product.footage%>"> 
-											Your browser does not support the video tag. 
-											</video>
-										</span>
-										</div>
-										<div class="form-group">
-											<label for="sub_total"><%product.type%> Size</label>
-											<select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
-												<option value="" selected="">--Select a size--</option>
-												<option value="Small">Web</option>
-												<option value="Medium">Medium</option>
-												<option value="Large">Large</option>
-												<option value="X-Large">XX-Large</option>
-												<option value="Custom">Custom</option>
-											</select>
-											<select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
-												<option value="" selected="">--Select a size--</option>
-												<option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
-											</select>
-										</div>
-										<div class="form-group" ng-show="product.type=='Image'">
-											<label for="pro_type"><%product.type%> type</label>
-											<select required="" class="form-control" ng-model="product.pro_type">
-											<option value="">--Select a Type--</option>
-											<option value="right_managed">Right Managed</option>
-											<option value="royalty_free">Royalty Free</option>
-											</select>
-										</div>
-										<div>
-											<div>
+								<div class="">
+									<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
 											<div class="form-group">
-												<label for="sub_total">Sub Total</label>
-												<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
-											</div>
+												<label>UID</label>
+												<input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
+												<input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
 											</div>
 										</div>
-										<label>
-											<button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
-										</label>&nbsp;
-										<label class="">
-											<button type="button" class="btn btn-danger" ng-click="addProduct()" ng-show="$last">Add More Image</button>
-										</label>
-									</div>
-								</div>
-								</div>
-								<div class="row">
-								<div class="col-lg-12 col-md-12 col-xs-12">
-									<div class="col-lg-6 col-md-6 col-xs-6">
-										<div class="form-group">
-											<label for="tax">Tax Applicable</label>
-											<div>
-											<span style="float: left;">
-												<input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +12%
-											</span>
-											<span style="float: left;padding-left:20px;">
-												<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
-											</span>
+										<div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
+											<div class="form-group">
+										    <?php if($type == '1') { ?>		
+												<label class="margin-right">
+													<input type="radio" value="Subscription" name="quotation_type" checked="checked" ng-click="quotation_type_set('subscription')">
+													Subscription
+												</label>
+											<?php } ?>
+											<?php if($type == '2') { ?>
+												<label class="margin-right">
+													<input type="radio" value="Download_Packs"  checked="checked" name="quotation_type" ng-click="quotation_type_set('download')">
+													Download Packs
+												</label>
+											<?php } ?>
+											<?php if($type == '3') { ?>
+												<label class="margin-right">
+													<input type="radio" value="custom" name="quotation_type" checked="checked" ng-click="quotation_type_set('custom')">
+													Custom
+												</label>
+											<?php } ?>
 											</div>
-											<!-- <div>
-												<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
-											</div>
-											<div class="">
-												<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]"> CGST- +6%
-											</div>
-											<div class="ng-binding ng-scope">
-												<input type="checkbox" ng-model="IGST" ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]"> IGST- +12%
-											</div>
-											<div class="ng-binding ng-scope">
-												<input type="checkbox" ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]"> IGST- +18%
-											</div> -->
 										</div>
 									</div>
-									<div class="col-lg-6 col-md-6 col-xs-6">
-										<div class="form-group">
-											<label for="Total">Total</label>
-											<input type="text" class="form-control " ng-model="total" name="Total" readonly="">
-										</div>
 									</div>
-								</div>
-								</div>
-								<div class="row">
-								<div class="col-lg-12 col-md-12 col-xs-12">
-									<div class="col-lg-6 col-md-6 col-xs-6">
-										<div class="form-group">
-											<label for="promoCode">Promo code</label>
-											<input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+								</div>		
+								<div class="">
+										<div class="row">
+										<div class="col-sm-12">
+											<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
+												<div class="form-group">
+													<label class="">Product Type <%$index+1%> (Image/Footage)</label>
+													<select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
+													<option value="">--Select a Type--</option>
+													<option value="Image">Image</option>
+													<option value="Footage">Footage</option>
+													</select>
+													<div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class=""><%product.type%> <%$index+1%> (Product ID)</label>
+													<input type="hidden" class="form-control" ng-model="product.id">
+													<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+													<div>
+													</div>
+												</div>
+												<div class="form-group" ng-show="product.type=='Image'">
+													<span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
+													<span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
+												</div>
+												<div class="form-group" ng-show="product.type =='Footage'">
+													<span ng-show="product.image">
+													<video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
+													<source type="video/mp4" src="<%product.footage%>"> 
+													Your browser does not support the video tag. 
+													</video>
+												</span>
+												</div>
+												<div class="form-group">
+													<label for="sub_total"><%product.type%> Size</label>
+													<select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
+														<option value="" selected="">--Select a size--</option>
+														<option value="Small">Web</option>
+														<option value="Medium">Medium</option>
+														<option value="Large">Large</option>
+														<option value="X-Large">XX-Large</option>
+														<option value="Custom">Custom</option>
+													</select>
+													<select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
+														<option value="" selected="">--Select a size--</option>
+														<option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
+													</select>
+												</div>
+												<div class="form-group" ng-show="product.type=='Image'">
+													<label for="pro_type"><%product.type%> type</label>
+													<select required="" class="form-control" ng-model="product.pro_type">
+													<option value="">--Select a Type--</option>
+													<option value="right_managed">Right Managed</option>
+													<option value="royalty_free">Royalty Free</option>
+													</select>
+												</div>
+												<div>
+													<div>
+													<div class="form-group">
+														<label for="sub_total">Sub Total</label>
+														<input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
+													</div>
+													</div>
+												</div>
+												<label>
+													<button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
+												</label>&nbsp;
+												<label class="">
+													<button type="button" class="btn btn-danger" ng-click="addProduct()" ng-show="$last">Add More Image</button>
+												</label>
+											</div>
 										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 col-xs-6">
-										<!-- <div class="form-group">
-											<label for="job_number">JOb Ref/Po #</label>
-											<select  class="form-control" required="" name="po" ng-model="po">
-											<option value="">--Select a Job PO--</option>
-											<!-- <option value="upload_po">Upload PO</option>
-												<option value="email_approval">Email Approval</option> -->
-										<!-- <option value="po_in_3days">PO Due In 3 Days</option>
-											<option value="po_in_7days">PO Due In 7 Days</option>
-											<option value="po_in_15days">PO Due In 15 Days</option>
-											</select>
-										</div> -->
-										<!-- <div class="">
-											<div class="row"> -->
-										<?php /* <div class="col-lg-6 col-md-6 col-xs-12">
-												<div class="form-group" >
-													<label for="po_no">PO No.</label>
-													<input type="text" class="form-control"  name="poDate" id="poDate" ng-model="poDate" autocomplete="false">
+										</div>
+										<div class="row">
+										<div class="col-lg-12 col-md-12 col-xs-12">
+											<div class="col-lg-6 col-md-6 col-xs-6">
+												<div class="form-group">
+													<label for="tax">Tax Applicable</label>
+													<div>
+													<span style="float: left;">
+														<input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +12%
+													</span>
+													<span style="float: left;padding-left:20px;">
+														<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
+													</span>
+													</div>
+													<!-- <div>
+														<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
+													</div>
+													<div class="">
+														<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]"> CGST- +6%
+													</div>
+													<div class="ng-binding ng-scope">
+														<input type="checkbox" ng-model="IGST" ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]"> IGST- +12%
+													</div>
+													<div class="ng-binding ng-scope">
+														<input type="checkbox" ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]"> IGST- +18%
+													</div> -->
 												</div>
 											</div>
-											<div class="col-lg-6 col-md-6 col-xs-12"></div>
+											<div class="col-lg-6 col-md-6 col-xs-6">
+												<div class="form-group">
+													<label for="Total">Total</label>
+													<input type="text" class="form-control " ng-model="total" name="Total" readonly="">
+												</div>
 											</div>
-											<div class="form-group">
-											<label for="email_id">Email</label>
-											
-											</div> */ ?>
-										<div class="form-group">
-											<input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value ="{{$userDetail->email}}">
-											<label for="expiry">Expiry Period</label><br>
-											<input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-											<input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
 										</div>
-										<!-- </div>
 										</div>
-										<div class="col-lg-4 col-md-6 col-xs-4"></div> -->
+										<div class="row">
+										<div class="col-lg-12 col-md-12 col-xs-12">
+											<div class="col-lg-6 col-md-6 col-xs-6">
+												<div class="form-group">
+													<label for="promoCode">Promo code</label>
+													<input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-6 col-xs-6">
+												<!-- <div class="form-group">
+													<label for="job_number">JOb Ref/Po #</label>
+													<select  class="form-control" required="" name="po" ng-model="po">
+													<option value="">--Select a Job PO--</option>
+													<!-- <option value="upload_po">Upload PO</option>
+														<option value="email_approval">Email Approval</option> -->
+												<!-- <option value="po_in_3days">PO Due In 3 Days</option>
+													<option value="po_in_7days">PO Due In 7 Days</option>
+													<option value="po_in_15days">PO Due In 15 Days</option>
+													</select>
+												</div> -->
+												<!-- <div class="">
+													<div class="row"> -->
+												<?php /* <div class="col-lg-6 col-md-6 col-xs-12">
+														<div class="form-group" >
+															<label for="po_no">PO No.</label>
+															<input type="text" class="form-control"  name="poDate" id="poDate" ng-model="poDate" autocomplete="false">
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-xs-12"></div>
+													</div>
+													<div class="form-group">
+													<label for="email_id">Email</label>
+													
+													</div> */ ?>
+												<div class="form-group">
+													<input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value ="{{$userDetail->email}}">
+													<label for="expiry">Expiry Period</label><br>
+													<input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
+													<input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
+												</div>
+												<!-- </div>
+												</div>
+												<div class="col-lg-4 col-md-6 col-xs-4"></div> -->
+											</div>
+										</div>
+										</div>
+								</div>						
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-xs-12" align="center">
+											<button type="submit" class="btn btn-danger ng-binding">Submit</button>
+											<button type="reset" class="btn btn-danger">Reset</button>
+										</div>
 									</div>
-								</div>
-								</div>
-                     	</div>						
-							<div class="row">
-								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
-									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
-									<button type="reset" class="btn btn-danger">Reset</button>
-								</div>
+								</form>
 							</div>
-						</form>
 					</div>
-              </div>
-		</div>
-    </section>  
-  </div>
-    @endsection
-    @section('scripts')
+			</div>
+		</section>  
+	</div>
+@endsection
+@section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
 <script>

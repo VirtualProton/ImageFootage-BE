@@ -14,6 +14,8 @@ use App\Models\Orders;
 use App\Models\OrderItem;
 use App\Models\Usercart;
 use App\Models\UserPackage;
+use App\Models\Package;
+use App\Models\Common;
 use CORS;
 use Payumoney;
 use Razorpay\Api\Api;
@@ -40,7 +42,8 @@ class PaymentController extends Controller
     public function __construct()
     {
         $environment = App::environment();
-        if (App::environment('local')) {
+        $environment = 'local';
+        if ($environment == 'local') {
             // The environment is local
             $this->baseurl = 'http://localhost:4200';
             $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
@@ -53,16 +56,16 @@ class PaymentController extends Controller
             $this->clientcode = '007';
             $this->atomprodId = 'NSE';
       }else{
-            $this->baseurl = 'https://imagefootage.com';
-            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
-            $this->atomRequestKey ='3a1575abc728e8ccf9';
-            $this->atomResponseKey ='43af4ba2fbd68d327e';
-            $this->login ='106640';
-            $this->mode ='live';
-            $this->password = '33719eef';
-            $this->clientcode = '007';
-            $this->atomprodId = 'CONCEPTUAL';
+            // $this->baseurl = 'https://imagefootage.com';
+            // $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
+            // $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
+            // $this->atomRequestKey ='3a1575abc728e8ccf9';
+            // $this->atomResponseKey ='43af4ba2fbd68d327e';
+            // $this->login ='106640';
+            // $this->mode ='live';
+            // $this->password = '33719eef';
+            // $this->clientcode = '007';
+            // $this->atomprodId = 'CONCEPTUAL';
 
         }
 
@@ -131,10 +134,40 @@ class PaymentController extends Controller
                 $orderItem->cart_added_by = $eachCart['cart_added_by'];
                 $orderItem->cart_added_on = $eachCart['cart_added_on'];
                 $orderItem->save();
+                if($eachCart['product_web'] == '5')
+                {
+                    $packge = new UserPackage();
+                    $packge->user_id = $allFields['tokenData']['Utype'];
+
+                    $packge->transaction_id = $transactionId;
+                    $package_plan = Package::find($eachCart['cart_product_id'])->toArray();
+                    //$orders->tax = $final_tax;
+                    $packge->package_id = $package_plan['package_id'];
+                    $packge->package_name = $package_plan['package_name'];
+                    $packge->package_price = $package_plan['package_price'];
+                    $packge->package_description = $package_plan['package_description'];
+                    $packge->package_products_count = $package_plan['package_products_count'];
+                    $packge->package_type = $package_plan['package_type'];
+                    $packge->package_permonth_download = $package_plan['package_permonth_download'];
+                    $packge->package_expiry = $package_plan['package_expiry'];
+                    $packge->package_plan = $package_plan['package_plan'];
+                    $packge->package_pcarry_forward = $package_plan['package_pcarry_forward'];
+                    $packge->package_expiry_yearly = $package_plan['package_expiry_yearly'];
+                    $packge->payment_gatway_provider = $allFields['type'];
+                    //$packge->pacage_size = $package_plan['pacage_size'];        
+                    $packge->created_at = date('Y-m-d H:i:s');
+                    $packge->footage_tier = $package_plan['footage_tier'];
+                    if($package_plan['package_expiry'] !=0 && $package_plan['package_expiry_yearly']==0){
+                        $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$package_plan['package_expiry']." months"));
+                    }else{
+                        $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$package_plan['package_expiry_yearly']." years"));
+                    }
+                    $packge->save();
+                }
+                //dd($userData);
             }
         }
-
-        //dd($userData);
+        
         if($allFields['type']=='atom'){
             $transactionRequest = new TransactionRequest();
             //Setting all values here
@@ -158,7 +191,6 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerBillingAddress("India");
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey($this->atomRequestKey);
-
 
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
@@ -220,8 +252,6 @@ class PaymentController extends Controller
                 $data['display_amount']    = $displayAmount;
             }
             echo json_encode($data);
-
-
         }
 
     }
@@ -234,11 +264,14 @@ class PaymentController extends Controller
            // print_r($_POST);die;
             if(count($_POST)>0){
                 if($_POST['f_code']=='Ok'){
-                     Orders::where('txn_id',$_POST['mer_txn'])
+                    Orders::where('txn_id',$_POST['mer_txn'])
                             ->update(['payment_mode'=>$_POST['discriminator'],
                                 'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
-                    $orders= Orders::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','city','state','country');
+                    UserPackage::where('transaction_id',$_POST['mer_txn'])
+                                ->update(['payment_mode'=>$_POST['discriminator'],
+                                    'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
+                    $orders = Orders::with(['user'=>function($query1){
+                        $query1->select('id','user_name','first_name','last_name','city','state','country', 'mobile', 'postal_code', 'phone');
                     }])->with(['items'=>function($query){
                         $query->with('product');
                     }]) ->where('txn_id','=',$_POST['mer_txn'])
@@ -246,7 +279,9 @@ class PaymentController extends Controller
                         ->with('state')
                         ->with('city')
                         ->get()->toArray();
-                    $this->invoiceWithemail($orders,$_POST['mer_txn']);
+                        $common = new Common;
+                        $amount_in_words   =  $common->convert_number_to_words($orders[0]['order_total']);
+                    $this->invoiceWithemail($orders,$_POST['mer_txn'],$amount_in_words);
                     Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
                     return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn']);
                  }else{
@@ -361,13 +396,7 @@ class PaymentController extends Controller
             $datenow = date('Y-m-d');
         }
         $transactionId = rand(1,1000000);
-        //echo "<pre>"; print_r($allFields); die;
-        //DB::enableQueryLog();
         $userData = User::where('id','=',$allFields['tokenData']['Utype'])->get()->toArray();
-        //dd(DB::getQueryLog());
-        //print_r($userData); die;
-        //$tax = $allFields['cartval'][0]*8/100;
-        //$final_tax=round($tax,2);
 
         $packge = new UserPackage();
         $packge->user_id = $allFields['tokenData']['Utype'];
@@ -738,9 +767,9 @@ class PaymentController extends Controller
 
     }
 
-    public function invoiceWithemail($OrderData,$transaction){
+    public function invoiceWithemail($OrderData, $transaction, $amount_in_words = ''){
         ini_set('max_execution_time',0);
-        $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0]]));
+        $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0], 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction."_web_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $s3Client = new S3Client([
@@ -762,6 +791,8 @@ class PaymentController extends Controller
         $pdf_path = $fileupresult['ObjectURL'];
         if(!empty($pdf_path)){
             Orders::where('txn_id','=',$transaction)
+                ->update(['invoice'=>$pdf_path]);
+            UserPackage::where('transaction_id', '=', $transaction)
                 ->update(['invoice'=>$pdf_path]);
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }

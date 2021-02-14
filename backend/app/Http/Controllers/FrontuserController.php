@@ -27,7 +27,11 @@ class FrontuserController extends Controller {
        // echo $request['product']['type'];
        // dd($request->all());
 		$Usercart=new Usercart;
-		if($request['product']['type']=='2'){
+		$already_image = 0;
+		$counterImage  = 0;
+		$already_footage = 0;
+		$counterFootage  = 0;
+		if(isset($request['product']['type']) && $request['product']['type'] =='2'){
             $product_id = $request['product']['product_info']['media']['id'];
             $product_type = "Image";
             $tokens=json_decode($request['product']['token'],true);
@@ -60,12 +64,12 @@ class FrontuserController extends Controller {
             }else{
                 echo '{"status":"0","message":"Already this product is in your cart."}';
             }
-        }else if($request['product']['type']=='3'){
+        }else if(isset($request['product']['type']) && $request['product']['type'] =='3'){
             $product_id = $request['product']['product_info'][0]['clip_data']['pic_objectid'];
 			$product_type = "Footage";
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
-            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            $cart_list= $Usercart->where('cart_product_id', $product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
             if(empty($cart_list)){
                 $Usercart=new Usercart;
                 $Usercart->cart_product_id=$product_id;
@@ -74,14 +78,14 @@ class FrontuserController extends Controller {
                 $Usercart->standard_type= $request['product']['selected_product']['size'];
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
                 $Usercart->standard_size= $request['product']['selected_product']['size'];
-                $Usercart->standard_price = $request['product']['selected_product']['pr'];
-                $Usercart->total= $request['product']['total'];
+                $Usercart->standard_price = $request['product']['selected_product']['price'];
+                $Usercart->total= $request['product']['selected_product']['price'];
                 $Usercart->product_name= $request['product']['product_info'][0]['clip_data']['n'];
-                $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
+                $Usercart->product_thumb= $request['product']['product_info'][1];
                 $Usercart->product_desc= $request['product']['product_info'][0]['clip_data']['pic_description'];
-                $Usercart->product_web= $request['product']['type'];
+                $Usercart->product_web = $request['product']['type'];
                 $Usercart->product_main_footage = $request['product']['product_info'][2];
-                $Usercart->product_json= json_encode($request['product']['product_info'][0]);
+                $Usercart->product_json = json_encode($request['product']['product_info'][0]);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $result=$Usercart->save();
                 if($result){
@@ -92,10 +96,94 @@ class FrontuserController extends Controller {
             }else{
                 echo '{"status":"0","message":"Allready this product is in your cart."}';
             }
-        }
-
-
-
+        }else if(isset($request['type']) && $request['type'] =='4'){
+			//print_r($request['data']); die;
+			if(count($request['data']) > 0){
+				foreach($request['data'] as $eachproduct){
+					$tokens =  json_decode(stripslashes($request['token']), true);
+					$product_addedby = $tokens['Utype'];
+					$cart_list= $Usercart->where('cart_product_id', $eachproduct['package_id'])->where('cart_added_by',$product_addedby)->get()->toArray();
+            		if(empty($cart_list)){
+						$Usercart=new Usercart;
+						$Usercart->cart_product_id= $eachproduct['package_id'];
+						$Usercart->cart_product_type= "Footage";
+						$Usercart->cart_added_by= $product_addedby;
+						$Usercart->standard_type= $eachproduct['package_name'];
+						$Usercart->cart_added_on= date('Y-m-d H:i:s');
+						$Usercart->standard_size= $eachproduct['package_name'];
+						$Usercart->standard_price = $eachproduct['package_price'];
+						$Usercart->extended_name= '0';
+						$Usercart->extended_price= '0';
+						$Usercart->total= $eachproduct['package_price'];
+						$Usercart->product_name= $eachproduct['package_description'];
+						$Usercart->product_thumb= '';
+						$Usercart->product_desc= '';
+						$Usercart->product_web= '5';
+						$Usercart->product_json= json_encode($eachproduct);
+						$Usercart->selected_product = '';
+						$Usercart->pricing_tier = $eachproduct['footage_tier'];
+						$result = $Usercart->save();
+						if($result){
+							$counterFootage++;
+							//echo '{"status":"1","message":"Product added to cart successfully"}';
+						}else{
+							
+							//echo '{"status":"0","message":"Some problem occured."}';
+						}
+					}else{
+						$already_footage++;
+						//echo '{"status":"0","message":"Already this product is in your cart."}';
+					}
+				}
+				if($counterFootage == count($request['data'] )){
+					echo '{"status":"1","message":"Product added to cart successfully"}';
+				}else{
+					echo '{"status":"0","message":"Already some products is in your cart."}';
+				}
+			}
+			//echo "<pre>";
+			//print_r($request['data']);
+		}else if(isset($request['type']) && $request['type'] =='5'){
+			//print_r($request['data']); die;
+			if(count($request['data']) > 0){
+				foreach($request['data'] as $eachproduct){
+					$tokens =  json_decode(stripslashes($request['token']), true);
+					$product_addedby = $tokens['Utype'];
+					$cart_list= $Usercart->where('cart_product_id', $eachproduct['package_id'])->where('cart_added_by',$product_addedby)->get()->toArray();
+            		if(empty($cart_list)){
+						$Usercart=new Usercart;
+						$Usercart->cart_product_id= $eachproduct['package_id'];
+						$Usercart->cart_product_type= "Image";
+						$Usercart->cart_added_by= $product_addedby;
+						$Usercart->standard_type= $eachproduct['package_name'];
+						$Usercart->cart_added_on= date('Y-m-d H:i:s');
+						$Usercart->standard_size= $eachproduct['package_name'];
+						$Usercart->standard_price = $eachproduct['package_price'];
+						$Usercart->extended_name= '0';
+						$Usercart->extended_price= '0';
+						$Usercart->total= $eachproduct['package_price'];
+						$Usercart->product_name= $eachproduct['package_description'];
+						$Usercart->product_thumb= '';
+						$Usercart->product_desc= '';
+						$Usercart->product_web= '5';
+						$Usercart->product_json= json_encode($eachproduct);
+						$Usercart->selected_product = '';
+						$Usercart->pricing_tier = $eachproduct['footage_tier'];
+						$result = $Usercart->save();
+						$counterImage++;
+					}else{
+						$already_image++;
+					}
+				}
+				if($counterImage == count($request['data'] )){
+					echo '{"status":"1","message":"Product added to cart successfully"}';
+				}else{
+					echo '{"status":"0","message":"Already some products is in your cart."}';
+				}
+			}
+			//echo "<pre>";
+			//print_r($request['data']);
+		}
 	}
 	public function userCartList(Request $request){
         $Usercart = new Usercart;
@@ -135,6 +223,7 @@ class FrontuserController extends Controller {
 		if(empty($cart_list)){
 			$UserWishlist=new UserWishlist;
 			$UserWishlist->wishlist_product=$productId;
+			$UserWishlist->folder_name = strtolower($request['folder']);
 			$UserWishlist->wishlist_user_id=$product_addedby;
 			$UserWishlist->wishlist_added_on=date('Y-m-d H:i:s');
 			$result=$UserWishlist->save();
@@ -165,20 +254,26 @@ class FrontuserController extends Controller {
         //print_r($request->all());
 		$user_id = $request['Utype'];
         $UserWishlist=new UserWishlist;
-		$products=new Product;
-		$cart_list= $UserWishlist->select('wishlist_product')->where('wishlist_user_id',$user_id)->get()->toArray();
+		$cart_data = [];
+		$cart_list= $UserWishlist->select('wishlist_product', 'folder_name')->where('wishlist_user_id',$user_id)->get()->toArray();
 		if(isset($cart_list) && !empty($cart_list)){
 			$wishlist_products=array();
 			foreach($cart_list as $key=>$wish){
-				$wishlist_products[]=$wish['wishlist_product'];
+				//$wishlist_products['folder'][] = $wish['wishlist_product'];
+				//$cart_data['folder_name'] = $wish['folder_name'];
+				$products = new Product;
+				$cart_list_new = $products->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','product_main_type')->where('id', $wish['wishlist_product'])->get()->toArray();
+				$cart_data[$wish['folder_name']][] = $cart_list_new[0];
 			}
-			$productids=implode(',',$wishlist_products);
-			$cart_list_new=$products->select('id','product_id','api_product_id','product_title','product_description','product_thumbnail','product_main_image','product_web','product_main_type')->whereRaw('FIND_IN_SET(id,"'.$productids.'")')->get()->toArray();
-            foreach($cart_list_new as $key=>$wishnew){
-                $cart_list_new[$key]['api_product_id'] = encrypt($wishnew['api_product_id']);
-                $cart_list_new[$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($wishnew['product_title'])));
-            }
-			echo '{"status":"1","data":'.json_encode($cart_list_new,true).',"message":""}';
+			//dd($cart_data);
+			foreach($cart_data as $folder=>$wishnew){
+                 //dd($wishnew);
+				foreach($wishnew as $key=>$eachData){
+					$cart_data[$folder][$key]['api_product_id'] = encrypt($eachData['api_product_id']);
+					$cart_data[$folder][$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachData['product_title'])));
+				}
+			}
+			echo '{"status":"1","data":'.json_encode($cart_data, true).',"message":""}';
 		}else{
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
 		}
