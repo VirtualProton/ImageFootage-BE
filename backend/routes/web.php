@@ -221,6 +221,7 @@ Route::post('/users/comments/', 'InvoiceController@comments');
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/quotation2/{id}', 'InvoiceController@quotation2');
 Route::get('/edit_quotation/{user_id}/{id}', 'InvoiceController@edit_quotation');
+Route::get('/edit_quotation/{user_id}/{id}/{type}', 'InvoiceController@edit_quotation');
 Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
 Route::post('/create_invoice','InvoiceController@create_invoice');

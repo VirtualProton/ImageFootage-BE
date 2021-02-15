@@ -117,10 +117,10 @@ class InvoiceController extends Controller
         }
     }
 
-    public function edit_quotation($user_id,$quotation_id)
+    public function edit_quotation($user_id,$quotation_id,$type)
     {
         $userDetail = User::find($user_id);
-        return view('admin.invoice.edit_quotation', compact('userDetail'));
+        return view('admin.invoice.edit_quotation', compact('userDetail', 'type'));
     }
 
     public function edit_quotation_data(Request $request)
@@ -128,7 +128,7 @@ class InvoiceController extends Controller
         $data = $request->all();
         //print_r($data); die;
         if (!empty($data['quotation'])) {
-            return $this->Common->getQuotationData($data['quotation']);
+            return $this->Common->getQuotationData($data['quotation'], $data['quotation_type']);
         }
     }
     public function create_invoice(Request $request)

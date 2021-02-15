@@ -65,7 +65,6 @@ export class HeaderComponent implements OnInit {
                       this.productType=params.type;
                       this.keywordEle=params.keyword;                      
                     });
-
   }
 
   searchDropDownClick(type){

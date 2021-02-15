@@ -555,12 +555,19 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     $scope.title = "Edit Quotation";
     $scope.quotation = {};
     $scope.tax = 0;
-    var path = window.location.pathname.split("/").pop();
+    console.log(window.location.pathname);
+    console.log(window.location.pathname.split("/"));
+    var allParams = window.location.pathname.split("/"); 
+    //var path = window.location.pathname.split("/").pop();
+    var path = allParams[allParams.length-2];
+    $scope.type = allParams[allParams.length-1];
+    console.log($scope.type);
+    console.log(path);
     $('#loading').show();
     $http({
         method: 'POST',
         url: base_url + 'edit_quotation_data',
-        data: { quotation: path }
+        data: { quotation: path, quotation_type: $scope.type  }
     }).then(function(result) {
         $('#loading').hide();
         response = result.data;
@@ -798,9 +805,6 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         });
 
     }
-
-
-
 
 });
 app.controller('invoiceController', function($scope, $http, $location) {

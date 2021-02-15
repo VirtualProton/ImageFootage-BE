@@ -293,15 +293,22 @@ class Common extends Model
       }
     }
 
-    public function getQuotationData($quotation_id){
+    public function getQuotationData($quotation_id, $type){
         if(!empty($quotation_id)){
-            // DB::enableQueryLog();
-            $all_datas = Invoice::select('imagefootage_performa_invoices.*')
+            
+            if($type == '3'){
+                $all_datas = Invoice::select('imagefootage_performa_invoices.*')
                 ->with('items')
                 ->where('imagefootage_performa_invoices.id','=',$quotation_id)
                 ->first()
                 ->toArray();
-            //dd(DB::getQueryLog());
+            } else{
+                $all_datas = Invoice::select('imagefootage_performa_invoices.*')
+                ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
+                ->where('imagefootage_performa_invoices.id','=',$quotation_id)
+                ->first()
+                ->toArray();
+            } 
             return  response()->json($all_datas);
 
         }

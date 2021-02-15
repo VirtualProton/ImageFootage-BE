@@ -9,7 +9,11 @@ use Auth;
 class PackageApiController extends Controller
 {
   public function packageList(){
-       $all_package_list = Package::get()->toArray();
+      $all_package_list = Package::where('package_status', 'Active')
+                          ->where('home_view', '1')
+                          ->orderBy('pacage_size', 'asc')
+                          ->get()
+                          ->toArray();
        //print_r($all_package_list); die;
       $packagelist = [];
       if(count($all_package_list)>0) {
@@ -27,11 +31,11 @@ class PackageApiController extends Controller
                   $packagelist[$eachpacage['package_type']][$plan][] = $eachpacage;
               } else {
                   if ($eachpacage['pacage_size'] == '1') {
-                      $packagelist[$eachpacage['package_type']][$plan]['HD'][] = $eachpacage;
+                      $packagelist[$eachpacage['package_type']][$plan][$eachpacage['footage_tier']][$eachpacage['package_name']]['HD'] = $eachpacage;
                   }else{
-                      $packagelist[$eachpacage['package_type']][$plan]['4K'][] = $eachpacage;
+                      $packagelist[$eachpacage['package_type']][$plan][$eachpacage['footage_tier']][$eachpacage['package_name']]['4K'] = $eachpacage;
                   }
-              }
+                }
           }
       }
       echo json_encode(["status"=>"success",'data'=>$packagelist]);
