@@ -295,16 +295,16 @@ $(document).ready(function ($) {
                         }
                     }
                 },
-            phone: {
-              validators: {
-                notEmpty: {
-                  message: 'The phone number is required and cannot be empty'
-                },
-                digits: {
-                    message: 'Please enter only digits'
-                },
-              }
-             },
+            // phone: {
+            //   validators: {
+            //     notEmpty: {
+            //       message: 'The phone number is required and cannot be empty'
+            //     },
+            //     digits: {
+            //         message: 'Please enter only digits'
+            //     },
+            //   }
+            //  },
              mobile: {
               validators: {
                 notEmpty: {
@@ -400,20 +400,20 @@ $(document).ready(function ($) {
                 //     }
                 // },
 
-                gst: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Gst is required'
-                        }
-                    }
-                },
-                pan: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Pan is required'
-                        }
-                    }
-                },
+                // gst: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Gst is required'
+                //         }
+                //     }
+                // },
+                // pan: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Pan is required'
+                //         }
+                //     }
+                // },
 
             }
         });

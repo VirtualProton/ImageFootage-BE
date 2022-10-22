@@ -89,7 +89,7 @@
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-                                    <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
+                                    <!-- <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span> -->
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
                                     <span ng-show="product.image">
@@ -339,7 +339,7 @@
                                     <label for="sub_total">Plan Name</label>
                                     <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'download')">
                                        <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> Within 1 Year</option>
+                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> Within 1 Year </option>
                                     </select>
                                  </div>
                               </div>

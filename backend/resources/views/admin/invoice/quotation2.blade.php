@@ -1,7 +1,7 @@
 @extends('admin.layouts.default')
 
 @section('content')
-<div class="content-wrapper" ng-controller="quotatationController">
+<div class="content-wrapper" ng-controller="quotatationWithoutApiController">
    <section class="content">
       <div class="box box-info">
          <div class="box-header with-border">
@@ -24,14 +24,14 @@
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
                                  <div class="form-group">
-                                    <label class="margin-right">
+                                    <!-- <label class="margin-right">
                                        <input type="radio" value="Subscription" name="quotation_type" ng-click="quotation_type_set('subscription')">
                                        Subscription
                                     </label>
                                     <label class="margin-right">
                                        <input type="radio" value="Download_Packs" name="quotation_type" ng-click="quotation_type_set('download')">
                                        Download Packs
-                                    </label>
+                                    </label> -->
                                     <label class="margin-right">
                                        <input type="radio" value="custom" name="quotation_type" checked="checked" ng-click="quotation_type_set('custom')">
                                        Custom
@@ -65,6 +65,16 @@
                               </div>
                            </div>
                         </div>
+                        <div class="row">
+                           <div class="col-lg-12 col-md-12 col-xs-12">
+                              <div class="col-lg-6 col-md-6 col-xs-6">
+                                 <div class="form-group">
+                                    <label>End Client Field</label>
+                                    <input type="text" name="end_client" id="end_client" class="form-control">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                      <div class="" ng-show="quotation_type_var=='custom'">
                         <div class="row">
@@ -76,14 +86,20 @@
                                        <option value="">--Select a Type--</option>
                                        <option value="Image">Image</option>
                                        <option value="Footage">Footage</option>
+                                       <option value="Music">Music</option>
                                     </select>
                                     <div>
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label class=""><%product.type%> <%$index+1%> (Product ID)</label>
-                                    <input type="hidden" class="form-control" ng-model="product.id">
-                                    <input type="text" class="form-control" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <label class=""><%product.type%> <%$index+1%> (Product Image/Footage ID)</label>
+                                    <input type="text" class="form-control" name="product_id" ng-model="product.id">
+                                    <div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class=""><%product.type%> <%$index+1%> (Image Bank)</label>
+                                    <input type="text" class="form-control" ng-model="product.name" name="product_name" required="">
                                     <div>
                                     </div>
                                  </div>
@@ -99,12 +115,18 @@
                                     <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
-                                    <span ng-show="product.image">
-                                    <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
-                                       <source type="video/mp4" src="<%product.footage%>"> 
-                                       Your browser does not support the video tag. 
-                                    </video>
-                                 </span>
+                                 <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
+                                    <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
+                                 </div>
+                                 <div class="form-group" ng-show="product.type=='Footage'">
+                                    <label for="pro_type"><%product.type%> Licence Type</label>
+                                    <select required="" class="form-control" ng-model="product.pro_type">
+                                       <option value="">--Select a Licence--</option>
+                                       <option value="1">Commercial (Promotion, Marketing, Advertising)</option>
+                                       <option value="2">Media Non Commercial (Doc, Education, News)</option>
+                                       <option value="3">Web Only</option>
+                                       <option value="4">All Media</option>
+                                    </select>
                                  </div>
                                  <div class="form-group">
                                     <label for="sub_total"><%product.type%> Size</label>
@@ -118,7 +140,10 @@
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
-                                       <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
+                                       <!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
+                                       <option value="HD (1080)">HD (1080)</option>
+                                       <option value="4K">4K</option>
+                                       <option value="SD">SD</option>
                                     </select>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
@@ -128,6 +153,18 @@
                                        <option value="right_managed">Right Managed</option>
                                        <option value="royalty_free">Royalty Free</option>
                                     </select>
+                                 </div>
+                                 <div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
+                                    <label for="licence_type"><%product.type%> Licence type</label>
+                                    <select required="" class="form-control" ng-model="product.licence_type">
+                                       <option value="">--Select a Licence Type--</option>
+                                       <option value="standard">Standard</option>
+                                       <option value="extended">Extended</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
+                                    <label for="licence_type"><%product.type%> Licence type</label>
+                                    <input type="text" ng-model="product.licence_type" >
                                  </div>
                                  <div>
                                     <div>

@@ -31,7 +31,7 @@ class UserController extends Controller
                         $query->whereIn('payment_status',['Completed','Transction Success'])
                             //->whereRaw('package_products_count > downloaded_product')
                             ->orderBy('id', 'desc')
-                            ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'footage_tier')
+                            ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
                             ->with(['downloads' => function($down_query){
                                 $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                             }]);
@@ -60,16 +60,14 @@ class UserController extends Controller
 
                   $image_download=0;
                   $footage_download=0;
-                  foreach($user['plans'] as $key=>$plan){
+                  foreach($user['plans'] as $plan){
                       if($plan['package_type']=='Image'){
                           $image_download=1;
                       }else if($plan['package_type']=='Footage'){
-                        $licence = [1=> 'Commercial', 2=> 'Non-Commercial', 3 => 'Web'];
-                        $footage_download = 1;  
-                        $send_data['plans'][$key]['licence'] = isset($plan['footage_tier']) ? $licence[$plan['footage_tier']] : '';
+                          $footage_download=1;
                       }
                   }
-                  $send_data['image_download'] = $image_download; 
+                  $send_data['image_download'] = $image_download;
                   $send_data['footage_download'] = $footage_download;
               }
                 return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
@@ -158,7 +156,7 @@ class UserController extends Controller
     public function userOrders($id){
         if($id>0){
             $OrderData = Orders::with(['items'=>function($query){
-                    $query->where('product_web', '!=', '5')->with('product');
+                    $query->with('product');
                 }])
                 ->where('user_id','=',$id)
                 ->whereIn('order_status',['Completed','Transction Success'])

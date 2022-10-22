@@ -94,40 +94,46 @@
                   style="border-style: double; border-width: 5px;">
                   <tbody>
                      <tr>
-                           <td colspan="2" width="302">
+                           <td colspan="2" width="304">
                               <p>Customer Name: <strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name']?></strong></p>
-                              <p>Address: <strong><?php echo $quotation[0]['address'] ?> </strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp;  <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></p>
+                              <p>Address: <strong><?php echo $quotation[0]['address'] ?> </strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp;  <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></p>
                               <p>Phone: <strong><?php echo $quotation[0]['mobile'] ?></strong></p>
+                              <p>GSTIN: <strong><?php echo substr($quotation[0]['gst'], 0, 2) ?>XXX<?php echo substr($quotation[0]['gst'], 5, 10) ?></strong></p>
+                              <p>PAN: <strong>XXX<?php echo substr($quotation[0]['pan'], 3, 7) ?></strong></p>
                               <br/>
                            </td>
                            <td colspan="2" width="304">
                               <p>Invoice No.: <strong><?php echo "Q".$quotation[0]['invoice_name'] ?></strong></p>
                               <p>Invoice Date: <strong><?php echo date("d.m.Y ",strtotime($quotation[0]['invicecreted'])) ?></strong></p>
-                              <p>GSTIN: <strong><?php echo $quotation[0]['gst'] ?></strong></p>
-                              <p>PAN No.: <strong><?php echo $quotation[0]['pan'] ?></strong></p>
-                              <p>SAC Code: <strong></strong></p>
-                              <p>Place: <strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp;  <?php echo $quotation[0]['statename'] ?><br /> </strong>Payment Due: <strong>Immediate</strong></p>
+                              <p>GSTIN: <strong>36AAFCC2629B1Z3</strong></p>
+                              <p>PAN No.: <strong>AAFCC2629B</strong></p>
+                              <p>SAC Code: <strong>997339</strong></p>
+                              <p>Place: <strong>Hyderabad - Telangana </strong></p>
+                              <p>Payment Due: <strong>Immediate</strong></p>
                               <br/> <br/>
                            </td>
                      </tr>
                      <tr>
-                           <td colspan="2" width="302">
-                              <p>Kind Attention: <br /> <strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong><br /></p>
-                           </td>
-                           <td colspan="2" width="304">
-                              <p>Product Description: Custom Pack</p>
-                           </td>
+                        <td colspan="2" width="302">
+                           <p>Kind Attention: <br /> <strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong><br /></p>
+                        </td>
+                        <td colspan="2" width="304">
+                           <?php if(!empty($po) && !empty($po_date)) { ?>
+                              <p>Purchase Order No. <?php echo $po; ?> dated <?php echo $po_date; ?></p>     
+                           </php } ?>
+                        </td>
                      </tr>
                      <tr>
-                           <td colspan="2" width="302">
-                              <p>Total number of image(s)/footage(s): <br/> <strong> <?php echo count($quotation); ?>
-                              </strong></p>
-                              <br/>
-                              <br/>
-                           </td>   
-                           <td colspan="2" width="304">
-                              <p><strong>&nbsp;</strong></p>
-                           </td>
+                        <td colspan="2" width="302">
+                           <p>Total number of image(s)/footage(s): <br/> <strong> <?php echo count($quotation); ?>
+                           </strong></p>
+                           <br/>
+                           <br/>
+                        </td>   
+                        <td colspan="2" width="304">
+                           <p>IF Sales Representative: Ashmita (capture from CRM)</p>
+                           <p>Client: L&T Parel Project LLP</p>
+                        </td>
                      </tr>
                      <tr>
                         <?php foreach($quotation as $k=>$value) { ?>
@@ -229,7 +235,7 @@
                            <td width="50%" style="border: none;">
                               <p>&nbsp;<br /><strong>Image Footage&nbsp;</strong>&nbsp;<br />3rd Floor, # 10-3-89/A/B, R-5
                                  Chambers, Near Sarojini Devi Hospital, Humayun Nagar,&nbsp;<br />Hyderabad -
-                                 500028,&nbsp;Telangana,&nbsp;Andhra&nbsp;Pradesh, India&nbsp;Phone: +91 40 6720 6720 Fax
+                                 500028,&nbsp;Telangana,&nbsp;India&nbsp;Phone: +91 40 6720 6720 Fax
                                  +91 40
                                  6673 8077&nbsp;</p>
                               <p><a href="http://about:blank/">info@imagefootage.com</a> &nbsp;&nbsp;&nbsp;&nbsp;<a

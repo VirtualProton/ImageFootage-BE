@@ -9,7 +9,6 @@ use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use App\Models\Contributor;
 use App\Models\UserPackage;
-use App\Models\UserWishlist;
 use Illuminate\Support\Facades\Hash;
 use CORS;
 use JWTAuth;
@@ -50,6 +49,7 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Email or password does\'t exist'], 401);
         }
+
         return $this->respondWithToken($token);
     }
 
@@ -242,7 +242,6 @@ class AuthController extends Controller
                         }
                     }
                 }
-                $collections = UserWishlist::where('wishlist_user_id', auth()->user()->id)->pluck('folder_name');
                 return response()->json([
                     'access_token' => $token,
                     'token_type' => 'bearer',
@@ -250,8 +249,7 @@ class AuthController extends Controller
                     'user' => auth()->user()->first_name,
                     'Utype' => auth()->user()->id,
                     'image_downlaod'=>$image_download,
-                    'footage_downlaod'=>$footage_download,
-                    'collections' => $collections
+                    'footage_downlaod'=>$footage_download
 
                 ]);
             } else {

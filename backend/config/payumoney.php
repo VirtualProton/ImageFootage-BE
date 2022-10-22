@@ -1,13 +1,11 @@
 <?php
+return [
 
-    return [
+    'KEY' => 'moyhzpcW',
 
-        'KEY' => 'moyhzpcW',
+    'SALT' => 'k5fBBBjPVs',
 
-        'SALT' => 'k5fBBBjPVs',
+    'TEST_MODE' => FALSE,
 
-        'TEST_MODE' => TRUE,
-
-        'DEBUG' => TRUE
-    ];
-
+    'DEBUG' => FALSE
+];

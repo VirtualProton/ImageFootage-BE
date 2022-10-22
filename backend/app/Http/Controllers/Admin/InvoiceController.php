@@ -117,10 +117,10 @@ class InvoiceController extends Controller
         }
     }
 
-    public function edit_quotation($user_id,$quotation_id,$type)
+    public function edit_quotation($user_id,$quotation_id)
     {
         $userDetail = User::find($user_id);
-        return view('admin.invoice.edit_quotation', compact('userDetail', 'type'));
+        return view('admin.invoice.edit_quotation', compact('userDetail'));
     }
 
     public function edit_quotation_data(Request $request)
@@ -128,14 +128,15 @@ class InvoiceController extends Controller
         $data = $request->all();
         //print_r($data); die;
         if (!empty($data['quotation'])) {
-            return $this->Common->getQuotationData($data['quotation'], $data['quotation_type']);
+            return $this->Common->getQuotationData($data['quotation']);
         }
     }
     public function create_invoice(Request $request)
     {
         $data = $request->all();
         if (!empty($data['quotation_id'])) {
-            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $data['po'], $data['po_date'], $data['payment_method']);
+            $po = isset($data['po']) ? $data['po'] : '';
+            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
         }
     }
 
@@ -143,7 +144,8 @@ class InvoiceController extends Controller
     {
         $data = $request->all();
         if (!empty($data['quotation_id'])) {
-            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $data['po'], $data['po_date'], $data['payment_method']);
+            $po = isset($data['po']) ? $data['po'] : '';
+            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method']);
         }
     }
 
@@ -170,8 +172,8 @@ class InvoiceController extends Controller
             'user_id' => 'required',
             'comment' => 'required|max:190',
             'status' => 'required',
-            'agent_id' => 'required',
-            'expiry' => 'required',
+            //'agent_id' => 'required',
+            //'expiry' => 'required',
 
         ]);
 
@@ -184,15 +186,6 @@ class InvoiceController extends Controller
         $comment['agent_id'] = $request->agent_id;
         $comment['created_by'] = $request->created_by;
         $comment['expiry'] = $request->expiry;
-
-        // $start_day = Carbon::parse($request->created_at); //get a carbon instance with created_at as date
-        // $expiry_day = $start_day->addMonths($request->user_selected_months);
-
-        // print_r($comment['expiry']); die;
-        $expiry_date = Carbon::now()->addDays($comment['expiry']);
-        $comment['expiry'] = $expiry_date;
-
-
         $comment->save();
         return Redirect::back()->with('success', 'Comment Saved');
     }

@@ -27,10 +27,10 @@ class FrontuserController extends Controller {
        // echo $request['product']['type'];
        // dd($request->all());
 		$Usercart=new Usercart;
-		$already_image = 0;
-		$counterImage  = 0;
-		$already_footage = 0;
-		$counterFootage  = 0;
+		$already_image = 0;	
+		$counterImage  = 0;	
+		$already_footage = 0;	
+		$counterFootage  = 0;	
 		if(isset($request['product']['type']) && $request['product']['type'] =='2'){
             $product_id = $request['product']['product_info']['media']['id'];
             $product_type = "Image";
@@ -69,7 +69,7 @@ class FrontuserController extends Controller {
 			$product_type = "Footage";
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
-            $cart_list= $Usercart->where('cart_product_id', $product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
             if(empty($cart_list)){
                 $Usercart=new Usercart;
                 $Usercart->cart_product_id=$product_id;
@@ -78,14 +78,14 @@ class FrontuserController extends Controller {
                 $Usercart->standard_type= $request['product']['selected_product']['size'];
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
                 $Usercart->standard_size= $request['product']['selected_product']['size'];
-                $Usercart->standard_price = $request['product']['selected_product']['price'];
-                $Usercart->total= $request['product']['selected_product']['price'];
+                $Usercart->standard_price = $request['product']['selected_product']['pr'];
+                $Usercart->total= $request['product']['total'];
                 $Usercart->product_name= $request['product']['product_info'][0]['clip_data']['n'];
-                $Usercart->product_thumb= $request['product']['product_info'][1];
+                $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
                 $Usercart->product_desc= $request['product']['product_info'][0]['clip_data']['pic_description'];
-                $Usercart->product_web = $request['product']['type'];
+                $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_main_footage = $request['product']['product_info'][2];
-                $Usercart->product_json = json_encode($request['product']['product_info'][0]);
+                $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $result=$Usercart->save();
                 if($result){
@@ -185,6 +185,7 @@ class FrontuserController extends Controller {
 			//print_r($request['data']);
 		}
 	}
+
 	public function userCartList(Request $request){
         $Usercart = new Usercart;
 		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->with('product')->get()->toArray();

@@ -227,7 +227,7 @@
                             <td width="50%" style="border: none;">
                                 <p>&nbsp;<br /><strong>Image Footage&nbsp;</strong>&nbsp;<br />3rd Floor, # 10-3-89/A/B, R-5
                                     Chambers, Near Sarojini Devi Hospital, Humayun Nagar,&nbsp;<br/>Hyderabad -
-                                    500028,&nbsp;Telangana,&nbsp;Andhra&nbsp;Pradesh, India&nbsp;Phone: +91 40 6720 6720 Fax +91 40
+                                    500028,&nbsp;Telangana,&nbsp;India&nbsp;Phone: +91 40 6720 6720 Fax +91 40
                                     6673 8077&nbsp;</p>
                                 <p><a href="http://about:blank/">info@imagefootage.com</a> <a
                                         href="http://about:blank/">www.imagefootage.com</a>&nbsp;</p>

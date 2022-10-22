@@ -180,11 +180,7 @@ return [
         Unisharp\Ckeditor\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
-		Pbmedia\LaravelFFMpeg\FFMpegServiceProvider::class,
-        Stevebauman\Location\LocationServiceProvider::class,
-
     ],
 
     /*
@@ -241,12 +237,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Payumoney' => Riazxrazor\Payumoney\PayumoneyFacade::class,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 		'Image' => Intervention\Image\Facades\Image::class,
-        'FFMpeg' => Pbmedia\LaravelFFMpeg\FFMpegFacade::class,
-        'Helper' => App\Helpers\Helper::class,
-        'Location' => Stevebauman\Location\Facades\Location::class,
     ],
 
 ];

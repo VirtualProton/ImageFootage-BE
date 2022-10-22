@@ -16,19 +16,24 @@
               <div class="box" style="padding-left: 10px;padding-right: 10px;">
                 <div class="box-header">
                   <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice</strong></a><br>
-                  <a href="{{ url('admin/quotation2/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice 2</strong></a>
+                  <a href="{{ url('admin/quotation2/'.$user_id) }}" style="float:right;"><strong>Custom Invoice</strong></a>
                 </div>
                 @include('admin.partials.message')
                 <div class="tabs">
                   <ul class="nav nav-tabs">
                     <li class="active">
                       <a href="#users" role="tab" data-toggle="tab">
-                        <icon class="fa fa-home"></icon>User Info
+                        <icon class="fa fa-home"></icon> Client Information
                       </a>
                     </li>
+                    <!-- <li>
+                      <a href="#comments" role="tab" data-toggle="tab">
+                        <i class="fa fa-comment"></i> Comment
+                      </a>
+                    </li> -->
                     <li>
                       <a href="#posts" role="tab" data-toggle="tab">
-                        <i class="fa fa-user"></i>Sale
+                        <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
                   </ul>
@@ -40,7 +45,7 @@
                             <div class="form-group col-sm-12">
                               <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Account Info</h4>
                               <div class="form-group col-sm-6">
-                                <h5>User Id : {{$user->id}}</h5>
+                                <h5>User Name : {{$user->user_name}}</h5>
                                 <h5>Deactivated ? : {{$user->status=1?"No":"Yes"}}</h5>
                                 <h5>Password :
                                   <input type="password" class="" name="" id="" value="{{$user->password}}"><button id="resetButton" onclick="resetPassword({{$user->id}})">reset</button>
@@ -62,6 +67,8 @@
                                 <h5>Country : {{$country_name}}</h5>
                                 <h5>Postal Code : {{$user->postal_code}}</h5>
                                 <h5>Phone : {{$user->phone}}</h5>
+                                <h5>GST : {{$user->gst}}</h5>
+                                <h5>PAN : {{$user->pan}}</h5>
                               </div>
                             </div>
                             <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Other Info</h4>
@@ -72,108 +79,16 @@
                               <h5>Checkout Frozen : </h5>
                               <h5>Allow Download Certificate : </h5>
                               <h5>Enable Subs Multi-logins ? : </h5>
-                              <h5>Preferred Contact Methid : </h5>
+                              <h5>Preferred Contact Method : </h5>
                               <h5>Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
                             </div>
                           </thead>
                         </table>
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Add New Comment</h4>
-                        <div class="form-group col-sm-12">
-                          {!! Form::open(array('url' => URL::to('admin/users/comments'), 'method' => 'POST', 'class'=>"form-horizontal")) !!}
-                          <!-- @include('admin.partials.message') -->
-                          <table>
-                            <tbody>
-                              <input type="hidden" name="user_id" value="{{$user_id}}">
-                              <input type="hidden" name="created_by" value="{{Auth::guard('admins')->user()->id}}">
-                              <tr>
-                                <td>
-                                  <h5>Subject : </h5>
-                                </td>
-                                <td><input required="true" type="text" class="form-control" name="subject" id="subject" placeholder="Subject" value=""></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <h5>Description : </h5>
-                                </td>
-                                <td><textarea required="true" name="comment" rows="3" class="form-control"></textarea></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <h5>Status : </h5>
-                                </td>
-                                <td><select name="status" required="true">
-                                    <option value="">-Select-</option>
-                                    <option value="Open">Open</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Closed">Closed</option>
-                                  </select></td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <h5>To Agent ? : </h5>
-                                </td>
-                                <td><select name="agent_id" required="true">
-                                    <option value="">-Select-</option>
-                                    @foreach($agentlist as $agent)
-                                    <option value="{{$agent['id']}}">{{$agent['account_name']}}</option>
-                                    @endforeach
-                                  </select></td>
-                              </tr>
-
-                              <tr>
-                                <td>
-                                  <h5>Expiry : </h5>
-                                </td>
-                                <td><input required="true" type="number" name="expiry" id="expiry" /></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <div class="box-footer">
-                            {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'submit')) !!}
-                          </div>
-                        </div>
-                        @if(count($comments) > 0 )
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Existing Comments</h4>
-                        <div class="form-group col-sm-12">
-                          <table class="account table table-bordered table-striped dataTable col-sm-12" class="">
-                            <thead>
-                              <tr>
-                                <th>Sl No</th>
-                                <th>Subject</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Assigned To</th>
-                                <th>Created By</th>
-                                <th>Created Date</th>
-                                <th>Expiry Date</th>
-                                <!-- <th>Show Downloads</th> -->
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($comments as $key=>$comment)
-                              <tr role="row" class="odd">
-                                <td>{{$key+1}}</td>
-
-                                <td>{{$comment['subject']}}</td>
-                                <td>{{$comment['comment']}}</td>
-                                <td>{{$comment['status']}}</td>
-                                <td>{{(!empty($comment['agent']['account_name']))?$comment['agent']['account_name']:""}}</td>
-                                <td>{{(!empty($comment['admin']['name']))?$comment['admin']['name']:""}}</td>
-                                <!-- <?php
-                                      $created_at = date('d-m-Y', strtotime($comment['created_at']));
-                                      ?> -->
-                                <td>{{$comment['created_at']}}</td>
-                                <td>{{$comment['expiry']}}</td>
-                              </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                        @else
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} No Existing Comments</h4>
-                        @endif
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
                       </div>
                     </div>
+                   
                     <div class="tab-pane fade" id="posts">
                       <div class="box-body">
                         <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Quotation</h4>
@@ -185,7 +100,6 @@
                             <tr>
                               <th>Sl No</th>
                               <th>Trans Id</th>
-
                               <th>Quotation Date</th>
                               <th>Amount (In INR)</th>
                               <th>Plan</th>
@@ -232,7 +146,7 @@
                               </td>
                               <td>
                                 @if($quotations->status != 3)
-                                <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id.'/'.$quotations->invoice_type) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                 @if($quotations->invoice_type == 3)
                                 <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                 @else
@@ -317,15 +231,16 @@
                               <td>&nbsp;</td>
                               @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="9">{{$account_invoices->fragment('posts')->render()}}</td>
+                                <td colspan="10">{{$account_invoices->fragment('posts')->render()}}</td>
                               </tr>
                             @else
                             <tr style="text-align: center;">
-                              <td colspan="9"><strong> No Invoice Yet ...</strong></td>
+                              <td colspan="10"><strong> No Invoice Yet ...</strong></td>
                             </tr>
                             @endif
                           </tbody>
                         </table>
+                        @include('admin.account.comment')
                       </div>
                     </div>
                   </div>
@@ -346,9 +261,11 @@
                     <div class="col-sm-6">
                       <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
+                      <p><strong>GST No. :</strong>   <input type="text" name="gstNo" id="gstNo" value="{{$user->gst}}" class="form-group"></p>
+                      <p><strong>Phone No. :</strong> <input type="text" name="phone" id="phone" value="{{$user->phone}}" class="form-group"></p>
                       <p><strong>Package :</strong> <%quotationObj.package_description%></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                      <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p>
+                      <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p> -->
                       <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
                       <p><strong>Discount :</strong> </p>
                       <p><strong>Tax :</strong> <%quotationObj.tax%></p>
@@ -358,11 +275,13 @@
                       <p><strong>Method : </strong>
                         <select class="form-group" name="payment_method" ng-model="payment_method">
                           <option value="">Select Method</option>
-                          <option value="chq">Cheque</option>
+                          <option value="chq">Terms Granted</option>
                           <option value="online">Online</option>
                         </select>
                       </p>
+                      <p><strong>Pan No. :</strong>   <input type="text" name="panNo" id="panNo" value="{{$user->pan}}" class="form-group"></p>
                       <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
+                     
                       <p><strong>Street :</strong> {{$user->address}}</p>
                       <p><strong>City :</strong> {{$city_name}}</p>
                       <p><strong>State :</strong> {{$state_name}}</p>
@@ -396,8 +315,10 @@
                     
                       <p><strong>Trasaction Id :</strong> Q<%quotationObjCus.invoice_name%></p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
+                      <p><strong>GST No. :</strong>   <input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-group"></p>
+                      <p><strong>Phone No. :</strong> <input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-group"></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                      <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p>
+                      <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p> -->
                       <p><strong>Subtotal :</strong> <%quotationObjCus.total - quotationObjCus.tax%></p>
                       <p><strong>Discount :</strong> </p>
                       <p><strong>Tax :</strong> <%quotationObjCus.tax%></p>
@@ -407,11 +328,13 @@
                       <p><strong>Method : </strong>
                         <select class="form-group" name="payment_method" ng-model="payment_method">
                           <option value="">Select Method</option>
-                          <option value="chq">Cheque</option>
+                          <option value="chq">Terms Granted</option>
                           <option value="online">Online</option>
                         </select>
                       </p>
+                      <p><strong>Pan No. :</strong>   <input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-group"></p>
                       <p><strong>Job Ref/ PO # :</strong> <input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-group"></p>
+                      
                       <p><strong>Street :</strong> {{$user->address}}</p>
                       <p><strong>City :</strong> {{$city_name}}</p>
                       <p><strong>State :</strong> {{$state_name}}</p>
@@ -526,7 +449,11 @@
       autoclose: true,
       format: "yyyy/mm/dd"
     }).attr("autocomplete", "off");
-    
+
+    $('#expiry').datepicker({
+      format: "yyyy/mm/dd",
+      autoclose: true
+    });
   });
 
   //  $("#resetButton").click(function(e) {

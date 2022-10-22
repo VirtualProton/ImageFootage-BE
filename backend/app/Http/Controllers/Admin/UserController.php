@@ -136,12 +136,17 @@ class UserController extends Controller
         }else{
             $account_manager_name = "";
         }
-        $city = City::where('id', $user->city)->first();
-        $city_name = $city['name'];
-        $state = State::where('id', $user->state)->first();
-        $state_name = $state['state'];
-        $country = Country::where('id', $user->country)->first();
-        $country_name = $country['name'];
+        $city_name = '';
+        $state_name = '';
+        $country_name = '';
+        if($user->city) {
+            $city = City::where('id', $user->city)->first();
+            $city_name = $city['name'];
+            $state = State::where('id', $user->state)->first();
+            $state_name = $state['state'];
+            $country = Country::where('id', $user->country)->first();
+            $country_name = $country['name'];
+        }
         $user_plans = $this->User->userPlans($user_id);
 
         $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country', 'company')->with('country')
@@ -160,7 +165,7 @@ class UserController extends Controller
           // echo "<pre>"; print_r($userPlanslist); die;
 
         $agentlist=$this->Account->getAccountData();
-        $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->get()->toArray();
+        $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
         
         $account_quotations = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
@@ -177,10 +182,7 @@ class UserController extends Controller
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
-                    ->simplePaginate('10');
-        //echo "<pre>";                    
-        //print_r($account_quotations->toArray()); 
-        //die;                     
+                    ->simplePaginate('10');                   
         return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
     }
 
@@ -193,7 +195,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = Auth::guard('admins')->user();
-        if($user->role['role'] !='Super Admin'){
+        if($user->role['role'] != 'Super Admin'){
           return back()->with('success','You dont have acess to edit.');
         }
         $title = "Edit Lead/User/Contact";
@@ -267,7 +269,6 @@ class UserController extends Controller
     public function newRegistrants()
     {
         $userlist=$this->User->getNewRegistrants();
-        // echo "<pre>"; print_r($userlist); die;
         return view('admin.user.newregistrants',compact('userlist'));
     }
 

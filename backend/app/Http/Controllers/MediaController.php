@@ -78,27 +78,23 @@ class MediaController extends Controller
             $media_id = decrypt($media_id);
             $keyword['search'] = $media_id;
             $footageMedia = new FootageApi();
-            //echo $media_id; die;
-            $product_details_data = $footageMedia->getclipdata_latest_version($media_id);
-            //print_r($product_details_data); die;
-            // if (isset($product_details_data['clip_data']['pic_objectid'])) {
-            //     $pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
-            //     if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
-            //         $add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
-            //         for ($i = 0; $i < $add_zero; $i++) {
-            //             $pond_id_withprefix = "0" . $pond_id_withprefix;
-            //         }
-            //     }
-            //     $b64image = base64_encode(file_get_contents($product_details_data['icon_base'] . $pond_id_withprefix . '_main_xl.mp4'));
-            //     $downlaod_image = '';
-            //     if (count($product_details_data) > 0) {
-            //         $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
-            //     }
-            // }
-            if (count($product_details_data) > 0) {
-                $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+            $product_details_data = $footageMedia->getclipdata($media_id);
+            //print_r($product_details_data);
+            if (isset($product_details_data['clip_data']['pic_objectid'])) {
+                $pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
+                if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
+                    $add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
+                    for ($i = 0; $i < $add_zero; $i++) {
+                        $pond_id_withprefix = "0" . $pond_id_withprefix;
+                    }
+                }
+                $b64image = base64_encode(file_get_contents($product_details_data['icon_base'] . $pond_id_withprefix . '_main_xl.mp4'));
+                $downlaod_image = '';
+                if (count($product_details_data) > 0) {
+                    $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                }
             }
-            $product_details = array($product_details_data, $product_details_data['commercial']['assetWatermarkPreview'], $product_details_data['commercial']['watermarkStill'], $imagefootage_id, '');
+            $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);
         } else {
             $product = new Product();
             $product_details = $product->getProductDetail($media_id, $type);
@@ -186,7 +182,7 @@ class MediaController extends Controller
                     return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
                 }
                 $footageMedia = new FootageApi();
-                $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id, $pacakegalist['0']['footage_tier']);
+                $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
 
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $allFields['product']['selected_product']['id'])->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();

@@ -37,7 +37,9 @@
                 <th>Created Date</th>
                 <th>Updated Date</th>
                 <th>Status</th>
-                <th>Action</th>
+                @if(Auth::guard('admins')->user()->role == '1')
+                  <th>Action</th>
+                @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -58,21 +60,21 @@
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
                   <td><?php echo date('D, d M, Y',strtotime($user['updated_at'])) ?></td>
                   <td><?php echo ($user['status']=='1'?"Active":"Inactive"); ?></td>
-                  <td>
-                   
-                  @if($user['status'] =='1')
-                    <a href="{{ url('admin/users/status/0/'.$user['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
-                  @elseif($user['status'] =='0')
-                    <a href="{{ url('admin/users/status/1/'.$user['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
-                  @endif
-                  <a href="{{ URL::to('admin/users/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
-                  
-                  <form action="{{ route('users.destroy', $user['id']) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
+                  @if(Auth::guard('admins')->user()->role == '1')
+                    <td>
+                        @if($user['status'] =='1')
+                          <a href="{{ url('admin/users/status/0/'.$user['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+                        @elseif($user['status'] =='0')
+                          <a href="{{ url('admin/users/status/1/'.$user['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+                        @endif
+                        <a href="{{ URL::to('admin/users/'.$user['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp; &nbsp;
+                        <form action="{{ route('users.destroy', $user['id']) }}" method="POST">
+                          @method('DELETE')
+                          @csrf
+                          <button  onclick="return confirm('Do You want to remove ?')"><i class="fa fa-remove" aria-hidden="true"></i></button>
                         </form>
-                  </td>
+                    </td>
+                  @endif
                 </tr>
                 @endforeach
                 @endif

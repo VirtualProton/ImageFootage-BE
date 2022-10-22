@@ -47,7 +47,7 @@ class HourlyUpdate extends Command
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
 
         if(!empty($userCart)){
-            $a = 'vasiuddin@conceptualpictures.com';
+            $a = 'admin@imagefootage.com';
             Mail::raw("This is automatically generated Hourly Update", function($message) use ($a)
             {
                 $message->from('admin@imagefootage.com');

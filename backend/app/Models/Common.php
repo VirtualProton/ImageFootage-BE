@@ -7,6 +7,7 @@ use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Auth;
 use Mail;
 use PDF;
 use App;
@@ -121,6 +122,7 @@ class Common extends Model
 
         $insert = array(
             'user_id'=> $data['uid'],
+            'end_client'=> $data['end_client'],
             'email_id'=> $data['email'],
             'flag'=> $data['flag'],
             'invoice_name'=> $this->random_numbers(),
@@ -135,6 +137,7 @@ class Common extends Model
             'invoice_type'=>'3',
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
+            'created_by' => Auth::guard('admins')->user()->id
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
 
         );
@@ -157,6 +160,7 @@ class Common extends Model
                     'product_type' => $eachproduct['pro_type'],
                     'type' => $eachproduct['type'],
                     'product_size' => $eachproduct['pro_size'],
+                    'licence_type' => $eachproduct['licence_type'] ?? '',
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
                     'status' => "1",
@@ -199,8 +203,8 @@ class Common extends Model
             $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
             $data["email"] = $data['email'];
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
-            $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
-            
+            $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']); 
+            //echo view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]); die;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
             $fileName = $data["invoice"]."_quotation.pdf";
@@ -247,7 +251,7 @@ class Common extends Model
                 $this->statusdesc  =   "Quotation sent Succesfully";
                 $this->statuscode  =   "1";
             }
-            return response()->json(compact('this')); 
+            return response()->json(compact('this'));
 }
                     //}catch (\Exception $e){
                     // DB::rollback();
@@ -293,29 +297,23 @@ class Common extends Model
       }
     }
 
-    public function getQuotationData($quotation_id, $type){
+    public function getQuotationData($quotation_id){
         if(!empty($quotation_id)){
-            
-            if($type == '3'){
-                $all_datas = Invoice::select('imagefootage_performa_invoices.*')
+            // DB::enableQueryLog();
+            $all_datas = Invoice::select('imagefootage_performa_invoices.*')
                 ->with('items')
                 ->where('imagefootage_performa_invoices.id','=',$quotation_id)
                 ->first()
                 ->toArray();
-            } else{
-                $all_datas = Invoice::select('imagefootage_performa_invoices.*')
-                ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
-                ->where('imagefootage_performa_invoices.id','=',$quotation_id)
-                ->first()
-                ->toArray();
-            } 
+            //dd(DB::getQueryLog());
             return  response()->json($all_datas);
 
         }
     }
 
-    public function create_invoice($quotation_id,$user_id, $po, $po_date, $payment_method){
+    public function create_invoice($quotation_id,$user_id, $po, $po_date, $payment_method, $request_data){
         ini_set('max_execution_time', 0);
+        User::where('id', $user_id)->update(['gst'=> $request_data['gst'], 'pan' => $request_data['gst'], 'mobile' => $request_data['phone'], 'phone' => $request_data['phone']])->update();
         $dataForEmail = $this->getData($quotation_id,$user_id);
 
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
@@ -344,7 +342,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
+        $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date ]));
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $data["subject"] = "Invoice (".$dataForEmail[0]['invoice_name'].")";
@@ -377,7 +375,7 @@ class Common extends Model
             if(!empty($pdf_path)){
                 DB::table('imagefootage_performa_invoices')
                     ->where('id','=',$quotation_id)
-                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s')]);
+                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','job_number'=> $po, 'po_detail'=>$po_date,'invoice_created'=>date('Y-m-d H:i:s')]);
                 unlink(storage_path('app/public/pdf'). '/' . $fileName);
             }
             $resp =array();
@@ -498,7 +496,7 @@ class Common extends Model
             $selected_taxes['GST']='1';
         }else{
             $selected_taxes['GST']='0';
-        } 
+        }
 
                
         $allFields = Package::find($data['plan_id']['package_id']);

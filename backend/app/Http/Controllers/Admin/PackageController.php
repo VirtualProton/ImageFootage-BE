@@ -136,7 +136,7 @@ class PackageController extends Controller
 				}
 			}
 		}
-		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry')->where('package_status', '=', 'Active')->get()->toArray();
+		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier')->where('package_status', '=', 'Active')->get()->toArray();
 		if(count($all_package_list) > 0){
 			echo json_encode(["status"=>"success",'data'=>$all_package_list]);
 		} else {

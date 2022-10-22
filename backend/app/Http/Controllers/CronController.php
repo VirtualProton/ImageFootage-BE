@@ -63,7 +63,7 @@ class CronController extends Controller
         $products = Product::where('product_web','=','2')
                     ->select('api_product_id')
                     ->whereIn('product_category',$cat)
-                    ->whereRaw("date(updated_at) < '2021-01-06'")
+                    ->whereRaw("date(updated_at) < '2020-12-04'")
                     ->orderBy('id','desc')
                     ->get()
                     ->toArray();
