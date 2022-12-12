@@ -15,5 +15,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /var/www/imagefootage/backend/
-            ls
+            git pull origin stage
             
