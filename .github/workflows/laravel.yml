@@ -3,7 +3,7 @@ name: Imagefootage Workflow
 on:
   push:
     branches:
-      - staging
+      - stage
 
 jobs:
   deploy:
