@@ -17,5 +17,5 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd /var/www/imagefootage/backend
-            ls
+            git pull origin stage
 
