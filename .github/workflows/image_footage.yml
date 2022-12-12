@@ -8,17 +8,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup SSH Keys and known_hosts
-        env:
-            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-            ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-            ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Updating project with new changes
-      - uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          script: "cd /var/www/imagefootage/backend"
+          key: ${{ secrets.SSHKEY }}
+          script: "ls"
             
