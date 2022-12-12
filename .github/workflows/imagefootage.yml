@@ -1,21 +1,23 @@
-name: Imagefootage Workflow
-
+name: Imagefootage Deployment
 on:
   push:
     branches:
       - staging
-
+  pull_request:
+    branches:
+      - staging
+      
 jobs:
   deploy:
-    name: Deploying latest changes on staging server
     runs-on: ubuntu-latest
     steps:
-    - name: updating code on server
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        script: |
-           whoami
-           ls -al
+      - uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          script: "ls"
+
