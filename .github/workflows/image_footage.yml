@@ -8,10 +8,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-        -   uses: actions/checkout@v1
-        -   name: Setup SSH Keys and known_hosts
-            env:
-                SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-            run: |
-                ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-                ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+      - uses: actions/checkout@v1
+      - name: Setup SSH Keys and known_hosts
+        env:
+            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+            ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+            ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
+      - uses: garygrossgarten/github-action-ssh@release
+      - name: Setup SSH Keys and known_hosts
+        env:
+            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        shell: |
+           git pull origin stage
+           php artisen optimize
