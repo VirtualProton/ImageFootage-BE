@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - stage
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,6 +12,6 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           script: "ls"
             
