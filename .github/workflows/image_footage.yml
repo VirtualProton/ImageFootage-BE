@@ -15,6 +15,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          jobs:
-          script: "ls"
+          script: |
+            cd /var/www/imagefootage/backend
+            ls
 
