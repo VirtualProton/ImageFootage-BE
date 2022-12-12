@@ -15,6 +15,10 @@ jobs:
         run: |
             ssh-agent -a $SSH_AUTH_SOCK > /dev/null
             ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}
-            cd /var/www/imagefootage/backend
-            git pull origin stage
-            php artisen optimize
+      - name: Updating project with new changes
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          script: "cd /var/www/imagefootage/backend"
+            
