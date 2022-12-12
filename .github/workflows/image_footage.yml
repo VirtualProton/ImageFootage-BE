@@ -14,8 +14,9 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
           script: |
             cd /var/www/imagefootage/backend
             git pull origin stage
+            php artisan optimize
 
