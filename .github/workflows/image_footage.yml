@@ -9,4 +9,4 @@ jobs:
     
   deploy-staging:
       name: Deploy Project to STAGING Server
-    runs-on: ubuntu-latest
+      runs-on: ubuntu-latest
