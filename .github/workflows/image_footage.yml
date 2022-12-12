@@ -6,7 +6,14 @@ on:
       - staging
 
 jobs:
-    
-  deploy-staging:
-      name: Deploy Project to STAGING Server
-      runs-on: ubuntu-latest
+  deploy:
+    name: Deploying latest changes on staging server
+    runs-on: ubuntu-latest
+    steps:
+    - name: updating code on server
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: whoami
