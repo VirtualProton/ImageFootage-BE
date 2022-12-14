@@ -49,9 +49,8 @@
 @foreach($orderlists as $orders)
 
  <!-- <tr ng-if="orderslist" ng-repeat="orders in orderslist"> -->
- <tr><td>
-   <?php /*  <td><a href="{{ url('admin/users/invoices/'.$orders['user']['id'])}}" target="_blank">{{$orders['user']['user_name']}}</a>*/ ?>
-   </td>
+ <tr>
+     <td><a href="{{ url('admin/users/invoices/'.$orders['user']['id'])}}" target="_blank">{{$orders['user']['user_name']}}</a></td>
      <td>{{$orders['txn_id']}}</td>
      <td>{{$orders['order_total'] - $orders['tax'] }}</td>
      <td>{{$orders['tax']}}</td>
@@ -62,17 +61,12 @@
 
      <td>{{$orders['bill_firstname']}} {{$orders['bill_lastname']}}</td>
      <td>{{$orders['bill_address1']}}</td>
-     <td></td>
-     <td></td>
-     <td></td>
-     <td></td>
-     <td></td>
-   <?php /*  <td>{{$orders['city']['name']}}</td>
-      <td>{{$orders['state']['state']}}</td>
+     <td>{{$orders['city']['name']}}</td>
+     <!-- <td>{{$orders['state']['state']}}</td>
 
      <td>{{$orders['country']['name']}}</td> -->
      <td>{{$orders['bill_zip']}}</td>
-     <td>{{$orders['items'][0]['product_id']}}</td> */ ?>
+     <td>{{$orders['items'][0]['product_id']}}</td>
      @if(isset($orders['items'][0]['product_thumb']))
      <td><img src="{{$orders['items'][0]['product_thumb']}}" width="150" height="100"></td>
      @else

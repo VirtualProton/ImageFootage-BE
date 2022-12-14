@@ -133,10 +133,8 @@ class SearchController extends Controller
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
-        //print_r($keyword); die;
         $all_products = $product->getProducts($keyword);
         $flag =0;
-       // print_r($all_products); die;
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
@@ -144,8 +142,7 @@ class SearchController extends Controller
                 return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
-        // dd($all_products);
-        if($flag=='0'){
+        if($flag=='0'){ 
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             //print_r($pantharmediaData); die;
@@ -166,10 +163,8 @@ class SearchController extends Controller
                             'product_web' => '2',
                         );
                     }
-                   // $media = Arr::random($media,count($media));
-                   // echo "<pre>"; print_r($media);
                     array_push($all_products, $media);
-                   // echo "<pre>"; print_r($all_products);
+                    $all_products [] = shuffle($all_products);
                 }
                 return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items'],'tp'=>'2');
             }

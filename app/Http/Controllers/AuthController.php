@@ -33,6 +33,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function test()
+    {
+        echo "test"; exit();
+    }
     public function login()
     {
         $validator = \Validator::make(request()->all(), [
