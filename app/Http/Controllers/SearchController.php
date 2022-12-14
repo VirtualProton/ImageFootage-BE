@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
+use App\Models\Keywords;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+
 use CORS;
 
 class SearchController extends Controller
@@ -130,10 +133,8 @@ class SearchController extends Controller
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
-        //print_r($keyword); die;
         $all_products = $product->getProducts($keyword);
         $flag =0;
-       // print_r($all_products); die;
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
@@ -141,7 +142,7 @@ class SearchController extends Controller
                 return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
-        if($flag=='0'){
+        if($flag=='0'){ 
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             //print_r($pantharmediaData); die;
@@ -163,6 +164,7 @@ class SearchController extends Controller
                         );
                     }
                     array_push($all_products, $media);
+                    $all_products [] = shuffle($all_products);
                 }
                 return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items'],'tp'=>'2');
             }
@@ -227,5 +229,21 @@ class SearchController extends Controller
         $product = new Product();
         $all_products = $product->categoryWiseData();
         return $all_products;
+    }
+
+    public function getKeywords(Request $request, $keyword = "")
+    {
+        try {
+            $products = Keywords::where(function($query) use ($keyword) {
+                // Filter the keywords when pass keywords as param
+                $keyword = trim($keyword);
+                if($keyword != "") {
+                    $query->where("name", "like", "%$keyword%");
+                } 
+            })->get()->toArray();
+            return response()->json(["status"=> true, "data"=> $products]);
+        } catch (\Throwable $th) {
+            return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
+        }
     }
 }

@@ -33,6 +33,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function test()
+    {
+        echo "test"; exit();
+    }
     public function login()
     {
         $validator = \Validator::make(request()->all(), [
@@ -67,22 +71,23 @@ class AuthController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'first_name' => 'required',
-            'last_name' => 'required',
-            'occupation' => 'required',
-            'company' => 'required',
+            //'last_name' => 'required',
+            //'occupation' => 'required',
+            //'company' => 'required',
             'mobile' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'pincode' => 'required',
+            //'country' => 'required',
+           // 'state' => 'required',
+           // 'city' => 'required',
+           // 'address' => 'required',
+           // 'pincode' => 'required',
            
         ]);
 
+        
         if ($validator->fails()) {    
             return response()->json($validator->messages(), 200);
         }  
-
+        
 		$user = $request->all();
 		$count = User::where('email','=',$request->input('email'))->count();
 		if($count==0) {
@@ -103,6 +108,7 @@ class AuthController extends Controller
             $save_data->postal_code = $request->input('pincode');
             $save_data->password = Hash::make($request->input('password'));
             $save_data->type = 'U';
+            $save_data->status = '0';
             //$save_data->password =  bcrypt($request->input('password'));
             $result = $save_data->save();
             //User::create($request->all());

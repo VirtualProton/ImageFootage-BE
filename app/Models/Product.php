@@ -26,8 +26,8 @@ class Product extends Model
 
 
     public function getProducts($keyword){
-        //dd($getKeyword);
-        DB::enableQueryLog();
+       // dd($keyword);
+        //DB::enableQueryLog();
         if($keyword['productType']['id']=='1'){
             $type='Image';
         }else if($keyword['productType']['id']=='2'){
@@ -46,7 +46,7 @@ class Product extends Model
                 'product_peoples'=>'product_peoples',
                 'product_locations'=>'product_locations',
                 'product_sorttype'=>'product_sort_types');
-            //DB::enableQueryLog();
+           // DB::enableQueryLog();
             $data = Product::select('product_id','api_product_id','product_category','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
                     //->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
                 ->where(function ($query) use ($type){
