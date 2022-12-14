@@ -88,6 +88,7 @@ Route::group([
     Route::get('emailHtml', 'PaymentController@emailHtml');
     Route::get('categoryWiseData','SearchController@categoryWiseData');
     Route::get('/product/{id}', 'ProductController@getproduct');
+    Route::get('/search-keywords/get/{keyword?}','SearchController@getKeywords');
 });
 
 Route::group([
