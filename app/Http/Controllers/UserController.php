@@ -111,7 +111,7 @@ class UserController extends Controller
 			$update_array=array('otp'=>$randnum);
 		    $result = User::where('email',$request['email']['user_email'])->update($update_array);
 			// $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-			$url = env("FRONT_END_URL")."resetpassword/".$randnum.'/'.$request['email']['user_email'];
+            $url=url("resetpassword/".$randnum.'/'.$request['email']['user_email']);
             $data = array('url'=>$url,'email'=>$request['email']['user_email']);
 				 Mail::send('email.forgotpassword', $data, function($message) use($data) {
                      $message->to($data['email'], '')->subject('Image Footage Forget Password')
