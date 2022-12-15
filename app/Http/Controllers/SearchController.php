@@ -145,7 +145,6 @@ class SearchController extends Controller
         if($flag=='0'){ 
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
-            //print_r($pantharmediaData); die;
             if (count($pantharmediaData) > 0) {
                 foreach ($pantharmediaData['items']['media'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
