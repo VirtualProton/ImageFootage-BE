@@ -15,4 +15,5 @@ jobs:
           password: ${{ secrets.MAIN_SSH_PASSWORD }}
           script: |
             cd /var/www/html/backend
-            ls
+            git pull origin master
+            php artisan optimize
