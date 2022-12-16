@@ -13,4 +13,4 @@ jobs:
           key: ${{ secrets.MAIN_SSH_KEY }}
           
           script: |
-              ssh username: ${{ secrets.MAIN_USER }}@${{ secrets.MAIN_HOST }} "ls"
+              ssh ${{ secrets.MAIN_USER }}@${{ secrets.MAIN_HOST }} "ls"
