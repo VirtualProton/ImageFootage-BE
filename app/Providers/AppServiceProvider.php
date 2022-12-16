@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \URL::forceScheme('http');
+        \URL::forceScheme('https');
         Schema::defaultStringLength(191); //NEW: Increase StringLength
 
         view()->composer('admin.layouts.default', function($view)
