@@ -30,15 +30,11 @@ class SearchController extends Controller
     public function home(){
         $product = new Product();
         $all_products = $product->getProductsRandom();
-//        $keyword['search'] = '';
-//        $pantherMediaImages = new ImageApi();
-//        $pantharmediaData = $pantherMediaImages->search($keyword);
         return array('api'=>$all_products[0],'home'=>$all_products[1]);
     }
     public function index(SearchRequest $request){
         ini_set('max_execution_time', 0);
         $getKeyword = $request->all();
-        //dd($getKeyword);
         $keyword = array();
         $keyword['search'] = $getKeyword['search'];
         $keyword['productType']['id']= $getKeyword['productType'];
@@ -65,7 +61,6 @@ class SearchController extends Controller
         $all_products = [];
 		ini_set('max_execution_time', 0);
 		$getKeyword = $request->all();
-		//print_r($getKeyword); die;
 		$keyword = array();
 		$keyword['search'] = $getKeyword['searchData'];
         $keyword['pagenumber'] = $getKeyword['pagenumber'];
@@ -145,7 +140,6 @@ class SearchController extends Controller
         if($flag=='0'){ 
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
-            //print_r($pantharmediaData); die;
             if (count($pantharmediaData) > 0) {
                 foreach ($pantharmediaData['items']['media'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -190,9 +184,7 @@ class SearchController extends Controller
 
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
-            //print_r($pondfootageMediaData); die;
             if (count($pondfootageMediaData) > 0) {
-
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
                         $pond_id_withprefix = $eachmedia['id'];
