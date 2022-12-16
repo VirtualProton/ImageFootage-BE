@@ -13,4 +13,6 @@ jobs:
           key: ${{ secrets.MAIN_SSH_KEY }}
           
           script: |
-              ssh ${{ secrets.MAIN_USER }}@${{ secrets.MAIN_HOST }} "ls"
+              ssh -i {{secrets.MAIN_ID_RSA }} ${{ secrets.MAIN_USER }}@${{ secrets.MAIN_HOST}} "
+               ls
+              "
