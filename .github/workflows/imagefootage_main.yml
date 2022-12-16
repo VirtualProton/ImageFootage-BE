@@ -10,6 +10,6 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.MAIN_ID_RSA }}
-          known_hosts: ''
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.MAIN_SSH_HOST }} >> ~/.ssh/known_hosts
