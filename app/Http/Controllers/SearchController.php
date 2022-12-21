@@ -67,9 +67,24 @@ class SearchController extends Controller
 		if($getKeyword['imgtype']=='2') {
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword, 30);
-            if (count($pantharmediaData) > 0) {
-                foreach ($pantharmediaData['items']['media'] as $eachmedia) {
-                    if (isset($eachmedia['id'])) {
+          if (count($pantharmediaData) > 0) {
+           if(empty($pantharmediaData['items']['media'][0] ) ){
+                $all_products = array(
+                    'product_id' => $pantharmediaData['items']['media']['id'],
+                    'api_product_id' => encrypt($pantharmediaData['items']['media']['id']),
+                    'product_title' => $pantharmediaData['items']['media']['title'],
+                    'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pantharmediaData['items']['media']['title']))),
+                    'product_main_image' => str_replace('http','https',$pantharmediaData['items']['media']['preview_high']),
+                    'product_thumbnail' => str_replace('http','https',$pantharmediaData['items']['media']['preview_no_wm']),
+                    'product_description' => $pantharmediaData['items']['media']['description'],
+                    'product_keywords' => $pantharmediaData['items']['media']['keywords'],
+                    'product_main_type' => "Image",
+                    'product_added_on' => date("Y-m-d H:i:s", strtotime($pantharmediaData['items']['media']['date'])),
+                    'product_web' => '2',
+                );
+            }else{
+                    foreach ($pantharmediaData['items']['media'] as $eachmedia) {
+                     if (isset($eachmedia['id'])) {
                         $media = array(
                             'product_id' => $eachmedia['id'],
                             'api_product_id' => encrypt($eachmedia['id']),
@@ -86,12 +101,12 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
+            }
+            return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
             }
         }else{
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword,'30');
-
             if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -115,7 +130,6 @@ class SearchController extends Controller
                             'product_web' => '3',
                             'product_keywords' => $eachmedia['kw']
                         );
-
                     }
                     array_push($all_products, $media);
                 }
