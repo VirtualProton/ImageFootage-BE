@@ -250,7 +250,14 @@ Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCa
 Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
 Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
 
+Route::get('/add_promotion', 'PromotionController@index');
+Route::post('/createpromotion', 'PromotionController@create');
+Route::get('/list_promotion', 'PromotionController@promotionList');
 
+Route::get('/promotionstatus/{status}/{id}', 'PromotionController@changePromotionStatus');
+Route::get('/deletepromotion/{id}', 'PromotionController@destroy');
+Route::get('/updatepromotion/{id}', 'PromotionController@updatePromotion');
+Route::post('/editpromotion', 'ProductCategoryController@editPromotion');
 });
 Route::get('emailVerification','UserContactusController@emailVerification');
 Route::get('payu/{id}','PaymentController@payu');
@@ -259,6 +266,9 @@ Route::get('invoiceConfirmation/{id}','PaymentController@invoiceConfirmation');
 
 // Route for active user account
 Route::get('active_user_account/{email?}', "UserController@activeUserAccount");
+
+//Route for Promtion 
+
 
 
 

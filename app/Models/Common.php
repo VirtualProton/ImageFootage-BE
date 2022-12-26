@@ -122,7 +122,7 @@ class Common extends Model
 
         $insert = array(
             'user_id'=> $data['uid'],
-            'end_client'=> $data['end_client'],
+           // 'end_client'=> $data['end_client'],
             'email_id'=> $data['email'],
             'flag'=> $data['flag'],
             'invoice_name'=> $this->random_numbers(),
@@ -171,10 +171,10 @@ class Common extends Model
             if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
                 Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
             }
-
+            // dd($id,$data['uid']);
             $dataForEmail  = $this->getData($id,$data['uid']); 
             $dataForEmail = json_decode(json_encode($dataForEmail), true);
-
+            // dd($dataForEmail);
             $transactionRequest = new TransactionRequest();
             //Setting all values here
             $transactionRequest->setMode($this->mode);
@@ -199,7 +199,7 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
-            
+            // dd($dataForEmail);
             $data["subject"] = "Quotation (".$dataForEmail[0]['invoice_name'].")";
             $data["email"] = $data['email'];
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
@@ -208,6 +208,7 @@ class Common extends Model
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
             $fileName = $data["invoice"]."_quotation.pdf";
+            
             $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
             try{
                     Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
@@ -218,7 +219,7 @@ class Common extends Model
                     });
 
                     $s3Client = new S3Client([
-                        /*'profile' => 'default',*/
+                        'profile' => 'default',
                         'region' => 'us-east-2',
                         'version' => '2006-03-01'
                     ]);
@@ -269,9 +270,9 @@ class Common extends Model
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
             ->where('imagefootage_performa_invoices.user_id','=',$user_id)
-            ->join('countries as cn','cn.id','=','usr.country')
-            ->join('states as st','st.id','=','usr.state')
-            ->join('cities as ct','ct.id','=','usr.city')
+            ->join('countries as cn','cn.id','=','usr.country','left')
+            ->join('states as st','st.id','=','usr.state','left')
+            ->join('cities as ct','ct.id','=','usr.city','left')
             ->get()
             ->toArray();
             //dd(DB::getQueryLog());
