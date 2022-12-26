@@ -15,6 +15,8 @@ class ImageApi {
      private $algo = "sha1";
      private $access_key =NULL;
 
+     
+
      public function  __construct(){
 
      }
@@ -185,7 +187,7 @@ class ImageApi {
                 'algo' => $this->algo,
                 'content_type'=>'application/json',
                 'lang'=>'en',
-                'q'=>$serach,
+                'q'=>,
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
@@ -380,14 +382,11 @@ class ImageApi {
                 'lang'=>'en',
                 'id_media'=> $contents['download_status']['$data']['media']['id'],
                 'queue_hash'=>$contents['download_status']['queue_hash'],
-                'callback_url' => 'https://imagefootage.com/backend/api/callback_download',
+                'callback_url' => 'https://staging.imagefootage.com/backend/api/callback_download',
                 'test'=>'yes'
             ]
         ]);
       if ($response2->getBody()) {
-          //echo $this->timestamp;
-          //echo "<br/>";
-          //echo $this->access_key;
           $downloadcontents = json_decode($response2->getBody());
           print_r($downloadcontents);
           die;
