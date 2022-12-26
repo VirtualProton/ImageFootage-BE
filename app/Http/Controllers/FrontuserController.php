@@ -203,6 +203,7 @@ class FrontuserController extends Controller {
 		}
 	}
 	public function addtoWishlist(Request $request){
+
 		$product_data = $request->all();
 		$UserWishlist=new UserWishlist;
         $product_addedby= $request['tokenData']['Utype'];
@@ -221,12 +222,14 @@ class FrontuserController extends Controller {
 
         $cart_list=$UserWishlist->where('wishlist_product',$productId)->where('wishlist_user_id',$product_addedby)->get()->toArray();
 		if(empty($cart_list)){
+			//dd($request['foldername']);
 			$UserWishlist=new UserWishlist;
 			$UserWishlist->wishlist_product=$productId;
-			$UserWishlist->folder_name = strtolower($request['folder']);
+			$UserWishlist->folder_name = strtolower($request['foldername']);
 			$UserWishlist->wishlist_user_id=$product_addedby;
 			$UserWishlist->wishlist_added_on=date('Y-m-d H:i:s');
 			$result=$UserWishlist->save();
+			
 			if($result){
 				echo '{"status":"1","message":"Product added to Wishlist successfully"}';
 			}else{
@@ -251,8 +254,7 @@ class FrontuserController extends Controller {
 		}
 	}
 	public function wishlist(Request $request){
-        //print_r($request->all());
-		$user_id = $request['Utype'];
+       	$user_id = $request['Utype'];
         $UserWishlist=new UserWishlist;
 		$cart_data = [];
 		$cart_list= $UserWishlist->select('wishlist_product', 'folder_name')->where('wishlist_user_id',$user_id)->get()->toArray();
@@ -273,6 +275,7 @@ class FrontuserController extends Controller {
 					$cart_data[$folder][$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachData['product_title'])));
 				}
 			}
+			//dd(json_encode($cart_data));
 			echo '{"status":"1","data":'.json_encode($cart_data, true).',"message":""}';
 		}else{
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
