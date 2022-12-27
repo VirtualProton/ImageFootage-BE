@@ -780,7 +780,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
 
         }
 
-        console.log($scope.quotation);
+     //   console.log($scope.quotation);
         var fd = new FormData();
         // angular.forEach($scope.quotation[0],function(file){
         //     fd.append('file',file);
@@ -813,10 +813,6 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         });
 
     }
-
-
-
-
 });
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};
@@ -904,20 +900,20 @@ app.controller('invoiceController', function($scope, $http, $location) {
         
         if(!$('#gstNocus').val()) { 
             alert("Please add gst no.");
-        // } else if(!reggst.test($('#gstNocus').val())) {
-        //     alert("Please enter valid GST no.");
-        // } else if(!$('#panNocus').val()) {
-        //     alert("Please add pan no.");
-        // } else if(!regex.test($('#panNocus').val())){
-        //     alert("Please enter valid pan no.");
-        // } else if(panno != $('#panNocus').val()) {
-        //     alert("Please enter valid pan no or GST Number.");
-        // } else if(!$('#phonecus').val()) {
-        //     alert("Please add phone no .");
-        // } else if(!regmob.test($('#phonecus').val())){
-        //     alert("Please enter 10 digit mobile no .");
-        // } else if(!$scope.payment_method){
-          //  alert("Please select payment method.");
+        } else if(!reggst.test($('#gstNocus').val())) {
+            alert("Please enter valid GST no.");
+        } else if(!$('#panNocus').val()) {
+            alert("Please add pan no.");
+        } else if(!regex.test($('#panNocus').val())){
+            alert("Please enter valid pan no.");
+        } else if(panno != $('#panNocus').val()) {
+            alert("Please enter valid pan no or GST Number.");
+        } else if(!$('#phonecus').val()) {
+            alert("Please add phone no .");
+        } else if(!regmob.test($('#phonecus').val())){
+            alert("Please enter 10 digit mobile no .");
+        } else if(!$scope.payment_method){
+           alert("Please select payment method.");
         } else {
         if (confirm('Do you want to send invoice for this quotation ?')) {
             $('#loading').show();

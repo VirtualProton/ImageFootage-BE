@@ -187,7 +187,7 @@ class ImageApi {
                 'algo' => $this->algo,
                 'content_type'=>'application/json',
                 'lang'=>'en',
-                'q'=>'',
+                'q'=>'', 
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
@@ -210,7 +210,6 @@ class ImageApi {
 
  public function get_media_info($media_id){
         $this->access_key = $this->getAccessKey();
-        // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post('http://rest.panthermedia.net/get-media-info', [
             'headers'=>[
@@ -240,8 +239,6 @@ class ImageApi {
 
   public function getPriceFromList($media,$product_id= NULL){
         if(count($media)>0){
-            //echo "<pre>";
-            //print_r($media); die;
             $products = array();
             //foreach($media as $eachmedia){
                 $products[0]['name'] = $media['metadata']['title'];
@@ -292,7 +289,6 @@ class ImageApi {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
             $hostname = env('APP_URL');
-            //print_r($contents); die;
 
             $client2 = new Client(); //GuzzleHttp\Client
             $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
@@ -315,9 +311,6 @@ class ImageApi {
                 ]
             ]);
             if ($response2->getBody()) {
-            // echo $this->timestamp;
-                //echo "<br/>";
-            // echo $this->access_key;
                 $downloadcontents = json_decode($response2->getBody());
                 print_r($downloadcontents); die;
             // die;
@@ -357,7 +350,6 @@ class ImageApi {
                         ]);
                         // Send the request & save response to $resp
                         $response = curl_exec($curl);
-                        //print_r($response); die;
                         curl_close($curl);
                         $contents = json_decode($response, true);
                         return $contents;
