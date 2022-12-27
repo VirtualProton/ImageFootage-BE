@@ -187,7 +187,7 @@ class ImageApi {
                 'algo' => $this->algo,
                 'content_type'=>'application/json',
                 'lang'=>'en',
-                'q'=>,
+                'q'=>'',
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
@@ -291,6 +291,7 @@ class ImageApi {
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
+            $hostname = env('APP_URL');
             //print_r($contents); die;
 
             $client2 = new Client(); //GuzzleHttp\Client
@@ -309,7 +310,7 @@ class ImageApi {
                     'lang'=>'en',
                     'id_media'=> $data['product']['product_info']['media']['id'],
                     'queue_hash'=>$contents['download_status']['queue_hash'],
-                    'callback_url' => 'http://localhost/imagefootage/backend/api/callback_download',
+                    'callback_url' => $hostname.'/backend/api/callback_download',
                     'test'=>'yes'
                 ]
             ]);
@@ -366,6 +367,7 @@ class ImageApi {
     }
 
     public function downloadCallback() {
+        $hostname = env('APP_URL');
         $client2 = new Client(); //GuzzleHttp\Client
         $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
             'headers'=>[
@@ -382,7 +384,7 @@ class ImageApi {
                 'lang'=>'en',
                 'id_media'=> $contents['download_status']['$data']['media']['id'],
                 'queue_hash'=>$contents['download_status']['queue_hash'],
-                'callback_url' => 'https://staging.imagefootage.com/backend/api/callback_download',
+                'callback_url' => $hostname.'/backend/api/callback_download',
                 'test'=>'yes'
             ]
         ]);

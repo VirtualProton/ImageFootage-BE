@@ -1,4 +1,6 @@
 base_url = '/imagefootage/backend/admin/';
+api_path = '/admin/';
+image_path ='/';
 small_price = '500';
 medium_price = '2500';
 large_price = '2500';
@@ -48,7 +50,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             var index = $scope.quotation.product.indexOf(product);
             $http({
                 method: 'GET',
-                url:  'https://imagefootage.com/backend/api/product/' + product.name +'?type='+ product.type,
+                url:  image_path+'api/product/' + product.name +'?type='+ product.type,
             }).then(function(response) {
                 console.log(response);
                 if (response.status == '200') {
@@ -189,7 +191,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         $('#loading').show();
             $http({
                 method: 'POST',
-                url: base_url + 'plans',
+                url: api_path + 'plans',
                 data: { "quotation_type" : $scope.quotation_type_var, "prod_type" : $scope.prod_type_var, "product_dur" : $scope.plan_type_var }
             }).then(function(response) {
                 $('#loading').hide();
@@ -363,7 +365,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
                 } else {
                     alert(response.data.this.statusdesc);
                 }
-                window.location = base_url + 'users/invoices/' + $('#uid').val();
+                window.location = api_path + 'users/invoices/' + $('#uid').val();
             
             }, function(error) {
                 $('#loading').hide();
@@ -415,7 +417,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
                 } else {
                     alert(response.data.this.statusdesc);
                 }
-                window.location = base_url + 'users/invoices/' + $('#uid').val();
+                window.location = api_path + 'users/invoices/' + $('#uid').val();
                 // $scope.quotation.product[index].name = response.data[0].product_code;
                 // $scope.quotation.product[index].id = response.data[0].id;
                 // if(response.data[0].type =="Royalty Free"){
@@ -459,7 +461,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         // });
         $http({
             method: 'POST',
-            url: base_url + 'saveInvoice',
+            url: api_path + 'saveInvoice',
             data: sendData,
             headers: { 'Content-Type': undefined },
         }).then(function(response) {
@@ -469,7 +471,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             } else {
                 alert(response.data.this.statusdesc);
             }
-            window.location = base_url + 'users/invoices/' + $('#uid').val();
+            window.location = api_path + 'users/invoices/' + $('#uid').val();
             // $scope.quotation.product[index].name = response.data[0].product_code;
             // $scope.quotation.product[index].id = response.data[0].id;
             // if(response.data[0].type =="Royalty Free"){
@@ -571,7 +573,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     $('#loading').show();
     $http({
         method: 'POST',
-        url: base_url + 'edit_quotation_data',
+        url: api_path + 'edit_quotation_data',
         data: { quotation: path }
     }).then(function(result) {
         $('#loading').hide();
@@ -785,7 +787,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         // });
         $http({
             method: 'POST',
-            url: base_url + 'saveInvoice',
+            url: api_path + 'saveInvoice',
             data: sendData,
             headers: { 'Content-Type': undefined },
         }).then(function(response) {
@@ -795,7 +797,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
             } else {
                 alert(response.data.this.statusdesc);
             }
-            window.location = base_url + 'users/invoices/' + $('#uid').val();
+            window.location = api_path + 'users/invoices/' + $('#uid').val();
             // $scope.quotation.product[index].name = response.data[0].product_code;
             // $scope.quotation.product[index].id = response.data[0].id;
             // if(response.data[0].type =="Royalty Free"){
@@ -877,7 +879,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
             $('#loading').show();
                 $http({
                     method: 'POST',
-                    url: base_url + 'create_invoice_subcription',
+                    url: api_path + 'create_invoice_subcription',
                     data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method,  gst : $('#gstNo').val(), pan: $('#panNo').val(), phone: $('#phone').val()}
                 }).then(function(result) {
                     $('#loading').hide();
@@ -902,26 +904,26 @@ app.controller('invoiceController', function($scope, $http, $location) {
         
         if(!$('#gstNocus').val()) { 
             alert("Please add gst no.");
-        } else if(!reggst.test($('#gstNocus').val())) {
-            alert("Please enter valid GST no.");
-        } else if(!$('#panNocus').val()) {
-            alert("Please add pan no.");
-        } else if(!regex.test($('#panNocus').val())){
-            alert("Please enter valid pan no.");
-        } else if(panno != $('#panNocus').val()) {
-            alert("Please enter valid pan no or GST Number.");
-        } else if(!$('#phonecus').val()) {
-            alert("Please add phone no .");
-        } else if(!regmob.test($('#phonecus').val())){
-            alert("Please enter 10 digit mobile no .");
-        } else if(!$scope.payment_method){
-            alert("Please select payment method.");
+        // } else if(!reggst.test($('#gstNocus').val())) {
+        //     alert("Please enter valid GST no.");
+        // } else if(!$('#panNocus').val()) {
+        //     alert("Please add pan no.");
+        // } else if(!regex.test($('#panNocus').val())){
+        //     alert("Please enter valid pan no.");
+        // } else if(panno != $('#panNocus').val()) {
+        //     alert("Please enter valid pan no or GST Number.");
+        // } else if(!$('#phonecus').val()) {
+        //     alert("Please add phone no .");
+        // } else if(!regmob.test($('#phonecus').val())){
+        //     alert("Please enter 10 digit mobile no .");
+        // } else if(!$scope.payment_method){
+          //  alert("Please select payment method.");
         } else {
         if (confirm('Do you want to send invoice for this quotation ?')) {
             $('#loading').show();
                 $http({
                     method: 'POST',
-                    url: base_url + 'create_invoice',
+                    url: api_path + 'create_invoice',
                     data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val()}
                 }).then(function(result) {
                     $('#loading').hide();
@@ -1096,7 +1098,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
             var index = $scope.quotation.product.indexOf(product);
             $http({
                 method: 'GET',
-                url:  'https://imagefootage.com/backend/api/product/' + product.name +'?type='+ product.type,
+                url:  image_path+'api/product/' + product.name +'?type='+ product.type,
                 //url:  'http://localhost/imagefootage/backend/api/product/' + product.name +'?type='+ product.type,
             }).then(function(response) {
                 console.log(response);
@@ -1241,7 +1243,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         $('#loading').show();
             $http({
                 method: 'POST',
-                url: base_url + 'plans',
+                url: api_path + 'plans',
                 data: { "quotation_type" : $scope.quotation_type_var, "prod_type" : $scope.prod_type_var, "product_dur" : $scope.plan_type_var }
             }).then(function(response) {
                 $('#loading').hide();
@@ -1512,7 +1514,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         // });
         $http({
             method: 'POST',
-            url: base_url + 'saveInvoice',
+            url: api_path + 'saveInvoice',
             data: sendData,
             headers: { 'Content-Type': undefined },
         }).then(function(response) {
