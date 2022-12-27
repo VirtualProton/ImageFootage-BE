@@ -692,7 +692,6 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     $scope.calculatePrice = function() {
 
         var subtotal = $scope.quotation.product;
-        //console.log(subtotal);
         var subtotalvalue = 0;
         var total = 0;
         for (var j = 0; j < subtotal.length; j++) {
