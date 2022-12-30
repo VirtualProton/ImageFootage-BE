@@ -187,7 +187,7 @@ class ImageApi {
                 'algo' => $this->algo,
                 'content_type'=>'application/json',
                 'lang'=>'en',
-                'q'=>'', 
+                'q'=>$serach, 
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",

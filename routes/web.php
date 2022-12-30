@@ -251,7 +251,7 @@ Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
 Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
 
 Route::get('/add_promotion', 'PromotionController@index');
-Route::post('/createpromotion', 'PromotionController@create');
+Route::post('/createpromotion', 'PromotionController@promotion');
 Route::get('/list_promotion', 'PromotionController@promotionList');
 
 Route::get('/promotionstatus/{status}/{id}', 'PromotionController@changePromotionStatus');

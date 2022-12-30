@@ -44,7 +44,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         $scope.quotation.product.splice(index, 1);
     }
     $scope.prices = [];
-    $scope.getproduct = function(product) {  
+    $scope.getproduct = function(product) {
     if(product.name != ''){
         $('#loading').show();
             var index = $scope.quotation.product.indexOf(product);
@@ -82,7 +82,6 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
     }
 
     $scope.getThetotalAmount = function(product) {
-        console.log(product);
         var index = $scope.quotation.product.indexOf(product);
         console.log($scope.prices);
         if(product.type == 'Image') {
@@ -491,7 +490,80 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         console.log(product_type);
     }
 });
+app.controller('PromotionController', function($scope, $http, $location, fileReader) {
+    $scope.title = "Promotion";
+    $scope.promotion = {};
+    $scope.po = '';
+    $scope.product = {};
+    $scope.subsc_expiry_time = '30';
+    $scope.expiry_time = '30';
+    $scope.download_expiry = '30';
 
+    //$scope.uid
+    $scope.promotion.product = [{
+        name: "",
+        pro_size: "",
+        pro_type: "",
+        id: "",
+        image: "",
+        price: "",
+        footage: "",
+        type: "Image"
+    }];
+    $scope.promotion_type_var = 'custom';
+    $scope.addProduct = function() {
+        var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image" };
+        $scope.promotion.product.push(newProduct);
+    }
+     
+    $scope.$on("fileProgress", function(e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+      });
+      
+    $scope.removeProduct = function(product) {
+        var index = $scope.promotion.product.indexOf(product);
+        $scope.promotion.product.splice(index, 1);
+    }
+    $scope.prices = [];
+    $scope.getproduct = function(product) {
+    if(product.name != ''){
+        $('#loading').show();
+            var index = $scope.promotion.product.indexOf(product);
+            $http({
+                method: 'GET',
+                url:  image_path+'api/product/' + product.name +'?type='+ product.type,
+            }).then(function(response) {
+                console.log(response);
+                if (response.status == '200') {
+                    $('#loading').hide();
+                    if(product.type == 'Image'){
+                        $scope.promotion.product[0].image = response.data[0].thumbnail_image;
+                        $("#image_url").val($scope.promotion.product[0].image);
+                        if($scope.promotion.product[0].image != ""){
+                            $("#product_image").attr("src", $scope.promotion.product[0].image);
+                            $("#product_image_container").show();
+                        } else{
+                            $("#product_image").removeAttr("src");
+                            $("#product_image_container").hide();
+                        }
+                    } else {
+                        if(response.data[1] != ""){
+                        $("#footage_url").val(response.data[1]);
+                        let url = "https://p5resellerp.s3-accelerate.amazonaws.com/"+ response.data[1];
+                        $("#product_footage").attr("src", url);
+                        $("#product_footage").show();
+                        }else{
+                            $("#product_footage").removeAttr("src");
+                            $("#product_footage").hide();
+                        }
+                    }
+                }
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }   
+    }  
+});
 app.directive('ngFileModel', ['$parse', function($parse) {
     return {
         restrict: 'A',
