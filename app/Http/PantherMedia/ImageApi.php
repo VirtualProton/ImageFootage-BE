@@ -199,7 +199,6 @@ class ImageApi {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
             return $contents;
-
         }
      }catch (BadResponseException $ex) {
           $response = $ex->getResponse();
@@ -388,8 +387,6 @@ class ImageApi {
         }
 
     }
-
-
 }
 
 ?>

@@ -633,8 +633,6 @@ app.controller('ordersController', function($scope, $http, $location) {
         console.log($scope.products);
         $('#modal-default').modal('show');
     }
-
-
 });
 
 app.controller('editquotatationController', function($scope, $http, $location) {

@@ -8,7 +8,6 @@ use App\Models\Promotion;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
-
 class PromotionController extends Controller
 {
     public function index(){
@@ -56,15 +55,6 @@ class PromotionController extends Controller
                 
             ]);
             $promotion->save();
-
-        // $postPromotionData = $request->except(['_token']);
-        // $promotionDataFormat = [];
-        //    foreach ($postPromotionData as $key => $promotionData) {
-        //        $promotionDataFormat[$key] = $promotionData;
-        //    }
-           // create array to insert into DB
-        //    $addPromotion = Promotion::create($promotionDataFormat); // Store lead data
-        //    $addPromotion->save();
            return back()->with('success','Promotion Save Successfully.');
         }
     }
@@ -130,9 +120,7 @@ class PromotionController extends Controller
 
     public function getPromotion(Request $request)
     {
-        
-
-        $current_event = Promotion::select( 'id','event_name', 'media_url','date_start', 'date_end' )
+       $current_event = Promotion::select( 'id','event_name', 'media_url','date_start', 'date_end' )
             ->where('date_start', '<=', Carbon::now())
             ->where('date_end', '>=', Carbon::now())->get();
        // dd( $current_event);

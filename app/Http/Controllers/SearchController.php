@@ -222,7 +222,6 @@ class SearchController extends Controller
                             'product_web' => '3',
                             'product_keywords' => $eachmedia['kw']
                         );
-
                     }
                     array_push($all_products, $media);
                 }
