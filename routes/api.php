@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PromotionController;
 use Illuminate\Http\Request;
 
 /*
@@ -79,7 +80,7 @@ Route::group([
     Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
     Route::post('atomSubPayInvoiceResponse', 'PaymentController@atomSubPayInvoiceResponse');
-
+    Route::get('/promotion', [PromotionController::class, "getPromotion"]);
 
     Route::get('/add_products_api', 'ProductApiController@getAddProduct');
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
