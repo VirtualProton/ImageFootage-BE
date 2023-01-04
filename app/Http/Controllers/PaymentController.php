@@ -40,20 +40,22 @@ class PaymentController extends Controller
     public function __construct()
     {
         $environment = App::environment();
-        if (App::environment('local')) {
-            // The environment is local
-            $this->baseurl = 'http://localhost:4200';
-            $this->keyRazorId = 'rzp_test_Dd2iWOI7kdIHEC';
-            $this->keyRazorSecret = 'BSVOJ3b77qVADz4qqiHdbsVQ';
-            $this->atomRequestKey ='KEY123657234';
-            $this->atomResponseKey ='KEYRESP123657234';
-            $this->login ='197';
-            $this->mode ='Test';
-            $this->password = 'Test@123';
-            $this->clientcode = '007';
-            $this->atomprodId = 'NSE';
-      }else{
-            $this->baseurl = 'https://imagefootage.com';
+        $hostname = env('FRONT_END_URL');
+    //     if (App::environment('local')) {
+    //         // The environment is local
+    //         $this->baseurl = 'http://localhost:4200';
+    //         $this->keyRazorId = 'rzp_test_Dd2iWOI7kdIHEC';
+    //         $this->keyRazorSecret = 'BSVOJ3b77qVADz4qqiHdbsVQ';
+    //         $this->atomRequestKey ='KEY123657234';
+    //         $this->atomResponseKey ='KEYRESP123657234';
+    //         $this->login ='197';
+    //         $this->mode ='Test';
+    //         $this->password = 'Test@123';
+    //         $this->clientcode = '007';
+    //         $this->atomprodId = 'NSE';
+    //   }else{
+          //  $this->baseurl = 'https://imagefootage.com';
+          $this->baseurl = $hostname;
             $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
             $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
             $this->atomRequestKey ='3a1575abc728e8ccf9';
@@ -64,7 +66,7 @@ class PaymentController extends Controller
             $this->clientcode = '007';
             $this->atomprodId = 'CONCEPTUAL';
 
-        }
+        //}
 
     }
 

@@ -26,18 +26,20 @@ class Common extends Model
 
         date_default_timezone_set('Asia/Kolkata');
         $environment = App::environment();
-        if (App::environment('local')) {
-            // The environment is local
-            $this->baseurl = 'http://localhost:4200';
-            $this->atomRequestKey = 'KEY123657234';
-            $this->atomResponseKey = 'KEYRESP123657234';
-            $this->login = '197';
-            $this->mode = 'Test';
-            $this->password = 'Test@123';
-            $this->clientcode = '007';
-            $this->atomprodId = 'NSE';
-        } else {
-            $this->baseurl = 'https://imagefootage.com';
+        $hostname = env('FRONT_END_URL');
+        // if (App::environment('local')) {
+        //     // The environment is local
+        //     $this->baseurl = 'http://localhost:4200';
+        //     $this->atomRequestKey = 'KEY123657234';
+        //     $this->atomResponseKey = 'KEYRESP123657234';
+        //     $this->login = '197';
+        //     $this->mode = 'Test';
+        //     $this->password = 'Test@123';
+        //     $this->clientcode = '007';
+        //     $this->atomprodId = 'NSE';
+        // } else {
+            //$this->baseurl = 'https://imagefootage.com';
+            $this->baseurl = $hostname;
             $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
             $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
             $this->atomRequestKey = '3a1575abc728e8ccf9';
@@ -47,7 +49,7 @@ class Common extends Model
             $this->password = '33719eef';
             $this->clientcode = '007';
             $this->atomprodId = 'CONCEPTUAL';
-        }
+        //}
     }
  public function getCurruncy($col=NULL,$value=NULL){
         if(!empty($id) && !empty($type)){
@@ -219,7 +221,7 @@ class Common extends Model
                     });
 
                     $s3Client = new S3Client([
-                        'profile' => 'default',
+                        // 'profile' => 'default',
                         'region' => 'us-east-2',
                         'version' => '2006-03-01'
                     ]);
@@ -313,8 +315,8 @@ class Common extends Model
     }
 
     public function create_invoice($quotation_id,$user_id, $po, $po_date, $payment_method, $request_data){
-        ini_set('max_execution_time', 0);
-        User::where('id', $user_id)->update(['gst'=> $request_data['gst'], 'pan' => $request_data['gst'], 'mobile' => $request_data['phone'], 'phone' => $request_data['phone']])->update();
+        //ini_set('max_execution_time', 0);
+        User::where('id', $user_id)->update(['gst'=> $request_data['gst'], 'pan' => $request_data['pan'], 'mobile' => $request_data['phone'], 'phone' => $request_data['phone']]);
         $dataForEmail = $this->getData($quotation_id,$user_id);
 
         $dataForEmail = json_decode(json_encode($dataForEmail), true);

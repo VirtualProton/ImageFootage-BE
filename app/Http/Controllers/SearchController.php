@@ -10,6 +10,7 @@ use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
 use App\Models\Keywords;
 use App\Models\Product;
+use App\Models\Promotion;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
@@ -221,7 +222,6 @@ class SearchController extends Controller
                             'product_web' => '3',
                             'product_keywords' => $eachmedia['kw']
                         );
-
                     }
                     array_push($all_products, $media);
                 }
@@ -252,4 +252,5 @@ class SearchController extends Controller
             return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
     }
+    
 }

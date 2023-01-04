@@ -15,6 +15,8 @@ class ImageApi {
      private $algo = "sha1";
      private $access_key =NULL;
 
+     
+
      public function  __construct(){
 
      }
@@ -185,7 +187,7 @@ class ImageApi {
                 'algo' => $this->algo,
                 'content_type'=>'application/json',
                 'lang'=>'en',
-                'q'=>$serach,
+                'q'=>$serach, 
                 'page'=>$page,
                 'limit'=>$limit,
                 'extra_info'=>"preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
@@ -197,7 +199,6 @@ class ImageApi {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
             return $contents;
-
         }
      }catch (BadResponseException $ex) {
           $response = $ex->getResponse();
@@ -208,7 +209,6 @@ class ImageApi {
 
  public function get_media_info($media_id){
         $this->access_key = $this->getAccessKey();
-        // echo $this->access_key; die;
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post('http://rest.panthermedia.net/get-media-info', [
             'headers'=>[
@@ -238,8 +238,6 @@ class ImageApi {
 
   public function getPriceFromList($media,$product_id= NULL){
         if(count($media)>0){
-            //echo "<pre>";
-            //print_r($media); die;
             $products = array();
             //foreach($media as $eachmedia){
                 $products[0]['name'] = $media['metadata']['title'];
@@ -289,7 +287,7 @@ class ImageApi {
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
-            //print_r($contents); die;
+            $hostname = env('APP_URL');
 
             $client2 = new Client(); //GuzzleHttp\Client
             $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
@@ -307,14 +305,11 @@ class ImageApi {
                     'lang'=>'en',
                     'id_media'=> $data['product']['product_info']['media']['id'],
                     'queue_hash'=>$contents['download_status']['queue_hash'],
-                    'callback_url' => 'http://localhost/imagefootage/backend/api/callback_download',
+                    'callback_url' => $hostname.'/backend/api/callback_download',
                     'test'=>'yes'
                 ]
             ]);
             if ($response2->getBody()) {
-            // echo $this->timestamp;
-                //echo "<br/>";
-            // echo $this->access_key;
                 $downloadcontents = json_decode($response2->getBody());
                 print_r($downloadcontents); die;
             // die;
@@ -354,7 +349,6 @@ class ImageApi {
                         ]);
                         // Send the request & save response to $resp
                         $response = curl_exec($curl);
-                        //print_r($response); die;
                         curl_close($curl);
                         $contents = json_decode($response, true);
                         return $contents;
@@ -364,6 +358,7 @@ class ImageApi {
     }
 
     public function downloadCallback() {
+        $hostname = env('APP_URL');
         $client2 = new Client(); //GuzzleHttp\Client
         $response2 = $client2->post('https://rest.panthermedia.net/download-media', [
             'headers'=>[
@@ -380,14 +375,11 @@ class ImageApi {
                 'lang'=>'en',
                 'id_media'=> $contents['download_status']['$data']['media']['id'],
                 'queue_hash'=>$contents['download_status']['queue_hash'],
-                'callback_url' => 'https://imagefootage.com/backend/api/callback_download',
+                'callback_url' => $hostname.'/backend/api/callback_download',
                 'test'=>'yes'
             ]
         ]);
       if ($response2->getBody()) {
-          //echo $this->timestamp;
-          //echo "<br/>";
-          //echo $this->access_key;
           $downloadcontents = json_decode($response2->getBody());
           print_r($downloadcontents);
           die;
@@ -395,8 +387,6 @@ class ImageApi {
         }
 
     }
-
-
 }
 
 ?>

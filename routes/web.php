@@ -249,9 +249,9 @@ Route::get('/outstanding_report', 'InvoiceController@outstandingReport');
 Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCartStatus');
 Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
 Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
-
+//Route for Promtion 
 Route::get('/add_promotion', 'PromotionController@index');
-Route::post('/createpromotion', 'PromotionController@create');
+Route::post('/createpromotion', 'PromotionController@promotion');
 Route::get('/list_promotion', 'PromotionController@promotionList');
 
 Route::get('/promotionstatus/{status}/{id}', 'PromotionController@changePromotionStatus');
@@ -267,7 +267,7 @@ Route::get('invoiceConfirmation/{id}','PaymentController@invoiceConfirmation');
 // Route for active user account
 Route::get('active_user_account/{email?}', "UserController@activeUserAccount");
 
-//Route for Promtion 
+
 
 
 

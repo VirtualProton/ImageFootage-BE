@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Promotion;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class PromotionController extends Controller
 {
     public function index(){
-        return view('admin.promotion.create');
+        return view('admin.promotion.promotion');
     }
     public function promotionList(){
         $promotionList = new Promotion;
@@ -21,34 +22,45 @@ class PromotionController extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'event_name' => 'required',
-            'date_start' => 'required',
-            'date_end' => 'required',
-            'event_banner'=> 'required',
+            'date_start'      => 'required',
+            'date_end'        => 'required|date|after:date_start',
+            'product_name'=> 'required',
             'event_des' => 'required'
 
         ], [
             'event_name.required' => 'The Event Name field is required.',
             'date_start.required' => 'The Start Date field is required.',
             'date_end.required' => 'The End Date field is required.',
-            'event_banner.required' => 'The Event Banner field is required.',
+            'product_name.required' => 'The Event Banner field is required.',
             'event_des.required' => 'The Event Description field is required.'
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         } else {
-        $postPromotionData = $request->except(['_token']);
-        $promotionDataFormat = [];
-           foreach ($postPromotionData as $key => $promotionData) {
-               $promotionDataFormat[$key] = $promotionData;
-           }
-           // create array to insert into DB
-           $addPromotion = Promotion::create($promotionDataFormat); // Store lead data
-           $addPromotion->save();
+            $url = "";
+            if($request->input('image_url') !=""){
+                $url = $request->input('image_url');
+            }else {
+                $url = "https://p5resellerp.s3-accelerate.amazonaws.com/".$request->input('footage_url');
+            }
+            $promotion = Promotion::create([
+                'event_name' => strip_tags($request->input('event_name')),
+                'date_start' => $request->input('date_start'),
+                'date_end' => $request->input('date_end'),
+                'media_type' => $request->input('media_type'),
+                'product_name' => $request->input('product_name'),
+                'media_url' =>  $url,
+                'event_des' => $request->input('event_des'),
+                'status' => $request->input('status')
+                
+            ]);
+            $promotion->save();
+           return back()->with('success','Promotion Save Successfully.');
         }
     }
 
     public function changePromotionStatus($status,$id){
-		$result = Promotion::where('category_id',$id)->update(array('status'=>$status));
+       $result = Promotion::where('id',$id)->update(array('status'=>$status));
 		if($result){
           return back()->with('success','Promotion status changed successfully.');
 		}else{
@@ -67,12 +79,13 @@ class PromotionController extends Controller
 
     public function updatePromotion($id)
     {
-    	$user = Auth::guard('admins')->user();
-        if($user->role['role'] !='Super Admin'){
-          return back()->with('success','You dont have acess to edit.');
-        }
+    	// $user = Auth::guard('admins')->user();
+        // if($user->role['role'] !='Super Admin'){
+        //   return back()->with('success','You dont have acess to edit.');
+        // }
 		$promotionDetails=Promotion::find($id)->toArray();
-        return view('admin.promotion.editproductcategory', ['promotionDetails' => $promotionDetails]);
+        // dd($promotionDetails);
+        return view('admin.promotion.editpromotion', ['promotionDetails' => $promotionDetails]);
     }
     public function editPromotion(Request $request){
 		$this->validate($request, [
@@ -105,4 +118,13 @@ class PromotionController extends Controller
 		       
     }
 
+    public function getPromotion(Request $request)
+    {
+       $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end' )
+            ->where('status', '=', '1')
+            ->where('date_start', '<=', Carbon::now())
+            ->where('date_end', '>=', Carbon::now())->get();
+       // dd( $current_event);
+        return response()->json(["status"=> true, "data"=> $current_event]);
+    }
 }

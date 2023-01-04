@@ -1,11 +1,4 @@
-<html>
-   <head>
-      <title>Quotataion invoice</title>
-      <style>
-         /* * {
-            font-size: 10px;
-            
-         } */
+ <style>
          @media print {
             @page {
                   size: auto;
@@ -69,8 +62,6 @@
             border: 0px !important;
          }
       </style>
-   </head>
-   <body>
       <div class="divTable">
          <div class="divTableBody">
             <div class="divTableRow">
@@ -120,7 +111,7 @@
                         <td colspan="2" width="304">
                            <?php if(!empty($po) && !empty($po_date)) { ?>
                               <p>Purchase Order No. <?php echo $po; ?> dated <?php echo $po_date; ?></p>     
-                           </php } ?>
+                           <?php } ?>
                         </td>
                      </tr>
                      <tr>
@@ -200,25 +191,11 @@
                <table class="bordered width-100pc" width="100%" align="center">
                   <tbody>
                      <tr>
-                           <!-- <td width="50%" style="border: none;">
-                                 
-                              </td>  -->
                            <td width="100%" style="border: none;">
                               <p style="float: right;">For&nbsp;<strong>Image Footage</strong>&nbsp;</p>
                            </td>
                      </tr>
-                     <!-- <tr>
-                              <td width="50%" style="border: none;">
-                                 &nbsp;
-                              </td>  
-                              <td width="50%" style="border: none;">
-                                 <p style="float: right;">&nbsp;</p>
-                              </td> 
-                        </tr>  -->
                      <tr>
-                           <!-- <td width="40%" style="border: none;">
-                                 
-                              </td>  -->
                            <td width="100%" style="border: none;">
                               <p style="text-align: center;"><strong>This is computer generated Quotation.</strong>&nbsp;
                               </p>
@@ -251,5 +228,4 @@
             </div>
          </div>
       </div>
-   </body>
-</html>
+      

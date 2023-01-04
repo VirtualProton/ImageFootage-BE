@@ -5,7 +5,7 @@
     <p><strong>hi</strong>&nbsp;<br /><strong>Plan Invoice</strong>&nbsp;</p>
     </td>
     <td data-celllook="273">
-    <p style="margin-left: 206px;"><img src="httpsapi://imagefootage.com/assets/images/IF_Logo_Final.png" width="200px"></p>
+    <p style="margin-left: 206px;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png" width="200px"></p>
     </td>
     </tr>
     </tbody>
