@@ -60,7 +60,7 @@ class PromotionController extends Controller
     }
 
     public function changePromotionStatus($status,$id){
-		$result = Promotion::where('category_id',$id)->update(array('status'=>$status));
+       $result = Promotion::where('id',$id)->update(array('status'=>$status));
 		if($result){
           return back()->with('success','Promotion status changed successfully.');
 		}else{
@@ -84,7 +84,7 @@ class PromotionController extends Controller
         //   return back()->with('success','You dont have acess to edit.');
         // }
 		$promotionDetails=Promotion::find($id)->toArray();
-        //dd($promotionDetails);
+        // dd($promotionDetails);
         return view('admin.promotion.editpromotion', ['promotionDetails' => $promotionDetails]);
     }
     public function editPromotion(Request $request){
@@ -120,7 +120,8 @@ class PromotionController extends Controller
 
     public function getPromotion(Request $request)
     {
-       $current_event = Promotion::select( 'id','event_name', 'media_url','date_start', 'date_end' )
+       $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end' )
+            ->where('status', '=', '1')
             ->where('date_start', '<=', Carbon::now())
             ->where('date_end', '>=', Carbon::now())->get();
        // dd( $current_event);

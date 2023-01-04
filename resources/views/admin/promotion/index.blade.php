@@ -45,11 +45,11 @@
                         <td>{{ $promotion['event_name'] }} </td>
                         <td>{{ date('Y-m-d',strtotime($promotion['date_start'])) }} </td>
                         <td>{{ date('Y-m-d',strtotime($promotion['date_end'])) }} </td>
-                        <td>{{ $promotion['event_banner'] }} </td>
-                        <td>  @if($promotion['status'] =='yes')
-                            <a href="{{ url('admin/promotionstatus/Inactive/'.$promotion['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
-                            @elseif($promotion['status'] =='no')
-                              <a href="{{ url('admin/promotionstatus/Active/'.$promotion['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+                        <td>{{ $promotion['media_type'] }} </td>
+                        <td>  @if($promotion['status'] =='1')
+                            <a href="{{ url('admin/promotionstatus/0/'.$promotion['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+                            @elseif($promotion['status'] =='0')
+                              <a href="{{ url('admin/promotionstatus/1/'.$promotion['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
                             @endif
 
                             <a href="{{ url('admin/updatepromotion/'.$promotion['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
