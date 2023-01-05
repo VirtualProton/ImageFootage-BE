@@ -28,7 +28,7 @@
                 @include('admin.partials.message')
 
 
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="promotion" class="table table-bordered table-hover">
                 	<thead>
                         <th>Id</th>
                         <th>Event Name</th>
@@ -69,4 +69,10 @@
   @endsection
   @section('scripts')
   <script>
+    $(function () {
+    $('#promotion').DataTable();
+ })
+    </script>
   @endsection
+
+

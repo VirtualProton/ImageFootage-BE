@@ -5,21 +5,9 @@
 <section class="content">
 <div class="box box-info">
         <!-- form start -->
-        <?php //dd($promotionDetails);
-//           "id" => 10
-//   "event_name" => "yoga"
-//   "date_start" => "2022-12-29"
-//   "date_end" => "2023-01-03"
-//   "media_type" => ""
-//   "product_name" => "11979403"
-//   "media_url" => "https://p5resellerp.s3-accelerate.amazonaws.com/011979403_main_xl.mp4"
-//   "event_des" => "tttt"
-//   "status" => "1"
-//   "created_at" => null
-//   "update_at" => null
-        ?>
         <form action="{{ url('admin/editpromotion') }}" role="form" method="post" enctype="multipart/form-data" id="promotionform">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+            <input type="hidden" name="promotion_id" value="{{ $promotionDetails['id']  }}">
             {{-- @include('admin.partials.message') --}}
               <div class="box-body">
                 <div class="form-group">
@@ -45,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label class="">Media Type (Image/Footage)</label>
-                    <select required="" id="ProductType" class="form-control" ng-model="product.type" (change)="checkProduct(product)" ng-change="checkProduct(product)" name="media_type">
+                    <select id="ProductType" class="form-control" ng-model="product.type" (change)="checkProduct(product)" ng-change="checkProduct(product)" name="media_type">
                        <option [ngValue]="Image" {{ $promotionDetails['media_type'] == "Image" ? 'selected' : '' }}>Image</option>
                        <option [ngValue]="Footage" {{ $promotionDetails['media_type'] == "Footage" ? 'selected' : '' }}>Footage</option>
                     </select>
@@ -55,7 +43,7 @@
                 <div class="form-group">
                     <label for="eventBanner">Event Banner</label>
                     <input type="hidden" class="form-control" ng-model="product.id" ng-init="product.name = '{{ $promotionDetails['product_name'] }}'">
-					<input type="text" class="form-control" value="{{ $promotionDetails['product_name'] }}" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
+					<input type="text" class="form-control" value="{{ $promotionDetails['product_name'] }}" name="product_name" id="product_1" ng-blur="getproduct(product)" >
 
                     @if ($errors->has('product_name'))
                             <div class="has_error" style="color:red;">{{ $errors->first('product_name') }}</div>

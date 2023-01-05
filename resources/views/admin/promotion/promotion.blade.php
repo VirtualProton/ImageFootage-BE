@@ -7,7 +7,11 @@
         <!-- form start -->
         <form action="{{ url('admin/createpromotion') }}" role="form" method="post" enctype="multipart/form-data" id="promotionform">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
-            {{-- @include('admin.partials.message') --}}
+            @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+                @endif
               <div class="box-body">
                 <div class="form-group">
                     <label for="event name">Event Name </label>
@@ -31,23 +35,25 @@
                      @endif
                 </div>
                 <div class="form-group">
-                    <label class="">Media Type <%$index+1%> (Image/Footage)</label>
-                    <select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)" name="media_type">
+                    <label class="">Media Type (Image/Footage)</label>
+                    <select class="form-control" ng-model="product.type" ng-change="checkProduct(product)" name="media_type">
                        <option value="">--Select a Type--</option>
                        <option value="Image">Image</option>
                        <option value="Footage">Footage</option>
                     </select>
+                    @if ($errors->has('media_type'))
+                        <div class="has_error" style="color:red;">{{ $errors->first('media_type') }}</div>
+                     @endif
                     <div>
                     </div>
                  </div>
                 <div class="form-group">
                     <label for="eventBanner">Event Banner</label>
-                    {{-- <input type="text" class="form-control" name="event_banner" id="event_banner" value="{{ old('event_banner') }}" placeholder="Event Banner"> --}}
                     <input type="hidden" class="form-control" ng-model="product.id">
-					<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)" >
+					<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-blur="getproduct(product)" >
 
                     @if ($errors->has('product_name'))
-                            <div class="has_error" style="color:red;">{{ $errors->first('event_banner') }}</div>
+                            <div class="has_error" style="color:red;">{{ $errors->first('product_name') }}</div>
                      @endif
                 </div>
 
@@ -55,8 +61,7 @@
                     <input type="hidden" class="form-control" id="image_url" name="image_url">
 
                     <span id="product_image_container" style="display: none"><img id="product_image" width="150" height="150" /></span>
-                    <!-- <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span> -->
-                 </div>
+                </div>
                  <div class="form-group" ng-show="product.type =='Footage'">
                     <input type="hidden" class="form-control" id="footage_url" name="footage_url">
                     <video style="display: none" id="product_footage" class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">

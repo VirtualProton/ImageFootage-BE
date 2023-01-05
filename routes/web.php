@@ -251,14 +251,26 @@ Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
 Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
 //Route for Promtion 
 Route::get('/add_promotion', 'PromotionController@index');
-Route::post('/createpromotion', 'PromotionController@promotion');
+Route::post('/createpromotion', 'PromotionController@create');
 Route::get('/list_promotion', 'PromotionController@promotionList');
 
 Route::get('/promotionstatus/{status}/{id}', 'PromotionController@changePromotionStatus');
 Route::get('/deletepromotion/{id}', 'PromotionController@destroy');
 Route::get('/updatepromotion/{id}', 'PromotionController@updatePromotion');
-Route::post('/editpromotion', 'ProductCategoryController@editPromotion');
+Route::post('/editpromotion', 'PromotionController@editPromotion');
+
+//Route for Module 
+Route::get('/add_module', 'ModuleController@index');
+Route::post('/createmodule', 'ModuleController@create');
+Route::get('/list_module', 'ModuleController@modulesList');
+
+Route::get('/modulestatus/{status}/{id}', 'ModuleController@changeModulesStatus');
+Route::get('/deletemodule/{id}', 'ModuleController@destroy');
+Route::get('/updatemodule/{id}', 'ModuleController@updateModules');
+Route::post('/editmodules', 'ModuleController@editModules');
+
 });
+
 Route::get('emailVerification','UserContactusController@emailVerification');
 Route::get('payu/{id}','PaymentController@payu');
 Route::get('payuplan/{id}','PaymentController@payuplan');
