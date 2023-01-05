@@ -111,6 +111,7 @@ class PaymentController extends Controller
         $orders->created_at = date('Y-m-d H:i:s');
         $orders->save();
         $order_id = $orders->id;
+
         if(count($userData)>0){
             foreach($userData[0]['cart'] as $eachCart) {
                 $orderItem = new OrderItem();
@@ -161,9 +162,10 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey($this->atomRequestKey);
 
-
+            
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
+            return;
             //return Redirect::to($url);
             //header("Location: $url");
         }else if($allFields['type']=='payu'){
