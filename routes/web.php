@@ -218,6 +218,9 @@ Route::post('/sendmail','InvoiceController@sendmail');
 //custom Invoice routes
 Route::get('/users/invoices/{id}', 'UserController@invoices');
 Route::post('/users/comments/', 'InvoiceController@comments');
+
+Route::post('/users/update_user/', 'UserController@updateUser');
+
 Route::get('/quotation/{id}', 'InvoiceController@quotation');
 Route::get('/quotation2/{id}', 'InvoiceController@quotation2');
 Route::get('/edit_quotation/{user_id}/{id}', 'InvoiceController@edit_quotation');

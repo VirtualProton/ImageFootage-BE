@@ -36,5 +36,5 @@
   </table>
 </div>
 @else
-<h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} No Existing Comments</h4>
+{{-- <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} No Existing Comments</h4> --}}
 @endif

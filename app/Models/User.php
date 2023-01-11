@@ -111,10 +111,22 @@ class User extends Authenticatable implements JWTSubject
        }
 
        public function getUserData($id=NULL){
+
+        // $user = User::with('account')->where('id','=',$id)->first();
+        // if($user) {
+        //     $result = $user->toArray();
+        // }
+        // return $result = [];
         if($id==''){
         return User::with('account')->get()->toArray();
         }else{
-         return User::with('account')->where('id','=',$id)->first()->toArray();
+            $user = User::with('account')->where('id','=',$id)->first();
+            if($user) {
+                return $user->toArray();
+            }
+            abort(404);
+            return;
+
         }
     }
 

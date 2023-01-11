@@ -285,5 +285,32 @@ function getstate(data){
             type: 'POST'
             });
 }
+function getcity(data){
+    console.log(data.value);
+    $.ajax({
+            url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#bill_city').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
 </script>
 @stop

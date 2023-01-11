@@ -24,6 +24,8 @@ use App\Models\UserPackage;
 use App\Models\Invoice;
 use Auth;
 use Mail;
+use App\Models\UserInfo;
+use App\Models\Description;
 
 class UserController extends Controller
 {
@@ -118,7 +120,7 @@ class UserController extends Controller
         $title = "Show User";
         $this->Account = new Account();
         $account_data =    $this->Account->getAccountDataForShow($id);
-        print_r($account_data); die;
+      
         return view('admin.account.show', compact('title','account_data'));
     }
 
@@ -128,6 +130,7 @@ class UserController extends Controller
 
         $user_id = $id;
         $user = User::find($id);
+       // dd($user);
         $this->Account = new Account();
         $this->Admin = new Admin();
         if(!empty($user->account_manager_id)){
@@ -139,7 +142,7 @@ class UserController extends Controller
         $city_name = '';
         $state_name = '';
         $country_name = '';
-        if($user->city) {
+        if(!empty($user->city)) {
             $city = City::where('id', $user->city)->first();
             $city_name = $city['name'];
             $state = State::where('id', $user->state)->first();
@@ -147,8 +150,9 @@ class UserController extends Controller
             $country = Country::where('id', $user->country)->first();
             $country_name = $country['name'];
         }
+        
         $user_plans = $this->User->userPlans($user_id);
-
+      
         $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country', 'company')->with('country')
             ->with('state')
             ->with('city')
@@ -182,8 +186,25 @@ class UserController extends Controller
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
-                    ->simplePaginate('10');                   
-        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
+                    ->simplePaginate('10');
+           
+        $this->Country = new Country();
+        $countries = $this->Country->getcountrylist();
+        $this->User = new User();
+        $user_data =    $this->User->getUserData($user_id);
+        $states = $this->Country->getState('country_id',$user_data['country'] ?? '');
+        $cities = $this->Country->getCity('state_id',$user_data['state'] ?? '');
+        
+        $this->UserInfo = new UserInfo();
+        $user_info =    $this->UserInfo->getUserInfo($user_id);
+        if($user_info == null){
+            $user_info = [];
+        }
+
+        $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
+           // dd($description);
+           $active_tab = "tab1";
+        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations);
     }
 
     /**
@@ -286,7 +307,7 @@ class UserController extends Controller
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
         //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
 
-        echo "<pre>"; print_r($userCart); die;
+       
         // echo "<pre>"; print_r($userlist); die;
         return view('admin.user.usercart',compact('userlist'));
     }
@@ -417,9 +438,6 @@ class UserController extends Controller
                 }
 
         }
-        // echo "<pre>";print_r($userlist1); 
-        // echo "<pre>";print_r($userlist2); die;
-
         return view('admin.user.clientfirstsale',compact('userlist1', 'userlist2'));
 
     }
@@ -461,5 +479,62 @@ class UserController extends Controller
         }
         return response()->json(compact('this'));
     }
-    
+
+    public function updateUser(Request $request){
+        if (isset($_POST['updatebtn'])) { 
+       
+     //  dd( $request);
+       $this->validate($request, [
+        'user_name' => 'required',
+        'user_last_name' => 'required',
+        'user_email' => 'required'
+    ], [
+        'user_name.required' => 'The First Name field is required.',
+        'user_last_name.required' => 'The Last Name field is required.',
+        'user_email.required' => 'The Email field is required.'
+    ]);
+    try {
+            $update_array=array('first_name'=>$request->user_name,
+                                'last_name'=>$request->user_last_name,
+                                'email'=>$request->user_email,
+                                'company' => $request->user_company,
+                                'occupation' => $request->user_occupation,
+                                'address'=>$request->user_address,
+                                'phone'=>$request->user_phone,
+                                'gst'=>$request->user_gst,
+                                'pan'=>$request->user_pan,
+                                'description'=>$request->user_client_des
+                            );
+                $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
+                if ($userinfo === null) {
+                        $userinfo=new UserInfo;
+                        $userinfo->partner =$request->user_partner;
+                        $userinfo->whitelist=$request->user_whitelist;
+                        $userinfo->blacklist=$request->user_blacklist;
+                        $userinfo->frozen=$request->user_checkout_frozen;
+                        $userinfo->allow_certi=$request->user_allow_certi;
+                        $userinfo->enable_subs_multi=$request->user_enable_subs_multi;
+                        $userinfo->preferred_contact_method=$request->user_preferred_contact_method;
+                        $userinfo->user_id=$request->user_id;
+                        $userinfo->save();
+            }
+            $description = Description::where('user_id', '=', $request->user_id)->where('description',$request->user_client_des)->first();
+            if ($description === null) {
+                $description=new Description;
+                    $description->user_id=$request->user_id;
+                    $description->description=$request->user_client_des;
+                    $description->save();
+            }   
+            User::where('id',$request->user_id)->update($update_array);
+                return redirect('admin/users')->with('success','Users updated successful');
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+            return back()->with('warning','Some problem occured.');
+            
+        }
+        else{
+            echo "error1"; die();
+        }
+    }
 }

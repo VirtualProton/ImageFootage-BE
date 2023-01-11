@@ -303,26 +303,17 @@ class SubAdminController extends Controller
 
 
     public function editProfile($id){
-        
-
         $user = Auth::guard('admins')->user();
         $title = "Add Admin/Agent";
         $roles= Roles::where('status','=','A')->get();
         $deparments= Department::where('status','=','A')->get();
         $this->Admin = new Admin();
         $agent_data=$this->Admin->getAgentData($id);
-        // echo "<pre>"; print_r($agent_data); die;
         $this->Country = new Country();
         $states = $this->Country->getState('country_id',$agent_data['country']);
-        // echo "<pre>"; print_r($states); die;
-
         $this->Country = new Country();
         $countries = $this->Country->getcountrylist();
-
-
         return view('admin.subadmin.editprofile', compact('title','countries','states','deparments','roles','agent_data'));
-        echo "<pre>"; print_r($user); die;
-        // echo "hi"; die;
     }
 
     /**
@@ -334,7 +325,6 @@ class SubAdminController extends Controller
      */
     public function updateProfile(Request $request, $id)
     {
-
         $this->validate($request, [
             'department'   => 'required',
             'role' => 'required',

@@ -21,24 +21,30 @@
                 @include('admin.partials.message')
                 <div class="tabs">
                   <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li class="@if($active_tab=="tab1") active @endif">
                       <a href="#users" role="tab" data-toggle="tab">
                         <icon class="fa fa-home"></icon> Client Information
                       </a>
                     </li>
-                    <!-- <li>
-                      <a href="#comments" role="tab" data-toggle="tab">
-                        <i class="fa fa-comment"></i> Comment
-                      </a>
-                    </li> -->
-                    <li>
+                    <li class="@if($active_tab=="tab2") active @endif">
                       <a href="#posts" role="tab" data-toggle="tab">
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
+                    <li class="@if($active_tab=="tab3") active @endif">
+                      <a href="#clientinfo" role="tab" data-toggle="tab">
+                        <i class="fa fa-pencil-square-o"></i> Client Info Update
+                      </a>
+                    </li>
+                    <li class="@if($active_tab=="tab4") active @endif">
+                      <a href="#comment" role="tab" data-toggle="tab">
+                        <i class="fa fa-comment"></i> Comment
+                      </a>
+                      
+                    </li>
                   </ul>
                   <div class="tab-content">
-                    <div class="tab-pane fade active in" id="users">
+                    <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">
                       <div class="box-body">
                         <table id="info" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
@@ -84,12 +90,11 @@
                             </div>
                           </thead>
                         </table>
-                        @include('admin.account.add-comment')
-                        @include('admin.account.comment')
+                        {{-- @include('admin.account.add-comment')
+                        @include('admin.account.comment') --}}
                       </div>
                     </div>
-                   
-                    <div class="tab-pane fade" id="posts">
+                    <div class="tab-pane fade @if($active_tab=="tab2") in active @endif" id="posts">
                       <div class="box-body">
                         <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Quotation</h4>
                         <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
@@ -240,6 +245,19 @@
                             @endif
                           </tbody>
                         </table>
+                        {{-- @include('admin.account.comment') --}}
+                      </div>
+                    </div>
+                    <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
+                      <div class="box-body">
+                        @include('admin.account.update-user') 
+                        @include('admin.account.client-des')
+                      </div>
+                    </div>
+                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
+                      <div class="box-body">
+                      
+                        @include('admin.account.add-comment')
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -473,6 +491,59 @@
   //         }
   //     });
   // });
+  function getstate(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#state').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
+  function getcity(data){
+      console.log(data.value);
+      $.ajax({
+              url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#city').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
 </script>
 
 @stop

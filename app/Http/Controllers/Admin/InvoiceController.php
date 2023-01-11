@@ -166,7 +166,7 @@ class InvoiceController extends Controller
 
     public function comments(Request $request)
     {
-
+        if (isset($_POST['commentbtn'])) { 
         $this->validate($request, [
             'subject' => 'required|max:100',
             'user_id' => 'required',
@@ -189,6 +189,7 @@ class InvoiceController extends Controller
         $comment->save();
         return Redirect::back()->with('success', 'Comment Saved');
     }
+}
 
     public function saveSubscriptionInvoice(Request $request)
     {
