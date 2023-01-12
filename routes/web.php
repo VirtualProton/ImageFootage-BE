@@ -229,6 +229,7 @@ Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
 Route::post('/create_invoice','InvoiceController@create_invoice');
 Route::post('/change_invoice_status','InvoiceController@change_invoice_status');
 Route::get('/subscribers','SubscribersController@index');
+Route::get('/subscribers/details/{id}','SubscribersController@subscribers_details');
 Route::post('/plans', 'PackageController@plans');
 Route::post('/saveSubscriptionInvoice', 'InvoiceController@saveSubscriptionInvoice');
 Route::post('/saveDownloadInvoice', 'InvoiceController@saveDownloadInvoice');

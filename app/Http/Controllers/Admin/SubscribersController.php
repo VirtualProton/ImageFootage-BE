@@ -47,7 +47,21 @@ class SubscribersController extends Controller
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
         return response()->json($subscriberList);
+    }
 
+    public function subscribers_details($id){
+        $userlist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country')->with('country')
+            ->with('state')
+            ->where('id',$id)
+            ->with('city')
+            ->with(['plans' => function ($query) {
+                $query->whereIn('payment_status', ['Completed', 'Transction Success'])
+                    ->with('downloads');
+            }
+            ])->whereHas("plans", function ($query) {
+                $query->whereIn('payment_status', ['Completed', 'Transction Success']);
+            })->first()->toArray();
+            return view('admin.subscribers.subscribers_details', compact('userlist'));
     }
 
 }
