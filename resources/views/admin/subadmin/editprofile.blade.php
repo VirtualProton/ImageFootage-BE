@@ -67,7 +67,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>" readonly>
                 </div>
                   </div>
                 </div>

@@ -20,6 +20,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
 Route::get('/login', 'AdminController@login');
 Route::post('/authenticate', 'AdminController@authenticate');
 Route::get('logout', 'AdminController@logout');
+
+
+Route::get('forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
+Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
+Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+
+
 Route::get('/dashboard', 'DashboardController@dashboard');
 Route::get('/add_product', 'ProductController@index');
 Route::post('/createproduct', 'ProductController@create');

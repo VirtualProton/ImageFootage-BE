@@ -1,7 +1,3 @@
-<p>Hi,</p></br>
-
-<p>Click on below link to reset your password.</p>
-<p><a href="{{ $url }}">{{ $url }}</a><br></p>
-
-<p>Thanks & Regards,</p>
-<p>Image Footage Team.</p>
+<h1>Forget Password Email</h1>
+You can reset password from bellow link:
+<a href="{{ route('reset.password.get', $data['token']) }}">Reset Password</a>

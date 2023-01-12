@@ -329,7 +329,7 @@ class SubAdminController extends Controller
             'department'   => 'required',
             'role' => 'required',
             'name' =>'required',
-            'email'=>'required|email',
+            //'email'=>'required|email',
             'bill_country' =>'required',
             'bill_state' =>'required',
             'password'=>'sometimes|nullable|min:6',

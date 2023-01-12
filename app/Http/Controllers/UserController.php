@@ -17,7 +17,7 @@ use App\Models\Contributor;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-
+use App;
 
 class UserController extends Controller
 {
@@ -104,7 +104,7 @@ class UserController extends Controller
         return response()->json($result);
     }*/
     public function validUser(Request $request){
-        $hostname = env('FRONT_END_URL');
+        $hostname = \Request::server('HTTP_REFERER');
         $count = User::where('email','=',$request['email']['user_email'])->count();
 		if($count>0){
             $randnum=rand(1000,10000);
@@ -114,7 +114,7 @@ class UserController extends Controller
 			// $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
             $url = $hostname."/resetpassword/".$randnum."/".$request['email']['user_email'];
             $data = array('url'=>$url,'email'=>$request['email']['user_email']);
-				 Mail::send('email.forgotpassword', $data, function($message) use($data) {
+			Mail::send('email.forgotpasswordadmin', $data, function($message) use($data) {
                      $message->to($data['email'], '')->subject('Image Footage Forget Password')
                         ->from('admin@imagefootage.com', 'Imagefootage');
 				  });
