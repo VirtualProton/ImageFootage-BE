@@ -1,5 +1,5 @@
 @if(count($comments) > 0 )
-<h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Existing Comments</h4>
+<h4 class="box-title exist-comment">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Existing Comments</h4>
 <div class="form-group col-sm-12">
   <table class="account table table-bordered table-striped dataTable col-sm-12" class="">
     <thead>
