@@ -1,0 +1,317 @@
+.form-horizontal .form-group {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.custom-font {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.content-wrapper .tab-content .form-group h4 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-left: -15px;
+}
+
+.content-wrapper .tab-content .form-group input {
+    margin-top: 10px;
+    padding: 6px 12px;
+}
+
+.form-group .user-name-dec h5,
+.form-group .ps-wrap h5 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.form-group .ps-wrap h5 input {
+    padding: 3px 60px;
+}
+
+.form-group .ps-wrap .reset-pass button {
+    padding: 6px 30px;
+}
+
+.form-group .ps-wrap .reset-pass input {
+    width: 25%;
+}
+
+.form-group .f-l-e-wrap {
+    display: flex;
+}
+
+.form-group .f-l-e-wrap h5,
+.reg-acc-wrap h5 {
+    font-size: 16px;
+    font-weight: 500;
+    display: grid;
+    margin-right: 15px;
+}
+
+.form-group .f-l-e-wrap {
+    margin-top: 10px;
+    display: flex;
+    gap: 25px;
+}
+
+.form-group .f-l-e-wrap input {
+    width: 100%;
+}
+
+.form-group .custom-width {
+    width: 25%;
+}
+
+.form-group .f-l-e-wrap .emails {
+    display: grid;
+}
+
+.user-name-dec,
+.reg-acc-wrap {
+    display: flex;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.user-name-dec h5:last-child,
+.reg-acc-wrap h5:last-child {
+    padding-left: 30px;
+}
+
+
+/*  */
+
+.user-com-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 25px;
+}
+
+.user-com-wrap h5 {
+    margin: 0;
+}
+
+.user-com-wrap input,
+.user-com-wrap textarea {
+    margin-top: 10px;
+}
+
+.user-com-wrap input {
+    display: block;
+    width: 100%;
+}
+
+.user-com-wrap h5,
+.user-com-wrap textarea {
+    font-size: 16px;
+    font-weight: 500;
+    display: grid;
+    margin-right: 15px;
+}
+
+.select-button-wrap {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 15px;
+    gap: 25px;
+}
+
+.select-button-wrap .form-group select {
+    margin-left: 15px;
+    border-color: #555 !important;
+    color: #333;
+}
+
+.form-horizontal .select-button-wrap .form-group label {
+    padding-left: 0;
+    width: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.form-horizontal .postal-code {
+    display: flex;
+    gap: 25px;
+    padding-left: 24px;
+    align-items: baseline;
+}
+
+.form-horizontal .postal-code .custom-width:first-child {
+    padding-left: 0;
+}
+
+.form-horizontal .postal-code input {
+    width: 100%;
+}
+
+
+/*  */
+
+.form-horizontal .form-group .list-user,
+.form-horizontal .form-group .preferred {
+    display: flex;
+    gap: 25px;
+}
+
+.form-horizontal .form-group .list-user input {
+    width: 100%;
+}
+
+.form-horizontal .form-group .preferred {
+    margin-top: 20px;
+}
+
+.form-horizontal .form-group .preferred .custom-width {
+    display: block;
+}
+
+.form-horizontal .form-group .preferred textarea {
+    margin-top: 10px;
+    border-color: #555;
+}
+
+.form-horizontal .form-group .preferred input {
+    width: 100%;
+}
+
+
+/*  */
+
+.form-group .box-footer .btn-info {
+    padding: 11px 56px !important;
+}
+
+.box-body h4.box-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+/* media query start here */
+
+@media (max-width: 991px) {
+    .form-group .f-l-e-wrap {
+        flex-wrap: wrap;
+    }
+    .form-horizontal .form-group {
+        margin-left: -18px;
+    }
+    .user-com-wrap,
+    .select-button-wrap {
+        flex-wrap: wrap;
+    }
+    .form-horizontal .postal-code {
+        padding-left: 0;
+        flex-wrap: wrap;
+    }
+    .form-horizontal .form-group .list-user,
+    .form-horizontal .form-group .preferred {
+        flex-wrap: wrap;
+    }
+    .form-group .custom-width {
+        width: 45%;
+    }
+}
+
+@media (max-width: 767px) {
+    .form-group .ps-wrap .reset-pass input {
+        width: 50%;
+    }
+    .form-group .custom-width {
+        width: 100%;
+    }
+    .user-name-dec,
+    .reg-acc-wrap {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+
+/*  */
+
+h4.box-title.add-new {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.content-wrapper.ng-scope .content-header .form-horizontal .form-group {
+    margin: 50px;
+}
+
+.comment-sec-wrap {
+    display: flex;
+    padding: 0 15px;
+    gap: 25px;
+    width: 100%;
+    align-items: baseline;
+}
+
+.comment-sec-wrap .custom-width {
+    width: 25%;
+}
+
+.comment-sec-wrap .custom-width select,
+.comment-sec-wrap .custom-width input {
+    width: 100%;
+    padding: 6px 12px;
+    color: #000;
+}
+
+
+/*  */
+
+.form-group.comment-sub-wrap {
+    margin: 50px 0;
+    padding: 0 15px;
+}
+
+.form-group.comme-desc {
+    width: 100%;
+    margin: 0;
+    padding: 0 15px;
+}
+
+.form-group.comment-sub-wrap input,
+.form-group.comme-desc textarea {
+    border-color: #333;
+}
+
+.form-group.comment-sub-wrap input::placeholder {
+    color: #000;
+}
+
+.box-footer.comme-button {
+    padding: 0;
+}
+
+h4.box-title.exist-comment {
+    padding-left: 7px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 20px;
+}
+
+
+/* comment page media query start here */
+
+@media (max-width: 991px) {
+    .comment-sec-wrap .custom-width {
+        width: 45%;
+    }
+    .comment-sec-wrap {
+        flex-wrap: wrap;
+    }
+}
+
+
+/*  */
+
+@media (max-width: 767px) {
+    .comment-sec-wrap .custom-width {
+        width: 100%;
+    }
+}
