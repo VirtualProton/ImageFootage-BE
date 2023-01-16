@@ -315,3 +315,60 @@ h4.box-title.exist-comment {
         width: 100%;
     }
 }
+
+
+/* 16-01-2023 */
+
+
+/* forget password design start here */
+
+.login-page .login-form form .forget-pas-btn {
+    text-align: center;
+}
+
+.login-page .login-form form .forget-pas-btn .btn {
+    background-color: #FF8080;
+    border-color: transparent;
+}
+
+.login-page .login-form form .forget-pas-btn:focus-visible {
+    outline: 0;
+}
+
+.login-page .login-form form .forget-pas-btn button.btn.btn-primary:focus-visible {
+    outline: 0;
+}
+
+.login-box .login-box-body .login-box-msg.reset-pas {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.login-box .login-box-body .card .forget-aler {
+    padding: 8px 15px;
+}
+
+.login-page .login-form form .forget-pas-btn.link-blade-pas .btn {
+    width: 200px;
+}
+
+.login-page .login-form form .forget-pas-btn.link-blade-pas:focus-visible {
+    outline: 0;
+}
+
+.login-page .login-form form .forget-pas-btn button.btn.btn-primary:focus {
+    outline: 0;
+}
+
+
+/* start media query */
+
+@media (max-width:768px) {
+    .login-page.link-blade .login-box {}
+}
+
+@media (max-width:480px) {
+    .login-page .login-form form .forget-pas-btn.link-blade-pas .btn {
+        width: 130px;
+    }
+}
