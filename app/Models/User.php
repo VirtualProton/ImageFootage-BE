@@ -132,7 +132,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getPurchaseOrders($id=NULL){
         if($id==''){
-        return User::with('account')->paginate(100);  
+        return User::with('account')->paginate(10);  
         }else{
          return User::with('account')->where('id','=',$id)->first()->toArray();
         }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Pagination\Paginator;
 use DB;
 use PDF;
 use Mail;
@@ -203,6 +203,7 @@ class InvoiceController extends Controller
         return $this->Common->save_download_proforma($data);
     }
 
+
     public function quotationReport(){
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
@@ -214,7 +215,7 @@ class InvoiceController extends Controller
         //     $quotations = Invoice::where('invoice_url', null)->where('status', '<>', 3)->where('state', $userState)->get()->toArray();
         // }
         // echo "<pre>"; print_r($quotations); die;
-
+            
         return view('admin.invoice.quotationsReport', compact('quotations'));
 
 

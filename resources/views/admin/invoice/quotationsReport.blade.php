@@ -29,7 +29,6 @@
                             <tr>
                               <th>Sl No</th>
                               <th>Trans Id</th>
-
                               <th>Quotation Date</th>
                               <th>Amount (In INR)</th>
                               <th>Plan</th>
@@ -102,11 +101,11 @@
     @endsection
 @section('scripts')
 <script>
-  //     $(function () {
-  //     $('.account').DataTable({
-  //         paging: false
-  //     });
-  //  })
+      $(function () {
+      $('.account').DataTable({
+          paging: true
+      });
+   })
   $(function() {
     var url = window.location.href;
     var activeTab = url.substring(url.indexOf("#!#") + 3);
