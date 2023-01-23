@@ -43,9 +43,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('dist/js/invoice.js') }}"></script>
-<!-- <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> -->
-<script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script>
-
+@php
+ /* <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> 
+<script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script> */ 
+@endphp
 
 
 

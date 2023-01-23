@@ -161,7 +161,7 @@ class MediaController extends Controller
             ->get()->toArray();
         $download = 0;
         $downoad_type = 0;
-
+       
         if (count($pacakegalist) > 0) {
             foreach ($pacakegalist as $perpack) {
                 if ($perpack['downloaded_product'] < $perpack['package_products_count']) {
@@ -218,10 +218,11 @@ class MediaController extends Controller
                             ]);
                     }
                 }
-                return response()->json($product_details_data);
+               return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
                 $imageMedia = new ImageApi();
                 $product_details_data = $imageMedia->download($allFields, $id);
+                dd($product_details_data);
                 return response()->json($product_details_data);
             }
         } else {

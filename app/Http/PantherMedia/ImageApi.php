@@ -258,13 +258,12 @@ class ImageApi {
 
     public function download($data,$id){
         $this->access_key = $this->getAccessKey();
-        // echo $this->access_key; die;
-        if(count($data['product']['selected_product'])>0){
-            $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
-        }else{
+        // if(count($data['product']['selected_product'])>0){
+        //     $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
+        // }else{
             $id = $data['product']['product_info']['media']['id'];
-        }
-
+       // }
+       echo "id=>". $id;
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post('http://rest.panthermedia.net/download-media', [
             'headers'=>[
@@ -311,7 +310,7 @@ class ImageApi {
             ]);
             if ($response2->getBody()) {
                 $downloadcontents = json_decode($response2->getBody());
-                print_r($downloadcontents); die;
+              //  print_r($downloadcontents); die;
             // die;
                 return $downloadcontents;
             }

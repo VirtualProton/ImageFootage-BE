@@ -42,6 +42,12 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+  <!-- favicon icons -->
+  <link rel="shortcut icon" href="{{ asset('images/favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{ asset('images/favicon.ico')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-favicon.png')}}">
+  <!-- favicon icons -->
+
  @yield('styles')
 
 </head>

@@ -32,7 +32,7 @@ Route::group([
 	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
 
-	Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
+Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
 	Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
     Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');
@@ -92,6 +92,9 @@ Route::group([
     Route::get('/search-keywords/get/{keyword?}','SearchController@getKeywords');
 
   //  Route::post('/wishlistfolder','WishListController@getWishList');
+  Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
+
+  
 });
 
 Route::group([
@@ -120,5 +123,5 @@ Route::group([
     Route::get('getIpAddress','FrontuserController@getIpAddress');
     Route::get('getLocationDetails','FrontuserController@ip_details');
     Route::get('getCurrencies','FrontuserController@getCurrencies');
-
+    Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
 });

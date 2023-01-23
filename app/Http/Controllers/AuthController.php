@@ -224,6 +224,14 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    public function delete_user_profile($id)
+    {
+        dd('test');
+        $delagent = User::find($id);
+        $delagent->delete();
+        return response()->json(['message' => 'Successfully deleted the User']);
+    }
+
     /**
      * Get the token array structure.
      *

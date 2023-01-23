@@ -22,6 +22,7 @@ class StaticPagesController extends Controller
 			'page_url'=>'required',
 			'page_meta_desc'=>'required',
 			'page_meta_keywords'=>'required',
+			'page_slug'=>'required',
 			'page_content'=>'required'
         ]);
 		$staticpages=new StaticPages;
@@ -29,6 +30,7 @@ class StaticPagesController extends Controller
 	    $staticpages->page_url=$request->page_url;
 		$staticpages->page_meta_desc=$request->page_meta_desc;
 		$staticpages->page_meta_keywords=$request->page_meta_keywords;
+		$staticpages->page_slug=$request->page_slug;
 		$staticpages->page_content=$request->page_content;
 		$staticpages->page_added_on=date('Y-m-d H:i:s');
 		$staticpages->page_added_by=Auth::guard('admins')->user()->id;	
@@ -63,12 +65,14 @@ class StaticPagesController extends Controller
 			'page_url'=>'required',
 			'page_meta_desc'=>'required',
 			'page_meta_keywords'=>'required',
+			'page_slug'=>'required',
 			'page_content'=>'required'
         ]);
 	 $update_array=array('page_title'=>$request->page_title,
 							 'page_url'=>$request->page_url,
 		 					 'page_meta_desc'=>$request->page_meta_desc,
 							 'page_meta_keywords'=>$request->page_meta_keywords,
+							 'page_slug'=>$request->page_slug,
 							 'page_content'=>$request->page_content
 							 );
 		$result = StaticPages::where('page_id',$request->page_id)->update($update_array);

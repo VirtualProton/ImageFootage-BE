@@ -59,6 +59,15 @@
                       		<div class="has_error" style="color:red;">{{ $errors->first('page_meta_keywords') }}</div>
                          @endif
                     </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Page Slug</label>
+                       <textarea type="text" class="form-control" name="page_slug" id="page_slug" placeholder="Page Slug"></textarea>
+                         @if ($errors->has('page_slug'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('page_slug') }}</div>
+                         @endif
+                    </div>
+
                     <div class="form-group">
                       <label for="exampleInputPassword1">Page Content</label>
                        <textarea type="text" class="form-control" name="page_content" id="page_content" placeholder="Page Content"></textarea>
