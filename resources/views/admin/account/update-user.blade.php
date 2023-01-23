@@ -1,6 +1,6 @@
 {!! Form::open(array('url' => URL::to('admin/users/update_user'), 'method' => 'POST', 'class'=>"form-horizontal", 'name' => 'updateuser', 'id' => 'updateuser')) !!}
-<div class="form-group col-sm-12">
-      <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Account Info</h4>
+<div class="">
+      <h4 class="box-title account-title">Account Info</h4>
       <div class="form-group col-sm-6">
         <input type="hidden" name="tabId1" value="tab1">
         <input type="hidden" id="user_id" name="user_id" value="{{$user->id}}"/>
@@ -10,7 +10,7 @@
         </div>
         <div class="ps-wrap">
           <div class="reset-pass"><span class="custom-font">Password :</span>
-            <input type="password" class="" name="" id="" value="{{$user->password}}"><button id="resetButton" onclick="resetPassword({{$user->id}})">reset</button>
+            <input type="password" class="" name="" id="" value="{{$user->password}}"><button id="resetButton" onclick="resetPassword({{$user->id}})">Reset</button>
           </div>
         </div>
         <div class="f-l-e-wrap">
@@ -26,76 +26,79 @@
       </div>
        
       <div class="form-group col-sm-6">
-      <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Personal Info</h4>
-        <div class="user-com-wrap"> 
+      <h4 class="box-title">Personal Info</h4>
+        <div class="user-com-wrap select-button-wrap"> 
           <div class="custom-width"><span class="custom-font">Company :</span> <input type="text" class="" name="user_company" id="user_company" value="{{$user->company}}" /></div>
           <div class="custom-width"><span class="custom-font">Occupation :</span> <input type="text" class="" name="user_occupation" id="user_occupation" value="{{$user->occupation}}" /></div>
-          <div class="add-content">
-            <div class="custom-width"><span class="custom-font">Address:<span></div> 
+            <div class="custom-width"><span class="custom-font">Address:<span>
               <textarea name="user_address" id="user_address" rows="4"  cols="50">{{$user->address}}</textarea>
-            </div>  
-        </div>
-        <div class="select-button-wrap">
-        <div class="custom-width">   
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
-
-              <div class="">
-            <div class="form-group">
-            <select class="form-control" name="country" id="country" onchange="getstate(this)">
-                <option  value="">Select</option>
-                @if(count($countries) > 0)
-                @foreach($countries as $country)
-                <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
-                @endforeach
-                @endif
-              </select>
-              </div>
-              </div>
-            </div>
-        </div>
-        <div class="custom-width">  
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">State</label>
-            <div class="">
+            </div> 
+            <div class="custom-width">   
               <div class="form-group">
-                <select class="form-control" name="state" id="state" onchange="getcity(this)">
-                  <option value="">Select</option>
-                  @if(count($states) > 0)
-                  @foreach($states as $state)
-                  <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
-                  @endforeach
-                  @endif
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>  
-      <div class="custom-width">
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">City</label>
-
-              <div class="">
-                <div class="form-group">
-                    <select class="form-control" name="city" id="city">
-                      <option value="">Select</option>
-                      @if(count($cities) > 0)
-                      @foreach($cities as $city)
-                      <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
+                <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                <div class="">
+                  <div class="form-group">
+                    <select class="form-control" name="country" id="country" onchange="getstate(this)">
+                      <option  value="">Select</option>
+                      @if(count($countries) > 0)
+                      @foreach($countries as $country)
+                      <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
                       @endforeach
                       @endif
                     </select>
+                  </div>
+                </div>
+              </div>
+          </div> 
+         
+        </div>
+        <div class="select-button-wrap">
+          <div class="custom-width">  
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">State</label>
+              <div class="">
+                <div class="form-group">
+                  <select class="form-control" name="state" id="state" onchange="getcity(this)">
+                    <option value="">Select</option>
+                    @if(count($states) > 0)
+                    @foreach($states as $state)
+                    <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                    @endforeach
+                    @endif
+                  </select>
                 </div>
               </div>
             </div>
-          </div>
-      </div>  
-          {{-- <h5>City : {{$city_name}}</h5>
+          </div>  
+          
+          <div class="custom-width">
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">City</label>
+
+                <div class="">
+                  <div class="form-group">
+                      <select class="form-control" name="city" id="city">
+                        <option value="">Select</option>
+                        @if(count($cities) > 0)
+                        @foreach($cities as $city)
+                        <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
+                        @endforeach
+                        @endif
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="custom-width"><span class="custom-font">Postal Code :</span> {{$user->postal_code}}</div>
+            <div class="custom-width"><span class="custom-font">Phone :</span> <input type="text" class="" name="user_phone" id="user_phone" value="{{$user->phone}}" /></div>
+        </div>  
+          
+        {{-- <h5>City : {{$city_name}}</h5>
         <h5>State : {{$state_name}}</h5>
         <h5>Country : {{$country_name}}</h5> --}}
         <div class="postal-code">
-          <div class="custom-width"><span class="custom-font">Postal Code :</span> {{$user->postal_code}}</div>
-          <div class="custom-width"><span class="custom-font">Phone :</span> <input type="text" class="" name="user_phone" id="user_phone" value="{{$user->phone}}" /></div>
+          
+         
           <div class="custom-width"><span class="custom-font">GST :</span> <input type="text" class="" name="user_gst" id="user_gst" value="{{$user->gst}}" /></div>
           <div class="custom-width"><span class="custom-font">PAN :</span> <input type="text" class="" name="user_pan" id="user_pan" value="{{$user->pan}}" /></div>
         </div>
@@ -103,7 +106,7 @@
     </div>
    <div>
       <div class="form-group col-sm-12">
-        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Other Info</h4>
+        <h4 class="box-title">Other Info</h4>
         <div class="list-user">
           <div class="custom-width"><span class="custom-font">Partner ? :</span> <input type="text" class="" name="user_partner" id="user_partner" value=" {{$user_info['partner'] ?? ''}}" /> </div>
           <div class="custom-width"><span class="custom-font">White List User ? :</span> <input type="text" class="" name="user_whitelist" id="user_whitelist" value="{{$user_info['whitelist'] ?? ''}}" /></div>
