@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
-
+ <!-- custom style -->
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -34,7 +35,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  <p class="login-box-msg">Sign in to start your session</p>
+  <p class="login-box-msg reset-pas">Reset Password</p>
   <span style="color:red;">@if( Session::has( 'success' ))
      {{ Session::get( 'success' ) }}
 @elseif( Session::has( 'warning' ))
@@ -44,13 +45,13 @@
 <main class="login-form">
   <div class="cotainer">
       <div class="row justify-content-center">
-          <div class="col-md-8">
+          <div class="col-md-12">
               <div class="card">
-                  <div class="card-header">Reset Password</div>
+                  <div class="card-header"></div>
                   <div class="card-body">
   
                     @if (Session::has('message'))
-                         <div class="alert alert-success" role="alert">
+                         <div class="alert alert-success forget-aler" role="alert">
                             {{ Session::get('message') }}
                         </div>
                     @endif
@@ -58,15 +59,15 @@
                       <form action="{{ route('forget.password.post') }}" method="POST">
                           @csrf
                           <div class="form-group row">
-                              <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                              <div class="col-md-6">
+                              <label for="email_address" class="col-md-12 col-form-label text-md-right email-add">E-Mail Address</label>
+                              <div class="col-md-12">
                                   <input type="text" id="email_address" class="form-control" name="email" required autofocus>
                                   @if ($errors->has('email'))
                                       <span class="text-danger">{{ $errors->first('email') }}</span>
                                   @endif
                               </div>
                           </div>
-                          <div class="col-md-6 offset-md-4">
+                          <div class="col-md-12 offset-md-4 forget-pas-btn">
                               <button type="submit" class="btn btn-primary">
                                   Send Password Reset Link
                               </button>
