@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\PromotionController;
 use Illuminate\Http\Request;
 
 /*
@@ -92,9 +91,10 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('/search-keywords/get/{keyword?}','SearchController@getKeywords');
 
   //  Route::post('/wishlistfolder','WishListController@getWishList');
-  Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
+    Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
 
   
+    Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 });
 
 Route::group([

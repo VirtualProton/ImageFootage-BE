@@ -34,7 +34,15 @@ class SignUpRequest extends FormRequest
         return [
             'first_name' => 'required',
             'email' => 'required|email|unique:imagefootage_users|max:255',
+            'mobile' => 'required|unique:imagefootage_users',
             'password' => 'required'
+        ];
+    }
+
+    public function attributes()
+    {
+        return[
+            'mobile' => 'phone', 
         ];
     }
 }
