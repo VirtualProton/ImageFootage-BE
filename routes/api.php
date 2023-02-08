@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\PromotionController;
 use Illuminate\Http\Request;
 
 /*
@@ -91,7 +90,7 @@ Route::group([
     Route::get('/product/{id}', 'ProductController@getproduct');
     Route::get('/search-keywords/get/{keyword?}','SearchController@getKeywords');
 
-  //  Route::post('/wishlistfolder','WishListController@getWishList');
+    Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 });
 
 Route::group([
