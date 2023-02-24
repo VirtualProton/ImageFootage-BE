@@ -1707,15 +1707,15 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 			}
 			$footageMedia = new FootageApi();
 			$product_details_data = $footageMedia->getclipdata($product_id);
-			if (isset($product_details_data['clip_data']['pic_objectid'])) {
-				$pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
-				if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
-					$add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
+			if (isset($product_details_data['id'])) {
+				$pond_id_withprefix = $product_details_data['id'];
+				if (strlen($product_details_data['id']) < 9) {
+					$add_zero = 9 - (strlen($product_details_data['id']));
 					for ($i = 0; $i < $add_zero; $i++) {
 						$pond_id_withprefix = "0" . $pond_id_withprefix;
 					}
 				}
-				$b64image = base64_encode(file_get_contents($product_details_data['icon_base'].$pond_id_withprefix.'_main_xl.mp4'));
+				$b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
 				$downlaod_image= '';
 			}
 			$product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg');
