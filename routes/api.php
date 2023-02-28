@@ -79,7 +79,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
     Route::post('atomSubPayInvoiceResponse', 'PaymentController@atomSubPayInvoiceResponse');
-    Route::get('/promotion', [PromotionController::class, "getPromotion"]);
+    Route::get('/promotion', 'Admin\PromotionController@getPromotion');
 
     Route::get('/add_products_api', 'ProductApiController@getAddProduct');
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
