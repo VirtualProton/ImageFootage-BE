@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-
+use Illuminate\Http\Request;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -130,11 +130,34 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    /**
+     * Query filter for any date field for 2 between dates
+     */
+    public function scopeBetweenDates($query, $dateField, array $dates) {
+        $start = ($dates[0] instanceof Carbon) ? $dates[0] : Carbon::parse($dates[0]);
+        $end   = ($dates[1] instanceof Carbon) ? $dates[1] : Carbon::parse($dates[1]);
+
+        return $query->whereBetween($dateField, [
+            $start->startOfDay(),
+            $end->endOfDay()
+        ]);
+    }
+
     public function getPurchaseOrders($id=NULL){
         if($id==''){
-        return User::with('account')->paginate(10);  
+
+            $userQuery = User::with('account');
+            if(request('from_date') && request('end_date')){
+
+                $userQuery->join('imagefootage_orders','imagefootage_orders.user_id', 'imagefootage_users.id');
+                $userQuery->BetweenDates('imagefootage_orders.created_at', [request('from_date'), request('end_date')])->get();
+                $userQuery->groupBy('imagefootage_users.id');
+            }
+
+            return $userQuery->paginate(10);
+
         }else{
-         return User::with('account')->where('id','=',$id)->first()->toArray();
+            return User::with('account')->where('id','=',$id)->first()->toArray();
         }
     }
 
