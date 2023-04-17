@@ -79,7 +79,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:imagefootage_users|max:255',
         ]);
 
-        
+
         // return back()
         // ->withInput();
         // ->withErrors(['name.required', 'Name is required']);
@@ -96,7 +96,7 @@ class UserController extends Controller
         if(!empty($user)){
             return view('admin.user.create', compact('title','countries','accountlist', 'user'));
         }
-        
+
             $data['email'] = $request->email;
             $data['name'] = $request->first_name.' '.$request->last_name;
             $data['text'] ="You are added as a client.";
@@ -120,7 +120,7 @@ class UserController extends Controller
         $title = "Show User";
         $this->Account = new Account();
         $account_data =    $this->Account->getAccountDataForShow($id);
-      
+
         return view('admin.account.show', compact('title','account_data'));
     }
 
@@ -150,9 +150,9 @@ class UserController extends Controller
             $country = Country::where('id', $user->country)->first();
             $country_name = $country['name'];
         }
-        
+
         $user_plans = $this->User->userPlans($user_id);
-      
+
         $userPlanslist = User::select('id', 'first_name', 'last_name', 'title', 'user_name', 'email', 'mobile', 'phone', 'postal_code', 'city', 'state', 'country', 'company')->with('country')
             ->with('state')
             ->with('city')
@@ -170,9 +170,9 @@ class UserController extends Controller
 
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
-        
+
         $account_quotations = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description')
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
@@ -180,21 +180,21 @@ class UserController extends Controller
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
                     ->simplePaginate('10');
         $account_invoices = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description')
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
                     ->simplePaginate('10');
-           
+
         $this->Country = new Country();
         $countries = $this->Country->getcountrylist();
         $this->User = new User();
         $user_data =    $this->User->getUserData($user_id);
         $states = $this->Country->getState('country_id',$user_data['country'] ?? '');
         $cities = $this->Country->getCity('state_id',$user_data['state'] ?? '');
-        
+
         $this->UserInfo = new UserInfo();
         $user_info =    $this->UserInfo->getUserInfo($user_id);
         if($user_info == null){
@@ -307,7 +307,7 @@ class UserController extends Controller
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
         //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
 
-       
+
         // echo "<pre>"; print_r($userlist); die;
         return view('admin.user.usercart',compact('userlist'));
     }
@@ -317,31 +317,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function abandoned_cart()
+    public function abandoned_cart(Request $request)
     {
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
-        // print_r($user->state); echo "<br>";
 
-        // echo "hi"; die;
-        date_default_timezone_set('Asia/Kolkata');
         $userlist=$this->User->getUserData();
         $date = new \DateTime();
-        $date->modify('-60 minutes');
+        $formatted_date1 = $date->format('Y-m-d H:i:s');
+
+        if($request->hours > 0){
+            $date->modify("-{$request->hours} hours");
+        }
+        if($request->minutes > 0){
+            $date->modify("-{$request->minutes} minutes");
+        }
+        if(!$request->hours && !$request->minutes){
+            $date->modify("-60 minutes");
+        }
+
         $formatted_date = $date->format('Y-m-d H:i:s');
-        //echo $formatted_date; die;
 
-        // $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->groupBy('cart_added_by')->toArray();
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
-        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
         if($user->department['department'] == 'Sales'){
-
-            // Usercart::where('cart_added_on', '>',$formatted_date)
-            //   ->with('user', function ($query) {
-            //       $query->where('state','=','3');
-            //   })
-            //   ->with('product')
-            //   ->get(); 
 
               $userCart = Usercart::whereHas('user', function($q) use($userState){
               $q->where('state', $userState);
@@ -351,13 +349,10 @@ class UserController extends Controller
               ->with('user')
               ->get()
               ->toArray();
-          
+
         }
 
-        // echo "<pre>"; print_r($userCart); die;
         return view('admin.user.abandonedcart',compact('userCart'));
-        // echo "<pre>"; print_r($userlist); die;
-        //return view('admin.user.usercart',compact('userlist'));
     }
 
     /**
@@ -382,7 +377,7 @@ class UserController extends Controller
 
 
     }
-    
+
     public function newClientSales(){
 
         $user = Auth::guard('admins')->user();
@@ -400,7 +395,7 @@ class UserController extends Controller
 
         $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
 
-        if($user->department['department'] == 'Sales'){ 
+        if($user->department['department'] == 'Sales'){
 
               $orders1 = Orders::whereHas('user', function($q) use($userState){
               $q->where('state', $userState);
@@ -417,7 +412,7 @@ class UserController extends Controller
               ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
               ->get()
               ->toArray();
-          
+
         }
         // echo "<pre>"; print_r($orders1); die;
 
@@ -481,8 +476,8 @@ class UserController extends Controller
     }
 
     public function updateUser(Request $request){
-        if (isset($_POST['updatebtn'])) { 
-       
+        if (isset($_POST['updatebtn'])) {
+
      //  dd( $request);
        $this->validate($request, [
         'user_name' => 'required',
@@ -524,14 +519,14 @@ class UserController extends Controller
                     $description->user_id=$request->user_id;
                     $description->description=$request->user_client_des;
                     $description->save();
-            }   
+            }
             User::where('id',$request->user_id)->update($update_array);
                 return redirect('admin/users')->with('success','Users updated successful');
             } catch (\Exception $e) {
                 dd($e->getMessage());
             }
             return back()->with('warning','Some problem occured.');
-            
+
         }
         else{
             echo "error1"; die();
