@@ -322,10 +322,10 @@ class UserController extends Controller
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
 
-        date_default_timezone_set('Asia/Kolkata');
         $userlist=$this->User->getUserData();
         $date = new \DateTime();
         $formatted_date1 = $date->format('Y-m-d H:i:s');
+
         if($request->hours > 0){
             $date->modify("-{$request->hours} hours");
         }
@@ -335,19 +335,11 @@ class UserController extends Controller
         if(!$request->hours && !$request->minutes){
             $date->modify("-60 minutes");
         }
+
         $formatted_date = $date->format('Y-m-d H:i:s');
 
-        // $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->groupBy('cart_added_by')->toArray();
         $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
-        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
         if($user->department['department'] == 'Sales'){
-
-            // Usercart::where('cart_added_on', '>',$formatted_date)
-            //   ->with('user', function ($query) {
-            //       $query->where('state','=','3');
-            //   })
-            //   ->with('product')
-            //   ->get();
 
               $userCart = Usercart::whereHas('user', function($q) use($userState){
               $q->where('state', $userState);
@@ -360,10 +352,7 @@ class UserController extends Controller
 
         }
 
-        // echo "<pre>"; print_r($userCart); die;
         return view('admin.user.abandonedcart',compact('userCart'));
-        // echo "<pre>"; print_r($userlist); die;
-        //return view('admin.user.usercart',compact('userlist'));
     }
 
     /**
