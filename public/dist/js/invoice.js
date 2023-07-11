@@ -159,7 +159,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
@@ -255,7 +255,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -291,7 +291,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -1283,7 +1283,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
