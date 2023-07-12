@@ -229,7 +229,7 @@
                                 <select <?php if($invioces->status==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                 <option value="0"  <?php if($invioces->status =='0'){ echo "Selected";} ?>>Pending</option>
                                 <option value="1" <?php if($invioces->status =='1'){ echo "Selected";} ?>>Paid</option>
-                                <option value="2" <?php if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option>
+                                <!-- <option value="2" <?php //if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option> -->
                                 <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
                                 </select>
                               </td>

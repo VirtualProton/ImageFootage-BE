@@ -111,6 +111,7 @@
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
+                                       <option value="5K+" selected="">5K+</option>
                                        <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
                                     </select>
                                  </div>
@@ -120,6 +121,14 @@
                                        <option value="">--Select a Type--</option>
                                        <option value="right_managed">Right Managed</option>
                                        <option value="royalty_free">Royalty Free</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group" ng-show="product.pro_type=='royalty_free'">
+                                    <label for="licence_type"><%product.type%> Licence type</label>
+                                    <select required="" class="form-control" ng-model="product.licence_type">
+                                       <option value="">--Select a Licence Type--</option>
+                                       <option value="standard">Standard</option>
+                                       <option value="extended">Extended</option>
                                     </select>
                                  </div>
                                  <div>
