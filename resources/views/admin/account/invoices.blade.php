@@ -331,16 +331,16 @@
                   <div class="form-group">
                     <div class="col-sm-6">
                     
-                      <p><strong>Trasaction Id :</strong> Q<%quotationObjCus.invoice_name%></p>
+                      <p><strong>Trasaction Id :</strong> Q <span id="default_custom_invoice_name"></span></p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
                       <p><strong>GST No. :</strong>   <input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-group"></p>
                       <p><strong>Phone No. :</strong> <input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-group"></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
                       <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p> -->
-                      <p><strong>Subtotal :</strong> <%quotationObjCus.total - quotationObjCus.tax%></p>
+                      <p><strong>Subtotal :</strong><span id="default_custom_subtotal"></span></p>
                       <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong> <%quotationObjCus.tax%></p>
-                      <p><strong>Total :</strong> <%quotationObjCus.total%></p>
+                      <p><strong>Tax :</strong><span id="default_custom_tax"></span></p>
+                      <p><strong>Total :</strong><span id="default_custom_total"></span></p>
                     </div>
                     <div class="col-sm-6">
                       <p><strong>Method : </strong>

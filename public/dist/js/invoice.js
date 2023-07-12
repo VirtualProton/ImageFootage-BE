@@ -896,7 +896,11 @@ app.controller('invoiceController', function($scope, $http, $location) {
       //  console.log(quotation);
         $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
-      //  console.log($scope.quotationObjCus);
+    //  console.log($scope.quotationObjCus);
+    $('#modal-default_custom #default_custom_invoice_name').html(quotation.invoice_name);
+    $('#modal-default_custom #default_custom_subtotal').html(quotation.total - quotation.tax);
+    $('#modal-default_custom #default_custom_tax').html(quotation.tax);
+    $('#modal-default_custom #default_custom_total').html(quotation.total);
         // if (confirm('Do you want to send invoice for this quotation ?')) {
         //     $('#loading').show();
         //     $http({

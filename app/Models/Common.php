@@ -376,9 +376,13 @@ class Common extends Model
             }
             $pdf_path = $fileupresult['ObjectURL'];
             if(!empty($pdf_path)){
+                $update_data = ['invoice_url'=>$pdf_path,'proforma_type'=>'2','job_number'=> $po, 'po_detail'=>$po_date,'invoice_created'=>date('Y-m-d H:i:s')];
+                if(!empty($request_data['payment_method'] == 'chq') && !empty($request_data['expiry_due_date'])) {
+                    $update_data['expiry_due_date'] = $request_data['expiry_due_date'];
+                }
                 DB::table('imagefootage_performa_invoices')
                     ->where('id','=',$quotation_id)
-                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','job_number'=> $po, 'po_detail'=>$po_date,'invoice_created'=>date('Y-m-d H:i:s')]);
+                    ->update($update_data);
                 unlink(storage_path('app/public/pdf'). '/' . $fileName);
             }
             $resp =array();
