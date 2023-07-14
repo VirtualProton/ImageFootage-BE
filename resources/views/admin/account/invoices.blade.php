@@ -31,11 +31,13 @@
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
+                    @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
                     <li class="@if($active_tab=="tab3") active @endif">
                       <a href="#clientinfo" role="tab" data-toggle="tab">
                         <i class="fa fa-pencil-square-o"></i> Client Info Update
                       </a>
                     </li>
+                    @endif
                     <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
