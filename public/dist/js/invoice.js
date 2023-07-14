@@ -131,9 +131,13 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         var total = 0;
         for (var j = 0; j < subtotal.length; j++) {
             subtotalvalue += Number(subtotal[j].price);
-        }  
+        }
+        if($('input[name="tax_checkbox[]"]:checked').length > 0){
+            total = (subtotalvalue * (gst_value) / 100);
+        }
         subtotal = Number(subtotalvalue);
-        $scope.total = subtotal;
+        $scope.total = subtotal + total;
+        $scope.tax = total;
     }
     $scope.checkThetax = function(tax_percent, type) {
 
@@ -159,7 +163,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
@@ -255,7 +259,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -291,7 +295,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -1256,8 +1260,12 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         for (var j = 0; j < subtotal.length; j++) {
             subtotalvalue += Number(subtotal[j].price);
         }  
+        if($('input[name="tax_checkbox[]"]:checked').length > 0){
+            total = (subtotalvalue * (gst_value) / 100);
+        }
         subtotal = Number(subtotalvalue);
-        $scope.total = subtotal;
+        $scope.total = subtotal + total;
+        $scope.tax = total;
     }
     $scope.checkThetax = function(tax_percent, type) {
 
@@ -1283,7 +1291,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
