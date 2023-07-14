@@ -37,6 +37,8 @@ class PackageController extends Controller
 		$package->package_pcarry_forward =$request->products_carry_forward;
 		$package->pacage_size =$request->pacage_size;
 		$package->package_addedby=Auth::guard('admins')->user()->id;
+		$package->package_expiry_quarterly =$request->package_expiry_quarterly;
+		$package->package_expiry_half_yearly =$request->package_expiry_half_yearly;
 		$result=$package->save();
 		if($result){
 		  	 return back()->with('success','Package created successful');
@@ -131,8 +133,12 @@ class PackageController extends Controller
 				$package->where('package_type', '=', 'Image');
 				if($data['product_dur'] == 'monthly') {
 					$package->where('package_expiry', '=', '1');
+				} else if ($data['product_dur'] == 'quarterly') {
+					$package->where('package_expiry_quarterly', '=', '1');
+				} else if ($data['product_dur'] == 'half_yearly') {
+					$package->where('package_expiry_half_yearly', '=', '1');
 				} else {
-					$package->where('package_expiry', '=', '0');
+					$package->where('package_expiry_year', '=', '1');
 				}
 			}
 		}

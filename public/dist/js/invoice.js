@@ -1,4 +1,5 @@
-base_url = '/imagefootage/backend/admin/';
+// base_url = '/imagefootage/backend/admin/';
+base_url = '/admin/';
 api_path = '/admin/';
 image_path ='/';
 small_price = '500';

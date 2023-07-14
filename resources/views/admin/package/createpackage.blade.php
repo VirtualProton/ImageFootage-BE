@@ -110,7 +110,21 @@
                     @if ($errors->has('package_expiry'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry') }}</div>
                     @endif
-                     <div class="form-group">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Package Expiry in Quarterly</label>
+                      <input type="text" class="form-control" name="package_expiry_quarterly" id="package_expiry_quarterly" placeholder="Package Expiry in Quarterly">
+                    </div>
+                    @if ($errors->has('package_expiry_quarterly'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_quarterly') }}</div>
+                    @endif
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Package Expiry in Half Year</label>
+                      <input type="text" class="form-control" name="package_expiry_half_yearly" id="package_expiry_half_yearly" placeholder="Package Expiry in Half Year">
+                    </div>
+                    @if ($errors->has('package_expiry_half_yearly'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_half_yearly') }}</div>
+                    @endif
+                    <div class="form-group">
                       <label for="exampleInputPassword1">Package Expiry Per Year</label>
                       <input type="text" class="form-control" name="package_expiry_year" id="package_expiry_year" placeholder="Package Expiry Per Year">
                     </div>
