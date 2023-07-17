@@ -38,12 +38,12 @@
                       </a>
                     </li>
                     @endif
-                    <li class="@if($active_tab=="tab4") active @endif">
+                    <!-- <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
                       </a>
                       
-                    </li>
+                    </li> -->
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">
@@ -247,22 +247,29 @@
                             @endif
                           </tbody>
                         </table>
-                        {{-- @include('admin.account.comment') --}}
+                        <br />
+                        <br />
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
                       </div>
                     </div>
                     <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
                       <div class="box-body">
                         @include('admin.account.update-user') 
                         @include('admin.account.client-des')
-                      </div>
-                    </div>
-                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
-                      <div class="box-body">
-                      
+                        <br />
+                        <br />
                         @include('admin.account.add-comment')
                         @include('admin.account.comment')
                       </div>
                     </div>
+                    {{--<div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
+                      <div class="box-body">
+                      
+                         @include('admin.account.add-comment')
+                        @include('admin.account.comment')
+                      </div>
+                    </div> --}}
                   </div>
                 </div>
               </div>

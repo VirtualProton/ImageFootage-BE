@@ -138,7 +138,7 @@ class PackageController extends Controller
 				} else if ($data['product_dur'] == 'half_yearly') {
 					$package->where('package_expiry_half_yearly', '=', '1');
 				} else {
-					$package->where('package_expiry_year', '=', '1');
+					$package->where('package_expiry_yearly', '=', '1');
 				}
 			}
 		}
