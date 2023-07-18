@@ -956,4 +956,18 @@ public function save_download_proforma($data){
         return $result; 
     }
 
+    public function update_po($invoice_id,$po_no){
+        $update = Invoice::where('id','=',$invoice_id)
+                ->update(['job_number'=>$po_no]);
+        $resp =array();
+        if($update) {
+            $resp['statusdesc'] = "PO no. updated successfully.";
+            $resp['statuscode'] = "1";
+        }else{
+            $resp['statusdesc'] = "Error in update PO no.";
+            $resp['statuscode'] = "0";
+        }
+        return response()->json(compact('resp'));
+    }
+
 }

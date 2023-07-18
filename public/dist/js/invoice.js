@@ -896,6 +896,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};
     $scope.payment_method = '';
+    $scope.invoice_id = '';
     $scope.create_invoice = function(quotation, user_id) {
       //  console.log(quotation);
         $scope.quotationObjCus = quotation;
@@ -1038,6 +1039,40 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
 
     }
+
+    $scope.open_modal_update_po = function(id=null,job_number=null) {
+        $('.modal-body #invoice_id').val(id);
+        $('.modal-body #po_no').val(job_number);
+        $scope.invoice_id = id;
+    }
+    $scope.update_po = function() {
+        $scope.invoice_id = $('.modal-body #invoice_id').val();
+        $scope.po_no = $('.modal-body #po_no').val();
+        if(!$scope.invoice_id){
+            return false;
+        }
+        if(!$scope.po_no){
+            alert("Please enter po #.");
+        } else {
+            $('#loading').show();
+            $http({
+                method: 'POST',
+                url: api_path + 'update_po',
+                data: { invoice_id : $scope.invoice_id, po_no: $scope.po_no}
+            }).then(function(result) {
+                $('#loading').hide();
+                if (result.data.resp.statuscode == '1') {
+                    alert(result.data.resp.statusdesc);
+                } else {
+                    alert(result.data.resp.statusdesc);
+                }
+                window.location.reload();
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
+    }
+
 });
 
 app.directive("ngFileSelect", function(fileReader, $timeout) {

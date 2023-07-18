@@ -281,6 +281,12 @@ Route::get('/deletemodule/{id}', 'ModuleController@destroy');
 Route::get('/updatemodule/{id}', 'ModuleController@updateModules');
 Route::post('/editmodules', 'ModuleController@editModules');
 
+// Route for po binding
+Route::get('/add_po', 'InvoiceController@addPO');
+Route::post('/save_po', 'InvoiceController@savePO');
+Route::post('/get_invoice', 'InvoiceController@get_invoice');
+Route::post('/update_po','InvoiceController@update_po');
+
 });
 
 Route::get('emailVerification','UserContactusController@emailVerification');
