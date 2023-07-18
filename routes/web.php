@@ -206,6 +206,9 @@ Route::get('/accounts/view/{id}', 'AccountController@show');
 
 Route::resource('/accounts', 'AccountController');
 
+# Promo Code
+Route::resource('/promo-codes', 'PromoCodeController');
+
 Route::get('/users/status/{status}/{id}', 'UserController@status');
 Route::get('/users/show/{id}', 'UserController@show');
 
