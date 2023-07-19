@@ -242,7 +242,7 @@ Route::post('/plans', 'PackageController@plans');
 Route::post('/saveSubscriptionInvoice', 'InvoiceController@saveSubscriptionInvoice');
 Route::post('/saveDownloadInvoice', 'InvoiceController@saveDownloadInvoice');
 Route::post('/create_invoice_subcription','InvoiceController@create_invoice_subcription');
-
+Route::get('/invoice_cancel/{id}', 'InvoiceController@invoiceCancel');
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');

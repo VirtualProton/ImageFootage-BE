@@ -321,4 +321,13 @@ class InvoiceController extends Controller
             return $this->Common->update_po($data['invoice_id'], $data['po_no']);
         }
     }
+
+    public function invoiceCancel($id){
+        $update = Invoice::where('id', $id)->update(['status' => '3', 'cancel_date' => date('Y-m-d H:i:s')]);
+        if($update){
+            return redirect("admin/users/invoices/1?page=3#!#posts")->with("success", "Quotation Cancelled !!!");
+        } else {
+            return redirect("admin/users/invoices/1?page=3#!#posts")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
+        }
+    }
 }

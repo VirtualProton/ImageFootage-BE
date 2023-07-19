@@ -171,7 +171,13 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }
             if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                $update = [
+                    'status' => 3,
+                    'expiry_invoices'=>$data['expiry_date'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ];
+                Invoice::where('id', '=', $data['old_quotation'])->update($update);
             }
             // dd($id,$data['uid']);
             $dataForEmail  = $this->getData($id,$data['uid']); 
