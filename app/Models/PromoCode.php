@@ -10,4 +10,6 @@ class PromoCode extends Model
     protected $fillable = [
         'name', 'type', 'max_usage', 'valid_upto_type', 'valid_till_date', 'status'
     ];
+
+    public $timestamps = false;
 }

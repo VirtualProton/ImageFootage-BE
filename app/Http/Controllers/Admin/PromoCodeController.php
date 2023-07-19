@@ -48,11 +48,12 @@ class PromoCodeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'       => 'required',
-            'type'       => 'required',
-            'max_usage'  => 'required',
-            'valid_type' => 'required',
-            'status'     => 'required',
+            'name'            => 'required',
+            'type'            => 'required',
+            'max_usage'       => 'required',
+            'valid_type'      => 'required',
+            'valid_till_date' => 'required|date',
+            'status'          => 'required',
         ]);
 
         $insertableData = [
@@ -90,7 +91,8 @@ class PromoCodeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $promoCode = PromoCode::find($id);
+        return view('admin.promo-code.edit', compact('promoCode'));
     }
 
     /**
@@ -102,7 +104,28 @@ class PromoCodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'            => 'required',
+            'type'            => 'required',
+            'max_usage'       => 'required',
+            'valid_type'      => 'required',
+            'valid_till_date' => 'required|date',
+            'status'          => 'required',
+        ]);
+
+        $promoCode                  = PromoCode::find($id);
+        $promoCode->name            = $request->name;
+        $promoCode->type            = $request->type;
+        $promoCode->max_usage       = $request->max_usage;
+        $promoCode->valid_upto_type = $request->valid_type;
+        $promoCode->valid_till_date = $request->valid_till_date;
+        $promoCode->status          = $request->status;
+
+        if ($promoCode->save()) {
+            return redirect("admin/promo-codes")->with("success", "Promo code has been updated successfully !");
+        } else {
+            return redirect("admin/promo-codes/$id/edit")->with("error", "Due to some error, Promo code is not updated yet. Please try again!");
+        }
     }
 
     /**
