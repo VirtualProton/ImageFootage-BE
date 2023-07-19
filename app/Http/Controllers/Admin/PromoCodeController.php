@@ -26,7 +26,8 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        //
+        $promocodes = PromoCode::orderBy('id', 'DESC')->get()->toArray();
+        return view('admin.promo-code.index',compact('promocodes'));
     }
 
     /**

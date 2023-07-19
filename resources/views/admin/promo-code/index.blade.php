@@ -1,0 +1,75 @@
+@extends('admin.layouts.default')
+@section('content')
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        PromoCodes List
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">PromoCodes List</li>
+      </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+        	<div class="col-md-12">
+         		<div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">PromoCodes List</h3>
+                </div>
+                @include('admin.partials.message')
+             <!-- /.box-header -->
+             <div class="box-body">
+            <table id="promo-codes" class="table table-bordered table-striped dataTable">
+                <thead>
+                    <!-- <tr class="col-sm-12"> -->
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Max Usage</th>
+                        <th>Valid Upto Type</th>
+                        <th>Valid Till Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(count($promocodes) > 0)
+                    @foreach($promocodes as $k => $promocode)
+                    <tr role="row">
+                          <td>{{$k+1}}</td>
+                          <td>{{$promocode['name']}}</td>
+                          <td>{{$promocode['type']}}</td>
+                          <td>{{$promocode['max_usage']}}</td>
+                          <td>{{$promocode['valid_upto_type']}}</td>
+                          <td>{{$promocode['valid_till_date']}}</td>
+                          <td><?php echo ($promocode['status']=='1'?"Active":"Inactive"); ?></td>
+                          <td>
+                            <a href="{{ URL::to('admin/promo-codes/'.$promocode['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                          </td>
+                    </tr>
+                    @endforeach
+                    @endif
+
+                </table>
+              </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    @endsection
+    @section('scripts')
+    <script>
+    $(function () {
+    $('#promo-codes').DataTable();
+ })
+    </script>
+
+@stop
