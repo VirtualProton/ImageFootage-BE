@@ -49,21 +49,25 @@ class PromoCodeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'            => 'required',
-            'type'            => 'required',
-            'max_usage'       => 'required',
-            'valid_type'      => 'required',
-            'valid_till_date' => 'required|date',
-            'status'          => 'required',
+            'name'             => 'required',
+            'type'             => 'required',
+            'discount'         => 'required|numeric',
+            'max_usage'        => 'required',
+            'valid_type'       => 'required',
+            'valid_start_date' => 'sometimes|nullable|required_if:valid_type,range|date',
+            'valid_till_date'  => 'required|date|after:valid_start_date',
+            'status'           => 'required',
         ]);
 
         $insertableData = [
-            'name'            => $request->name,
-            'type'            => $request->type,
-            'max_usage'       => $request->max_usage,
-            'valid_upto_type' => $request->valid_type,
-            'valid_till_date' => $request->valid_till_date,
-            'status'          => $request->status,
+            'name'             => $request->name,
+            'type'             => $request->type,
+            'max_usage'        => $request->max_usage,
+            'discount'         => $request->discount,
+            'valid_upto_type'  => $request->valid_type,
+            'valid_start_date' => $request->valid_start_date,
+            'valid_till_date'  => $request->valid_till_date,
+            'status'           => $request->status,
         ];
         
         if (PromoCode::insert($insertableData)) {
@@ -106,21 +110,25 @@ class PromoCodeController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'            => 'required',
-            'type'            => 'required',
-            'max_usage'       => 'required',
-            'valid_type'      => 'required',
-            'valid_till_date' => 'required|date',
-            'status'          => 'required',
+            'name'             => 'required',
+            'type'             => 'required',
+            'discount'         => 'required|numeric',
+            'max_usage'        => 'required',
+            'valid_type'       => 'required',
+            'valid_start_date' => 'sometimes|nullable|required_if:valid_type,range|date',
+            'valid_till_date'  => 'required|date|after:valid_start_date',
+            'status'           => 'required',
         ]);
 
-        $promoCode                  = PromoCode::find($id);
-        $promoCode->name            = $request->name;
-        $promoCode->type            = $request->type;
-        $promoCode->max_usage       = $request->max_usage;
-        $promoCode->valid_upto_type = $request->valid_type;
-        $promoCode->valid_till_date = $request->valid_till_date;
-        $promoCode->status          = $request->status;
+        $promoCode                   = PromoCode::find($id);
+        $promoCode->name             = $request->name;
+        $promoCode->type             = $request->type;
+        $promoCode->max_usage        = $request->max_usage;
+        $promoCode->discount         = $request->discount;
+        $promoCode->valid_upto_type  = $request->valid_type;
+        $promoCode->valid_start_date = ($request->valid_type === 'range') ? $request->valid_start_date: null;
+        $promoCode->valid_till_date  = $request->valid_till_date;
+        $promoCode->status           = $request->status;
 
         if ($promoCode->save()) {
             return redirect("admin/promo-codes")->with("success", "Promo code has been updated successfully !");

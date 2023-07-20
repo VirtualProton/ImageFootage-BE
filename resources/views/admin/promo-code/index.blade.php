@@ -30,7 +30,9 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Max Usage</th>
+                        <th>Discount</th>
                         <th>Valid Upto Type</th>
+                        <th>Valid Start Date</th>
                         <th>Valid Till Date</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -44,7 +46,9 @@
                           <td>{{$promocode['name']}}</td>
                           <td>{{$promocode['type']}}</td>
                           <td>{{$promocode['max_usage']}}</td>
+                          <td>{{$promocode['discount']}}</td>
                           <td>{{$promocode['valid_upto_type']}}</td>
+                          <td>{{$promocode['valid_start_date'] ?? '-'}}</td>
                           <td>{{$promocode['valid_till_date']}}</td>
                           <td><?php echo ($promocode['status']=='1'?"Active":"Inactive"); ?></td>
                           <td>

@@ -40,6 +40,15 @@
             </div>
 
             <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Discount value</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                    <input required="required" type="text" class="form-control" name="discount" id="discount" placeholder="Discount value" value="{{ old('discount') }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Max usage</label>
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -58,6 +67,15 @@
                     <label>
                         <input type="radio" name="valid_type" value="range" @if (old('valid_type') == "range") {{ 'checked' }} @endif class="type"> Range
                     </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="start-datepicker" style="display: none">
+                <label for="inputPassword3" class="col-sm-2 control-label">Valid Start Date</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                    <input type="text" class="form-control" name="valid_start_date" id="valid_start_date" placeholder="Valid start date" value="{{ old('valid_start_date') }}">
                     </div>
                 </div>
             </div>
@@ -136,6 +154,16 @@
                         }
                     }
                 },
+                discount: {
+                    validators: {
+                    notEmpty: {
+                        message: 'Discount is required'
+                    },
+                    integer: {
+                        message: 'Discount should be number only'
+                    }
+                    },
+                },
                 max_usage: {
                     validators: {
                         notEmpty: {
@@ -161,8 +189,16 @@
         });
     })();
 
+    $('input[type="radio"]').click(function() {
+        if ($(this).val() === 'range') {
+            $("#start-datepicker").show();
+        } else {
+            $("#start-datepicker").hide();
+        }
+    });
+
     $( function() {
-        $("#valid_till_date").datepicker({
+        $("#valid_till_date, #valid_start_date").datepicker({
         autoclose: true,
         format: "yyyy-mm-dd"
         }).attr("autocomplete", "off");
