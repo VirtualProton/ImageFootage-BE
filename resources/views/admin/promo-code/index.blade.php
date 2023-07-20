@@ -48,6 +48,11 @@
                           <td>{{$promocode['valid_till_date']}}</td>
                           <td><?php echo ($promocode['status']=='1'?"Active":"Inactive"); ?></td>
                           <td>
+                            @if($promocode['status'] =='1')
+                              <a href="{{ url('admin/promo-codes/status/0/'.$promocode['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+                            @elseif($promocode['status'] =='0')
+                              <a href="{{ url('admin/promo-codes/status/1/'.$promocode['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+                            @endif
                             <a href="{{ URL::to('admin/promo-codes/'.$promocode['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a>
                           </td>
                     </tr>

@@ -139,4 +139,22 @@ class PromoCodeController extends Controller
     {
         //
     }
+
+    /**
+     * Changing the status of promo code.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function status($type,$id)
+    {
+        $promoCode         = PromoCode::find($id);
+        $promoCode->status = $type;
+
+        if ($promoCode->save()) {
+            return redirect("admin/promo-codes")->with("success", "Promo code status has been changed successfully !");
+        } else {
+            return redirect("admin/promo-codes")->with("error", "Due to some error, Promo code status is not changed yet. Please try again!");
+        }
+    }
 }
