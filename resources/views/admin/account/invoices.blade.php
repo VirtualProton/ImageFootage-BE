@@ -86,7 +86,7 @@
                               <h5>Allow Download Certificate : </h5>
                               <h5>Enable Subs Multi-logins ? : </h5>
                               <h5>Preferred Contact Method : </h5>
-                              <h5>Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
+                              <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;">{{$user->description}}</textarea></h5>
                             </div>
                           </thead>
                         </table>
