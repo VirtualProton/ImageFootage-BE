@@ -5,7 +5,9 @@ CREATE TABLE `promo_codes` (
  `name` varchar(255) DEFAULT NULL,
  `type` varchar(255) DEFAULT NULL,
  `max_usage` varchar(255) DEFAULT NULL,
+ `discount` varchar(255) DEFAULT NULL,
  `valid_upto_type` varchar(255) DEFAULT NULL,
+ `valid_start_date` date DEFAULT NULL,
  `valid_till_date` date DEFAULT NULL,
  `status` enum('1','0') NOT NULL DEFAULT '1',
  PRIMARY KEY (`id`)
