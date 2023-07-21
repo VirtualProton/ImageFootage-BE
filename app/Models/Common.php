@@ -17,6 +17,7 @@ use App\Http\AtomPay\TransactionResponse;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Package;
+use Carbon\Carbon;
 
 class Common extends Model
 {
@@ -172,11 +173,15 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }
             if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
+                $today = Carbon::now();
+                $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d');
                 $update = [
                     'status' => 3,
                     'expiry_invoices'=>$data['expiry_date'],
                     'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'cancelled_on' => $cancelled_on,
+                    'cancelled_by' => Auth::guard('admins')->user()->id
                 ];
                 Invoice::where('id', '=', $data['old_quotation'])->update($update);
             }
