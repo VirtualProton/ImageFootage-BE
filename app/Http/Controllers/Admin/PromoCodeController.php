@@ -165,4 +165,19 @@ class PromoCodeController extends Controller
             return redirect("admin/promo-codes")->with("error", "Due to some error, Promo code status is not changed yet. Please try again!");
         }
     }
+
+    public function getActivePromoCode(Request $request)
+    {
+        $promoCode = $request->input('promo_code');
+        $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->first();
+
+        $today = date('Y-m-d');
+        if (!$existsPromoCode && $existsPromoCode == null) {
+            return response()->json(['status' => 'error', 'message'=>"Invalid PromoCode!",'data' =>'' ]);
+        }
+        if ($existsPromoCode->valid_till_date < $today) {
+            return response()->json(['status' => 'error', 'message'=>"Promo code has been expired!",'data' =>'' ]);
+        }
+        return response()->json(['status' => 'success', 'message' => "Promo code has been applied successfully!", 'data' => $existsPromoCode]);
+    }
 }

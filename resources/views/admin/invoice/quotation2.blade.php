@@ -213,7 +213,8 @@
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="Total">Total</label>
-                                    <input type="text" class="form-control " ng-model="total" name="Total" readonly="">
+                                    <input type="text" class="form-control " ng-model="total" name="Total" readonly="" id="total_amount">
+                                    <span id="amount-caption"></span>
                                  </div>
                               </div>
                            </div>
@@ -223,8 +224,10 @@
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="promoCode">Promo code</label>
-                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code">
+                                    <span id="span-message"></span>
                                  </div>
+                                 <button class="btn btn-primary" id="btn-promocode">Apply Promo Code</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <!-- <div class="form-group">
@@ -480,7 +483,7 @@
                      <div class="">
                         <div class="row">
                            <div class="col-lg-12 col-md-12 col-xs-12" align="center" ng-show="search === true || quotation_type_var=='custom'">
-                              <button name="submit" class="btn btn-danger ng-binding">Submit</button>
+                              <button name="submit" class="btn btn-danger ng-binding" id="btn-submit">Submit</button>
                               <button type="reset" class="btn btn-danger">Reset</button>
                            </div>
                         </div>
@@ -504,6 +507,78 @@
       $("#downloadpoDate").datepicker();
       $("#subsc_poDate").datepicker();
    });
+
+   $( document ).ready(function() {
+
+      $('#btn-promocode').hide();
+
+      $('#promo_code').keyup(function() {
+         if($.trim(this.value).length > 0)
+            $('#btn-promocode').show()
+         else
+            $('#btn-promocode').hide()
+      });
+
+      $(document).on("click","#btn-promocode", function(e) {
+
+         e.preventDefault();
+
+         let promoCode = $("#promo_code").val();
+
+         $.ajax({
+            url: '{{ URL::to("admin/getPromoCode") }}',
+            type: 'POST',
+            data: {
+               promo_code: promoCode,
+            },
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+               alert("error");
+            },
+            success: function(result) {
+               // if error
+               if (result.status === 'error') {
+                  $('#span-message').removeAttr('class');
+                  $('#span-message').text(result.message);
+                  $('#span-message').addClass('text-danger');
+                  return false;
+               }
+               // if success
+               if (result.status === 'success') {
+                  $('#span-message').removeAttr('class');
+                  $('#span-message').text(result.message);
+                  $('#span-message').addClass('text-success');
+                  $('#btn-promocode').hide();
+                  $("#promo_code").prop('disabled', true);
+
+                  let discountValue = result.data.discount;
+                  let discountType  = result.data.type;
+
+                  let currentAmount = $('#total_amount').val();
+
+                  let grossAmount = 0;
+                  let discount    = 0;
+                  if (discountType === 'flat') {
+                     discount = discountValue;
+                     grossAmount = currentAmount - discount;
+                  }
+                  if (discountType === 'percentage') {
+                     discount = (currentAmount*discountValue)/100;
+                     grossAmount = currentAmount - discount;
+                  }
+                  $('#total_amount').val(grossAmount);
+                  $('#total_amount').trigger('input');
+                  let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
+                  $('#amount-caption').text(messsage);
+
+               }
+            }
+         });
+      });
+   });
+
 </script>
 
 @stop
