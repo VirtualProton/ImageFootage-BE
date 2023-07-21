@@ -922,7 +922,7 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         }
       };
       // Call the initialization function after rendering the editors
-      setTimeout($scope.initEditors, 5);
+      setTimeout($scope.initEditors, 1000);
 });
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};

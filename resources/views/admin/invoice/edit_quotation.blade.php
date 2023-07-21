@@ -5,7 +5,7 @@
 <section class="content">
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"><%title%></h3>
+              <h3 class="box-title"><%title%></h3><a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -200,6 +200,7 @@
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
 									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
 									<button type="reset" class="btn btn-danger">Reset</button>
+									<a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
 								</div>
 							</div>
 						</form>
