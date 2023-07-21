@@ -31,17 +31,19 @@
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
+                    @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
                     <li class="@if($active_tab=="tab3") active @endif">
                       <a href="#clientinfo" role="tab" data-toggle="tab">
                         <i class="fa fa-pencil-square-o"></i> Client Info Update
                       </a>
                     </li>
-                    <li class="@if($active_tab=="tab4") active @endif">
+                    @endif
+                    <!-- <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
                       </a>
                       
-                    </li>
+                    </li> -->
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">
@@ -229,7 +231,7 @@
                                 <select <?php if($invioces->status==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                 <option value="0"  <?php if($invioces->status =='0'){ echo "Selected";} ?>>Pending</option>
                                 <option value="1" <?php if($invioces->status =='1'){ echo "Selected";} ?>>Paid</option>
-                                <option value="2" <?php if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option>
+                                <!-- <option value="2" <?php //if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option> -->
                                 <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
                                 </select>
                               </td>
@@ -245,22 +247,29 @@
                             @endif
                           </tbody>
                         </table>
-                        {{-- @include('admin.account.comment') --}}
+                        <br />
+                        <br />
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
                       </div>
                     </div>
                     <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
                       <div class="box-body">
                         @include('admin.account.update-user') 
                         @include('admin.account.client-des')
-                      </div>
-                    </div>
-                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
-                      <div class="box-body">
-                      
+                        <br />
+                        <br />
                         @include('admin.account.add-comment')
                         @include('admin.account.comment')
                       </div>
                     </div>
+                    {{--<div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
+                      <div class="box-body">
+                      
+                         @include('admin.account.add-comment')
+                        @include('admin.account.comment')
+                      </div>
+                    </div> --}}
                   </div>
                 </div>
               </div>
@@ -331,16 +340,16 @@
                   <div class="form-group">
                     <div class="col-sm-6">
                     
-                      <p><strong>Trasaction Id :</strong> Q<%quotationObjCus.invoice_name%></p>
+                      <p><strong>Trasaction Id :</strong> Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
                       <p><strong>GST No. :</strong>   <input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-group"></p>
                       <p><strong>Phone No. :</strong> <input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-group"></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
                       <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p> -->
-                      <p><strong>Subtotal :</strong> <%quotationObjCus.total - quotationObjCus.tax%></p>
+                      <p><strong>Subtotal :</strong>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
                       <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong> <%quotationObjCus.tax%></p>
-                      <p><strong>Total :</strong> <%quotationObjCus.total%></p>
+                      <p><strong>Tax :</strong>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                      <p><strong>Total :</strong>{{isset($quotations) ? $quotations->total : ''}}</p>
                     </div>
                     <div class="col-sm-6">
                       <p><strong>Method : </strong>
@@ -380,7 +389,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(quotationObjCus.id, quotation_user_cus)">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus({{$quotations->id}}, {{$user_id}})">Confirm Submission</button>
                 </div>
               </div>
               <!-- /.modal-content -->

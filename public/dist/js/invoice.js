@@ -1,4 +1,5 @@
-base_url = '/imagefootage/backend/admin/';
+// base_url = '/imagefootage/backend/admin/';
+base_url = '/admin/';
 api_path = '/admin/';
 image_path ='/';
 small_price = '500';
@@ -900,7 +901,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
       //  console.log(quotation);
         $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
-      //  console.log($scope.quotationObjCus);
+    //  console.log($scope.quotationObjCus);
         // if (confirm('Do you want to send invoice for this quotation ?')) {
         //     $('#loading').show();
         //     $http({

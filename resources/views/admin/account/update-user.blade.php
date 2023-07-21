@@ -121,7 +121,7 @@
         </div>  
       </div>
       <div class="form-group col-sm-12">
-        <div class="box-footer user-blade-sub">
+        <div class="box-footer user-blade-sub" style="margin-bottom: 20px;">
           {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'updatebtn', 'name' => 'updatebtn')) !!}
         </div>
       </div>
