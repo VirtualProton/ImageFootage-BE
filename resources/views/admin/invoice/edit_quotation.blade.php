@@ -5,7 +5,7 @@
 <section class="content">
 <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"><%title%></h3>
+              <h3 class="box-title"><%title%></h3><a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -92,6 +92,10 @@
 											<option value="right_managed">Right Managed</option>
 											<option value="royalty_free">Royalty Free</option>
 											</select>
+										</div>
+										<div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
+											<label for="licence_type"><%product.type%> Licence type</label>
+											<textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
 										</div>
 										<div>
 											<div>
@@ -196,6 +200,7 @@
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
 									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
 									<button type="reset" class="btn btn-danger">Reset</button>
+									<a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
 								</div>
 							</div>
 						</form>
@@ -208,6 +213,7 @@
     @section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <script>
 
 $(document).ready(function ($) {
@@ -377,6 +383,11 @@ function getcity(data){
 }
 $( function() {
     $( "#poDate" ).datepicker();
+	setTimeout(function () {
+		$('.licence_type').each(function() {
+			CKEDITOR.replace($(this).prop('id'));
+		});
+	});
   } );
 </script>
 

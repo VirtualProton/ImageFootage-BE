@@ -246,7 +246,7 @@ Route::post('/plans', 'PackageController@plans');
 Route::post('/saveSubscriptionInvoice', 'InvoiceController@saveSubscriptionInvoice');
 Route::post('/saveDownloadInvoice', 'InvoiceController@saveDownloadInvoice');
 Route::post('/create_invoice_subcription','InvoiceController@create_invoice_subcription');
-
+Route::get('/invoice_cancel/{id}', 'InvoiceController@invoiceCancel');
 
 //Route::get('dashboard', 'Admin\DashboardController@dashboard');
 //Route::get('login', 'Admin\DashboardController@login');
@@ -284,6 +284,12 @@ Route::get('/modulestatus/{status}/{id}', 'ModuleController@changeModulesStatus'
 Route::get('/deletemodule/{id}', 'ModuleController@destroy');
 Route::get('/updatemodule/{id}', 'ModuleController@updateModules');
 Route::post('/editmodules', 'ModuleController@editModules');
+
+// Route for po binding
+Route::get('/add_po', 'InvoiceController@addPO');
+Route::post('/save_po', 'InvoiceController@savePO');
+Route::post('/get_invoice', 'InvoiceController@get_invoice');
+Route::post('/update_po','InvoiceController@update_po');
 
 });
 

@@ -685,7 +685,8 @@ app.controller('editquotatationController', function($scope, $http, $location) {
                 image: value.product_image,
                 price: value.subtotal,
                 footage: "",
-                type: value.type
+                type: value.type,
+                licence_type: value.licence_type
             };
             $scope.quotation.product.push(obj);
         });
@@ -697,6 +698,9 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "" };
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+          }, 0);
     }
 
     $scope.removeProduct = function(product) {
@@ -838,6 +842,17 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     
     $scope.submitQuotation = function() {
       //  console.log($scope.quotation);
+        $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         $('#loading').show();
         var sendData = {
             "uid": $('#uid').val(),
@@ -893,10 +908,27 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         });
 
     }
+
+    // CKEditor initialization for all editors
+    $scope.initEditors = function () {
+        if($scope.quotation.product) {
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+              setTimeout(function (index) {
+                CKEDITOR.replace('licence_type-' + index, {
+                    readOnly: false,
+                });
+                CKEDITOR.instances['licence_type-' + (index+1)].setData($scope.quotation.product[index].licence_type);
+              }, 0, i);
+            }
+        }
+      };
+      // Call the initialization function after rendering the editors
+      setTimeout($scope.initEditors, 1000);
 });
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};
     $scope.payment_method = '';
+    $scope.invoice_id = '';
     $scope.create_invoice = function(quotation, user_id) {
       //  console.log(quotation);
         $scope.quotationObjCus = quotation;
@@ -1039,6 +1071,40 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
 
     }
+
+    $scope.open_modal_update_po = function(id=null,job_number=null) {
+        $('.modal-body #invoice_id').val(id);
+        $('.modal-body #po_no').val(job_number);
+        $scope.invoice_id = id;
+    }
+    $scope.update_po = function() {
+        $scope.invoice_id = $('.modal-body #invoice_id').val();
+        $scope.po_no = $('.modal-body #po_no').val();
+        if(!$scope.invoice_id){
+            return false;
+        }
+        if(!$scope.po_no){
+            alert("Please enter po #.");
+        } else {
+            $('#loading').show();
+            $http({
+                method: 'POST',
+                url: api_path + 'update_po',
+                data: { invoice_id : $scope.invoice_id, po_no: $scope.po_no}
+            }).then(function(result) {
+                $('#loading').hide();
+                if (result.data.resp.statuscode == '1') {
+                    alert(result.data.resp.statusdesc);
+                } else {
+                    alert(result.data.resp.statusdesc);
+                }
+                window.location.reload();
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
+    }
+
 });
 
 app.directive("ngFileSelect", function(fileReader, $timeout) {
@@ -1157,6 +1223,9 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image", licence_type:""};
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+          }, 0);
     }
      
     $scope.$on("fileProgress", function(e, progress) {
@@ -1567,8 +1636,17 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     }
 
     $scope.submitCustom = function(){
-      //  console.log($scope.quotation);
-       // console.log($scope);
+        $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         $('#loading').show();
       
         var sendData = {
