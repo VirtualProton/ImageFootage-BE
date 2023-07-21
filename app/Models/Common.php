@@ -155,6 +155,7 @@ class Common extends Model
                 } else{
                        $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';    
                 }
+                $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
                     'invoice_id' => $id,
                     'user_id' => $data['uid'],
@@ -162,7 +163,7 @@ class Common extends Model
                     'product_type' => $eachproduct['pro_type'],
                     'type' => $eachproduct['type'],
                     'product_size' => $eachproduct['pro_size'],
-                    'licence_type' => $eachproduct['licence_type'] ?? '',
+                    'licence_type' => $licence_type,
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
                     'status' => "1",
@@ -218,13 +219,6 @@ class Common extends Model
             $fileName = $data["invoice"]."_quotation.pdf";
             
             $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
-
-
-            $this->statusdesc  =   "Quotation sent Succesfully";
-            $this->statuscode  =   "1";
-            return response()->json(compact('this'));
-
-
 
             try{
                     Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
