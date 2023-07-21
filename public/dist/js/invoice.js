@@ -1191,6 +1191,9 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image", licence_type:""};
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+          }, 0);
     }
      
     $scope.$on("fileProgress", function(e, progress) {
@@ -1601,8 +1604,17 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     }
 
     $scope.submitCustom = function(){
-      //  console.log($scope.quotation);
-       // console.log($scope);
+        $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         $('#loading').show();
       
         var sendData = {

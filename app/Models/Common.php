@@ -153,7 +153,7 @@ class Common extends Model
                 if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) { 
                        $image = $eachproduct['image'];
                 } else{
-                       $image = $this->imagesaver($eachproduct['image']);    
+                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';    
                 }
                 $insert_product = array(
                     'invoice_id' => $id,
@@ -218,6 +218,14 @@ class Common extends Model
             $fileName = $data["invoice"]."_quotation.pdf";
             
             $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+
+
+            $this->statusdesc  =   "Quotation sent Succesfully";
+            $this->statuscode  =   "1";
+            return response()->json(compact('this'));
+
+
+
             try{
                     Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
                     $message->to($data["email"])

@@ -79,7 +79,7 @@
                      <div class="" ng-show="quotation_type_var=='custom'">
                         <div class="row">
                            <div class="col-sm-12">
-                              <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
+                              <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product track by $index">
                                  <div class="form-group">
                                     <label class="">Product Type <%$index+1%> (Image/Footage)</label>
                                     <select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
@@ -164,7 +164,7 @@
                                  </div>
                                  <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
                                     <label for="licence_type"><%product.type%> Licence type</label>
-                                    <input type="text" ng-model="product.licence_type" >
+                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
                                  </div>
                                  <div>
                                     <div>
@@ -498,11 +498,17 @@
 
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <script>
    $(function() {
       $("#poDate").datepicker();
       $("#downloadpoDate").datepicker();
       $("#subsc_poDate").datepicker();
+   });
+   $(document).ready(function($) {
+      $('.licence_type').each(function() {
+         CKEDITOR.replace($(this).prop('id'));
+      });
    });
 </script>
 
