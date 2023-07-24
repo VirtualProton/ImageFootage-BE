@@ -29,7 +29,7 @@
                               <td>Site:</td>
                               <td>27-SEP-16</td>
                            </tr> -->
-						  
+
                         <tr>
                               <td>Username:</td>
                               <td><?php echo $orders['user']['user_name'] ?></td>
@@ -74,8 +74,17 @@
                                 <td style="color: #fc8041; font-weight: 700">Plan Expiry on:</td>
                                 <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y h:i:s a",strtotime($orders['package_expiry_date_from_purchage'])) ?></td>
                             </tr>
-
-                          <tr>
+                            <?php
+                            if($orders['extended_date']) {
+                                ?>
+                                <tr>
+                                    <td style="color: #fc8041; font-weight: 700">Extended Date:</td>
+                                    <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y h:i:s a",strtotime($orders['extended_date'])) ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            <tr>
                               <td style="color: #fc8041; font-weight: 700">Total Price:</td>
                               <td style="color: #fc8041; font-weight: 700">Rs. <?php echo $orders['package_price'] ?></td>
                            </tr>
