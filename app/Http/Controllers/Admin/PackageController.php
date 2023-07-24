@@ -99,7 +99,9 @@ class PackageController extends Controller
 							 'package_pcarry_forward'=>$request->products_carry_forward,
 							 'package_expiry_yearly'=>$request->package_expiry_year,
 							 'pacage_size'=>$request->pacage_size,
-							 'updated_at'=>date('Y-m-d H:i:s')
+							 'updated_at'=>date('Y-m-d H:i:s'),
+							 'package_expiry_quarterly'=>$request->package_expiry_quarterly,
+							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);
 		if($result){

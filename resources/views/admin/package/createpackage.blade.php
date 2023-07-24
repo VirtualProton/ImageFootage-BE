@@ -110,14 +110,14 @@
                     @if ($errors->has('package_expiry'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry') }}</div>
                     @endif
-                    <div class="form-group">
+                    <div class="form-group" id="div_quarterly">
                       <label for="exampleInputPassword1">Package Expiry in Quarterly</label>
                       <input type="text" class="form-control" name="package_expiry_quarterly" id="package_expiry_quarterly" placeholder="Package Expiry in Quarterly">
                     </div>
                     @if ($errors->has('package_expiry_quarterly'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_quarterly') }}</div>
                     @endif
-                    <div class="form-group">
+                    <div class="form-group" id="div_half_yearly">
                       <label for="exampleInputPassword1">Package Expiry in Half Year</label>
                       <input type="text" class="form-control" name="package_expiry_half_yearly" id="package_expiry_half_yearly" placeholder="Package Expiry in Half Year">
                     </div>
@@ -234,6 +234,27 @@ $(document).ready(function ($) {
                   message: 'Package expiry in months is required'
                 }
               }
+             },
+             package_expiry_quarterly: {
+              validators: {
+                notEmpty: {
+                  message: 'Package expiry in quarterly is required'
+                }
+              }
+             },
+             package_expiry_half_yearly: {
+              validators: {
+                notEmpty: {
+                  message: 'Package expiry in half year is required'
+                }
+              }
+             },
+             package_expiry_year: {
+              validators: {
+                notEmpty: {
+                  message: 'Package expiry per year is required'
+                }
+              }
              }
             }
         });
@@ -245,8 +266,12 @@ $("#package_plan").change(function(){
 	if(pack_type =='1'){
 		$("#package_month_count").val("");
 		$('#for_pro').css('display','none');
+    $('#div_quarterly').hide();
+    $('#div_half_yearly').hide();
 	}else{
-		$('#for_pro').css('display','block');
+    $('#for_pro').css('display','block');
+    $('#div_quarterly').show();
+    $('#div_half_yearly').show();
 	}
 	
 });

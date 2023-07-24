@@ -111,6 +111,20 @@
                     @if ($errors->has('package_expiry'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry') }}</div>
                     @endif
+                    <div class="form-group" id="div_quarterly">
+                      <label for="exampleInputPassword1">Package Expiry in Quarterly</label>
+                      <input type="text" class="form-control" name="package_expiry_quarterly" id="package_expiry_quarterly" placeholder="Package Expiry in Quarterly" value="{{ $package[0]['package_expiry_quarterly'] }}">
+                    </div>
+                    @if ($errors->has('package_expiry_quarterly'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_quarterly') }}</div>
+                    @endif
+                    <div class="form-group" id="div_half_yearly">
+                      <label for="exampleInputPassword1">Package Expiry in Half Year</label>
+                      <input type="text" class="form-control" name="package_expiry_half_yearly" id="package_expiry_half_yearly" placeholder="Package Expiry in Half Year" value="{{ $package[0]['package_expiry_half_yearly'] }}">
+                    </div>
+                    @if ($errors->has('package_expiry_half_yearly'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_half_yearly') }}</div>
+                    @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Package Expiry Per Year</label>
                       <input type="text" class="form-control" name="package_expiry_year" id="package_expiry_year" placeholder="Package Expiry Per Year" value="{{ $package[0]['package_expiry_yearly'] }}">
@@ -165,7 +179,14 @@
   <script>
 
 $(document).ready(function ($) {
-
+  var pack_type = $("#package_plan").val();
+  if(pack_type =='1'){
+    $('#div_quarterly').hide();
+    $('#div_half_yearly').hide();
+	}else{
+    $('#div_quarterly').show();
+    $('#div_half_yearly').show();
+	}
    // Example Validataion Standard Mode
     // ---------------------------------
     (function () {
@@ -232,8 +253,12 @@ $("#package_plan").change(function(){
 	if(pack_type =='1'){
 		$("#package_month_count").val("");
 		$('#for_pro').css('display','none');
+    $('#div_quarterly').hide();
+    $('#div_half_yearly').hide();
 	}else{
 		$('#for_pro').css('display','block');
+    $('#div_quarterly').show();
+    $('#div_half_yearly').show();
 	}
 	
 });
