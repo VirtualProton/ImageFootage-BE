@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
         //
         Commands\HourlyUpdate::class,
         Commands\CurrencyUpdate::class,
-        commands\QuotationDeactive::class
+        Commands\QuotationDeactive::class
 
     ];
 
@@ -36,7 +36,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('currency:update')
                 ->hourly();
         $schedule->command('quotation:deactive')
-                ->daily();
+                ->daily
+                ();
     }
 
     /**
