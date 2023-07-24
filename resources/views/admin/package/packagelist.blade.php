@@ -69,6 +69,10 @@
           Expire in 1 month
       @elseif($packages['package_expiry_yearly']==1 && $packages['package_plan']==2)
           Expire limit per month till 1 year.
+      @elseif($packages['package_expiry_quarterly']==1 && $packages['package_plan']==2)
+          Expire limit per quarterly till 1 year.
+      @elseif($packages['package_expiry_half_yearly']==1 && $packages['package_plan']==2)
+          Expire limit per half year till 1 year.
        @elseif($packages['package_plan']==1)
           Expire in 1 year.
       @endif
