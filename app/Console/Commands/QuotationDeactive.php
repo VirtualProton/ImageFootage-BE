@@ -4,15 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Log;
 
-class quotation_deactive extends Command
+class QuotationDeactive extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'quotation_deactive';
+    protected $signature = 'quotation:deactive';
 
     /**
      * The console command description.
@@ -38,19 +39,19 @@ class quotation_deactive extends Command
      */
     public function handle()
     {
-        \Log::info("====== Quotation cancelled by cron : START =====");
-        $today = date('Y-m-d H:i:s');
-        $invoices = Invoice::whereDate('cancelled_on', '<', $today)->where('status', 3)->get();
+        Log::channel('quotationlog')->info("====== Quotation cancelled by cron : START =====");
+        $today = date('Y-m-d');
+        $invoices = Invoice::whereDate('cancelled_on', '<', $today)->where('status', '=', 0)->whereNotNull('cancelled_on')->get();
         if(count($invoices) > 0) {
             foreach($invoices as $invoice) {
-                $invoice->update([
+                Invoice::where('id', $invoice->id)->update([
                     'status' => 3,
-                    'cancel_date' => $today,
+                    'cancel_date' => date('Y-m-d H:i:s'),
                     'cancelled_by' => NULL
                 ]);
-                \Log::info("====== Quotation cancelled id : " . $invoice->id ." =====");
+                Log::channel('quotationlog')->info("====== Quotation cancelled id : " . $invoice->id ." =====");
             }
         }
-        \Log::info("====== Quotation cancelled by cron : END =====");
+        Log::channel('quotationlog')->info("====== Quotation cancelled by cron : END =====");
     }
 }

@@ -154,7 +154,7 @@
                                 @endif
                               </td>
                               <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
-                              <td></td>
+                              <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
                               <td>
                                 @if($quotations->status != 3)
                                 <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;

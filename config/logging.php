@@ -89,6 +89,12 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        'quotationlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/quotationlog.log'),
+            'level' => 'info'
+        ]
     ],
 
 ];

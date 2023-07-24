@@ -122,6 +122,8 @@ class Common extends Model
         }else{
             $selected_taxes['GST']='0';
         }
+        $today = Carbon::now();
+        $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
 
         $insert = array(
             'user_id'=> $data['uid'],
@@ -140,9 +142,9 @@ class Common extends Model
             'invoice_type'=>'3',
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
-            'created_by' => Auth::guard('admins')->user()->id
+            'created_by' => Auth::guard('admins')->user()->id,
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
-
+            'cancelled_on' => $cancelled_on,
         );
         //DB::beginTransaction();
         //try{
@@ -173,8 +175,6 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }
             if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                $today = Carbon::now();
-                $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d');
                 $update = [
                     'status' => 3,
                     'expiry_invoices'=>$data['expiry_date'],
