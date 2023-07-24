@@ -30,11 +30,13 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Max Usage</th>
+                        <th>Total Applied Code</th>
                         <th>Discount</th>
                         <th>Valid Upto Type</th>
                         <th>Valid Start Date</th>
                         <th>Valid Till Date</th>
                         <th>Status</th>
+                        <th>Promo Will Use</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -46,11 +48,20 @@
                           <td>{{$promocode['name']}}</td>
                           <td>{{$promocode['type']}}</td>
                           <td>{{$promocode['max_usage']}}</td>
+                          <td>{{$promocode['total_applied_code']}}</td>
                           <td>{{$promocode['discount']}}</td>
                           <td>{{$promocode['valid_upto_type']}}</td>
                           <td>{{$promocode['valid_start_date'] ?? '-'}}</td>
                           <td>{{$promocode['valid_till_date']}}</td>
                           <td><?php echo ($promocode['status']=='1'?"Active":"Inactive"); ?></td>
+                          <td><?php if ($promocode['will_apply_by'] == '1') {
+                            echo "Frontend";  
+                          } else if ($promocode['will_apply_by'] == '2') {
+                            echo "Backend";
+                          } else {
+                            echo "All";
+                          }
+                          ?></td>
                           <td>
                             @if($promocode['status'] =='1')
                               <a href="{{ url('admin/promo-codes/status/0/'.$promocode['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>

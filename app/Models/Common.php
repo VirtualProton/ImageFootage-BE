@@ -15,8 +15,10 @@ use Helper;
 use App\Http\AtomPay\TransactionRequest;
 use App\Http\AtomPay\TransactionResponse;
 use App\Models\Invoice;
+use App\Models\PromoCode;
 use App\Models\InvoiceItem;
 use App\Models\Package;
+use Carbon\Carbon;
 
 class Common extends Model
 {
@@ -121,6 +123,8 @@ class Common extends Model
         }else{
             $selected_taxes['GST']='0';
         }
+        $today = Carbon::now();
+        $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
 
         $insert = array(
             'user_id'=> $data['uid'],
@@ -139,22 +143,32 @@ class Common extends Model
             'invoice_type'=>'3',
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
-            'created_by' => Auth::guard('admins')->user()->id
+            'created_by' => Auth::guard('admins')->user()->id,
+            'promo_code_id' => $data['promo_code_id'],
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
-
+            'cancelled_on' => $cancelled_on,
         );
         //DB::beginTransaction();
         //try{
         DB::table('imagefootage_performa_invoices')->insert($insert);   
         $id = DB::getPdo()->lastInsertId();
+
+        // Update Total applied code in promo code
+        $promoCode   = PromoCode::find($data['promo_code_id']);
+        $currentUsed = $promoCode->total_applied_code;
+        $promoCode->total_applied_code = $currentUsed + 1;
+        $promoCode->save();
+        // End Update Total applied code in promo code
+
         if(count($data['products'])>0) {
             //echo "<pre>"; print_r($data['products']); die; 
             foreach ($data['products']['product'] as $eachproduct) {  
                 if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) { 
                        $image = $eachproduct['image'];
                 } else{
-                       $image = $this->imagesaver($eachproduct['image']);    
+                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';    
                 }
+                $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
                     'invoice_id' => $id,
                     'user_id' => $data['uid'],
@@ -162,7 +176,7 @@ class Common extends Model
                     'product_type' => $eachproduct['pro_type'],
                     'type' => $eachproduct['type'],
                     'product_size' => $eachproduct['pro_size'],
-                    'licence_type' => $eachproduct['licence_type'] ?? '',
+                    'licence_type' => $licence_type,
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
                     'status' => "1",
@@ -171,7 +185,15 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }
             if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                $update = [
+                    'status' => 3,
+                    'expiry_invoices'=>$data['expiry_date'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'cancelled_on' => $cancelled_on,
+                    'cancelled_by' => Auth::guard('admins')->user()->id
+                ];
+                Invoice::where('id', '=', $data['old_quotation'])->update($update);
             }
             // dd($id,$data['uid']);
             $dataForEmail  = $this->getData($id,$data['uid']); 
@@ -212,6 +234,7 @@ class Common extends Model
             $fileName = $data["invoice"]."_quotation.pdf";
             
             $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+
             try{
                     Mail::send('mail', $data, function($message)use($data,$pdf,$fileName) {
                     $message->to($data["email"])
@@ -958,6 +981,20 @@ public function save_download_proforma($data){
         /* it will return image name if image is saved successfully 
         or it will return error on failing to save image. */
         return $result; 
+    }
+
+    public function update_po($invoice_id,$po_no){
+        $update = Invoice::where('id','=',$invoice_id)
+                ->update(['job_number'=>$po_no]);
+        $resp =array();
+        if($update) {
+            $resp['statusdesc'] = "PO no. updated successfully.";
+            $resp['statuscode'] = "1";
+        }else{
+            $resp['statusdesc'] = "Error in update PO no.";
+            $resp['statuscode'] = "0";
+        }
+        return response()->json(compact('resp'));
     }
 
 }

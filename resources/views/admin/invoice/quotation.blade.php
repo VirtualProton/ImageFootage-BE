@@ -5,7 +5,7 @@
    <section class="content">
       <div class="box box-info">
          <div class="box-header with-border">
-            <h3 class="box-title"><%title%></h3>
+            <h3 class="box-title"><%title%></h3><a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn pull-right">Back</a>
          </div>
          @include('admin.partials.message')
          <div class="box-body">
@@ -20,6 +20,7 @@
                                     <label>UID</label>
                                     <input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
                                     <input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
+                                    <input type="hidden" name="promo_code_id" id="promo_code_id" class="form-control" readonly>
                                  </div>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
@@ -79,17 +80,18 @@
                            <div class="col-sm-12">
                               <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
                                  <div class="form-group">
-                                    <label class="">Product Type <%$index+1%> (Image/Footage)</label>
+                                    <label class="">Product Type <%$index+1%> (Image/Footage/Music)</label>
                                     <select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
                                        <option value="">--Select a Type--</option>
                                        <option value="Image">Image</option>
                                        <option value="Footage">Footage</option>
+                                       <option value="Music">Music</option>
                                     </select>
                                     <div>
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label class=""><%product.type%> <%$index+1%> (Product ID)</label>
+                                    <label class=""><%product.type%> <%$index+1%> (Product Image/Footage ID/Music)</label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
                                     <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
                                     <div>
@@ -122,6 +124,13 @@
                                        <option value="5K+" selected="">5K+</option>
                                        <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
                                     </select>
+                                    <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Music'">
+                                       <option value="" selected="">--Select a size--</option>
+                                       <option value="Small">Small</option>
+                                       <option value="Medium">Medium</option>
+                                       <option value="Large">Large</option>
+                                       <option value="Custom">Custom</option>
+                                    </select>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <label for="pro_type"><%product.type%> type</label>
@@ -131,14 +140,23 @@
                                        <option value="royalty_free">Royalty Free</option>
                                     </select>
                                  </div>
-                                 <div class="form-group" ng-show="product.pro_type=='royalty_free'">
-                                    <label for="licence_type"><%product.type%> Licence type</label>
+
+                                 <div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
+                                    <label for="pro_type"><%product.type%> Licence type</label>
+
+
                                     <select required="" class="form-control" ng-model="product.licence_type">
                                        <option value="">--Select a Licence Type--</option>
                                        <option value="standard">Standard</option>
                                        <option value="extended">Extended</option>
                                     </select>
                                  </div>
+
+                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
+                                    <label for="licence_type"><%product.type%> Licence type</label>
+                                    <input type="text" ng-model="product.licence_type" >
+                                 </div>
+
                                  <div>
                                     <div>
                                        <div class="form-group">
@@ -472,6 +490,7 @@
                            <div class="col-lg-12 col-md-12 col-xs-12" align="center" ng-show="search === true || quotation_type_var=='custom'">
                               <button name="submit" class="btn btn-danger ng-binding" id="btn-submit">Submit</button>
                               <button type="reset" class="btn btn-danger">Reset</button>
+                              <a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
                            </div>
                         </div>
                      </div>
@@ -556,6 +575,7 @@
                      grossAmount = currentAmount - discount;
                   }
                   $('#total_amount').val(grossAmount);
+                  $('#promo_code_id').val(result.data.id);
                   $('#total_amount').trigger('input');
                   let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
                   $('#amount-caption').text(messsage);

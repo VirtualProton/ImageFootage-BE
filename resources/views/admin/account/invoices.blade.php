@@ -88,7 +88,7 @@
                               <h5>Allow Download Certificate : </h5>
                               <h5>Enable Subs Multi-logins ? : </h5>
                               <h5>Preferred Contact Method : </h5>
-                              <h5>Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
+                              <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;">{{$user->description}}</textarea></h5>
                             </div>
                           </thead>
                         </table>
@@ -112,6 +112,8 @@
                               <th>Plan</th>
                               <!-- <th>Payment Mode</th>
                                 <th>Transaction Type Custom</th> -->
+                              <th>Status</th>
+                              <th>Cancelled By</th>
                               <th>Action</th>
                               <!-- <th>Activation Date</th>
                                 <th>Expiry Date</th>
@@ -151,6 +153,8 @@
                                 Subscription
                                 @endif
                               </td>
+                              <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
+                              <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
                               <td>
                                 @if($quotations->status != 3)
                                 <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
@@ -159,7 +163,7 @@
                                 @else
                                 <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                 @endif
-                                <a href="{{ url('admin/invoice/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
+                                <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                 @endif
                               </td>
 
@@ -235,7 +239,10 @@
                                 <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
                                 </select>
                               </td>
-                              <td>&nbsp;</td>
+                              <td>
+                              <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                              {{$invioces->job_number ?? ''}}&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                              </td>
                               @endforeach
                               <tr style="text-align: right;">
                                 <td colspan="10">{{$account_invoices->fragment('posts')->render()}}</td>
@@ -393,6 +400,28 @@
                 </div>
               </div>
               <!-- /.modal-content -->
+            </div>
+          </div>
+          <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">Update PO #</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">PO #</label>
+                      <input type="text" class="form-control" ng-model="po_no" name="po_no" id="po_no" placeholder="PO #">
+                      <input type="hidden" name="invoice_id" ng-model="invoice_id" id="invoice_id" />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="update_po()">Update</button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

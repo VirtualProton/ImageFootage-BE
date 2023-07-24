@@ -102,6 +102,22 @@
                 </div>
             </div>
             </div>
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Will Apply On</label>
+
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <select class="form-control" name="will_apply_by" id="will_apply_by">
+                        <option value="">Select</option>
+                        <option value="1" @if ($promoCode['will_apply_by'] == "1") {{ 'selected' }} @endif>Frontend</option>
+                        <option value="2" @if ($promoCode['will_apply_by'] == "2") {{ 'selected' }} @endif>Backend</option>
+                        <option value="3" @if ($promoCode['will_apply_by'] == "3") {{ 'selected' }} @endif>All</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+
         </div>
 
         <!-- /.box-body -->
@@ -169,6 +185,9 @@
                         notEmpty: {
                             message: 'Max usage is required'
                         }
+                    },
+                    integer: {
+                        message: 'Max usage should be number only'
                     }
                 },
                 valid_type: {
@@ -182,6 +201,13 @@
                     validators: {
                         notEmpty: {
                             message: 'Status is required'
+                        }
+                    }
+                },
+                will_apply_by: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Will apply on is required'
                         }
                     }
                 },
