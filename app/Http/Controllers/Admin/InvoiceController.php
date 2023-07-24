@@ -323,7 +323,11 @@ class InvoiceController extends Controller
     }
 
     public function invoiceCancel($id){
-        $update = Invoice::where('id', $id)->update(['status' => '3', 'cancel_date' => date('Y-m-d H:i:s')]);
+        $update = Invoice::where('id', $id)->update([
+            'status' => '3',
+            'cancel_date' => date('Y-m-d H:i:s'),
+            'cancelled_by' => Auth::guard('admins')->user()->id
+        ]);
         if($update){
             return redirect("admin/users/invoices/1?page=3#!#posts")->with("success", "Quotation Cancelled !!!");
         } else {

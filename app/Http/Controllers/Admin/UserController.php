@@ -172,9 +172,10 @@ class UserController extends Controller
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
         
         $account_quotations = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.first_name as calcelled_user_first_name', 'calcelled_user.last_name as calcelled_user_last_name') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
+                    ->leftJoin('imagefootage_users as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '1')
                     ->orderBy('imagefootage_performa_invoices.id', 'desc')
