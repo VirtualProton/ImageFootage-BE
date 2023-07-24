@@ -455,7 +455,8 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             "total": $scope.total,
             "GST": $scope.SGST,
             "email": $('#email_id').val(),
-            "flag": '0'
+            "flag": '0',
+            "promo_code_id": $('#promo_code_id').val(),
         }
        // console.log(sendData);
        // console.log($scope.quotation);
@@ -1662,7 +1663,8 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
             "total": $scope.total,
             "GST": $scope.SGST,
             "email": $('#email_id').val(),
-            "flag": $('#flag').val()
+            "flag": $('#flag').val(),
+            "promo_code_id": $('#promo_code_id').val(),
         }
       //  console.log(sendData);
       //  console.log($scope.quotation);

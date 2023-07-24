@@ -1,6 +1,6 @@
 -- Table : promo_codes
 
-CREATE TABLE [IF NOT EXISTS] `promo_codes` (
+CREATE TABLE IF NOT EXISTS `promo_codes` (
  `id` int NOT NULL AUTO_INCREMENT,
  `name` varchar(255) DEFAULT NULL,
  `type` varchar(255) DEFAULT NULL,
@@ -19,3 +19,6 @@ ALTER TABLE `imagefootage_packages` ADD `package_expiry_half_yearly` INT NULL AF
 ALTER TABLE `imagefootage_performa_invoice_items` CHANGE `licence_type` `licence_type` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_by` INT NULL COMMENT 'cancelled by user id, if null then cancelled by cron' AFTER `expiry_due_date`;
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL AFTER `cancelled_by`;
+
+--  imagefootage_performa_invoices
+ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;

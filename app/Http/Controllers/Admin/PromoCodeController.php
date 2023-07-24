@@ -49,14 +49,15 @@ class PromoCodeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'             => 'required',
+            'name'             => 'required|unique:promo_codes',
             'type'             => 'required',
-            'discount'         => 'required|numeric',
-            'max_usage'        => 'required',
+            'discount'         => 'required|numeric|gt:0',
+            'max_usage'        => 'required|numeric|gt:0',
             'valid_type'       => 'required',
             'valid_start_date' => 'sometimes|nullable|required_if:valid_type,range|date',
             'valid_till_date'  => 'required|date|after:valid_start_date',
             'status'           => 'required',
+            'will_apply_by'    => 'required',
         ]);
 
         $insertableData = [
@@ -68,6 +69,7 @@ class PromoCodeController extends Controller
             'valid_start_date' => $request->valid_start_date,
             'valid_till_date'  => $request->valid_till_date,
             'status'           => $request->status,
+            'will_apply_by'    => $request->will_apply_by,
         ];
         
         if (PromoCode::insert($insertableData)) {
@@ -110,25 +112,29 @@ class PromoCodeController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'             => 'required',
+            'name'             => 'required|unique:promo_codes,name,'.$id,
             'type'             => 'required',
-            'discount'         => 'required|numeric',
-            'max_usage'        => 'required',
+            'discount'         => 'required|numeric|gt:0',
+            'max_usage'        => 'required|numeric|gt:0',
             'valid_type'       => 'required',
             'valid_start_date' => 'sometimes|nullable|required_if:valid_type,range|date',
             'valid_till_date'  => 'required|date|after:valid_start_date',
             'status'           => 'required',
+            'will_apply_by'    => 'required',
         ]);
 
         $promoCode                   = PromoCode::find($id);
         $promoCode->name             = $request->name;
         $promoCode->type             = $request->type;
-        $promoCode->max_usage        = $request->max_usage;
+        if ($promoCode->total_applied_code == null ) {
+            $promoCode->max_usage    = $request->max_usage;
+        }
         $promoCode->discount         = $request->discount;
         $promoCode->valid_upto_type  = $request->valid_type;
         $promoCode->valid_start_date = ($request->valid_type === 'range') ? $request->valid_start_date: null;
         $promoCode->valid_till_date  = $request->valid_till_date;
         $promoCode->status           = $request->status;
+        $promoCode->will_apply_by    = $request->will_apply_by;
 
         if ($promoCode->save()) {
             return redirect("admin/promo-codes")->with("success", "Promo code has been updated successfully !");
@@ -164,5 +170,28 @@ class PromoCodeController extends Controller
         } else {
             return redirect("admin/promo-codes")->with("error", "Due to some error, Promo code status is not changed yet. Please try again!");
         }
+    }
+
+    public function getActivePromoCode(Request $request)
+    {
+        $promoCode = $request->input('promo_code');
+        $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->first();
+
+        $today = date('Y-m-d');
+        if (!$existsPromoCode && $existsPromoCode == null) {
+            return response()->json(['status' => 'error', 'message'=>"Invalid PromoCode!",'data' =>'' ]);
+        }
+        if ($existsPromoCode->valid_till_date < $today) {
+            return response()->json(['status' => 'error', 'message'=>"Promo code has been expired!",'data' =>'' ]);
+        }
+        if ($existsPromoCode->will_apply_by === '1') {
+            return response()->json(['status' => 'error', 'message' => "This promo code will not apply on Backend",'data' => '']);
+        }
+        $usedCode = $existsPromoCode->total_applied_code ?? 0;
+        $usedCode = $usedCode + 1;
+        if ($usedCode > $existsPromoCode->max_usage) {
+            return response()->json(['status' => 'error', 'message' => "Promo code has reached max usage",'data' => '']);
+        }
+        return response()->json(['status' => 'success', 'message' => "Promo code has been applied successfully!", 'data' => $existsPromoCode]);
     }
 }

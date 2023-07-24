@@ -15,6 +15,7 @@ use Helper;
 use App\Http\AtomPay\TransactionRequest;
 use App\Http\AtomPay\TransactionResponse;
 use App\Models\Invoice;
+use App\Models\PromoCode;
 use App\Models\InvoiceItem;
 use App\Models\Package;
 use Carbon\Carbon;
@@ -143,6 +144,7 @@ class Common extends Model
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
             'created_by' => Auth::guard('admins')->user()->id,
+            'promo_code_id' => $data['promo_code_id'],
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
             'cancelled_on' => $cancelled_on,
         );
@@ -150,6 +152,14 @@ class Common extends Model
         //try{
         DB::table('imagefootage_performa_invoices')->insert($insert);   
         $id = DB::getPdo()->lastInsertId();
+
+        // Update Total applied code in promo code
+        $promoCode   = PromoCode::find($data['promo_code_id']);
+        $currentUsed = $promoCode->total_applied_code;
+        $promoCode->total_applied_code = $currentUsed + 1;
+        $promoCode->save();
+        // End Update Total applied code in promo code
+
         if(count($data['products'])>0) {
             //echo "<pre>"; print_r($data['products']); die; 
             foreach ($data['products']['product'] as $eachproduct) {  
