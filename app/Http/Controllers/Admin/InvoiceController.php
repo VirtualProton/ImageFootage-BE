@@ -186,7 +186,7 @@ class InvoiceController extends Controller
         $comment['status'] = $request->status;
         $comment['agent_id'] = $request->agent_id;
         $comment['created_by'] = $request->created_by;
-        $comment['expiry'] = $request->expiry;
+        $comment['expiry'] = !empty($request->expiry) ? date('Y-m-d', strtotime($request->expiry)) : '';
         $comment->save();
         return Redirect::back()->with('success', 'Comment Saved');
     }

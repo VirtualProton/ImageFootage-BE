@@ -1032,7 +1032,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val()}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {
