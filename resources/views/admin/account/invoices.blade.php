@@ -366,6 +366,15 @@
                           <option value="online">Online</option>
                         </select>
                       </p>
+                      <p ng-show="payment_method=='chq'"><strong>How many days : </strong>
+                        <select class="form-group" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                          <option value="">Select Days</option>
+                          <option value="7">7 Days</option>
+                          <option value="15">15 Days</option>
+                          <option value="30">30 Days</option>
+                          <option value="45">45 Days</option>
+                        </select>
+                      </p>
                       <p><strong>Pan No. :</strong>   <input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-group"></p>
                       <p><strong>Job Ref/ PO # :</strong> <input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-group"></p>
                       
