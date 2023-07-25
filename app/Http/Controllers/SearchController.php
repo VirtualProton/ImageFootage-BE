@@ -121,20 +121,20 @@ class SearchController extends Controller
                         $media = array(
                             'product_id' => $eachmedia['id'],
                             'api_product_id' => encrypt($eachmedia['id']),
-                            'product_title' => $eachmedia['n'],
-                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['n']))),
-                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
-                            'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
-                            'product_description' => $eachmedia['desc'],
+                            'product_title' => $eachmedia['title'],
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_thumbnail' => $eachmedia['thumbnail'],
+                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
                             'product_main_type' => "Footage",
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
-                            'product_keywords' => $eachmedia['kw']
+                            'product_keywords' => $eachmedia['keywords'],
                         );
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page']);
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage']);
             }
         }
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
@@ -212,20 +212,20 @@ class SearchController extends Controller
                         $media = array(
                             'product_id' => $eachmedia['id'],
                             'api_product_id' => encrypt($eachmedia['id'],true),
-                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['n']))),
-                            'product_title' => $eachmedia['n'],
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_title' => $eachmedia['title'],
                             'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
-                            'product_main_image' => $pondfootageMediaData['icon_base'] . $pond_id_withprefix . "_main_l.mp4",
-                            'product_description' => $eachmedia['desc'],
+                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
                             'product_main_type' => "Footage",
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
-                            'product_keywords' => $eachmedia['kw']
+                            'product_keywords' => implode(',',$eachmedia['keywords'])
                         );
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['nbr_footage'],'perpage'=>$pondfootageMediaData['max_per_page'],'tp'=>'2');
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage'],'tp'=>'2');
             }
         }
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');

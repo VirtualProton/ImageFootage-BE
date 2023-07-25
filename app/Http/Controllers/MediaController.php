@@ -81,15 +81,15 @@ class MediaController extends Controller
             $footageMedia = new FootageApi();
             $product_details_data = $footageMedia->getclipdata($media_id);
             //print_r($product_details_data);
-            if (isset($product_details_data['clip_data']['pic_objectid'])) {
-                $pond_id_withprefix = $product_details_data['clip_data']['pic_objectid'];
-                if (strlen($product_details_data['clip_data']['pic_objectid']) < 9) {
-                    $add_zero = 9 - (strlen($product_details_data['clip_data']['pic_objectid']));
+            if (isset($product_details_data['id'])) {
+                $pond_id_withprefix = $product_details_data['id'];
+                if (strlen($product_details_data['id']) < 9) {
+                    $add_zero = 9 - (strlen($product_details_data['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
                         $pond_id_withprefix = "0" . $pond_id_withprefix;
                     }
                 }
-                $b64image = base64_encode(file_get_contents($product_details_data['icon_base'] . $pond_id_withprefix . '_main_xl.mp4'));
+                $b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
                 $downlaod_image = '';
                 if (count($product_details_data) > 0) {
                     $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
@@ -230,8 +230,7 @@ class MediaController extends Controller
         }
     }
 
-    public function downloadindi(Request $request)
-    {
+    public function downloadindi(Request $request){
         ini_set('max_execution_time', 0);
         $allFields = $request->all();
         //print_r($allFields); die;
@@ -243,8 +242,10 @@ class MediaController extends Controller
             $flag = 'Footage';
         }
         if ($allFields['product']['type'] == 3) {
+            $version = (array)json_decode($allFields['product']['product_info']['selected_product']);
+            $version = $version['version'];
             $footageMedia = new FootageApi();
-            $product_details_data = $footageMedia->download(json_decode($allFields['product']['product_info']['selected_product'], true), $id);
+            $product_details_data = $footageMedia->download(json_decode($allFields['product']['product_info']['selected_product'], true), $id,$version);
             return response()->json($product_details_data);
         } else if ($allFields['product']['type'] == 2) {
             $imageMedia = new ImageApi();
@@ -262,7 +263,8 @@ class MediaController extends Controller
     {
         ini_set('max_execution_time', 0);
         $allFields = $request->all();
-        $main_image = Product::where('product_id', '=', $allFields['productID'])->first()->product_main_image;
+        // $main_image = Product::where('product_id', '=', $allFields['productID'])->first()->product_main_image;
+        $main_image = Product::where('api_product_id', '=', $allFields['productID'])->first()->product_main_image;
         $b64image = base64_encode(file_get_contents($main_image));
         $downlaod_image = 'data:video/mp4;base64,' . $b64image;
         return response()->json($downlaod_image);

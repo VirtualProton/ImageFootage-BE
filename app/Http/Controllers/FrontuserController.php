@@ -70,6 +70,7 @@ class FrontuserController extends Controller {
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
             $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+			// dd($request);
             if(empty($cart_list)){
                 $Usercart=new Usercart;
                 $Usercart->cart_product_id=$product_id;
@@ -78,10 +79,11 @@ class FrontuserController extends Controller {
                 $Usercart->standard_type= $request['product']['selected_product']['size'];
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
                 $Usercart->standard_size= $request['product']['selected_product']['size'];
-                $Usercart->standard_price = $request['product']['selected_product']['pr'];
-                $Usercart->total= $request['product']['total'];
+                $Usercart->standard_price = $request['product']['selected_product']['price'];
+                // $Usercart->total= $request['product']['total'];
+				$Usercart->total = $request['product']['selected_product']['price'];
                 $Usercart->product_name= $request['product']['product_info'][0]['clip_data']['n'];
-                $Usercart->product_thumb= $request['product']['product_info'][0]['flv_base'].$request['product']['product_info'][1];
+                $Usercart->product_thumb= $request['product']['product_info'][2];
                 $Usercart->product_desc= $request['product']['product_info'][0]['clip_data']['pic_description'];
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_main_footage = $request['product']['product_info'][2];

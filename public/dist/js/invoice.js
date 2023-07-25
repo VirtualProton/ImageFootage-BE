@@ -1,4 +1,5 @@
-base_url = '/imagefootage/backend/admin/';
+// base_url = '/imagefootage/backend/admin/';
+base_url = '/admin/';
 api_path = '/admin/';
 image_path ='/';
 small_price = '500';
@@ -131,9 +132,13 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         var total = 0;
         for (var j = 0; j < subtotal.length; j++) {
             subtotalvalue += Number(subtotal[j].price);
-        }  
+        }
+        if($('input[name="tax_checkbox[]"]:checked').length > 0){
+            total = (subtotalvalue * (gst_value) / 100);
+        }
         subtotal = Number(subtotalvalue);
-        $scope.total = subtotal;
+        $scope.total = subtotal + total;
+        $scope.tax = total;
     }
     $scope.checkThetax = function(tax_percent, type) {
 
@@ -159,7 +164,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
@@ -255,7 +260,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -291,7 +296,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
             // if (intialtotal > total) {
@@ -450,7 +455,8 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
             "total": $scope.total,
             "GST": $scope.SGST,
             "email": $('#email_id').val(),
-            "flag": '0'
+            "flag": '0',
+            "promo_code_id": $('#promo_code_id').val(),
         }
        // console.log(sendData);
        // console.log($scope.quotation);
@@ -680,7 +686,8 @@ app.controller('editquotatationController', function($scope, $http, $location) {
                 image: value.product_image,
                 price: value.subtotal,
                 footage: "",
-                type: value.type
+                type: value.type,
+                licence_type: value.licence_type
             };
             $scope.quotation.product.push(obj);
         });
@@ -692,6 +699,9 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "" };
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+          }, 0);
     }
 
     $scope.removeProduct = function(product) {
@@ -833,6 +843,17 @@ app.controller('editquotatationController', function($scope, $http, $location) {
     
     $scope.submitQuotation = function() {
       //  console.log($scope.quotation);
+        $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         $('#loading').show();
         var sendData = {
             "uid": $('#uid').val(),
@@ -888,15 +909,32 @@ app.controller('editquotatationController', function($scope, $http, $location) {
         });
 
     }
+
+    // CKEditor initialization for all editors
+    $scope.initEditors = function () {
+        if($scope.quotation.product) {
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+              setTimeout(function (index) {
+                CKEDITOR.replace('licence_type-' + index, {
+                    readOnly: false,
+                });
+                CKEDITOR.instances['licence_type-' + (index+1)].setData($scope.quotation.product[index].licence_type);
+              }, 0, i);
+            }
+        }
+      };
+      // Call the initialization function after rendering the editors
+      setTimeout($scope.initEditors, 1000);
 });
 app.controller('invoiceController', function($scope, $http, $location) {
     $scope.quotationObj = {};
     $scope.payment_method = '';
+    $scope.invoice_id = '';
     $scope.create_invoice = function(quotation, user_id) {
       //  console.log(quotation);
         $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
-      //  console.log($scope.quotationObjCus);
+    //  console.log($scope.quotationObjCus);
         // if (confirm('Do you want to send invoice for this quotation ?')) {
         //     $('#loading').show();
         //     $http({
@@ -995,7 +1033,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val()}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {
@@ -1034,6 +1072,40 @@ app.controller('invoiceController', function($scope, $http, $location) {
         }
 
     }
+
+    $scope.open_modal_update_po = function(id=null,job_number=null) {
+        $('.modal-body #invoice_id').val(id);
+        $('.modal-body #po_no').val(job_number);
+        $scope.invoice_id = id;
+    }
+    $scope.update_po = function() {
+        $scope.invoice_id = $('.modal-body #invoice_id').val();
+        $scope.po_no = $('.modal-body #po_no').val();
+        if(!$scope.invoice_id){
+            return false;
+        }
+        if(!$scope.po_no){
+            alert("Please enter po #.");
+        } else {
+            $('#loading').show();
+            $http({
+                method: 'POST',
+                url: api_path + 'update_po',
+                data: { invoice_id : $scope.invoice_id, po_no: $scope.po_no}
+            }).then(function(result) {
+                $('#loading').hide();
+                if (result.data.resp.statuscode == '1') {
+                    alert(result.data.resp.statusdesc);
+                } else {
+                    alert(result.data.resp.statusdesc);
+                }
+                window.location.reload();
+            }, function(error) {
+                $('#loading').hide();
+            });
+        }
+    }
+
 });
 
 app.directive("ngFileSelect", function(fileReader, $timeout) {
@@ -1152,6 +1224,9 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image", licence_type:""};
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+          }, 0);
     }
      
     $scope.$on("fileProgress", function(e, progress) {
@@ -1256,8 +1331,12 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         for (var j = 0; j < subtotal.length; j++) {
             subtotalvalue += Number(subtotal[j].price);
         }  
+        if($('input[name="tax_checkbox[]"]:checked').length > 0){
+            total = (subtotalvalue * (gst_value) / 100);
+        }
         subtotal = Number(subtotalvalue);
-        $scope.total = subtotal;
+        $scope.total = subtotal + total;
+        $scope.tax = total;
     }
     $scope.checkThetax = function(tax_percent, type) {
 
@@ -1283,7 +1362,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         if (tax_percent == true) {
             //total = intialtotal + total;
             if (type == 'GST') {
-                total = (subtotalvalue * (12) / 100);
+                total = (subtotalvalue * (gst_value) / 100);
             }
         } else {
 
@@ -1558,8 +1637,17 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
     }
 
     $scope.submitCustom = function(){
-      //  console.log($scope.quotation);
-       // console.log($scope);
+        $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         $('#loading').show();
       
         var sendData = {
@@ -1575,7 +1663,8 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
             "total": $scope.total,
             "GST": $scope.SGST,
             "email": $('#email_id').val(),
-            "flag": $('#flag').val()
+            "flag": $('#flag').val(),
+            "promo_code_id": $('#promo_code_id').val(),
         }
       //  console.log(sendData);
       //  console.log($scope.quotation);

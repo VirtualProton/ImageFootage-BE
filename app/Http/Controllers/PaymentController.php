@@ -339,7 +339,7 @@ class PaymentController extends Controller
             ->with('state')
             ->with('city')
             ->get()->toArray();
-        $this->invoiceWithemail($orders,$orders[0]['txn_id']);
+        // $this->invoiceWithemail($orders,$orders[0]['txn_id']);
         if($success===true){
            Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
                   ->update(['order_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);

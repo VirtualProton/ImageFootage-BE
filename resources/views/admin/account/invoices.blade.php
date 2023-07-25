@@ -31,17 +31,30 @@
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
+
+                    <li class="@if($active_tab=="tab5") active @endif">
+                      <a href="#download_posts" role="tab" data-toggle="tab">
+                        <i class="fa fa-user"></i> Download Packs
+
+                    <li class="@if($active_tab=="tab4") active @endif">
+                      <a href="#subscription_posts" role="tab" data-toggle="tab">
+                        <i class="fa fa-user"></i> Subscription Plan
+
+                      </a>
+                    </li>
+                    @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
                     <li class="@if($active_tab=="tab3") active @endif">
                       <a href="#clientinfo" role="tab" data-toggle="tab">
                         <i class="fa fa-pencil-square-o"></i> Client Info Update
                       </a>
                     </li>
-                    <li class="@if($active_tab=="tab4") active @endif">
+                    @endif
+                    <!-- <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
                       </a>
                       
-                    </li>
+                    </li> -->
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">
@@ -86,7 +99,7 @@
                               <h5>Allow Download Certificate : </h5>
                               <h5>Enable Subs Multi-logins ? : </h5>
                               <h5>Preferred Contact Method : </h5>
-                              <h5>Client Description : <textarea rows="3" class="form-control" style="width: 30%;">{{$user->description}}</textarea></h5>
+                              <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;">{{$user->description}}</textarea></h5>
                             </div>
                           </thead>
                         </table>
@@ -110,6 +123,8 @@
                               <th>Plan</th>
                               <!-- <th>Payment Mode</th>
                                 <th>Transaction Type Custom</th> -->
+                              <th>Status</th>
+                              <th>Cancelled By</th>
                               <th>Action</th>
                               <!-- <th>Activation Date</th>
                                 <th>Expiry Date</th>
@@ -149,6 +164,8 @@
                                 Subscription
                                 @endif
                               </td>
+                              <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
+                              <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
                               <td>
                                 @if($quotations->status != 3)
                                 <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
@@ -157,7 +174,7 @@
                                 @else
                                 <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                 @endif
-                                <a href="{{ url('admin/invoice/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
+                                <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                 @endif
                               </td>
 
@@ -229,11 +246,14 @@
                                 <select <?php if($invioces->status==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                 <option value="0"  <?php if($invioces->status =='0'){ echo "Selected";} ?>>Pending</option>
                                 <option value="1" <?php if($invioces->status =='1'){ echo "Selected";} ?>>Paid</option>
-                                <option value="2" <?php if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option>
+                                <!-- <option value="2" <?php //if($invioces->status =='2'){ echo "Selected";} ?>>Purchased</option> -->
                                 <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
                                 </select>
                               </td>
-                              <td>&nbsp;</td>
+                              <td>
+                              <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                              {{$invioces->job_number ?? ''}}&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                              </td>
                               @endforeach
                               <tr style="text-align: right;">
                                 <td colspan="10">{{$account_invoices->fragment('posts')->render()}}</td>
@@ -245,22 +265,223 @@
                             @endif
                           </tbody>
                         </table>
-                        {{-- @include('admin.account.comment') --}}
+                        <br />
+                        <br />
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade @if($active_tab=="tab5") in active @endif" id="download_posts">
+                      <div class="box-body">
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Download Pack Quotation</h4>
+
+                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="subscription_posts">
+                      <div class="box-body">
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Subscription Quotation</h4>
+
+                        <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+                          <thead>
+                            <div class="form-group">
+                              <h5 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}{!! "&nbsp;" !!}Transaction Type Custom</h5>
+                            </div>
+                            <tr>
+                              <th>Sl No</th>
+                              <th>Trans Id</th>
+                              <th>Quotation Date</th>
+                              <th>Amount (In INR)</th>
+                              <th>Plan</th>
+                              <th>Status</th>
+                              <th>Cancelled By</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            @if(count($account_download_pack_quotations) > 0)
+                              @foreach($account_download_pack_quotations as $k=>$quotations)
+
+                            <tr role="row" class="odd">
+                              <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                            @if(count($account_subscription_quotations) > 0)
+                              @foreach($account_subscription_quotations as $k=>$quotations)
+
+                            <tr role="row" class="odd">
+                              <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                              <td>
+                                @if($quotations->proforma_type == '2')
+                                  @if($invioces->invoice_url)
+                                    <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a><br>
+                                    <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                  @else
+                                    IN{{$invioces->invoice_name}}
+                                  @endif
+                                @else
+                                  @if($quotations->quotation_url)
+                                    <a href="{{$quotations->quotation_url}}" target="_blank">Q{{$quotations->invoice_name}}</a>
+                                  @else
+                                    Q{{$quotations->invoice_name}}
+                                  @endif
+                                @endif
+                              </td>
+                              <td>{{$quotations->created}}</td>
+                              <td>{{$quotations->total}}</td>
+                              <td>
+                                @if($quotations->invoice_type==3)
+                                Custom
+                                @elseif($quotations->invoice_type==2)
+                                Download
+                                @else
+                                Subscription
+                                @endif
+                              </td>
+                              <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
+                              <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
+                              <td>
+                                @if($quotations->status != 3)
+                                <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                @if($quotations->invoice_type == 3)
+                                <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                @else
+                                <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                @endif
+                                <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                @endif
+                              </td>
+
+                            </tr>
+                            @endforeach
+                            <tr style="text-align: right;">
+
+                              <td colspan="9">{{$account_download_pack_quotations->fragment('posts')->render()}}</td>
+
+                              <td colspan="9">{{$account_subscription_quotations->fragment('posts')->render()}}</td>
+
+                            </tr>
+                            @else
+                            <tr style="text-align: center;">
+                              <td colspan="9"><strong> No Quotation Yet ... </strong></td>
+                            </tr>
+                            @endif
+
+                        </table>
+                        <br />
+                        <br />
+
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Download Pack Invoice</h4>
+
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Subscription Invoice</h4>
+
+                        <table id="invoice" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+                          <thead>
+                            <tr>
+                              <th>Sl No</th>
+                              <th>Invoice No.</th>
+                              <th>Invoice Date</th>
+                              <th>Amount (In INR)</th>
+                              <th>Plan</th>
+                              <th>Payment Method</th>
+                              <th>Payment Status</th>
+                              <th>Due Date</th>
+                              <th>Payment Date</th>
+                              <th>Action</th>
+                              <th>Update PO</th>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @if(count($account_download_pack_invoices) > 0)
+                              @foreach($account_download_pack_invoices as $k=>$invioces)
+                              <tr role="row" class="odd">
+                              <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                              <!-- <th>Activation Date</th>
+                                <th>Expiry Date</th>
+                                <th>Available Download</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @if(count($account_subscriptions_invoices) > 0)
+                              @foreach($account_subscriptions_invoices as $k=>$invioces)
+                              <tr role="row" class="odd">
+                              <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                              <td>
+                                  @if($invioces->invoice_url)
+                                    <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                  @else
+                                    IN{{$invioces->invoice_name}}
+                                  @endif
+                              </td>
+                              <td>{{$invioces->invoice_created}}</td>
+                              <td>{{$invioces->total}}</td>
+                              <td>{{$invioces->package_description}}</td>
+                              <td>{{$invioces->payment_method}}</td>
+                              <td>
+                                <?php if($invioces->status =='0'){
+                                      echo "Pending";
+                                } else if($invioces->status =='1') {
+                                      echo "Paid";
+                                }else if($invioces->status =='2') {
+                                      echo "Purchased";
+                                } else if($invioces->status =='3') {
+                                      echo "Cancel";
+                                }
+                                ?>
+                              </td>
+                              <td>{{$invioces->po_detail}}</td>
+                              <td>{{$invioces->payment_date ?? ''}}</td>
+                              <td>
+                                <select <?php if($invioces->status==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
+                                <option value="0"  <?php if($invioces->status =='0'){ echo "Selected";} ?>>Pending</option>
+                                <option value="1" <?php if($invioces->status =='1'){ echo "Selected";} ?>>Paid</option>
+                                <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
+                                </select>
+                              </td>
+                              <td>
+                              <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                              {{$invioces->job_number ?? ''}}&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                              </td>
+                              @endforeach
+                              <tr style="text-align: right;">
+
+                                <td colspan="10">{{$account_download_pack_invoices->fragment('posts')->render()}}</td>
+
+                                <td colspan="10">{{$account_subscriptions_invoices->fragment('posts')->render()}}</td>
+
+                              </tr>
+                            @else
+                            <tr style="text-align: center;">
+                              <td colspan="10"><strong> No Invoice Yet ...</strong></td>
+                            </tr>
+                            @endif
+                          </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
                       </div>
                     </div>
                     <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
                       <div class="box-body">
                         @include('admin.account.update-user') 
                         @include('admin.account.client-des')
-                      </div>
-                    </div>
-                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
-                      <div class="box-body">
-                      
+                        <br />
+                        <br />
                         @include('admin.account.add-comment')
                         @include('admin.account.comment')
                       </div>
                     </div>
+                    {{--<div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
+                      <div class="box-body">
+                      
+                         @include('admin.account.add-comment')
+                        @include('admin.account.comment')
+                      </div>
+                    </div> --}}
                   </div>
                 </div>
               </div>
@@ -319,7 +540,7 @@
               <!-- /.modal-content -->
             </div>
           </div>
-          <div class="modal" id="modal-default_custom" style="padding-right: 16px;">
+          <div class="modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -331,16 +552,16 @@
                   <div class="form-group">
                     <div class="col-sm-6">
                     
-                      <p><strong>Trasaction Id :</strong> Q<%quotationObjCus.invoice_name%></p>
+                      <p><strong>Trasaction Id :</strong> Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
                       <p><strong>User Name :</strong> {{$user->user_name}}</p>
                       <p><strong>GST No. :</strong>   <input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-group"></p>
                       <p><strong>Phone No. :</strong> <input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-group"></p>
                       <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
                       <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p> -->
-                      <p><strong>Subtotal :</strong> <%quotationObjCus.total - quotationObjCus.tax%></p>
+                      <p><strong>Subtotal :</strong>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
                       <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong> <%quotationObjCus.tax%></p>
-                      <p><strong>Total :</strong> <%quotationObjCus.total%></p>
+                      <p><strong>Tax :</strong>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                      <p><strong>Total :</strong>{{isset($quotations) ? $quotations->total : ''}}</p>
                     </div>
                     <div class="col-sm-6">
                       <p><strong>Method : </strong>
@@ -348,6 +569,15 @@
                           <option value="">Select Method</option>
                           <option value="chq">Terms Granted</option>
                           <option value="online">Online</option>
+                        </select>
+                      </p>
+                      <p ng-show="payment_method=='chq'"><strong>How many days : </strong>
+                        <select class="form-group" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                          <option value="">Select Days</option>
+                          <option value="7">7 Days</option>
+                          <option value="15">15 Days</option>
+                          <option value="30">30 Days</option>
+                          <option value="45">45 Days</option>
                         </select>
                       </p>
                       <p><strong>Pan No. :</strong>   <input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-group"></p>
@@ -380,10 +610,32 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(quotationObjCus.id, quotation_user_cus)">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus({{$quotations->id}}, {{$user_id}})">Confirm Submission</button>
                 </div>
               </div>
               <!-- /.modal-content -->
+            </div>
+          </div>
+          <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">Update PO #</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">PO #</label>
+                      <input type="text" class="form-control" ng-model="po_no" name="po_no" id="po_no" placeholder="PO #">
+                      <input type="hidden" name="invoice_id" ng-model="invoice_id" id="invoice_id" />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="update_po()">Update</button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

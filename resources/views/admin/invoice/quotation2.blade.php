@@ -5,7 +5,7 @@
    <section class="content">
       <div class="box box-info">
          <div class="box-header with-border">
-            <h3 class="box-title"><%title%></h3>
+            <h3 class="box-title"><%title%></h3><a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn pull-right">Back</a>
          </div>
          @include('admin.partials.message')
          <div class="box-body">
@@ -20,6 +20,7 @@
                                     <label>UID.</label>
                                     <input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
                                     <input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
+                                    <input type="hidden" name="promo_code_id" id="promo_code_id" class="form-control" readonly>
                                  </div>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
@@ -79,7 +80,7 @@
                      <div class="" ng-show="quotation_type_var=='custom'">
                         <div class="row">
                            <div class="col-sm-12">
-                              <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
+                              <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product track by $index">
                                  <div class="form-group">
                                     <label class="">Product Type <%$index+1%> (Image/Footage)</label>
                                     <select required="" class="form-control" ng-model="product.type" ng-change="checkProduct(product)">
@@ -164,7 +165,7 @@
                                  </div>
                                  <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
                                     <label for="licence_type"><%product.type%> Licence type</label>
-                                    <input type="text" ng-model="product.licence_type" >
+                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
                                  </div>
                                  <div>
                                     <div>
@@ -190,7 +191,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +12%
+                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
@@ -213,7 +214,8 @@
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="Total">Total</label>
-                                    <input type="text" class="form-control " ng-model="total" name="Total" readonly="">
+                                    <input type="text" class="form-control " ng-model="total" name="Total" readonly="" id="total_amount">
+                                    <span id="amount-caption"></span>
                                  </div>
                               </div>
                            </div>
@@ -223,8 +225,10 @@
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="promoCode">Promo code</label>
-                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code">
+                                    <span id="span-message"></span>
                                  </div>
+                                 <button class="btn btn-primary" id="btn-promocode">Apply Promo Code</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <!-- <div class="form-group">
@@ -300,7 +304,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +12%
+                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
@@ -402,7 +406,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +12%
+                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
@@ -480,8 +484,9 @@
                      <div class="">
                         <div class="row">
                            <div class="col-lg-12 col-md-12 col-xs-12" align="center" ng-show="search === true || quotation_type_var=='custom'">
-                              <button name="submit" class="btn btn-danger ng-binding">Submit</button>
+                              <button name="submit" class="btn btn-danger ng-binding" id="btn-submit">Submit</button>
                               <button type="reset" class="btn btn-danger">Reset</button>
+                              <a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
                            </div>
                         </div>
                      </div>
@@ -498,11 +503,90 @@
 
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <script>
    $(function() {
       $("#poDate").datepicker();
       $("#downloadpoDate").datepicker();
       $("#subsc_poDate").datepicker();
+   });
+
+   $( document ).ready(function() {
+
+      $('#btn-promocode').hide();
+
+      $('#promo_code').keyup(function() {
+         if($.trim(this.value).length > 0)
+            $('#btn-promocode').show()
+         else
+            $('#btn-promocode').hide()
+      });
+
+      $(document).on("click","#btn-promocode", function(e) {
+
+         e.preventDefault();
+
+         let promoCode = $("#promo_code").val();
+
+         $.ajax({
+            url: '{{ URL::to("admin/getPromoCode") }}',
+            type: 'POST',
+            data: {
+               promo_code: promoCode,
+            },
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+               alert("error");
+            },
+            success: function(result) {
+               // if error
+               if (result.status === 'error') {
+                  $('#span-message').removeAttr('class');
+                  $('#span-message').text(result.message);
+                  $('#span-message').addClass('text-danger');
+                  return false;
+               }
+               // if success
+               if (result.status === 'success') {
+                  $('#span-message').removeAttr('class');
+                  $('#span-message').text(result.message);
+                  $('#span-message').addClass('text-success');
+                  $('#btn-promocode').hide();
+                  $("#promo_code").prop('disabled', true);
+
+                  let discountValue = result.data.discount;
+                  let discountType  = result.data.type;
+
+                  let currentAmount = $('#total_amount').val();
+
+                  let grossAmount = 0;
+                  let discount    = 0;
+                  if (discountType === 'flat') {
+                     discount = discountValue;
+                     grossAmount = currentAmount - discount;
+                  }
+                  if (discountType === 'percentage') {
+                     discount = (currentAmount*discountValue)/100;
+                     grossAmount = currentAmount - discount;
+                  }
+                  $('#total_amount').val(grossAmount);
+                  $('#promo_code_id').val(result.data.id);
+                  $('#total_amount').trigger('input');
+                  let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
+                  $('#amount-caption').text(messsage);
+
+               }
+            }
+         });
+      });
+   });
+
+   $(document).ready(function($) {
+      $('.licence_type').each(function() {
+         CKEDITOR.replace($(this).prop('id'));
+      });
    });
 </script>
 

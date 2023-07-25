@@ -19,6 +19,7 @@ use App\Models\Comment;
 use App\Models\Invoice;
 use App\Models\Orders;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class InvoiceController extends Controller
@@ -185,7 +186,7 @@ class InvoiceController extends Controller
         $comment['status'] = $request->status;
         $comment['agent_id'] = $request->agent_id;
         $comment['created_by'] = $request->created_by;
-        $comment['expiry'] = $request->expiry;
+        $comment['expiry'] = !empty($request->expiry) ? date('Y-m-d', strtotime($request->expiry)) : '';
         $comment->save();
         return Redirect::back()->with('success', 'Comment Saved');
     }
@@ -270,5 +271,67 @@ class InvoiceController extends Controller
 
          //echo "<pre>";print_r($all_orders_list); die;
         return view('admin.invoice.orderlist', ['orderlists' => $all_orders_list]);
+    }
+
+    public function addPO()
+    {
+        return view('admin.invoice.add_po');
+    }
+
+    public function savePO(Request $request)
+    {
+        $this->validate($request, [
+            'invoice_no' => 'required',
+            'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_no
+        ]);
+        $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no]);
+        if ($update) {
+            return redirect()->back()->with('success', 'PO no. updated successfully.');
+        } else {
+            return back()->with('warning', 'Some problem occured.');
+        }
+
+    }
+
+    public function get_invoice(Request $request)
+    {
+        $invoices = Invoice::select('id', 'invoice_name')->get();
+
+        $invoices_arr = '<option value="">--Select Invoice--</option>';
+        foreach ($invoices as $key => $value) {
+            $invoices_arr .= '<option value="' . $value->id . '">' . $value->invoice_name . '</option>';
+        }
+        echo $invoices_arr;
+    }
+
+    public function update_po(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+                'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_id
+        ]);
+        if ($validation->fails())
+        {
+            $resp =array();
+            $resp['statusdesc']  =   $validation->errors()->first();
+            $resp['statuscode']   =   "0";
+            return response()->json(compact('resp')); 
+        }
+        $data = $request->all();
+        if (!empty($data['invoice_id']) && isset($data['po_no'])) {
+            return $this->Common->update_po($data['invoice_id'], $data['po_no']);
+        }
+    }
+
+    public function invoiceCancel($id){
+        $update = Invoice::where('id', $id)->update([
+            'status' => '3',
+            'cancel_date' => date('Y-m-d H:i:s'),
+            'cancelled_by' => Auth::guard('admins')->user()->id
+        ]);
+        if($update){
+            return redirect("admin/users/invoices/1?page=3#!#posts")->with("success", "Quotation Cancelled !!!");
+        } else {
+            return redirect("admin/users/invoices/1?page=3#!#posts")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
+        }
     }
 }
