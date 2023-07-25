@@ -276,7 +276,7 @@
                         </table>
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'sale'])
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -416,7 +416,7 @@
                         </table>
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'sub'])
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -561,7 +561,7 @@
                         </table>
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'download'])
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -704,7 +704,7 @@
                         </table>
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'custom'])
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -843,7 +843,7 @@
                         </table>
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'custom1'])
                         @include('admin.account.comment')
                       </div>
                     </div>
@@ -854,7 +854,7 @@
                         @include('admin.account.client-des')
                         <br />
                         <br />
-                        @include('admin.account.add-comment')
+                        @include('admin.account.add-comment', ['tab' => 'clientinfo'])
                         @include('admin.account.comment')
                       </div>
                     </div>
