@@ -14,6 +14,31 @@
     </section>
     <section class="content">
         <div class="row">
+        <div class="col-md-12">
+         		<div class="box" style="overflow: auto;">
+                <div class="box-header">
+                  <h3 class="box-title">Settings</h3>
+                </div>
+                @include('admin.partials.message')
+             <!-- /.box-header -->
+             <div class="box-body">
+                {!! Form::open(array('url' => URL::to('admin/abandoned_cart'), 'method' => 'get', 'class'=>"form-horizontal",'autocomplete'=>false)) !!}
+                <div class="col-md-3">
+                    <label class="control-label">Hours</label>
+                    <input type="number" class="form-control w-100" name="hours" placeholder="Hours" value="{{ isset($_GET['hours'])?request('hours'):'1' }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">Minutes</label>
+                    <input type="number" class="form-control w-100" name="minutes" required placeholder="Minutes" value="{{ request('minutes')?request('minutes'):'0' }}">
+                </div>
+                <div class="col-md-2">
+                    {!! Form::submit('Submit', array('class' => 'btn btn-info margin-top-2', 'id' => 'filterBtn')) !!}
+                </div>
+                {!! Form::close() !!}
+             </div>
+            </div>
+        </div>
+
         	<div class="col-md-12">
          		<div class="box" style="overflow: auto;">
                 <div class="box-header">
@@ -68,9 +93,9 @@
                       <option value="1" {!! $user['status'] == '1' ? "selected='selected'" : "" !!}>Pending</option>
                       <option value="2" {!! $user['status'] == '2' ? "selected='selected'" : "" !!}>Contact Again Later</option>
                       <option value="3" {!! $user['status'] == '3' ? "selected='selected'" : "" !!}>Closed</option>
-                      
+
                     </select>
-                    
+
                   </td>
                   <td>
                     <button type="submit">Update</button>
@@ -78,8 +103,8 @@
               {!! Form::close() !!}
                   <!-- </form> -->
                   </tr>
-                  
-                  
+
+
                 </tr>
                 @endforeach
                 @endif

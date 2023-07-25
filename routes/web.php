@@ -23,7 +23,7 @@ Route::get('logout', 'AdminController@logout');
 
 
 Route::get('forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
-Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post');
 Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
 Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
 
@@ -241,8 +241,13 @@ Route::post('/edit_quotation_data', 'InvoiceController@edit_quotation_data');
 Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
 Route::post('/create_invoice','InvoiceController@create_invoice');
 Route::post('/change_invoice_status','InvoiceController@change_invoice_status');
-Route::get('/subscribers','SubscribersController@index');
+Route::get('/subscribers','SubscribersController@index')->name('subscribers');
 Route::get('/subscribers/details/{id}','SubscribersController@subscribers_details');
+
+// Route for update expiration date
+Route::get('/edit-expire-date/{id}', 'SubscribersController@editExpireDate')->name('editExpireDate');
+Route::post('/update-expire-date', 'SubscribersController@updateExpiredDate')->name('updateExpiredDate');
+
 Route::post('/plans', 'PackageController@plans');
 Route::post('/saveSubscriptionInvoice', 'InvoiceController@saveSubscriptionInvoice');
 Route::post('/saveDownloadInvoice', 'InvoiceController@saveDownloadInvoice');
@@ -266,7 +271,7 @@ Route::get('/outstanding_report', 'InvoiceController@outstandingReport');
 Route::post('/changeAbandonedCartStatus/{id}', 'UserController@changeAbandonedCartStatus');
 Route::get('/edit_profile/{id}', 'SubAdminController@editProfile');
 Route::post('/subadmin/edit_profile/{id}', 'SubAdminController@updateProfile');
-//Route for Promtion 
+//Route for Promtion
 Route::get('/add_promotion', 'PromotionController@index');
 Route::post('/createpromotion', 'PromotionController@create');
 Route::get('/list_promotion', 'PromotionController@promotionList');
