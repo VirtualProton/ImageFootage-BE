@@ -154,10 +154,12 @@ class Common extends Model
         $id = DB::getPdo()->lastInsertId();
 
         // Update Total applied code in promo code
-        $promoCode   = PromoCode::find($data['promo_code_id']);
-        $currentUsed = $promoCode->total_applied_code;
-        $promoCode->total_applied_code = $currentUsed + 1;
-        $promoCode->save();
+        if(!empty($data['promo_code_id'])) {
+            $promoCode   = PromoCode::find($data['promo_code_id']);
+            $currentUsed = $promoCode->total_applied_code;
+            $promoCode->total_applied_code = $currentUsed + 1;
+            $promoCode->save();
+        }
         // End Update Total applied code in promo code
 
         if(count($data['products'])>0) {

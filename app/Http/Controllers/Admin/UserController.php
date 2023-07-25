@@ -177,17 +177,23 @@ class UserController extends Controller
                     ->leftJoin('imagefootage_users as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '1');
+
         $account_quotations = $get_quotations->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+        $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
         $account_subscription_quotations = $get_quotations->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+
         $get_invoices = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2');
+        
         $account_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10');
         $account_subscriptions_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10');
         
+
         $this->Country = new Country();
         $countries = $this->Country->getcountrylist();
         $this->User = new User();
@@ -204,7 +210,8 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
            // dd($description);
            $active_tab = "tab1";
-        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices);
+
+        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices);
     }
 
     /**
