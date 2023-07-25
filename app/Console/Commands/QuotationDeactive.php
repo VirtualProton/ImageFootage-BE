@@ -41,7 +41,7 @@ class QuotationDeactive extends Command
     {
         Log::channel('quotationlog')->info("====== Quotation cancelled by cron : START =====");
         $today = date('Y-m-d');
-        $invoices = Invoice::whereDate('cancelled_on', '<', $today)->where('status', '=', 0)->whereNotNull('cancelled_on')->get();
+        $invoices = Invoice::whereDate('cancelled_on', '<', $today)->where('proforma_type', 1)->where('status', '=', 0)->whereNotNull('cancelled_on')->get();
         if(count($invoices) > 0) {
             foreach($invoices as $invoice) {
                 Invoice::where('id', $invoice->id)->update([
