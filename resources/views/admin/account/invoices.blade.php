@@ -439,7 +439,7 @@
 
                     <div class="tab-pane fade @if($active_tab=="tab5") in active @endif" id="download_posts">
                       <div class="box-body">
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Subscription Quotation</h4>
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Download Pack Quotation</h4>
 
                         <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
