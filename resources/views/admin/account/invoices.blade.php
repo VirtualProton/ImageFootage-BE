@@ -43,12 +43,12 @@
                     </li>
                     <li class="@if($active_tab=="tab6") active @endif">
                       <a href="#custom_posts" role="tab" data-toggle="tab">
-                        <i class="fa fa-user"></i> Custom Proforma
+                        <i class="fa fa-user"></i> Custom
                       </a>
                     </li>
                     <li class="@if($active_tab=="tab7") active @endif">
                       <a href="#custom_invoices" role="tab" data-toggle="tab">
-                        <i class="fa fa-user"></i> Custom Invoice
+                        <i class="fa fa-user"></i> Others
                       </a>
                     </li>
                     @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
@@ -711,7 +711,7 @@
 
                     <div class="tab-pane fade @if($active_tab=="tab7") in active @endif" id="custom_invoices">
                       <div class="box-body">
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Custom Quotation</h4>
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Other Quotation</h4>
 
                         <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
@@ -771,7 +771,7 @@
                         <br />
                         <br />
 
-                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Custom Invoice</h4>
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Other Invoice</h4>
 
                         <table id="invoice" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
