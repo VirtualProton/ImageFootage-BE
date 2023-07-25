@@ -177,10 +177,10 @@ class UserController extends Controller
                     ->leftJoin('imagefootage_users as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '1');
-
+        $get_quotations2 = clone $get_quotations;
         $account_quotations = $get_quotations->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
         $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_subscription_quotations = $get_quotations->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+        $account_subscription_quotations = $get_quotations2->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
 
         $get_invoices = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
@@ -188,10 +188,10 @@ class UserController extends Controller
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '2');
-        
+        $get_invoices2 = clone $get_invoices;
         $account_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
         $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10');
-        $account_subscriptions_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10');
+        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10');
         
 
         $this->Country = new Country();
