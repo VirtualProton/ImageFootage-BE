@@ -41,12 +41,15 @@
                                         <th>Transaction ID</th>
                                         <th>Start Date</th>
                                         <th>Expire Date</th>
+                                        <th>Extended Date</th>
                                         <th>Invoice</th>
                                         <th>Show Downloads</th>
                                     </tr>
                                     </thead>
+
                                     @if(count($userlist['plans']) > 0 )
                                         @foreach($userlist['plans'] as $key=>$eachPlan)
+
                                             <tr role="row" class="odd">
                                                 <td>{{$key+1}}</td>
                                                 <td>
@@ -59,20 +62,22 @@
                                                 <td>{{$eachPlan['transaction_id']}}</td>
                                                 <td>{{$eachPlan['created_at']}}</td>
                                                 <td>{{$eachPlan['package_expiry_date_from_purchage']}}</td>
+                                                <td>{{$eachPlan['extended_date']}}</td>
                                                 <td><a href="{{$eachPlan['invoice']}}"
                                                         target="_blank">Download</a></td>
                                                 <td>
-                                                    <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i
-                                                                class="fa fa-cloud-download"
-                                                                aria-hidden="true"></i></a>
+                                                    <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
                                                     &nbsp; &nbsp;
+@if (now()->format('Y-m-d') < date('Y-m-d', strtotime($eachPlan['package_expiry_date_from_purchage'])) || now()->format('Y-m-d')  < date('Y-m-d', strtotime($eachPlan['extended_date'])))
+    <a href="{{ route('editExpireDate', $eachPlan['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+@endif
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @endif
 
                                 </table>
-                                                   
+
                             </div>
                         </div>
                     </div>

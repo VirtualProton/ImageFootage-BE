@@ -31,9 +31,15 @@
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
+
                     <li class="@if($active_tab=="tab5") active @endif">
                       <a href="#download_posts" role="tab" data-toggle="tab">
                         <i class="fa fa-user"></i> Download Packs
+
+                    <li class="@if($active_tab=="tab4") active @endif">
+                      <a href="#subscription_posts" role="tab" data-toggle="tab">
+                        <i class="fa fa-user"></i> Subscription Plan
+
                       </a>
                     </li>
                     @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
@@ -265,9 +271,15 @@
                         @include('admin.account.comment')
                       </div>
                     </div>
+
                     <div class="tab-pane fade @if($active_tab=="tab5") in active @endif" id="download_posts">
                       <div class="box-body">
                         <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Download Pack Quotation</h4>
+
+                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="subscription_posts">
+                      <div class="box-body">
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Subscription Quotation</h4>
+
                         <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
                             <div class="form-group">
@@ -285,11 +297,19 @@
                             </tr>
                           </thead>
                           <tbody>
+
                             @if(count($account_download_pack_quotations) > 0)
                               @foreach($account_download_pack_quotations as $k=>$quotations)
 
                             <tr role="row" class="odd">
                               <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                            @if(count($account_subscription_quotations) > 0)
+                              @foreach($account_subscription_quotations as $k=>$quotations)
+
+                            <tr role="row" class="odd">
+                              <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
+
                               <td>
                                 @if($quotations->proforma_type == '2')
                                   @if($invioces->invoice_url)
@@ -334,7 +354,11 @@
                             </tr>
                             @endforeach
                             <tr style="text-align: right;">
+
                               <td colspan="9">{{$account_download_pack_quotations->fragment('posts')->render()}}</td>
+
+                              <td colspan="9">{{$account_subscription_quotations->fragment('posts')->render()}}</td>
+
                             </tr>
                             @else
                             <tr style="text-align: center;">
@@ -345,7 +369,11 @@
                         </table>
                         <br />
                         <br />
+
                         <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Download Pack Invoice</h4>
+
+                        <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Subscription Invoice</h4>
+
                         <table id="invoice" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                           <thead>
                             <tr>
@@ -360,6 +388,7 @@
                               <th>Payment Date</th>
                               <th>Action</th>
                               <th>Update PO</th>
+
                             </tr>
                           </thead>
                           <tbody>
@@ -367,6 +396,18 @@
                               @foreach($account_download_pack_invoices as $k=>$invioces)
                               <tr role="row" class="odd">
                               <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+
+                              <!-- <th>Activation Date</th>
+                                <th>Expiry Date</th>
+                                <th>Available Download</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @if(count($account_subscriptions_invoices) > 0)
+                              @foreach($account_subscriptions_invoices as $k=>$invioces)
+                              <tr role="row" class="odd">
+                              <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
+
                               <td>
                                   @if($invioces->invoice_url)
                                     <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
@@ -405,7 +446,11 @@
                               </td>
                               @endforeach
                               <tr style="text-align: right;">
+
                                 <td colspan="10">{{$account_download_pack_invoices->fragment('posts')->render()}}</td>
+
+                                <td colspan="10">{{$account_subscriptions_invoices->fragment('posts')->render()}}</td>
+
                               </tr>
                             @else
                             <tr style="text-align: center;">
