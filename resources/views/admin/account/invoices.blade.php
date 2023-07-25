@@ -688,10 +688,10 @@
                             </tr>
                           </thead>
                           <tbody>
-                            @if(count($account_download_pack_invoices) > 0)
-                              @foreach($account_download_pack_invoices as $k=>$invioces)
+                            @if(count($account_custom_invoices) > 0)
+                              @foreach($account_custom_invoices as $k=>$invioces)
                               <tr role="row" class="odd">
-                              <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+                              <td>{{(($account_custom_quotations->currentPage()-1)*10)+$k+1}}</td>
                               <td>
                                   @if($invioces->invoice_url)
                                     <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
