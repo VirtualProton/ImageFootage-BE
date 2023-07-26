@@ -252,7 +252,7 @@ class PromotionController extends Controller
 
     public function getPromotion(Request $request)
     {
-       $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end' )
+       $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end', 'page_type', 'desktop_banner_image', 'mobile_banner_image'  )
             ->where('status', '=', '1')
             ->where('date_start', '<=', Carbon::now())
             ->where('date_end', '>=', Carbon::now())->get();
