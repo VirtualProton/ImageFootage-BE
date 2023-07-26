@@ -25,8 +25,28 @@
                   <h3 class="box-title">Promotion List</h3>
                 </div>
 
-                @include('admin.partials.message')
-
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
+                @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session()->get('error') }}
+                </div>
+                @endif
+                @if(count($errors) > 0)
+                <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                </div>
+                @endif
 
                 <table id="promotion" class="table table-bordered table-hover">
                 	<thead>

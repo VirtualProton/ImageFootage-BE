@@ -122,7 +122,11 @@ class PromotionController extends Controller
     }
 
     public function changePromotionStatus($status,$id){
-       $result = Promotion::where('id',$id)->update(array('status'=>$status));
+        $promotion = Promotion::where('id',$id)->first();
+        if($status == 1 && Promotion::where('id','!=',$id)->where('page_type', $promotion->page_type)->where('status', '1')->count() > 0){
+            return back()->with('error','Active record found. You can not add another active record.');
+        }
+        $result = $promotion->update(array('status'=>$status));
 		if($result){
           return back()->with('success','Promotion status changed successfully.');
 		}else{
