@@ -32,6 +32,7 @@
                 	<thead>
                         <th>Id</th>
                         <th>Event Name</th>
+                        <th>Page Type</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Items</th>
@@ -43,6 +44,7 @@
                       <tr>
                         <td>{{ $promotion['id'] }} </td>
                         <td>{{ $promotion['event_name'] }} </td>
+                        <td> {{ $promotion['page_type'] }} </td>
                         <td>{{ date('Y-m-d',strtotime($promotion['date_start'])) }} </td>
                         <td>{{ date('Y-m-d',strtotime($promotion['date_end'])) }} </td>
                         <td>{{ $promotion['media_type'] }} </td>
