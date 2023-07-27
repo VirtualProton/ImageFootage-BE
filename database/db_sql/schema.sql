@@ -35,3 +35,6 @@ ALTER TABLE `imagefootage_promotion` ADD `page_type` VARCHAR(20) NULL DEFAULT NU
 ALTER TABLE `imagefootage_promotion` ADD `desktop_banner_image` VARCHAR(255) NULL DEFAULT NULL;
 -- Mobile screen banner image
 ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL DEFAULT NULL;
+
+-- Verify registration use token and expiry datetime
+ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;

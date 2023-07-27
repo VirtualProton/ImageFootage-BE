@@ -113,23 +113,20 @@ class AuthController extends Controller
             $result = $save_data->save();
             //User::create($request->all());
             if ($result) {
-                $credentials = ['email'=>$request->input('email'),'password'=>$request->input('password')];
-                $token = auth()->attempt($credentials);
-                $usercredentials = ['access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => auth()->factory()->getTTL() * 60,
-                    'user' => auth()->user()->first_name,
-                    'Utype' => auth()->user()->id
-                ];
-				$cname=$request->input('first_name');
+                $cname=$request->input('first_name');
 				$cemail=$request->input('email');
-				$cont_url=url('/active_user_account').'/'.$cemail;
+                $match_token = sha1(time()).random_int(111, 999);
+                User::where('id', $save_data->id)->update([
+                    'email_verify_token' => $match_token,
+                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"))
+                ]);
+				$cont_url=url('/active_user_account').'/'.$match_token;
 			 
-			 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
-				 Mail::send('createusermail', $data, function($message) use($data) {
-				 $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
-			 }); 
-                 return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
+                $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+                    Mail::send('createusermail', $data, function($message) use($data) {
+                    $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
+                }); 
+                 return response()->json(['status'=>'1','message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
             }
