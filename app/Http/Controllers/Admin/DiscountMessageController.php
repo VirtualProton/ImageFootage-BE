@@ -58,7 +58,7 @@ class DiscountMessageController extends Controller
         if (DiscountMessage::where('page_type', $request->input('page_type'))->count() > 0) {
             return back()->withInput()->with('error', 'Record already exist for this page type.');
         }
-        $discountMessage = DiscountMessage::create([
+        $result = DiscountMessage::create([
             'page_type' => $request->input('page_type'),
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -66,7 +66,6 @@ class DiscountMessageController extends Controller
             'button_text' => $request->input('button_text'),
             'status' => $request->input('status'),
         ]);
-        $result = $discountMessage->save();
         if ($result) {
             return back()->with('success', 'Discount Message Save Successfully.');
         } else {
