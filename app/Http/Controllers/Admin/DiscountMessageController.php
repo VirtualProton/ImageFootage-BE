@@ -165,4 +165,10 @@ class DiscountMessageController extends Controller
             return back()->with('warning', 'Some problem occured.');
         }
     }
+
+    // API
+    public function discountMessagesList(Request $request){
+        $discount_message_list = DiscountMessage::get()->toArray();
+        return json_encode($discount_message_list);
+    }
 }
