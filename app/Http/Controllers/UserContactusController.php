@@ -22,6 +22,7 @@ use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 
 use App\Http\TnnraoSms\TnnraoSms;
+use App\Mail\ChangePassword;
 
 class UserContactusController extends Controller
 {
@@ -55,7 +56,9 @@ class UserContactusController extends Controller
 		$password=$request->password;
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
-		$email= User::where('id','=',$user_id)->first()->email;
+        $user = User::where('id','=',$user_id)->first();
+		$email= $user->email;
+		$name= $user->first_name;
 		
 		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
@@ -75,6 +78,8 @@ class UserContactusController extends Controller
             }else{
                 $result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
                 if($result){
+                        $content = array('name' => $name, 'email' => $email);
+                        Mail::to($content['email'])->send(new ChangePassword($content));
                         return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
                 }else{
                         return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
