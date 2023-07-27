@@ -217,9 +217,10 @@ class UserController extends Controller
                                     'state' => $data['profileData']['state'],
                                     'city' => $data['profileData']['city'],
                                     'postal_code' => $data['profileData']['pincode'],
+                                    'address2' => $data['profileData']['address2'] ?? '',
                                 ]);
              $userlist = User::where('id', '=', $data['tokenData']['Utype'])
-                                ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code')
+                                ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code', 'address2')
                                 ->with('country')
                                 ->with('state')
                                 ->with('city')

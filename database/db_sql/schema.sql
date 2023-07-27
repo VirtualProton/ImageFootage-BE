@@ -22,3 +22,7 @@ ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL AF
 
 --  imagefootage_performa_invoices
 ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;
+
+-- User profile page add new field address2
+
+ALTER TABLE `imagefootage_users` ADD `address2` TEXT NULL;
