@@ -297,6 +297,15 @@ Route::post('/save_po', 'InvoiceController@savePO');
 Route::post('/get_invoice', 'InvoiceController@get_invoice');
 Route::post('/update_po','InvoiceController@update_po');
 
+// Route for discount module
+Route::get('/list_discount_message', 'DiscountMessageController@index');
+Route::get('/add_discount_message', 'DiscountMessageController@create');
+Route::post('/creatediscountmessage', 'DiscountMessageController@store');
+Route::get('/editdiscountmessage/{id}', 'DiscountMessageController@edit');
+Route::post('/updatediscountmessage', 'DiscountMessageController@update');
+Route::get('/deletediscountmessage/{id}', 'DiscountMessageController@destroy');
+Route::get('/discountmessagestatus/{status}/{id}', 'DiscountMessageController@changeStatus');
+
 });
 
 Route::get('emailVerification','UserContactusController@emailVerification');

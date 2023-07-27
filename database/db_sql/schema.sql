@@ -32,6 +32,27 @@ ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL;
 --  imagefootage_performa_invoices
 ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;
 
+
+-- Discount message module for display discount in frontend page wise
+CREATE TABLE IF NOT EXISTS `discount_messages` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `page_type` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NULL,
+  `link` varchar(255) NOT NULL,
+  `button_text` varchar(255) NOT NULL,
+  `status` int NOT NULL,
+  `created_at` timestamp NULL,
+  `updated_at` timestamp NULL,
+   PRIMARY KEY (`id`)
+);
+
+-- Display new module "discount message" in sidemenu
+INSERT INTO `imagefootage_modules` (`id`, `module_name`, `url`, `parent_module_id`, `status`, `sort_order`, `created_at`, `updated_at`, `module_icon`) VALUES
+(100, 'List Discount Messages', 'list_discount_message', 101, 'A', NULL, NULL, NULL, NULL),
+(101, 'Discount Messages', NULL, 0, 'A', 93, NULL, NULL, 'fa fa-tag'),
+(102, 'Add Discount Message', 'add_discount_message', 101, 'A', NULL, NULL, NULL, NULL);
+
 -- User profile page add new field address2
 ALTER TABLE `imagefootage_users` ADD `address2` TEXT NULL;
 ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL;
@@ -44,4 +65,3 @@ ALTER TABLE `imagefootage_promotion` ADD `desktop_banner_image` VARCHAR(255) NUL
 
 -- Mobile screen banner image
 ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL DEFAULT NULL;
-
