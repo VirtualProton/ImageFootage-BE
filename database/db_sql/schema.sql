@@ -36,3 +36,10 @@ CREATE TABLE IF NOT EXISTS `discount_messages` (
   `updated_at` timestamp NULL,
    PRIMARY KEY (`id`)
 );
+
+-- Display new module "discount message" in sidemenu
+
+INSERT INTO `imagefootage_modules` (`id`, `module_name`, `url`, `parent_module_id`, `status`, `sort_order`, `created_at`, `updated_at`, `module_icon`) VALUES
+(100, 'List Discount Messages', 'list_discount_message', 101, 'A', NULL, NULL, NULL, NULL),
+(101, 'Discount Messages', NULL, 0, 'A', 93, NULL, NULL, 'fa fa-tag'),
+(102, 'Add Discount Message', 'add_discount_message', 101, 'A', NULL, NULL, NULL, NULL);
