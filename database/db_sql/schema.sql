@@ -22,3 +22,17 @@ ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL AF
 
 --  imagefootage_performa_invoices
 ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;
+
+-- Discount message module for display discount in frontend page wise
+CREATE TABLE IF NOT EXISTS `discount_messages` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `page_type` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NULL,
+  `link` varchar(255) NOT NULL,
+  `button_text` varchar(255) NOT NULL,
+  `status` int NOT NULL,
+  `created_at` timestamp NULL,
+  `updated_at` timestamp NULL,
+   PRIMARY KEY (`id`)
+);
