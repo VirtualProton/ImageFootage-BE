@@ -209,7 +209,6 @@ class UserController extends Controller
             $update = User::where('id', '=' , $data['tokenData']['Utype'])
                             ->update([
                                     'first_name' => $data['profileData']['first_name'],
-                                    'last_name' => $data['profileData']['last_name'],
                                     'mobile' => $data['profileData']['mobile'],
                                     'phone' => $data['profileData']['phone'],
                                     'address' => $data['profileData']['address'],
