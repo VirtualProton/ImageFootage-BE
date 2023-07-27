@@ -63,7 +63,7 @@
                        <option value="footage_page">Footage</option>
                        <option value="editorial_page">Editorial</option>
                        <option value="pricing_page">Pricing</option>
-                       <option value="music_page1">Music1</option>
+                       <option value="music_page">Music</option>
                     </select>
                     @if ($errors->has('page_type'))
                         <div class="has_error" style="color:red;">{{ $errors->first('page_type') }}</div>
