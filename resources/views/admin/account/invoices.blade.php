@@ -76,11 +76,12 @@
                                 <h5>User Name : {{$user->user_name}}</h5>
                                 <h5>Deactivated ? : {{$user->status=1?"No":"Yes"}}</h5>
                                 <h5>Password :
-                                  <input type="password" class="" name="" id="" value="{{$user->password}}"><button id="resetButton" onclick="resetPassword({{$user->id}})">reset</button>
+                                  <input type="password" class="" name="" id="" value=""></br></br>
+                                  <button class="btn btn-primary" id="resetButton" onclick="resetPassword({{$user->id}})">Reset</button>
                                 </h5>
                                 <h5>First Name : {{$user->first_name}}</h5>
                                 <h5>Last Name : {{$user->last_name}}</h5>
-                                <h5>Email : <input type="text" class="" name="" id="" value="{{$user->email}}"></h5>
+                                <h5>Email : {{$user->email}}
                                 <!-- <h5>Email Verified : {{$user->last_name}}</h5> -->
                                 <h5>Date Registered : {{date('d-m-Y', strtotime($user->created_at))}}</h5>
                                 <h5>Dedicated Account Manager : {{$account_manager_name}}</h5>
@@ -99,16 +100,19 @@
                                 <h5>PAN : {{$user->pan}}</h5>
                               </div>
                             </div>
-                            <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Other Info</h4>
                             <div class="form-group col-sm-12">
-                              <h5>Partner ? : </h5>
-                              <h5>White List User ? : </h5>
-                              <h5>Black List User ? : </h5>
-                              <h5>Checkout Frozen : </h5>
-                              <h5>Allow Download Certificate : </h5>
-                              <h5>Enable Subs Multi-logins ? : </h5>
-                              <h5>Preferred Contact Method : </h5>
-                              <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;">{{$user->description}}</textarea></h5>
+                              <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Other Info</h4>
+                              <div class="form-group col-sm-12">
+                                <h5>Partner ? : </h5>
+                                <h5>White List User ? : </h5>
+                                <h5>Black List User ? : </h5>
+                                <h5>Checkout Frozen : </h5>
+                                <h5>Allow Download Certificate : </h5>
+                                <h5>Enable Subs Multi-logins ? : </h5>
+                                <h5>Preferred Contact Method : </h5>
+                                <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;" id="user_description">{{$user->description}}</textarea></h5>
+                                <button class="btn btn-primary" id="resetButton" onclick="saveDescription({{$user->id}})">Save</button>
+                              </div>
                             </div>
                           </thead>
                         </table>
@@ -1271,6 +1275,31 @@
       $.ajax({
         type: "POST",
         url: "{{ url('admin/ajaxRequestForUserPass')}}/" + id,
+        success: function(result) {
+          $('#loading').hide();
+          console.log(result);
+          if (result.resp.statuscode == '1') {
+            alert(result.resp.statusdesc);
+          } else {
+            alert(result.resp.statusdesc);
+          }
+          window.location.reload();
+        }
+      });
+    }
+  }
+  function saveDescription(id) {
+    event.preventDefault();
+    var description = $('#user_description').val();
+    if(description.length > 0){
+      $('#loading').show();
+      $.ajax({
+        type: "POST",
+        url: "{{ url('admin/ajaxRequestForUserDesc')}}",
+        data: {
+          id: id,
+          description: description
+        },
         success: function(result) {
           $('#loading').hide();
           console.log(result);
