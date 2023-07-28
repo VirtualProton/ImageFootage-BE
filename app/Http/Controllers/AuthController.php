@@ -327,7 +327,7 @@ class AuthController extends Controller
         Mail::send('createusermail', $data, function ($message) use ($data) {
             $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
         });
-        return response()->json(['status' => '1', 'message' => 'Email address verification link has been sent.'], 200);
+        return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
     }
 
 
