@@ -27,6 +27,7 @@ Route::group([
 
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
+    Route::post('resend_verification_link/{email?}', 'AuthController@resendVerificationLink');
 
 	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
@@ -95,6 +96,8 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
 
   
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
+
+    Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
 });
 
 Route::group([
@@ -124,4 +127,5 @@ Route::group([
     Route::get('getLocationDetails','FrontuserController@ip_details');
     Route::get('getCurrencies','FrontuserController@getCurrencies');
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
+    
 });

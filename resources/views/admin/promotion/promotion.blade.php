@@ -2,8 +2,21 @@
 
 @section('content')
 <div class="content-wrapper" ng-controller="PromotionController">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Add Promotion
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Add Promotion</li>
+  </ol>
+</section>
 <section class="content">
 <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add Promotion</h3><a href="{{ URL::to('admin/list_promotion') }}" class="btn pull-right">Back</a>
+        </div>
         <!-- form start -->
         <form action="{{ url('admin/createpromotion') }}" role="form" method="post" enctype="multipart/form-data" id="promotionform">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
@@ -11,7 +24,12 @@
             <div class="alert alert-success">
                 {{ session()->get('success') }}
             </div>
-                @endif
+            @endif
+            @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+            @endif
               <div class="box-body">
                 <div class="form-group">
                     <label for="event name">Event Name </label>
@@ -33,6 +51,39 @@
                      @if ($errors->has('date_end'))
                             <div class="has_error" style="color:red;">{{ $errors->first('date_end') }}</div>
                      @endif
+                </div>
+                <div class="form-group">
+                    <label class="">Page Type</label>
+                    <select class="form-control" ng-model="product.page_type" name="page_type">
+                       <option value="">--Select a Type--</option>
+                       <option value="home_page">Home</option>
+                       <option value="image_page">Image</option>
+                       <option value="footage_page">Footage</option>
+                       <option value="editorial_page">Editorial</option>
+                       <option value="pricing_page">Pricing</option>
+                       <option value="music_page">Music</option>
+                    </select>
+                    @if ($errors->has('page_type'))
+                        <div class="has_error" style="color:red;">{{ $errors->first('page_type') }}</div>
+                     @endif
+                    <div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Desktop Banner Image</label>
+                    <input type="file" id="desktop_banner_image" name="desktop_banner_image">
+                    <p class="help-block">Image upload size (1280px * 797px)</p>
+                    @if ($errors->has('desktop_banner_image'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('desktop_banner_image') }}</div>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Mobile Banner Image</label>
+                    <input type="file" id="mobile_banner_image" name="mobile_banner_image">
+                    <p class="help-block">Image upload size (236px * 354px)</p>
+                    @if ($errors->has('mobile_banner_image'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('mobile_banner_image') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label class="">Media Type (Image/Footage)</label>

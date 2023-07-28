@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use App;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\ChangeMobileMail;
 
 class UserController extends Controller
 {
@@ -191,62 +192,75 @@ class UserController extends Controller
 
     }
 
-    public function update_profile (Request $request){
+    public function update_profile(Request $request)
+    {
         $data = $request->all();
-        
-        $validator = \Validator::make($request->profileData ?? [], [
-            'mobile' => 'required|unique:imagefootage_users,mobile,'.$data['tokenData']['Utype'],
-            'mobile' => 'required|unique:imagefootage_users,phone,'.$data['tokenData']['Utype'],
-        ]);
-        
-        if ($validator->fails()) {    
-            return response()->json(["error"=> $validator->messages()], 200);
-        }
-    
-        
-        if(count($data['profileData']) > 0 && count($data['tokenData']) > 0){
 
-            $update = User::where('id', '=' , $data['tokenData']['Utype'])
-                            ->update([
-                                    'first_name' => $data['profileData']['first_name'],
-                                    'last_name' => $data['profileData']['last_name'],
-                                    'mobile' => $data['profileData']['mobile'],
-                                    'phone' => $data['profileData']['phone'],
-                                    'address' => $data['profileData']['address'],
-                                    'country' => $data['profileData']['country'],
-                                    'state' => $data['profileData']['state'],
-                                    'city' => $data['profileData']['city'],
-                                    'postal_code' => $data['profileData']['pincode'],
-                                ]);
-             $userlist = User::where('id', '=', $data['tokenData']['Utype'])
-                                ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code')
-                                ->with('country')
-                                ->with('state')
-                                ->with('city')
-                                ->first()
-                                ->toArray();
-            echo json_encode(['status'=>"success", 'data'=>$userlist]);
-        } else {
-            echo json_encode(['status'=>"fail", 'data'=>'', 'message'=>'Some error happened']);
+        $validator = \Validator::make($request->profileData ?? [], [
+            'mobile' => 'required|unique:imagefootage_users,mobile,' . $data['tokenData']['Utype'],
+            'mobile' => 'required|unique:imagefootage_users,phone,' . $data['tokenData']['Utype'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["error" => $validator->messages()], 200);
         }
-        
+
+        if (count($data['profileData']) > 0 && count($data['tokenData']) > 0) {
+            $userlist = User::where('id', '=', $data['tokenData']['Utype'])
+            ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code', 'address2')
+            ->with('country')
+            ->with('state')
+            ->with('city')
+            ->first();
+            $update_data = [
+                'first_name' => $data['profileData']['first_name'],
+                'mobile' => $data['profileData']['mobile'],
+                'phone' => $data['profileData']['phone'],
+                'address' => $data['profileData']['address'],
+                'state' => $data['profileData']['state'],
+                'city' => $data['profileData']['city'],
+                'postal_code' => $data['profileData']['pincode'],
+                'address2' => $data['profileData']['address2'] ?? '',
+            ];
+            if (empty($userlist['country'])) {
+                $update_data['country'] = $data['profileData']['country'];
+            }
+            $update = User::where('id', '=', $data['tokenData']['Utype'])->update($update_data);
+
+            if ($userlist['mobile'] != $data['profileData']['mobile']) {
+                $content = array('name' => $userlist->first_name, 'email' => $userlist->email);
+                Mail::to($content['email'])->send(new ChangeMobileMail($content));
+            }
+
+            $result = clone $userlist;
+            $result = $result->toArray();
+            echo json_encode(['status' => "success", 'data' => $result]);
+        } else {
+            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+        }
     }
 
 
     /**
      * Active user account
      */
-    public function activeUserAccount($email = "")
+    public function activeUserAccount($token = "")
     {
         $message = "";
         try {
-            if($email == "" || $email == null) {
-                throw new Exception("Email not found");
+            $user = User::where("email_verify_token", $token)->first();
+            if(empty($user) || $token == "" || $token == null){
+                throw new Exception("Token not found.");
             }
-            $user = User::where("email", $email)->first();
-            $user->status = '1';
+            if($user->token_valid_date < date('Y-m-d H:i:s')){
+                throw new Exception("Link is expired.");
+            }
+            $user->status = 1;
+            $user->email_verify_token = null;
+            $user->token_valid_date = null;
             $user->save();
             $message = "User activated successfully.";
+            $email = $user->email;
             return redirect(env("FRONT_END_URL")."account-activated/$email"); 
         } catch (\Throwable $th) {
             $message = $th->getMessage();

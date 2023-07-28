@@ -1,4 +1,4 @@
-{!! Form::open(array('url' => URL::to('admin/users/comments'), 'method' => 'POST', 'class'=>"form-horizontal" , 'id' => 'commentform', 'name' => 'commentform')) !!}
+{!! Form::open(array('url' => URL::to('admin/users/comments'), 'method' => 'POST', 'class'=>"form-horizontal" , 'id' => (isset($tab) ? $tab.'commentform' : 'commentform'), 'name' => 'commentform')) !!}
 <h4 class="box-title add-new news_add-div">Add New Comment</h4>
 <div class="inner-mail-top-top">
 <div class="inner-mail-right">
@@ -24,7 +24,7 @@
     </div>
     <div class="custom-width">
       <label>Expiry</label>
-      <input type="text" name="expiry" id="expiry" data-provide="datepicker"/>
+      <input type="text" name="expiry" id="expiry{{isset($tab) ? $tab : ''}}" data-provide="datepicker"/>
     </div>
   </div>
 </div>
@@ -35,7 +35,7 @@
         <div class="form-group comment-sub-wrap">
           <label>Subject</label>
           <input type="hidden" name="tabId2" value="tab2">
-          <input type="text" class="form-control" width="200" name="subject" id="subject" placeholder="Subject" value="">
+          <input type="text" class="form-control" width="200" name="subject" id="subject{{isset($tab) ? $tab : ''}}" placeholder="Subject" value="">
           <input type="hidden" name="user_id" value="{{$user_id}}">
           <input type="hidden" name="created_by" value="{{Auth::guard('admins')->user()->id}}">
         </div>
@@ -51,7 +51,7 @@
   </div> 
   <div class="form-group col-sm-12">
     <div class="box-footer comme-button">
-      {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'commentbtn', 'name' => 'commentbtn')) !!}
+      {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => (isset($tab) ? $tab.'commentbtn' : 'commentbtn'), 'name' => 'commentbtn')) !!}
     </div>
   </div> 
   </div>
