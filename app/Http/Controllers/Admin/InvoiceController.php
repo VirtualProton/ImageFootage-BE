@@ -283,6 +283,9 @@ class InvoiceController extends Controller
         $this->validate($request, [
             'invoice_no' => 'required',
             'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_no
+        ], [
+            'po_no.required' => 'The PO no field is required.',
+            'po_no.unique' => 'The PO no must be unique.'
         ]);
         $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no]);
         if ($update) {

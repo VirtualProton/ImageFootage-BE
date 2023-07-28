@@ -218,6 +218,9 @@ $(document).ready(function ($) {
                  validators: {
                 notEmpty: {
                   message: 'Package products count is required'
+                },
+                numeric: {
+                  message: 'The value is not an integer'
                 }
               }
             },
@@ -232,6 +235,9 @@ $(document).ready(function ($) {
               validators: {
                 notEmpty: {
                   message: 'Package expiry in months is required'
+                },
+                numeric: {
+                  message: 'The value is not an integer'
                 }
               }
              },
@@ -239,6 +245,9 @@ $(document).ready(function ($) {
               validators: {
                 notEmpty: {
                   message: 'Package expiry in quarterly is required'
+                },
+                numeric: {
+                  message: 'The value is not an integer'
                 }
               }
              },
@@ -246,6 +255,9 @@ $(document).ready(function ($) {
               validators: {
                 notEmpty: {
                   message: 'Package expiry in half year is required'
+                },
+                numeric: {
+                  message: 'The value is not an integer'
                 }
               }
              },
@@ -253,6 +265,9 @@ $(document).ready(function ($) {
               validators: {
                 notEmpty: {
                   message: 'Package expiry per year is required'
+                },
+                numeric: {
+                  message: 'The value is not an integer'
                 }
               }
              }

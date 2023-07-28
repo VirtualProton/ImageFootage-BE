@@ -138,6 +138,9 @@
                         validators: {
                             notEmpty: {
                                 message: 'Link is required'
+                            },
+                            uri: {
+                                message: 'Please enter valid URL.'
                             }
                         }
                     },
