@@ -871,7 +871,7 @@
             </div>
           </div>
           <div class="modal invoice-modal" id="modal-default" style="padding-right: 16px;"> 
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -881,36 +881,132 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <div class="col-sm-6">
-                      <p><strong>Trasaction Id :</strong> Q<%quotationObj.invoice_name%></p>
-                      <p><strong>User Name :</strong> {{$user->user_name}}</p>
-                      <p><strong>GST No. :</strong>   <input type="text" name="gstNo" id="gstNo" value="{{$user->gst}}" class="form-group"></p>
-                      <p><strong>Phone No. :</strong> <input type="text" name="phone" id="phone" value="{{$user->phone}}" class="form-group"></p>
-                      <p><strong>Package :</strong> <%quotationObj.package_description%></p>
-                      <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                      <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDate" id="poDate" ng-model="poDate"></p> -->
-                      <p><strong>Subtotal :</strong> <%quotationObj.total - quotationObj.tax%></p>
-                      <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong> <%quotationObj.tax%></p>
-                      <p><strong>Total :</strong> <%quotationObj.total%></p>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Trasaction Id</label>
+                        <div class="col-md-6">
+                            <p>Q<%quotationObj.invoice_name%></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">User Name</label>
+                        <div class="col-md-6">
+                            <p>{{$user->user_name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">GST No. :</label>
+                        <div class="col-md-6">
+                            <p><input type="text" name="gstNo" id="gstNo" value="{{$user->gst}}" class="form-control"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Phone No. :</label>
+                        <div class="col-md-6">
+                            <p><input type="text" name="phone" id="phone" value="{{$user->phone}}" class="form-control"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Package :</label>
+                        <div class="col-md-6">
+                            <p><%quotationObj.package_description%></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Purchase Date :</label>
+                        <div class="col-md-6">
+                            <p>{{date('Y-m-d H:i:s')}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Subtotal :</label>
+                        <div class="col-md-6">
+                            <p><%quotationObj.total - quotationObj.tax%></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Discount :</label>
+                        <div class="col-md-6">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Tax :</label>
+                        <div class="col-md-6">
+                            <p><%quotationObj.tax%></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Total :</label>
+                        <div class="col-md-6">
+                            <p><%quotationObj.total%></p>
+                        </div>
+                    </div>
                     </div>
                     <div class="col-sm-6">
-                      <p><strong>Method : </strong>
-                        <select class="form-group" name="payment_method" ng-model="payment_method">
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Method :</label>
+                        <div class="col-md-6">
+                            <p><select class="form-control" name="payment_method" ng-model="payment_method">
                           <option value="">Select Method</option>
                           <option value="chq">Terms Granted</option>
                           <option value="online">Online</option>
-                        </select>
-                      </p>
-                      <p><strong>Pan No. :</strong>   <input type="text" name="panNo" id="panNo" value="{{$user->pan}}" class="form-group"></p>
-                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="po" id="po" ng-model="po" class="form-group"></p>
-                     
-                      <p><strong>Street :</strong> {{$user->address}}</p>
-                      <p><strong>City :</strong> {{$city_name}}</p>
-                      <p><strong>State :</strong> {{$state_name}}</p>
-                      <p><strong>Zip Code :</strong> {{$user->postal_code}}</p>
-                      <p><strong>Country :</strong> {{$country_name}}</p>
-                      <p><strong>Agent :</strong> {{Auth::guard('admins')->user()->name}}</p>
-                      <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                        </select></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Pan No. :</label>
+                        <div class="col-md-6">
+                            <p><input type="text" name="panNo" id="panNo" value="{{$user->pan}}" class="form-control"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Job Ref/ PO # :</label>
+                        <div class="col-md-6">
+                            <p><input type="text" name="po" id="po" ng-model="po" class="form-control"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Street :</label>
+                        <div class="col-md-6">
+                            <p>{{$user->address}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">City :</label>
+                        <div class="col-md-6">
+                            <p>{{$city_name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">State :</label>
+                        <div class="col-md-6">
+                            <p>{{$state_name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Zip Code :</label>
+                        <div class="col-md-6">
+                            <p>{{$user->postal_code}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Country :</label>
+                        <div class="col-md-6">
+                            <p>{{$country_name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Agent :</label>
+                        <div class="col-md-6">
+                            <p>{{Auth::guard('admins')->user()->name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Checkout via Online :</label>
+                        <div class="col-md-6">
+                            <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                        </div>
+                    </div>
                     </div>
                   </div>
                   <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
@@ -924,7 +1020,7 @@
             </div>
           </div>
           <div class="modal invoice-modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -934,45 +1030,141 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <div class="col-sm-6">
-                    
-                      <p><strong>Trasaction Id :</strong> Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
-                      <p><strong>User Name :</strong> {{$user->user_name}}</p>
-                      <p><strong>GST No. :</strong>   <input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-group"></p>
-                      <p><strong>Phone No. :</strong> <input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-group"></p>
-                      <p><strong>Purchase Date :</strong> {{date('Y-m-d H:i:s')}}</p>
-                      <!-- <p><strong>Expiry Date :</strong> <input type="text" name="poDateCustom" id="poDateCustom" ng-model="poDateCustom" autocomplete="off"></p> -->
-                      <p><strong>Subtotal :</strong>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
-                      <p><strong>Discount :</strong> </p>
-                      <p><strong>Tax :</strong>{{isset($quotations) ? $quotations->tax : ''}}</p>
-                      <p><strong>Total :</strong>{{isset($quotations) ? $quotations->total : ''}}</p>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Trasaction Id :</label>
+                          <div class="col-md-6">
+                              <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">User Name :</label>
+                          <div class="col-md-6">
+                              <p>{{$user->user_name}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">GST No. :</label>
+                          <div class="col-md-6">
+                              <p><input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-control"></p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Phone No. :</label>
+                          <div class="col-md-6">
+                              <p><input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-control"></p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Purchase Date :</label>
+                          <div class="col-md-6">
+                              <p>{{date('Y-m-d H:i:s')}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Subtotal :</label>
+                          <div class="col-md-6">
+                              <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Discount :</label>
+                          <div class="col-md-6">
+                              <p></p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Tax :</label>
+                          <div class="col-md-6">
+                              <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Total :</label>
+                          <div class="col-md-6">
+                              <p>{{isset($quotations) ? $quotations->total : ''}}</p>
+                          </div>
+                      </div>
                     </div>
                     <div class="col-sm-6">
-                      <p><strong>Method : </strong>
-                        <select class="form-group" name="payment_method" ng-model="payment_method">
-                          <option value="">Select Method</option>
-                          <option value="chq">Terms Granted</option>
-                          <option value="online">Online</option>
-                        </select>
-                      </p>
-                      <p ng-show="payment_method=='chq'"><strong>How many days : </strong>
-                        <select class="form-group" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
-                          <option value="">Select Days</option>
-                          <option value="7">7 Days</option>
-                          <option value="15">15 Days</option>
-                          <option value="30">30 Days</option>
-                          <option value="45">45 Days</option>
-                        </select>
-                      </p>
-                      <p><strong>Pan No. :</strong>   <input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-group"></p>
-                      <p><strong>Job Ref/ PO # :</strong> <input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-group"></p>
-                      
-                      <p><strong>Street :</strong> {{$user->address}}</p>
-                      <p><strong>City :</strong> {{$city_name}}</p>
-                      <p><strong>State :</strong> {{$state_name}}</p>
-                      <p><strong>Zip Code :</strong> {{$user->postal_code}}</p>
-                      <p><strong>Country :</strong> {{$country_name}}</p>
-                      <p><strong>Agent :</strong> {{Auth::guard('admins')->user()->name}}</p>
-                      <p><strong>Checkout via Online :</strong> <span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                    <div class="form-group row">
+                          <label for="" class="col-md-6">Method :</label>
+                          <div class="col-md-6">
+                              <p><select class="form-control" name="payment_method" ng-model="payment_method">
+                                  <option value="">Select Method</option>
+                                  <option value="chq">Terms Granted</option>
+                                  <option value="online">Online</option>
+                                </select>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="form-group row" ng-show="payment_method=='chq'">
+                          <label for="" class="col-md-6">How many days : </label>
+                          <div class="col-md-6">
+                              <p>
+                                <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                                  <option value="">Select Days</option>
+                                  <option value="7">7 Days</option>
+                                  <option value="15">15 Days</option>
+                                  <option value="30">30 Days</option>
+                                  <option value="45">45 Days</option>
+                                </select>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Pan No. :</label>
+                          <div class="col-md-6">
+                              <p><input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-control"></p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Job Ref/ PO # :</label>
+                          <div class="col-md-6">
+                              <p><input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-control"></p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Street :</label>
+                          <div class="col-md-6">
+                              <p>{{$user->address}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">City :</label>
+                          <div class="col-md-6">
+                              <p>{{$city_name}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">State :</label>
+                          <div class="col-md-6">
+                              <p>{{$state_name}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Zip Code :</label>
+                          <div class="col-md-6">
+                              <p>{{$user->postal_code}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Country :</label>
+                          <div class="col-md-6">
+                              <p>{{$country_name}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Agent :</label>
+                          <div class="col-md-6">
+                              <p>{{Auth::guard('admins')->user()->name}}</p>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Checkout via Online :</label>
+                          <div class="col-md-6">
+                              <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                          </div>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
