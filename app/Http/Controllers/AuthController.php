@@ -331,11 +331,8 @@ class AuthController extends Controller
     }
 
 
-}
 
-
-
-/**For new updated designs modules */
+    /**For new updated designs modules */
 
 
 public function signupV2(Request $request)
@@ -407,4 +404,6 @@ public function signupV2(Request $request)
     }else{
         return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
     }
+}
+
 }
