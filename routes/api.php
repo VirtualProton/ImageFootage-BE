@@ -27,6 +27,7 @@ Route::group([
 
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
+    Route::post('resend_verification_link/{email?}', 'AuthController@resendVerificationLink');
 
 	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
