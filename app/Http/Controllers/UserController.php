@@ -244,17 +244,23 @@ class UserController extends Controller
     /**
      * Active user account
      */
-    public function activeUserAccount($email = "")
+    public function activeUserAccount($token = "")
     {
         $message = "";
         try {
-            if($email == "" || $email == null) {
-                throw new Exception("Email not found");
+            $user = User::where("email_verify_token", $token)->first();
+            if(empty($user) || $token == "" || $token == null){
+                throw new Exception("Token not found.");
             }
-            $user = User::where("email", $email)->first();
-            $user->status = '1';
+            if($user->token_valid_date < date('Y-m-d H:i:s')){
+                throw new Exception("Link is expired.");
+            }
+            $user->status = 1;
+            $user->email_verify_token = null;
+            $user->token_valid_date = null;
             $user->save();
             $message = "User activated successfully.";
+            $email = $user->email;
             return redirect(env("FRONT_END_URL")."account-activated/$email"); 
         } catch (\Throwable $th) {
             $message = $th->getMessage();

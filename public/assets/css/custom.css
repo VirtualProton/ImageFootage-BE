@@ -282,8 +282,15 @@
     height: 133px !important;
     margin-bottom: 15px !important;
 }
+/* invoice page poup modal: start */
+.invoice-modal .form-group p input, .invoice-modal .form-group select {
+    padding: 5px;
+}
 
-
+.invoice-modal .form-group p {
+    margin-bottom: 15px;
+}
+/* invoice page poup modal: end */
 /* media query start here */
 
 @media (max-width: 991px) {

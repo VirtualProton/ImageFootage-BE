@@ -314,7 +314,7 @@ Route::get('payuplan/{id}','PaymentController@payuplan');
 Route::get('invoiceConfirmation/{id}','PaymentController@invoiceConfirmation');
 
 // Route for active user account
-Route::get('active_user_account/{email?}', "UserController@activeUserAccount");
+Route::get('active_user_account/{token?}', "UserController@activeUserAccount");
 
 
 

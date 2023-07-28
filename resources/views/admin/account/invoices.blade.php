@@ -870,7 +870,7 @@
               </div>
             </div>
           </div>
-          <div class="modal" id="modal-default" style="padding-right: 16px;"> 
+          <div class="modal invoice-modal" id="modal-default" style="padding-right: 16px;"> 
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -923,7 +923,7 @@
               <!-- /.modal-content -->
             </div>
           </div>
-          <div class="modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
+          <div class="modal invoice-modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
