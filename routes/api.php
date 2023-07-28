@@ -94,7 +94,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
   //  Route::post('/wishlistfolder','WishListController@getWishList');
     Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
 
-  
+
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
     Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
@@ -127,5 +127,17 @@ Route::group([
     Route::get('getLocationDetails','FrontuserController@ip_details');
     Route::get('getCurrencies','FrontuserController@getCurrencies');
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
-    
+
+});
+
+
+/**For new updated designs modules */
+
+Route::group(['prefix' => 'v2'], function(){
+    Route::group([
+        'middleware' => ['api','CORS'],
+
+    ], function () {
+        Route::post('signup-v2', 'AuthController@signupV2');
+    });
 });
