@@ -1025,7 +1025,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice_subcription',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method,  gst : $('#gstNo').val(), pan: $('#panNo').val(), phone: $('#phone').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method,  gst : $('#gstNo').val(), pan: $('#panNo').val(), phone: $('#phone').val(), country: $('#country_invoice').val() ?? '', state: $('#state_invoice').val() ?? '', city: $('#city_invoice').val() ?? '', address: $('#address_invoice').val() ?? '', address2: $('#address2_invoice').val() ?? '', postal_code: $('#postal_code_invoice').val() ?? ''}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {
@@ -1069,7 +1069,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val(), country: $('#country_invoice_cus').val() ?? '', state: $('#state_invoice_cus').val() ?? '', city: $('#city_invoice_cus').val() ?? '', address: $('#address_invoice_cus').val() ?? '', address2: $('#address2_invoice_cus').val() ?? '', postal_code: $('#postal_code_invoice_cus').val() ?? ''}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {

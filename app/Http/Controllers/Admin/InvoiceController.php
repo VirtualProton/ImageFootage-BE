@@ -135,6 +135,17 @@ class InvoiceController extends Controller
     public function create_invoice(Request $request)
     {
         $data = $request->all();
+        // Update user address
+        $user = User::where('id', $data['user_id'])->first();
+        if(!empty($data['country']) && !empty($data['state']) && !empty($data['city'])){
+            $user->country = $data['country'] ?? $user->country;
+            $user->state = $data['state'] ?? $user->state;
+            $user->city = $data['city'] ?? $user->city;
+            $user->address = $data['address'] ?? $user->address;
+            $user->address2 = $data['address2'] ?? $user->address2;
+            $user->postal_code = $data['postal_code'] ?? $user->postal_code;
+            $user->save();
+        }
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
@@ -144,6 +155,17 @@ class InvoiceController extends Controller
     public function create_invoice_subcription(Request $request)
     {
         $data = $request->all();
+        // Update user address
+        $user = User::where('id', $data['user_id'])->first();
+        if(!empty($data['country']) && !empty($data['state']) && !empty($data['city'])){
+            $user->country = $data['country'] ?? $user->country;
+            $user->state = $data['state'] ?? $user->state;
+            $user->city = $data['city'] ?? $user->city;
+            $user->address = $data['address'] ?? $user->address;
+            $user->address2 = $data['address2'] ?? $user->address2;
+            $user->postal_code = $data['postal_code'] ?? $user->postal_code;
+            $user->save();
+        }
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method']);
