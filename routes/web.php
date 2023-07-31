@@ -75,6 +75,7 @@ Route::get('/viewcontributor/{id}', 'ContributorController@viewcontributor');
 Route::get('/deletecontributor/{id}', 'ContributorController@destroy');
 Route::post('/request_for_contributorpass/{id}', 'ContributorController@requestForContributorPass');
 Route::post('/ajaxRequestForUserPass/{id}', 'ContributorController@ajaxRequestForUserPass');
+Route::post('/ajaxRequestForUserDesc', 'ContributorController@ajaxRequestForUserDesc');
 
 Route::get('/contributorotpvalidate/{id}', 'ContributorController@contVerifyRegisteriedOtp');
 Route::post('/contributorotpvalidateprocess', 'ContributorController@contVerifyRegisteriedOtpprocess');

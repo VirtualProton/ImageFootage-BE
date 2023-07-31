@@ -218,8 +218,9 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
            // dd($description);
            $active_tab = "tab1";
+           $active_nested_tab = "subscription_tab";
 
-        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices)->with('account_custom_quotations', $account_custom_quotations)->with('account_custom_invoices', $account_custom_invoices)->with('account_custom_quotations2', $account_custom_quotations2)->with('account_custom_invoices2', $account_custom_invoices2);
+        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab', 'active_nested_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices)->with('account_custom_quotations', $account_custom_quotations)->with('account_custom_invoices', $account_custom_invoices)->with('account_custom_quotations2', $account_custom_quotations2)->with('account_custom_invoices2', $account_custom_invoices2);
     }
 
     /**

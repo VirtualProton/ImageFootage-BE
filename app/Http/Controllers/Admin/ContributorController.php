@@ -372,4 +372,14 @@ class ContributorController extends Controller
 		 }
 		
 	}
+
+	public function ajaxRequestForUserDesc(Request $request){
+		$id = $request->id;
+		$description = $request->description;
+		$update = User::where('id', $id)->update(['description' => $description]);
+		$resp =array();
+		$resp['statusdesc'] = "Description Updated Successfully!!";
+        $resp['statuscode'] = "1";
+		return response()->json(compact('resp'));
+	}
 }

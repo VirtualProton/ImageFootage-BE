@@ -93,7 +93,7 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label class=""><%product.type%> <%$index+1%> (Product Image/Footage ID)</label>
+                                    <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="text" class="form-control" name="product_id" ng-model="product.id">
                                     <div>
                                     </div>
