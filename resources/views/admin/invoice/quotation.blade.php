@@ -91,7 +91,7 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label class=""><%product.type%> <%$index+1%> (Product Image/Footage ID/Music)</label>
+                                    <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
                                     <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
                                     <div>

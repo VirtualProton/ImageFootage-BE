@@ -31,60 +31,72 @@
                 </div>
                 @endif
                 <div class="box-body">
-                    <div class="form-group">
-                        <label class="">Page Type</label>
-                        <select class="form-control" name="page_type" id="page_type">
-                            <option value="">--Select a Type--</option>
-                            <option value="home_page">Home</option>
-                            <option value="image_page">Image</option>
-                            <option value="footage_page">Footage</option>
-                            <option value="editorial_page">Editorial</option>
-                            <option value="pricing_page">Pricing</option>
-                            <option value="music_page">Music</option>
-                        </select>
-                        @if ($errors->has('page_type'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('page_type') }}</div>
-                        @endif
-                        <div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="">Page Type</label>
+                            <select class="form-control" name="page_type" id="page_type">
+                                <option value="">--Select a Type--</option>
+                                <option value="home_page">Home</option>
+                                <option value="image_page">Image</option>
+                                <option value="footage_page">Footage</option>
+                                <option value="editorial_page">Editorial</option>
+                                <option value="pricing_page">Pricing</option>
+                                <option value="music_page">Music</option>
+                            </select>
+                            @if ($errors->has('page_type'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('page_type') }}</div>
+                            @endif
+                            <div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="title">Title </label>
-                        <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" placeholder="Title">
-                        @if ($errors->has('title'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('title') }}</div>
-                        @endif
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="title">Title </label>
+                            <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" placeholder="Title">
+                            @if ($errors->has('title'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('title') }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Description</label>
-                        <textarea type="text" class="form-control" name="description" id="description" placeholder="Description">{{ old('description') }}</textarea>
-                        @if ($errors->has('description'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('description') }}</div>
-                        @endif
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">Description</label>
+                            <textarea type="text" class="form-control" name="description" id="description" placeholder="Description">{{ old('description') }}</textarea>
+                            @if ($errors->has('description'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('description') }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="link">Link </label>
-                        <input type="text" class="form-control" name="link" id="link" value="{{ old('link') }}" placeholder="Link">
-                        @if ($errors->has('link'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('link') }}</div>
-                        @endif
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="link">Link </label>
+                            <input type="text" class="form-control" name="link" id="link" value="{{ old('link') }}" placeholder="Link">
+                            @if ($errors->has('link'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('link') }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="button_text">Button Text </label>
-                        <input type="text" class="form-control" name="button_text" id="button_text" value="{{ old('button_text') }}" placeholder="Button Text">
-                        @if ($errors->has('button_text'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('button_text') }}</div>
-                        @endif
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="button_text">Button Text </label>
+                            <input type="text" class="form-control" name="button_text" id="button_text" value="{{ old('button_text') }}" placeholder="Button Text">
+                            @if ($errors->has('button_text'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('button_text') }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Status</label>
-                        <select class="form-control" name="status" id="status">
-                            <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
-                        </select>
-                        @if($errors->has('status'))
-                        <div class="has_error" style="color:red;">{{ $errors->first('status') }}</div>
-                        @endif
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                            @if($errors->has('status'))
+                            <div class="has_error" style="color:red;">{{ $errors->first('status') }}</div>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-body -->

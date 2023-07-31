@@ -35,21 +35,25 @@
                     <form action="{{ url('admin/save_po') }}" role="form" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Invoice No.</label>
-                                <select class="form-control select2" name="invoice_no" id="invoice_no" data-placeholder="Select Invoice">
-                                    <option value="">--Select Invoice --</option>
-                                </select>
-                                @if ($errors->has('invoice_no'))
-                                <div class="has_error" style="color:red;">{{ $errors->first('invoice_no') }}</div>
-                                @endif
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="exampleInputEmail1">Invoice No.</label>
+                                    <select class="form-control select2" name="invoice_no" id="invoice_no" data-placeholder="Select Invoice">
+                                        <option value="">--Select Invoice --</option>
+                                    </select>
+                                    @if ($errors->has('invoice_no'))
+                                    <div class="has_error" style="color:red;">{{ $errors->first('invoice_no') }}</div>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">PO #</label>
-                                <input type="text" class="form-control" name="po_no" id="po_no" placeholder="PO #">
-                                @if ($errors->has('po_no'))
-                                <div class="has_error" style="color:red;">{{ $errors->first('po_no') }}</div>
-                                @endif
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="exampleInputEmail1">PO #</label>
+                                    <input type="text" class="form-control" name="po_no" id="po_no" placeholder="PO #">
+                                    @if ($errors->has('po_no'))
+                                    <div class="has_error" style="color:red;">{{ $errors->first('po_no') }}</div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
