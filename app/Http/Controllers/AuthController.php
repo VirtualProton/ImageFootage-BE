@@ -16,6 +16,7 @@ use Razorpay\Api\Plan;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Mail;
 use App\Helpers\Helper;
+use App\Http\TnnraoSms\TnnraoSms;
 
 class AuthController extends Controller
 {
@@ -337,70 +338,76 @@ class AuthController extends Controller
 
 public function signupV2(Request $request)
 {
-
     $rules = [
         'email' => [
             'required',
             'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
         ],
-        'name'=>['required'],
-        'password'=>['required']
+        'name' => ['required'],
+        'password' => ['required']
     ];
     $messages = [
         'email.regex' => 'Please enter a valid email address or mobile number.',
     ];
     $validator = \Validator::make($request->all(), $rules, $messages);
-
     if ($validator->fails()) {
-        return response()->json($validator->errors(), 200);
+        return response()->json(['status' => false, 'message' => $validator->errors()], 200);
     }
-
-    $user = $request->all();
-    $checkEmail = User::where('email','=',$request->input('email'))->count();
-    $checkMobile = User::where('mobile','=',$request->input('email'))->count();
+    $checkEmail = User::where('email', '=', $request->input('email'))->count();
+    $checkMobile = User::where('mobile', '=', $request->input('email'))->count();
+    if ($checkEmail > 0 || $checkMobile > 0) {
+        return response()->json(['status' => false, 'message' => 'User have been already registered'], 200);
+    }
     $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     $mobilePattern = '/^\d{10,15}$/';
     $email = '';
     $mobile = '';
-    if(preg_match($emailPattern,$request->input('email'))){
+    if (preg_match($emailPattern, $request->input('email'))) {
         $email = $request->input('email');
-    }else{
+    } else {
         $mobile = $request->input('email');
     }
-
-
-    if($checkEmail==0 && $checkMobile ==0) {
-        $save_data = new User();
-        $save_data->first_name = $request->input('name');
-        $save_data->user_name = Helper::generateUserName();
-        $save_data->email = $email;
-        $save_data->mobile = $mobile;
-        $save_data->password = Hash::make($request->input('password'));
-        $save_data->type = 'U';
-        $save_data->status = '0';
-        //$save_data->password =  bcrypt($request->input('password'));
-        $result = $save_data->save();
-        //User::create($request->all());
-        if ($result) {
-            $cname=$request->input('name');
-			$cemail=$request->input('email');
-            $match_token = sha1(time()).random_int(111, 999);
+    $save_data = new User();
+    $save_data->first_name = $request->input('name');
+    $save_data->user_name = Helper::generateUserName();
+    $save_data->email = $email;
+    $save_data->mobile = $mobile;
+    $save_data->password = Hash::make($request->input('password'));
+    $save_data->type = 'U';
+    $save_data->status = '0';
+    $result = $save_data->save();
+    if ($result) {
+        if (!empty($email)) {
+            // send email
+            $cname = $request->input('name');
+            $cemail = $request->input('email');
+            $match_token = sha1(time()) . random_int(111, 999);
             User::where('id', $save_data->id)->update([
                 'email_verify_token' => $match_token,
-                'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +". config('constants.EMAIL_EXPIRY') ." days"))
+                'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " hours"))
             ]);
-			$cont_url=url('/active_user_account').'/'.$match_token;
-            $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
-                Mail::send('createusermail', $data, function($message) use($data) {
-                $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
+            $cont_url = url('/active_user_account') . '/' . $match_token;
+            $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
+            Mail::send('createusermail', $data, function ($message) use ($data) {
+                $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
             });
-            return response()->json(['status'=>'1','message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
         } else {
-            return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
+            // send sms
+            $otp = rand(100000, 999999);
+            $update = User::where('id', $save_data->id)->update([
+                'otp' => $otp,
+                'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
+            ]);
+            if ($update) {
+                $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+                $smsClass = new TnnraoSms;
+                $smsClass->sendSms($message, $mobile);
+                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.'], 200);
+            }
         }
-    }else{
-        return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
     }
+    return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
 }
 
     /**

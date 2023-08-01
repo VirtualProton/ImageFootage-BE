@@ -67,3 +67,9 @@ ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL
 
 -- Verify registration use token and expiry datetime
 ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;
+
+-- Verify registration use otp expiry datetime
+ALTER TABLE `imagefootage_users` ADD `otp_valid_date` DATETIME NULL;
+
+-- Static pages page slug value store
+ALTER TABLE `imagefootage_staticpages` ADD `page_slug` VARCHAR(255) NULL DEFAULT NULL;

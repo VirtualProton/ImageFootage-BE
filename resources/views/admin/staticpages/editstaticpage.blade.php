@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Page Slug</label>
-                       <textarea type="text" class="form-control" name="page_slug" id="page_slug" placeholder="Page slug">{{ $page[0]['page_slug'] }}</textarea>
+                       <textarea type="text" class="form-control" name="page_slug" id="page_slug" placeholder="Page slug">{{ $page[0]['page_slug'] ?? ''}}</textarea>
                          @if ($errors->has('page_slug'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('page_slug') }}</div>
                          @endif
