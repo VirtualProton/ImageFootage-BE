@@ -15,7 +15,7 @@ use JWTAuth;
 use Razorpay\Api\Plan;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Mail;
-
+use App\Helpers\Helper;
 
 class AuthController extends Controller
 {
@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -118,7 +118,7 @@ class AuthController extends Controller
                 $match_token = sha1(time()).random_int(111, 999);
                 User::where('id', $save_data->id)->update([
                     'email_verify_token' => $match_token,
-                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"))
+                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +". config('constants.EMAIL_EXPIRY') ." days"))
                 ]);
 				$cont_url=url('/active_user_account').'/'.$match_token;
 
@@ -371,7 +371,8 @@ public function signupV2(Request $request)
 
     if($checkEmail==0 && $checkMobile ==0) {
         $save_data = new User();
-        $save_data->user_name = $request->input('name');
+        $save_data->first_name = $request->input('name');
+        $save_data->user_name = Helper::generateUserName();
         $save_data->email = $email;
         $save_data->mobile = $mobile;
         $save_data->password = Hash::make($request->input('password'));
@@ -381,23 +382,19 @@ public function signupV2(Request $request)
         $result = $save_data->save();
         //User::create($request->all());
         if ($result) {
-            $credentials = ['email'=>$request->input('email'),'password'=>$request->input('password')];
-            $token = auth()->attempt($credentials);
-            $usercredentials = ['access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
-                'user' => auth()->user()->user_name,
-                'Utype' => auth()->user()->id
-            ];
-            $cname=$request->input('user_name');
-            $cemail=$request->input('email');
-            /* $cont_url=url('/active_user_account').'/'.$cemail;
-
-         $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
-             Mail::send('createusermail', $data, function($message) use($data) {
-             $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
-         }); */
-             return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
+            $cname=$request->input('name');
+			$cemail=$request->input('email');
+            $match_token = sha1(time()).random_int(111, 999);
+            User::where('id', $save_data->id)->update([
+                'email_verify_token' => $match_token,
+                'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +". config('constants.EMAIL_EXPIRY') ." days"))
+            ]);
+			$cont_url=url('/active_user_account').'/'.$match_token;
+            $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
+                Mail::send('createusermail', $data, function($message) use($data) {
+                $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
+            });
+            return response()->json(['status'=>'1','message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
         } else {
             return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
         }
@@ -405,5 +402,27 @@ public function signupV2(Request $request)
         return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
     }
 }
+
+    /**
+     * Active user account
+     */
+    public function activeUserAccount($token = "")
+    {
+        $user = User::where("email_verify_token", $token)->first();
+        if (empty($user) || $token == "" || $token == null) {
+            return response()->json(['status' => false, 'message' => 'Token not found.'], 200);
+        }
+        if ($user->token_valid_date < date('Y-m-d H:i:s')) {
+            return response()->json(['status' => false, 'message' => 'Link is expired.'], 200);
+        }
+        $user->status = 1;
+        $user->email_verify_token = null;
+        $user->token_valid_date = null;
+        $save = $user->save();
+        if ($save) {
+            return response()->json(['status' => true, 'message' => 'User activated successfully.'], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
 
 }
