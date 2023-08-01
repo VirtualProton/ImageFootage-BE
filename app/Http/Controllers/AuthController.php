@@ -27,7 +27,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -430,6 +430,53 @@ public function signupV2(Request $request)
             return response()->json(['status' => true, 'message' => 'User activated successfully.'], 200);
         }
         return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
+
+    /**
+     * Verify otp send on mobile
+     */
+    public function verifyMobile (Request $request) {
+        $otp = $request->otp;
+        if (empty($otp)) {
+            return response()->json(['status' => false, 'message' => 'OTP is required.'], 200);
+        }
+        $user = User::where("otp", $otp)->first();
+        if (empty($user)) {
+            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+        }
+        if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
+            return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
+        }
+        $user->status = 1;
+        $user->otp = null;
+        $user->otp_valid_date = null;
+        $save = $user->save();
+        if ($save) {
+            return response()->json(['status' => true, 'message' => 'User activated successfully.'], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
+
+    /**
+     * Resend otp on mobile
+     */
+    public function resendOtp (Request $request) {
+        $mobile = $request->mobile;
+        if (empty($mobile)) {
+            return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
+        }
+        $otp = rand(100000, 999999);
+        $update = User::where('mobile', $mobile)->update([
+            'otp' => $otp,
+            'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
+        ]);
+        if ($update) {
+            $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+            $smsClass = new TnnraoSms;
+            $smsClass->sendSms($message, $mobile);
+            return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.'], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'User not found.'], 200);
     }
 
 }
