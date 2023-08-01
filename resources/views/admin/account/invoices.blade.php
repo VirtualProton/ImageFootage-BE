@@ -790,6 +790,12 @@
                             <p><%quotationObj.total%></p>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Agent :</label>
+                        <div class="col-md-6">
+                            <p>{{Auth::guard('admins')->user()->name}}</p>
+                        </div>
+                    </div>
                     </div>
                     <div class="col-sm-6">
                     <div class="form-group row">
@@ -815,39 +821,80 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="" class="col-md-6">Street :</label>
+                        <label for="" class="col-md-6">Country :</label>
                         <div class="col-md-6">
-                            <p>{{$user->address}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">City :</label>
-                        <div class="col-md-6">
-                            <p>{{$city_name}}</p>
+                          @if(empty($country_name))
+                          <p>
+                            <select class="form-control" name="country_invoice" ng-model="country_invoice" id="country_invoice" onchange="getStateInvoice(this)">
+                              <option  value="">Please Select</option>
+                              @if(count($countries) > 0)
+                              @foreach($countries as $country)
+                              <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                              @endforeach
+                              @endif
+                            </select>
+                          </p>
+                          @else
+                            <p>{{$country_name}}</p>
+                          @endif
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-md-6">State :</label>
                         <div class="col-md-6">
+                          @if(empty($state_name))
+                          <p>
+                            <select class="form-control" name="state_invoice" ng-model="state_invoice" id="state_invoice" onchange="getCityInvoice(this)">
+                              <option value="">Please Select</option>
+                            </select>
+                          </p>
+                          @else
                             <p>{{$state_name}}</p>
+                          @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">City :</label>
+                        <div class="col-md-6">
+                          @if(empty($city_name))
+                            <p>
+                              <select class="form-control" name="city_invoice" ng-model="city_invoice" id="city_invoice">
+                                <option value="">Please Select</option>
+                              </select>
+                            </p>
+                          @else
+                            <p>{{$city_name}}</p>
+                          @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Street :</label>
+                        <div class="col-md-6">
+                          @if(empty($user->address))
+                            <p><input type="text" name="address_invoice" id="address_invoice" ng-model="address_invoice" class="form-control"></p>
+                          @else
+                            <p>{{$user->address}}</p>
+                          @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-md-6">Street2 :</label>
+                        <div class="col-md-6">
+                          @if(empty($user->address2))
+                            <p><input type="text" name="address2_invoice" id="address2_invoice" ng-model="address2_invoice" class="form-control"></p>
+                          @else
+                            <p>{{$user->address2}}</p>
+                          @endif
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-md-6">Zip Code :</label>
                         <div class="col-md-6">
+                            @if(empty($user->postal_code))
+                            <p><input type="text" name="postal_code_invoice" id="postal_code_invoice" ng-model="postal_code_invoice" class="form-control"></p>
+                          @else
                             <p>{{$user->postal_code}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Country :</label>
-                        <div class="col-md-6">
-                            <p>{{$country_name}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Agent :</label>
-                        <div class="col-md-6">
-                            <p>{{Auth::guard('admins')->user()->name}}</p>
+                          @endif
                         </div>
                     </div>
                     <div class="form-group row">
@@ -857,12 +904,13 @@
                         </div>
                     </div>
                     </div>
+                    </div>
                   </div>
                   <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
+                  </div>
                 </div>
               </div>
               <!-- /.modal-content -->
@@ -933,6 +981,12 @@
                               <p>{{isset($quotations) ? $quotations->total : ''}}</p>
                           </div>
                       </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Agent :</label>
+                          <div class="col-md-6">
+                              <p>{{Auth::guard('admins')->user()->name}}</p>
+                          </div>
+                      </div>
                     </div>
                     <div class="col-sm-6">
                     <div class="form-group row">
@@ -973,39 +1027,80 @@
                           </div>
                       </div>
                       <div class="form-group row">
-                          <label for="" class="col-md-6">Street :</label>
+                        <label for="" class="col-md-6">Country :</label>
+                        <div class="col-md-6">
+                          @if(empty($country_name))
+                          <p>
+                            <select class="form-control" name="country_invoice_cus" ng-model="country_invoice_cus" id="country_invoice_cus" onchange="getStateInvoiceCus(this)">
+                              <option  value="">Please Select</option>
+                              @if(count($countries) > 0)
+                              @foreach($countries as $country)
+                              <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                              @endforeach
+                              @endif
+                            </select>
+                          </p>
+                          @else
+                            <p>{{$country_name}}</p>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">State :</label>
                           <div class="col-md-6">
-                              <p>{{$user->address}}</p>
+                            @if(empty($state_name))
+                            <p>
+                              <select class="form-control" name="state_invoice_cus" ng-model="state_invoice_cus" id="state_invoice_cus" onchange="getCityInvoiceCus(this)">
+                                <option value="">Please Select</option>
+                              </select>
+                            </p>
+                            @else
+                              <p>{{$state_name}}</p>
+                            @endif
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">City :</label>
                           <div class="col-md-6">
+                            @if(empty($city_name))
+                              <p>
+                                <select class="form-control" name="city_invoice_cus" ng-model="city_invoice_cus" id="city_invoice_cus">
+                                  <option value="">Please Select</option>
+                                </select>
+                              </p>
+                            @else
                               <p>{{$city_name}}</p>
+                            @endif
                           </div>
                       </div>
                       <div class="form-group row">
-                          <label for="" class="col-md-6">State :</label>
+                          <label for="" class="col-md-6">Street :</label>
                           <div class="col-md-6">
-                              <p>{{$state_name}}</p>
+                            @if(empty($user->address))
+                              <p><input type="text" name="address_invoice_cus" id="address_invoice_cus" ng-model="address_invoice_cus" class="form-control"></p>
+                            @else
+                              <p>{{$user->address}}</p>
+                            @endif
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-md-6">Street2 :</label>
+                          <div class="col-md-6">
+                            @if(empty($user->address2))
+                              <p><input type="text" name="address2_invoice_cus" id="address2_invoice_cus" ng-model="address2_invoice_cus" class="form-control"></p>
+                            @else
+                              <p>{{$user->address2}}</p>
+                            @endif
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">Zip Code :</label>
                           <div class="col-md-6">
+                              @if(empty($user->postal_code))
+                              <p><input type="text" name="postal_code_invoice_cus" id="postal_code_invoice_cus" ng-model="postal_code_invoice_cus" class="form-control"></p>
+                            @else
                               <p>{{$user->postal_code}}</p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Country :</label>
-                          <div class="col-md-6">
-                              <p>{{$country_name}}</p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Agent :</label>
-                          <div class="col-md-6">
-                              <p>{{Auth::guard('admins')->user()->name}}</p>
+                            @endif
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1034,7 +1129,9 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  @if(isset($quotations) && !empty($quotations))
                   <button type="button" class="btn btn-primary" ng-click="send_invoice_cus({{$quotations->id}}, {{$user_id}})">Confirm Submission</button>
+                  @endif
                 </div>
               </div>
               <!-- /.modal-content -->
@@ -1212,7 +1309,6 @@
             //$('#info').html('<p>An error has occurred</p>');
             },
             success: function(data) {
-               console.log(data);
                if(data.response=='success'){
                   var option='<option value="">Please Select</option>';
                 $.each(data.data, function( i, val ) {
@@ -1239,7 +1335,6 @@
             //$('#info').html('<p>An error has occurred</p>');
             },
             success: function(data) {
-               console.log(data);
                if(data.response=='success'){
                   var option='<option value="">Please Select</option>';
                 $.each(data.data, function( i, val ) {
@@ -1248,6 +1343,104 @@
                 $('#city').html(option);
                }
 
+            },
+            type: 'POST'
+            });
+}
+function getStateInvoice(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#state_invoice').html(option);
+                $('#city_invoice').val('');
+               }
+            },
+            type: 'POST'
+            });
+}
+  function getCityInvoice(data){
+      $.ajax({
+              url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#city_invoice').html(option);
+               }
+            },
+            type: 'POST'
+            });
+}
+function getStateInvoiceCus(data){
+   $.ajax({
+            url: '{{ URL::to("admin/getStatesByCounty") }}',
+            data: {
+            country_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
+                });
+                $('#state_invoice_cus').html(option);
+                $('#city_invoice_cus').val('');
+               }
+            },
+            type: 'POST'
+            });
+}
+  function getCityInvoiceCus(data){
+      $.ajax({
+              url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#city_invoice_cus').html(option);
+               }
             },
             type: 'POST'
             });
