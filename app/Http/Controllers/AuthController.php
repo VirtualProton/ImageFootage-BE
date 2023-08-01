@@ -309,14 +309,14 @@ class AuthController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function resendVerificationLink($email)
+    public function resendVerificationLink($email = null)
     {
         $user = User::where('email', $email)->first();
         if (empty($email) || empty($user)) {
-            return response()->json(['status' => '0', 'message' => 'Email address not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Email address not found.'], 404);
         }
         if($user->status == 1){
-            return response()->json(['status' => '1', 'message' => 'Your account is already activated.'], 200);
+            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
         }
         $match_token = sha1(time()) . random_int(111, 999);
         $user->email_verify_token = $match_token;
@@ -328,7 +328,7 @@ class AuthController extends Controller
         Mail::send('createusermail', $data, function ($message) use ($data) {
             $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
         });
-        return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+        return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
     }
 
 
@@ -468,10 +468,13 @@ public function signupV2(Request $request)
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
         $otp = rand(100000, 999999);
-        $update = User::where('mobile', $mobile)->update([
-            'otp' => $otp,
-            'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
-        ]);
+        $user  = User::where('mobile', $mobile)->first();
+        if($user->status == 1){
+            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
+        }
+        $user->otp = $otp;
+        $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
+        $update = $user->save();
         if ($update) {
             $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
             $smsClass = new TnnraoSms;
