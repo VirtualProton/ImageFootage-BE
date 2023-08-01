@@ -30,7 +30,7 @@ ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_by` INT NULL COMMENT
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL;
 
 --  imagefootage_performa_invoices
-ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;
+ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL;
 
 
 -- Discount message module for display discount in frontend page wise
@@ -55,7 +55,6 @@ INSERT INTO `imagefootage_modules` (`id`, `module_name`, `url`, `parent_module_i
 
 -- User profile page add new field address2
 ALTER TABLE `imagefootage_users` ADD `address2` TEXT NULL;
-ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL;
 
 -- Page type / slug
 ALTER TABLE `imagefootage_promotion` ADD `page_type` VARCHAR(20) NULL DEFAULT NULL;
