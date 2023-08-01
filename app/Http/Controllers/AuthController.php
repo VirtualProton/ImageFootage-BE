@@ -391,7 +391,8 @@ public function signupV2(Request $request)
             Mail::send('createusermail', $data, function ($message) use ($data) {
                 $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
             });
-            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+            $user_data = ['user_id' => $save_data->id, 'is_email' => true];
+            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
         } else {
             // send sms
             $otp = rand(100000, 999999);
@@ -403,7 +404,8 @@ public function signupV2(Request $request)
                 $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
                 $smsClass = new TnnraoSms;
                 $smsClass->sendSms($message, $mobile);
-                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.'], 200);
+                $user_data = ['user_id' => $save_data->id, 'is_email' => false];
+                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.', 'data' => $user_data], 200);
             }
         }
     }
