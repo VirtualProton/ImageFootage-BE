@@ -27,7 +27,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -482,6 +482,36 @@ public function signupV2(Request $request)
             return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.'], 200);
         }
         return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+    }
+
+    public function loginV2(Request $request)
+    {
+        $rules = [
+            'email' => [
+                'required',
+                'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
+            ],
+            'password' => ['required']
+        ];
+        $messages = [
+            'email.regex' => 'Please enter a valid email address or mobile number.',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'message' => $validator->errors()], 200);
+        }
+        $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        if (preg_match($emailPattern, $request->input('email'))) {
+            $credentials = ['email' => $request->input('email'), 'password' => $request->input('password')];
+        } else {
+            $credentials = ['mobile' => $request->input('email'), 'password' => $request->input('password')];
+        }
+        $usercredentials = [];
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['status' => false, 'message' => 'Email or password does\'t exist'], 401);
+        }
+        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
+    
     }
 
 }
