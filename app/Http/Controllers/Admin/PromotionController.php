@@ -250,12 +250,17 @@ class PromotionController extends Controller
 		       
     }
 
-    public function getPromotion(Request $request)
+    public function getPromotion(Request $request, $page =  null)
     {
        $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end', 'page_type', 'desktop_banner_image', 'mobile_banner_image'  )
             ->where('status', '=', '1')
             ->where('date_start', '<=', Carbon::now())
-            ->where('date_end', '>=', Carbon::now())->get();
+            ->where('date_end', '>=', Carbon::now());
+            if(!empty($page)){
+                $current_event = $current_event->where('page_type', $page.'_page')->first();
+            } else {
+                $current_event = $current_event->get();
+            }
         return response()->json(["status"=> true, "data"=> $current_event]);
     }
 }

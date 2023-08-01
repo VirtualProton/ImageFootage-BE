@@ -80,7 +80,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
     Route::post('atomSubPayInvoiceResponse', 'PaymentController@atomSubPayInvoiceResponse');
-    Route::get('/promotion', 'Admin\PromotionController@getPromotion');
+    Route::get('/promotion/{page?}', 'Admin\PromotionController@getPromotion');
 
     Route::get('/add_products_api', 'ProductApiController@getAddProduct');
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
@@ -97,7 +97,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
 
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
-    Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
+    Route::get('/get_discount_messages/{page?}','Admin\DiscountMessageController@discountMessagesList');
 });
 
 Route::group([
