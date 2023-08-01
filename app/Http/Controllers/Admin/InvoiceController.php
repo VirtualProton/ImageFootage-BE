@@ -155,7 +155,7 @@ class InvoiceController extends Controller
         if (!empty($data['postal_code'])) {
             $user->postal_code = $data['postal_code'] ?? $user->postal_code;
         }
-        $user->save();dd($user);
+        $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
@@ -185,7 +185,7 @@ class InvoiceController extends Controller
         if (!empty($data['postal_code'])) {
             $user->postal_code = $data['postal_code'] ?? $user->postal_code;
         }
-        $user->save();dd($user);
+        $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method']);
