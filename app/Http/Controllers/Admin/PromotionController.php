@@ -257,7 +257,7 @@ class PromotionController extends Controller
             ->where('date_start', '<=', Carbon::now())
             ->where('date_end', '>=', Carbon::now());
             if(!empty($page)){
-                $current_event = $current_event->where('page_type', $page.'_page')->first();
+                $current_event = $current_event->where('page_type', $page)->first();
             } else {
                 $current_event = $current_event->get();
             }

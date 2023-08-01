@@ -168,7 +168,7 @@ class DiscountMessageController extends Controller
     // API
     public function discountMessagesList(Request $request, $page =  null){
         if(!empty($page)){
-            $discount_message_list = DiscountMessage::where('page_type', $page.'_page')->first();
+            $discount_message_list = DiscountMessage::where('page_type', $page)->first();
         } else {
             $discount_message_list = DiscountMessage::get()->toArray();
         }
