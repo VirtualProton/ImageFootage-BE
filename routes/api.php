@@ -129,3 +129,7 @@ Route::group([
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
     
 });
+
+# Elasticsearch
+Route::get('/search/{query}', 'ElasticSearchController@search');
+Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');
