@@ -419,7 +419,7 @@ public function signupV2(Request $request)
     {
         $user = User::where("email_verify_token", $token)->first();
         if (empty($user) || $token == "" || $token == null) {
-            return response()->json(['status' => false, 'message' => 'Token not found.'], 200);
+            return response()->json(['status' => false, 'message' => 'Token not found.'], 404);
         }
         if ($user->token_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'Link is expired.'], 200);
@@ -444,7 +444,7 @@ public function signupV2(Request $request)
         }
         $user = User::where("otp", $otp)->first();
         if (empty($user)) {
-            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+            return response()->json(['status' => false, 'message' => 'User not found.'], 404);
         }
         if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
@@ -481,7 +481,7 @@ public function signupV2(Request $request)
             $smsClass->sendSms($message, $mobile);
             return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.'], 200);
         }
-        return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+        return response()->json(['status' => false, 'message' => 'User not found.'], 404);
     }
 
     public function loginV2(Request $request)

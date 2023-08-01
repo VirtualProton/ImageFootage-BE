@@ -56,10 +56,6 @@ class UserContactusController extends Controller
 		$password=$request->password;
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
-        $user = User::where('id','=',$user_id)->first();
-		$email= $user->email;
-		$name= $user->first_name;
-		
 		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
 		}
@@ -72,6 +68,12 @@ class UserContactusController extends Controller
 		if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 		}
+        $user = User::where('id','=',$user_id)->first();
+        if(empty($user)){
+            return response()->json(['status'=>'0','message' => 'User not found.'], 404);
+        }
+		$email= $user->email;
+		$name= $user->first_name;
 		$credentials = ['email'=>$email, 'password'=>$old_pass];
           if (!$token = auth()->attempt($credentials)) {
                 return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
