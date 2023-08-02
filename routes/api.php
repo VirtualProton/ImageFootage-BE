@@ -28,6 +28,9 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
     Route::post('resend_verification_link/{email?}', 'AuthController@resendVerificationLink');
+    Route::get('active_user_account/{token?}', "AuthController@activeUserAccount");
+    Route::post('verify_mobile', "AuthController@verifyMobile");
+    Route::post('resend_otp', "AuthController@resendOtp");
 
 	Route::post('user_contactus', 'UserContactusController@submitContactUs');
 	Route::post('user_cart_list', 'FrontuserController@userCartList');
@@ -80,7 +83,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('atompayinvoiceplan', 'PaymentController@atompayinvoiceplan');
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
     Route::post('atomSubPayInvoiceResponse', 'PaymentController@atomSubPayInvoiceResponse');
-    Route::get('/promotion', 'Admin\PromotionController@getPromotion');
+    Route::get('/promotion/{page?}', 'Admin\PromotionController@getPromotion');
 
     Route::get('/add_products_api', 'ProductApiController@getAddProduct');
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
@@ -97,7 +100,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
 
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
-    Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
+    Route::get('/get_discount_messages/{page?}','Admin\DiscountMessageController@discountMessagesList');
 });
 
 Route::group([
@@ -139,5 +142,6 @@ Route::group(['prefix' => 'v2'], function(){
 
     ], function () {
         Route::post('signup-v2', 'AuthController@signupV2');
+        Route::post('login-v2', 'AuthController@loginV2');
     });
 });

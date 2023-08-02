@@ -30,7 +30,7 @@ ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_by` INT NULL COMMENT
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL;
 
 --  imagefootage_performa_invoices
-ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL  AFTER `invoice_name`;
+ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL;
 
 
 -- Discount message module for display discount in frontend page wise
@@ -55,7 +55,6 @@ INSERT INTO `imagefootage_modules` (`id`, `module_name`, `url`, `parent_module_i
 
 -- User profile page add new field address2
 ALTER TABLE `imagefootage_users` ADD `address2` TEXT NULL;
-ALTER TABLE `imagefootage_performa_invoices`  ADD `promo_code_id` INT NULL;
 
 -- Page type / slug
 ALTER TABLE `imagefootage_promotion` ADD `page_type` VARCHAR(20) NULL DEFAULT NULL;
@@ -68,3 +67,9 @@ ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL
 
 -- Verify registration use token and expiry datetime
 ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;
+
+-- Verify registration use otp expiry datetime
+ALTER TABLE `imagefootage_users` ADD `otp_valid_date` DATETIME NULL;
+
+-- Static pages page slug value store
+ALTER TABLE `imagefootage_staticpages` ADD `page_slug` VARCHAR(255) NULL DEFAULT NULL;

@@ -43,6 +43,16 @@ class Helper
 
         return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
     }
+
+    public static function generateUserName() {
+        $length = 9;
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $name = '';
+        for ($i = 0; $i < $length; $i++) {
+            $name .= $characters[mt_rand(0, strlen($characters) - 1)];
+        }
+        return $name;
+    }
 }
 
 
