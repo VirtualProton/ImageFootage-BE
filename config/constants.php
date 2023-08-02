@@ -2,5 +2,6 @@
 
 return [
     'SUPER_ADMIN_ROLE_ID' => [1],
-    'GST_VALUE' => '18'
+    'GST_VALUE' => '18',
+    'ADMIN_EMAIL' => 'admin@imagefootage.com'
 ];

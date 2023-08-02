@@ -23,32 +23,59 @@ use Aws\Exception\MultipartUploadException;
 
 use App\Http\TnnraoSms\TnnraoSms;
 use App\Mail\ChangePassword;
+use App\Helpers\Helper;
 
 class UserContactusController extends Controller
 {
     public function submitContactUs(Request $request){
+        $validator = \Validator::make(request()->all(), [
+            'user_name' => 'required|min:2',
+            'mobile_number' => 'required|digits:10',
+            'user_email' => 'required|email', 
+            'user_subject' => 'required',
+            'user_message' => 'required'
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json(['status' => false, 'message' => $validator->messages()], 200);
+        }
+        if(!Helper::disposableEmailCheck($request->input('user_email'))) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Disposable email addresses are not allowed.'
+            ]);
+        }
         $name=$request->user_name; 
         $mobile=$request->mobile_number;
         $user_email=$request->user_email;
         $user_message=$request->user_message;
+        $user_subject=$request->user_subject;
         $Usercontactus=new Usercontactus;
         $Usercontactus->contactus_name=$name;
         $Usercontactus->contactus_mobileno=$mobile;
         $Usercontactus->contactus_emailid=$user_email;
+        $Usercontactus->contactus_subject=$user_subject;
         $Usercontactus->contactus_message=$user_message;
         $Usercontactus->cart_added_on=date('Y-m-d H:i:s');
         $result=$Usercontactus->save();
 		$sm='info@imagefootage.com';
         if($result){
-			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message);
+			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message,'user_subject'=>$user_subject);
 				 Mail::send('contactusmailbody',$data,function($message) use($data,$sm) {
-				 $message->to('shilpi@conceptualpictures.com','Image Footage')
+                 $email_to = config('constants.ADMIN_EMAIL');
+				 $message->to($email_to,'Image Footage')
                      ->from($sm,'Admin Imagefootage')
                      ->subject('Contact us request from Image Footage');
 			 });
-            echo '{"status":"1","message":"Your message has been sent successfully"}';
+            return response()->json([
+                'status' => true,
+                'message' => 'Your message has been sent successfully.'
+            ], 200);
         }else{
-            echo '{"status":"0","message":"Some problem occured."}';
+            return response()->json([
+                'status' => false,
+                'message' => 'Some problem occured.'
+            ], 200);
         }
     }
 	public function uchangepassword(Request $request){

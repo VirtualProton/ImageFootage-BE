@@ -67,3 +67,13 @@ ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL
 
 -- Verify registration use token and expiry datetime
 ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;
+
+-- Settings table
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `status` tinyint NOT NULL
+);
+
+ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;
