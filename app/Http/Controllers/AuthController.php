@@ -398,7 +398,7 @@ public function signupV2(Request $request)
             return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
         } else {
             // send sms
-            $otp = rand(100000, 999999);
+            $otp = rand(1000, 9999);
             $update = User::where('id', $save_data->id)->update([
                 'otp' => $otp,
                 'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
@@ -474,7 +474,7 @@ public function signupV2(Request $request)
         if (empty($mobile)) {
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
-        $otp = rand(100000, 999999);
+        $otp = rand(1000, 9999);
         $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'User not found.'], 404);
