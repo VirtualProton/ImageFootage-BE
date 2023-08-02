@@ -328,7 +328,8 @@ class AuthController extends Controller
         Mail::send('createusermail', $data, function ($message) use ($data) {
             $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
         });
-        return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+        $user_data = ['user_id' => $user->id];
+        return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
     }
 
 
@@ -429,7 +430,8 @@ public function signupV2(Request $request)
         $user->token_valid_date = null;
         $save = $user->save();
         if ($save) {
-            return response()->json(['status' => true, 'message' => 'User activated successfully.'], 200);
+            $user_data = ['user_id' => $user->id];
+            return response()->json(['status' => true, 'message' => 'User activated successfully.', 'data' => $user_data], 200);
         }
         return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
     }
@@ -454,7 +456,8 @@ public function signupV2(Request $request)
         $user->otp_valid_date = null;
         $save = $user->save();
         if ($save) {
-            return response()->json(['status' => true, 'message' => 'User activated successfully.'], 200);
+            $user_data = ['user_id' => $user->id];
+            return response()->json(['status' => true, 'message' => 'User activated successfully.', 'data' => $user_data], 200);
         }
         return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
     }
@@ -476,10 +479,11 @@ public function signupV2(Request $request)
         $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
         $update = $user->save();
         if ($update) {
+            $user_data = ['user_id' => $user->id];
             $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
             $smsClass = new TnnraoSms;
             $smsClass->sendSms($message, $mobile);
-            return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.'], 200);
+            return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
         }
         return response()->json(['status' => false, 'message' => 'User not found.'], 404);
     }
@@ -513,80 +517,5 @@ public function signupV2(Request $request)
         return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
     
     }
-
-
-    /**For new updated designs modules */
-
-
-public function signupV2(Request $request)
-{
-
-    $rules = [
-        'email' => [
-            'required',
-            'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
-        ],
-        'name'=>['required'],
-        'password'=>['required']
-    ];
-    $messages = [
-        'email.regex' => 'Please enter a valid email address or mobile number.',
-    ];
-    $validator = \Validator::make($request->all(), $rules, $messages);
-
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 200);
-    }
-
-    $user = $request->all();
-    $checkEmail = User::where('email','=',$request->input('email'))->count();
-    $checkMobile = User::where('mobile','=',$request->input('email'))->count();
-    $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-    $mobilePattern = '/^\d{10,15}$/';
-    $email = '';
-    $mobile = '';
-    if(preg_match($emailPattern,$request->input('email'))){
-        $email = $request->input('email');
-    }else{
-        $mobile = $request->input('email');
-    }
-
-
-    if($checkEmail==0 && $checkMobile ==0) {
-        $save_data = new User();
-        $save_data->user_name = $request->input('name');
-        $save_data->email = $email;
-        $save_data->mobile = $mobile;
-        $save_data->password = Hash::make($request->input('password'));
-        $save_data->type = 'U';
-        $save_data->status = '0';
-        //$save_data->password =  bcrypt($request->input('password'));
-        $result = $save_data->save();
-        //User::create($request->all());
-        if ($result) {
-            $credentials = ['email'=>$request->input('email'),'password'=>$request->input('password')];
-            $token = auth()->attempt($credentials);
-            $usercredentials = ['access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
-                'user' => auth()->user()->user_name,
-                'Utype' => auth()->user()->id
-            ];
-            $cname=$request->input('user_name');
-            $cemail=$request->input('email');
-            /* $cont_url=url('/active_user_account').'/'.$cemail;
-
-         $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
-             Mail::send('createusermail', $data, function($message) use($data) {
-             $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
-         }); */
-             return response()->json(['status'=>'1','message' => 'Successfully registered','userdata'=>$usercredentials], 200);
-        } else {
-            return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
-        }
-    }else{
-        return response()->json(['status'=>'0','message' => 'User have been already registered'], 200);
-    }
-}
 
 }
