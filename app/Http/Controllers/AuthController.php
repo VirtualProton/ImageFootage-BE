@@ -309,9 +309,10 @@ class AuthController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function resendVerificationLink($email = null)
+    public function resendVerificationLink(Request $request, $email = null)
     {
-        $user = User::where('email', $email)->first();
+        $user_id = $request->user_id;
+        $user = User::where('email', $email)->where('id', $user_id)->first();
         if (empty($email) || empty($user)) {
             return response()->json(['status' => false, 'message' => 'Email address not found.'], 404);
         }
@@ -441,10 +442,11 @@ public function signupV2(Request $request)
      */
     public function verifyMobile (Request $request) {
         $otp = $request->otp;
+        $user_id = $request->user_id;
         if (empty($otp)) {
             return response()->json(['status' => false, 'message' => 'OTP is required.'], 200);
         }
-        $user = User::where("otp", $otp)->first();
+        $user = User::where("otp", $otp)->where('id', $user_id)->first();
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'User not found.'], 404);
         }
@@ -467,11 +469,15 @@ public function signupV2(Request $request)
      */
     public function resendOtp (Request $request) {
         $mobile = $request->mobile;
+        $user_id = $request->user_id;
         if (empty($mobile)) {
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
         $otp = rand(100000, 999999);
-        $user  = User::where('mobile', $mobile)->first();
+        $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
+        if (empty($user)) {
+            return response()->json(['status' => false, 'message' => 'User not found.'], 404);
+        }
         if($user->status == 1){
             return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
         }
@@ -485,7 +491,7 @@ public function signupV2(Request $request)
             $smsClass->sendSms($message, $mobile);
             return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
         }
-        return response()->json(['status' => false, 'message' => 'User not found.'], 404);
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
     }
 
     public function loginV2(Request $request)
