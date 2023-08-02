@@ -75,3 +75,5 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `value` varchar(255) NOT NULL,
   `status` tinyint NOT NULL
 );
+
+ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;

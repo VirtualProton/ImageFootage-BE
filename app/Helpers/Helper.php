@@ -47,7 +47,7 @@ class Helper
         return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
     }
 
-    public static function disposable_email_check($email){
+    public static function disposableEmailCheck($email){
         $email = $email;
         $domain = explode('@', $email)[1] ?? '';
         if(Schema::hasTable('settings')){
