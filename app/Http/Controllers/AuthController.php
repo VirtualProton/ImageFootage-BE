@@ -315,7 +315,7 @@ class AuthController extends Controller
         $email = isset($request->email) ? $request->email : $email;
         $user = User::where('email', $email)->where('id', $user_id)->first();
         if (empty($email) || empty($user)) {
-            return response()->json(['status' => false, 'message' => 'Email address not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Email address not found.'], 200);
         }
         if($user->status == 1){
             return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
@@ -422,7 +422,7 @@ public function signupV2(Request $request)
     {
         $user = User::where("email_verify_token", $token)->first();
         if (empty($user) || $token == "" || $token == null) {
-            return response()->json(['status' => false, 'message' => 'Token not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Token not found.'], 200);
         }
         if ($user->token_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'Link is expired.'], 200);
@@ -449,7 +449,7 @@ public function signupV2(Request $request)
         }
         $user = User::where("otp", $otp)->where('id', $user_id)->first();
         if (empty($user)) {
-            return response()->json(['status' => false, 'message' => 'User not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
         }
         if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
@@ -477,7 +477,7 @@ public function signupV2(Request $request)
         $otp = rand(1000, 9999);
         $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
         if (empty($user)) {
-            return response()->json(['status' => false, 'message' => 'User not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
         }
         if($user->status == 1){
             return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
@@ -519,7 +519,7 @@ public function signupV2(Request $request)
         }
         $usercredentials = [];
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['status' => false, 'message' => 'Email or password does\'t exist'], 401);
+            return response()->json(['status' => false, 'message' => 'Email or password does\'t exist'], 200);
         }
         return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
     
