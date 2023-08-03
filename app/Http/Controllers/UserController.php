@@ -124,7 +124,9 @@ class UserController extends Controller
                      $message->to($data['email'], '')->subject('Image Footage Forget Password')
                         ->from('admin@imagefootage.com', 'Imagefootage');
 				  });
-            $result = ['status'=>1,'message'=>'Check your email for reset password link.'];
+            $user = User::where('email',$request['email']['user_email'])->first();
+            $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile];
+            $result = ['status'=>1,'message'=>'Check your email for reset password link.','data'=>$user_data];
         }else{
             $result = ['status'=>0,'message'=>'Email Not Found.'];
         }
@@ -153,7 +155,7 @@ class UserController extends Controller
                 //             ->from('admin@imagefootage.com', 'Imagefootage');
                 //     });
                 // $maskEmail = Helper::obfuscate_email($user->email);
-                $user_data = ['user_id' => $user->id];
+                $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile];
                 $result = ['status'=>1,'message'=>"Your otp for forgot password is send on your registered mobile number. Please check.",'data' => $user_data];
                 $user->save();
 				$message = "Your otp for forgot password is ".$otp." \n Thanks \n Imagefootage Team";
