@@ -98,6 +98,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
     Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
+    Route::get('/get_trending_keywords/{keyword?}','SearchController@getTrendingKeywords');
 });
 
 Route::group([

@@ -73,7 +73,15 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `key` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
-  `status` tinyint NOT NULL
+  `status` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;
+
+CREATE TABLE IF NOT EXISTS `trending_words` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `count` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+);
