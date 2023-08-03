@@ -107,6 +107,9 @@ class UserController extends Controller
         return response()->json($result);
     }*/
     public function validUser(Request $request){
+        if (empty($request['email']['user_email'])) {
+            return response()->json(['status' => false, 'message' => 'Email is required.'], 200);
+        }
         $hostname = \Request::server('HTTP_REFERER');
         $count = User::where('email','=',$request['email']['user_email'])->count();
 		if($count>0){
@@ -128,6 +131,9 @@ class UserController extends Controller
         return response()->json($result);
     }
 	public function validMobileUser(Request $request){
+        if (empty($request['mobile']['user_mobile'])) {
+            return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
+        }
         $hostname = \Request::server('HTTP_REFERER');
 		$count = User::where('mobile','=',$request['mobile']['user_mobile'])->count();
 		if($count>0){
@@ -137,22 +143,22 @@ class UserController extends Controller
 
                 $randnum=rand(1000,10000);
                 $sm=$request['mobile']['user_mobile'];
-                $update_array=array('otp'=>$randnum);
                 $user = User::where('mobile',$request['mobile']['user_mobile'])->first();
                 $user->otp = $randnum;
                 // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-                $url = $hostname."/resetpassword/".$randnum."/".$user->email;
-                $data = array('url'=>$url,'email'=>$user->email);
-                Mail::send('email.forgotpasswordadmin', $data, function($message) use($data) {
-                        $message->to($data['email'], '')->subject('Image Footage Forget Password')
-                            ->from('admin@imagefootage.com', 'Imagefootage');
-                    });
-                $maskEmail = Helper::obfuscate_email($user->email);
-                $result = ['status'=>1,'message'=>"Check your email for reset password link ($maskEmail)."];
+                // $url = $hostname."/resetpassword/".$randnum."/".$user->email;
+                // $data = array('url'=>$url,'email'=>$user->email);
+                // Mail::send('email.forgotpasswordadmin', $data, function($message) use($data) {
+                //         $message->to($data['email'], '')->subject('Image Footage Forget Password')
+                //             ->from('admin@imagefootage.com', 'Imagefootage');
+                //     });
+                // $maskEmail = Helper::obfuscate_email($user->email);
+                $user_data = ['user_id' => $user->id];
+                $result = ['status'=>1,'message'=>"Your otp for forgot password is send on your registered mobile number. Please check.",'data' => $user_data];
                 $user->save();
-				// $message = "Your otp for forgot password is ".$otp." \n Thanks \n Imagefootage Team";
-				// $smsClass = new TnnraoSms;
-				// $smsClass->sendSms($message,$request['mobile']['user_mobile']);
+				$message = "Your otp for forgot password is ".$otp." \n Thanks \n Imagefootage Team";
+				$smsClass = new TnnraoSms;
+				$smsClass->sendSms($message,$request['mobile']['user_mobile']);
 				return response()->json($result, 200);
 			}else{
 				return response()->json(['status'=>'0','message' => 'Error in sending otp again !!!'], 200);
