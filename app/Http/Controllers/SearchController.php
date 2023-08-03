@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
 use CORS;
+use App\Models\TrendingWord;
 
 class SearchController extends Controller
 {
@@ -54,6 +55,20 @@ class SearchController extends Controller
             $footage = $this->getFootageData($keyword);
             array_push($all_products,$images);
             array_push($all_products,$footage);
+        }
+        // Save search keyword to trending words table
+        if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
+            $search_keyword = Str::slug($keyword['search']);
+            $trending_word = TrendingWord::where('name', $search_keyword)->first();
+            if(!empty($trending_word)){
+                $trending_word->count += 1;
+                $trending_word->save();
+            } else {
+                $trending_word = new TrendingWord();
+                $trending_word->name = $search_keyword;
+                $trending_word->count = 1;
+                $trending_word->save();
+            }
         }
 
         return response()->json($all_products);
@@ -248,6 +263,21 @@ class SearchController extends Controller
                 } 
             })->get()->toArray();
             return response()->json(["status"=> true, "data"=> $products]);
+        } catch (\Throwable $th) {
+            return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
+        }
+    }
+
+    public function getTrendingKeywords(Request $request, $keyword = "")
+    {
+        try {
+            $result = TrendingWord::where(function($query) use ($keyword) {
+                $keyword = trim($keyword);
+                if($keyword != "") {
+                    $query->where("name", "like", "%$keyword%");
+                } 
+            })->orderBy('count', 'desc')->orderBy('id', 'desc')->get()->take(5);
+            return response()->json(["status"=> true, "data"=> $result]);
         } catch (\Throwable $th) {
             return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
