@@ -45,6 +45,7 @@ class UserController extends Controller
        
         if(count($userlist)>0){
 	          foreach($userlist as $user){
+                  $send_data['id'] =$user['id'];
                   $send_data['first_name'] =$user['first_name'];
                   $send_data['last_name'] =$user['last_name'];
                   $send_data['title'] =$user['title'];
@@ -61,6 +62,8 @@ class UserController extends Controller
                   $send_data['city'] =$user['city'];
                   $send_data['state'] =$user['state'];
                   $send_data['country'] =$user['country'];
+                  $send_data['address2'] =$user['address2'];
+                  $send_data['company'] =$user['company'];
 
                   $image_download=0;
                   $footage_download=0;
@@ -198,7 +201,7 @@ class UserController extends Controller
 
         $validator = \Validator::make($request->profileData ?? [], [
             'mobile' => 'required|unique:imagefootage_users,mobile,' . $data['tokenData']['Utype'],
-            'mobile' => 'required|unique:imagefootage_users,phone,' . $data['tokenData']['Utype'],
+            // 'mobile' => 'required|unique:imagefootage_users,phone,' . $data['tokenData']['Utype'],
         ]);
 
         if ($validator->fails()) {
@@ -215,12 +218,13 @@ class UserController extends Controller
             $update_data = [
                 'first_name' => $data['profileData']['first_name'],
                 'mobile' => $data['profileData']['mobile'],
-                'phone' => $data['profileData']['phone'],
+                // 'phone' => $data['profileData']['phone'],
                 'address' => $data['profileData']['address'],
                 'state' => $data['profileData']['state'],
                 'city' => $data['profileData']['city'],
-                'postal_code' => $data['profileData']['pincode'],
+                'postal_code' => $data['profileData']['postal_code'],
                 'address2' => $data['profileData']['address2'] ?? '',
+                'company' => $data['profileData']['company'] ?? ''
             ];
             if (empty($userlist['country'])) {
                 $update_data['country'] = $data['profileData']['country'];
@@ -234,9 +238,9 @@ class UserController extends Controller
 
             $result = clone $userlist;
             $result = $result->toArray();
-            echo json_encode(['status' => "success", 'data' => $result]);
+            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $result]);
         } else {
-            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+            echo json_encode(['status' => "fail", 'message' => 'Some error happened', 'data' => '']);
         }
     }
 

@@ -97,8 +97,11 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
   
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
-    Route::get('/get_discount_messages','Admin\DiscountMessageController@discountMessagesList');
     Route::get('/get_trending_keywords/{keyword?}','SearchController@getTrendingKeywords');
+    Route::get('/get_discount_messages/{page?}','Admin\DiscountMessageController@discountMessagesList');
+    Route::get('/get_countries_list','AuthController@getCountriesList');
+    Route::get('/get_states_list/{country_id?}','AuthController@getStatesList');
+    Route::get('/get_cities_list/{state_id?}','AuthController@getCitiesList');
 });
 
 Route::group([
