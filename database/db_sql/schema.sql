@@ -73,3 +73,21 @@ ALTER TABLE `imagefootage_users` ADD `otp_valid_date` DATETIME NULL;
 
 -- Static pages page slug value store
 ALTER TABLE `imagefootage_staticpages` ADD `page_slug` VARCHAR(255) NULL DEFAULT NULL;
+
+-- Settings table
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `status` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;
+
+CREATE TABLE IF NOT EXISTS `trending_words` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `count` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+);

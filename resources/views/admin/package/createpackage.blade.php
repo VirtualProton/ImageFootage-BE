@@ -52,8 +52,8 @@
                       <option value="1">HD</option>
                       <option value="2">4K</option>
                       </select>
-                       @if ($errors->has('package_plan'))
-                          <div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
+                       @if ($errors->has('pacage_size'))
+                          <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
                        @endif
                     </div>
                    <div class="form-group">
@@ -103,10 +103,24 @@
                       <select type="text" class="form-control" name="package_type" id="package_type" >
                       	<option value="Image">Image</option>
                         <option value="Footage">Footage</option>
+                        <option value="Music">Music</option>
                       </select>
                     </div>
                      @if ($errors->has('package_type'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
+                     @endif
+                     <div class="form-group" id="footageTierDiv">
+                      <label for="exampleInputEmail1">Licence Type</label>
+                      <select type="text" class="form-control" name="footage_tier" id="footage_tier" >
+                        <option value="">Select</option>
+                        <option value="1">Commercial</option>
+                        <option value="2">Media Non-commercial (Editorial)</option>
+                        <option value="3">Digital</option>
+                      	<option value="4">Full RF Licence</option>
+                      </select>
+                    </div>
+                     @if ($errors->has('footage_tier'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
                      @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Package Expiry in Months</label>
@@ -280,6 +294,10 @@ $(document).ready(function ($) {
         });
     })();
 
+    $('#div_quarterly').hide();
+    $('#div_half_yearly').hide();
+    $("#footageTierDiv").hide();
+
 });
 $("#package_plan").change(function(){
 	var pack_type=$(this).val();
@@ -295,7 +313,14 @@ $("#package_plan").change(function(){
 	}
 	
 });
-
+$("#package_type").change(function(){
+	var pack_type=$(this).val();
+	if(pack_type =='Footage'){
+    $("#footageTierDiv").show();
+  } else {
+    $("#footageTierDiv").hide();
+  }
+});
 </script>
   @endsection
   

@@ -17,6 +17,9 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Mail;
 use App\Helpers\Helper;
 use App\Http\TnnraoSms\TnnraoSms;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 
 class AuthController extends Controller
 {
@@ -27,7 +30,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -525,4 +528,35 @@ public function signupV2(Request $request)
     
     }
 
+    public function getCountriesList(Request $request) {
+        $countries = Country::all();
+        return response()->json([
+            'status' => true,
+            'data' => $countries
+        ]);
+    }
+
+    public function getStatesList(Request $request, $country_id = null) {
+        if(empty($country_id)){
+            $states = State::all();
+        } else {
+            $states = State::where('country_id', $country_id)->get();
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $states
+        ]);
+    }
+
+    public function getCitiesList(Request $request, $state_id = null) {
+        if(empty($state_id)){
+            $cities = City::all();
+        } else {
+            $cities = City::where('state_id', $state_id)->get();
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $cities
+        ]);
+    }
 }

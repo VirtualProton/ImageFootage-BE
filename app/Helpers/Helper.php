@@ -1,6 +1,9 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
+
 class Helper
 {
     public static function imagesaver($image_data){ 
@@ -52,6 +55,22 @@ class Helper
             $name .= $characters[mt_rand(0, strlen($characters) - 1)];
         }
         return $name;
+    }
+
+    public static function disposableEmailCheck($email){
+        $email = $email;
+        $domain = explode('@', $email)[1] ?? '';
+        if(Schema::hasTable('settings')){
+            $settings = Setting::select('value')->where('key', 'disposable_emails')->first();
+            if(!empty($settings)){
+                $disposableDomains = $settings->toArray();
+                $invalid_emails = array_map('trim', explode(',', $disposableDomains['value']));
+                if (in_array($domain, $invalid_emails)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 
