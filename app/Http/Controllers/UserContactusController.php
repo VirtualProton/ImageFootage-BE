@@ -103,13 +103,13 @@ class UserContactusController extends Controller
 		$name= $user->first_name;
 		$credentials = ['email'=>$email, 'password'=>$old_pass];
           if (!$token = auth()->attempt($credentials)) {
-                return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
+                return response()->json(['status'=>'0','message' => 'Old Password is wrong.'], 200);
             }else{
                 $result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
                 if($result){
                         $content = array('name' => $name, 'email' => $email);
                         Mail::to($content['email'])->send(new ChangePassword($content));
-                        return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
+                        return response()->json(['status'=>'1','message' => 'Password changed successfully.'], 200);
                 }else{
                         return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
                 }
