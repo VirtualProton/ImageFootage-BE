@@ -166,8 +166,13 @@ class DiscountMessageController extends Controller
     }
 
     // API
-    public function discountMessagesList(Request $request){
-        $discount_message_list = DiscountMessage::get()->toArray();
-        return json_encode($discount_message_list);
+    public function discountMessagesList(Request $request, $page =  null){
+        if(!empty($page)){
+            $discount_message_list = DiscountMessage::where('page_type', $page)->first();
+        } else {
+            $discount_message_list = DiscountMessage::get()->toArray();
+        }
+        // return json_encode($discount_message_list);
+        return response()->json(["status"=> true, "data"=> $discount_message_list]);
     }
 }

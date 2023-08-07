@@ -45,10 +45,10 @@ class AuthController extends Controller
     {
         $validator = \Validator::make(request()->all(), [
             'email' => 'required',
-            'password' => 'required',          
+            'password' => 'required',
         ]);
 
-        if ($validator->fails()) {    
+        if ($validator->fails()) {
             return response()->json($validator->messages(), 200);
         }
 
@@ -84,14 +84,14 @@ class AuthController extends Controller
            // 'city' => 'required',
            // 'address' => 'required',
            // 'pincode' => 'required',
-           
+
         ]);
 
-        
-        if ($validator->fails()) {    
+
+        if ($validator->fails()) {
             return response()->json($validator->messages(), 200);
-        }  
-        
+        }
+
 		$user = $request->all();
 		$count = User::where('email','=',$request->input('email'))->count();
 		if($count==0) {
@@ -122,14 +122,14 @@ class AuthController extends Controller
                 $match_token = sha1(time()).random_int(111, 999);
                 User::where('id', $save_data->id)->update([
                     'email_verify_token' => $match_token,
-                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"))
+                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +". config('constants.EMAIL_EXPIRY') ." days"))
                 ]);
 				$cont_url=url('/active_user_account').'/'.$match_token;
-			 
+
                 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
                     Mail::send('createusermail', $data, function($message) use($data) {
                     $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
-                }); 
+                });
                  return response()->json(['status'=>'1','message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
@@ -141,7 +141,7 @@ class AuthController extends Controller
 	public function socialLogin(Request $request){
         $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
-			
+
 			//$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
 		 	//return $res;
             $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
@@ -184,11 +184,11 @@ class AuthController extends Controller
                     return $this->respondWithToken($token);
                    //$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
                    //return $res;
-                }	
+                }
 			}
 			//return response()->json(['error' => 'Please register to login.'], 401);
 		}
-       
+
 	}
 	public function contactUs(Request $request){
 	}
@@ -312,14 +312,16 @@ class AuthController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function resendVerificationLink($email)
+    public function resendVerificationLink(Request $request, $email = null)
     {
-        $user = User::where('email', $email)->first();
+        $user_id = $request->user_id;
+        $email = isset($request->email) ? $request->email : $email;
+        $user = User::where('email', $email)->where('id', $user_id)->first();
         if (empty($email) || empty($user)) {
-            return response()->json(['status' => '0', 'message' => 'Email address not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Email address not found.'], 200);
         }
         if($user->status == 1){
-            return response()->json(['status' => '1', 'message' => 'Your account is already activated.'], 200);
+            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
         }
         $match_token = sha1(time()) . random_int(111, 999);
         $user->email_verify_token = $match_token;
@@ -331,7 +333,8 @@ class AuthController extends Controller
         Mail::send('createusermail', $data, function ($message) use ($data) {
             $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
         });
-        return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+        $user_data = ['user_id' => $user->id];
+        return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
     }
 
 
@@ -556,5 +559,4 @@ public function signupV2(Request $request)
             'data' => $cities
         ]);
     }
-
 }
