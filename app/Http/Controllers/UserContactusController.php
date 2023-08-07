@@ -83,10 +83,6 @@ class UserContactusController extends Controller
 		$password=$request->password;
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
-        $user = User::where('id','=',$user_id)->first();
-		$email= $user->email;
-		$name= $user->first_name;
-		
 		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
 		}
@@ -99,15 +95,21 @@ class UserContactusController extends Controller
 		if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 		}
+        $user = User::where('id','=',$user_id)->first();
+        if(empty($user)){
+            return response()->json(['status'=>'0','message' => 'User not found.'], 404);
+        }
+		$email= $user->email;
+		$name= $user->first_name;
 		$credentials = ['email'=>$email, 'password'=>$old_pass];
           if (!$token = auth()->attempt($credentials)) {
-                return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
+                return response()->json(['status'=>'0','message' => 'Old Password is wrong.'], 200);
             }else{
                 $result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
                 if($result){
                         $content = array('name' => $name, 'email' => $email);
                         Mail::to($content['email'])->send(new ChangePassword($content));
-                        return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
+                        return response()->json(['status'=>'1','message' => 'Password changed successfully.'], 200);
                 }else{
                         return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
                 }
@@ -297,12 +299,14 @@ class UserContactusController extends Controller
 		//  if($password!=$cpassword){
 		// 	  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 		//  }
-		 $check_otp=User::where('email',$email)->where('otp',$otp)->first();
-                  
-        if(isset($check_otp) && !empty($check_otp)){
+		$user=User::where('email',$email)->where('otp',$otp)->first();
+
+        if(isset($user) && !empty($user)){
          $result=User::where('email',$email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
             // $result=User::where('email',$email)->update(['password'=>Hash::make($password)]);
             if($result){
+                $content = array('name' => $user->first_name, 'email' => $email);
+                Mail::to($content['email'])->send(new ChangePassword($content));
                 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
             }else{
                 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);	
