@@ -9,7 +9,7 @@ use Auth;
 class PackageApiController extends Controller
 {
   public function packageList(){
-       $all_package_list = Package::get()->where('package_added_on', '<=' ,'2020-02-29')->whereNotIn('footage_tier', ['2', '3', '4'])->toArray();
+       $all_package_list = Package::get()->where('package_added_on', '<=' ,date('Y-m-d'))->whereNotIn('footage_tier', ['2', '3', '4'])->toArray();
        //print_r($all_package_list); die;
       $packagelist = [];
       if(count($all_package_list)>0) {
@@ -25,6 +25,8 @@ class PackageApiController extends Controller
               }
               if ($eachpacage['package_type'] == 'Image') {
                   $packagelist[$eachpacage['package_type']][$plan][] = $eachpacage;
+              } else if ($eachpacage['package_type'] == 'Music') {
+                $packagelist[$eachpacage['package_type']][$plan][] = $eachpacage;
               } else {
                   if ($eachpacage['pacage_size'] == '1') {
                       $packagelist[$eachpacage['package_type']][$plan]['HD'][] = $eachpacage;

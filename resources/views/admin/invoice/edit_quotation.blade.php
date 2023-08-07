@@ -121,7 +121,7 @@
 											<label for="tax">Tax Applicable</label>
 											<div>
 											<span style="float: left;">
-												<input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +12%
+												<input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 											</span>
 											<span style="float: left;padding-left:20px;">
 												<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
