@@ -9,7 +9,8 @@ use Auth;
 class PackageApiController extends Controller
 {
   public function packageList(){
-       $all_package_list = Package::get()->where('package_added_on', '<=' ,date('Y-m-d'))->whereNotIn('footage_tier', ['2', '3', '4'])->toArray();
+    $all_package_list = Package::get()->where('package_added_on', '<=' ,config('constants.GET_PACKAGE_LIST_DATE'))->toArray();
+    // whereNotIn('footage_tier', ['2', '3', '4'])
        //print_r($all_package_list); die;
       $packagelist = [];
       if(count($all_package_list)>0) {
