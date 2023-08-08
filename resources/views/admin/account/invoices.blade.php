@@ -137,13 +137,13 @@
                                     </div>
                                     <tr>
                                       <th>Sl No</th>
-                                      <th>Trans Id</th>
+                                      <th>Trans ID</th>
                                       <th>Quotation Date</th>
                                       <th>Amount (In INR)</th>
                                       <th>Plan</th>
                                       <th>Status</th>
                                       <th>Cancelled By</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -165,12 +165,12 @@
                                         Subscription
                                       </td>
                                       <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
-                                      <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
+                                      <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                         <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
                                     </tr>
@@ -201,7 +201,7 @@
                                       <th>Payment Status</th>
                                       <th>Due Date</th>
                                       <th>Payment Date</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                       <th>Update PO</th>
 
                                     </tr>
@@ -277,13 +277,13 @@
                                     </div>
                                     <tr>
                                       <th>Sl No</th>
-                                      <th>Trans Id</th>
+                                      <th>Trans ID</th>
                                       <th>Quotation Date</th>
                                       <th>Amount (In INR)</th>
                                       <th>Plan</th>
                                       <th>Status</th>
                                       <th>Cancelled By</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -306,7 +306,7 @@
                                         Download
                                       </td>
                                       <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
-                                      <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
+                                      <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
@@ -315,7 +315,7 @@
                                         @else
                                         <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
-                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
 
@@ -347,7 +347,7 @@
                                       <th>Payment Status</th>
                                       <th>Due Date</th>
                                       <th>Payment Date</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                       <th>Update PO</th>
 
                                     </tr>
@@ -422,13 +422,13 @@
                                     </div>
                                     <tr>
                                       <th>Sl No</th>
-                                      <th>Trans Id</th>
+                                      <th>Trans ID</th>
                                       <th>Quotation Date</th>
                                       <th>Amount (In INR)</th>
                                       <th>Plan</th>
                                       <th>Status</th>
                                       <th>Cancelled By</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -450,7 +450,7 @@
                                         Custom
                                       </td>
                                       <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
-                                      <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
+                                      <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
@@ -459,7 +459,7 @@
                                         @else
                                         <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
-                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
 
@@ -491,7 +491,7 @@
                                       <th>Payment Status</th>
                                       <th>Due Date</th>
                                       <th>Payment Date</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                       <th>Update PO</th>
                                     </tr>
                                   </thead>
@@ -565,13 +565,13 @@
                                     </div>
                                     <tr>
                                       <th>Sl No</th>
-                                      <th>Trans Id</th>
+                                      <th>Trans ID</th>
                                       <th>Quotation Date</th>
                                       <th>Amount (In INR)</th>
                                       <th>Plan</th>
                                       <th>Status</th>
                                       <th>Cancelled By</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -593,12 +593,12 @@
                                         Custom
                                       </td>
                                       <td>{{$quotations->status == 3 ? 'Cancelled' : ''}}</td>
-                                      <td>{{ !empty($quotations->calcelled_user_first_name) && !empty($quotations->calcelled_user_last_name) ? ($quotations->calcelled_user_first_name . $quotations->calcelled_user_last_name) : '' }}</td>
+                                      <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                         <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
 
@@ -630,7 +630,7 @@
                                       <th>Payment Status</th>
                                       <th>Due Date</th>
                                       <th>Payment Date</th>
-                                      <th>Action</th>
+                                      <th>Actions</th>
                                       <th>Update PO</th>
                                     </tr>
                                   </thead>
@@ -846,6 +846,11 @@
                           <p>
                             <select class="form-control" name="state_invoice" ng-model="state_invoice" id="state_invoice" onchange="getCityInvoice(this)">
                               <option value="">Please Select</option>
+                              @if(count($states) > 0)
+                              @foreach($states as $state)
+                              <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                              @endforeach
+                              @endif
                             </select>
                           </p>
                           @else
@@ -860,6 +865,11 @@
                             <p>
                               <select class="form-control" name="city_invoice" ng-model="city_invoice" id="city_invoice">
                                 <option value="">Please Select</option>
+                                @if(count($cities) > 0)
+                                @foreach($cities as $country)
+                                <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                @endforeach
+                                @endif
                               </select>
                             </p>
                           @else
@@ -1034,8 +1044,8 @@
                             <select class="form-control" name="country_invoice_cus" ng-model="country_invoice_cus" id="country_invoice_cus" onchange="getStateInvoiceCus(this)">
                               <option  value="">Please Select</option>
                               @if(count($countries) > 0)
-                              @foreach($countries as $country)
-                              <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                              @foreach($countries as $city)
+                              <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
                               @endforeach
                               @endif
                             </select>
@@ -1052,6 +1062,11 @@
                             <p>
                               <select class="form-control" name="state_invoice_cus" ng-model="state_invoice_cus" id="state_invoice_cus" onchange="getCityInvoiceCus(this)">
                                 <option value="">Please Select</option>
+                                @if(count($states) > 0)
+                                @foreach($states as $state)
+                                <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                                @endforeach
+                                @endif
                               </select>
                             </p>
                             @else
@@ -1066,6 +1081,11 @@
                               <p>
                                 <select class="form-control" name="city_invoice_cus" ng-model="city_invoice_cus" id="city_invoice_cus">
                                   <option value="">Please Select</option>
+                                  @if(count($cities) > 0)
+                                  @foreach($cities as $country)
+                                  <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                  @endforeach
+                                  @endif
                                 </select>
                               </p>
                             @else
@@ -1226,7 +1246,6 @@
         url: "{{ url('admin/ajaxRequestForUserPass')}}/" + id,
         success: function(result) {
           $('#loading').hide();
-          console.log(result);
           if (result.resp.statuscode == '1') {
             alert(result.resp.statusdesc);
           } else {
@@ -1251,7 +1270,6 @@
         },
         success: function(result) {
           $('#loading').hide();
-          console.log(result);
           if (result.resp.statuscode == '1') {
             alert(result.resp.statusdesc);
           } else {
@@ -1322,7 +1340,6 @@
             });
 }
   function getcity(data){
-      console.log(data.value);
       $.ajax({
               url: '{{ URL::to("admin/getCityByState") }}',
             data: {
