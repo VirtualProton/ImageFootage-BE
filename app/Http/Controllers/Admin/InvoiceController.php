@@ -374,9 +374,9 @@ class InvoiceController extends Controller
             'cancelled_by' => Auth::guard('admins')->user()->id
         ]);
         if($update){
-            return redirect("admin/users/invoices/1?page=3#!#posts")->with("success", "Quotation Cancelled !!!");
+            return redirect()->back()->with("success", "Quotation Cancelled !!!");
         } else {
-            return redirect("admin/users/invoices/1?page=3#!#posts")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
+            return redirect()->back()->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
         }
     }
 }
