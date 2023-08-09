@@ -518,8 +518,13 @@
       $('#promo_code').keyup(function() {
          if($.trim(this.value).length > 0)
             $('#btn-promocode').show()
-         else
+         else {
             $('#btn-promocode').hide()
+            let gsttax = angular.element($("#btn-promocode")).scope().tax;
+            let isGST = gsttax > 0 ? true : false;
+            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+            angular.element('#btn-promocode').scope().$apply();
+         }
       });
 
       $(document).on("click","#btn-promocode", function(e) {
@@ -553,29 +558,36 @@
                   $('#span-message').removeAttr('class');
                   $('#span-message').text(result.message);
                   $('#span-message').addClass('text-success');
-                  $('#btn-promocode').hide();
-                  $("#promo_code").prop('disabled', true);
+                  // $('#btn-promocode').hide();
+                  // $("#promo_code").prop('disabled', true);
 
                   let discountValue = result.data.discount;
                   let discountType  = result.data.type;
 
-                  let currentAmount = $('#total_amount').val();
+                  // let currentAmount = $('#total_amount').val();
 
-                  let grossAmount = 0;
-                  let discount    = 0;
-                  if (discountType === 'flat') {
-                     discount = discountValue;
-                     grossAmount = currentAmount - discount;
-                  }
-                  if (discountType === 'percentage') {
-                     discount = (currentAmount*discountValue)/100;
-                     grossAmount = currentAmount - discount;
-                  }
-                  $('#total_amount').val(grossAmount);
-                  $('#promo_code_id').val(result.data.id);
-                  $('#total_amount').trigger('input');
-                  let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
-                  $('#amount-caption').text(messsage);
+                  // let grossAmount = 0;
+                  // let discount    = 0;
+                  // if (discountType === 'flat') {
+                  //    discount = discountValue;
+                  //    grossAmount = currentAmount - discount;
+                  // }
+                  // if (discountType === 'percentage') {
+                  //    discount = (currentAmount*discountValue)/100;
+                  //    grossAmount = currentAmount - discount;
+                  // }
+
+                  console.log(angular.element($("#btn-promocode")).scope().tax);
+                  let gsttax = angular.element($("#btn-promocode")).scope().tax;
+                  let isGST = gsttax > 0 ? true : false;
+                  angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element('#btn-promocode').scope().$apply();
+
+                  // $('#total_amount').val(grossAmount);
+                  // $('#promo_code_id').val(result.data.id);
+                  // $('#total_amount').trigger('input');
+                  // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
+                  // $('#amount-caption').text(messsage);
 
                }
             }

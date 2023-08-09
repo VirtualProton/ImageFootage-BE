@@ -144,7 +144,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         $scope.total = subtotal + total;
         $scope.tax = total;
     }
-    $scope.checkThetax = function(tax_percent, type) {
+    $scope.checkThetax = function(tax_percent, type, promo = {}) {
 
         var subtotal = $scope.quotation.product;
         //console.log(subtotal);
@@ -183,6 +183,16 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         total = Number(total);
         $scope.tax = total;
         $scope.total = total + subtotal;
+
+        if (promo.type == 'flat') {
+            $scope.total = (total + subtotal) - promo.discount;
+        }
+
+        if (promo.type == 'percentage') {
+            discount = ((total + subtotal) * promo.discount)/100;
+            $scope.total = (total + subtotal) - discount;
+        }
+        console.log($scope.total);
     }
 
     $scope.prod_type =   function(type){
@@ -1374,7 +1384,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         $scope.total = subtotal + total;
         $scope.tax = total;
     }
-    $scope.checkThetax = function(tax_percent, type) {
+    $scope.checkThetax = function(tax_percent, type, promo = {}) {
 
         var subtotal = $scope.quotation.product;
         //console.log(subtotal);
@@ -1413,6 +1423,16 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         total = Number(total);
         $scope.tax = total;
         $scope.total = total + subtotal;
+
+        if (promo.type == 'flat') {
+            $scope.total = (total + subtotal) - promo.discount;
+        }
+
+        if (promo.type == 'percentage') {
+            discount = ((total + subtotal) * promo.discount)/100;
+            $scope.total = (total + subtotal) - discount;
+        }
+        console.log($scope.total);
     }
 
     $scope.prod_type =   function(type){
