@@ -18,11 +18,12 @@ class PackageApiController extends Controller
               if ($eachpacage['package_plan'] == 1) {
                   $plan = 'download_pack';
               } else if ($eachpacage['package_plan'] == 2) {
-                  if ($eachpacage['package_expiry_yearly'] == 0) {
-                      $plan = 'monthly_pack';
-                  } else {
-                      $plan = 'yearly_pack';
-                  }
+                  $plan = 'subscription';
+                //   if ($eachpacage['package_expiry_yearly'] == 0) {
+                //       $plan = 'monthly_pack';
+                //   } else {
+                //       $plan = 'yearly_pack';
+                //   }
               }
               if ($eachpacage['package_type'] == 'Image') {
                   $packagelist[$eachpacage['package_type']][$plan][] = $eachpacage;
