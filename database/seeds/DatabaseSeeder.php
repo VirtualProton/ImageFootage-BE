@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             ImagefootageRolesModulesMappingSeeder::class,
             EmailTemplatesSeeder::class,
+            PlansSeeder::class,
+            TaxesSeeder::class,
+            IndustryTypesSeeder::class,
         ]);
     }
 }

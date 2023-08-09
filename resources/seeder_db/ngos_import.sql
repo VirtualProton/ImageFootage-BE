@@ -1,0 +1,1 @@
+INSERT INTO `ngos` VALUES (1,'Wildlife Conservation Trust',1),(3,'Cancer Patients Aid Association (CPAA)',1),(4,'NAB - We help the blind help themselves',1),(5,'Helen Keller Institute for Deaf & Deafblind (HKIDB)',1),(6,'Junior Red Cross',1);
