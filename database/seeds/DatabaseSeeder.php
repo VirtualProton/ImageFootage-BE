@@ -11,6 +11,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call([
+            CountrySeeder::class,
+            StatSeeder::class,
+            CitySeeder::class,
+            ImagefootageDepartmentsSeeder::class,
+            ImagefootageAdminSeeder::class,
+            CurrencyConvertesSeeder::class,
+            ImagefootageAccountsSeeder::class,
+            ImagefootageModulesSeeder::class,
+            ImagefootagePackagesSeeder::class,
+            ContentsSeeder::class,
+            ImagefootageProductLocationsSeeder::class,
+            ImagefootageProductOrientationSeeder::class,
+            ImagefootageProductSortTypesSeeder::class,
+            RmValuesSeeder::class,
+            RmHeadingFieldsSeeder::class,
+            RmFiledsSeeder::class,
+            ReasonOfRejectionsSeeder::class,
+            NgosSeeder::class,
+            RolesSeeder::class,
+            ImagefootageRolesModulesMappingSeeder::class,
+            EmailTemplatesSeeder::class,
+        ]);
     }
 }
