@@ -208,12 +208,12 @@ class UserController extends Controller
         $data = $request->all();
 
         $validator = \Validator::make($request->profileData ?? [], [
+            'email' => 'required|unique:imagefootage_users,email,' . $data['tokenData']['Utype'],
             'mobile' => 'required|unique:imagefootage_users,mobile,' . $data['tokenData']['Utype'],
-            // 'mobile' => 'required|unique:imagefootage_users,phone,' . $data['tokenData']['Utype'],
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["error" => $validator->messages()], 200);
+            return response()->json(["message" => $validator->errors()->first()], 200);
         }
 
         if (count($data['profileData']) > 0 && count($data['tokenData']) > 0) {
@@ -223,6 +223,9 @@ class UserController extends Controller
             ->with('state')
             ->with('city')
             ->first();
+            if(empty($userlist)){
+                echo json_encode(['status' => "fail", 'message' => 'Profile not found', 'data' => '']);
+            }
             $update_data = [
                 'first_name' => $data['profileData']['first_name'],
                 'mobile' => $data['profileData']['mobile'],
