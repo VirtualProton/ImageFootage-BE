@@ -122,6 +122,7 @@ Route::group([
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}','UserController@userProfile');
     Route::get('userOrders/{id}', 'UserController@userOrders');
+    Route::post('purchase-history', 'UserController@purchaseHistory');
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');

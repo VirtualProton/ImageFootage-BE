@@ -21,6 +21,7 @@ use App;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\ChangeMobileMail;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -201,6 +202,58 @@ class UserController extends Controller
             echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
         }
 
+    }
+
+    # Purchase history
+    public function purchaseHistory(Request $request)
+    {
+        $userId      = $request->user_id;
+        $mediaType   = $request->media_type;
+        $licenseType = $request->license_type;
+        $range       = $request->input('range', 'today');
+
+        $startDate = null;
+        $endDate   = null;
+
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today()->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                break;
+            case 'last_week':
+                $startDate = Carbon::today()->subWeek()->startOfWeek();
+                $endDate = Carbon::today()->subWeek()->endOfWeek();
+                break;
+            case 'last_month':
+                $startDate = Carbon::today()->subMonth()->startOfMonth();
+                $endDate = Carbon::today()->subMonth()->endOfMonth();
+                break;
+            case 'custom':
+                $startDate = $request->input('start_date');
+                $endDate = $request->input('end_date');
+                break;
+        }
+
+        if ($request->user_id) {
+            $OrderData = Orders::with(['items'=>function($query) use ($mediaType, $licenseType){
+                $query->with(['product' => function ($productquery) use($mediaType, $licenseType){
+                    if ($mediaType != 'All') {
+                        $productquery->where('product_main_type', $mediaType);
+                    }
+                    if ($licenseType != 'All') {
+                        $productquery->where('license_type', $licenseType);
+                    }
+                }]);
+            }])
+            ->where('user_id','=',$userId)
+            ->whereIn('order_status',['Completed','Transction Success'])
+            ->whereBetween('order_date', [$startDate, $endDate])
+            ->orderBy('id','desc')
+            ->paginate(5)->toArray();
+            echo json_encode(['status'=>"success",'data'=>$OrderData]);
+        } else {
+            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+        }
     }
 
     public function update_profile(Request $request)
