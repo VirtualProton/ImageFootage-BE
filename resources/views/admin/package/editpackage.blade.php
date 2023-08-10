@@ -22,11 +22,16 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Edit Package</h3><a href="{{ URL::to('admin/package_list') }}" class="btn pull-right">Back</a>
                 </div>
-               @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
-			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
-			   @endif
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
+                @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session()->get('error') }}
+                </div>
+                @endif
                 <form action="{{ url('admin/editpackage') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                 <input type="hidden" class="form-control" name="package_id" id="package_id"  value="{{ $package[0]['package_id'] }}">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -99,10 +104,23 @@
                       <select type="text" class="form-control" name="package_type" id="package_type" >
                       	<option value="Image" @if($package[0]['package_type']=='Image') selected="selected" @endif >Image</option>
                         <option value="Footage" @if($package[0]['package_type']=='Footage') selected="selected" @endif >Footage</option>
+                        <option value="Music" @if($package[0]['package_type']=='Music') selected="selected" @endif >Music</option>
                       </select>
                     </div>
                      @if ($errors->has('package_type'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
+                     @endif
+                     <div class="form-group" id="footageTierDiv">
+                      <label for="exampleInputEmail1">Package Type</label>
+                      <select type="text" class="form-control" name="footage_tier" id="footage_tier" >
+                      	<option value="1" @if($package[0]['footage_tier']=='1') selected="selected" @endif >Commercial</option>
+                        <option value="2" @if($package[0]['footage_tier']=='2') selected="selected" @endif >Media Non-commercial (Editorial)</option>
+                        <option value="3" @if($package[0]['footage_tier']=='3') selected="selected" @endif >Digital</option>
+                        <option value="4" @if($package[0]['footage_tier']=='4') selected="selected" @endif >Full RF Licence</option>
+                      </select>
+                    </div>
+                     @if ($errors->has('footage_tier'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
                      @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Package Expiry in Months</label>
@@ -187,6 +205,12 @@ $(document).ready(function ($) {
     $('#div_quarterly').show();
     $('#div_half_yearly').show();
 	}
+  var package_type = $("#package_type").val();
+  if(package_type =='Footage'){
+    $("#footageTierDiv").show();
+  } else {
+    $("#footageTierDiv").hide();
+  }
    // Example Validataion Standard Mode
     // ---------------------------------
     (function () {
@@ -261,6 +285,14 @@ $("#package_plan").change(function(){
     $('#div_half_yearly').show();
 	}
 	
+});
+$("#package_type").change(function(){
+	var pack_type=$(this).val();
+	if(pack_type =='Footage'){
+    $("#footageTierDiv").show();
+  } else {
+    $("#footageTierDiv").hide();
+  }
 });
 </script>
   @endsection

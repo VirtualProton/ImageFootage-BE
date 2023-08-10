@@ -91,7 +91,7 @@
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label class=""><%product.type%> <%$index+1%> (Product Image/Footage ID/Music)</label>
+                                    <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
                                     <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
                                     <div>
@@ -154,7 +154,7 @@
 
                                  <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
                                     <label for="licence_type"><%product.type%> Licence type</label>
-                                    <input type="text" ng-model="product.licence_type" >
+                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
                                  </div>
 
                                  <div>
@@ -507,6 +507,7 @@
 
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <script>
    $(function() {
       $("#poDate").datepicker();
@@ -521,8 +522,13 @@
       $('#promo_code').keyup(function() {
          if($.trim(this.value).length > 0)
             $('#btn-promocode').show()
-         else
+         else {
             $('#btn-promocode').hide()
+            let gsttax = angular.element($("#btn-promocode")).scope().tax;
+            let isGST = gsttax > 0 ? true : false;
+            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+            angular.element('#btn-promocode').scope().$apply();
+         }
       });
 
       $(document).on("click","#btn-promocode", function(e) {
@@ -556,33 +562,45 @@
                   $('#span-message').removeAttr('class');
                   $('#span-message').text(result.message);
                   $('#span-message').addClass('text-success');
-                  $('#btn-promocode').hide();
-                  $("#promo_code").prop('disabled', true);
+                  // $('#btn-promocode').hide();
+                  // $("#promo_code").prop('disabled', true);
 
                   let discountValue = result.data.discount;
                   let discountType  = result.data.type;
 
-                  let currentAmount = $('#total_amount').val();
+                  // let currentAmount = $('#total_amount').val();
 
-                  let grossAmount = 0;
-                  let discount    = 0;
-                  if (discountType === 'flat') {
-                     discount = discountValue;
-                     grossAmount = currentAmount - discount;
-                  }
-                  if (discountType === 'percentage') {
-                     discount = (currentAmount*discountValue)/100;
-                     grossAmount = currentAmount - discount;
-                  }
-                  $('#total_amount').val(grossAmount);
-                  $('#promo_code_id').val(result.data.id);
-                  $('#total_amount').trigger('input');
-                  let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
-                  $('#amount-caption').text(messsage);
+                  // let grossAmount = 0;
+                  // let discount    = 0;
+                  // if (discountType === 'flat') {
+                  //    // discount = discountValue;
+                  //    // grossAmount = currentAmount - discount;
+                  //    angular.element($("#btn-promocode")).scope().checkThetax(true, 'GST', {'type' : 'flat', 'discount' : discountValue});
+                  //    angular.element('#btn-promocode').scope().$apply();
+                  // }
+                  // if (discountType === 'percentage') {
+                  //    discount = (currentAmount*discountValue)/100;
+                  //    grossAmount = currentAmount - discount;
+                  // }
+                  console.log(angular.element($("#btn-promocode")).scope().tax);
+                  let gsttax = angular.element($("#btn-promocode")).scope().tax;
+                  let isGST = gsttax > 0 ? true : false;
+                  angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element('#btn-promocode').scope().$apply();
+
+                  // $('#total_amount').val(grossAmount);
+                  // $('#promo_code_id').val(result.data.id);
+                  // $('#total_amount').trigger('input');
+                  // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
+                  // $('#amount-caption').text(messsage);
 
                }
             }
          });
+      });
+
+      $('.licence_type').each(function() {
+         CKEDITOR.replace($(this).prop('id'));
       });
    });
 

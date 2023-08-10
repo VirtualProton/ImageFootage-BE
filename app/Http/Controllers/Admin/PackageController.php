@@ -39,6 +39,7 @@ class PackageController extends Controller
 		$package->package_addedby=Auth::guard('admins')->user()->id;
 		$package->package_expiry_quarterly =$request->package_expiry_quarterly;
 		$package->package_expiry_half_yearly =$request->package_expiry_half_yearly;
+		$package->footage_tier =$request->footage_tier;
 		$result=$package->save();
 		if($result){
 		  	 return back()->with('success','Package created successful');
@@ -101,7 +102,8 @@ class PackageController extends Controller
 							 'pacage_size'=>$request->pacage_size,
 							 'updated_at'=>date('Y-m-d H:i:s'),
 							 'package_expiry_quarterly'=>$request->package_expiry_quarterly,
-							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly
+							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly,
+							 'footage_tier'=>$request->footage_tier
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);
 		if($result){

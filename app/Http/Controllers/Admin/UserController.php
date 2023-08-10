@@ -145,8 +145,12 @@ class UserController extends Controller
         if(!empty($user->city)) {
             $city = City::where('id', $user->city)->first();
             $city_name = $city['name'];
+        }
+        if(!empty($user->state)) {
             $state = State::where('id', $user->state)->first();
             $state_name = $state['state'];
+        }
+        if(!empty($user->country)) {
             $country = Country::where('id', $user->country)->first();
             $country_name = $country['name'];
         }
@@ -171,10 +175,10 @@ class UserController extends Controller
         $agentlist=$this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
         $get_quotations = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.first_name as calcelled_user_first_name', 'calcelled_user.last_name as calcelled_user_last_name') 
+                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name') 
                     ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
                     ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
-                    ->leftJoin('imagefootage_users as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
+                    ->leftJoin('imagefootage_admins as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
                     ->where('imagefootage_performa_invoices.user_id','=', $id)
                     ->where('imagefootage_performa_invoices.proforma_type', '=', '1');
         $get_quotations2 = clone $get_quotations;
@@ -218,8 +222,9 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
            // dd($description);
            $active_tab = "tab1";
+           $active_nested_tab = "subscription_tab";
 
-        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices)->with('account_custom_quotations', $account_custom_quotations)->with('account_custom_invoices', $account_custom_invoices)->with('account_custom_quotations2', $account_custom_quotations2)->with('account_custom_invoices2', $account_custom_invoices2);
+        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab', 'active_nested_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices)->with('account_custom_quotations', $account_custom_quotations)->with('account_custom_invoices', $account_custom_invoices)->with('account_custom_quotations2', $account_custom_quotations2)->with('account_custom_invoices2', $account_custom_invoices2);
     }
 
     /**

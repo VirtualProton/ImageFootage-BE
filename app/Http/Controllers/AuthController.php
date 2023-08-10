@@ -15,7 +15,11 @@ use JWTAuth;
 use Razorpay\Api\Plan;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Mail;
-
+use App\Helpers\Helper;
+use App\Http\TnnraoSms\TnnraoSms;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 
 class AuthController extends Controller
 {
@@ -26,7 +30,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -41,10 +45,10 @@ class AuthController extends Controller
     {
         $validator = \Validator::make(request()->all(), [
             'email' => 'required',
-            'password' => 'required',          
+            'password' => 'required',
         ]);
 
-        if ($validator->fails()) {    
+        if ($validator->fails()) {
             return response()->json($validator->messages(), 200);
         }
 
@@ -80,14 +84,14 @@ class AuthController extends Controller
            // 'city' => 'required',
            // 'address' => 'required',
            // 'pincode' => 'required',
-           
+
         ]);
 
-        
-        if ($validator->fails()) {    
+
+        if ($validator->fails()) {
             return response()->json($validator->messages(), 200);
-        }  
-        
+        }
+
 		$user = $request->all();
 		$count = User::where('email','=',$request->input('email'))->count();
 		if($count==0) {
@@ -118,14 +122,14 @@ class AuthController extends Controller
                 $match_token = sha1(time()).random_int(111, 999);
                 User::where('id', $save_data->id)->update([
                     'email_verify_token' => $match_token,
-                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"))
+                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +". config('constants.EMAIL_EXPIRY') ." days"))
                 ]);
 				$cont_url=url('/active_user_account').'/'.$match_token;
-			 
+
                 $data = array('cname'=>$cname,'cemail'=>$cemail,'cont_url'=>$cont_url);
                     Mail::send('createusermail', $data, function($message) use($data) {
                     $message->to($data['cemail'],$data['cname'])->from('admin@imagefootage.com', 'Imagefootage')  ->subject('Welcome to Image Footage');
-                }); 
+                });
                  return response()->json(['status'=>'1','message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
             } else {
                 return response()->json(['status'=>'0','message' => 'Some problem occured.'], 401);
@@ -137,7 +141,7 @@ class AuthController extends Controller
 	public function socialLogin(Request $request){
         $count = User::where('email','=',$request['userData']['email'])->count();
 		if($count >0){
-			
+
 			//$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
 		 	//return $res;
             $credentials = ['email'=> $request['userData']['email'],'password'=>'123456'];
@@ -180,11 +184,11 @@ class AuthController extends Controller
                     return $this->respondWithToken($token);
                    //$res = User::where('email','=',$request['userData']['email'])->first()->toArray();
                    //return $res;
-                }	
+                }
 			}
 			//return response()->json(['error' => 'Please register to login.'], 401);
 		}
-       
+
 	}
 	public function contactUs(Request $request){
 	}
@@ -308,14 +312,16 @@ class AuthController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function resendVerificationLink($email)
+    public function resendVerificationLink(Request $request, $email = null)
     {
-        $user = User::where('email', $email)->first();
+        $user_id = $request->user_id;
+        $email = isset($request->email) ? $request->email : $email;
+        $user = User::where('email', $email)->where('id', $user_id)->first();
         if (empty($email) || empty($user)) {
-            return response()->json(['status' => '0', 'message' => 'Email address not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Email address not found.'], 200);
         }
         if($user->status == 1){
-            return response()->json(['status' => '1', 'message' => 'Your account is already activated.'], 200);
+            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
         }
         $match_token = sha1(time()) . random_int(111, 999);
         $user->email_verify_token = $match_token;
@@ -327,8 +333,230 @@ class AuthController extends Controller
         Mail::send('createusermail', $data, function ($message) use ($data) {
             $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
         });
-        return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
+        $user_data = ['user_id' => $user->id];
+        return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
     }
 
 
+
+    /**For new updated designs modules */
+
+
+public function signupV2(Request $request)
+{
+    $rules = [
+        'email' => [
+            'required',
+            'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
+        ],
+        'name' => ['required'],
+        'password' => ['required']
+    ];
+    $messages = [
+        'email.regex' => 'Please enter a valid email address or mobile number.',
+    ];
+    $validator = \Validator::make($request->all(), $rules, $messages);
+    if ($validator->fails()) {
+        return response()->json(['status' => false, 'message' => $validator->errors()], 200);
+    }
+    $checkEmail = User::where('email', '=', $request->input('email'))->count();
+    $checkMobile = User::where('mobile', '=', $request->input('email'))->count();
+    if ($checkEmail > 0 || $checkMobile > 0) {
+        return response()->json(['status' => false, 'message' => 'User have been already registered'], 200);
+    }
+    $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+    $mobilePattern = '/^\d{10,15}$/';
+    $email = '';
+    $mobile = '';
+    if (preg_match($emailPattern, $request->input('email'))) {
+        $email = $request->input('email');
+    } else {
+        $mobile = $request->input('email');
+    }
+    $save_data = new User();
+    $save_data->first_name = $request->input('name');
+    $save_data->user_name = Helper::generateUserName();
+    $save_data->email = $email;
+    $save_data->mobile = $mobile;
+    $save_data->password = Hash::make($request->input('password'));
+    $save_data->type = 'U';
+    $save_data->status = '0';
+    $result = $save_data->save();
+    if ($result) {
+        if (!empty($email)) {
+            // send email
+            $cname = $request->input('name');
+            $cemail = $request->input('email');
+            $match_token = sha1(time()) . random_int(111, 999);
+            User::where('id', $save_data->id)->update([
+                'email_verify_token' => $match_token,
+                'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " hours"))
+            ]);
+            $cont_url = url('/active_user_account') . '/' . $match_token;
+            $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
+            Mail::send('createusermail', $data, function ($message) use ($data) {
+                $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
+            });
+            $user_data = ['user_id' => $save_data->id, 'is_email' => true, 'email' => $email];
+            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
+        } else {
+            // send sms
+            $otp = rand(1000, 9999);
+            $update = User::where('id', $save_data->id)->update([
+                'otp' => $otp,
+                'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
+            ]);
+            if ($update) {
+                $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+                $smsClass = new TnnraoSms;
+                $smsClass->sendSms($message, $mobile);
+                $user_data = ['user_id' => $save_data->id, 'is_email' => false, 'mobile' => $mobile];
+                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.', 'data' => $user_data], 200);
+            }
+        }
+    }
+    return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+}
+
+    /**
+     * Active user account
+     */
+    public function activeUserAccount($token = "")
+    {
+        $user = User::where("email_verify_token", $token)->first();
+        if (empty($user) || $token == "" || $token == null) {
+            return response()->json(['status' => false, 'message' => 'Token not found.'], 200);
+        }
+        if ($user->token_valid_date < date('Y-m-d H:i:s')) {
+            return response()->json(['status' => false, 'message' => 'Link is expired.'], 200);
+        }
+        $user->status = 1;
+        $user->email_verify_token = null;
+        $user->token_valid_date = null;
+        $save = $user->save();
+        if ($save) {
+            $user_data = ['user_id' => $user->id];
+            return response()->json(['status' => true, 'message' => 'User activated successfully.', 'data' => $user_data], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
+
+    /**
+     * Verify otp send on mobile
+     */
+    public function verifyMobile (Request $request) {
+        $otp = $request->otp;
+        $user_id = $request->user_id;
+        if (empty($otp)) {
+            return response()->json(['status' => false, 'message' => 'OTP is required.'], 200);
+        }
+        $user = User::where("otp", $otp)->where('id', $user_id)->first();
+        if (empty($user)) {
+            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+        }
+        if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
+            return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
+        }
+        $user->status = 1;
+        $user->otp = null;
+        $user->otp_valid_date = null;
+        $save = $user->save();
+        if ($save) {
+            $user_data = ['user_id' => $user->id];
+            return response()->json(['status' => true, 'message' => 'User activated successfully.', 'data' => $user_data], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
+
+    /**
+     * Resend otp on mobile
+     */
+    public function resendOtp (Request $request) {
+        $mobile = $request->mobile;
+        $user_id = $request->user_id;
+        if (empty($mobile)) {
+            return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
+        }
+        $otp = rand(1000, 9999);
+        $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
+        if (empty($user)) {
+            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+        }
+        if($user->status == 1){
+            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
+        }
+        $user->otp = $otp;
+        $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
+        $update = $user->save();
+        if ($update) {
+            $user_data = ['user_id' => $user->id];
+            $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+            $smsClass = new TnnraoSms;
+            $smsClass->sendSms($message, $mobile);
+            return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
+    }
+
+    public function loginV2(Request $request)
+    {
+        $rules = [
+            'email' => [
+                'required',
+                'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
+            ],
+            'password' => ['required']
+        ];
+        $messages = [
+            'email.regex' => 'Please enter a valid email address or mobile number.',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'message' => $validator->errors()], 200);
+        }
+        $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        if (preg_match($emailPattern, $request->input('email'))) {
+            $credentials = ['email' => $request->input('email'), 'password' => $request->input('password')];
+        } else {
+            $credentials = ['mobile' => $request->input('email'), 'password' => $request->input('password')];
+        }
+        $usercredentials = [];
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['status' => false, 'message' => 'Email or password does\'t exist'], 200);
+        }
+        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
+    
+    }
+
+    public function getCountriesList(Request $request) {
+        $countries = Country::all();
+        return response()->json([
+            'status' => true,
+            'data' => $countries
+        ]);
+    }
+
+    public function getStatesList(Request $request, $country_id = null) {
+        if(empty($country_id)){
+            $states = State::all();
+        } else {
+            $states = State::where('country_id', $country_id)->get();
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $states
+        ]);
+    }
+
+    public function getCitiesList(Request $request, $state_id = null) {
+        if(empty($state_id)){
+            $cities = City::all();
+        } else {
+            $cities = City::where('state_id', $state_id)->get();
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $cities
+        ]);
+    }
 }

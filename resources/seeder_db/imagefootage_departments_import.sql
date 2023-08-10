@@ -1,0 +1,1 @@
+INSERT INTO `imagefootage_departments` VALUES (1,'Operations','A','2019-08-28 18:33:16','2019-08-28 18:33:28'),(2,'Sales','A','2019-08-28 18:33:22','2019-08-28 18:33:34'),(3,'Accounts','A','2020-05-04 16:01:21',NULL);

@@ -1,0 +1,1 @@
+INSERT INTO `imagefootage_product_orientations` VALUES (1,'Vertical','1',NULL,'2022-12-07 13:51:14'),(2,'Horizontal','1',NULL,'2022-12-07 13:51:14'),(3,'Square','1',NULL,'2022-12-07 13:51:14'),(4,'Panoramic','1',NULL,'2022-12-07 13:51:14'),(5,'360','0',NULL,'2022-12-07 13:51:14');

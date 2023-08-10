@@ -28,12 +28,16 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         image: "",
         price: "",
         footage: "",
-        type: "Image"
+        type: "Image",
+        licence_type: ""
     }];
     $scope.quotation_type_var = 'custom';
     $scope.addProduct = function() {
         var newProduct = { name: "", pro_size: "", pro_type: "", id: "", image: "", price: "", footage: "", type:"Image" };
         $scope.quotation.product.push(newProduct);
+        setTimeout(function () {
+            CKEDITOR.replace('licence_type-' + ($scope.quotation.product.length));
+        }, 0);
     }
      
     $scope.$on("fileProgress", function(e, progress) {
@@ -140,7 +144,7 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         $scope.total = subtotal + total;
         $scope.tax = total;
     }
-    $scope.checkThetax = function(tax_percent, type) {
+    $scope.checkThetax = function(tax_percent, type, promo = {}) {
 
         var subtotal = $scope.quotation.product;
         //console.log(subtotal);
@@ -179,14 +183,29 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
         total = Number(total);
         $scope.tax = total;
         $scope.total = total + subtotal;
+
+        if (promo.type == 'flat') {
+            $scope.total = (total + subtotal) - promo.discount;
+        }
+
+        if (promo.type == 'percentage') {
+            discount = ((total + subtotal) * promo.discount)/100;
+            $scope.total = (total + subtotal) - discount;
+        }
+        console.log($scope.total);
     }
 
     $scope.prod_type =   function(type){
         $scope.prod_type_var = type;
+        $scope.search = false; // Reset loaded data
+        $scope.selected_sub_plan = ""; // Reset sub total
+        $scope.downloadprice = ""; // Reset total
         
     }
     $scope.plan_type_select = function(type){
         $scope.plan_type_var = type;
+        $scope.subscriptionprice = ""; // Reset sub total
+        $scope.subsc_total = ""; // Reset total
     }
     
     $scope.getPlans = function(){
@@ -315,6 +334,17 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
     $scope.submitQuotation = function() {
        // console.log($scope.quotation);
        // console.log($scope);
+       $scope.quotation.product.map(function (editor, index) {
+            for (var i in CKEDITOR.instances) {
+                if (CKEDITOR.instances[i].element.$.classList.contains('licence_type')) {
+                    let ci = i[i.length-1] - 1;
+                    if(index == ci) {
+                        editor.licence_type = CKEDITOR.instances[i].getData();
+                    }
+                }
+            }
+            return editor;
+        });
         if($scope.quotation_type_var == 'subscription'){
             $scope.submitSubscription();
         } else if($scope.quotation_type_var == 'download'){
@@ -495,6 +525,22 @@ app.controller('quotatationController', function($scope, $http, $location, fileR
     $scope.checkProduct = function(product_type){
        // console.log(product_type);
     }
+
+    // CKEditor initialization for all editors
+    $scope.initEditors = function () {
+        if($scope.quotation.product) {
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+              setTimeout(function (index) {
+                CKEDITOR.replace('licence_type-' + index, {
+                    readOnly: false,
+                });
+                CKEDITOR.instances['licence_type-' + (index+1)].setData($scope.quotation.product[index].licence_type);
+              }, 0, i);
+            }
+        }
+      };
+      // Call the initialization function after rendering the editors
+      setTimeout($scope.initEditors, 1000);
 });
 app.controller('PromotionController', function($scope, $http, $location, fileReader) {
     $scope.title = "Promotion";
@@ -989,7 +1035,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice_subcription',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method,  gst : $('#gstNo').val(), pan: $('#panNo').val(), phone: $('#phone').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.po, po_date : $scope.poDate, payment_method : $scope.payment_method,  gst : $('#gstNo').val(), pan: $('#panNo').val(), phone: $('#phone').val(), country: $('#country_invoice').val() ?? '', state: $('#state_invoice').val() ?? '', city: $('#city_invoice').val() ?? '', address: $('#address_invoice').val() ?? '', address2: $('#address2_invoice').val() ?? '', postal_code: $('#postal_code_invoice').val() ?? ''}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {
@@ -1033,7 +1079,7 @@ app.controller('invoiceController', function($scope, $http, $location) {
                 $http({
                     method: 'POST',
                     url: api_path + 'create_invoice',
-                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val()}
+                    data: { quotation_id: quotation_id, user_id : user_id, po: $scope.poCustom, po_date : $scope.poDateCustom, payment_method : $scope.payment_method, gst : $('#gstNocus').val(), pan: $('#panNocus').val(), phone: $('#phonecus').val(), expiry_due_date: $('#expiry_due_date').val(), country: $('#country_invoice_cus').val() ?? '', state: $('#state_invoice_cus').val() ?? '', city: $('#city_invoice_cus').val() ?? '', address: $('#address_invoice_cus').val() ?? '', address2: $('#address2_invoice_cus').val() ?? '', postal_code: $('#postal_code_invoice_cus').val() ?? ''}
                 }).then(function(result) {
                     $('#loading').hide();
                     if (result.data.resp.statuscode == '1') {
@@ -1338,7 +1384,7 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         $scope.total = subtotal + total;
         $scope.tax = total;
     }
-    $scope.checkThetax = function(tax_percent, type) {
+    $scope.checkThetax = function(tax_percent, type, promo = {}) {
 
         var subtotal = $scope.quotation.product;
         //console.log(subtotal);
@@ -1377,6 +1423,16 @@ app.controller('quotatationWithoutApiController', function($scope, $http, $locat
         total = Number(total);
         $scope.tax = total;
         $scope.total = total + subtotal;
+
+        if (promo.type == 'flat') {
+            $scope.total = (total + subtotal) - promo.discount;
+        }
+
+        if (promo.type == 'percentage') {
+            discount = ((total + subtotal) * promo.discount)/100;
+            $scope.total = (total + subtotal) - discount;
+        }
+        console.log($scope.total);
     }
 
     $scope.prod_type =   function(type){

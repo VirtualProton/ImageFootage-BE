@@ -135,6 +135,27 @@ class InvoiceController extends Controller
     public function create_invoice(Request $request)
     {
         $data = $request->all();
+        // Update user address
+        $user = User::where('id', $data['user_id'])->first();
+        if (!empty($data['country'])) {
+            $user->country = $data['country'] ?? $user->country;
+        }
+        if (!empty($data['state'])) {
+            $user->state = $data['state'] ?? $user->state;
+        }
+        if (!empty($data['city'])) {
+            $user->city = $data['city'] ?? $user->city;
+        }
+        if (!empty($data['address'])) {
+            $user->address = $data['address'] ?? $user->address;
+        }
+        if (!empty($data['address2'])) {
+            $user->address2 = $data['address2'] ?? $user->address2;
+        }
+        if (!empty($data['postal_code'])) {
+            $user->postal_code = $data['postal_code'] ?? $user->postal_code;
+        }
+        $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
@@ -144,6 +165,27 @@ class InvoiceController extends Controller
     public function create_invoice_subcription(Request $request)
     {
         $data = $request->all();
+        // Update user address
+        $user = User::where('id', $data['user_id'])->first();
+        if (!empty($data['country'])) {
+            $user->country = $data['country'] ?? $user->country;
+        }
+        if (!empty($data['state'])) {
+            $user->state = $data['state'] ?? $user->state;
+        }
+        if (!empty($data['city'])) {
+            $user->city = $data['city'] ?? $user->city;
+        }
+        if (!empty($data['address'])) {
+            $user->address = $data['address'] ?? $user->address;
+        }
+        if (!empty($data['address2'])) {
+            $user->address2 = $data['address2'] ?? $user->address2;
+        }
+        if (!empty($data['postal_code'])) {
+            $user->postal_code = $data['postal_code'] ?? $user->postal_code;
+        }
+        $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
             return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method']);
@@ -283,6 +325,9 @@ class InvoiceController extends Controller
         $this->validate($request, [
             'invoice_no' => 'required',
             'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_no
+        ], [
+            'po_no.required' => 'The PO no field is required.',
+            'po_no.unique' => 'The PO no must be unique.'
         ]);
         $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no]);
         if ($update) {
@@ -329,9 +374,9 @@ class InvoiceController extends Controller
             'cancelled_by' => Auth::guard('admins')->user()->id
         ]);
         if($update){
-            return redirect("admin/users/invoices/1?page=3#!#posts")->with("success", "Quotation Cancelled !!!");
+            return redirect()->back()->with("success", "Quotation Cancelled !!!");
         } else {
-            return redirect("admin/users/invoices/1?page=3#!#posts")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
+            return redirect()->back()->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
         }
     }
 }
