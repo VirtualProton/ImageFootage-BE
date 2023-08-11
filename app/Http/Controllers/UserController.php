@@ -21,6 +21,7 @@ use App;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\ChangeMobileMail;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -81,6 +82,91 @@ class UserController extends Controller
 	   }else{
 				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
 	   }
+   }
+
+   # My Plan
+   public function myPlan(Request $request)
+   {
+    $send_data = [];
+    $range       = $request->input('range', 'today');
+
+    $startDate = null;
+    $endDate   = null;
+
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today()->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                break;
+            case 'last_week':
+                $startDate = Carbon::today()->subWeek()->startOfWeek();
+                $endDate = Carbon::today()->subWeek()->endOfWeek();
+                break;
+            case 'last_month':
+                $startDate = Carbon::today()->subMonth()->startOfMonth();
+                $endDate = Carbon::today()->subMonth()->endOfMonth();
+                break;
+            case 'custom':
+                $startDate = $request->input('start_date');
+                $endDate = $request->input('end_date');
+                break;
+        }
+    $userlist= User::where('id', $request->user_id)
+                ->with('country')
+                ->with('state')
+                ->with('city')
+                ->with(['plans'=> function ($query) use($startDate, $endDate) {
+                    $query->whereIn('payment_status',['Completed','Transction Success'])
+                        //->whereRaw('package_products_count > downloaded_product')
+                        ->whereDate('created_at', '>=', $startDate)
+                        ->whereDate('created_at', '<=', $endDate)
+                        ->orderBy('id', 'desc')
+                        ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                        ->with(['downloads' => function($down_query){
+                            $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
+                        }]);
+                    }
+                ])
+                ->get()->toArray();
+
+    if(count($userlist)>0){
+          foreach($userlist as $user){
+              $send_data['id'] =$user['id'];
+              $send_data['first_name'] =$user['first_name'];
+              $send_data['last_name'] =$user['last_name'];
+              $send_data['title'] =$user['title'];
+              $send_data['email'] =$user['email'];
+              $send_data['user_name'] =$user['user_name'];
+              $send_data['contact_owner'] =$user['contact_owner'];
+              $send_data['mobile'] =$user['mobile'];
+              $send_data['phone'] =$user['phone'];
+              $send_data['address'] =$user['address'];
+              $send_data['status'] =$user['status'];
+              $send_data['type'] =$user['type'];
+              $send_data['postal_code'] =$user['postal_code'];
+              $send_data['plans'] =$user['plans'];
+              $send_data['city'] =$user['city'];
+              $send_data['state'] =$user['state'];
+              $send_data['country'] =$user['country'];
+              $send_data['address2'] =$user['address2'];
+              $send_data['company'] =$user['company'];
+
+              $image_download=0;
+              $footage_download=0;
+              foreach($user['plans'] as $plan){
+                  if($plan['package_type']=='Image'){
+                      $image_download=1;
+                  }else if($plan['package_type']=='Footage'){
+                      $footage_download=1;
+                  }
+              }
+              $send_data['image_download'] = $image_download;
+              $send_data['footage_download'] = $footage_download;
+          }
+            return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
+   }else{
+            return '{"status":"0","message":"Some problem occured.","data":"[]"}';
+   }
    }
    public function getUserAddress(Request $request){
 	   $id=$request->Utype;
@@ -201,6 +287,59 @@ class UserController extends Controller
             echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
         }
 
+    }
+
+    # Purchase history
+    public function purchaseHistory(Request $request)
+    {
+        $userId      = $request->user_id;
+        $mediaType   = $request->media_type;
+        $licenseType = $request->license_type;
+        $range       = $request->input('range', 'today');
+
+        $startDate = null;
+        $endDate   = null;
+
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today()->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                break;
+            case 'last_week':
+                $startDate = Carbon::today()->subWeek()->startOfWeek();
+                $endDate = Carbon::today()->subWeek()->endOfWeek();
+                break;
+            case 'last_month':
+                $startDate = Carbon::today()->subMonth()->startOfMonth();
+                $endDate = Carbon::today()->subMonth()->endOfMonth();
+                break;
+            case 'custom':
+                $startDate = $request->input('start_date');
+                $endDate = $request->input('end_date');
+                break;
+        }
+
+        if ($request->user_id) {
+            $OrderData = Orders::with(['items'=>function($query) use ($mediaType, $licenseType){
+                $query->with(['product' => function ($productquery) use($mediaType, $licenseType){
+                    if ($mediaType != 'All') {
+                        $productquery->where('product_main_type', $mediaType);
+                    }
+                    if ($licenseType != 'All') {
+                        $productquery->where('license_type', $licenseType);
+                    }
+                }]);
+            }])
+            ->where('user_id','=',$userId)
+            ->whereIn('order_status',['Completed','Transction Success'])
+            ->whereDate('order_date', '>=', $startDate)
+            ->whereDate('order_date', '<=', $endDate)
+            ->orderBy('id','desc')
+            ->paginate(5)->toArray();
+            echo json_encode(['status'=>"success",'data'=>$OrderData]);
+        } else {
+            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+        }
     }
 
     public function update_profile(Request $request)

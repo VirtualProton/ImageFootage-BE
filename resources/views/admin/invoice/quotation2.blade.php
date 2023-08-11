@@ -144,7 +144,17 @@
                                        <!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
                                        <option value="HD (1080)">HD (1080)</option>
                                        <option value="4K">4K</option>
+                                       <option value="5K+">5K+</option>
                                        <option value="SD">SD</option>
+                                    </select>
+                                    {{-- Music --}}
+                                    <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Music'">
+                                       <option value="" selected="">--Select a size--</option>
+                                       <option value="Small">Web</option>
+                                       <option value="Medium">Medium</option>
+                                       <option value="Large">Large</option>
+                                       <option value="X-Large">XX-Large</option>
+                                       <option value="Custom">Custom</option>
                                     </select>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
