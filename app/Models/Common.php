@@ -42,15 +42,15 @@ class Common extends Model
         // } else {
             //$this->baseurl = 'https://imagefootage.com';
             $this->baseurl = $hostname;
-            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
-            $this->atomRequestKey = '3a1575abc728e8ccf9';
-            $this->atomResponseKey = '43af4ba2fbd68d327e';
-            $this->login = '106640';
-            $this->mode = 'live';
-            $this->password = '33719eef';
-            $this->clientcode = '007';
-            $this->atomprodId = 'CONCEPTUAL';
+            $this->keyRazorId = config('payments.keyRazorId');
+            $this->keyRazorSecret = config('payments.keyRazorSecret');
+            $this->atomRequestKey = config('payments.atomRequestKey');
+            $this->atomResponseKey = config('payments.atomResponseKey');
+            $this->login = config('payments.login');
+            $this->mode = config('payments.mode');
+            $this->password = config('payments.password');
+            $this->clientcode = config('payments.clientcode');
+            $this->atomprodId = config('payments.atomprodId');
         //}
     }
  public function getCurruncy($col=NULL,$value=NULL){
