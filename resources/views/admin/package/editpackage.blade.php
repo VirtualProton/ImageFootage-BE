@@ -150,6 +150,17 @@
                     @if ($errors->has('package_expiry_year'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_year') }}</div>
                     @endif
+                    <div class="form-group">
+                      <label for="display_for">Display For</label>
+                      <select class="form-control" name="display_for" id="display_for" >
+                        <option value="3" @if($package[0]['display_for']=='3') selected="selected" @endif>All</option>
+                      	<option value="1" @if($package[0]['display_for']=='1') selected="selected" @endif>Frontend</option>
+                        <option value="2" @if($package[0]['display_for']=='2') selected="selected" @endif>Backend</option>
+                      </select>
+                    </div>
+                     @if ($errors->has('display_for'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('display_for') }}</div>
+                     @endif
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
