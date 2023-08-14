@@ -149,5 +149,6 @@ Route::group(['prefix' => 'v2'], function(){
     ], function () {
         Route::post('signup-v2', 'AuthController@signupV2');
         Route::post('login-v2', 'AuthController@loginV2');
+        Route::get('packages-v2', 'PackageApiController@packageListv2');
     });
 });
