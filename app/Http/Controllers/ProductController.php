@@ -1711,10 +1711,12 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 			}
 		} else {
 			$footages = DB::table('imagefootage_products')->select('api_product_id')->where('product_id', $product_id)->get();
-			
+
+			$pond_id_withprefix = '';
 			if(count($footages) > 0 ){
 				$product_id  = $footages[0]->api_product_id;
 			}
+
 			$footageMedia = new FootageApi();
 			$product_details_data = $footageMedia->getclipdata($product_id);
 			if (isset($product_details_data['clip_data']['pic_objectid'])) {
