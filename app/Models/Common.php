@@ -144,7 +144,7 @@ class Common extends Model
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
             'created_by' => Auth::guard('admins')->user()->id,
-            'promo_code_id' => $data['promo_code_id'],
+            'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
             'cancelled_on' => $cancelled_on,
         );
@@ -182,7 +182,8 @@ class Common extends Model
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
                     'status' => "1",
-                    'product_web' => 'imagefootage'
+                    'product_web' => 'imagefootage',
+                    'licence_type' => $eachproduct['licence_type']
                 );
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }
