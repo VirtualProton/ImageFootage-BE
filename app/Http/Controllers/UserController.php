@@ -372,7 +372,7 @@ class UserController extends Controller
                 'address' => $data['profileData']['address'],
                 'state' => $data['profileData']['state'],
                 'city' => $data['profileData']['city'],
-                'postal_code' => $data['profileData']['postal_code'],
+                'postal_code' => $data['profileData']['pincode'],
                 'address2' => $data['profileData']['address2'] ?? '',
                 'company' => $data['profileData']['company'] ?? ''
             ];
