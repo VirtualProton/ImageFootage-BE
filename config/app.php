@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'front_end_url' => env('FRONT_END_URL', 'https://staging.imagefootage.com/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://staging-api.imagefootage.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
