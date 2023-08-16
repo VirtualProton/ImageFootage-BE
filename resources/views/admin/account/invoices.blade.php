@@ -238,11 +238,13 @@
                                       <td>{{$invioces->po_detail}}</td>
                                       <td>{{$invioces->payment_date ?? ''}}</td>
                                       <td>
+                                        <?php if ($invioces->status == '1' && $invioces->payment_by == '1') { echo "Paid"; } else { ?> {{-- payment_by (frontend) display 'Paid' --}}
                                         <select <?php if($invioces->status==3){ echo "disabled" ; } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                         <option value="0"  <?php if($invioces->status =='0'){ echo "Selected";} ?>>Pending</option>
                                         <option value="1" <?php if($invioces->status =='1'){ echo "Selected";} ?>>Paid</option>
                                         <option value="3"  <?php if($invioces->status =='3'){ echo "Selected";} ?>>Cancel</option>
                                         </select>
+                                        <?php } ?>
                                       </td>
                                       <td>
                                       <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  

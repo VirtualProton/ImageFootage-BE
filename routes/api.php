@@ -121,7 +121,9 @@ Route::group([
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}','UserController@userProfile');
+    Route::post('myplan','UserController@myPlan'); # My Plan
     Route::get('userOrders/{id}', 'UserController@userOrders');
+    Route::post('purchase-history', 'UserController@purchaseHistory'); # Purchase History
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
@@ -147,5 +149,10 @@ Route::group(['prefix' => 'v2'], function(){
     ], function () {
         Route::post('signup-v2', 'AuthController@signupV2');
         Route::post('login-v2', 'AuthController@loginV2');
+        Route::get('packages-v2', 'PackageApiController@packageListv2');
     });
 });
+
+# Elasticsearch
+Route::get('/search/{query}', 'ElasticSearchController@search');
+Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');

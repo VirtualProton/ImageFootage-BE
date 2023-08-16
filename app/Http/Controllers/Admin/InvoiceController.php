@@ -90,16 +90,20 @@ class InvoiceController extends Controller
 
     public function quotation($user_id)
     {
+        $getFootageSizeDetails = config('constants.footage_size_details');
+        $getMusicLicenceDetails = config('constants.music_licence_details');
         $userDetail = User::find($user_id);
         $monthly_image_package_list = Package::where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
-        return view('admin.invoice.quotation', compact('userDetail'), ['packages' => $monthly_image_package_list]);
+        return view('admin.invoice.quotation', compact('getFootageSizeDetails', 'getMusicLicenceDetails', 'userDetail'), ['packages' => $monthly_image_package_list]);
     }
 
     public function quotation2($user_id)
     {
+        $getFootageSizeDetails = config('constants.footage_size_details');
+        $getMusicLicenceDetails = config('constants.music_licence_details');
         $userDetail = User::find($user_id);
         $monthly_image_package_list = Package::where('package_plan', 2)->where('package_type', 'Image')->get()->toArray();
-        return view('admin.invoice.quotation2', compact('userDetail'), ['packages' => $monthly_image_package_list]);
+        return view('admin.invoice.quotation2', compact('getFootageSizeDetails', 'getMusicLicenceDetails', 'userDetail'), ['packages' => $monthly_image_package_list]);
     }
 
     public function saveInvoice(Request $request)
@@ -120,8 +124,10 @@ class InvoiceController extends Controller
 
     public function edit_quotation($user_id,$quotation_id)
     {
+        $getFootageSizeDetails = config('constants.footage_size_details');
+        $getMusicLicenceDetails = config('constants.music_licence_details');
         $userDetail = User::find($user_id);
-        return view('admin.invoice.edit_quotation', compact('userDetail'));
+        return view('admin.invoice.edit_quotation', compact('userDetail', 'getFootageSizeDetails', 'getMusicLicenceDetails'));
     }
 
     public function edit_quotation_data(Request $request)
