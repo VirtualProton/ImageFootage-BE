@@ -93,3 +93,7 @@ CREATE TABLE IF NOT EXISTS `trending_words` (
   `count` bigint NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+
+-- Table : imagefootage_performa_invoices
+ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFAULT '1' COMMENT 'payment by 1- frontend 0- backend'  AFTER `status`;
