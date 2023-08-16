@@ -104,7 +104,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Will Apply On</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">Valid For</label>
 
             <div class="col-sm-4">
                 <div class="form-group">

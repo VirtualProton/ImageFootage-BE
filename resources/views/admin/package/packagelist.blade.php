@@ -124,14 +124,15 @@
   <script>
   $(function () {
 
-    $('#example2').DataTable(/*{
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    }*/);
+    var dataTable = $('#example2').DataTable({
+      // 'paging'      : true,
+      // 'lengthChange': false,
+      // 'searching'   : false,
+      // 'ordering'    : true,
+      // 'info'        : true,
+      // 'autoWidth'   : false
+    });
+    dataTable.order([[0, 'desc']]).draw();
   });
 </script>
   @endsection
