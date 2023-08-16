@@ -32,6 +32,16 @@ use PDF;
 
 class PaymentController extends Controller
 {
+    public $baseurl;
+    public $keyRazorId;
+    public $keyRazorSecret;
+    public $atomRequestKey;
+    public $atomResponseKey;
+    public $login;
+    public $mode;
+    public $password;
+    public $clientcode;
+    public $atomprodId;
     /**
      * Create a new AuthController instance.
      *
@@ -501,7 +511,7 @@ class PaymentController extends Controller
                        $this->invoiceWithemailPlan($orders,$_POST['mer_txn']);
                             //SendPlanEmail::dispatch($orders);
 
-                        return redirect($this->baseurl.'/user-profile');
+                        return redirect($this->baseurl.'/profile');
                 }else{
                     return redirect($this->baseurl.'/planFailed/'.$_POST['mer_txn']);
                 }
@@ -553,7 +563,7 @@ class PaymentController extends Controller
             }])->where('transaction_id',$params['txnid'])->first()->toArray();
 
             $this->invoiceWithemailPlan($orders,$params['txnid']);
-            return redirect($this->baseurl.'/user-profile');
+            return redirect($this->baseurl.'/profile');
         }
 
     }
