@@ -389,6 +389,53 @@ app.controller(
             $scope.subsc_total = total + subtotal;
         };
 
+        $scope.checkTheSubtax = function (tax_percent, type, promo = {}) {
+            var subtotalvalue = $scope.subscriptionprice;
+            if ($scope.subsc_tax > 0) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.subsc_total = total + subtotal;
+
+            if (promo.type == "flat") {
+                $scope.subsc_total = total + subtotal - promo.discount;
+            }
+
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.subsc_total = total + subtotal - discount;
+            }
+        };
+
+        $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
+            var subtotalvalue = $scope.downloadprice;
+            if ($scope.taxdownload > 0) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.taxdownload = total;
+
+            if (promo.type == "flat") {
+                $scope.total_download = total + subtotal - promo.discount;
+            }
+
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.total_download = total + subtotal - discount;
+            }
+        };
+
         $scope.submitQuotation = function () {
             // console.log($scope.quotation);
             // console.log($scope);
