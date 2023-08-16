@@ -27,7 +27,7 @@ ALTER TABLE `imagefootage_performa_invoice_items` CHANGE `licence_type` `licence
 
 -- Store cancelled by user id, if null then cancelled by cron
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_by` INT NULL COMMENT 'cancelled by user id, if null then cancelled by cron';
-trending_words
+
 -- Quotation cancelled on date
 ALTER TABLE `imagefootage_performa_invoices` ADD `cancelled_on` DATETIME NULL;
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `discount_messages` (
   `button_text` varchar(255) NOT NULL,
   `status` int NOT NULL,
   `created_at` timestamp NULL,
-  `updated_at` timestamp NULL,trending_words
+  `updated_at` timestamp NULL,
    PRIMARY KEY (`id`)
 );
 
@@ -68,7 +68,15 @@ ALTER TABLE `imagefootage_promotion` ADD `desktop_banner_image` VARCHAR(255) NUL
 ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL DEFAULT NULL;
 
 -- Verify registration use token and expiry datetime
-ALTER TABLE `imagefootage_users` ADD `email_verify_totrending_words
+ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;
+
+-- Verify registration use otp expiry datetime
+ALTER TABLE `imagefootage_users` ADD `otp_valid_date` DATETIME NULL;
+
+-- Static pages page slug value store
+ALTER TABLE `imagefootage_staticpages` ADD `page_slug` VARCHAR(255) NULL DEFAULT NULL;
+
+-- Settings table
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `key` varchar(255) NOT NULL,
@@ -80,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;
 
 CREATE TABLE IF NOT EXISTS `trending_words` (
-  `id` bigint NOT NULL AUTO_INCREMENT,trending_words
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `count` bigint NOT NULL,
   PRIMARY KEY (`id`)
