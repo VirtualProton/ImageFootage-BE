@@ -152,3 +152,7 @@ Route::group(['prefix' => 'v2'], function(){
         Route::get('packages-v2', 'PackageApiController@packageListv2');
     });
 });
+
+# Elasticsearch
+Route::get('/search/{query}', 'ElasticSearchController@search');
+Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');
