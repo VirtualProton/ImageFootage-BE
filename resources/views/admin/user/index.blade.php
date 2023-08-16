@@ -33,9 +33,9 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Account Manager</th>
-                <th>Type</th>
+                
                 <th>Created Date</th>
-                <th>Updated Date</th>
+                
                 <th>Status</th>
                 @if(Auth::guard('admins')->user()->role == '1')
                   <th>Action</th>
@@ -56,9 +56,9 @@
                           {{$user['account']['account_name']}}
                       @endif
                   </td>
-                  <td>{{$user['type']}}</td>
+                  
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
-                  <td><?php echo date('D, d M, Y',strtotime($user['updated_at'])) ?></td>
+                  
                   <td><?php echo ($user['status']=='1'?"Active":"Inactive"); ?></td>
                   @if(Auth::guard('admins')->user()->role == '1')
                     <td>
@@ -94,7 +94,18 @@
     @section('scripts')
     <script>
     $(function () {
-    $('#account').DataTable();
+    $('#account').DataTable({
+      "pageLength": 25,
+      "order": [[0, "desc"]],  
+      "columnDefs": [
+        { "width": "12%", "targets": 1 },  // Column 2 width
+        { "width": "12%", "targets": 2 },  // Column 3 width
+        { "width": "12%", "targets": 3 },  // Column 4 width
+        { "width": "20%", "targets": 4 },  // Column 5 width    
+        { "width": "8%", "targets": 5 },   // Column 6 width
+        { "width": "5%", "targets": 8 },   // Column 9 width    
+    ]
+  });
  })
     </script>
 
