@@ -866,6 +866,7 @@ app.controller(
         $scope.title = "Edit Quotation";
         $scope.quotation = {};
         $scope.tax = 0;
+        $scope.is_gst_applied = false;
         var path = window.location.pathname.split("/").pop();
         $("#loading").show();
         $http({
@@ -881,6 +882,7 @@ app.controller(
                 $scope.quotation_type = response.invoice_type;
                 $scope.promoCode = response.promo_code;
                 $scope.tax = response.tax;
+                $scope.is_gst_applied = $scope.tax > 0 ? true : false;
                 $scope.total = response.total;
                 $scope.total = response.total;
                 $scope.po = response.job_number;
@@ -1048,7 +1050,7 @@ app.controller(
             $scope.total = intialtotal + subtotal;
         };
 
-        $scope.checkThetax = function (tax_percent, type) {
+        $scope.checkThetax = function (tax_percent, type, promo = {}) {
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
             var subtotalvalue = 0;
@@ -1056,30 +1058,42 @@ app.controller(
             for (var j = 0; j < subtotal.length; j++) {
                 subtotalvalue += Number(subtotal[j].price);
             }
-            var intialtotal = $scope.tax;
-            if (type == "SGST") {
-                total = (subtotalvalue * 6) / 100;
-            } else if (type == "CGST") {
-                total = (subtotalvalue * 6) / 100;
-            } else if (type == "IGST") {
-                total = (subtotalvalue * 12) / 100;
-            } else if (type == "IGSTT") {
-                total = (subtotalvalue * 18) / 100;
-            }
+            //var intialtotal = $scope.tax;
+            // if (type == 'SGST') {
+            //     total = (subtotalvalue * (6) / 100);
+            // } else if (type == 'CGST') {
+            //     total = (subtotalvalue * (6) / 100);
+            // } else if (type == 'IGST') {
+            //     total = (subtotalvalue * (12) / 100);
+            // } else if (type == 'IGSTT') {
+            //     total = (subtotalvalue * (18) / 100);
+            // }
 
             if (tax_percent == true) {
-                total = intialtotal + total;
-            } else {
-                if (intialtotal > total) {
-                    total = intialtotal - total;
-                } else {
-                    total = 0;
+                //total = intialtotal + total;
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
                 }
+            } else {
+                // if (intialtotal > total) {
+                //     total = intialtotal - total;
+                // } else {
+                total = 0;
+                //}
             }
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
             $scope.total = total + subtotal;
+
+            if (promo.type == "flat") {
+                $scope.total = total + subtotal - promo.discount;
+            }
+
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.total = total + subtotal - discount;
+            }
         };
 
         $scope.submitQuotation = function () {
