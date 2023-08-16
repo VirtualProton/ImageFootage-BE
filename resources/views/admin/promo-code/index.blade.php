@@ -16,9 +16,7 @@
         <div class="row">
         	<div class="col-md-12">
          		<div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">PromoCodes List</h3>
-                </div>
+                
                 @include('admin.partials.message')
              <!-- /.box-header -->
              <div class="box-body">
@@ -29,14 +27,14 @@
                         <th>SN</th>
                         <th>Name</th>
                         <th>Type</th>
+                        <th>Discount value</th>
                         <th>Max Usage</th>
                         <th>Total Applied Code</th>
-                        <th>Discount</th>
                         <th>Valid Upto Type</th>
                         <th>Valid Start Date</th>
                         <th>Valid Till Date</th>
                         <th>Status</th>
-                        <th>Promo Will Use</th>
+                        <th>Valid For</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -47,9 +45,9 @@
                           <td>{{$k+1}}</td>
                           <td>{{$promocode['name']}}</td>
                           <td>{{$promocode['type']}}</td>
+                          <td>{{$promocode['discount']}}</td>
                           <td>{{$promocode['max_usage']}}</td>
                           <td>{{$promocode['total_applied_code']}}</td>
-                          <td>{{$promocode['discount']}}</td>
                           <td>{{$promocode['valid_upto_type']}}</td>
                           <td>{{$promocode['valid_start_date'] ?? '-'}}</td>
                           <td>{{$promocode['valid_till_date']}}</td>
@@ -88,7 +86,9 @@
     @section('scripts')
     <script>
     $(function () {
-    $('#promo-codes').DataTable();
+    $('#promo-codes').DataTable({
+      "pageLength": 25
+    });
  })
     </script>
 

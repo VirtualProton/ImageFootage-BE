@@ -1,6 +1,6 @@
 @extends('admin.layouts.default')
 @section('styles')
-<link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<!-- <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}"> -->
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -8,11 +8,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Discount Messages List
+      Discount Messages
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Discount Messages List</li>
+      <li class="active">Discount Messages</li>
     </ol>
   </section>
 
@@ -20,10 +20,8 @@
   <section class="content">
     <div class="row">
       <div class="col-md-12">
-        <div class="box box-primary" style="overflow-x:auto;">
-          <div class="box-header with-border" style="overflow-x:auto;">
-            <h3 class="box-title">Discount Messages List</h3>
-          </div>
+        <div class="box" >
+          
 
           @if(session()->has('success'))
           <div class="alert alert-success">
@@ -35,7 +33,7 @@
             {{ session()->get('error') }}
           </div>
           @endif
-
+          <div class="box-body">
           <table id="discountMessage" class="table table-bordered table-hover">
             <thead>
               <th>Id</th>
@@ -69,6 +67,7 @@
               @endforeach
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +79,9 @@
 @section('scripts')
 <script>
   $(function() {
-    $('#discountMessage').DataTable();
+    $('#discountMessage').DataTable({
+      "pageLength": 25
+    });
   })
 </script>
 @endsection

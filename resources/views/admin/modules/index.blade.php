@@ -8,11 +8,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Module List
+        Modules List
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Module List</li>
+        <li class="active">Modules List</li>
       </ol>
     </section>
 
@@ -20,14 +20,12 @@
     <section class="content">
         <div class="row">
         	<div class="col-md-12">
-         		<div class="box box-primary" style="overflow-x:auto;">
-                <div class="box-header with-border" style="overflow-x:auto;">
-                  <h3 class="box-title">Module List</h3>
-                </div>
+         		<div class="box">
+                
 
                 @include('admin.partials.message')
 
-
+              <div class="box-body">
                 <table id="module" class="table table-bordered table-hover">
                 	<thead>
                         <th>Id</th>
@@ -57,6 +55,7 @@
                       @endforeach
                     </tbody>
                    </table>
+</div>
               </div>
             </div>
         </div>
@@ -68,7 +67,9 @@
   @section('scripts')
   <script>
      $(function () {
-    $('#module').DataTable();
+    $('#module').DataTable({
+      "pageLength": 25
+    });
  })
     </script>
   @endsection

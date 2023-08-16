@@ -29,12 +29,8 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-4">
                 <div class="checkbox">
-                    <label>
-                        <input type="radio" name="type" value="flat" @if (old('type') == "flat") {{ 'checked' }} @endif class="type"> Flat
-                    </label>
-                    <label>
-                        <input type="radio" name="type" value="percentage" @if (old('type') == "percentage") {{ 'checked' }} @endif class="type"> Percentage
-                    </label>
+                    <input type="radio" name="type" value="flat" @if (old('type') == "flat") {{ 'checked' }} @endif class="type"> Flat
+                    <input type="radio" name="type" value="percentage" @if (old('type') == "percentage") {{ 'checked' }} @endif class="type"> Percentage
                 </div>
                 </div>
             </div>
@@ -61,12 +57,8 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Valid Upto Type</label>
                 <div class="col-sm-4">
                 <div class="checkbox">
-                    <label>
                         <input type="radio" name="valid_type" value="fixed" @if (old('valid_type') == "fixed") {{ 'checked' }} @endif class="type"> Fixed
-                    </label>
-                    <label>
                         <input type="radio" name="valid_type" value="range" @if (old('valid_type') == "range") {{ 'checked' }} @endif class="type"> Range
-                    </label>
                     </div>
                 </div>
             </div>
@@ -104,7 +96,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Will Apply On</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">Valid For</label>
 
             <div class="col-sm-4">
                 <div class="form-group">
