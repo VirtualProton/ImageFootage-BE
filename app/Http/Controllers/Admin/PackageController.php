@@ -21,7 +21,8 @@ class PackageController extends Controller
 			'package_description'=>'required',
 			'package_products_count'=>'required',
 			'package_type'=>'required',
-			'package_expiry'=>'required'
+			'package_expiry'=>'required',
+			'display_for'=>'required'
         ]);
 		$package=new Package;
 		$package->package_plan =$request->package_plan;
@@ -39,6 +40,8 @@ class PackageController extends Controller
 		$package->package_addedby=Auth::guard('admins')->user()->id;
 		$package->package_expiry_quarterly =$request->package_expiry_quarterly;
 		$package->package_expiry_half_yearly =$request->package_expiry_half_yearly;
+		$package->footage_tier =$request->footage_tier;
+		$package->display_for =$request->display_for;
 		$result=$package->save();
 		if($result){
 		  	 return back()->with('success','Package created successful');
@@ -101,7 +104,9 @@ class PackageController extends Controller
 							 'pacage_size'=>$request->pacage_size,
 							 'updated_at'=>date('Y-m-d H:i:s'),
 							 'package_expiry_quarterly'=>$request->package_expiry_quarterly,
-							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly
+							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly,
+							 'footage_tier'=>$request->footage_tier,
+							 'display_for'=>$request->display_for
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);
 		if($result){
@@ -144,7 +149,7 @@ class PackageController extends Controller
 				}
 			}
 		}
-		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier')->where('package_status', '=', 'Active')->get()->toArray();
+		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier')->where('display_for', 2)->orWhere('display_for', 3)->where('package_status', '=', 'Active')->get()->toArray();
 		if(count($all_package_list) > 0){
 			echo json_encode(["status"=>"success",'data'=>$all_package_list]);
 		} else {

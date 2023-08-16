@@ -6,12 +6,14 @@ CREATE TABLE IF NOT EXISTS `promo_codes` (
  `id` int NOT NULL AUTO_INCREMENT,
  `name` varchar(255) DEFAULT NULL,
  `type` varchar(255) DEFAULT NULL,
- `max_usage` varchar(255) DEFAULT NULL,
+ `max_usage` int DEFAULT NULL,
+ `total_applied_code` int DEFAULT NULL,
  `discount` varchar(255) DEFAULT NULL,
  `valid_upto_type` varchar(255) DEFAULT NULL,
  `valid_start_date` date DEFAULT NULL,
  `valid_till_date` date DEFAULT NULL,
  `status` enum('1','0') NOT NULL DEFAULT '1',
+ `will_apply_by` enum('1','2','3') DEFAULT NULL COMMENT '1- frontend, 2- backend, 3- all',
  PRIMARY KEY (`id`)
 );
 
@@ -67,3 +69,31 @@ ALTER TABLE `imagefootage_promotion` ADD `mobile_banner_image` VARCHAR(255) NULL
 
 -- Verify registration use token and expiry datetime
 ALTER TABLE `imagefootage_users` ADD `email_verify_token` VARCHAR(255) NULL, ADD `token_valid_date` DATETIME NULL;
+
+-- Verify registration use otp expiry datetime
+ALTER TABLE `imagefootage_users` ADD `otp_valid_date` DATETIME NULL;
+
+-- Static pages page slug value store
+ALTER TABLE `imagefootage_staticpages` ADD `page_slug` VARCHAR(255) NULL DEFAULT NULL;
+
+-- Settings table
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `status` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `imagefootage_usercontactus` ADD `contactus_subject` VARCHAR(255) NULL;
+
+CREATE TABLE IF NOT EXISTS `trending_words` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `count` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+-- Table : imagefootage_performa_invoices
+ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFAULT '1' COMMENT 'payment by 1- frontend 0- backend'  AFTER `status`;

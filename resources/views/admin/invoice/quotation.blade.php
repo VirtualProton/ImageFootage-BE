@@ -93,7 +93,8 @@
                                  <div class="form-group">
                                     <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
-                                    <input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="">
                                     <div>
                                     </div>
                                  </div>
@@ -103,60 +104,61 @@
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
                                     <span ng-show="product.image">
-                                    <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
-                                       <source type="video/mp4" src="<%product.footage%>"> 
-                                       Your browser does not support the video tag. 
-                                    </video>
-                                 </span>
+                                       <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
+                                          <source type="video/mp4" src="<%product.footage%>">
+                                          Your browser does not support the video tag.
+                                       </video>
+                                    </span>
                                  </div>
-                                 <div class="form-group">
+                                 <div class="form-group" ng-show="product.type=='Footage'">
+                                    <label for="pro_type"><%product.type%> Licence Type</label>
+                                    <select required="" class="form-control" ng-model="product.pro_type">
+                                       <option value="">--Select a Licence--</option>
+                                       <option value="1">Commercial (Promotion, Marketing, Advertising)</option>
+                                       <option value="2">Media Non Commercial (Doc, Education, News)</option>
+                                       <option value="3">Web Only</option>
+                                       <option value="4">All Media</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group" ng-show="product.type!='Music'">
                                     <label for="sub_total"><%product.type%> Size</label>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
                                        <option value="" selected="">--Select a size--</option>
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
-                                       <option value="Large">Large</option>
                                        <option value="X-Large">XX-Large</option>
-                                       <option value="Custom">Custom</option>
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
-                                       <option value="5K+" selected="">5K+</option>
-                                       <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option>
-                                    </select>
-                                    <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Music'">
-                                       <option value="" selected="">--Select a size--</option>
-                                       <option value="Small">Small</option>
-                                       <option value="Medium">Medium</option>
-                                       <option value="Large">Large</option>
-                                       <option value="Custom">Custom</option>
+                                       @foreach ($getFootageSizeDetails as $getFootageSizeDetail)
+                                       <option value="{{ $getFootageSizeDetail['type'] }}">{{ $getFootageSizeDetail['type'] }}</option>
+                                       @endforeach
+                                       <!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
                                     </select>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <label for="pro_type"><%product.type%> type</label>
                                     <select required="" class="form-control" ng-model="product.pro_type">
                                        <option value="">--Select a Type--</option>
-                                       <option value="right_managed">Right Managed</option>
                                        <option value="royalty_free">Royalty Free</option>
                                     </select>
                                  </div>
 
                                  <div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
                                     <label for="pro_type"><%product.type%> Licence type</label>
-
-
-                                    <select required="" class="form-control" ng-model="product.licence_type">
+                                    <select required="" class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)" ng-if="product.type=='Music'">
                                        <option value="">--Select a Licence Type--</option>
-                                       <option value="standard">Standard</option>
-                                       <option value="extended">Extended</option>
+                                       @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
+                                       <option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
+                                       @endforeach
+                                    </select>
+                                    <select required="" class="form-control" ng-model="product.licence_type" ng-if="product.type=='Image'">
+                                       <option value="">--Select a Licence Type--</option>
+                                       @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
+                                       <option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
+                                       @endforeach
                                     </select>
                                  </div>
-
-                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
-                                    <label for="licence_type"><%product.type%> Licence type</label>
-                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
-                                 </div>
-
                                  <div>
                                     <div>
                                        <div class="form-group">
@@ -247,8 +249,8 @@
                                        
                                     </div> */ ?>
                                  <div class="form-group">
-                                    <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value ="{{$userDetail->email}}">
-                                    <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value ="1">
+                                    <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
+                                    <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value="1">
                                     <label for="expiry">Expiry Period</label><br>
                                     <input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
                                     <input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
@@ -341,15 +343,17 @@
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="promoCode">Promo code</label>
-                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_sub">
+                                    <span id="span-message-sub"></span>
                                  </div>
+                                 <button class="btn btn-primary" type="button" id="btn-promocode-sub">Apply Promo Code1</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <!-- <div class="form-group">
                                     <label for="job_number">JOb Ref/Po #</label>
                                     <select  class="form-control" required="" name="subsc_po" ng-model="subsc_po">
                                        <option value="">--Select a Job PO--</option>
-                                       <!-- <option value="upload_po">Upload PO</option>
+                                        <option value="upload_po">Upload PO</option>
                                           <option value="email_approval">Email Approval</option> -->
                                  <!-- <option value="po_in_3days">PO Due In 3 Days</option>
                                        <option value="po_in_7days">PO Due In 7 Days</option>
@@ -371,7 +375,7 @@
                                        <input type="email" class="form-control"  id="subsc_email_id" name="subsc_email_id" ng-model="subsc_email_id" >
                                     </div> */ ?>
                                  <div class="form-group">
-                                    <input type="hidden" class="form-control"  id="subsc_email_id" name="subsc_email_id" ng-model="subsc_email_id" value ="{{$userDetail->email}}">
+                                    <input type="hidden" class="form-control" id="subsc_email_id" name="subsc_email_id" ng-model="subsc_email_id" value="{{$userDetail->email}}">
                                     <label for="expiry">Expiry Period</label><br>
                                     <input type="radio" ng-value="'7'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
                                     <input type="radio" ng-value="'30'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;30 Days
@@ -473,7 +477,7 @@
                                        <input type="email" class="form-control" id="download_email_id" name="download_email_id" ng-model="download_email_id" >
                                     </div> */ ?>
                                  <div class="form-group">
-                                    <input type="hidden" class="form-control" id="download_email_id" name="download_email_id" value ="{{$userDetail->email}}">
+                                    <input type="hidden" class="form-control" id="download_email_id" name="download_email_id" value="{{$userDetail->email}}">
                                     <label for="expiry">Expiry Period</label><br>
                                     <input type="radio" ng-value="'7'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
                                     <input type="radio" ng-value="'30'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;30 Days
@@ -514,19 +518,34 @@
       $("#downloadpoDate").datepicker();
       $("#subsc_poDate").datepicker();
    });
+   var getFootageSizeDetails = @json($getFootageSizeDetails);
+   var getMusicLicenceDetails = @json($getMusicLicenceDetails);
 
-   $( document ).ready(function() {
+   $(document).ready(function() {
 
       $('#btn-promocode').hide();
+      $('#btn-promocode-sub').hide();
 
       $('#promo_code').keyup(function() {
-         if($.trim(this.value).length > 0)
+         if ($.trim(this.value).length > 0)
             $('#btn-promocode').show()
-         else
+         else {
             $('#btn-promocode').hide()
+            let gsttax = angular.element($("#btn-promocode")).scope().tax;
+            let isGST = gsttax > 0 ? true : false;
+            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+            angular.element('#btn-promocode').scope().$apply();
+         }
+      });
+      $('#promo_code_sub').keyup(function() {
+         if($.trim(this.value).length > 0)
+            $('#btn-promocode-sub').show()
+         else {
+            $('#btn-promocode-sub').hide()
+         }
       });
 
-      $(document).on("click","#btn-promocode", function(e) {
+      $(document).on("click", "#btn-promocode", function(e) {
 
          e.preventDefault();
 
@@ -557,40 +576,96 @@
                   $('#span-message').removeAttr('class');
                   $('#span-message').text(result.message);
                   $('#span-message').addClass('text-success');
-                  $('#btn-promocode').hide();
-                  $("#promo_code").prop('disabled', true);
+                  // $('#btn-promocode').hide();
+                  // $("#promo_code").prop('disabled', true);
 
                   let discountValue = result.data.discount;
-                  let discountType  = result.data.type;
+                  let discountType = result.data.type;
 
-                  let currentAmount = $('#total_amount').val();
+                  // let currentAmount = $('#total_amount').val();
 
-                  let grossAmount = 0;
-                  let discount    = 0;
-                  if (discountType === 'flat') {
-                     discount = discountValue;
-                     grossAmount = currentAmount - discount;
-                  }
-                  if (discountType === 'percentage') {
-                     discount = (currentAmount*discountValue)/100;
-                     grossAmount = currentAmount - discount;
-                  }
-                  $('#total_amount').val(grossAmount);
-                  $('#promo_code_id').val(result.data.id);
-                  $('#total_amount').trigger('input');
-                  let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
-                  $('#amount-caption').text(messsage);
+                  // let grossAmount = 0;
+                  // let discount    = 0;
+                  // if (discountType === 'flat') {
+                  //    // discount = discountValue;
+                  //    // grossAmount = currentAmount - discount;
+                  //    angular.element($("#btn-promocode")).scope().checkThetax(true, 'GST', {'type' : 'flat', 'discount' : discountValue});
+                  //    angular.element('#btn-promocode').scope().$apply();
+                  // }
+                  // if (discountType === 'percentage') {
+                  //    discount = (currentAmount*discountValue)/100;
+                  //    grossAmount = currentAmount - discount;
+                  // }
+                  console.log(angular.element($("#btn-promocode")).scope().tax);
+                  let gsttax = angular.element($("#btn-promocode")).scope().tax;
+                  let isGST = gsttax > 0 ? true : false;
+                  angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
+                     'type': discountType,
+                     'discount': discountValue
+                  });
+                  angular.element('#btn-promocode').scope().$apply();
+
+                  // $('#total_amount').val(grossAmount);
+                  // $('#promo_code_id').val(result.data.id);
+                  // $('#total_amount').trigger('input');
+                  // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
+                  // $('#amount-caption').text(messsage);
 
                }
             }
          });
       });
 
-      $('.licence_type').each(function() {
-         CKEDITOR.replace($(this).prop('id'));
-      });
-   });
 
+      // $('.licence_type').each(function() {
+      //    CKEDITOR.replace($(this).prop('id'));
+      // });
+
+      $(document).on("click","#btn-promocode-sub", function(e) {
+
+         e.preventDefault();
+
+         let promoCode = $("#promo_code_sub").val();
+
+         $.ajax({
+            url: '{{ URL::to("admin/getPromoCode") }}',
+            type: 'POST',
+            data: {
+               promo_code: promoCode,
+            },
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+               alert("error");
+            },
+            success: function(result) {
+               if (result.status === 'error') {
+                  $('#span-message-sub').removeAttr('class');
+                  $('#span-message-sub').text(result.message);
+                  $('#span-message-sub').addClass('text-danger');
+                  return false;
+               }
+               if (result.status === 'success') {
+                  $('#span-message-sub').removeAttr('class');
+                  $('#span-message-sub').text(result.message);
+                  $('#span-message-sub').addClass('text-success');
+                  let discountValue = result.data.discount;
+                  let discountType  = result.data.type;
+                  console.log("=====")
+                  console.log(angular.element($("#btn-promocode-sub")).scope().subsc_total);
+                  console.log("=====")
+                  let gsttax = angular.element($("#btn-promocode-sub")).scope().tax;
+                  let isGST = gsttax > 0 ? true : false;
+                  console.log(discountType, discountValue)
+                  angular.element($("#btn-promocode-sub")).scope().checkThetax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element('#btn-promocode-sub').scope().$apply();
+               }
+            }
+         });
+      });
+
+   });
 </script>
 
 @stop

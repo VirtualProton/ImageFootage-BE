@@ -104,10 +104,23 @@
                       <select type="text" class="form-control" name="package_type" id="package_type" >
                       	<option value="Image" @if($package[0]['package_type']=='Image') selected="selected" @endif >Image</option>
                         <option value="Footage" @if($package[0]['package_type']=='Footage') selected="selected" @endif >Footage</option>
+                        <option value="Music" @if($package[0]['package_type']=='Music') selected="selected" @endif >Music</option>
                       </select>
                     </div>
                      @if ($errors->has('package_type'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
+                     @endif
+                     <div class="form-group" id="footageTierDiv">
+                      <label for="exampleInputEmail1">Package Type</label>
+                      <select type="text" class="form-control" name="footage_tier" id="footage_tier" >
+                      	<option value="1" @if($package[0]['footage_tier']=='1') selected="selected" @endif >Commercial</option>
+                        <option value="2" @if($package[0]['footage_tier']=='2') selected="selected" @endif >Media Non-commercial (Editorial)</option>
+                        <option value="3" @if($package[0]['footage_tier']=='3') selected="selected" @endif >Digital</option>
+                        <option value="4" @if($package[0]['footage_tier']=='4') selected="selected" @endif >Full RF Licence</option>
+                      </select>
+                    </div>
+                     @if ($errors->has('footage_tier'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
                      @endif
                     <div class="form-group">
                       <label for="exampleInputPassword1">Package Expiry in Months</label>
@@ -137,6 +150,17 @@
                     @if ($errors->has('package_expiry_year'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('package_expiry_year') }}</div>
                     @endif
+                    <div class="form-group">
+                      <label for="display_for">Display For</label>
+                      <select class="form-control" name="display_for" id="display_for" >
+                        <option value="3" @if($package[0]['display_for']=='3') selected="selected" @endif>All</option>
+                      	<option value="1" @if($package[0]['display_for']=='1') selected="selected" @endif>Frontend</option>
+                        <option value="2" @if($package[0]['display_for']=='2') selected="selected" @endif>Backend</option>
+                      </select>
+                    </div>
+                     @if ($errors->has('display_for'))
+                      		<div class="has_error" style="color:red;">{{ $errors->first('display_for') }}</div>
+                     @endif
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
@@ -192,6 +216,12 @@ $(document).ready(function ($) {
     $('#div_quarterly').show();
     $('#div_half_yearly').show();
 	}
+  var package_type = $("#package_type").val();
+  if(package_type =='Footage'){
+    $("#footageTierDiv").show();
+  } else {
+    $("#footageTierDiv").hide();
+  }
    // Example Validataion Standard Mode
     // ---------------------------------
     (function () {
@@ -266,6 +296,14 @@ $("#package_plan").change(function(){
     $('#div_half_yearly').show();
 	}
 	
+});
+$("#package_type").change(function(){
+	var pack_type=$(this).val();
+	if(pack_type =='Footage'){
+    $("#footageTierDiv").show();
+  } else {
+    $("#footageTierDiv").hide();
+  }
 });
 </script>
   @endsection

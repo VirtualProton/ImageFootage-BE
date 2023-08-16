@@ -42,15 +42,15 @@ class Common extends Model
         // } else {
             //$this->baseurl = 'https://imagefootage.com';
             $this->baseurl = $hostname;
-            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
-            $this->atomRequestKey = '3a1575abc728e8ccf9';
-            $this->atomResponseKey = '43af4ba2fbd68d327e';
-            $this->login = '106640';
-            $this->mode = 'live';
-            $this->password = '33719eef';
-            $this->clientcode = '007';
-            $this->atomprodId = 'CONCEPTUAL';
+            $this->keyRazorId = config('payments.keyRazorId');
+            $this->keyRazorSecret = config('payments.keyRazorSecret');
+            $this->atomRequestKey = config('payments.atomRequestKey');
+            $this->atomResponseKey = config('payments.atomResponseKey');
+            $this->login = config('payments.login');
+            $this->mode = config('payments.mode');
+            $this->password = config('payments.password');
+            $this->clientcode = config('payments.clientcode');
+            $this->atomprodId = config('payments.atomprodId');
         //}
     }
  public function getCurruncy($col=NULL,$value=NULL){
@@ -144,7 +144,7 @@ class Common extends Model
             'proforma_type'=>'1',
             'expiry_invoices'=>$data['expiry_date'],
             'created_by' => Auth::guard('admins')->user()->id,
-            'promo_code_id' => $data['promo_code_id'],
+            'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
             'cancelled_on' => $cancelled_on,
         );
@@ -182,7 +182,8 @@ class Common extends Model
                     'product_image' => $image,
                     'subtotal' => $eachproduct['price'],
                     'status' => "1",
-                    'product_web' => 'imagefootage'
+                    'product_web' => 'imagefootage',
+                    'licence_type' => $eachproduct['licence_type']
                 );
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }

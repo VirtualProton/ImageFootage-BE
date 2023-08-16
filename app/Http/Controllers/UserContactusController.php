@@ -23,32 +23,59 @@ use Aws\Exception\MultipartUploadException;
 
 use App\Http\TnnraoSms\TnnraoSms;
 use App\Mail\ChangePassword;
+use App\Helpers\Helper;
 
 class UserContactusController extends Controller
 {
     public function submitContactUs(Request $request){
+        $validator = \Validator::make(request()->all(), [
+            'user_name' => 'required|min:2',
+            'mobile_number' => 'required|digits:10',
+            'user_email' => 'required|email', 
+            'user_subject' => 'required',
+            'user_message' => 'required'
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json(['status' => false, 'message' => $validator->messages()], 200);
+        }
+        if(!Helper::disposableEmailCheck($request->input('user_email'))) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Disposable email addresses are not allowed.'
+            ]);
+        }
         $name=$request->user_name; 
         $mobile=$request->mobile_number;
         $user_email=$request->user_email;
         $user_message=$request->user_message;
+        $user_subject=$request->user_subject;
         $Usercontactus=new Usercontactus;
         $Usercontactus->contactus_name=$name;
         $Usercontactus->contactus_mobileno=$mobile;
         $Usercontactus->contactus_emailid=$user_email;
+        $Usercontactus->contactus_subject=$user_subject;
         $Usercontactus->contactus_message=$user_message;
         $Usercontactus->cart_added_on=date('Y-m-d H:i:s');
         $result=$Usercontactus->save();
 		$sm='info@imagefootage.com';
         if($result){
-			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message);
+			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message,'user_subject'=>$user_subject);
 				 Mail::send('contactusmailbody',$data,function($message) use($data,$sm) {
-				 $message->to('shilpi@conceptualpictures.com','Image Footage')
+                 $email_to = config('constants.ADMIN_EMAIL');
+				 $message->to($email_to,'Image Footage')
                      ->from($sm,'Admin Imagefootage')
                      ->subject('Contact us request from Image Footage');
 			 });
-            echo '{"status":"1","message":"Your message has been sent successfully"}';
+            return response()->json([
+                'status' => true,
+                'message' => 'Your message has been sent successfully.'
+            ], 200);
         }else{
-            echo '{"status":"0","message":"Some problem occured."}';
+            return response()->json([
+                'status' => false,
+                'message' => 'Some problem occured.'
+            ], 200);
         }
     }
 	public function uchangepassword(Request $request){
@@ -56,10 +83,6 @@ class UserContactusController extends Controller
 		$password=$request->password;
 		$cpassword=$request->cpassword;
 		$user_id=$request->userid;
-        $user = User::where('id','=',$user_id)->first();
-		$email= $user->email;
-		$name= $user->first_name;
-		
 		if(!isset($old_pass) && empty($old_pass)){
 			 return response()->json(['status'=>'0','message' => 'Old Password is required.'], 200);
 		}
@@ -72,15 +95,21 @@ class UserContactusController extends Controller
 		if($password!=$cpassword){
 			  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 		}
+        $user = User::where('id','=',$user_id)->first();
+        if(empty($user)){
+            return response()->json(['status'=>'0','message' => 'User not found.'], 404);
+        }
+		$email= $user->email;
+		$name= $user->first_name;
 		$credentials = ['email'=>$email, 'password'=>$old_pass];
           if (!$token = auth()->attempt($credentials)) {
-                return response()->json(['status'=>'0','message' => 'Old Password is wrong!!'], 200);
+                return response()->json(['status'=>'0','message' => 'Old Password is wrong.'], 200);
             }else{
                 $result=User::where('id',$user_id)->update(['password'=>Hash::make($password)]);
                 if($result){
                         $content = array('name' => $name, 'email' => $email);
                         Mail::to($content['email'])->send(new ChangePassword($content));
-                        return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
+                        return response()->json(['status'=>'1','message' => 'Password changed successfully.'], 200);
                 }else{
                         return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
                 }
@@ -270,12 +299,14 @@ class UserContactusController extends Controller
 		//  if($password!=$cpassword){
 		// 	  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
 		//  }
-		 $check_otp=User::where('email',$email)->where('otp',$otp)->first();
-                  
-        if(isset($check_otp) && !empty($check_otp)){
+		$user=User::where('email',$email)->where('otp',$otp)->first();
+
+        if(isset($user) && !empty($user)){
          $result=User::where('email',$email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
             // $result=User::where('email',$email)->update(['password'=>Hash::make($password)]);
             if($result){
+                $content = array('name' => $user->first_name, 'email' => $email);
+                Mail::to($content['email'])->send(new ChangePassword($content));
                 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
             }else{
                 return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);	
