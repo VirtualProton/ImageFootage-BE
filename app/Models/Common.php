@@ -22,6 +22,16 @@ use Carbon\Carbon;
 
 class Common extends Model
 {
+    public $baseurl;
+    public $keyRazorId;
+    public $keyRazorSecret;
+    public $atomRequestKey;
+    public $atomResponseKey;
+    public $login;
+    public $mode;
+    public $password;
+    public $clientcode;
+    public $atomprodId;
 
     public function __construct()
     {

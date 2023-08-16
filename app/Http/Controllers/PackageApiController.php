@@ -40,7 +40,7 @@ class PackageApiController extends Controller
 
     public function packageListv2()
     {
-        $all_package_list = Package::where('package_added_on', '<=', config('constants.GET_PACKAGE_LIST_DATE'))->where('display_for', 1)->get()->toArray();
+        $all_package_list = Package::where('package_added_on', '<=', config('constants.GET_PACKAGE_LIST_DATE'))->where('display_for', 1)->orWhere('display_for', 3)->get()->toArray();
         $packagelist = [];
         if (count($all_package_list) > 0) {
             foreach ($all_package_list as $eachpacage) {

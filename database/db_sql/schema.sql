@@ -97,3 +97,6 @@ CREATE TABLE IF NOT EXISTS `trending_words` (
 
 -- Table : imagefootage_performa_invoices
 ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFAULT '1' COMMENT 'payment by 1- frontend 0- backend'  AFTER `status`;
+
+-- Add column for display package in api or backend
+ALTER TABLE `imagefootage_packages`  ADD `display_for` 	tinyint NULL COMMENT '1=Frontend,2=Backend,3=All';
