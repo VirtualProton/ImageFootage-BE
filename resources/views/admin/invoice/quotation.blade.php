@@ -346,7 +346,7 @@
                                     <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_sub">
                                     <span id="span-message-sub"></span>
                                  </div>
-                                 <button class="btn btn-primary" type="button" id="btn-promocode-sub">Apply Promo Code1</button>
+                                 <button class="btn btn-primary" type="button" id="btn-promocode-sub">Apply Promo Code</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <!-- <div class="form-group">
@@ -444,11 +444,13 @@
                         </div>
                         <div class="row">
                            <div class="col-lg-12 col-md-12 col-xs-12">
-                              <div class="col-lg-6 col-md-6 col-xs-6">
+                           <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="promoCode">Promo code</label>
-                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+                                    <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_dis">
+                                    <span id="span-message-dis"></span>
                                  </div>
+                                 <button class="btn btn-primary" type="button" id="btn-promocode-dis">Apply Promo Code</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <!-- <div class="form-group">
@@ -525,6 +527,7 @@
 
       $('#btn-promocode').hide();
       $('#btn-promocode-sub').hide();
+      $('#btn-promocode-dis').hide();
 
       $('#promo_code').keyup(function() {
          if ($.trim(this.value).length > 0)
@@ -542,6 +545,13 @@
             $('#btn-promocode-sub').show()
          else {
             $('#btn-promocode-sub').hide()
+         }
+      });
+      $('#promo_code_dis').keyup(function() {
+         if($.trim(this.value).length > 0)
+            $('#btn-promocode-dis').show()
+         else {
+            $('#btn-promocode-dis').hide()
          }
       });
 
@@ -652,14 +662,50 @@
                   $('#span-message-sub').addClass('text-success');
                   let discountValue = result.data.discount;
                   let discountType  = result.data.type;
-                  console.log("=====")
-                  console.log(angular.element($("#btn-promocode-sub")).scope().subsc_total);
-                  console.log("=====")
                   let gsttax = angular.element($("#btn-promocode-sub")).scope().tax;
                   let isGST = gsttax > 0 ? true : false;
-                  console.log(discountType, discountValue)
-                  angular.element($("#btn-promocode-sub")).scope().checkThetax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
                   angular.element('#btn-promocode-sub').scope().$apply();
+               }
+            }
+         });
+      });
+
+      $(document).on("click","#btn-promocode-dis", function(e) {
+
+         e.preventDefault();
+
+         let promoCode = $("#promo_code_dis").val();
+
+         $.ajax({
+            url: '{{ URL::to("admin/getPromoCode") }}',
+            type: 'POST',
+            data: {
+               promo_code: promoCode,
+            },
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+               alert("error");
+            },
+            success: function(result) {
+               if (result.status === 'error') {
+                  $('#span-message-dis').removeAttr('class');
+                  $('#span-message-dis').text(result.message);
+                  $('#span-message-dis').addClass('text-danger');
+                  return false;
+               }
+               if (result.status === 'success') {
+                  $('#span-message-dis').removeAttr('class');
+                  $('#span-message-dis').text(result.message);
+                  $('#span-message-dis').addClass('text-success');
+                  let discountValue = result.data.discount;
+                  let discountType  = result.data.type;
+                  let gsttax = angular.element($("#btn-promocode-dis")).scope().tax;
+                  let isGST = gsttax > 0 ? true : false;
+                  angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element('#btn-promocode-dis').scope().$apply();
                }
             }
          });
