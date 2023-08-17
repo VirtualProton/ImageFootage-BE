@@ -489,6 +489,7 @@ app.controller(
                     subscription_subtotal: $scope.downloadprice,
                     GSTS: $scope.GSTD,
                     email: $("#download_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);
@@ -544,6 +545,7 @@ app.controller(
                     subscription_subtotal: $scope.subscriptionprice,
                     GSTS: $scope.GSTS,
                     email: $("#subsc_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);

@@ -616,7 +616,7 @@
                   angular.element('#btn-promocode').scope().$apply();
 
                   // $('#total_amount').val(grossAmount);
-                  // $('#promo_code_id').val(result.data.id);
+                  $('#promo_code_id').val(result.data.id);
                   // $('#total_amount').trigger('input');
                   // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
                   // $('#amount-caption').text(messsage);
@@ -666,6 +666,7 @@
                   let isGST = gsttax > 0 ? true : false;
                   angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
                   angular.element('#btn-promocode-sub').scope().$apply();
+                  $('#promo_code_id').val(result.data.id);
                }
             }
          });
@@ -706,6 +707,7 @@
                   let isGST = gsttax > 0 ? true : false;
                   angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
                   angular.element('#btn-promocode-dis').scope().$apply();
+                  $('#promo_code_id').val(result.data.id);
                }
             }
          });
