@@ -1138,6 +1138,7 @@ app.controller(
                 old_quotation: path,
                 image1: $("#file1")[0] ? $("#file1")[0].files[0] : '',
                 flag: "0",
+                promo_code_id: $("#promo_code_id").val(),
             };
 
             //   console.log($scope.quotation);
