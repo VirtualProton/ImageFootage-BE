@@ -694,7 +694,7 @@ app.controller(
                 price: "",
                 footage: "",
                 type: "Image",
-                licence_type:"",
+                licence_type: "",
             },
         ];
         $scope.promotion_type_var = "custom";
@@ -708,9 +708,14 @@ app.controller(
                 price: "",
                 footage: "",
                 type: "Image",
-                licence_type:"",
+                licence_type: "",
             };
-            $scope.promotion.product.push(newProduct);
+            $scope.quotation.product.push(newProduct);
+            setTimeout(function () {
+                CKEDITOR.replace(
+                    "licence_type-" + $scope.quotation.product.length
+                );
+            }, 0);
         };
 
         $scope.$on("fileProgress", function (e, progress) {
@@ -892,6 +897,7 @@ app.controller(
                 $scope.poDate = response.po_detail;
                 $scope.email = response.email_id;
                 $scope.expiry_time = response.expiry_invoices;
+                $scope.flag = response.flag;
                 $scope.quotation.product = [];
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
@@ -911,6 +917,11 @@ app.controller(
                         licence_type: value.licence_type,
                     };
                     $scope.quotation.product.push(obj);
+                    setTimeout(function () {
+                        CKEDITOR.replace(
+                            "licence_type-" + $scope.quotation.product.length
+                        );
+                    }, 0);
                 });
             },
             function (error) {
@@ -926,7 +937,7 @@ app.controller(
                 id: "",
                 image: "",
                 price: "",
-                licence_type:"",
+                licence_type: "",
             };
             $scope.quotation.product.push(newProduct);
             setTimeout(function () {
@@ -1054,7 +1065,8 @@ app.controller(
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
-            if($scope.quotation.product.length > 0) { // when multiple product (images) data available
+            if ($scope.quotation.product.length > 0) {
+                // when multiple product (images) data available
                 var subtotal = $scope.quotation.product;
                 //console.log(subtotal);
                 var subtotalvalue = 0;
@@ -1062,7 +1074,8 @@ app.controller(
                 for (var j = 0; j < subtotal.length; j++) {
                     subtotalvalue += Number(subtotal[j].price);
                 }
-            } else { // when no data available
+            } else {
+                // when no data available
                 var subtotalvalue = $scope.total_saved;
             }
             //var intialtotal = $scope.tax;
@@ -1075,8 +1088,9 @@ app.controller(
             // } else if (type == 'IGSTT') {
             //     total = (subtotalvalue * (18) / 100);
             // }
-            
-            if (tax_percent == true || $scope.is_gst_applied) { // when gst applied
+
+            if (tax_percent == true || $scope.is_gst_applied) {
+                // when gst applied
                 //total = intialtotal + total;
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
@@ -1138,7 +1152,7 @@ app.controller(
                 IGSTT: $scope.IGSTT,
                 email: $scope.email,
                 old_quotation: path,
-                image1: $("#file1")[0] ? $("#file1")[0].files[0] : '',
+                image1: $("#file1")[0] ? $("#file1")[0].files[0] : "",
                 flag: "0",
                 promo_code_id: $("#promo_code_id").val(),
             };
@@ -2027,7 +2041,6 @@ app.controller(
         };
 
         $scope.submitCustom = function () {
-
             $scope.quotation.product.map(function (editor, index) {
                 for (var i in CKEDITOR.instances) {
                     if (
