@@ -24,6 +24,7 @@
 												<label>UID</label>
 												<input type="text" name="uname" id="uname" class="form-control" value="{{$userDetail->first_name}} {{$userDetail->last_name}}" readonly>
 												<input type="hidden" name="uid" id="uid" class="form-control" value="{{$userDetail->id}}" readonly>
+												<input type="hidden" name="promo_code_id" id="promo_code_id" class="form-control" readonly>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
@@ -149,7 +150,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="is_gst_applied" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
@@ -182,8 +183,10 @@
 										<div class="col-lg-6 col-md-6 col-xs-6">
 											<div class="form-group">
 												<label for="promoCode">Promo code</label>
-												<input type="text" class="form-control" name="promoCode" ng-model="promoCode">
+												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code">
+												<span id="span-message"></span>
 											</div>
+											<button class="btn btn-primary" type="button" id="btn-promocode">Apply Promo Code</button>
 										</div>
 										<div class="col-lg-6 col-md-6 col-xs-6">
 											<!-- <div class="form-group">
@@ -214,8 +217,8 @@
 											<div class="form-group">
 												<input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
 												<label for="expiry">Expiry Period</label><br>
-												<input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-												<input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
+												<input type="radio" ng-value="7" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
+												<input type="radio" ng-value="30" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
 											</div>
 											<!-- </div>
 										</div>
@@ -366,6 +369,64 @@
 				}
 			});
 		})();
+
+		$('#btn-promocode').hide();
+		$('#promo_code').keyup(function() {
+			if ($.trim(this.value).length > 0)
+				$('#btn-promocode').show()
+			else {
+				$('#btn-promocode').hide()
+				let gsttax = angular.element($("#btn-promocode")).scope().tax;
+				let isGST = gsttax > 0 ? true : false;
+				angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+				angular.element('#btn-promocode').scope().$apply();
+			}
+      	});
+		$(document).on("click", "#btn-promocode", function(e) {
+
+			e.preventDefault();
+
+			let promoCode = $("#promo_code").val();
+
+			$.ajax({
+				url: '{{ URL::to("admin/getPromoCode") }}',
+				type: 'POST',
+				data: {
+					promo_code: promoCode,
+				},
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				error: function() {
+					alert("error");
+				},
+				success: function(result) {
+					// if error
+					if (result.status === 'error') {
+						$('#span-message').removeAttr('class');
+						$('#span-message').text(result.message);
+						$('#span-message').addClass('text-danger');
+						return false;
+					}
+					// if success
+					if (result.status === 'success') {
+						$('#span-message').removeAttr('class');
+						$('#span-message').text(result.message);
+						$('#span-message').addClass('text-success');
+						let discountValue = result.data.discount;
+						let discountType = result.data.type;
+						let gsttax = angular.element($("#btn-promocode")).scope().tax;
+						let isGST = gsttax > 0 ? true : false;
+						angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
+							'type': discountType,
+							'discount': discountValue
+						});
+						angular.element('#btn-promocode').scope().$apply();
+						$('#promo_code_id').val(result.data.id);
+					}
+				}
+			});
+		});
 
 	});
 

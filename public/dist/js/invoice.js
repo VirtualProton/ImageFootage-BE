@@ -866,6 +866,8 @@ app.controller(
         $scope.title = "Edit Quotation";
         $scope.quotation = {};
         $scope.tax = 0;
+        $scope.is_gst_applied = false;
+        $scope.total_saved = 0;
         var path = window.location.pathname.split("/").pop();
         $("#loading").show();
         $http({
@@ -881,14 +883,15 @@ app.controller(
                 $scope.quotation_type = response.invoice_type;
                 $scope.promoCode = response.promo_code;
                 $scope.tax = response.tax;
+                $scope.is_gst_applied = $scope.tax > 0 ? true : false;
                 $scope.total = response.total;
-                $scope.total = response.total;
+                $scope.total_saved = response.total;
                 $scope.po = response.job_number;
                 $scope.poDate = response.po_detail;
                 $scope.email = response.email_id;
                 $scope.expiry_time = response.expiry_invoices;
                 $scope.quotation.product = [];
-                var tax_selected = angular.fromJson(response.tax_selected);
+                var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
                 angular.forEach(tax_selected, function (value, key) {
                     $scope[key] = value;
@@ -1048,38 +1051,54 @@ app.controller(
             $scope.total = intialtotal + subtotal;
         };
 
-        $scope.checkThetax = function (tax_percent, type) {
-            var subtotal = $scope.quotation.product;
-            //console.log(subtotal);
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            var intialtotal = $scope.tax;
-            if (type == "SGST") {
-                total = (subtotalvalue * 6) / 100;
-            } else if (type == "CGST") {
-                total = (subtotalvalue * 6) / 100;
-            } else if (type == "IGST") {
-                total = (subtotalvalue * 12) / 100;
-            } else if (type == "IGSTT") {
-                total = (subtotalvalue * 18) / 100;
-            }
-
-            if (tax_percent == true) {
-                total = intialtotal + total;
-            } else {
-                if (intialtotal > total) {
-                    total = intialtotal - total;
-                } else {
-                    total = 0;
+        $scope.checkThetax = function (tax_percent, type, promo = {}) {
+            if($scope.quotation.product.length > 0) { // when multiple product (images) data available
+                var subtotal = $scope.quotation.product;
+                //console.log(subtotal);
+                var subtotalvalue = 0;
+                var total = 0;
+                for (var j = 0; j < subtotal.length; j++) {
+                    subtotalvalue += Number(subtotal[j].price);
                 }
+            } else { // when no data available
+                var subtotalvalue = $scope.total_saved;
+            }
+            //var intialtotal = $scope.tax;
+            // if (type == 'SGST') {
+            //     total = (subtotalvalue * (6) / 100);
+            // } else if (type == 'CGST') {
+            //     total = (subtotalvalue * (6) / 100);
+            // } else if (type == 'IGST') {
+            //     total = (subtotalvalue * (12) / 100);
+            // } else if (type == 'IGSTT') {
+            //     total = (subtotalvalue * (18) / 100);
+            // }
+            
+            if (tax_percent == true || $scope.is_gst_applied) { // when gst applied
+                //total = intialtotal + total;
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                // if (intialtotal > total) {
+                //     total = intialtotal - total;
+                // } else {
+                total = 0;
+                //}
             }
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
             $scope.total = total + subtotal;
+
+            if (promo.type == "flat") {
+                $scope.total = total + subtotal - promo.discount;
+            }
+
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.total = total + subtotal - discount;
+            }
         };
 
         $scope.submitQuotation = function () {
@@ -1117,8 +1136,9 @@ app.controller(
                 IGSTT: $scope.IGSTT,
                 email: $scope.email,
                 old_quotation: path,
-                image1: $("#file1")[0].files[0],
+                image1: $("#file1")[0] ? $("#file1")[0].files[0] : '',
                 flag: "0",
+                promo_code_id: $("#promo_code_id").val(),
             };
 
             //   console.log($scope.quotation);
