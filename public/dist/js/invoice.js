@@ -867,6 +867,7 @@ app.controller(
         $scope.quotation = {};
         $scope.tax = 0;
         $scope.is_gst_applied = false;
+        $scope.total_saved = 0;
         var path = window.location.pathname.split("/").pop();
         $("#loading").show();
         $http({
@@ -884,13 +885,13 @@ app.controller(
                 $scope.tax = response.tax;
                 $scope.is_gst_applied = $scope.tax > 0 ? true : false;
                 $scope.total = response.total;
-                $scope.total = response.total;
+                $scope.total_saved = response.total;
                 $scope.po = response.job_number;
                 $scope.poDate = response.po_detail;
                 $scope.email = response.email_id;
                 $scope.expiry_time = response.expiry_invoices;
                 $scope.quotation.product = [];
-                var tax_selected = angular.fromJson(response.tax_selected);
+                var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
                 angular.forEach(tax_selected, function (value, key) {
                     $scope[key] = value;
@@ -1051,12 +1052,16 @@ app.controller(
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
-            var subtotal = $scope.quotation.product;
-            //console.log(subtotal);
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
+            if($scope.quotation.product.length > 0) { // when multiple product (images) data available
+                var subtotal = $scope.quotation.product;
+                //console.log(subtotal);
+                var subtotalvalue = 0;
+                var total = 0;
+                for (var j = 0; j < subtotal.length; j++) {
+                    subtotalvalue += Number(subtotal[j].price);
+                }
+            } else { // when no data available
+                var subtotalvalue = $scope.total_saved;
             }
             //var intialtotal = $scope.tax;
             // if (type == 'SGST') {
@@ -1068,8 +1073,8 @@ app.controller(
             // } else if (type == 'IGSTT') {
             //     total = (subtotalvalue * (18) / 100);
             // }
-
-            if (tax_percent == true) {
+            
+            if (tax_percent == true || $scope.is_gst_applied) { // when gst applied
                 //total = intialtotal + total;
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
@@ -1131,7 +1136,7 @@ app.controller(
                 IGSTT: $scope.IGSTT,
                 email: $scope.email,
                 old_quotation: path,
-                image1: $("#file1")[0].files[0],
+                image1: $("#file1")[0] ? $("#file1")[0].files[0] : '',
                 flag: "0",
             };
 
