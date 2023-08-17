@@ -214,8 +214,8 @@
 											<div class="form-group">
 												<input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
 												<label for="expiry">Expiry Period</label><br>
-												<input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-												<input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
+												<input type="radio" ng-value="7" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
+												<input type="radio" ng-value="30" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
 											</div>
 											<!-- </div>
 										</div>
