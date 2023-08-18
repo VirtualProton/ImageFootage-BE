@@ -21,77 +21,80 @@ use App;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\ChangeMobileMail;
+use App\Mail\ChangeAddressEmail;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
-   public function userProfile($id){
+    public function userProfile($id)
+    {
 
-	   $send_data = [];
-        $userlist= User::where('id',$id)
-                    ->with('country')
-                    ->with('state')
-                    ->with('city')
-                    ->with(['plans'=> function ($query) {
-                        $query->whereIn('payment_status',['Completed','Transction Success'])
-                            //->whereRaw('package_products_count > downloaded_product')
-                            ->orderBy('id', 'desc')
-                            ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
-                            ->with(['downloads' => function($down_query){
-                                $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
-                            }]);
-                        }
-                    ]) 
-                    ->get()->toArray();
-       
-        if(count($userlist)>0){
-	          foreach($userlist as $user){
-                  $send_data['id'] =$user['id'];
-                  $send_data['first_name'] =$user['first_name'];
-                  $send_data['last_name'] =$user['last_name'];
-                  $send_data['title'] =$user['title'];
-                  $send_data['email'] =$user['email'];
-                  $send_data['user_name'] =$user['user_name'];
-                  $send_data['contact_owner'] =$user['contact_owner'];
-                  $send_data['mobile'] =$user['mobile'];
-                  $send_data['phone'] =$user['phone'];
-                  $send_data['address'] =$user['address'];
-                  $send_data['status'] =$user['status'];
-                  $send_data['type'] =$user['type'];
-                  $send_data['postal_code'] =$user['postal_code'];
-                  $send_data['plans'] =$user['plans'];
-                  $send_data['city'] =$user['city'];
-                  $send_data['state'] =$user['state'];
-                  $send_data['country'] =$user['country'];
-                  $send_data['address2'] =$user['address2'];
-                  $send_data['company'] =$user['company'];
+        $send_data = [];
+        $userlist = User::where('id', $id)
+            ->with('country')
+            ->with('state')
+            ->with('city')
+            ->with([
+                'plans' => function ($query) {
+                    $query->whereIn('payment_status', ['Completed', 'Transction Success'])
+                        //->whereRaw('package_products_count > downloaded_product')
+                        ->orderBy('id', 'desc')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                        ->with(['downloads' => function ($down_query) {
+                            $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
+                        }]);
+                }
+            ])
+            ->get()->toArray();
 
-                  $image_download=0;
-                  $footage_download=0;
-                  foreach($user['plans'] as $plan){
-                      if($plan['package_type']=='Image'){
-                          $image_download=1;
-                      }else if($plan['package_type']=='Footage'){
-                          $footage_download=1;
-                      }
-                  }
-                  $send_data['image_download'] = $image_download;
-                  $send_data['footage_download'] = $footage_download;
-              }
-                return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
-	   }else{
-				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
-	   }
-   }
+        if (count($userlist) > 0) {
+            foreach ($userlist as $user) {
+                $send_data['id'] = $user['id'];
+                $send_data['first_name'] = $user['first_name'];
+                $send_data['last_name'] = $user['last_name'];
+                $send_data['title'] = $user['title'];
+                $send_data['email'] = $user['email'];
+                $send_data['user_name'] = $user['user_name'];
+                $send_data['contact_owner'] = $user['contact_owner'];
+                $send_data['mobile'] = $user['mobile'];
+                $send_data['phone'] = $user['phone'];
+                $send_data['address'] = $user['address'];
+                $send_data['status'] = $user['status'];
+                $send_data['type'] = $user['type'];
+                $send_data['postal_code'] = $user['postal_code'];
+                $send_data['plans'] = $user['plans'];
+                $send_data['city'] = $user['city'];
+                $send_data['state'] = $user['state'];
+                $send_data['country'] = $user['country'];
+                $send_data['address2'] = $user['address2'];
+                $send_data['company'] = $user['company'];
 
-   # My Plan
-   public function myPlan(Request $request)
-   {
-    $send_data = [];
-    $range       = $request->input('range', 'today');
+                $image_download = 0;
+                $footage_download = 0;
+                foreach ($user['plans'] as $plan) {
+                    if ($plan['package_type'] == 'Image') {
+                        $image_download = 1;
+                    } else if ($plan['package_type'] == 'Footage') {
+                        $footage_download = 1;
+                    }
+                }
+                $send_data['image_download'] = $image_download;
+                $send_data['footage_download'] = $footage_download;
+            }
+            return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
+        } else {
+            return '{"status":"0","message":"Some problem occured.","data":"[]"}';
+        }
+    }
 
-    $startDate = null;
-    $endDate   = null;
+    # My Plan
+    public function myPlan(Request $request)
+    {
+        $send_data = [];
+        $range       = $request->input('range', 'today');
+
+        $startDate = null;
+        $endDate   = null;
 
         switch ($range) {
             case 'today':
@@ -111,81 +114,83 @@ class UserController extends Controller
                 $endDate = $request->input('end_date');
                 break;
         }
-    $userlist= User::where('id', $request->user_id)
-                ->with('country')
-                ->with('state')
-                ->with('city')
-                ->with(['plans'=> function ($query) use($startDate, $endDate) {
-                    $query->whereIn('payment_status',['Completed','Transction Success'])
+        $userlist = User::where('id', $request->user_id)
+            ->with('country')
+            ->with('state')
+            ->with('city')
+            ->with([
+                'plans' => function ($query) use ($startDate, $endDate) {
+                    $query->whereIn('payment_status', ['Completed', 'Transction Success'])
                         //->whereRaw('package_products_count > downloaded_product')
                         ->whereDate('created_at', '>=', $startDate)
                         ->whereDate('created_at', '<=', $endDate)
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name','package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
-                        ->with(['downloads' => function($down_query){
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                        ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }]);
+                }
+            ])
+            ->get()->toArray();
+
+        if (count($userlist) > 0) {
+            foreach ($userlist as $user) {
+                $send_data['id'] = $user['id'];
+                $send_data['first_name'] = $user['first_name'];
+                $send_data['last_name'] = $user['last_name'];
+                $send_data['title'] = $user['title'];
+                $send_data['email'] = $user['email'];
+                $send_data['user_name'] = $user['user_name'];
+                $send_data['contact_owner'] = $user['contact_owner'];
+                $send_data['mobile'] = $user['mobile'];
+                $send_data['phone'] = $user['phone'];
+                $send_data['address'] = $user['address'];
+                $send_data['status'] = $user['status'];
+                $send_data['type'] = $user['type'];
+                $send_data['postal_code'] = $user['postal_code'];
+                $send_data['plans'] = $user['plans'];
+                $send_data['city'] = $user['city'];
+                $send_data['state'] = $user['state'];
+                $send_data['country'] = $user['country'];
+                $send_data['address2'] = $user['address2'];
+                $send_data['company'] = $user['company'];
+
+                $image_download = 0;
+                $footage_download = 0;
+                foreach ($user['plans'] as $plan) {
+                    if ($plan['package_type'] == 'Image') {
+                        $image_download = 1;
+                    } else if ($plan['package_type'] == 'Footage') {
+                        $footage_download = 1;
                     }
-                ])
-                ->get()->toArray();
-
-    if(count($userlist)>0){
-          foreach($userlist as $user){
-              $send_data['id'] =$user['id'];
-              $send_data['first_name'] =$user['first_name'];
-              $send_data['last_name'] =$user['last_name'];
-              $send_data['title'] =$user['title'];
-              $send_data['email'] =$user['email'];
-              $send_data['user_name'] =$user['user_name'];
-              $send_data['contact_owner'] =$user['contact_owner'];
-              $send_data['mobile'] =$user['mobile'];
-              $send_data['phone'] =$user['phone'];
-              $send_data['address'] =$user['address'];
-              $send_data['status'] =$user['status'];
-              $send_data['type'] =$user['type'];
-              $send_data['postal_code'] =$user['postal_code'];
-              $send_data['plans'] =$user['plans'];
-              $send_data['city'] =$user['city'];
-              $send_data['state'] =$user['state'];
-              $send_data['country'] =$user['country'];
-              $send_data['address2'] =$user['address2'];
-              $send_data['company'] =$user['company'];
-
-              $image_download=0;
-              $footage_download=0;
-              foreach($user['plans'] as $plan){
-                  if($plan['package_type']=='Image'){
-                      $image_download=1;
-                  }else if($plan['package_type']=='Footage'){
-                      $footage_download=1;
-                  }
-              }
-              $send_data['image_download'] = $image_download;
-              $send_data['footage_download'] = $footage_download;
-          }
-            return '{"status":"1","message":"","data":'.json_encode($send_data).'}';
-   }else{
+                }
+                $send_data['image_download'] = $image_download;
+                $send_data['footage_download'] = $footage_download;
+            }
+            return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
+        } else {
             return '{"status":"0","message":"Some problem occured.","data":"[]"}';
-   }
-   }
-   public function getUserAddress(Request $request){
-	   $id=$request->Utype;
-	   $userlist=User::select('first_name','last_name','address','city','state','country','postal_code')->where('id',$id)->first();
-	   return '{"status":"1","message":"","data":'.json_encode($userlist).'}';
-	   
-   }
-   public function contributorProfile($id){
-	   $User=new Contributor();
-	   $userlist=$User->where('contributor_id',$id)->get()->toArray();
-	   
-	    if(count($userlist)>0){
-				return '{"status":"1","message":"","data":'.json_encode($userlist).'}';
-	   }else{
-				return '{"status":"0","message":"Some problem occured.","data":"[]"}';
-	   } 
-   }
-   
-	/*public function validUser(Request $request){
+        }
+    }
+    public function getUserAddress(Request $request)
+    {
+        $id = $request->Utype;
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->first();
+        return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
+    }
+    public function contributorProfile($id)
+    {
+        $User = new Contributor();
+        $userlist = $User->where('contributor_id', $id)->get()->toArray();
+
+        if (count($userlist) > 0) {
+            return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
+        } else {
+            return '{"status":"0","message":"Some problem occured.","data":"[]"}';
+        }
+    }
+
+    /*public function validUser(Request $request){
         $count = User::where('email','=',$request['user_email'])
             ->count();
         if($count>0){
@@ -195,46 +200,48 @@ class UserController extends Controller
         }
         return response()->json($result);
     }*/
-    public function validUser(Request $request){
+    public function validUser(Request $request)
+    {
         if (empty($request['email']['user_email'])) {
             return response()->json(['status' => false, 'message' => 'Email is required.'], 200);
         }
         $hostname = \Request::server('HTTP_REFERER');
-        $count = User::where('email','=',$request['email']['user_email'])->count();
-		if($count>0){
-            $randnum=rand(1000,10000);
-			$sm=$request['email']['user_email'];
-			$update_array=array('otp'=>$randnum);
-		    $result = User::where('email',$request['email']['user_email'])->update($update_array);
-			// $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-            $url = $hostname."/resetpassword/".$randnum."/".$request['email']['user_email'];
-            $data = array('url'=>$url,'email'=>$request['email']['user_email']);
-			Mail::send('email.forgotpasswordadmin', $data, function($message) use($data) {
-                     $message->to($data['email'], '')->subject('Image Footage Forget Password')
-                        ->from('admin@imagefootage.com', 'Imagefootage');
-				  });
-            $user = User::where('email',$request['email']['user_email'])->first();
+        $count = User::where('email', '=', $request['email']['user_email'])->count();
+        if ($count > 0) {
+            $randnum = rand(1000, 10000);
+            $sm = $request['email']['user_email'];
+            $update_array = array('otp' => $randnum);
+            $result = User::where('email', $request['email']['user_email'])->update($update_array);
+            // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
+            $url = $hostname . "/resetpassword/" . $randnum . "/" . $request['email']['user_email'];
+            $data = array('url' => $url, 'email' => $request['email']['user_email']);
+            Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
+                $message->to($data['email'], '')->subject('Image Footage Forget Password')
+                    ->from('admin@imagefootage.com', 'Imagefootage');
+            });
+            $user = User::where('email', $request['email']['user_email'])->first();
             $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile];
-            $result = ['status'=>1,'message'=>'Check your email for reset password link.','data'=>$user_data];
-        }else{
-            $result = ['status'=>0,'message'=>'Email Not Found.'];
+            $result = ['status' => 1, 'message' => 'Check your email for reset password link.', 'data' => $user_data];
+        } else {
+            $result = ['status' => 0, 'message' => 'Email Not Found.'];
         }
         return response()->json($result);
     }
-	public function validMobileUser(Request $request){
+    public function validMobileUser(Request $request)
+    {
         if (empty($request['mobile']['user_mobile'])) {
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
         $hostname = \Request::server('HTTP_REFERER');
-		$count = User::where('mobile','=',$request['mobile']['user_mobile'])->count();
-		if($count>0){
-			$otp = rand(100000,999999);
-			$update = User::where('mobile',$request['mobile']['user_mobile'])->update(['otp'=>$otp]);
-			if($update){
+        $count = User::where('mobile', '=', $request['mobile']['user_mobile'])->count();
+        if ($count > 0) {
+            $otp = rand(100000, 999999);
+            $update = User::where('mobile', $request['mobile']['user_mobile'])->update(['otp' => $otp]);
+            if ($update) {
 
-                $randnum=rand(1000,10000);
-                $sm=$request['mobile']['user_mobile'];
-                $user = User::where('mobile',$request['mobile']['user_mobile'])->first();
+                $randnum = rand(1000, 10000);
+                $sm = $request['mobile']['user_mobile'];
+                $user = User::where('mobile', $request['mobile']['user_mobile'])->first();
                 $user->otp = $randnum;
                 // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
                 // $url = $hostname."/resetpassword/".$randnum."/".$user->email;
@@ -245,48 +252,47 @@ class UserController extends Controller
                 //     });
                 // $maskEmail = Helper::obfuscate_email($user->email);
                 $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile];
-                $result = ['status'=>1,'message'=>"Your otp for forgot password is send on your registered mobile number. Please check.",'data' => $user_data];
+                $result = ['status' => 1, 'message' => "Your otp for forgot password is send on your registered mobile number. Please check.", 'data' => $user_data];
                 $user->save();
-				$message = "Your otp for forgot password is ".$otp." \n Thanks \n Imagefootage Team";
-				$smsClass = new TnnraoSms;
-				$smsClass->sendSms($message,$request['mobile']['user_mobile']);
-				return response()->json($result, 200);
-			}else{
-				return response()->json(['status'=>'0','message' => 'Error in sending otp again !!!'], 200);
-			}
-		}else{
-			return response()->json(['status'=>0,'message'=>'Mobile Number Not Found.']);
-		}
-	}
-	public function requestChangePassword(Request $request){
-		$count = User::where('mobile','=',$request['mobile'])->where('otp','=',$request['user_otp'])->count();
-		if($count>0){
-			$update = User::where('mobile',$request['user_mobile'])->update(['password'=>Hash::make($request['user_password'])]);
-			if($update){
-				return response()->json(['status'=>'1','message' => ' Password Succesfully changed, Please Log In using new password'], 200);
-			}else{
-				return response()->json(['status'=>'0','message' => 'Some problem occured !!!'], 200);
-			}
-			
-		}else{
-			return response()->json(['status'=>0,'message'=>'Enter correct otp.']);
-		}
-		
-	}
-    public function userOrders($id){
-        if($id>0){
-            $OrderData = Orders::with(['items'=>function($query){
-                    $query->with('product');
-                }])
-                ->where('user_id','=',$id)
-                ->whereIn('order_status',['Completed','Transction Success'])
-                ->orderBy('id','desc')
-                ->get()->toArray();
-            echo json_encode(['status'=>"success",'data'=>$OrderData]);
-        }else{
-            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+                $message = "Your otp for forgot password is " . $otp . " \n Thanks \n Imagefootage Team";
+                $smsClass = new TnnraoSms;
+                $smsClass->sendSms($message, $request['mobile']['user_mobile']);
+                return response()->json($result, 200);
+            } else {
+                return response()->json(['status' => '0', 'message' => 'Error in sending otp again !!!'], 200);
+            }
+        } else {
+            return response()->json(['status' => 0, 'message' => 'Mobile Number Not Found.']);
         }
-
+    }
+    public function requestChangePassword(Request $request)
+    {
+        $count = User::where('mobile', '=', $request['mobile'])->where('otp', '=', $request['user_otp'])->count();
+        if ($count > 0) {
+            $update = User::where('mobile', $request['user_mobile'])->update(['password' => Hash::make($request['user_password'])]);
+            if ($update) {
+                return response()->json(['status' => '1', 'message' => ' Password Succesfully changed, Please Log In using new password'], 200);
+            } else {
+                return response()->json(['status' => '0', 'message' => 'Some problem occured !!!'], 200);
+            }
+        } else {
+            return response()->json(['status' => 0, 'message' => 'Enter correct otp.']);
+        }
+    }
+    public function userOrders($id)
+    {
+        if ($id > 0) {
+            $OrderData = Orders::with(['items' => function ($query) {
+                $query->with('product');
+            }])
+                ->where('user_id', '=', $id)
+                ->whereIn('order_status', ['Completed', 'Transction Success'])
+                ->orderBy('id', 'desc')
+                ->get()->toArray();
+            echo json_encode(['status' => "success", 'data' => $OrderData]);
+        } else {
+            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+        }
     }
 
     # Purchase history
@@ -320,8 +326,8 @@ class UserController extends Controller
         }
 
         if ($request->user_id) {
-            $OrderData = Orders::with(['items'=>function($query) use ($mediaType, $licenseType){
-                $query->with(['product' => function ($productquery) use($mediaType, $licenseType){
+            $OrderData = Orders::with(['items' => function ($query) use ($mediaType, $licenseType) {
+                $query->with(['product' => function ($productquery) use ($mediaType, $licenseType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }
@@ -330,15 +336,15 @@ class UserController extends Controller
                     }
                 }]);
             }])
-            ->where('user_id','=',$userId)
-            ->whereIn('order_status',['Completed','Transction Success'])
-            ->whereDate('order_date', '>=', $startDate)
-            ->whereDate('order_date', '<=', $endDate)
-            ->orderBy('id','desc')
-            ->paginate(5)->toArray();
-            echo json_encode(['status'=>"success",'data'=>$OrderData]);
+                ->where('user_id', '=', $userId)
+                ->whereIn('order_status', ['Completed', 'Transction Success'])
+                ->whereDate('order_date', '>=', $startDate)
+                ->whereDate('order_date', '<=', $endDate)
+                ->orderBy('id', 'desc')
+                ->paginate(5)->toArray();
+            echo json_encode(['status' => "success", 'data' => $OrderData]);
         } else {
-            echo json_encode(['status'=>"fail",'data'=>'','message'=>'Some error happened']);
+            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }
     }
 
@@ -357,12 +363,12 @@ class UserController extends Controller
 
         if (count($data['profileData']) > 0 && count($data['tokenData']) > 0) {
             $userlist = User::where('id', '=', $data['tokenData']['Utype'])
-            ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code', 'address2')
-            ->with('country')
-            ->with('state')
-            ->with('city')
-            ->first();
-            if(empty($userlist)){
+                ->select('id', 'first_name', 'last_name', 'mobile', 'email', 'user_name', 'phone', 'address', 'country', 'state', 'city', 'postal_code', 'address2')
+                ->with('country')
+                ->with('state')
+                ->with('city')
+                ->first();
+            if (empty($userlist)) {
                 echo json_encode(['status' => "fail", 'message' => 'Profile not found', 'data' => '']);
             }
             $update_data = [
@@ -386,6 +392,12 @@ class UserController extends Controller
                 Mail::to($content['email'])->send(new ChangeMobileMail($content));
             }
 
+            if ($userlist['state'] != $data['profileData']['state'] || $userlist['city'] != $data['profileData']['city']) {
+                $content = array('name' => $userlist->first_name, 'email' => $userlist->email);
+                Mail::to($content['email'])->send(new ChangeAddressEmail($content));
+            }
+
+
             $result = clone $userlist;
             $result = $result->toArray();
             echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $result]);
@@ -408,15 +420,15 @@ class UserController extends Controller
      * Delete user account
      */
     public function deleteUserAccount($user_id, Request $request)
-    {   
+    {
         try {
             $user = auth('api')->user();
-    
-            if($user->id == $user_id){
+
+            if ($user->id == $user_id) {
                 $userToDelete = User::find($user->id);
-                if($userToDelete){
+                if ($userToDelete) {
                     $userToDelete->delete();
-                    return response()->json(["success"=>true, "message"=> "User deleted successfully."], 200);
+                    return response()->json(["success" => true, "message" => "User deleted successfully."], 200);
                 } else {
                     throw new Exception("User not found. Please try again later.");
                 }
@@ -424,9 +436,7 @@ class UserController extends Controller
                 throw new Exception("Invalid user id. Please try again later.");
             }
         } catch (\Exception $e) {
-            return response()->json(['error'=>true, "message"=> $e->getMessage()], 200);
+            return response()->json(['error' => true, "message" => $e->getMessage()], 200);
         }
-
     }
-
 }
