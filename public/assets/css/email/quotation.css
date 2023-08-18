@@ -104,7 +104,7 @@ header {
 /* Photo gallery start */
 .row{ clear: both; }
 .col-lg-4 {
-    width:30%;
+    width:28%;
     float:left;
     background-color: rgba(211, 211, 211, 0.5);
     padding: 10px;
@@ -115,7 +115,8 @@ header {
     padding: 10px;
 }
 .ml-1-p{
-    margin-left: 1%;
+    margin-left: 4.5%;
+    margin-right: 2%;
 }
 .mt-10-p{
     margin-top: 10px;
