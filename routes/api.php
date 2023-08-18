@@ -153,6 +153,7 @@ Route::group(['prefix' => 'v2'], function(){
     });
 });
 
+
 # Elasticsearch
 Route::get('/search/{query}', 'ElasticSearchController@search');
 Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');
