@@ -90,6 +90,7 @@
 													<option value="Small">Web</option>
 													<option value="Medium">Medium</option>
 													<option value="X-Large">XX-Large</option>
+													<option value="Custom">Custom</option>
 												</select>
 												<select class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
 													<option value="">--Select a size--</option>
@@ -103,29 +104,23 @@
 												<label for="pro_type"><%product.type%> type</label>
 												<select required="" class="form-control" ng-model="product.pro_type">
 													<option value="">--Select a Type--</option>
+													<option ng-if="flag == 2" value="right_managed">Right Managed</option>
 													<option value="royalty_free">Royalty Free</option>
 												</select>
 											</div>
 											<div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
-												<label for="pro_type"><%product.type%> Licence type</label>
-												<select required="" class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)" ng-if="product.type=='Music'">
-													<option value="">--Select a Licence Type--</option>
-													@foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
-													<option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
-													@endforeach
-												</select>
-												<select required="" class="form-control" ng-model="product.licence_type" ng-if="product.type=='Image'">
+												<label for="licence_type"><%product.type%> Licence type</label>
+												<select required="" class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)">
 													<option value="">--Select a Licence Type--</option>
 													@foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
 													<option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
 													@endforeach
 												</select>
 											</div>
-
-											<!-- <div class="form-group" ng-if="product.type=='Image'">
+											<div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
 												<label for="licence_type"><%product.type%> Licence type</label>
 												<textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
-											</div> -->
+											</div>
 											<div>
 												<div>
 													<div class="form-group">
@@ -381,7 +376,7 @@
 				angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
 				angular.element('#btn-promocode').scope().$apply();
 			}
-      	});
+		});
 		$(document).on("click", "#btn-promocode", function(e) {
 
 			e.preventDefault();
@@ -472,14 +467,11 @@
 			type: 'POST'
 		});
 	}
-	// $(function() {
-	// 	$("#poDate").datepicker();
-	// 	setTimeout(function() {
-	// 		$('.licence_type').each(function() {
-	// 			CKEDITOR.replace($(this).prop('id'));
-	// 		});
-	// 	});
-	// });
+	$(document).ready(function($) {
+		$('.licence_type').each(function() {
+			CKEDITOR.replace($(this).prop('id'));
+		});
+	});
 </script>
 
 @stop
