@@ -44,7 +44,7 @@
                     <p>Kind Attention: <span class="block-text"><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Product Description: <span class="block-text"><?php echo $quotation[0]['description'] ?></span></p>
+                    <p>Product Description: <span class="block-text">Images/Footage- <?php echo count($quotation); ?></span></p>
                 </div>
             </div>
             <?php
