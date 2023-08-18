@@ -2,30 +2,28 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Image-Footage</title>
-   <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-   <!-- <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap" rel="stylesheet"> -->
-   <link rel="stylesheet" href="assets/css/email/quotation.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image-Footage</title>
+    <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
 
 <body>
-   <!-- Header start -->
-   <header>
-      <div class="container">
-         <div class="header-text">
-            <h1 class="h1">hi</h1>
-            <span>this is an estimate</span>
-         </div>
-         <div class="header-logo">
-            <img src="images/conceptual_logo.png" alt="logo" width="1920" height="351">
-         </div>
-      </div>
-   </header>
-   <!-- Header end -->
-   <!-- Table paragraph section start -->
-   <section class="table-paragraph">
+    <!-- Header start -->
+    <header>
+        <div class="container">
+            <div class="header-text">
+                <h1 class="h1">hi</h1>
+                <span>this is an estimate</span>
+            </div>
+            <div class="header-logo">
+                <img src="images/conceptual_logo.png" alt="logo" width="1920" height="351">
+            </div>
+        </div>
+    </header>
+    <!-- Header end -->
+    <!-- Table paragraph section start -->
+    <section class="table-paragraph">
         <div class="container">
             <div class="client-info-top">
                 <div class="client-info-leftside">
@@ -38,7 +36,7 @@
                 <div class="client-info-rightside">
                     <p>Estimate No.: <span><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></p>
                     <p>Estimate Date: <span><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></span></p>
-                    <p>Place: <span>Hyderabad – Telangana</span></p>
+                    <p>Place: <span><?php echo $quotation[0]['cityname'] . "-" . $quotation[0]['statename'] ?></span></p>
                 </div>
             </div>
             <div class="client-info-bottom">
@@ -46,36 +44,57 @@
                     <p>Kind Attention: <span class="block-text"><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Product Description: <span class="block-text"><?php echo $quotation[0]['description'] ?></span></p> 
-                    <!-- verify -->
+                    <p>Product Description: <span class="block-text"><?php echo $quotation[0]['description'] ?></span></p>
                 </div>
             </div>
-            <div class="row">
-                <?php 
+            <?php
+            for ($i = 0; $i < count($quotation); $i++) {
                 $amount = 0;
-                if(!empty($quotation)){
-                    foreach($quotation as $index => $single_quotation){
-                        $amount += $single_quotation['subtotal'];
-                        if($index > 0) {
-                            $class = "col-lg-4 ml-1-p";
-                        } else {
+                if ($i % 3 == 0) {
+            ?>
+                    <div class="row">
+                        <?php
+                        if (!empty($quotation[$i])) {
+                            $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
+                            if ($i % 3 == 0) {
+                                $class = "col-lg-4";
+                            } else {
+                                $class = "col-lg-4 ml-1-p";
+                            } ?>
+                            <div class="<?php echo $class; ?>">
+                                <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
+                                <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
+                                <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
+                                <p>Cost: <span>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</span></p>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <?php
+                } else {
+                    if (!empty($quotation[$i])) {
+                        $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
+                        if ($i % 3 == 0) {
                             $class = "col-lg-4";
+                        } else {
+                            $class = "col-lg-4 ml-1-p";
                         } ?>
-                        <div class=<?php echo $class; ?>>
-                            <div><img src="<?php echo $single_quotation['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
-                            <p>Image ID: <?php echo $single_quotation['product_id'] ?></p>
-                            <p>Size: <?php echo $single_quotation['product_size'] ?></p>
-                            <p>Cost: <span>INR <?php echo $single_quotation['subtotal'] ?>/-</span></p>
+                        <div class="<?php echo $class; ?>">
+                            <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
+                            <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
+                            <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
+                            <p>Cost: <span>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</span></p>
                         </div>
-                  <?php  
-                  }
-                } 
-                ?>
-            </div>
+            <?php
+                    }
+                }
+            }
+            ?>
             <div class="row mb-0 amount-divs-row">
                 <div class="col-lg-12 amount-divs">
                     <div class="start">Amount (INR)</div>
-                    <div class="end"><?php echo $amount.'/-'; ?></div>
+                    <div class="end"><?php echo $amount . '/-'; ?></div>
                 </div>
             </div>
             <div class="row">
