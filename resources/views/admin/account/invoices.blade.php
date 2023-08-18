@@ -91,6 +91,7 @@
                                 <h5>Enable Subs Multi-logins ? : </h5>
                                 <h5>Preferred Contact Method : </h5>
                                 <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;" id="user_description">{{$user->description}}</textarea></h5>
+                                <a href="{{ url('admin/users') }}" class="btn btn-danger">Back</a>
                                 <button class="btn btn-primary" id="resetButton" onclick="saveDescription({{$user->id}})">Save</button>
                               </div>
                             </div>
