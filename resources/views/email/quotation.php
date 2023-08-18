@@ -29,71 +29,53 @@
         <div class="container">
             <div class="client-info-top">
                 <div class="client-info-leftside">
-                    <p>Customer Name: <span>mjunction Services Limited</span></p>
-                    <p>Address: <span>Godrej Waterside, 3rd Floor, Tower 1,
-                            Plot V Block DP, Sector V,</span>
-                        <span class="block-text">Salt Lake, Kolkata – 700091</span>
+                    <p>Customer Name: <span><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
+                    <p>Address: <span><?php echo $quotation[0]['address'] ?></span>
+                        <span class="block-text"><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></span>
                     </p>
-                    <p>Phone: <span>+91 - 33 6610 6100</span></p>
+                    <p>Phone: <span><?php echo $quotation[0]['mobile'] ?></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Estimate No.: <span>IF2021EST0003</span></p>
-                    <p>Estimate Date: <span>29.04.2020 </span></p>
+                    <p>Estimate No.: <span><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></p>
+                    <p>Estimate Date: <span><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></span></p>
                     <p>Place: <span>Hyderabad – Telangana</span></p>
                 </div>
             </div>
             <div class="client-info-bottom">
                 <div class="client-info-leftside">
-                    <p>Kind Attention: <span class="block-text">Name of Client Contact </span></p>
+                    <p>Kind Attention: <span class="block-text"><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Product Description: <span class="block-text">Images/Footage- 12</span></p>
+                    <p>Product Description: <span class="block-text"><?php echo $quotation[0]['description'] ?></span></p> 
+                    <!-- verify -->
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="col-lg-4 ml-1-p">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="col-lg-4 ml-1-p">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 mt-10-p">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="col-lg-4 ml-1-p">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="col-lg-4 ml-1-p">
-                  <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
+                <?php 
+                $amount = 0;
+                if(!empty($quotation)){
+                    foreach($quotation as $index => $single_quotation){
+                        $amount += $single_quotation['subtotal'];
+                        if($index > 0) {
+                            $class = "col-lg-4 ml-1-p";
+                        } else {
+                            $class = "col-lg-4";
+                        } ?>
+                        <div class=<?php echo $class; ?>>
+                            <div><img src="<?php echo $single_quotation['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
+                            <p>Image ID: <?php echo $single_quotation['product_id'] ?></p>
+                            <p>Size: <?php echo $single_quotation['product_size'] ?></p>
+                            <p>Cost: <span>INR <?php echo $single_quotation['subtotal'] ?>/-</span></p>
+                        </div>
+                  <?php  
+                  }
+                } 
+                ?>
             </div>
             <div class="row mb-0 amount-divs-row">
                 <div class="col-lg-12 amount-divs">
                     <div class="start">Amount (INR)</div>
-                    <div class="end">1,62,300</div>
+                    <div class="end"><?php echo $amount.'/-'; ?></div>
                 </div>
             </div>
             <div class="row">
@@ -101,51 +83,6 @@
                     <p>Add: GST @ 18%</p>
                 </div>
             </div>
-            <!-- <div class="gallery">
-                <div class="photo-gallery">
-                    <div><img src="images/list-img2.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 722860580</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="photo-gallery">
-                    <div><img src="images/list-img3.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 133655873</p>
-                    <p>Size: Vector</p>
-                    <p>Cost: <span>INR 3,500/-</span></p>
-                </div>
-                <div class="photo-gallery">
-                    <div><img src="images/list-img4.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 998439530</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 21,800/-</span></p>
-                </div>
-                <div class="photo-gallery">
-                    <div><img src="images/list-img5.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 491520973</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 21,800/-</span></p>
-                </div>
-                <div class="photo-gallery">
-                    <div><img src="images/list-img6.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 470802868</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 21,800/-</span></p>
-                </div>
-                <div class="photo-gallery">
-                    <div><img src="images/list-img7.jpg" alt="photo-gallery" width="344" height="208"></div>
-                    <p>Image ID: 926350058</p>
-                    <p>Size: Large</p>
-                    <p>Cost: <span>INR 21,800/-</span></p>
-                </div>
-                <div class="total-cost">
-                    <div>
-                        <p>Amount (INR)</p>
-                        <p>1,62,300</p>
-                    </div>
-                    <p>Add: GST @ 18%</p>
-                </div>
-            </div> -->
             <div class="licensing-terms">
                 <h2 class="h3">Licensing Terms: </h2>
                 <div class="licensing-condition">
