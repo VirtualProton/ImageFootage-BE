@@ -1,0 +1,309 @@
+/* css reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* common css */
+body {
+    font-family: 'Lato', sans-serif;
+    color: #000000;
+    font-weight: 400;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+    /* margin: 0 auto; */
+}
+
+/* Header start */
+header {
+    padding: 20px 0 0 0;
+}
+
+.header-text {
+    width: 55%;
+    display: inline-block;
+}
+
+.header-text .h1 {
+    color: #595959;
+    font-size: 80px;
+    font-weight: 900;
+}
+
+.header-text span {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.header-logo {
+    width: 43%;
+    display: inline-block;
+    margin-bottom: 23px;
+}
+
+.header-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Header end */
+
+/* Table paragraph section start */
+.table-paragraph {
+    padding: 20px 0 0 0;
+}
+
+.table-paragraph .container>div {
+    margin-bottom: 20px;
+}
+
+.table-paragraph .container>div:last-child {
+    margin-bottom: 0px;
+}
+
+/* client-info start */
+
+.client-info-leftside {
+    width: 67%;
+    display: inline-block;
+}
+
+.client-info-leftside p,
+.client-info-rightside p {
+    max-width: 350px;
+    font-size: 15px;
+    word-spacing: 4px;
+    line-height: 22px;
+}
+
+.client-info-leftside p span,
+.client-info-rightside p span {
+    font-weight: 900;
+}
+
+.block-text {
+    display: block;
+}
+
+.client-info-rightside {
+    width: 32%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* client-info end */
+
+/* Photo gallery start */
+.row{ clear: both; }
+.col-lg-4 {
+    width:30%;
+    float:left;
+    background-color: rgba(211, 211, 211, 0.5);
+    padding: 10px;
+    text-align: center;
+}
+.col-lg-12 {
+    width:100%;
+    padding: 10px;
+}
+.ml-1-p{
+    margin-left: 1%;
+}
+.mt-10-p{
+    margin-top: 10px;
+}
+.col-lg-4 p span{
+    font-weight: 900;
+}
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+.amount-divs-row {
+    background-color: rgba(89, 89, 89, 0.29) !important;
+    width: 100%;
+}
+.amount-divs {
+    margin-top: 1%;
+}
+.amount-divs .end {
+    font-weight: 900;
+    font-size: 20px;
+    display: inline-block;
+    width: 10%;
+}
+.amount-divs .start {
+    width: 90%;
+    font-size: 20px;
+    display: inline-block;
+}
+.photo-gallery {
+    display: inline-block;
+    /* width: calc((100% - 13px)/3); */
+    width: 150px;
+    margin-bottom: 5px;
+    background-color: rgba(211, 211, 211, 0.5);
+    padding: 10px;
+    text-align: center;
+    margin-right: 2px;
+}
+
+.photo-gallery img {
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+}
+
+.photo-gallery p {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.photo-gallery p span {
+    font-weight: 900;
+}
+
+/* Photo gallery end */
+
+/* total-cost start */
+.total-cost {
+    text-align: justify;
+}
+
+.total-cost>div {
+    background-color: rgba(89, 89, 89, 0.29);
+}
+
+.total-cost p {
+    width: 49.5%;
+    display: inline-block;
+    font-size: 20px;
+    padding: 15px 10px;
+}
+
+.total-cost>div p:nth-child(2) {
+    text-align: end;
+    font-weight: 900;
+}
+/* total-cost end */
+
+/* licensing-terms start */
+.licensing-terms .h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0563c1;
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+.licensing-terms .h4 {
+    font-size: 18px;
+    font-weight: 900;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+.licensing-terms p {
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 15px;
+    word-spacing: 4px;
+}
+
+.licensing-terms ul {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.licensing-terms ul li {
+    line-height: 25px;
+}
+
+/* licensing-terms end */
+
+/* Terms-of-payment start */
+.terms-of-payment ul {
+    margin-top: 15px;
+    list-style-type: auto;
+}
+
+.terms-of-payment ul li ol {
+    margin-left: 30px;
+    list-style-type: upper-alpha;
+}
+
+.terms-of-payment span {
+    font-weight: 900;
+}
+
+.terms-of-payment ul li a {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding-left: 5px;
+}
+
+/* Terms-of-payment end */
+
+/* Table paragraph section end */
+
+/* Footer start */
+footer {
+    padding: 20px 0 0 0;
+}
+
+.footer-left {
+    width: 62%;
+    display: inline-block;
+}
+
+.footer-left .h4 {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.footer-left p {
+    max-width: 350px;
+    word-spacing: 4px;
+    line-height: 17px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.footer-left p span {
+    display: block;
+}
+
+.footer-left a {
+    font-size: 12px;
+    color: #0563c1;
+    display: inline-block;
+}
+
+.footer-left a.info {
+    margin-right: 20px;
+}
+
+.footer-right {
+    width: 32%;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.footer-right .h2 {
+    color: #595959;
+    font-size: 40px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+/* Footer end */
