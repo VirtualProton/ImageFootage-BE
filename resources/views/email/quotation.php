@@ -52,42 +52,28 @@
                 $amount = 0;
                 if ($i % 3 == 0) {
             ?>
-                    <div class="row">
-                        <?php
-                        if (!empty($quotation[$i])) {
-                            $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
-                            if ($i % 3 == 0) {
-                                $class = "col-lg-4";
-                            } else {
-                                $class = "col-lg-4 ml-1-p";
-                            } ?>
-                            <div class="<?php echo $class; ?>">
-                                <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
-                                <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
-                                <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                                <p>Cost: <span>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</span></p>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                    <div class="row g-container">
                     <?php
-                } else {
-                    if (!empty($quotation[$i])) {
-                        $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
-                        if ($i % 3 == 0) {
-                            $class = "col-lg-4";
-                        } else {
-                            $class = "col-lg-4 ml-1-p";
-                        } ?>
+                }
+                if (!empty($quotation[$i])) {
+                    $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
+                    if ($i % 3 == 1) {
+                        $class = "col-lg-4 ml-1-p";
+                    } else {
+                        $class = "col-lg-4 ";
+                    } ?>
                         <div class="<?php echo $class; ?>">
                             <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
                             <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
                             <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
                             <p>Cost: <span>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</span></p>
                         </div>
+                    <?php
+                }
+                if ($i % 3 == 0) {
+                    ?>
+                    </div>
             <?php
-                    }
                 }
             }
             ?>
@@ -99,7 +85,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Add: GST @ 18%</p>
+                    <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                 </div>
             </div>
             <div class="licensing-terms">
@@ -164,7 +150,7 @@
                                 IFSC Code: <span>HDFC0001998</span>.</li>
                         </ol>
                     </li>
-                    <li>For Payment through Credit/Debit Card <a href="#">click here</a></li>
+                    <li>For Payment through Credit/Debit Card <a href="<?php echo $quotation[0]['payment_url']; ?>">click here</a></li>
                     <li>All disputes are subject to Hyderabad Jurisdiction.</li>
                 </ul>
             </div>
