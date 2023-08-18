@@ -57,13 +57,13 @@
                     <p>Size: Large</p>
                     <p>Cost: <span>INR 3,500/-</span></p>
                 </div>
-                <div class="col-lg-4 ml-10-p">
+                <div class="col-lg-4 ml-1-p">
                   <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
                     <p>Image ID: 722860580</p>
                     <p>Size: Large</p>
                     <p>Cost: <span>INR 3,500/-</span></p>
                 </div>
-                <div class="col-lg-4 ml-10-p">
+                <div class="col-lg-4 ml-1-p">
                   <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
                     <p>Image ID: 722860580</p>
                     <p>Size: Large</p>
@@ -77,13 +77,13 @@
                     <p>Size: Large</p>
                     <p>Cost: <span>INR 3,500/-</span></p>
                 </div>
-                <div class="col-lg-4 ml-10-p">
+                <div class="col-lg-4 ml-1-p">
                   <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
                     <p>Image ID: 722860580</p>
                     <p>Size: Large</p>
                     <p>Cost: <span>INR 3,500/-</span></p>
                 </div>
-                <div class="col-lg-4 ml-10-p">
+                <div class="col-lg-4 ml-1-p">
                   <div><img src="images/list-img2.jpg" alt="photo-gallery" width="200" height="108"></div>
                     <p>Image ID: 722860580</p>
                     <p>Size: Large</p>
