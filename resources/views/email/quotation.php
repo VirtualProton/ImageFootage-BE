@@ -52,13 +52,13 @@
                 $amount = 0;
                 if ($i % 3 == 0) {
             ?>
-                    <div class="row g-container">
+                    <div class="row">
                     <?php
                 }
                 if (!empty($quotation[$i])) {
                     $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
                     if ($i % 3 == 1) {
-                        $class = "col-lg-4 ml-1-p";
+                        $class = "col-lg-4 second-div";
                     } else {
                         $class = "col-lg-4 ";
                     } ?>
