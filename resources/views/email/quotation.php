@@ -5,6 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image-Footage</title>
+    <style>
+@font-face {
+    font-family: 'Lato', sans-serif;
+    src: url('fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Lato', sans-serif;
+    src: url('fonts/Lato-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Lato', sans-serif;
+    src: url('fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: bold;
+}
+    </style>
     <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
 
@@ -13,8 +33,8 @@
     <header>
         <div class="container">
             <div class="header-text">
-                <h1 class="h1">hi</h1>
-                <span>this is an estimate</span>
+                <h1 class="h1"><strong>hi</strong></h1>
+                <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
                 <img src="images/conceptual_logo.png" alt="logo" width="1920" height="351">
@@ -27,24 +47,24 @@
         <div class="container">
             <div class="client-info-top">
                 <div class="client-info-leftside">
-                    <p>Customer Name: <span><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
-                    <p>Address: <span><?php echo $quotation[0]['address'] ?></span>
-                        <span class="block-text"><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></span>
+                    <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></strong></p>
+                    <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
+                        <span class="block-text"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                     </p>
-                    <p>Phone: <span><?php echo $quotation[0]['mobile'] ?></span></p>
+                    <p>Phone: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Estimate No.: <span><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></p>
-                    <p>Estimate Date: <span><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></span></p>
-                    <p>Place: <span><?php echo $quotation[0]['cityname'] . "-" . $quotation[0]['statename'] ?></span></p>
+                    <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
+                    <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
+                    <p>Place: <span><strong><?php echo $quotation[0]['cityname'] . "-" . $quotation[0]['statename'] ?></strong></span></p>
                 </div>
             </div>
             <div class="client-info-bottom">
                 <div class="client-info-leftside">
-                    <p>Kind Attention: <span class="block-text"><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></p>
+                    <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Product Description: <span class="block-text">Images/Footage- <?php echo count($quotation); ?></span></p>
+                    <p>Product Description: <span class="block-text"><strong>Images/Footage- <?php echo count($quotation); ?></strong></span></p>
                 </div>
             </div>
             <?php
@@ -66,7 +86,7 @@
                             <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
                             <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
                             <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                            <p>Cost: <span>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</span></p>
+                            <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                         </div>
                     <?php
                 }
@@ -80,7 +100,7 @@
             <div class="row mb-0 amount-divs-row">
                 <div class="col-lg-12 amount-divs">
                     <div class="start">Amount (INR)</div>
-                    <div class="end"><?php echo $amount . '/-'; ?></div>
+                    <div class="end"><strong><?php echo $amount . '/-'; ?></strong></div>
                 </div>
             </div>
             <div class="row">
@@ -89,10 +109,10 @@
                 </div>
             </div>
             <div class="licensing-terms">
-                <h2 class="h3">Licensing Terms: </h2>
+                <h2 class="h3"><strong> Licensing Terms: </strong></h2>
                 <div class="licensing-condition">
-                    <h3 class="h4">Standard licenses</h3>
-                    <p>Most Stock photos, vectors, and illustrations come with a Standard license you may:</p>
+                    <h3 class="h4"><strong>Standard licenses</strong></h3>
+                    <p><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                     <ul>
                         <li>Reproduce up to 500,000 copies of the asset in all media, including product packaging,
                             printed marketing materials, digital documents, or software.</li>
@@ -106,7 +126,7 @@
                             to abide by the license terms.</li>
                         <li>Transfer the license to your client or employer.</li>
                     </ul>
-                    <p>With a Standard license, you may not:</p>
+                    <p><strong>With a Standard license, you may not:</strong></p>
                     <ul>
                         <li>Distribute the stand-alone file.</li>
                         <li>Create merchandise, templates, or other products for resale or distribution where the
@@ -118,15 +138,15 @@
                     </ul>
                 </div>
                 <div class="licensing-condition">
-                    <h3 class="h4">Enhanced /Extended licenses</h3>
-                    <p>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
-                        Premium Collection.</p>
-                    <p>With an Enhanced license, you may:</p>
+                    <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
+                    <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
+                        Premium Collection.</strong></p>
+                    <p><strong>With an Enhanced license, you may:</strong></p>
                     <ul>
                         <li>Use the asset with all the rights granted in the Standard license.</li>
                         <li>Reproduce the asset beyond the 500,000 copy/viewer restriction.</li>
                     </ul>
-                    <p>With an Enhanced license, you may not:</p>
+                    <p><strong>With an Enhanced license, you may not:</strong></p>
                     <ul>
                         <li>Distribute the stand-alone file.</li>
                         <li>Create merchandise, templates, or other products for resale or distribution where the
@@ -137,20 +157,20 @@
                 </div>
             </div>
             <div class="terms-of-payment licensing-terms">
-                <h3 class="h4">Terms of Payment: </h3>
+                <h3 class="h4"><strong>Terms of Payment: </strong></h3>
                 <ul>
-                    <li>License Rights are only assigned on issuance of a <span>Purchase Order</span> and <span>Upfront
-                            Commitment</span>.</li>
-                    <li>Payment can be made in favour of <span>M/s. Conceptual Pictures Worldwide Private
-                            Limited</span>.
+                    <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
+                            Commitment</strong></span>.</li>
+                    <li>Payment can be made in favour of <span><strong>M/s. Conceptual Pictures Worldwide Private
+                            Limited</strong></span>.
                         <ol>
                             <li>Through A/c. Payee Cheques/DD payable at Hyderabad</li>
-                            <li> RTGS/NEFT to <span>A/c. No. 50200000502220, HDFC Bank Ltd</span>, Vijay Nagar Branch,
+                            <li> RTGS/NEFT to <span><strong>A/c. No. 50200000502220, HDFC Bank Ltd</strong></span>, Vijay Nagar Branch,
                                 Hyderabad
-                                IFSC Code: <span>HDFC0001998</span>.</li>
+                                IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
                         </ol>
                     </li>
-                    <li>For Payment through Credit/Debit Card <a href="<?php echo $quotation[0]['payment_url']; ?>">click here</a></li>
+                    <li>For Payment through Credit/Debit Card <a href="<?php echo $quotation[0]['payment_url']; ?>"><strong>click here</strong></a></li>
                     <li>All disputes are subject to Hyderabad Jurisdiction.</li>
                 </ul>
             </div>
@@ -162,7 +182,7 @@
     <footer>
         <div class="container">
             <div class="footer-left">
-                <h2 class="h4">Image Footage</h2>
+                <h2 class="h4"><strong>Image Footage</strong></h2>
                 <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                     500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>

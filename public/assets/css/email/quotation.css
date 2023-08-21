@@ -112,7 +112,7 @@ header {
 }
 .col-lg-12 {
     width:100%;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
 }
 .second-div{
     margin-left: 3.5%;
@@ -127,9 +127,6 @@ header {
 .amount-divs-row {
     background-color: rgba(89, 89, 89, 0.29) !important;
     width: 100%;
-}
-.amount-divs {
-    margin-top: 1%;
 }
 .amount-divs .end {
     font-weight: 900;
@@ -153,18 +150,18 @@ header {
     margin-right: 2px;
 }
 
-.photo-gallery img {
-    width: 100%;
-    height: auto;
+.photo-gallery img, .col-lg-4 div img {
+    /* width: 100%; */
+    /* height: auto; */
     padding: 10px 20px;
 }
 
-.photo-gallery p {
+.photo-gallery p, .col-lg-4 p {
     margin-bottom: 5px;
     font-size: 15px;
 }
 
-.photo-gallery p span {
+.photo-gallery p span, .col-lg-4 p span {
     font-weight: 900;
 }
 
