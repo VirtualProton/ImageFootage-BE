@@ -232,15 +232,21 @@
                     // Create a label for the searched images
                     var label = document.createElement("label");
                     label.textContent = "Searched Images";
-                    label.className = "col-md-2 control-label";
+                    label.className = "col-sm-2 control-label";
+
 
                     // Append the label to the imagesContainer
                     imagesContainer.appendChild(label);
 
+                    var imageWrapperContainer = document.createElement("div");
+                    imageWrapperContainer.className = "col-sm-10"; // Set the column size
+
                     result.data.forEach(function(image) {
                         var imageWrapper = document.createElement("div");
-                        imageWrapper.className = "image-wrapper col-md-1";
+                        imageWrapper.className = "col-sm-1";
                         imageWrapper.style.marginBottom = "15px";
+                        imageWrapper.style.marginRight = "10px";
+
                         imageWrapper.style.display = "inline-block";
 
                         var checkboxDiv = document.createElement("div");
@@ -253,7 +259,7 @@
                         checkboxInput.style.transform = "scale(1.5)";
                         checkboxInput.style.position = "absolute";
                         checkboxInput.style.position = "absolute";
-                        checkboxInput.style.right = "19";
+                        checkboxInput.style.right = "-6";
                         checkboxInput.style.top = "0";
 
 
@@ -269,8 +275,9 @@
                         imageWrapper.appendChild(imgElement);
 
                         // Append the image wrapper to the images container
-                        imagesContainer.appendChild(imageWrapper);
+                        imageWrapperContainer.appendChild(imageWrapper);
                     });
+                    imagesContainer.appendChild(imageWrapperContainer);
 
                 } else {
                     imagesContainer.innerHTML = "";
