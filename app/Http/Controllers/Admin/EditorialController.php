@@ -28,7 +28,9 @@ class EditorialController extends Controller
      */
     public function index()
     {
-        //
+        $this->Editorial = new Editorial();
+        $editoriallist = $this->Editorial->getEditorialData();
+        return view('admin.editorial.index', compact('editoriallist'));
     }
 
     /**
@@ -38,7 +40,6 @@ class EditorialController extends Controller
      */
     public function create()
     {
-
         $title = "Add Editorial";
         return view('admin.editorial.create', compact('title'));
     }
