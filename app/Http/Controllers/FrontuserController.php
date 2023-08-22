@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Usercart;
-use App\Models\UserWishlist;
-use App\Models\Product;
-use App\Models\Contributor;
+use App\Models\{
+    Usercart,
+    UserWishlist,
+    Product,
+    Contributor,
+    ImageFootageWishlist,
+    User
+};
 use Illuminate\Support\Facades\Hash;
 use CORS;
 
@@ -20,6 +24,18 @@ use Stevebauman\Location\Facades\Location;
 
 class FrontuserController extends Controller {
 
+	public $userWishList, $productModel, $imageFootageWishlistModel, $userModel;
+	public function __construct(
+		UserWishlist $userWishList,
+		Product $product,
+		ImageFootageWishlist $imageFootageWishlist,
+		User $userModel
+	) {
+		$this->userWishListModel = $userWishList;
+		$this->productModel = $product;
+		$this->imageFootageWishlistModel = $imageFootageWishlist;
+		$this->userModel = $userModel;
+	}
 
     public function addtocart(Request $request){
         //$lub = new Lcobucci();
@@ -283,6 +299,36 @@ class FrontuserController extends Controller {
 			echo '{"status":"0","data":{},"message":"No wishlist items found."}';
 		}
 	}
+
+	/**
+	 * Retrieve user data and their wishlists for the Wishlist App (Version 2).
+	 *
+	 * This function takes a user's ID from the request and fetches their data,
+	 * including their wishlists and product counts. The result is returned as a JSON response.
+	 *
+	 * @param Request $request The HTTP request object containing user ID (Utype).
+	 *
+	 * @return void The function echoes a JSON response with user data or an error message.
+	 */
+	public function wishlistAppV2(Request $request) {
+		try {
+			if (!empty($request->Utype)) {
+				$userId = $request->Utype;
+				$userData = $this->userModel->with(['wishlists' => function($qry) {
+					$qry->with(['products'])->withCount('products');
+				}])
+				->withCount('wishlists')
+				->find($userId);
+
+				echo '{"status":"1","data":'.json_encode($userData, true).',"message":""}';
+			} else {
+				echo '{"status":"0","data":{},"message":"No user id passed."}';
+			}
+		} catch(\Exception $e) {
+			echo '{"status":"0","data":{},"message":"Something went wrong."}';
+		}
+	}
+
 	public function wishlistfs(Request $request){
         //print_r($request->all());
 		$user_id = $request['Utype'];

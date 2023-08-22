@@ -117,6 +117,7 @@ Route::group([
     Route::post('addto_wishlist', 'FrontuserController@addtoWishlist');
     Route::post('delete_wishlist_product', 'FrontuserController@deleteWishlistItem');
     Route::post('wishlist', 'FrontuserController@wishlist');
+    Route::post('wishlist-app-v2', 'FrontuserController@wishlistAppV2');
 	Route::post('wishlistfs', 'FrontuserController@wishlistfs');
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');

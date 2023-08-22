@@ -100,3 +100,31 @@ ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFA
 
 -- Add column for display package in api or backend
 ALTER TABLE `imagefootage_packages`  ADD `display_for` 	tinyint NULL COMMENT '1=Frontend,2=Backend,3=All';
+
+CREATE TABLE IF NOT EXISTS `imagefootage_wishlists` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` MEDIUMTEXT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `imagefootage_users_wishlist` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` BIGINT UNSIGNED,
+    `wishlist_id` BIGINT UNSIGNED,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES imagefootage_users(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`wishlist_id`) REFERENCES imagefootage_wishlists(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `imagefootage_wishlist_products` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `wishlist_id` BIGINT UNSIGNED,
+    `product_id` BIGINT UNSIGNED,
+    `type` ENUM('image', 'footage', 'music') NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`wishlist_id`) REFERENCES imagefootage_wishlists(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES imagefootage_products(`id`) ON DELETE CASCADE
+);
