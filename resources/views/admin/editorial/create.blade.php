@@ -64,8 +64,13 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Staus</label>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <input type="radio" name="status" value="1" /> Active
-                            <input type="radio" name="status" value="0" /> Inactive
+
+                            <select class="form-control" name="status" id="status">
+                                <option value="">Select</option>
+
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                         </div>
                     </div>
                 </div>

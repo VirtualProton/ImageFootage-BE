@@ -311,6 +311,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::resource('/editorial', 'EditorialController');
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
+    Route::get('/editorial/status/{status}/{id}', 'EditorialController@changeStatus');
 });
 
 Route::get('emailVerification', 'UserContactusController@emailVerification');

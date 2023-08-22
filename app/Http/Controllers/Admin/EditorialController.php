@@ -112,4 +112,14 @@ class EditorialController extends Controller
             return response()->json(['isValid' => true, 'data' => $product]);
         }
     }
+
+    public function changeStatus($status, $id)
+    {
+        $result = Editorial::where('id', $id)->update(array('status' => $status));
+        if ($result) {
+            return back()->with('success', 'Editorial status changed successfully.');
+        } else {
+            return back()->with('warning', 'Some problem occured.');
+        }
+    }
 }
