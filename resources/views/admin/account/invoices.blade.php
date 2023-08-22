@@ -44,6 +44,10 @@
                       </a>
                       
                     </li> -->
+
+                    <span style="float:right;">
+                      <a href="{{ url('admin/users') }}" class="btn btn-danger">Back</a>
+                    </span>
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">

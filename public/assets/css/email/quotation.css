@@ -109,6 +109,8 @@ header {
     background-color: rgba(211, 211, 211, 0.5);
     padding: 10px;
     text-align: center;
+    margin-bottom: 0.5% !important;
+    margin-top: 0 !important;
 }
 .col-lg-12 {
     width:100%;
@@ -122,11 +124,12 @@ header {
     font-weight: 900;
 }
 .mb-0 {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
 }
 .amount-divs-row {
-    background-color: rgba(89, 89, 89, 0.29) !important;
+    background-color: rgba(89, 89, 89, 0.29);
     width: 100%;
+    margin-bottom: 0 !important;
 }
 .amount-divs .end {
     font-weight: 900;
