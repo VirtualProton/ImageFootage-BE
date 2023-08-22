@@ -114,7 +114,7 @@
 
         <!-- /.box-body -->
         <div class="box-footer">
-        <a href="{{ URL::previous() }}">
+        <a href="{{ URL::to('admin/promo-codes') }}">
         <button type="button" class="btn btn-default">Cancel</button></a>
         <!-- <button type="button" class="btn btn-default">Cancel</button> -->
         {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
