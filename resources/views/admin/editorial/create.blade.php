@@ -14,6 +14,8 @@
             @include('admin.partials.message')
 
             <div class="box-body">
+                <input type="hidden" name="data_to_pass" id="data_to_pass" value="">
+
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
                     <div class="col-sm-4">
@@ -104,6 +106,10 @@
         var cancelButton2Div = document.getElementById("cancelButton");
         cancelButton2Div.style.display = "none";
 
+        $('#submitButton').click(function() {
+            prepareAndSubmitData();
+        });
+
         (function() {
             $('#adminform').formValidation({
                 framework: "bootstrap",
@@ -168,6 +174,22 @@
             return false;
         }
         return true;
+    }
+
+    function prepareAndSubmitData() {
+        var title = document.getElementById("title").value;
+        var search = document.getElementById("search").value;
+        var main_image_id = document.getElementById("main_image_id").value;
+
+        // Combine the data into an object
+        var dataToPass = {
+            title: title,
+            search: search,
+            main_image_id: main_image_id
+        };
+
+        // Set the value of the hidden input field
+        $('#data_to_pass').val(JSON.stringify(dataToPass));
     }
 
 

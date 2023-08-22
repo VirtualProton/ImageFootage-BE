@@ -58,12 +58,19 @@ class EditorialController extends Controller
             'selectedImages.required' => 'Please select at least one image.',
         ]);
 
+        $dataToPass = json_decode($request->input('data_to_pass'), true);
+
+        // Access individual values from the decoded array
+        $title = isset($dataToPass['title']) ? $dataToPass['title'] : null;
+        $search = isset($dataToPass['search']) ? $dataToPass['search'] : null;
+        $mainImageId = isset($dataToPass['main_image_id']) ? $dataToPass['main_image_id'] : null;
+
         // Create a new Editorial instance and fill it with the validated data
         $editorial = new Editorial();
-        $editorial->title = $request->input('title');
-        $editorial->search_term = $request->input('search');
+        $editorial->title = $title;
+        $editorial->search_term = $search;
         $editorial->type = $request->input('type');
-        $editorial->main_image_id = $request->input('main_image_id');
+        $editorial->main_image_id = $mainImageId;
 
         $selectedImages = $request->input('selectedImages', []);
         $commaSeparatedImages = implode(',', $selectedImages);
