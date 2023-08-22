@@ -129,6 +129,7 @@
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
                                        <option value="X-Large">XX-Large</option>
+                                       <option value="Custom">Custom</option>
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
@@ -142,6 +143,7 @@
                                     <label for="pro_type"><%product.type%> type</label>
                                     <select required="" class="form-control" ng-model="product.pro_type">
                                        <option value="">--Select a Type--</option>
+                                       <option value="right_managed">Right Managed</option>
                                        <option value="royalty_free">Royalty Free</option>
                                     </select>
                                  </div>
@@ -154,10 +156,10 @@
                                        @endforeach
                                     </select>
                                  </div>
-                                 <!-- <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
+                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
                                     <label for="licence_type"><%product.type%> Licence type</label>
                                     <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
-                                 </div> -->
+                                 </div>
                                  <div>
                                     <div>
                                        <div class="form-group">

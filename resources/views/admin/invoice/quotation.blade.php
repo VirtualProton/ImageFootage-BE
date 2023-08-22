@@ -127,6 +127,7 @@
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
                                        <option value="X-Large">XX-Large</option>
+                                       <option value="Custom">Custom</option>
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
@@ -444,7 +445,7 @@
                         </div>
                         <div class="row">
                            <div class="col-lg-12 col-md-12 col-xs-12">
-                           <div class="col-lg-6 col-md-6 col-xs-6">
+                              <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
                                     <label for="promoCode">Promo code</label>
                                     <input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_dis">
@@ -541,14 +542,14 @@
          }
       });
       $('#promo_code_sub').keyup(function() {
-         if($.trim(this.value).length > 0)
+         if ($.trim(this.value).length > 0)
             $('#btn-promocode-sub').show()
          else {
             $('#btn-promocode-sub').hide()
          }
       });
       $('#promo_code_dis').keyup(function() {
-         if($.trim(this.value).length > 0)
+         if ($.trim(this.value).length > 0)
             $('#btn-promocode-dis').show()
          else {
             $('#btn-promocode-dis').hide()
@@ -616,7 +617,7 @@
                   angular.element('#btn-promocode').scope().$apply();
 
                   // $('#total_amount').val(grossAmount);
-                  // $('#promo_code_id').val(result.data.id);
+                  $('#promo_code_id').val(result.data.id);
                   // $('#total_amount').trigger('input');
                   // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
                   // $('#amount-caption').text(messsage);
@@ -631,7 +632,7 @@
       //    CKEDITOR.replace($(this).prop('id'));
       // });
 
-      $(document).on("click","#btn-promocode-sub", function(e) {
+      $(document).on("click", "#btn-promocode-sub", function(e) {
 
          e.preventDefault();
 
@@ -661,17 +662,21 @@
                   $('#span-message-sub').text(result.message);
                   $('#span-message-sub').addClass('text-success');
                   let discountValue = result.data.discount;
-                  let discountType  = result.data.type;
+                  let discountType = result.data.type;
                   let gsttax = angular.element($("#btn-promocode-sub")).scope().tax;
                   let isGST = gsttax > 0 ? true : false;
-                  angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {
+                     'type': discountType,
+                     'discount': discountValue
+                  });
                   angular.element('#btn-promocode-sub').scope().$apply();
+                  $('#promo_code_id').val(result.data.id);
                }
             }
          });
       });
 
-      $(document).on("click","#btn-promocode-dis", function(e) {
+      $(document).on("click", "#btn-promocode-dis", function(e) {
 
          e.preventDefault();
 
@@ -701,11 +706,15 @@
                   $('#span-message-dis').text(result.message);
                   $('#span-message-dis').addClass('text-success');
                   let discountValue = result.data.discount;
-                  let discountType  = result.data.type;
+                  let discountType = result.data.type;
                   let gsttax = angular.element($("#btn-promocode-dis")).scope().tax;
                   let isGST = gsttax > 0 ? true : false;
-                  angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {'type' : discountType, 'discount' : discountValue});
+                  angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {
+                     'type': discountType,
+                     'discount': discountValue
+                  });
                   angular.element('#btn-promocode-dis').scope().$apply();
+                  $('#promo_code_id').val(result.data.id);
                }
             }
          });

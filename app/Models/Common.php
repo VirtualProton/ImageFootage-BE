@@ -584,11 +584,20 @@ class Common extends Model
             'package_id' => $packge->id,
             'expiry_invoices'=>$data['expiry_date'],
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
-
+            'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);   
         $id = DB::getPdo()->lastInsertId();
+
+        // Update Total applied code in promo code
+        if(!empty($data['promo_code_id'])) {
+            $promoCode   = PromoCode::find($data['promo_code_id']);
+            $currentUsed = $promoCode->total_applied_code;
+            $promoCode->total_applied_code = $currentUsed + 1;
+            $promoCode->save();
+        }
+        // End Update Total applied code in promo code
                    
         if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
             Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
@@ -736,12 +745,20 @@ public function save_download_proforma($data){
                 'package_id' => $packge->id,
                 'expiry_invoices'=>$data['expiry_date'],
                 //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
-
+                'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             );
 
             DB::table('imagefootage_performa_invoices')->insert($insert);   
             $id = DB::getPdo()->lastInsertId();
            
+            // Update Total applied code in promo code
+            if(!empty($data['promo_code_id'])) {
+                $promoCode   = PromoCode::find($data['promo_code_id']);
+                $currentUsed = $promoCode->total_applied_code;
+                $promoCode->total_applied_code = $currentUsed + 1;
+                $promoCode->save();
+            }
+            // End Update Total applied code in promo code
                
                 if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
                     Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);

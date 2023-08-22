@@ -91,6 +91,7 @@
                                 <h5>Enable Subs Multi-logins ? : </h5>
                                 <h5>Preferred Contact Method : </h5>
                                 <h5>Client Description : <textarea rows="7" class="form-control" style="width: 50%;height:auto;" id="user_description">{{$user->description}}</textarea></h5>
+                                <a href="{{ url('admin/users') }}" class="btn btn-danger">Back</a>
                                 <button class="btn btn-primary" id="resetButton" onclick="saveDescription({{$user->id}})">Save</button>
                               </div>
                             </div>
@@ -122,6 +123,11 @@
                             <li class="@if($active_tab=="others_tab") active @endif">
                               <a href="#other_invoices" role="tab" data-toggle="tab">
                                 <i class="fa fa-user"></i> Others
+                              </a>
+                            </li>
+                            <li class="@if($active_tab=="active_plans") active @endif">
+                              <a href="#active_plans" role="tab" data-toggle="tab">
+                                <i class="fa fa-user"></i> Current Active Plans
                               </a>
                             </li>
                           </ul>
@@ -694,6 +700,91 @@
                                 @include('admin.account.comment')
                               </div>
                             </div>
+
+                            <div class="tab-pane fade @if($active_tab=="active_plans") in active @endif" id="active_plans">
+                              <div class="box-body">
+                                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Subscription Plans</h4>
+                                  @if(!empty($data['active_subscription_plans']))
+                                  <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+                                    <thead>
+                                      <div class="form-group">
+                                        <h5 class="box-title"></h5>
+                                      </div>
+                                      <tr>
+                                        <th>Sl No</th>
+                                        <th>Plan Name</th>
+                                        <th>Plan Type</th>
+                                        <th>Plan Description</th>
+                                        <th>Price</th>
+                                        <th>Downloaded</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      @if(count($data['active_subscription_plans']) > 0)
+                                        @foreach($data['active_subscription_plans'] as $k=>$plan)
+                                          <tr role="row" class="odd">
+                                            <td>{{(($data['active_subscription_plans']->currentPage()-1)*10)+$k+1}}</td>
+                                            <td>{{$plan->package_name ?? ''}}</td>
+                                            <td>{{$plan->package_type ?? ''}}</td>
+                                            <td>{{$plan->package_description ?? ''}}</td>
+                                            <td>{{$plan->package_price ?? ''}}</td>
+                                            <td>{{$plan->downloaded_product ?? ''}}</td>
+                                          </tr>
+                                        @endforeach
+                                      <tr style="text-align: right;">
+                                        <td colspan="9">{{$data['active_subscription_plans']->render()}}</td>
+                                      </tr>
+                                      @else
+                                      <tr style="text-align: center;">
+                                        <td colspan="9"><strong> No Active Plan Yet ... </strong></td>
+                                      </tr>
+                                      @endif
+                                    </tbody>
+                                  </table>
+                                  @endif
+
+                                  <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Download Packs</h4>
+                                  @if(!empty($data['active_download_plans']))
+                                  <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
+                                    <thead>
+                                      <div class="form-group">
+                                        <h5 class="box-title"></h5>
+                                      </div>
+                                      <tr>
+                                        <th>Sl No</th>
+                                        <th>Pack Name</th>
+                                        <th>Pack Type</th>
+                                        <th>Pack Description</th>
+                                        <th>Price</th>
+                                        <th>Downloaded</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      @if(count($data['active_download_plans']) > 0)
+                                        @foreach($data['active_download_plans'] as $k=>$plan)
+                                          <tr role="row" class="odd">
+                                            <td>{{(($data['active_download_plans']->currentPage()-1)*10)+$k+1}}</td>
+                                            <td>{{$plan->package_name ?? ''}}</td>
+                                            <td>{{$plan->package_type ?? ''}}</td>
+                                            <td>{{$plan->package_description ?? ''}}</td>
+                                            <td>{{$plan->package_price ?? ''}}</td>
+                                            <td>{{$plan->downloaded_product ?? ''}}</td>
+                                          </tr>
+                                        @endforeach
+                                      <tr style="text-align: right;">
+                                        <td colspan="9">{{$data['active_download_plans']->render()}}</td>
+                                      </tr>
+                                      @else
+                                      <tr style="text-align: center;">
+                                        <td colspan="9"><strong> No Active Pack Yet ... </strong></td>
+                                      </tr>
+                                      @endif
+                                    </tbody>
+                                  </table>
+                                  @endif
+                              </div>
+                            </div>
+
                           </div>
                         </div>
                         </div>
