@@ -7,9 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Editorial;
 
-
-
-
 class EditorialController extends Controller
 {
     /**
@@ -28,8 +25,8 @@ class EditorialController extends Controller
      */
     public function index()
     {
-        $this->Editorial = new Editorial();
-        $editoriallist = $this->Editorial->getEditorialData();
+        $editorial = new Editorial();
+        $editoriallist = $editorial->getEditorialData();
         return view('admin.editorial.index', compact('editoriallist'));
     }
 
@@ -42,6 +39,18 @@ class EditorialController extends Controller
     {
         $title = "Add Editorial";
         return view('admin.editorial.create', compact('title'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $editorial = Editorial::find($id);
+        return view('admin.editorial.edit', compact('editorial'));
     }
 
     public function store(Request $request)
@@ -79,12 +88,57 @@ class EditorialController extends Controller
         $editorial->status = $request->input('status');
 
         if ($editorial->save()) {
-            return redirect("admin/editorial/create")->with("success", "Editorial has been created successfully !!!");
+            return redirect("admin/editorials")->with("success", "Editorial has been created successfully!");
         } else {
-            return redirect("admin/editorial/create")->with("error", "Due to some error, editorial is not registered yet. Please try again!");
+            return redirect("admin/editorials/create")->with("error", "Due to some error, editorial is not registered yet. Please try again!");
         }
-        // Redirect back or to a success page
-        return redirect()->back()->with('success', 'Editorial added successfully.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        // Validate the request data
+        $this->validate($request, [
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+
+        // Custom validation for selectedImages
+        $request->validate([
+            'selectedImages' => 'required|array|min:1',
+        ], [
+            'selectedImages.required' => 'Please select at least one image.',
+        ]);
+
+        $dataToPass = json_decode($request->input('data_to_pass'), true);
+
+        // Access individual values from the decoded array
+        $title = isset($dataToPass['title']) ? $dataToPass['title'] : null;
+        $search = isset($dataToPass['search']) ? $dataToPass['search'] : null;
+        $mainImageId = isset($dataToPass['main_image_id']) ? $dataToPass['main_image_id'] : null;
+
+        $editorial = Editorial::find($id);
+        $editorial->title = $title;
+        $editorial->search_term = $search;
+        $editorial->type = $request->input('type');
+        $editorial->main_image_id = $mainImageId;
+
+        $selectedImages = $request->input('selectedImages', []);
+        $commaSeparatedImages = implode(',', $selectedImages);
+        $editorial->selected_values = $commaSeparatedImages;
+        $editorial->status = $request->input('status');
+
+        if ($editorial->save()) {
+            return redirect("admin/editorials")->with("success", "Promo code has been updated successfully !");
+        } else {
+            return redirect("admin/editorials/$id/edit")->with("error", "Due to some error, Promo code is not updated yet. Please try again!");
+        }
     }
 
     public function getEditorialImages(Request $request)

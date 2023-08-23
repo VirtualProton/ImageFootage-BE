@@ -6,11 +6,11 @@
 
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Add Editorial</h3><a href="{{ URL::to('admin/editorials') }}" class="btn pull-right">Back</a> <!-- Need to update path after listing page is done.-->
+                <h3 class="box-title">Edit Editorial</h3><a href="{{ URL::to('admin/editorials') }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/editorials'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+            {!! Form::open(array('url' => URL::to('admin/editorials/'.$editorial['id']), 'method' => 'PUT', 'class'=>"form-horizontal",'id'=>'editorialform','files'=> true,'autocomplete'=>false)) !!}
             @include('admin.partials.message')
 
             <div class="box-body">
@@ -20,15 +20,16 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<?php echo $editorial['title'] ?>" disabled>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Search Term</label>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="search" id="search" placeholder="Search">
+                            <input type="text" class="form-control" name="search" id="search" placeholder="Search" value="<?php echo $editorial['search_term'] ?>" disabled>
                         </div>
                     </div>
                 </div>
@@ -37,16 +38,16 @@
                     <label for="inputPassword3" class="col-sm-2 control-label">Main Image ID</label>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="main_image_id" id="main_image_id" placeholder="Main Image ID">
+                            <input type="text" class="form-control" name="main_image_id" id="main_image_id" placeholder="Main Image ID" value="<?php echo $editorial['main_image_id'] ?>" disabled>
                         </div>
                     </div>
                 </div>
+                <?php $selected_values = explode(",", $editorial['selected_values']); ?>
                 <div class="form-group">
                     <div id="imagesContainer">
-
                     </div>
                 </div>
-                <br />
+
                 <div class="form-group" id="typeButton">
                     <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
@@ -54,8 +55,8 @@
                         <div class="form-group">
                             <select class="form-control" name="type" id="type">
                                 <option value="">Select</option>
-                                <option value="story">Story</option>
-                                <option value="collection">Collection</option>
+                                <option value="story" @if ($editorial['type']=="story" ) {{ 'selected' }} @endif>Story</option>
+                                <option value="collection" @if ($editorial['type']=="collection" ) {{ 'selected' }} @endif>Collection</option>
                             </select>
                         </div>
                     </div>
@@ -67,9 +68,8 @@
 
                             <select class="form-control" name="status" id="status">
                                 <option value="">Select</option>
-
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1" @if ($editorial['status']=="1" ) {{ 'selected' }} @endif>Active</option>
+                                <option value="0" @if ($editorial['status']=="0" ) {{ 'selected' }} @endif>Inactive</option>
                             </select>
                         </div>
                     </div>
@@ -77,10 +77,9 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a href="{{ URL::previous() }}">
-                        <button type="button" class="btn btn-default" id="cancelButton">Cancel</button></a>
-                    {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'submitButton')) !!}
-
-                    <button type="button" class="btn btn-succsess" onclick="findImages()" id="searchButton">Search</button>
+                        <button type="button" class="btn btn-default">Cancel</button></a>
+                    <!-- <button type="button" class="btn btn-default">Cancel</button> -->
+                    {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
                 </div>
                 <!-- /.box-footer -->
                 {!! Form::close() !!}
@@ -92,94 +91,16 @@
 <!-- /.content-wrapper -->
 @endsection
 @section('scripts')
-<script src=" {{ asset('js/formvalidation/formValidation.min.js') }}"></script>
+<script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
 <script>
-    $(document).ready(function() {
+    var phpImageUrls = <?php echo json_encode($selected_values); ?>;
 
-        var typeButtonDiv = document.getElementById("typeButton");
-        typeButtonDiv.style.display = "none";
-
-        var statusButtonDiv = document.getElementById("statusButton");
-        statusButtonDiv.style.display = "none";
-
-        var submitButton2Div = document.getElementById("submitButton");
-        submitButton2Div.style.display = "none";
-
-        var cancelButton2Div = document.getElementById("cancelButton");
-        cancelButton2Div.style.display = "none";
-
-        $('#submitButton').click(function() {
-            prepareAndSubmitData();
-        });
-
-        (function() {
-            $('#adminform').formValidation({
-                framework: "bootstrap",
-                button: {
-                    selector: '#submitButton',
-                    disabled: 'disabled'
-                },
-                icon: null,
-                fields: {
-
-                    type: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Type is required'
-                            }
-                        }
-                    },
-                    status: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Status is required'
-                            }
-                        }
-                    },
-                    'selectedImages[]': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Images selection is required'
-                            }
-                        }
-                    },
-
-
-
-                }
-            });
-        })();
-
-
+    $(document).ready(function($) {
+        findImages();
+        prepareAndSubmitData();
     });
-
-    function validateFields() {
-        var title = document.getElementById("title").value;
-        var search = document.getElementById("search").value;
-        var main_image_id = document.getElementById("main_image_id").value;
-
-        if (title === "" && search === "" && main_image_id === "") {
-
-            imagesContainer.innerHTML = "";
-
-            var label = document.createElement("label");
-            label.className = "col-sm-2 control-label";
-
-            imagesContainer.appendChild(label);
-
-            var message = document.createElement("p");
-            message.textContent = "Please select at least one field (Title, Search Term, or Main Image ID).";
-            message.style.color = "red"; // Set the text color to red
-
-            imagesContainer.appendChild(message);
-
-            return false;
-        }
-        return true;
-    }
 
     function prepareAndSubmitData() {
         var title = document.getElementById("title").value;
@@ -199,9 +120,7 @@
 
 
     function findImages() {
-        if (!validateFields()) {
-            return;
-        }
+
         var title = document.getElementById("title").value;
         var search = document.getElementById("search").value;
         var main_image_id = document.getElementById("main_image_id").value;
@@ -217,19 +136,12 @@
                 if (result.isValid == true) {
 
                     // Disabled field
-
                     var main_image_id = document.getElementById("main_image_id");
                     main_image_id.disabled = true;
                     var title = document.getElementById("title");
                     title.disabled = true;
                     var search = document.getElementById("search");
                     search.disabled = true;
-
-                    searchButton.style.display = "none"; // Hide the search button
-                    typeButton.style.display = "block";
-                    statusButton.style.display = "block";
-                    submitButton.style.display = "inline";
-                    cancelButton.style.display = "inline";
 
                     // Clear existing content from imagesContainer
                     imagesContainer.innerHTML = "";
@@ -266,7 +178,10 @@
                         checkboxInput.style.position = "absolute";
                         checkboxInput.style.right = "-6";
                         checkboxInput.style.top = "0";
-
+                        // Check if the image URL should be selected
+                        if (phpImageUrls.indexOf(image.product_thumbnail) !== -1) {
+                            checkboxInput.checked = true;
+                        }
 
                         var imgElement = document.createElement("img");
                         imgElement.src = image.product_main_image;

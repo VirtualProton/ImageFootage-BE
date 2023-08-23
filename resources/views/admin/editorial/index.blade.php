@@ -52,9 +52,9 @@
                                     <td><?php echo date('D, d M, Y', strtotime($editorial['updated_at'])) ?></td>
                                     <td>
                                         @if($editorial['status'] =='1')
-                                        <a href="{{ url('admin/editorial/status/0/'.$editorial['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
+                                        <a href="{{ url('admin/editorials/status/0/'.$editorial['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
                                         @elseif($editorial['status'] =='0')
-                                        <a href="{{ url('admin/editorial/status/1/'.$editorial['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
+                                        <a href="{{ url('admin/editorials/status/1/'.$editorial['id']) }}" title="Make Active"><i class="fa fa-star" aria-hidden="true" style="color:#F00;"></i></a>
                                         @endif
                                     </td>
                                 </tr>
