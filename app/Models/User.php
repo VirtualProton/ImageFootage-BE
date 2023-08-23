@@ -57,6 +57,9 @@ class User extends Authenticatable implements JWTSubject
         return UserPackage::where('user_id',$id)->get()->toArray();
     }
 
+    public function wishlists() {
+        return $this->belongsToMany(ImageFootageWishlist::class, 'imagefootage_users_wishlist', 'user_id', 'wishlist_id');
+    }
 
 
     // /**
