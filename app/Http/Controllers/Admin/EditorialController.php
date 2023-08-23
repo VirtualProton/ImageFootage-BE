@@ -141,6 +141,20 @@ class EditorialController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $editorial = Editorial::find($id);
+        $editorial->delete();
+        // redirect
+        return redirect('admin/editorials')->with('success', 'Successfully deleted the admin/agent!');
+    }
+
     public function getEditorialImages(Request $request)
     {
         $title = $request->input('title');
