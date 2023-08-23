@@ -106,9 +106,7 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('/get_states_list/{country_id?}','AuthController@getStatesList');
     Route::get('/get_cities_list/{state_id?}','AuthController@getCitiesList');
 
-    # Wishlist
-    Route::post('/share-wishlist','WishListController@shareWishListCreateLink');
-    Route::post('/accept-wishlist-link','WishListController@acceptWishlistFolder');
+    
 });
 
 Route::group([
@@ -142,6 +140,9 @@ Route::group([
     Route::get('getCurrencies','FrontuserController@getCurrencies');
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
 
+    # Wishlist
+    Route::post('/share-wishlist','WishListController@shareWishListCreateLink');
+    Route::post('/accept-wishlist-link','WishListController@acceptWishlistFolder');
 });
 
 

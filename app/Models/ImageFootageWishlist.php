@@ -12,4 +12,10 @@ class ImageFootageWishlist extends Model
     public function products() {
         return $this->belongsToMany(Product::class, 'imagefootage_wishlist_products', 'wishlist_id', 'product_id')->withPivot('type');
     }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'imagefootage_users_wishlist', 'wishlist_id', 'user_id')
+            ->withTimestamps();
+    }
 }
