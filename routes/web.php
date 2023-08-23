@@ -309,9 +309,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     // Route for block module editorial page
 
-    Route::resource('/editorial', 'EditorialController');
+    Route::resource('/editorials', 'EditorialController');
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
-    Route::get('/editorial/status/{status}/{id}', 'EditorialController@changeStatus');
+    Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
 });
 
 Route::get('emailVerification', 'UserContactusController@emailVerification');

@@ -9,13 +9,13 @@ class CreateImagefootageEditorialsTable extends Migration
     public function up()
     {
         Schema::create('imagefootage_editorials', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 255);
-            $table->string('search_term', 255);
+            $table->integer('id', true);
+            $table->string('title')->nullable();
+            $table->string('search_term')->nullable();
             $table->enum('type', ['story', 'collection']);
-            $table->unsignedBigInteger('main_image_id')->nullable();
+            $table->string('main_image_id', 50)->nullable();
             $table->text('selected_values')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

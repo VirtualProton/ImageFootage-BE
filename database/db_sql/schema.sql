@@ -101,30 +101,16 @@ ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFA
 -- Add column for display package in api or backend
 ALTER TABLE `imagefootage_packages`  ADD `display_for` 	tinyint NULL COMMENT '1=Frontend,2=Backend,3=All';
 
+
 CREATE TABLE IF NOT EXISTS `imagefootage_editorials` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) NOT NULL,
-  `search_term` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) DEFAULT NULL,
+  `search_term` VARCHAR(255) DEFAULT NULL,
   `type` ENUM('story', 'collection') NOT NULL,
-  `main_image_id` INT UNSIGNED NULL,
+  `main_image_id` VARCHAR(50) DEFAULT NULL,
   `selected_values` TEXT NULL,
-  `status` ENUM('active', 'inactive') DEFAULT 'active',
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
+  `status` TINYINT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT NULL,
+  `updated_at` TIMESTAMP DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
-
-ALTER TABLE imagefootage_editorials
-MODIFY main_image_id VARCHAR(50);
-
-ALTER TABLE imagefootage_editorials
-MODIFY title VARCHAR(255) NULL DEFAULT NULL;
-
-ALTER TABLE imagefootage_editorials
-MODIFY search_term VARCHAR(255) NULL DEFAULT NULL;
-
-ALTER TABLE imagefootage_editorials
-MODIFY main_image_id VARCHAR(50)  NULL DEFAULT NULL;
-
-ALTER TABLE imagefootage_editorials
-MODIFY status TINYINT DEFAULT 0;
