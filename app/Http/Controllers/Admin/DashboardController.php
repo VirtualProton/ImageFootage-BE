@@ -29,12 +29,14 @@ class DashboardController extends Controller
         $users = DB::table('imagefootage_users')->count();
         $products = DB::table('imagefootage_products')->count();
         $subs = DB::table('imagefootage_user_package') ->groupBy('user_id')->count();
-        $subspercentage = ($subs*100)/$users;
+        if ($subs) {
+            $subspercentage = ($subs*100)/$users;
+        }
 
         $data['orders'] = $orders;
         $data['products'] = $products;
         $data['users'] = $users;
-        $data['subspercentage'] = $subspercentage;
+        $data['subspercentage'] = $subspercentage ?? 0;
         return view('admin.dashboard.dashboard', compact('title'), ['data' => $data]);
 	}
 
