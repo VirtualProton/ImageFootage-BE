@@ -50,7 +50,15 @@ class EditorialController extends Controller
     public function edit($id)
     {
         $editorial = Editorial::find($id);
-        return view('admin.editorial.edit', compact('editorial'));
+        $selected_values = [];
+        if (!empty($editorial['selected_values'])) {
+            $editorial_selected_values = json_decode($editorial['selected_values']);
+            $editorial_selected_values = array($editorial_selected_values);
+            $images = Product::whereIn('product_id', $editorial_selected_values[0])->pluck('product_main_image');
+            $selected_values = $images->toArray();
+        }
+        $main_images_selected_values = explode(',', $editorial['main_image_selected_values']);
+        return view('admin.editorial.edit', compact('editorial', 'selected_values', 'main_images_selected_values'));
     }
 
     public function store(Request $request)
@@ -112,33 +120,40 @@ class EditorialController extends Controller
     {
         // Validate the request data
         $this->validate($request, [
+            'title' => 'required|max:100',
+            'search' => 'required|max:50',
             'type' => 'required',
             'status' => 'required',
+            'selectedMainImages' => 'required_without_all:main_image_upload',
+            'main_image_upload' => 'required_without_all:selectedMainImages|file|mimes:jpeg,png'
         ]);
 
         // Custom validation for selectedImages
         $request->validate([
             'selectedImages' => 'required|array|min:1',
         ], [
-            'selectedImages.required' => 'Please select at least one image.',
+            'selectedImages.required' => 'Please select at least one image from search result.',
         ]);
 
-        $dataToPass = json_decode($request->input('data_to_pass'), true);
-
-        // Access individual values from the decoded array
-        $title = isset($dataToPass['title']) ? $dataToPass['title'] : null;
-        $search = isset($dataToPass['search']) ? $dataToPass['search'] : null;
-        $mainImageId = isset($dataToPass['main_image_id']) ? $dataToPass['main_image_id'] : null;
-
         $editorial = Editorial::find($id);
-        $editorial->title = $title;
-        $editorial->search_term = $search;
+        $editorial->title = $request->input('title');
         $editorial->type = $request->input('type');
-        $editorial->main_image_id = $mainImageId;
 
+        // Selected Images
+        $editorial->search_term = $request->input('search');
         $selectedImages = $request->input('selectedImages', []);
-        $commaSeparatedImages = implode(',', $selectedImages);
-        $editorial->selected_values = $commaSeparatedImages;
+        $images = $editorial->getImageIdsFromUrls($selectedImages);
+        $editorial->selected_values = json_encode($images);
+
+        // Selected Main Images
+        $editorial->main_image_id = $request->input('main_image_id');
+        $selectedMainImages = $request->input('selectedMainImages', []);
+        $commaSeparatedMainImages = implode(
+            ',',
+            $selectedMainImages
+        );
+        $editorial->main_image_selected_values = $commaSeparatedMainImages;
+        $editorial->main_image_upload = $request->hasFile('main_image_upload');
         $editorial->status = $request->input('status');
 
         if ($editorial->save()) {
