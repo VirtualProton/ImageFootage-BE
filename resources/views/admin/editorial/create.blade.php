@@ -65,7 +65,6 @@
                                     <button type="button" class="btn btn-success" onclick="getMainImage()" id="search_main_image">Search</button>
                                 </span>
                             </div>
-                            <small class="text-muted">Image dimensions must be 415x315.</small>
                         </div>
                     </div>
                 </div>

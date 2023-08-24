@@ -65,7 +65,6 @@
                                     <button type="button" class="btn btn-success" onclick="getMainImage()" id="search_main_image">Search</button>
                                 </span>
                             </div>
-                            <small class="text-muted">Image dimensions must be 415x315.</small>
                         </div>
                     </div>
                 </div>
@@ -90,7 +89,7 @@
                             <small class="text-muted">Image dimensions must be 415x315</small>
                             <br />
                             <br />
-                            <img src="{{ URL::asset('uploads/editorialmainimage/' . $editorial['main_image_upload']) }}" alt="Editorial Main Image" width="200">
+                            <img src="{{ URL::asset('uploads/editorialmainimage/' . $editorial['main_image_upload']) }}" alt="Editorial Main Image" width="100">
 
                         </div>
                     </div>
