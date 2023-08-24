@@ -905,6 +905,20 @@
                         </select></p>
                         </div>
                     </div>
+                    <div class="form-group row" ng-show="payment_method=='chq'">
+                          <label for="" class="col-md-6">How many days : </label>
+                          <div class="col-md-6">
+                              <p>
+                                <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                                  <option value="">Select Days</option>
+                                  <option value="7">7 Days</option>
+                                  <option value="15">15 Days</option>
+                                  <option value="30">30 Days</option>
+                                  <option value="45">45 Days</option>
+                                </select>
+                              </p>
+                          </div>
+                      </div>
                     <div class="form-group row">
                         <label for="" class="col-md-6">Pan No. :</label>
                         <div class="col-md-6">
