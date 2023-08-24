@@ -101,18 +101,45 @@ ALTER TABLE `imagefootage_performa_invoices`  ADD `payment_by` INT NOT NULL DEFA
 -- Add column for display package in api or backend
 ALTER TABLE `imagefootage_packages`  ADD `display_for` 	tinyint NULL COMMENT '1=Frontend,2=Backend,3=All';
 
+CREATE TABLE IF NOT EXISTS `imagefootage_wishlists` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` MEDIUMTEXT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
-CREATE TABLE IF NOT EXISTS `imagefootage_editorials` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) DEFAULT NULL,
-  `type` ENUM('story', 'collection') NOT NULL,
-  `search_term` VARCHAR(255) DEFAULT NULL,
-  `selected_values` TEXT NULL,  
-  `main_image_id` VARCHAR(50) DEFAULT NULL,
-  `main_image_selected_values` TEXT NULL, 
-  `main_image_upload` VARCHAR(255) DEFAULT NULL, 
-  `status` TINYINT DEFAULT 0,
-  `created_at` TIMESTAMP DEFAULT NULL,
-  `updated_at` TIMESTAMP DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `imagefootage_users_wishlist` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` BIGINT UNSIGNED,
+    `wishlist_id` BIGINT UNSIGNED,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES imagefootage_users(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`wishlist_id`) REFERENCES imagefootage_wishlists(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `imagefootage_wishlist_products` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `wishlist_id` BIGINT UNSIGNED,
+    `product_id` BIGINT UNSIGNED,
+    `type` ENUM('image', 'footage', 'music') NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`wishlist_id`) REFERENCES imagefootage_wishlists(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES imagefootage_products(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `imagefootage_shared_wishlists_logs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `shared_by_user_id` BIGINT UNSIGNED,
+    `shared_wishlist_id` BIGINT UNSIGNED,
+    `shared_with_user_id` BIGINT UNSIGNED,
+    `new_wishlist_id` BIGINT UNSIGNED,
+    `shared_product_ids` TEXT,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`shared_by_user_id`) REFERENCES imagefootage_users(`id`),
+    FOREIGN KEY (`shared_wishlist_id`) REFERENCES imagefootage_wishlists(`id`),
+    FOREIGN KEY (`shared_with_user_id`) REFERENCES imagefootage_users(`id`),
+    FOREIGN KEY (`new_wishlist_id`) REFERENCES imagefootage_wishlists(`id`)
 );

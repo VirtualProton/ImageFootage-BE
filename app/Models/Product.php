@@ -24,6 +24,13 @@ class Product extends Model
         return $this->hasOne(ProductCategory::class,'category_id', 'product_category');
     }
 
+    public function wishlists() {
+        return $this->belongsToMany(ImageFootageWishlist::class, 'imagefootage_wishlist_products', 'product_id', 'wishlist_id');
+    }
+
+    public function getTypeAttribute() {
+        return $this->pivot->type;
+    }
 
     public function getProducts($keyword){
        // dd($keyword);
