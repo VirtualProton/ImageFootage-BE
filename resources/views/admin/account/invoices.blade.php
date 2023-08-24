@@ -27,7 +27,7 @@
                       </a>
                     </li>
                     <li class="@if($active_tab=="tab2") active @endif">
-                      <a href="#posts" role="tab" data-toggle="tab" onclick="activeSubscriptionTab()">
+                      <a href="#posts" role="tab" data-toggle="tab" onclick="loadFirstTab()">
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
@@ -109,6 +109,11 @@
                       <div class="box-body">
                         <div class="tabs">
                           <ul class="nav nav-tabs">
+                            <li class="@if($active_tab=="active_plans") active @endif">
+                              <a href="#active_plans_invoices" role="tab" data-toggle="tab">
+                                <i class="fa fa-user"></i> Current Active Plans
+                              </a>
+                            </li>
                             <li class="@if($active_tab=="subscription_tab") active @endif">
                               <a href="#subscription_invoices" role="tab" data-toggle="tab">
                                 <i class="fa fa-user"></i> Subscription Plan
@@ -127,11 +132,6 @@
                             <li class="@if($active_tab=="others_tab") active @endif">
                               <a href="#other_invoices" role="tab" data-toggle="tab">
                                 <i class="fa fa-user"></i> Others
-                              </a>
-                            </li>
-                            <li class="@if($active_tab=="active_plans") active @endif">
-                              <a href="#active_plans" role="tab" data-toggle="tab">
-                                <i class="fa fa-user"></i> Current Active Plans
                               </a>
                             </li>
                           </ul>
@@ -705,7 +705,7 @@
                               </div>
                             </div>
 
-                            <div class="tab-pane fade @if($active_tab=="active_plans") in active @endif" id="active_plans">
+                            <div class="tab-pane fade @if($active_tab=="active_plans") in active @endif" id="active_plans_invoices">
                               <div class="box-body">
                                   <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Subscription Plans</h4>
                                   @if(!empty($data['active_subscription_plans']))
@@ -1302,8 +1302,8 @@
     }
   });
 
-  function activeSubscriptionTab() {
-    $('a[href="#subscription_invoices"]').tab('show');
+  function loadFirstTab() {
+    $('a[href="#active_plans_invoices"]').tab('show');
   }
 
   function changestatus(statust, quotation_id, oldstatus) {
