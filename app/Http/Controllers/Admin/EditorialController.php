@@ -99,7 +99,15 @@ class EditorialController extends Controller
             $selectedMainImages
         );
         $editorial->main_image_selected_values = $commaSeparatedMainImages;
-        $editorial->main_image_upload = $request->hasFile('main_image_upload');
+
+        if ($request->hasFile('main_image_upload')) {
+            $image = $request->file('main_image_upload');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $file_path = '/uploads/editorialmainimage/';
+            $destinationPath = public_path($file_path);
+            $image->move($destinationPath, $name);
+            $editorial->main_image_upload = $name;
+        }
         $editorial->status = $request->input('status');
 
         if ($editorial->save()) {
@@ -153,7 +161,14 @@ class EditorialController extends Controller
             $selectedMainImages
         );
         $editorial->main_image_selected_values = $commaSeparatedMainImages;
-        $editorial->main_image_upload = $request->hasFile('main_image_upload');
+        if ($request->hasFile('main_image_upload')) {
+            $image = $request->file('main_image_upload');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $file_path = '/uploads/editorialmainimage/';
+            $destinationPath = public_path($file_path);
+            $image->move($destinationPath, $name);
+            $editorial->main_image_upload = $name;
+        }
         $editorial->status = $request->input('status');
 
         if ($editorial->save()) {

@@ -81,15 +81,21 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Main Image Upload</label>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <input type="file" class="form-control" name="main_image_upload" id="main_image_upload">
                             <small class="text-muted">Image dimensions must be 415x315</small>
+                            <br />
+                            <br />
+                            <img src="{{ URL::asset('uploads/editorialmainimage/' . $editorial['main_image_upload']) }}" alt="Editorial Main Image" width="200">
+
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group" id="statusButton">
                     <label for="inputPassword3" class="col-sm-2 control-label">Staus</label>
                     <div class="col-sm-4">
