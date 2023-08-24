@@ -29,7 +29,7 @@
                                     <th>SN</th>
                                     <th>Title</th>
                                     <th>Type</th>
-                                    <th>Product Id</th>
+                                    <th>Main Image Id</th>
                                     <th>No Of Selected Images</th>
                                     <th>Status</th>
                                     <th>Created Date</th>

@@ -6,15 +6,14 @@
 
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Add Editorial</h3><a href="{{ URL::to('admin/editorials') }}" class="btn pull-right">Back</a> <!-- Need to update path after listing page is done.-->
+                <h3 class="box-title">Add Editorial</h3><a href="{{ URL::to('admin/editorials') }}" class="btn pull-right">Back</a>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/editorials'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+            {!! Form::open(array('url' => URL::to('admin/editorials'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false,'enctype' => 'multipart/form-data')) !!}
             @include('admin.partials.message')
 
             <div class="box-body">
-                <input type="hidden" name="data_to_pass" id="data_to_pass" value="">
 
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
@@ -24,29 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Search Term</label>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="search" id="search" placeholder="Search">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Main Image ID</label>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="main_image_id" id="main_image_id" placeholder="Main Image ID">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div id="imagesContainer">
-
-                    </div>
-                </div>
-                <br />
                 <div class="form-group" id="typeButton">
                     <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
@@ -60,14 +37,65 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Search Term</label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" id="search" placeholder="Search Term">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" onclick="findImages()" id="search_term">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="imagesContainer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Main Image ID</label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="main_image_id" id="main_image_id" placeholder="Main Image ID">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" onclick="getMainImage()" id="search_main_image">Search</button>
+                                </span>
+                            </div>
+                            <small class="text-muted">Image dimensions must be 415x315.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="mainImagesContainer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <b>OR</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Main Image Upload</label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="file" class="form-control" name="main_image_upload" id="main_image_upload">
+                            <small class="text-muted">Image dimensions must be 415x315</small>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group" id="statusButton">
                     <label for="inputPassword3" class="col-sm-2 control-label">Staus</label>
                     <div class="col-sm-4">
                         <div class="form-group">
-
                             <select class="form-control" name="status" id="status">
                                 <option value="">Select</option>
-
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
@@ -79,8 +107,6 @@
                     <a href="{{ URL::previous() }}">
                         <button type="button" class="btn btn-default" id="cancelButton">Cancel</button></a>
                     {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'submitButton')) !!}
-
-                    <button type="button" class="btn btn-succsess" onclick="findImages()" id="searchButton">Search</button>
                 </div>
                 <!-- /.box-footer -->
                 {!! Form::close() !!}
@@ -99,22 +125,6 @@
 <script>
     $(document).ready(function() {
 
-        var typeButtonDiv = document.getElementById("typeButton");
-        typeButtonDiv.style.display = "none";
-
-        var statusButtonDiv = document.getElementById("statusButton");
-        statusButtonDiv.style.display = "none";
-
-        var submitButton2Div = document.getElementById("submitButton");
-        submitButton2Div.style.display = "none";
-
-        var cancelButton2Div = document.getElementById("cancelButton");
-        cancelButton2Div.style.display = "none";
-
-        $('#submitButton').click(function() {
-            prepareAndSubmitData();
-        });
-
         (function() {
             $('#adminform').formValidation({
                 framework: "bootstrap",
@@ -124,7 +134,13 @@
                 },
                 icon: null,
                 fields: {
-
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Title is required'
+                            }
+                        }
+                    },
                     type: {
                         validators: {
                             notEmpty: {
@@ -139,15 +155,6 @@
                             }
                         }
                     },
-                    'selectedImages[]': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Images selection is required'
-                            }
-                        }
-                    },
-
-
 
                 }
             });
@@ -156,89 +163,49 @@
 
     });
 
-    function validateFields() {
-        var title = document.getElementById("title").value;
-        var search = document.getElementById("search").value;
-        var main_image_id = document.getElementById("main_image_id").value;
-
-        if (title === "" && search === "" && main_image_id === "") {
-
-            imagesContainer.innerHTML = "";
-
-            var label = document.createElement("label");
-            label.className = "col-sm-2 control-label";
-
-            imagesContainer.appendChild(label);
-
-            var message = document.createElement("p");
-            message.textContent = "Please select at least one field (Title, Search Term, or Main Image ID).";
-            message.style.color = "red"; // Set the text color to red
-
-            imagesContainer.appendChild(message);
-
-            return false;
-        }
-        return true;
-    }
-
-    function prepareAndSubmitData() {
-        var title = document.getElementById("title").value;
-        var search = document.getElementById("search").value;
-        var main_image_id = document.getElementById("main_image_id").value;
-
-        // Combine the data into an object
-        var dataToPass = {
-            title: title,
-            search: search,
-            main_image_id: main_image_id
-        };
-
-        // Set the value of the hidden input field
-        $('#data_to_pass').val(JSON.stringify(dataToPass));
-    }
-
-
     function findImages() {
-        if (!validateFields()) {
+        var search = document.getElementById("search").value;
+        var type = document.getElementById("type").value; // Get the selected type
+
+        $('#type').on('change', function() {
+            var typeField = $(this);
+            var errorMessage = typeField.closest('.form-group').find('.help-block');
+            if (errorMessage.length > 0) {
+                errorMessage.remove();
+            }
+
+            var searchField = $('#search');
+            searchField.val(''); // Clear search term
+            var imagesContainer = $('#imagesContainer');
+            imagesContainer.empty(); // Clear search result
+        });
+
+        if (!type) {
+            // Display an error message
+            var typeField = document.getElementById("type");
+            var errorMessage = document.createElement("div");
+            errorMessage.className = "help-block";
+            errorMessage.textContent = "Type is required to search.";
+            errorMessage.style.color = "red";
+            typeField.parentNode.appendChild(errorMessage);
             return;
         }
-        var title = document.getElementById("title").value;
-        var search = document.getElementById("search").value;
-        var main_image_id = document.getElementById("main_image_id").value;
+
         $.ajax({
             url: "{{ url('admin/get-editorial-images')}}",
             type: "POST",
             data: {
-                title: title,
                 search: search,
-                main_image_id: main_image_id
             },
             success: function(result) {
                 if (result.isValid == true) {
 
-                    // Disabled field
-
-                    var main_image_id = document.getElementById("main_image_id");
-                    main_image_id.disabled = true;
-                    var title = document.getElementById("title");
-                    title.disabled = true;
-                    var search = document.getElementById("search");
-                    search.disabled = true;
-
-                    searchButton.style.display = "none"; // Hide the search button
-                    typeButton.style.display = "block";
-                    statusButton.style.display = "block";
-                    submitButton.style.display = "inline";
-                    cancelButton.style.display = "inline";
-
-                    // Clear existing content from imagesContainer
                     imagesContainer.innerHTML = "";
 
                     // Create a label for the searched images
                     var label = document.createElement("label");
-                    label.textContent = "Searched Images";
+                    label.textContent = "Result";
                     label.className = "col-sm-2 control-label";
-
 
                     // Append the label to the imagesContainer
                     imagesContainer.appendChild(label);
@@ -260,13 +227,18 @@
                         var checkboxInput = document.createElement("input");
                         checkboxInput.type = "checkbox";
                         checkboxInput.name = "selectedImages[]";
-                        checkboxInput.value = image.product_thumbnail;
+                        checkboxInput.value = image.product_main_image;
                         checkboxInput.style.transform = "scale(1.5)";
                         checkboxInput.style.position = "absolute";
                         checkboxInput.style.position = "absolute";
                         checkboxInput.style.right = "-6";
                         checkboxInput.style.top = "0";
 
+                        if (type === 'story') { // If type is 'story', automatically check the checkbox
+                            checkboxInput.checked = true;
+                            checkboxInput.style.display = "none";
+
+                        }
 
                         var imgElement = document.createElement("img");
                         imgElement.src = image.product_main_image;
@@ -290,9 +262,88 @@
                     // Create a label for the searched images
                     var label = document.createElement("label");
                     label.className = "col-sm-2 control-label";
+                    imagesContainer.appendChild(label);
+
+                    // Create a message element for displaying "No images found."
+                    var message = document.createElement("p");
+                    message.textContent = "No images found.";
+                    message.style.color = "red";
+                    imagesContainer.appendChild(message);
+                }
+            },
+        });
+    }
+
+    function getMainImage() {
+
+        var main_image_id = document.getElementById("main_image_id").value;
+        $.ajax({
+            url: "{{ url('admin/get-main-images')}}",
+            type: "POST",
+            data: {
+                main_image_id: main_image_id
+            },
+            success: function(result) {
+                if (result.isValid == true) {
+
+                    mainImagesContainer.innerHTML = "";
+                    var label = document.createElement("label");
+                    label.textContent = "Main Image Result";
+                    label.className = "col-sm-2 control-label";
 
                     // Append the label to the imagesContainer
-                    imagesContainer.appendChild(label);
+                    mainImagesContainer.appendChild(label);
+
+                    var mainImageWrapperContainer = document.createElement("div");
+                    mainImageWrapperContainer.className = "col-sm-10"; // Set the column size
+
+                    result.data.forEach(function(image) {
+                        var mainImageWrapper = document.createElement("div");
+                        mainImageWrapper.className = "col-sm-1";
+                        mainImageWrapper.style.marginBottom = "15px";
+                        mainImageWrapper.style.marginRight = "10px";
+
+                        mainImageWrapper.style.display = "inline-block";
+
+                        var checkboxMainDiv = document.createElement("div");
+                        checkboxMainDiv.className = "checkbox-wrapper";
+
+                        var checkboxMainInput = document.createElement("input");
+                        checkboxMainInput.type = "checkbox";
+                        checkboxMainInput.name = "selectedMainImages[]";
+                        checkboxMainInput.value = image.product_main_image;
+                        checkboxMainInput.style.transform = "scale(1.5)";
+                        checkboxMainInput.style.position = "absolute";
+                        checkboxMainInput.style.position = "absolute";
+                        checkboxMainInput.style.right = "-6";
+                        checkboxMainInput.style.top = "0";
+
+
+                        var mainImgElement = document.createElement("img");
+                        mainImgElement.src = image.product_main_image;
+                        mainImgElement.alt = image.product_title;
+                        mainImgElement.width = 100; // Set width
+                        mainImgElement.height = 100; // Set height
+
+                        // Append the checkbox input and img element to the checkbox div
+                        checkboxMainDiv.appendChild(checkboxMainInput);
+                        mainImageWrapper.appendChild(checkboxMainDiv);
+                        mainImageWrapper.appendChild(mainImgElement);
+
+                        // Append the image wrapper to the images container
+                        mainImageWrapperContainer.appendChild(mainImageWrapper);
+                    });
+                    mainImagesContainer.appendChild(mainImageWrapperContainer); // Append mainImageWrapperContainer
+
+                } else {
+                    mainImagesContainer.innerHTML = "";
+
+                    // Create a label for the searched images
+                    var label = document.createElement("label");
+                    label.className = "col-sm-2 control-label";
+
+                    // Append the label to the imagesContainer
+                    mainImagesContainer.appendChild(label);
 
                     // Create a message element for displaying "No images found."
                     var message = document.createElement("p");
@@ -300,7 +351,7 @@
                     message.style.color = "red"; // Set the text color to red
 
                     // Append the message to the imagesContainer
-                    imagesContainer.appendChild(message);
+                    mainImagesContainer.appendChild(message); // Append message
                 }
             },
         });

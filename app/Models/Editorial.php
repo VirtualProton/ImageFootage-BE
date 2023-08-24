@@ -13,4 +13,10 @@ class Editorial extends Model
     {
         return Editorial::orderBy('id', 'DESC')->get()->toArray();
     }
+
+    public static function getImageIdsFromUrls($imageUrls)
+    {
+        $images = Product::whereIn('product_main_image', $imageUrls)->pluck('product_id');
+        return $images;
+    }
 }
