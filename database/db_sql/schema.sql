@@ -143,3 +143,18 @@ CREATE TABLE IF NOT EXISTS `imagefootage_shared_wishlists_logs` (
     FOREIGN KEY (`shared_with_user_id`) REFERENCES imagefootage_users(`id`),
     FOREIGN KEY (`new_wishlist_id`) REFERENCES imagefootage_wishlists(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `imagefootage_editorials` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) DEFAULT NULL,
+  `type` ENUM('story', 'collection') NOT NULL,
+  `search_term` VARCHAR(255) DEFAULT NULL,
+  `selected_values` TEXT NULL,  
+  `main_image_id` VARCHAR(50) DEFAULT NULL,
+  `main_image_selected_values` TEXT NULL, 
+  `main_image_upload` VARCHAR(255) DEFAULT NULL, 
+  `status` TINYINT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT NULL,
+  `updated_at` TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
