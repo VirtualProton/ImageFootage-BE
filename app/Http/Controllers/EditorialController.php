@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Editorial;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -11,51 +12,52 @@ class EditorialController extends Controller
     public function editorialListv2()
     {
         $editoriallist = [];
-        //$editoriallist = Editorial::get()->toArray();
+        $editoriallist = Editorial::all();
 
-        // Sample Response     
+        foreach ($editoriallist as $editorial) {
 
-        $editoriallist = [
-            [
-                "id" => 1,
-                "title" => "Test 1",
-                "type" => "story",
-                "search_term" => "Christmas eve",
-                "selected_values" => "https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg,https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0019000000/19177000/19177077_preview.jpg",
-                "main_image_id" => "IMGFT190",
-                "main_image_selected_values" => "https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg",
-                "main_image_upload" => null,
-                "status" => 1,
-                "created_at" => "2023-08-24 08:43:12",
-                "updated_at" => "2023-08-24 08:43:12",
-            ],
-            [
-                "id" => 2,
-                "title" => "Test 2",
-                "type" => "story",
-                "search_term" => "Christmas eve",
-                "selected_values" => "https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg,https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0019000000/19177000/19177077_preview.jpg",
-                "main_image_id" => "IMGFT190",
-                "main_image_selected_values" => "https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg",
-                "main_image_upload" => null,
-                "status" => 0,
-                "created_at" => "2023-08-24 08:43:12",
-                "updated_at" => "2023-08-24 08:43:12",
-            ],
-            [
-                "id" => 3,
-                "title" => "Test 3",
-                "type" => "collection",
-                "search_term" => "Christmas eve",
-                "selected_values" => "https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg,https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0019000000/19177000/19177077_preview.jpg",
-                "main_image_id" => "IMGFT190",
-                "main_image_selected_values" => null,
-                "main_image_upload" => "https://mh-2-rest.panthermedia.net/media/previews/0027000000/27498000/27498649_preview.jpg,https://mh-1-rest.panthermedia.net/media/previews/0027000000/27498000/27498651_preview.jpg",
-                "status" => 1,
-                "created_at" => "2023-08-24 08:43:12",
-                "updated_at" => "2023-08-24 08:43:12",
-            ],
-        ];
+            $editorialValue = json_decode($editorial['selected_values']);
+
+            $products_urls = Product::whereIn('product_id', $editorialValue)
+                ->pluck('product_main_image')
+                ->toArray();
+            $editorial->selected_values_count = count($products_urls);
+            $editorial->selected_values = implode(',', $products_urls);
+        }
         echo json_encode(["status" => "success", 'data' => $editoriallist]);
+    }
+
+    public function editorialDetailv2($id)
+    {
+        $editoriallist = Editorial::find($id);
+
+        if (!$editoriallist) {
+            echo response()->json(['message' => 'Editorial not found'], 404);
+        } else {
+            $editorial = [];
+            $editorialValue = json_decode($editoriallist['selected_values']);
+            $products_urls = Product::whereIn('product_id', $editorialValue)
+                ->pluck('product_main_image')
+                ->toArray();
+            $editoriallist->selected_values_count = count($products_urls);
+            $editoriallist->selected_values = implode(',', $products_urls);
+
+            $editorial =
+                [
+                    "id" => $editoriallist->id,
+                    "title" => $editoriallist->title,
+                    "type" => $editoriallist->type,
+                    "search_term" => $editoriallist->search_term,
+                    "selected_values" => $editoriallist->selected_values,
+                    "main_image_selected_values" => $editoriallist->main_image_selected_values,
+                    "main_image_upload" => $editoriallist->main_image_upload,
+                    "status" => $editoriallist->status,
+                    "created_at" => $editoriallist->created_at,
+                    "updated_at" => $editoriallist->updated_at,
+                ];
+
+
+            echo json_encode(["status" => "success", 'data' => $editorial]);
+        }
     }
 }

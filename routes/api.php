@@ -155,6 +155,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('login-v2', 'AuthController@loginV2');
         Route::get('packages-v2', 'PackageApiController@packageListv2');
         Route::get('editorials-v2', 'EditorialController@editorialListv2');
+        Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
+
     });
 });
 

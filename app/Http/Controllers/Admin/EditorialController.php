@@ -70,7 +70,7 @@ class EditorialController extends Controller
             'type' => 'required',
             'status' => 'required',
             'selectedMainImages' => 'required_without_all:main_image_upload',
-            'main_image_upload' => 'required_without_all:selectedMainImages|file|mimes:jpeg,png'
+            'main_image_upload' => 'required_without_all:selectedMainImages|file|mimes:jpeg,png,jpg,gif'
         ]);
 
         // Custom validation for selectedImages
