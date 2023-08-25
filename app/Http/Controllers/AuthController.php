@@ -30,7 +30,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
+       $this->middleware('auth:api', ['except' => ['login', 'signup','socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -190,6 +190,37 @@ class AuthController extends Controller
 		}
 
 	}
+
+    # New socialLogin V2
+    public function socialLoginv2(Request $request)
+    {
+        $count = User::where('email', '=' , $request->email)->count();
+		if ($count >0) {
+            $credentials = ['email'=> $request->email,'password'=>'123456'];
+            $token = auth()->attempt($credentials);
+            return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
+		} else {
+		    if ($request->provider == 'google') {
+                $save_data = new User();
+
+                $save_data->email         = $request->email;
+                $save_data->first_name    = $request->name;
+				$save_data->user_name     = $request->name;
+                $save_data->password      = Hash::make('123456');
+                $save_data->gmail_idtoken = $request->idToken;
+                $save_data->profile_photo = $request->image;
+                $save_data->provider      = $request->provider;
+                $save_data->type          = 'U';
+                $result = $save_data->save();
+                if ($result) {
+                    $credentials = ['email' => $request->email, 'password' => '123456'];
+                    $token = auth()->attempt($credentials);
+                    return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
+                }
+            }
+		}
+    }
+
 	public function contactUs(Request $request){
 	}
 
