@@ -232,7 +232,10 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -379,7 +382,10 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -522,7 +528,10 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -661,7 +670,10 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";

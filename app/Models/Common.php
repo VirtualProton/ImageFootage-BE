@@ -412,7 +412,7 @@ class Common extends Model
             }
             $pdf_path = $fileupresult['ObjectURL'];
             if(!empty($pdf_path)){
-                $update_data = ['invoice_url'=>$pdf_path,'proforma_type'=>'2','job_number'=> $po, 'po_detail'=>$po_date,'invoice_created'=>date('Y-m-d H:i:s')];
+                $update_data = ['invoice_url'=>$pdf_path,'proforma_type'=>'2','job_number'=> $po, 'po_detail'=>$po_date,'invoice_created'=>date('Y-m-d H:i:s'),'payment_method'=>$request_data['payment_method']];
                 if(!empty($request_data['payment_method'] == 'chq') && !empty($request_data['expiry_due_date'])) {
                     $update_data['expiry_due_date'] = $request_data['expiry_due_date'];
                 }
@@ -433,7 +433,7 @@ class Common extends Model
 
     }
 
-    public function create_invoice_subscription($quotation_id,$user_id, $po, $po_date, $payment_method){
+    public function create_invoice_subscription($quotation_id,$user_id, $po, $po_date, $payment_method, $request_data){
         $dataForEmail = $this->getSubData($quotation_id,$user_id);
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
         $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
@@ -496,9 +496,13 @@ class Common extends Model
             }
             $pdf_path = $fileupresult['ObjectURL'];
             if(!empty($pdf_path)){
+                $update_data = ['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s'), 'job_number'=> $po, 'po_detail'=>$po_date, 'payment_method' => $payment_method];
+                if(!empty($payment_method == 'chq') && !empty($request_data['expiry_due_date'])) {
+                    $update_data['expiry_due_date'] = $request_data['expiry_due_date'];
+                }
                 DB::table('imagefootage_performa_invoices')
                     ->where('id','=',$quotation_id)
-                    ->update(['invoice_url'=>$pdf_path,'proforma_type'=>'2','invoice_created'=>date('Y-m-d H:i:s'), 'job_number'=> $po, 'po_detail'=>$po_date, 'payment_method' => $payment_method]);
+                    ->update($update_data);
                 DB::table('imagefootage_user_package')
                     ->where('id','=', $dataForEmail[0]['package_id'])
                     ->update(['status'=> 0,'order_type'=>'2']);       
@@ -541,6 +545,8 @@ class Common extends Model
             $selected_taxes['GST']='0';
         }
 
+        $today = Carbon::now();
+        $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
                
         $allFields = Package::find($data['plan_id']['package_id']);
         $packge = new UserPackage();
@@ -585,6 +591,9 @@ class Common extends Model
             'expiry_invoices'=>$data['expiry_date'],
             //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
             'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
+            'created_by' => Auth::guard('admins')->user()->id,
+            'flag'=> $data['flag'] ?? '',
+            'cancelled_on' => $cancelled_on,
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);   
@@ -600,7 +609,15 @@ class Common extends Model
         // End Update Total applied code in promo code
                    
         if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-            Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+            $update = [
+                'status' => 3,
+                'expiry_invoices'=>$data['expiry_date'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'cancelled_on' => $cancelled_on,
+                'cancelled_by' => Auth::guard('admins')->user()->id
+            ];
+            Invoice::where('id', '=', $data['old_quotation'])->update($update);
         }
 
         $dataForEmail  = $this->getSubData($id,$data['uid']);
@@ -704,6 +721,9 @@ public function save_download_proforma($data){
                 $selected_taxes['GST']='0';
             } 
 
+            $today = Carbon::now();
+            $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
+
             $allFields = Package::find($data['plan_id']['package_id']);
             $packge = new UserPackage();
             $packge->user_id = $data['uid'];               
@@ -746,6 +766,9 @@ public function save_download_proforma($data){
                 'expiry_invoices'=>$data['expiry_date'],
                 //'po_detail'=>date('Y-m-d',strtotime($data['poDate']))
                 'promo_code_id' => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
+                'created_by' => Auth::guard('admins')->user()->id,
+                'flag'=> $data['flag'] ?? '',
+                'cancelled_on' => $cancelled_on,
             );
 
             DB::table('imagefootage_performa_invoices')->insert($insert);   
@@ -761,7 +784,15 @@ public function save_download_proforma($data){
             // End Update Total applied code in promo code
                
                 if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
-                    Invoice::where('id', '=', $data['old_quotation'])->update(['status' => 3]);
+                    $update = [
+                        'status' => 3,
+                        'expiry_invoices'=>$data['expiry_date'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'cancelled_on' => $cancelled_on,
+                        'cancelled_by' => Auth::guard('admins')->user()->id
+                    ];
+                    Invoice::where('id', '=', $data['old_quotation'])->update($update);
                 }
 
                     $dataForEmail  = $this->getSubData($id,$data['uid']); 

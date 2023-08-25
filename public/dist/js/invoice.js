@@ -490,6 +490,7 @@ app.controller(
                     GSTS: $scope.GSTD,
                     email: $("#download_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);
@@ -546,6 +547,7 @@ app.controller(
                     GSTS: $scope.GSTS,
                     email: $("#subsc_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);
@@ -1297,6 +1299,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address: $("#address_invoice").val() ?? "",
                         address2: $("#address2_invoice").val() ?? "",
                         postal_code: $("#postal_code_invoice").val() ?? "",
+                        expiry_due_date: $scope.expiry_due_date ?? "",
                     },
                 }).then(
                     function (result) {
@@ -1354,7 +1357,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         gst: $("#gstNocus").val(),
                         pan: $("#panNocus").val(),
                         phone: $("#phonecus").val(),
-                        expiry_due_date: $("#expiry_due_date").val(),
+                        expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
                         state: $("#state_invoice_cus").val() ?? "",
                         city: $("#city_invoice_cus").val() ?? "",
