@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ImageFootageWishlist extends Model
 {
+    use SoftDeletes;
+
     protected $table = "imagefootage_wishlists";
     protected $fillable = ['id', 'name'];
 

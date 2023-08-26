@@ -17,6 +17,7 @@ class CreateImageFootageWishlistsTable extends Migration
             $table->bigIncrements('id');
             $table->mediumText('name', 512)->nullable(); // Add the 'name' field with a default value of null and a maximum length of 255 characters
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
