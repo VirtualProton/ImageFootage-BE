@@ -877,6 +877,11 @@ app.controller(
         $scope.tax = 0;
         $scope.is_gst_applied = false;
         $scope.total_saved = 0;
+        $scope.prod_type = "";
+        $scope.plan_type = "";
+        $scope.plansData = [];
+        $scope.selected_plan = "";
+        $scope.subsc_expiry_time = "";
         var path = window.location.pathname.split("/").pop();
         $("#loading").show();
         $http({
@@ -901,6 +906,8 @@ app.controller(
                 $scope.expiry_time = response.expiry_invoices;
                 $scope.flag = response.flag;
                 $scope.quotation.product = [];
+                $scope.prod_type = response.user_package.package_type;
+                $scope.subsc_expiry_time = response.expiry_invoices;
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
                 angular.forEach(tax_selected, function (value, key) {
@@ -925,11 +932,63 @@ app.controller(
                         );
                     }, 0);
                 });
+                get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly,response.user_package.package_expiry_quarterly,response.user_package.package_expiry_half_yearly);
+                get_plan_data();
+                $scope.selected_plan = response.user_package.package_id;
             },
             function (error) {
                 $("#loading").hide();
             }
         );
+
+        $scope.edit_quotation_type_set = function (type) {
+            $scope.quotation_type = type;
+        };
+        $scope.edit_prod_type_set = function (type) {
+            $scope.prod_type = type;
+        };
+        $scope.edit_plan_type_select = function (value) {
+            $scope.plan_type = value;
+        };
+        function get_plan_data(){
+            $http({
+                method: "POST",
+                url: api_path + "plans",
+                data: {
+                    quotation_type: $scope.quotation_type,
+                    prod_type: $scope.prod_type,
+                    product_dur: $scope.plan_type,
+                },
+            }).then(
+                function (response) {
+                    if (response.data.status == "success") {
+                        $scope.plansData = response.data.data;
+                    }
+                }
+            );
+        }
+        function get_play_type(package_expiry,package_expiry_yearly,package_expiry_quarterly,package_expiry_half_yearly){
+            if(package_expiry == 1){
+                $scope.plan_type = "monthly";
+            } else if(package_expiry_yearly == 1) {
+                $scope.plan_type = "quarterly";
+            } else if (package_expiry_quarterly == 1) {
+                $scope.plan_type = "half_yearly";
+            } else if(package_expiry_half_yearly == 1){
+                $scope.plan_type = "annual";
+            }
+        }
+        $scope.selectPlanfromlist = function (selectedPlanData, type) {
+            selectedPlanData = JSON.parse(selectedPlanData);
+            $scope.selected_plan = selectedPlanData;
+            if (type == "download") {
+                $scope.downloadprice = selectedPlanData["package_price"];
+                $scope.total_download = selectedPlanData["package_price"];
+            } else {
+                $scope.subscriptionprice = selectedPlanData["package_price"];
+                $scope.subsc_total = selectedPlanData["package_price"];
+            }
+        };
 
         $scope.addProduct = function () {
             var newProduct = {
@@ -1120,7 +1179,6 @@ app.controller(
         };
 
         $scope.submitQuotation = function () {
-            //  console.log($scope.quotation);
             $scope.quotation.product.map(function (editor, index) {
                 for (var i in CKEDITOR.instances) {
                     if (
@@ -1137,6 +1195,111 @@ app.controller(
                 }
                 return editor;
             });
+            if ($scope.quotation_type == "1") {
+                $scope.submitEditSubscription();
+            } else if ($scope.quotation_type == "2") {
+                $scope.submitEditDownload();
+            } else {
+                $scope.submitEditCustom();
+            }
+        };
+
+        $scope.submitEditSubscription = function () {
+            if (!$scope.selected_plan) {
+                alert("Please select Plan");
+                return false;
+            } else if (!$scope.subscriptionprice) {
+                alert("Please enter Subtotal");
+                return false;
+            } else {
+                $("#loading").show();
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type,
+                    plan_id: $scope.selected_plan,
+                    plan_type_var: $scope.plan_type,
+                    expiry_date: $scope.subsc_expiry_time,
+                    tax: $scope.subsc_tax,
+                    total: $scope.subsc_total,
+                    subscription_subtotal: $scope.subscriptionprice,
+                    GSTS: $scope.GSTS,
+                    email: $("#subsc_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                    old_quotation: path,
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveSubscriptionInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
+        };
+
+        $scope.submitEditDownload = function () {
+            if (!$scope.selected_plan) {
+                alert("Please select Plan");
+                return false;
+            } else if (!$scope.downloadprice) {
+                alert("Please enter Subtotal");
+                return false;
+            } else {
+                $("#loading").show();
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type,
+                    plan_id: $scope.selected_plan,
+                    plan_type_var: $scope.plan_type,
+                    expiry_date: $scope.download_expiry,
+                    tax: $scope.taxdownload,
+                    total: $scope.total_download,
+                    subscription_subtotal: $scope.downloadprice,
+                    GSTS: $scope.GSTD,
+                    email: $("#download_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveDownloadInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
+        };
+
+        $scope.submitEditCustom = function () {
             $("#loading").show();
             var sendData = {
                 uid: $("#uid").val(),
@@ -1158,12 +1321,7 @@ app.controller(
                 flag: "0",
                 promo_code_id: $("#promo_code_id").val(),
             };
-
-            //   console.log($scope.quotation);
             var fd = new FormData();
-            // angular.forEach($scope.quotation[0],function(file){
-            //     fd.append('file',file);
-            // });
             $http({
                 method: "POST",
                 url: api_path + "saveInvoice",
@@ -1179,21 +1337,59 @@ app.controller(
                     }
                     window.location =
                         api_path + "users/invoices/" + $("#uid").val();
-                    // $scope.quotation.product[index].name = response.data[0].product_code;
-                    // $scope.quotation.product[index].id = response.data[0].id;
-                    // if(response.data[0].type =="Royalty Free"){
-                    //     $scope.quotation.product[index].pro_type = "royalty_free";
-                    // }else{
-                    //     $scope.quotation.product[index].pro_type = "right_managed";
-                    // }
-                    // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
-                    // $scope.prices[index] = response.data[0];
-                    //}
                 },
                 function (error) {
                     $("#loading").hide();
                 }
             );
+        };
+
+        $scope.submitSubscription = function () {
+            if (!$scope.selected_plan) {
+                alert("Please select Plan");
+                return false;
+            } else if (!$scope.subscriptionprice) {
+                alert("Please enter Subtotal");
+                return false;
+            } else {
+                $("#loading").show();
+
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type_var,
+                    plan_id: $scope.selected_plan,
+                    plan_type_var: $scope.plan_type_var,
+                    expiry_date: $scope.subsc_expiry_time,
+                    tax: $scope.subsc_tax,
+                    total: $scope.subsc_total,
+                    subscription_subtotal: $scope.subscriptionprice,
+                    GSTS: $scope.GSTS,
+                    email: $("#subsc_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveSubscriptionInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
         };
 
         // CKEditor initialization for all editors

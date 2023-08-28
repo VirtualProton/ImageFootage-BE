@@ -7,8 +7,6 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><%title%></h3><a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn pull-right">Back</a>
 			</div>
-			<!-- /.box-header -->
-			<!-- form start -->
 			@include('admin.partials.message')
 
 			<div class="box-body">
@@ -30,15 +28,56 @@
 										<div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
 											<div class="form-group">
 												<label class="margin-right">
-													<input type="radio" value="custom" name="quotation_type" checked="checked" ng-click="quotation_type_set('custom')">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('1')" ng-model="quotation_type" ng-value="1">
+													Subscription
+												</label>
+												<label class="margin-right">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('2')" ng-model="quotation_type" ng-value="2">
+													Download Packs
+												</label>
+												<label class="margin-right">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('3')" ng-model="quotation_type" ng-value="3">
 													Custom
+												</label>
+											</div>
+											<div class="form-group" ng-if="quotation_type !='3'">
+												<label class="margin-right">
+													<input type="radio" name="prod_type" ng-model="prod_type" ng-value="'Image'" ng-click="edit_prod_type_set('Image')">
+													Images
+												</label>
+												<label class="margin-right" ng-if="quotation_type =='2'">
+													<input type="radio" name="prod_type" ng-model="prod_type" ng-value="'Footage'" ng-click="edit_prod_type_set('Footage')">
+													Footage
+												</label>
+											</div>
+											<div class="form-group" ng-if="quotation_type == '1' && prod_type == 'Image'">
+												<label class="margin-right">
+													<input type="radio" ng-value="'monthly'" ng-model="plan_type" name="plan_type" ng-click="edit_plan_type_select('monthly')">
+													Monthly
+												</label>
+												<label class="margin-right">
+													<input type="radio" ng-value="'quarterly'" ng-model="plan_type" name="plan_type" ng-click="edit_plan_type_select('quarterly')">
+													Quarterly
+												</label>
+												<label class="margin-right">
+													<input type="radio" ng-value="'half_yearly'" ng-model="plan_type" name="plan_type" ng-click="edit_plan_type_select('half_yearly')">
+													Half Year
+												</label>
+												<label class="margin-right">
+													<input type="radio" ng-value="'annual'" ng-model="plan_type" name="plan_type" ng-click="edit_plan_type_select('annual')">
+													Annual
+												</label>
+											</div>
+											<div class="form-group" ng-show="quotation_type !='3'">
+												<label>
+													<button type="button" class="btn btn-danger" ng-click="getPlans()">Get Plan</button>
 												</label>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="">
+							<div class="" ng-show="quotation_type=='3'">
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv " ng-repeat="product in quotation.product">
@@ -97,7 +136,6 @@
 													@foreach ($getFootageSizeDetails as $getFootageSizeDetail)
 													<option value="{{ $getFootageSizeDetail['type'] }}">{{ $getFootageSizeDetail['type'] }}</option>
 													@endforeach
-													<!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
 												</select>
 											</div>
 											<div class="form-group" ng-if="product.type=='Image'">
@@ -151,18 +189,6 @@
 														<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
 													</span>
 												</div>
-												<!-- <div>
-												<input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
-											</div>
-											<div class="">
-												<input type="checkbox" ng-model="CGST" ng-change="checkThetax(CGST,'CGST');" name="tax_checkbox[]"> CGST- +6%
-											</div>
-											<div class="ng-binding ng-scope">
-												<input type="checkbox" ng-model="IGST" ng-change="checkThetax(IGST,'IGST');" name="tax_checkbox[]"> IGST- +12%
-											</div>
-											<div class="ng-binding ng-scope">
-												<input type="checkbox" ng-model="IGSTT" ng-change="checkThetax(IGSTT,'IGSTT');" name="tax_checkbox[]"> IGST- +18%
-											</div> -->
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-xs-6">
@@ -184,40 +210,162 @@
 											<button class="btn btn-primary" type="button" id="btn-promocode">Apply Promo Code</button>
 										</div>
 										<div class="col-lg-6 col-md-6 col-xs-6">
-											<!-- <div class="form-group">
-											<label for="job_number">JOb Ref/Po #</label>
-											<select  class="form-control" required="" name="po" ng-model="po">
-											<option value="">--Select a Job PO--</option>
-											<!-- <option value="upload_po">Upload PO</option>
-												<option value="email_approval">Email Approval</option> -->
-											<!-- <option value="po_in_3days">PO Due In 3 Days</option>
-											<option value="po_in_7days">PO Due In 7 Days</option>
-											<option value="po_in_15days">PO Due In 15 Days</option>
-											</select>
-										</div> -->
-											<!-- <div class="">
-											<div class="row"> -->
-											<?php /* <div class="col-lg-6 col-md-6 col-xs-12">
-												<div class="form-group" >
-													<label for="po_no">PO No.</label>
-													<input type="text" class="form-control"  name="poDate" id="poDate" ng-model="poDate" autocomplete="false">
-												</div>
-											</div>
-											<div class="col-lg-6 col-md-6 col-xs-12"></div>
-											</div>
-											<div class="form-group">
-											<label for="email_id">Email</label>
-											
-											</div> */ ?>
 											<div class="form-group">
 												<input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
+												<input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value="1">
 												<label for="expiry">Expiry Period</label><br>
 												<input type="radio" ng-value="7" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
 												<input type="radio" ng-value="30" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
 											</div>
-											<!-- </div>
 										</div>
-										<div class="col-lg-4 col-md-6 col-xs-4"></div> -->
+									</div>
+								</div>
+							</div>
+							<div class="" ng-show="quotation_type=='1'">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
+											<div class="form-group" ng-if="plan_type == 'monthly'">
+												<label for="sub_total">Plan Name</label>
+												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
+													<option value="" selected="">--Select a plan--</option>
+													<option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
+												</select>
+											</div>
+											<div class="form-group" ng-if="plan_type == 'quarterly'">
+												<label for="sub_total">Plan Name</label>
+												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
+													<option value="" selected="">--Select a plan--</option>
+													<option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
+												</select>
+											</div>
+											<div class="form-group" ng-if="plan_type == 'half_yearly'">
+												<label for="sub_total">Plan Name</label>
+												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
+													<option value="" selected="">--Select a plan--</option>
+													<option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
+												</select>
+											</div>
+											<div class="form-group" ng-if="plan_type == 'annual'">
+												<label for="sub_total">Plan Name</label>
+												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
+													<option value="" selected="">--Select a plan--</option>
+													<option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> For 1 Year</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
+											<div class="form-group">
+												<label for="sub_total">Sub Total</label>
+												<input type="text" class="form-control" ng-model="subscriptionprice" name="subscriptionprice" ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="tax">Tax Applicable</label>
+												<div>
+													<span style="float: left;">
+														<input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+													</span>
+													<span style="float: left;padding-left:20px;">
+														<input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="Total">Total</label>
+												<input type="text" class="form-control " ng-model="subsc_total" name="subsc_total" readonly="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="promoCode">Promo code</label>
+												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_sub">
+												<span id="span-message-sub"></span>
+											</div>
+											<button class="btn btn-primary" type="button" id="btn-promocode-sub">Apply Promo Code</button>
+										</div>
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<input type="hidden" class="form-control" id="subsc_email_id" name="subsc_email_id" ng-model="subsc_email_id" value="{{$userDetail->email}}" ng-checked="subsc_expiry_time=='7'">
+												<label for="expiry">Expiry Period</label><br>
+												<input type="radio" ng-value="'7'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
+												<input type="radio" ng-value="'30'" ng-checked="subsc_expiry_time=='30'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;30 Days
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="" ng-show="quotation_type=='2'">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
+											<div class="form-group">
+												<label for="sub_total">Plan Name</label>
+												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'download')">
+													<option value="" selected="">--Select a plan--</option>
+													<option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> Within 1 Year </option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
+											<div class="form-group">
+												<label for="sub_total">Sub Total</label>
+												<input type="text" class="form-control" ng-model="downloadprice" name="downloadprice" ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="tax">Tax Applicable</label>
+												<div>
+													<span style="float: left;">
+														<input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+													</span>
+													<span style="float: left;padding-left:20px;">
+														<input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="Total">Total</label>
+												<input type="text" class="form-control " ng-model="total_download" name="total_download" readonly="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label for="promoCode">Promo code</label>
+												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_dis">
+												<span id="span-message-dis"></span>
+											</div>
+											<button class="btn btn-primary" type="button" id="btn-promocode-dis">Apply Promo Code</button>
+										</div>
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<input type="hidden" class="form-control" id="download_email_id" name="download_email_id" value="{{$userDetail->email}}">
+												<label for="expiry">Expiry Period</label><br>
+												<input type="radio" ng-value="'7'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
+												<input type="radio" ng-value="'30'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;30 Days
+											</div>
 										</div>
 									</div>
 								</div>
@@ -425,21 +573,6 @@
 
 	});
 
-	// function getproduct(data){
-	//    $.ajax({
-	//             url: '{{ URL::to("admin/product") }}'+'/'+data.value,
-	//             headers: {
-	//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	//             },
-	//             error: function() {
-	//             //$('#info').html('<p>An error has occurred</p>');
-	//             },
-	//             success: function(response) {
-	//                console.log(response);
-	//            },
-	//             type: 'GET'
-	//             });
-	// }
 	function getcity(data) {
 		console.log(data.value);
 		$.ajax({

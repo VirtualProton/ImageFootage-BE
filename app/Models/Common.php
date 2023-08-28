@@ -341,6 +341,7 @@ class Common extends Model
             // DB::enableQueryLog();
             $all_datas = Invoice::select('imagefootage_performa_invoices.*')
                 ->with('items')
+                ->with('user_package:id,package_type,package_expiry,package_expiry_yearly,package_expiry_quarterly,package_expiry_half_yearly,package_id')
                 ->where('imagefootage_performa_invoices.id','=',$quotation_id)
                 ->first()
                 ->toArray();
@@ -563,6 +564,8 @@ class Common extends Model
         $packge->package_pcarry_forward = $allFields['package_pcarry_forward'];
         $packge->package_expiry_yearly = $allFields['package_expiry_yearly'];
         $packge->pacage_size = $allFields['pacage_size'];
+        $packge->package_expiry_quarterly = $allFields['package_expiry_quarterly'] ?? '';
+        $packge->package_expiry_half_yearly = $allFields['package_expiry_half_yearly'] ?? '';
         $packge->status = 0; 
         $packge->order_type = 2;           
         $packge->created_at = date('Y-m-d H:i:s');

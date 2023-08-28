@@ -159,3 +159,7 @@ CREATE TABLE IF NOT EXISTS `imagefootage_editorials` (
   `updated_at` TIMESTAMP DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
+-- Edit quotation
+ALTER TABLE `imagefootage_user_package` ADD `package_expiry_quarterly` INT NULL;
+ALTER TABLE `imagefootage_user_package` ADD `package_expiry_half_yearly` INT NULL;
