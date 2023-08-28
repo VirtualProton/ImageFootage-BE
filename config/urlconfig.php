@@ -1,3 +1,5 @@
+<?php
+
 return [
     'secure' => [
         'local' => true,       // Use secure_url
