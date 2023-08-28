@@ -11,18 +11,41 @@ class EditorialController extends Controller
 {
     public function editorialListv2()
     {
-        $editoriallist = [];
         $editoriallist = Editorial::all();
 
+        $selectedValues = [];
+        // Retrive all occured products Ids
         foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
 
-            $editorialValue = json_decode($editorial['selected_values']);
+            if (is_array($editorialValue)) {
+                $selectedValues = array_merge($selectedValues, $editorialValue);
+            }
+        }
 
-            $products_urls = Product::whereIn('product_id', $editorialValue)
-                ->pluck('product_main_image')
-                ->toArray();
-            $editorial->selected_values_count = count($products_urls);
-            $editorial->selected_values = implode(',', $products_urls);
+        // Retrive URLs based on Ids
+        $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+
+        $productUrlMap = [];
+        foreach ($products as $product) {
+            $productUrlMap[$product->product_id] = $product->product_main_image;
+        }
+
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+            if (is_array($editorialValue)) {
+                $updatedEditorialValue = [];
+                foreach ($editorialValue as $productId) {
+                    if (isset($productUrlMap[$productId])) {
+                        $updatedEditorialValue[] = $productUrlMap[$productId];
+                    }
+                }
+                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
+                $editorial['selected_values_count'] = count($updatedEditorialValue);
+            }
+            if (!empty($editorial['main_image_upload'])) {
+                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
+            }
         }
         echo json_encode(["status" => "success", 'data' => $editoriallist]);
     }
