@@ -11,5 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
+// Compile and minify AdminLTE.css
+mix.styles(['public/dist/css/AdminLTE.css'], 'public/dist/css/AdminLTE.min.css');
+
+// Other mix.js and mix.sass definitions
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
