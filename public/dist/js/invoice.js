@@ -1601,7 +1601,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         }
     };
 
-    $scope.open_modal_update_po = function (id = null, job_number = null) {
+    $scope.open_modal_update_po = function (id = null, job_number = 0) {
+        job_number = job_number == 0 ? '' : job_number;
         $(".modal-body #invoice_id").val(id);
         $(".modal-body #po_no").val(job_number);
         $scope.invoice_id = id;
