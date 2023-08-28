@@ -5512,6 +5512,13 @@ hr {
 #purple .slider-selection {
   background: #932ab6;
 }
+.login-page{
+  height: auto;
+  background: #ffffff;
+}
+.login-box{
+border: 1px solid black;
+}
 /*
  * Misc: print
  * -----------
