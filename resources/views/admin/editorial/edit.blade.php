@@ -243,7 +243,7 @@
                     var message = document.createElement("p");
                     message.textContent = "No images found.";
                     message.style.color = "red";
-                    imagesContainer.appendChild(message);
+                    //imagesContainer.appendChild(message);
                 }
             },
         });
@@ -329,7 +329,7 @@
                     message.style.color = "red"; // Set the text color to red
 
                     // Append the message to the imagesContainer
-                    mainImagesContainer.appendChild(message); // Append message
+                    //mainImagesContainer.appendChild(message); // Append message
                 }
             },
         });
