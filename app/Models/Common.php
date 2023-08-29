@@ -138,7 +138,7 @@ class Common extends Model
 
         $insert = array(
             'user_id'=> $data['uid'],
-           // 'end_client'=> $data['end_client'],
+           'end_client'=> $data['end_client'] ?? '',
             'email_id'=> $data['email'],
             'flag'=> $data['flag'],
             'invoice_name'=> $this->random_numbers(),

@@ -908,19 +908,24 @@ app.controller(
                 $scope.quotation.product = [];
                 $scope.prod_type = response.user_package?.package_type;
                 if(response.invoice_type == 1){
+                    // subscription
                     $scope.subsc_expiry_time = response.expiry_invoices;
                     $scope.subscriptionprice = response.total - response.tax;
                     $scope.subsc_tax = response.tax;
                     $scope.subsc_total = response.total;
                     $scope.GSTS = $scope.subsc_tax > 0;
                 } else if (response.invoice_type == 2) {
+                    // download
                     $scope.download_expiry = response.expiry_invoices;
                     $scope.downloadprice = response.total - response.tax;
                     $scope.taxdownload = response.tax;
                     $scope.total_download = response.total;
                     $scope.GSTS = $scope.taxdownload > 0;
                 } else {
+                    // custom
                     $scope.expiry_time = response.expiry_invoices;
+                    //other
+                    $scope.end_client = response.end_client;
                 }
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
@@ -1464,8 +1469,9 @@ app.controller(
                 email: $scope.email,
                 old_quotation: path,
                 image1: $("#file1")[0] ? $("#file1")[0].files[0] : "",
-                flag: "0",
+                flag: $scope.flag ?? "0",
                 promo_code_id: $("#promo_code_id").val(),
+                end_client: $scope.end_client,
             };
             var fd = new FormData();
             $http({

@@ -28,15 +28,15 @@
 										<div class="col-lg-6 col-md-6 col-xs-6" style="padding-top: 31px;">
 											<div class="form-group">
 												<label class="margin-right">
-													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('1')" ng-model="quotation_type" ng-value="1">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set(1)" ng-model="quotation_type" ng-value="1">
 													Subscription
 												</label>
 												<label class="margin-right">
-													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('2')" ng-model="quotation_type" ng-value="2">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set(2)" ng-model="quotation_type" ng-value="2">
 													Download Packs
 												</label>
 												<label class="margin-right">
-													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set('3')" ng-model="quotation_type" ng-value="3">
+													<input type="radio" name="quotation_type" ng-click="edit_quotation_type_set(3)" ng-model="quotation_type" ng-value="3">
 													Custom
 												</label>
 											</div>
@@ -72,6 +72,16 @@
 												<label>
 													<button type="button" class="btn btn-danger" ng-click="getPlans()">Get Plan</button>
 												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" ng-if="flag == 2">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-xs-6">
+											<div class="form-group">
+												<label>End Client Field</label>
+												<input type="text" ng-model="end_client" id="end_client" class="form-control">
 											</div>
 										</div>
 									</div>
