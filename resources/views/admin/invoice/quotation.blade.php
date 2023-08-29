@@ -127,7 +127,7 @@
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
                                        <option value="X-Large">XX-Large</option>
-                                       <option value="Custom">Custom</option>
+                                       <option value="Custom" ng-show="product.type == 'Image' && quotation_type_var != 'custom'">Custom</option>
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>

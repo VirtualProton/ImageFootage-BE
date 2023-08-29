@@ -23,7 +23,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group" id="typeButton">
                     <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 

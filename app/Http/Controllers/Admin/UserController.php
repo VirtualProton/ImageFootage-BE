@@ -222,7 +222,7 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
            // dd($description);
            $active_tab = "tab1";
-           $active_nested_tab = "subscription_tab";
+           $active_nested_tab = "active_plans";
 
 
         $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function($join){
