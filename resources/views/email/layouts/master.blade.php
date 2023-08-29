@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <base href="<?php echo env('APP_URL'); ?>" target="_blank">
 </head>
 
 <body>
@@ -39,7 +40,7 @@
                                                                                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width:100%">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td> <img width="60" src="images/conceptual_logo.png" title="logo" alt="logo">
+                                                                                                        <td> <img width="180" src="images/conceptual_logo.png" title="logo" alt="logo">
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </tbody>
