@@ -548,8 +548,8 @@ class Common extends Model
 
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
-               
-        $allFields = Package::find($data['plan_id']['package_id']);
+        $package_id = !empty($data['plan_id']['package_id']) ? $data['plan_id']['package_id'] : $data['plan_id'];
+        $allFields = Package::find($package_id);
         $packge = new UserPackage();
         $packge->user_id = $data['uid'];               
         $packge->package_id = $allFields['package_id'];
@@ -726,8 +726,8 @@ public function save_download_proforma($data){
 
             $today = Carbon::now();
             $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
-
-            $allFields = Package::find($data['plan_id']['package_id']);
+            $package_id = !empty($data['plan_id']['package_id']) ? $data['plan_id']['package_id'] : $data['plan_id'];
+            $allFields = Package::find($package_id);
             $packge = new UserPackage();
             $packge->user_id = $data['uid'];               
             $packge->package_id = $allFields['package_id'];
