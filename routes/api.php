@@ -65,7 +65,7 @@ Route::group([
     Route::post('resendOtp', 'UserContactusController@resendOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
-    Route::get('categoryListApi', 'MediaController@categoryListApi');
+    Route::get('categories', 'MediaController@categoryListApi');
     Route::post('payUResponse', 'PaymentController@payUResponse');
     Route::post('validUser', 'UserController@validUser');
     Route::post('validMobileUser', 'UserController@validMobileUser');
