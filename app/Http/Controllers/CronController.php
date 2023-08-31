@@ -12,7 +12,7 @@ use App\Models\Product;
 use App\Http\Pond5\FootageApi;
 use App\Models\ProductCategory;
 use App\Http\PantherMedia\ImageApi;
-
+use App\Http\Pond5\MusicApi;
 use CORS;
 
 class CronController extends Controller
@@ -143,6 +143,26 @@ class CronController extends Controller
                 //echo "<pre>";
                 //print_r($pondfootageMediaData); die;
                 $this->product->savePond5Image($pondfootageMediaData, $category_id);
+            }
+        }
+    }
+
+    # pond5GetMusic
+    public function pond5GetMusic()
+    {
+        ini_set('max_execution_time', 0);
+        $homeCategories = ['COVID-19', 'Summer', 'Work from Home', 'Mothers day', 'Earth Day', 'Nature'];
+
+        foreach ($homeCategories as $percategory) {
+            $keyword['search'] = $percategory;
+            $musicMedia = new MusicApi();
+            $pondMusicMediaData = $musicMedia->searchMusic($keyword, []);
+
+            $common     = new Common();
+            $categoryId = $common->checkCategory($percategory);
+
+            if (count($pondMusicMediaData['items']) > 0) {
+                $this->product->savePond5Music($pondMusicMediaData['items'], $categoryId);
             }
         }
     }

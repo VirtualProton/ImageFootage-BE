@@ -51,6 +51,7 @@ Route::group([
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
     Route::get('pond5Upload', 'CronController@pond5Upload');
+    Route::get('pond5-get-music', 'CronController@pond5GetMusic');  # pond5GetMusic
     Route::get('pantherImageUploadCategory', 'CronController@pantherImageUploadCategory');
     Route::get('pond5UploadCategory', 'CronController@pond5UploadCategory');
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
