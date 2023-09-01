@@ -16,6 +16,7 @@ use Illuminate\Support\Arr;
 
 use CORS;
 use App\Models\TrendingWord;
+use App\Http\Pond5\MusicApi;
 
 class SearchController extends Controller
 {
@@ -49,12 +50,20 @@ class SearchController extends Controller
             }
                $all_products =$this->getFootageData($keyword,$getKeyword);
               
+        }else if($keyword['productType']['id']=='3'){
+            if(isset($getKeyword['pagenumber'])){
+                $keyword['pagenumber']= $getKeyword['pagenumber'];
+            }
+               $all_products =$this->getMusicData($keyword,$getKeyword);
+              
         }else{
             $all_products =[];
-            $images = $this->getImagesData($keyword);
-            $footage = $this->getFootageData($keyword);
+            $images = $this->getImagesData($keyword,$getKeyword);
+            $footage = $this->getFootageData($keyword,$getKeyword);
+            $music =$this->getMusicData($keyword,$getKeyword);
             array_push($all_products,$images);
             array_push($all_products,$footage);
+            array_push($all_products,$music);
         }
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
@@ -241,6 +250,51 @@ class SearchController extends Controller
                     array_push($all_products, $media);
                 }
                 return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage'],'tp'=>'2');
+            }
+        }
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
+    }
+
+    public function getMusicData($keyword,$getKeyword){
+        $product = new Product();
+        $all_products =[];
+        $all_products = $product->getMusicProducts($keyword);
+        
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
+                $all_products = $all_products['data'];
+                return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
+            }
+        } else {
+            $musicMedia = new MusicApi();
+            $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
+            if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
+                foreach ($pondmusicMediaData['items'] as $eachmedia) {
+                    if (isset($eachmedia['id'])) {
+                        $pond_id_withprefix = $eachmedia['id'];
+                        if (strlen($eachmedia['id']) < 9) {
+                            $add_zero = 9 - (strlen($eachmedia['id']));
+                            for ($i = 0; $i < $add_zero; $i++) {
+                                $pond_id_withprefix = "0" . $pond_id_withprefix;
+                            }
+                        }
+                        $media = array(
+                            'product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id'],true),
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_title' => $eachmedia['title'],
+                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
+                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
+                            'product_main_type' => "Music",
+                            'product_added_on' => date("Y-m-d H:i:s"),
+                            'product_web' => '3',
+                            'product_keywords' => implode(',',$eachmedia['keywords'])
+                        );
+                    }
+                    array_push($all_products, $media);
+                }
+                return array('imgfootage'=>$all_products,'total'=>$pondmusicMediaData['totalNumberOfItems'],'perpage'=>$pondmusicMediaData['itemsPerPage'],'tp'=>'2');
             }
         }
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');

@@ -94,6 +94,29 @@ class Product extends Model
         return  $data;
     }
 
+    //API search function
+    public function getMusicProducts($keyword){
+        $data=[];
+        if(!empty($keyword['search'])){
+            $search = $keyword['search'];
+            $data = Product::select('product_id','api_product_id','product_category','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
+                 ->where(function ($query) {
+                 $query->whereIn('product_web',[1,2,3])->where('product_main_type','=','Music');
+             })->Where(function($query) use ($search) {
+                     $query->orWhere('product_id','=',$search)
+                         ->orWhere('product_title','LIKE', ''. $search .'%')
+                         ->orWhere('product_keywords','LIKE',''. $search .'%');
+             })->get()->toArray();
+             
+            if(count($data)>0){
+                $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
+                $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'],true);
+                $data = array('code'=>1,'data'=>$data);
+            }
+        }
+         return  $data;
+     }
+
     public function getProductDetail($media_id,$type){
         $data =Product::where('product_main_type','=',$type)
                 ->Where('product_id','=',$media_id)
@@ -284,7 +307,8 @@ class Product extends Model
                     ->get()
                     ->toArray();
                 if (count($data2)==0) {
-                    $flag = $this->get_api_flag('3','api_flag');
+                    //TODO
+                    $flag = $this->get_api_flag('5','api_flag');
                     $key  = $this->randomkey();
                     DB::table('imagefootage_products')->insert($media);
                     $id = DB::getPdo()->lastInsertId();

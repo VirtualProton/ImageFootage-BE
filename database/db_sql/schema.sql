@@ -168,3 +168,6 @@ ALTER TABLE `imagefootage_user_package` ADD `package_expiry_half_yearly` INT NUL
 -- Add Music ennum for product_main_type & product_sub_type
 ALTER TABLE `imagefootage_products` CHANGE `product_main_type` `product_main_type` ENUM('Image','Footage','Editorial','Music') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Image';
 ALTER TABLE `imagefootage_products` CHANGE `product_sub_type` `product_sub_type` ENUM('Footage','Vector','Photo','Illustrator','Music') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Photo';
+
+-- Music search api related changes
+INSERT INTO `imagefootage_api` (`api_id`, `api_provider`, `api_amount`, `api_flag`, `created_at`, `updated_at`) VALUES (NULL, 'Pond 5', NULL, 'MSCPD', '2023-09-01 15:39:04.000000', '2023-09-01 15:39:04.000000');
