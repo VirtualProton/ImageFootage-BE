@@ -40,7 +40,7 @@
                                                                                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width:100%">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td> <img width="180" src="images/conceptual_logo.png" title="logo" alt="logo">
+                                                                                                        <td> <img width="180" src="{{asset('images/conceptual_logo.png')}}" title="logo" alt="logo">
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </tbody>

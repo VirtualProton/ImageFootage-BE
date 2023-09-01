@@ -376,7 +376,7 @@ class AuthController extends Controller
         $user->email_verify_token = $match_token;
         $user->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"));
         $user->save();
-        $cont_url = url('/active_user_account') . '/' . $match_token;
+        $cont_url = config('app.front_end_url') . 'account-verification/' . $match_token;
 
         $data = array('cname' => $user->first_name, 'cemail' => $user->email, 'cont_url' => $cont_url);
         Mail::send('createusermail', $data, function ($message) use ($data) {
@@ -441,7 +441,7 @@ public function signupV2(Request $request)
                 'email_verify_token' => $match_token,
                 'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " hours"))
             ]);
-            $cont_url = url('/active_user_account') . '/' . $match_token;
+            $cont_url = config('app.front_end_url') . 'account-verification/' . $match_token;
             $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
             Mail::send('createusermail', $data, function ($message) use ($data) {
                 $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
