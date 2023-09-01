@@ -245,6 +245,57 @@ class Product extends Model
 
     }
 
+    # savePond5Music
+    public function savePond5Music($data, $category_id)
+    {
+        $eachmedia = $data;
+
+        foreach ($eachmedia as $key => $music) {
+            if (isset($music['id'])) {
+                $pond_id_withprefix = $music['id'];
+                if(strlen($music['id'])<9) {
+                    $add_zero = 9 - (strlen($music['id']));
+                    for($i=0;$i<$add_zero;$i++) {
+                       $pond_id_withprefix =  "0".$pond_id_withprefix;
+                    }
+                }
+
+                $media = array(
+                    'product_id' => "",
+                    'api_product_id' => $music['id'],
+                    'product_category' => $category_id,
+                    'product_title' => $music['title'],
+                    'product_thumbnail' => $music['thumbnail'],
+                    'product_main_image' => $music['watermarkPreview'],
+                    'product_description' => $music['description'],
+                    'product_size' => '',
+                    "product_keywords" => implode(',',$music['keywords']),
+                    'product_status' => "Active",
+                    'product_main_type' => "Music",
+                    'product_sub_type' => "Music",
+                    'product_added_on' => date("Y-m-d H:i:s"),
+                    'product_web' => '3',
+                    'product_vertical' => 'Royalty Free',
+                    'updated_at' => date("Y-m-d H:i:s")
+                );
+
+                $data2 = DB::table('imagefootage_products')
+                    ->where('api_product_id', $music['id'])
+                    ->get()
+                    ->toArray();
+                if (count($data2)==0) {
+                    $flag = $this->get_api_flag('3','api_flag');
+                    $key  = $this->randomkey();
+                    DB::table('imagefootage_products')->insert($media);
+                    $id = DB::getPdo()->lastInsertId();
+                    DB::table('imagefootage_products')
+                        ->where('id', '=', $id)
+                        ->update(['product_id' => $flag.$key]);
+                }
+            }
+        }
+    }
+
 
     public function getProductsRandom(){
         ini_set('max_execution_time',0);

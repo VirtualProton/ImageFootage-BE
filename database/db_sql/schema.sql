@@ -163,3 +163,8 @@ CREATE TABLE IF NOT EXISTS `imagefootage_editorials` (
 -- Edit quotation
 ALTER TABLE `imagefootage_user_package` ADD `package_expiry_quarterly` INT NULL;
 ALTER TABLE `imagefootage_user_package` ADD `package_expiry_half_yearly` INT NULL;
+
+
+-- Add Music ennum for product_main_type & product_sub_type
+ALTER TABLE `imagefootage_products` CHANGE `product_main_type` `product_main_type` ENUM('Image','Footage','Editorial','Music') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Image';
+ALTER TABLE `imagefootage_products` CHANGE `product_sub_type` `product_sub_type` ENUM('Footage','Vector','Photo','Illustrator','Music') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Photo';
