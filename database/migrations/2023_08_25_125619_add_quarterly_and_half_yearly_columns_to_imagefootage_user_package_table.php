@@ -27,7 +27,8 @@ class AddQuarterlyAndHalfYearlyColumnsToImagefootageUserPackageTable extends Mig
     public function down()
     {
         Schema::table('imagefootage_user_package', function (Blueprint $table) {
-            //
+            $table->dropColumn('package_expiry_quarterly');
+            $table->dropColumn('package_expiry_half_yearly');
         });
     }
 }

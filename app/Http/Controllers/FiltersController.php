@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImageFootageFilter;
 use Illuminate\Http\Request;
 use App\Models\Usercontactus;
 use App\Models\ProductColors;
@@ -88,5 +89,23 @@ class FiltersController extends Controller {
 	   }else{
 				echo '{"status":"0","message":"Some problem occured."}';
 	   }
+   }
+
+   public function getAllFiltersV2(Request $request) {
+		$type = $request->type;
+		$filters = ImageFootageFilter::select('id', 'name', 'value')
+					->whereHas('options', function($options){
+						$options->where('status', 'active')->orderBy('sort_order', 'asc');
+					})
+					->with('options:id,filter_id,option_name,value')
+					->where('type', $type)
+					->where('status', 'active')
+					->orderBy('sort_order', 'asc')
+					->get();
+		if(isset($filters) && !empty($filters)){
+			echo '{"status":"1","message":"","data":'.json_encode($filters,true).'}';
+		}else{
+			echo '{"status":"0","message":"No data found.","data":""}';
+		}
    }
 }
