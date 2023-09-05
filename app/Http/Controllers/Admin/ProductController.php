@@ -26,6 +26,7 @@ use App\Models\ProductOrientations;
 use App\Models\ImageSortTypes;
 use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
+use App\Models\ImageFootageFilter;
 use DB;
 use Auth;
 use Image;
@@ -267,6 +268,30 @@ class ProductController extends Controller
 					   $result=$productFilters->save();
 				  }
 			 }
+
+			 /* Dynamic filter: START */
+			 $type = strtolower($request->product_type);
+			 $filters = ImageFootageFilter::select('value')
+			 ->when(!empty($type), function($query) use($type) {
+			 	$query->where('type', $type);
+			 })
+			 ->where('status', 'active')
+			 ->orderBy('sort_order', 'asc')
+			 ->get()->pluck('value')->toArray();
+			 foreach($filters as $filter){
+			 	if(isset($request->$filter) && !empty($request->$filter)){
+			 		foreach($request->$filter as $options){
+			 			$productFilters = new ProductFilters;
+			 			$productFilters->filter_product_id=$last_id;
+			 			$productFilters->filter_type=$filter;
+			 			$productFilters->filter_type_id=$options;
+			 			$productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+			 			$productFilters->filter_added_on=date('Y-m-d H:i:s');
+			 			$result=$productFilters->save();
+			 		}
+			 	}
+			 }
+			 /* Dynamic filter: END */
 			 
 			 /* end filters */
 			 
@@ -705,6 +730,31 @@ class ProductController extends Controller
 				  }
 			 }
 			 }
+
+			 /* Dynamic filter: START */
+			 $type = strtolower($request->product_type);
+			 $filters = ImageFootageFilter::select('value')
+			 ->when(!empty($type), function($query) use($type) {
+			 	$query->where('type', $type);
+			 })
+			 ->where('status', 'active')
+			 ->orderBy('sort_order', 'asc')
+			 ->get()->pluck('value')->toArray();
+			 foreach($filters as $filter){
+			 	if(isset($request->$filter) && !empty($request->$filter)){
+			 		foreach($request->$filter as $options){
+						$productFilters=new ProductFilters;
+					    $productFilters->filter_product_id=$product_id;
+					    $productFilters->filter_type=$filter;
+					    $productFilters->filter_type_id=$options;
+					    $productFilters->filter_added_by=Auth::guard('admins')->user()->id;
+					    $productFilters->filter_added_on=date('Y-m-d H:i:s');
+					    $result=$productFilters->save();
+			 		}
+			 	}
+			 }
+			 /* Dynamic filter: END */
+			 
 			 /* end filters */
 			 
 
@@ -1722,6 +1772,83 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 			return json_encode($product_details);
 		}  		
          
+  }
+
+  public function getFilters(Request $request) {
+	$type = $request->type ? $request->type : NULL;
+	$filters = ImageFootageFilter::select('id', 'name', 'value')
+		->with(['options' => function($options) {
+			$options->select('id', 'filter_id', 'option_name', 'value')
+			->where('status', 'active')
+			->orderBy('sort_order', 'asc');
+		}])
+		->when(!empty($type), function($query) use($type) {
+			$query->where('type', $type);
+		})
+		->where('status', 'active')
+		->orderBy('sort_order', 'asc')
+		->get();
+	if(count($filters) > 0) {
+		$html = '';
+		foreach($filters as $filter){
+			$html .= '<div class="form-group">
+						<label for="exampleInputEmail1">' . $filter->name . '</label>
+						<select class="form-control select2" name="' . $filter->value .'[]" multiple="multiple">
+							<option value="">-- Select ' . $filter->name . ' --</option>';
+			foreach($filter->options as $option){
+				$html .= '<option value="' . $option->id .'">' . $option->option_name . '</option>';
+			}
+		  	$html .= '</select>
+					</div>';
+		}
+		return response()->json(['status' => true, 'data' => $html, 'message' => 'Filters get successfully.']);
+	}
+	return response()->json(['status' => false, 'data' => [], 'message' => 'Filters not found.']);
+  }
+
+  public function editFilters(Request $request) {
+	$id = $request->id ? $request->id : NULL;
+	$type = $request->type ? $request->type : NULL;
+	$filters = ImageFootageFilter::select('id', 'name', 'value')
+		->with(['options' => function($options) {
+			$options->select('id', 'filter_id', 'option_name', 'value')
+			->where('status', 'active')
+			->orderBy('sort_order', 'asc');
+		}])
+		->when(!empty($type), function($query) use($type) {
+			$query->where('type', $type);
+		})
+		->where('status', 'active')
+		->orderBy('sort_order', 'asc')
+		->get();
+	$getFilters = ProductFilters::join('imagefootage_filters_options', function($join) {
+					$join->on('imagefootage_filters_options.id', '=', 'imagefootage_productfilters.filter_type_id');
+				})
+				->where('filter_product_id', $id)->get();
+	$res = [];
+	foreach($getFilters as $key=>$filter) {
+		$res[$filter->filter_type][] = $filter->filter_type_id;
+	}
+	if(count($filters) > 0) {
+		$html = '';
+		foreach($filters as $filter){
+			$html .= '<div class="form-group">
+						<label for="exampleInputEmail1">' . $filter->name . '</label>
+						<select class="form-control select2" name="' . $filter->value .'[]" multiple="multiple">
+							<option value="">-- Select ' . $filter->name . ' --</option>';
+			foreach($filter->options as $option){
+				if(isset($res[$filter->value]) && in_array($option->id, $res[$filter->value])) {
+					$html .= '<option value="' . $option->id .'" selected="selected">' . $option->option_name . '</option>';
+				} else {
+					$html .= '<option value="' . $option->id .'">' . $option->option_name . '</option>';
+					}
+			}
+		  	$html .= '</select>
+					</div>';
+		}
+		return response()->json(['status' => true, 'data' => $html, 'message' => 'Filters get successfully.']);
+	}
+	return response()->json(['status' => false, 'data' => [], 'message' => 'Filters not found.']);
   }
 
 }  
