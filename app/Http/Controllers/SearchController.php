@@ -251,9 +251,13 @@ class SearchController extends Controller
             $product_ids = $products->pluck('product_id')->toArray();
             // if filter apply editorials list result update by above product ids
             $editoriallist = Editorial::select('*');
-            foreach ($product_ids as $product_id) {
-                // find in json by or condition
-                $editoriallist = $editoriallist->orWhereJsonContains('selected_values', [$product_id]);
+            if(count($product_ids) > 0) {
+                foreach ($product_ids as $product_id) {
+                    // find in json by and condition
+                    $editoriallist = $editoriallist->whereJsonContains('selected_values', [$product_id]);
+                }
+            } else {
+                $editoriallist = $editoriallist->whereJsonContains('selected_values', ['']);
             }
             $editoriallist = $editoriallist->get();
         } else {
