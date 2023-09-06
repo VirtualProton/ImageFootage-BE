@@ -8,6 +8,7 @@ use App\Models\Api;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 
 class Product extends Model
 {
@@ -95,18 +96,74 @@ class Product extends Model
     }
 
     //API search function
-    public function getMusicProducts($keyword){
+    public function getProductsNew($keyword, $requestData){
+         $data=[];
+         if($keyword['productType']['id']=='1'){
+             $type='Image';
+         }else if($keyword['productType']['id']=='2'){
+             $type='Footage';
+         }else{
+             $type='Editorial';
+         }
+         if(!empty($keyword['search'])){
+            $search = $keyword['search'];
+            $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
+            
+            $data = Product::select('product_id','api_product_id','product_category','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
+                    ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+                    ->join('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
+                ->where(function ($query) use ($type){
+                $query->whereIn('product_web',[1,2,3])->where('product_main_type','=',$type);
+            })->Where(function($query) use ($search) {
+                    $query->orWhere('product_id','=',$search) //exact match
+                          ->orWhere('product_title','LIKE', '%'. $search .'%')
+                          ->orWhere('product_keywords','LIKE','%'. $search .'%');
+            });
+            //filters apply pending
+            if(count($requestFilters) > 0) {
+               //TODO:  pricing and color filter pending
+               $filtersArr = array_values(array_filter($requestFilters));
+               if(count($filtersArr) > 0) {
+                   $data = $data->whereIn('imagefootage_filters_options.id', $filtersArr);
+               }
+            }
+            $data = $data->distinct()->get()->toArray();
+            if(count($data)>0){
+               $url = 'detail/'.$data[0]['api_product_id'].'/'.$data[0]['product_web']."/".$data[0]['product_main_type'];
+               $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
+               $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'],true);
+               $data = array('code'=>1,'url'=>$url,'data'=>$data);
+            }
+         }
+         return  $data;
+     }
+
+    //API search function
+    public function getMusicProducts($keyword, $requestData){
         $data=[];
         if(!empty($keyword['search'])){
             $search = $keyword['search'];
+            $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
+
             $data = Product::select('product_id','api_product_id','product_category','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
+                    ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+                    ->join('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
                  ->where(function ($query) {
-                 $query->whereIn('product_web',[1,2,3])->where('product_main_type','=','Music');
-             })->Where(function($query) use ($search) {
-                     $query->orWhere('product_id','=',$search)
-                         ->orWhere('product_title','LIKE', ''. $search .'%')
-                         ->orWhere('product_keywords','LIKE',''. $search .'%');
-             })->get()->toArray();
+                    $query->whereIn('product_web',[1,2,3])->where('product_main_type','=','Music');
+                 })->Where(function($query) use ($search) {
+                        $query->orWhere('product_id','=',$search)
+                            ->orWhere('product_title','LIKE', '%'. $search .'%')
+                            ->orWhere('product_keywords','LIKE','%'. $search .'%');
+                 });
+
+             //filters apply pending
+            if(count($requestFilters) > 0) {//TODO:  pricing and color filter pending
+                $filtersArr = array_values(array_filter($requestFilters));
+                if(count($filtersArr) > 0) {
+                    $data = $data->whereIn('imagefootage_filters_options.id', $filtersArr);
+                }
+            }
+            $data = $data->distinct()->get()->toArray();
              
             if(count($data)>0){
                 $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));

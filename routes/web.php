@@ -62,7 +62,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/editproductsubcategory', 'ProductSubCategoryController@update');
     Route::post('/get_related_subcat', 'ProductController@get_relatedsubcat');
     // Route::get('/product/{id}', 'ProductController@getProduct');
-
+    Route::post('/get-filters', 'ProductController@getFilters');
+    Route::post('/edit-filters', 'ProductController@editFilters');
 
     //ContributorController
     Route::get('/add_contributor', 'ContributorController@index');

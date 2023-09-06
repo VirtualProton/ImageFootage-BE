@@ -174,3 +174,28 @@ ALTER TABLE `imagefootage_products`  ADD `music_sound_bpm` VARCHAR(255) NULL  AF
 
 -- Music search api related changes
 INSERT INTO `imagefootage_api` (`api_id`, `api_provider`, `api_amount`, `api_flag`, `created_at`, `updated_at`) VALUES (5, 'Pond 5', NULL, 'MSCPD', '2023-09-01 15:39:04.000000', '2023-09-01 15:39:04.000000');
+
+-- filters
+CREATE TABLE IF NOT EXISTS `imagefootage_filters` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `value` varchar(191) NOT NULL,
+  `type` varchar(191) NOT NULL,
+  `sort_order` int NOT NULL DEFAULT '1',
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
+  `created_at` TIMESTAMP DEFAULT NULL,
+  `updated_at` TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `imagefootage_filters_options` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `filter_id` bigint UNSIGNED NOT NULL,
+  `option_name` varchar(191) NOT NULL,
+  `value` varchar(191) NOT NULL,
+  `sort_order` int NOT NULL DEFAULT '1',
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
+  `created_at` TIMESTAMP DEFAULT NULL,
+  `updated_at` TIMESTAMP DEFAULT NULL,
+  FOREIGN KEY (`filter_id`) REFERENCES `imagefootage_filters` (`id`) ON DELETE CASCADE
+);
