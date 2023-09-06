@@ -56,7 +56,9 @@ class SearchController extends Controller
             }
                $all_products =$this->getMusicData($keyword,$getKeyword);
               
-        }else{
+        } else if ($keyword['productType']['id'] == '4') {
+            $all_products = $this->getEditorialData($keyword, $getKeyword);
+        } else{
             $all_products =[];
             $images = $this->getImagesData($keyword,$getKeyword);
             $footage = $this->getFootageData($keyword,$getKeyword);
@@ -204,6 +206,55 @@ class SearchController extends Controller
         }
 
           return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30,'tp'=>'2');
+    }
+
+    public function getEditorialData($keyword, $getKeyword)
+    {
+
+        if (!empty($keyword['search'])) {
+            $editoriallist = Editorial::where('status', 1)
+                ->where('search_term', $keyword['search'])
+                ->get();
+        } else {
+            $editoriallist = Editorial::where('status', 1)->get();
+        }
+
+        $selectedValues = [];
+        // Retrive all occured products Ids
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+
+            if (is_array($editorialValue)) {
+                $selectedValues = array_merge($selectedValues, $editorialValue);
+            }
+        }
+
+        // Retrive URLs based on Ids
+        $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+
+        $productUrlMap = [];
+        foreach ($products as $product) {
+            $productUrlMap[$product->product_id] = $product->product_main_image;
+        }
+
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+            if (is_array($editorialValue)) {
+                $updatedEditorialValue = [];
+                foreach ($editorialValue as $productId) {
+                    if (isset($productUrlMap[$productId])) {
+                        $updatedEditorialValue[] = $productUrlMap[$productId];
+                    }
+                }
+                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
+                $editorial['selected_values_count'] = count($updatedEditorialValue);
+            }
+            if (!empty($editorial['main_image_upload'])) {
+                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
+            }
+        }
+        $total = count($editoriallist);
+        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => 15, 'tp' => '2');
     }
 
     public function getFootageData($keyword,$getKeyword){
