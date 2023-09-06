@@ -695,4 +695,9 @@ class Product extends Model
 
         return $headers['http_code'];
     }
+
+    public function downloads()
+    {
+        return $this->hasMany(ProductsDownload::class, 'product_id', 'product_id');
+    }
 }
