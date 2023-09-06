@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\ChangeMobileMail;
 use App\Mail\ChangeAddressEmail;
 use Carbon\Carbon;
+use App\Models\ProductsDownload;
+
 
 class UserController extends Controller
 {
@@ -343,6 +345,55 @@ class UserController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(5)->toArray();
             echo json_encode(['status' => "success", 'data' => $OrderData]);
+        } else {
+            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+        }
+    }
+
+    # Download history
+    public function downloadHistory(Request $request)
+    {
+        $userId      = $request->user_id;
+        $mediaType   = $request->media_type;
+        $range       = $request->input('range', 'today');
+        $startDate = null;
+        $endDate   = null;
+
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today()->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                break;
+            case 'last_week':
+                $startDate = Carbon::today()->subWeek()->startOfWeek();
+                $endDate = Carbon::today()->subWeek()->endOfWeek();
+                break;
+            case 'last_month':
+                $startDate = Carbon::today()->subMonth()->startOfMonth();
+                $endDate = Carbon::today()->subMonth()->endOfMonth();
+                break;
+            case 'custom':
+                $startDate = $request->input('start_date');
+                $endDate = $request->input('end_date');
+                break;
+        }
+
+        if ($request->user_id) {            
+
+            $downloads = ProductsDownload::with(['product' => function ($productquery) use ($mediaType) {
+                if ($mediaType != 'All') {
+                    $productquery->where('product_main_type', $mediaType);
+                }
+            }])
+               
+                ->where('user_id', '=', $userId)
+                ->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate)
+                ->orderBy('id', 'desc')
+                ->paginate(5)
+                ->toArray();
+
+            echo json_encode(['status' => "success", 'data' => $downloads]);
         } else {
             echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }

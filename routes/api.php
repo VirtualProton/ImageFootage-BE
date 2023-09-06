@@ -126,6 +126,7 @@ Route::group([
     Route::post('myplan', 'UserController@myPlan'); # My Plan
     Route::get('userOrders/{id}', 'UserController@userOrders');
     Route::post('purchase-history', 'UserController@purchaseHistory'); # Purchase History
+    Route::post('download-history', 'UserController@downloadHistory'); # Download History
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
@@ -140,11 +141,11 @@ Route::group([
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
 
     # Wishlist
-    Route::post('/share-wishlist','WishListController@shareWishListCreateLink');
-    Route::post('/accept-wishlist-link','WishListController@acceptWishlistFolder');
-    Route::post('/add-products-to-wishlist','WishListController@addProductToWishlist');
-    Route::post('/create-update-wishlist','WishListController@createOrUpdateWishlist');
-    Route::post('/remove-products-from-wishlist','WishListController@removeProductFromWishlist');
+    Route::post('/share-wishlist', 'WishListController@shareWishListCreateLink');
+    Route::post('/accept-wishlist-link', 'WishListController@acceptWishlistFolder');
+    Route::post('/add-products-to-wishlist', 'WishListController@addProductToWishlist');
+    Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
+    Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
 });
 
 
@@ -160,7 +161,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::get('packages-v2', 'PackageApiController@packageListv2');
         Route::get('editorials-v2', 'EditorialController@editorialListv2');
         Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
-        Route::post('social-login','AuthController@socialLoginv2');  # new socialLogin
+        Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
     });
 });
 
