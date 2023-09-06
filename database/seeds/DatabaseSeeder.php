@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ImagefootageAdminSeeder::class,
             CurrencyConvertesSeeder::class,
             ImagefootageAccountsSeeder::class,
+            ImageFootageApiSeeder::class,
             ImagefootageModulesSeeder::class,
             ImagefootagePackagesSeeder::class,
             ContentsSeeder::class,

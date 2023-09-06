@@ -172,9 +172,6 @@ ALTER TABLE `imagefootage_products` CHANGE `product_sub_type` `product_sub_type`
 -- Add Music related columns
 ALTER TABLE `imagefootage_products`  ADD `music_sound_bpm` VARCHAR(255) NULL  AFTER `thumb_update_status`,  ADD `music_duration` VARCHAR(255) NULL  AFTER `music_sound_bpm`,  ADD `music_fileType` VARCHAR(255) NULL  AFTER `music_duration`,  ADD `music_price` VARCHAR(255) NULL  AFTER `music_fileType`,  ADD `music_size` VARCHAR(255) NULL  AFTER `music_price`;
 
--- Music search api related changes
-INSERT INTO `imagefootage_api` (`api_id`, `api_provider`, `api_amount`, `api_flag`, `created_at`, `updated_at`) VALUES (5, 'Pond 5', NULL, 'MSCPD', '2023-09-01 15:39:04.000000', '2023-09-01 15:39:04.000000');
-
 -- filters
 CREATE TABLE IF NOT EXISTS `imagefootage_filters` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -199,3 +196,13 @@ CREATE TABLE `imagefootage_filters_options` (
   `updated_at` TIMESTAMP DEFAULT NULL,
   FOREIGN KEY (`filter_id`) REFERENCES `imagefootage_filters` (`id`) ON DELETE CASCADE
 );
+
+INSERT INTO `imagefootage_api`
+(api_id, api_provider, api_amount, api_flag, created_at, updated_at)
+VALUES(2, 'Panthermedia', NULL, 'IMGPM', '2023-09-01 11:35:10', '2023-09-01 11:35:10');
+
+INSERT INTO `imagefootage_api`
+(api_id, api_provider, api_amount, api_flag, created_at, updated_at)
+VALUES(3, 'Pond 5', NULL, 'IMGPD', '2023-09-01 11:35:10', '2023-09-01 11:35:10');
+
+INSERT INTO `imagefootage_api` (`api_id`, `api_provider`, `api_amount`, `api_flag`, `created_at`, `updated_at`) VALUES (5, 'Pond 5', NULL, 'MSCPD', '2023-09-01 15:39:04.000000', '2023-09-01 15:39:04.000000');
