@@ -299,8 +299,16 @@ class Product extends Model
                     'product_added_on' => date("Y-m-d H:i:s"),
                     'product_web' => '3',
                     'product_vertical' => 'Royalty Free',
+                    'music_sound_bpm' => $music['soundBpm'] ?? null,
                     'updated_at' => date("Y-m-d H:i:s")
                 );
+
+                if (!empty($music['versions'])) {
+                    $media['music_duration'] = $music['versions'][0]['duration'] ?? null;
+                    $media['music_fileType'] = $music['versions'][0]['fileType'] ?? null;
+                    $media['music_price'] = $music['versions'][0]['price'] ?? null;
+                    $media['music_size'] = $music['versions'][0]['size'] ?? null;
+                }
 
                 $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $music['id'])

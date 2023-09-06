@@ -289,7 +289,12 @@ class SearchController extends Controller
                             'product_main_type' => "Music",
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
-                            'product_keywords' => implode(',',$eachmedia['keywords'])
+                            'product_keywords' => implode(',',$eachmedia['keywords']),
+                            'music_sound_bpm' => $eachmedia['soundBpm'] ?? null,
+                            'music_duration' => $eachmedia['versions'][0]['duration'] ?? null,
+                            'music_fileType' => $eachmedia['versions'][0]['fileType'] ?? null,
+                            'music_price' => $eachmedia['versions'][0]['price'] ?? null,
+                            'music_size' => $eachmedia['versions'][0]['size'] ?? null,
                         );
                     }
                     array_push($all_products, $media);
