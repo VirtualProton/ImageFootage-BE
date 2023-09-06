@@ -40,8 +40,7 @@ class PackageApiController extends Controller
 
     public function packageListv2()
     {
-        $all_package_list = Package::select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier', 'package_plan', 'package_type', 'pacage_size')
-            ->where(function ($query) {
+        $all_package_list = Package::where(function ($query) {
                 $query->where('display_for', 1)
                     ->orWhere('display_for', 3);
             })

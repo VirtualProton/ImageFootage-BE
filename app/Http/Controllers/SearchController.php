@@ -27,49 +27,49 @@ class SearchController extends Controller
      */
     public function __construct()
     {
+
     }
 
-    public function home()
-    {
+    public function home(){
         $product = new Product();
         $all_products = $product->getProductsRandom();
-        return array('api' => $all_products[0], 'home' => $all_products[1]);
+        return array('api'=>$all_products[0],'home'=>$all_products[1]);
     }
-    public function index(SearchRequest $request)
-    {
+    public function index(SearchRequest $request){
         ini_set('max_execution_time', 0);
         $getKeyword = $request->all();
         $keyword = array();
-        $keyword['search'] = $getKeyword['search'];
-        $keyword['productType']['id'] = $getKeyword['productType'];
-        if ($keyword['productType']['id'] == '1') {
-            $all_products = $this->getImagesData($keyword, $getKeyword);
-        } else if ($keyword['productType']['id'] == '2') {
-            if (isset($getKeyword['pagenumber'])) {
-                $keyword['pagenumber'] = $getKeyword['pagenumber'];
+        $keyword['search'] = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
+        $keyword['productType']['id']= $getKeyword['productType'];
+
+        if($keyword['productType']['id']=='1'){
+           $all_products = $this->getImagesData($keyword,$getKeyword);
+        }else if($keyword['productType']['id']=='2'){
+            if(isset($getKeyword['pagenumber'])){
+                $keyword['pagenumber']= $getKeyword['pagenumber'];
             }
-            $all_products = $this->getFootageData($keyword, $getKeyword);
-        } else if ($keyword['productType']['id'] == '3') {
-            if (isset($getKeyword['pagenumber'])) {
-                $keyword['pagenumber'] = $getKeyword['pagenumber'];
+               $all_products =$this->getFootageData($keyword,$getKeyword);
+              
+        }else if($keyword['productType']['id']=='3'){
+            if(isset($getKeyword['pagenumber'])){
+                $keyword['pagenumber']= $getKeyword['pagenumber'];
             }
-            $all_products = $this->getMusicData($keyword, $getKeyword);
-        } else if ($keyword['productType']['id'] == '4') {
-            $all_products = $this->getEditorialData($keyword, $getKeyword);
-        } else {
-            $all_products = [];
-            $images = $this->getImagesData($keyword, $getKeyword);
-            $footage = $this->getFootageData($keyword, $getKeyword);
-            $music = $this->getMusicData($keyword, $getKeyword);
-            array_push($all_products, $images);
-            array_push($all_products, $footage);
-            array_push($all_products, $music);
+               $all_products =$this->getMusicData($keyword,$getKeyword);
+              
+        }else{
+            $all_products =[];
+            $images = $this->getImagesData($keyword,$getKeyword);
+            $footage = $this->getFootageData($keyword,$getKeyword);
+            $music =$this->getMusicData($keyword,$getKeyword);
+            array_push($all_products,$images);
+            array_push($all_products,$footage);
+            array_push($all_products,$music);
         }
         // Save search keyword to trending words table
-        if (!empty($keyword['search']) && strlen($keyword['search']) > 1) {
+        if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
             $search_keyword = Str::slug($keyword['search']);
             $trending_word = TrendingWord::where('name', $search_keyword)->first();
-            if (!empty($trending_word)) {
+            if(!empty($trending_word)){
                 $trending_word->count += 1;
                 $trending_word->save();
             } else {
@@ -82,57 +82,56 @@ class SearchController extends Controller
 
         return response()->json($all_products);
     }
-    public function relatedProductList(Request $request)
-    {
+	public function relatedProductList(Request $request){
         $all_products = [];
-        ini_set('max_execution_time', 0);
-        $getKeyword = $request->all();
-        $keyword = array();
-        $keyword['search'] = $getKeyword['searchData'];
+		ini_set('max_execution_time', 0);
+		$getKeyword = $request->all();
+		$keyword = array();
+		$keyword['search'] = $getKeyword['searchData'];
         $keyword['pagenumber'] = $getKeyword['pagenumber'];
-        if ($getKeyword['imgtype'] == '2') {
+		if($getKeyword['imgtype']=='2') {
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword, 30);
-            if (count($pantharmediaData) > 0) {
-                if (empty($pantharmediaData['items']['media'][0])) {
-                    $all_products = array(
-                        'product_id' => $pantharmediaData['items']['media']['id'],
-                        'api_product_id' => encrypt($pantharmediaData['items']['media']['id']),
-                        'product_title' => $pantharmediaData['items']['media']['title'],
-                        'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pantharmediaData['items']['media']['title']))),
-                        'product_main_image' => str_replace('http', 'https', $pantharmediaData['items']['media']['preview_high']),
-                        'product_thumbnail' => str_replace('http', 'https', $pantharmediaData['items']['media']['preview_no_wm']),
-                        'product_description' => $pantharmediaData['items']['media']['description'],
-                        'product_keywords' => $pantharmediaData['items']['media']['keywords'],
-                        'product_main_type' => "Image",
-                        'product_added_on' => date("Y-m-d H:i:s", strtotime($pantharmediaData['items']['media']['date'])),
-                        'product_web' => '2',
-                    );
-                } else {
+          if (count($pantharmediaData) > 0) {
+           if(empty($pantharmediaData['items']['media'][0] ) ){
+                $all_products = array(
+                    'product_id' => $pantharmediaData['items']['media']['id'],
+                    'api_product_id' => encrypt($pantharmediaData['items']['media']['id']),
+                    'product_title' => $pantharmediaData['items']['media']['title'],
+                    'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pantharmediaData['items']['media']['title']))),
+                    'product_main_image' => str_replace('http','https',$pantharmediaData['items']['media']['preview_high']),
+                    'product_thumbnail' => str_replace('http','https',$pantharmediaData['items']['media']['preview_no_wm']),
+                    'product_description' => $pantharmediaData['items']['media']['description'],
+                    'product_keywords' => $pantharmediaData['items']['media']['keywords'],
+                    'product_main_type' => "Image",
+                    'product_added_on' => date("Y-m-d H:i:s", strtotime($pantharmediaData['items']['media']['date'])),
+                    'product_web' => '2',
+                );
+            }else{
                     foreach ($pantharmediaData['items']['media'] as $eachmedia) {
-                        if (isset($eachmedia['id'])) {
-                            $media = array(
-                                'product_id' => $eachmedia['id'],
-                                'api_product_id' => encrypt($eachmedia['id']),
-                                'product_title' => $eachmedia['title'],
-                                'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                                'product_main_image' => str_replace('http', 'https', $eachmedia['preview_high']),
-                                'product_thumbnail' => str_replace('http', 'https', $eachmedia['preview_no_wm']),
-                                'product_description' => $eachmedia['description'],
-                                'product_keywords' => $eachmedia['keywords'],
-                                'product_main_type' => "Image",
-                                'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
-                                'product_web' => '2',
-                            );
-                        }
-                        array_push($all_products, $media);
+                     if (isset($eachmedia['id'])) {
+                        $media = array(
+                            'product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id']),
+                            'product_title' => $eachmedia['title'],
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
+                            'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
+                            'product_description' => $eachmedia['description'],
+                            'product_keywords' => $eachmedia['keywords'],
+                            'product_main_type' => "Image",
+                            'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
+                            'product_web' => '2',
+                        );
                     }
+                    array_push($all_products, $media);
                 }
-                return array('imgfootage' => $all_products, 'total' => $pantharmediaData['items']['total'], 'perpage' => $pantharmediaData['items']['items']);
             }
-        } else {
+            return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
+            }
+        }else{
             $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword, $getKeyword, '30');
+            $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword,'30');
             if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -159,26 +158,25 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage' => $all_products, 'total' => $pondfootageMediaData['totalNumberOfItems'], 'perpage' => $pondfootageMediaData['itemsPerPage']);
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage']);
             }
         }
-        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 20);
-    }
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
+	}
 
-    public function getImagesData($keyword, $getKeyword)
-    {
+    public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
-        $all_products = $product->getProducts($keyword);
-        $flag = 0;
-        if (count($all_products) > 0) {
-            if (isset($all_products['code']) && $all_products['code'] == '1') {
+        $all_products = $product->getProductsNew($keyword, $getKeyword);
+        $flag =0;
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
-                $flag = 1;
-                return array('imgfootage' => $all_products, 'total' => '1', 'perpage' => '30', 'tp' => '1');
+                $flag =1;
+                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
-        if ($flag == '0') {
+        if($flag=='0'){ 
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             if (count($pantharmediaData) > 0) {
@@ -186,11 +184,11 @@ class SearchController extends Controller
                     if (isset($eachmedia['id'])) {
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => encrypt($eachmedia['id'], true),
+                            'api_product_id' => encrypt($eachmedia['id'],true),
                             'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_title' => $eachmedia['title'],
-                            'product_main_image' => str_replace('http', 'https', $eachmedia['preview_high']),
-                            'product_thumbnail' => str_replace('http', 'https', $eachmedia['preview_no_wm']),
+                            'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
+                            'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
                             'product_description' => $eachmedia['description'],
                             'product_keywords' => $eachmedia['keywords'],
                             'product_main_type' => "Image",
@@ -199,82 +197,32 @@ class SearchController extends Controller
                         );
                     }
                     array_push($all_products, $media);
-                    $all_products[] = shuffle($all_products);
+                    $all_products [] = shuffle($all_products);
                 }
-                return array('imgfootage' => $all_products, 'total' => $pantharmediaData['items']['total'], 'perpage' => $pantharmediaData['items']['items'], 'tp' => '2');
+                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items'],'tp'=>'2');
             }
         }
 
-        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 30, 'tp' => '2');
+          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30,'tp'=>'2');
     }
 
-    public function getEditorialData($keyword, $getKeyword)
-    {
-
-        if (!empty($keyword['search'])) {
-            $editoriallist = Editorial::where('status', 1)
-                ->where('search_term', $keyword['search'])
-                ->get();
-        } else {
-            $editoriallist = Editorial::where('status', 1)->get();
-        }
-
-        $selectedValues = [];
-        // Retrive all occured products Ids
-        foreach ($editoriallist as $editorial) {
-            $editorialValue = json_decode($editorial['selected_values'], true);
-
-            if (is_array($editorialValue)) {
-                $selectedValues = array_merge($selectedValues, $editorialValue);
-            }
-        }
-
-        // Retrive URLs based on Ids
-        $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
-
-        $productUrlMap = [];
-        foreach ($products as $product) {
-            $productUrlMap[$product->product_id] = $product->product_main_image;
-        }
-
-        foreach ($editoriallist as $editorial) {
-            $editorialValue = json_decode($editorial['selected_values'], true);
-            if (is_array($editorialValue)) {
-                $updatedEditorialValue = [];
-                foreach ($editorialValue as $productId) {
-                    if (isset($productUrlMap[$productId])) {
-                        $updatedEditorialValue[] = $productUrlMap[$productId];
-                    }
-                }
-                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
-                $editorial['selected_values_count'] = count($updatedEditorialValue);
-            }
-            if (!empty($editorial['main_image_upload'])) {
-                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
-            }
-        }
-        $total = count($editoriallist);
-        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => 15, 'tp' => '2');
-    }
-
-    public function getFootageData($keyword, $getKeyword)
-    {
+    public function getFootageData($keyword,$getKeyword){
         $product = new Product();
-        $all_products = [];
-        $all_products = $product->getProducts($keyword);
-        $flag = 0;
-
-        if (count($all_products) > 0) {
-            if (isset($all_products['code']) && $all_products['code'] == '1') {
+        $all_products =[];
+        $all_products = $product->getProductsNew($keyword, $getKeyword);
+        $flag =0;
+        
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
-                $flag = 1;
-                return array('imgfootage' => $all_products, 'total' => '1', 'perpage' => '30', 'tp' => '1');
+                $flag =1;
+                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
-        if ($flag == '0') {
+        if($flag=='0'){
 
             $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword, $getKeyword);
+            $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
             if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -287,7 +235,7 @@ class SearchController extends Controller
                         }
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => encrypt($eachmedia['id'], true),
+                            'api_product_id' => encrypt($eachmedia['id'],true),
                             'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_title' => $eachmedia['title'],
                             'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
@@ -296,31 +244,30 @@ class SearchController extends Controller
                             'product_main_type' => "Footage",
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
-                            'product_keywords' => implode(',', $eachmedia['keywords'])
+                            'product_keywords' => implode(',',$eachmedia['keywords'])
                         );
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage' => $all_products, 'total' => $pondfootageMediaData['totalNumberOfItems'], 'perpage' => $pondfootageMediaData['itemsPerPage'], 'tp' => '2');
+                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage'],'tp'=>'2');
             }
         }
-        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 20, 'tp' => '2');
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
-    public function getMusicData($keyword, $getKeyword)
-    {
+    public function getMusicData($keyword,$getKeyword){
         $product = new Product();
-        $all_products = [];
-        $all_products = $product->getMusicProducts($keyword);
-
-        if (count($all_products) > 0) {
-            if (isset($all_products['code']) && $all_products['code'] == '1') {
+        $all_products =[];
+        $all_products = $product->getMusicProducts($keyword, $getKeyword);
+        
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
-                return array('imgfootage' => $all_products, 'total' => count($all_products), 'perpage' => '30', 'tp' => '1');
+                return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
             }
         } else {
             $musicMedia = new MusicApi();
-            $pondmusicMediaData = $musicMedia->searchMusic($keyword, $getKeyword);
+            $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
             if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
                 foreach ($pondmusicMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -333,7 +280,7 @@ class SearchController extends Controller
                         }
                         $media = array(
                             'product_id' => $eachmedia['id'],
-                            'api_product_id' => encrypt($eachmedia['id'], true),
+                            'api_product_id' => encrypt($eachmedia['id'],true),
                             'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_title' => $eachmedia['title'],
                             'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
@@ -342,19 +289,23 @@ class SearchController extends Controller
                             'product_main_type' => "Music",
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
-                            'product_keywords' => implode(',', $eachmedia['keywords'])
+                            'product_keywords' => implode(',',$eachmedia['keywords']),
+                            'music_sound_bpm' => $eachmedia['soundBpm'] ?? null,
+                            'music_duration' => $eachmedia['versions'][0]['duration'] ?? null,
+                            'music_fileType' => $eachmedia['versions'][0]['fileType'] ?? null,
+                            'music_price' => $eachmedia['versions'][0]['price'] ?? null,
+                            'music_size' => $eachmedia['versions'][0]['size'] ?? null,
                         );
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage' => $all_products, 'total' => $pondmusicMediaData['totalNumberOfItems'], 'perpage' => $pondmusicMediaData['itemsPerPage'], 'tp' => '2');
+                return array('imgfootage'=>$all_products,'total'=>$pondmusicMediaData['totalNumberOfItems'],'perpage'=>$pondmusicMediaData['itemsPerPage'],'tp'=>'2');
             }
         }
-        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 20, 'tp' => '2');
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
-    public function categoryWiseData()
-    {
+    public function categoryWiseData() {
         $product = new Product();
         $all_products = $product->categoryWiseData();
         return $all_products;
@@ -363,31 +314,32 @@ class SearchController extends Controller
     public function getKeywords(Request $request, $keyword = "")
     {
         try {
-            $products = Keywords::where(function ($query) use ($keyword) {
+            $products = Keywords::where(function($query) use ($keyword) {
                 // Filter the keywords when pass keywords as param
                 $keyword = trim($keyword);
-                if ($keyword != "") {
+                if($keyword != "") {
                     $query->where("name", "like", "%$keyword%");
-                }
+                } 
             })->get()->toArray();
-            return response()->json(["status" => true, "data" => $products]);
+            return response()->json(["status"=> true, "data"=> $products]);
         } catch (\Throwable $th) {
-            return response()->json(["status" => false, "message" => "Cannot get keywords"]);
+            return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
     }
 
     public function getTrendingKeywords(Request $request, $keyword = "")
     {
         try {
-            $result = TrendingWord::where(function ($query) use ($keyword) {
+            $result = TrendingWord::where(function($query) use ($keyword) {
                 $keyword = trim($keyword);
-                if ($keyword != "") {
+                if($keyword != "") {
                     $query->where("name", "like", "%$keyword%");
-                }
+                } 
             })->orderBy('count', 'desc')->orderBy('id', 'desc')->get()->take(5);
-            return response()->json(["status" => true, "data" => $result]);
+            return response()->json(["status"=> true, "data"=> $result]);
         } catch (\Throwable $th) {
-            return response()->json(["status" => false, "message" => "Cannot get keywords"]);
+            return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
     }
+    
 }
