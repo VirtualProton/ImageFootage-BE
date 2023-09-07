@@ -128,7 +128,7 @@
                                                                                                                                 <tbody>
                                                                                                                                     <tr>
                                                                                                                                         <td align="left" style="padding-right:20px;font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-align:left;">
-                                                                                                                                            <a href="{{ config('app.front_end_url') }}" alt="Image Footage" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-decoration:none" target="_blank">{{ rtrim(config('app.front_end_url'), "/") }}</a>
+                                                                                                                                            <a href="{{ config('app.front_end_url') }}" alt="Image Footage" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-decoration:none" target="_blank">{{ config('app.front_end_url_name') }}</a>
                                                                                                                                         </td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
@@ -140,7 +140,7 @@
                                                                                                                                     <tr>
                                                                                                                                         <td align="left" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 400;color:#ffffff;text-align:left;">
                                                                                                                                             Copyright
-                                                                                                                                            @Image Footage
+                                                                                                                                            {{ '@' . config('app.name') }}
                                                                                                                                             {{ date('Y') }}</td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
