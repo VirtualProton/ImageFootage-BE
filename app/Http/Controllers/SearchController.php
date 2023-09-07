@@ -230,7 +230,40 @@ class SearchController extends Controller
         }
 
         // Retrive URLs based on Ids
-        $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+        $is_filter = 0;
+        $product_ids = [];
+        if(count($getKeyword) > 0) {
+            $requestFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+            $filtersArr = array_values(array_filter($requestFilters));
+            if(count($filtersArr) > 0) {
+                $is_filter = 1;
+            }
+        }
+        if($is_filter == 1) {
+            // Get filtered products
+            $products = Product::select('product_id', 'product_main_image')
+            ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+            ->join('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
+            ->whereIn('product_id', $selectedValues)
+            ->whereIn('imagefootage_filters_options.id', $filtersArr)
+            ->distinct()->get();
+            // Get filtered product ids array
+            $product_ids = $products->pluck('product_id')->toArray();
+            // if filter apply editorials list result update by above product ids
+            $editoriallist = Editorial::select('*');
+            if(count($product_ids) > 0) {
+                foreach ($product_ids as $product_id) {
+                    // find in json by and condition
+                    $editoriallist = $editoriallist->whereJsonContains('selected_values', [$product_id]);
+                }
+            } else {
+                $editoriallist = $editoriallist->whereJsonContains('selected_values', ['']);
+            }
+            $editoriallist = $editoriallist->get();
+        } else {
+            $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+            $product_ids = $products->pluck('product_id')->toArray();
+        }
 
         $productUrlMap = [];
         foreach ($products as $product) {

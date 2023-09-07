@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
             PlansSeeder::class,
             TaxesSeeder::class,
             IndustryTypesSeeder::class,
+            ImageFootageFiltersSeeder::class,
+            ImageFootageFilterOptionsSeeder::class
         ]);
     }
 }
