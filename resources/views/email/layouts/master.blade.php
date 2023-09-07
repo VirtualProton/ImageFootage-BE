@@ -40,7 +40,7 @@
                                                                                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width:100%">
                                                                                                 <tbody>
                                                                                                     <tr>
-                                                                                                        <td> <img width="180" src="{{asset('images/conceptual_logo.png')}}" title="logo" alt="logo">
+                                                                                                        <td> <img width="180" src="{{asset('images/new-design-logo.png')}}" title="logo" alt="logo">
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </tbody>
@@ -128,7 +128,7 @@
                                                                                                                                 <tbody>
                                                                                                                                     <tr>
                                                                                                                                         <td align="left" style="padding-right:20px;font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-align:left;">
-                                                                                                                                            <a href="https://imagefootage.com/" alt="Image Footage" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-decoration:none" target="_blank">www.imagefootage.com</a>
+                                                                                                                                            <a href="{{ config('app.front_end_url') }}" alt="Image Footage" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 500;color:#ffffff;text-decoration:none" target="_blank">{{ rtrim(config('app.front_end_url'), "/") }}</a>
                                                                                                                                         </td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
@@ -141,7 +141,7 @@
                                                                                                                                         <td align="left" style="font-family: 'Poppins', sans-serif;font-size:12px;line-height: 28px;font-weight: 400;color:#ffffff;text-align:left;">
                                                                                                                                             Copyright
                                                                                                                                             @Image Footage
-                                                                                                                                            2023</td>
+                                                                                                                                            {{ date('Y') }}</td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
                                                                                                                             </table>
