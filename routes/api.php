@@ -47,6 +47,8 @@ Route::group([
     Route::post('search', 'SearchController@index');
     Route::post('relatedsearch', 'SearchController@relatedProductList');
     Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
+    Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
+    
     Route::get('home', 'SearchController@home');
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
