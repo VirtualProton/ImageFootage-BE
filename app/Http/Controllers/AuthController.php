@@ -398,7 +398,7 @@ public function signupV2(Request $request)
             'required',
             'regex:/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$|^(\d{10,15})$/',
         ],
-        'name' => ['required'],
+        'name' => ['required', 'regex:/^[A-Za-z\s]+$/'],
         'password' => ['required']
     ];
     $messages = [
