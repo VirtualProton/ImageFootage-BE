@@ -42,6 +42,7 @@ class PackageController extends Controller
 		$package->package_expiry_half_yearly =$request->package_expiry_half_yearly;
 		$package->footage_tier =$request->footage_tier;
 		$package->display_for =$request->display_for;
+		$package->package_status = $request->package_status;
 		$result=$package->save();
 		if($result){
 		  	 return back()->with('success','Package created successful');
@@ -106,7 +107,8 @@ class PackageController extends Controller
 							 'package_expiry_quarterly'=>$request->package_expiry_quarterly,
 							 'package_expiry_half_yearly'=>$request->package_expiry_half_yearly,
 							 'footage_tier'=>$request->footage_tier,
-							 'display_for'=>$request->display_for
+							 'display_for'=>$request->display_for,
+							 'package_status'=>$request->package_status
 							 );
 		$result = Package::where('package_id',$request->package_id)->update($update_array);
 		if($result){

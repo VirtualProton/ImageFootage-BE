@@ -73,7 +73,7 @@
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td style="font-family: 'Poppins', sans-serif;font-size: 14px;line-height:29px;color:#3F4246;text-align:center;font-weight: 500;padding-bottom: 39px;">
-                                                                                            imagefootage.com wishes you a warm welcome! You have just joined one of the
+                                                                                            {{ $frontend_name ?? '' }} wishes you a warm welcome! You have just joined one of the
                                                                                             most creative communities of stock image providers.
                                                                                         </td>
                                                                                     </tr>

@@ -161,6 +161,16 @@
                      @if ($errors->has('display_for'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('display_for') }}</div>
                      @endif
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Status</label>
+                      <select class="form-control" name="package_status">
+                          <option value="Active" {{ $package[0]['package_status'] == 'Active' ? 'selected' : '' }}>Active</option>
+                          <option value="Inactive" {{ $package[0]['package_status'] == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                      </select>
+                      @if($errors->has('package_status'))
+                      <div class="has_error" style="color:red;">{{ $errors->first('package_status') }}</div>
+                      @endif
+                    </div>
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">

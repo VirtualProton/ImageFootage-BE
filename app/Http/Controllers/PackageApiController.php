@@ -46,6 +46,7 @@ class PackageApiController extends Controller
             })
             ->where('package_status', '=', 'Active')
             ->where('package_added_on', '<=', config('constants.GET_PACKAGE_LIST_DATE'))
+            ->orderByRaw('CAST(package_price AS DECIMAL(10,2)) ASC')
             ->get()
             ->toArray();
         $packagelist = [];
