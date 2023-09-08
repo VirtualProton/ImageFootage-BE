@@ -93,7 +93,7 @@ class FiltersController extends Controller {
 
    public function getAllFiltersV2(Request $request) {
 		$type = $request->type;
-		$filters = ImageFootageFilter::select('id', 'name', 'value')
+		$filters = ImageFootageFilter::select('id', 'name', 'value','filter_type')
 					->whereHas('options', function($options){
 						$options->where('status', 'active')->orderBy('sort_order', 'asc');
 					})
