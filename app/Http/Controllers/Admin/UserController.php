@@ -477,6 +477,9 @@ class UserController extends Controller
         //$data["email"]="amitpathak.bansal@gmail.com";
         //$data["client_name"]="Test email";
         $data["subject"] = "Registration Email";
+        $front_end_url_name = config('app.front_end_url');
+        $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+        $data["frontend_name"] = $frontend_name[1] ?? '';
 
         // $pdf = PDF::loadHTML($data["text"]);
 

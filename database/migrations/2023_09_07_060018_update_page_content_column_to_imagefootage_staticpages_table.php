@@ -31,7 +31,7 @@ class UpdatePageContentColumnToImagefootageStaticpagesTable extends Migration
     {
         Schema::table('imagefootage_staticpages', function (Blueprint $table) {
             // $table->string('page_content')->change();
-            DB::statement('ALTER TABLE `imagefootage_staticpages` CHANGE `page_content` `page_content` VARCHAR(255) NULL DEFAULT NULL;');
+            DB::statement('ALTER TABLE `imagefootage_staticpages` CHANGE `page_content` `page_content` VARCHAR(191) NULL DEFAULT NULL;');
         });
     }
 }

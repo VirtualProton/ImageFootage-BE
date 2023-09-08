@@ -15,7 +15,6 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'front_end_url' => env('FRONT_END_URL', 'https://staging.imagefootage.com/'),
-    'front_end_url_name' => env('FRONT_END_URL_NAME', 'https://staging.imagefootage.com'),
 
     /*
     |--------------------------------------------------------------------------
