@@ -8,7 +8,7 @@ return [
         'nonce' => env('PANTHERMEDIA_NONCE','imagefootage'),
         'algo' => env('PANTHERMEDIA_ALGO','sha1'),
         'access_key' => env('PANTHERMEDIA_ACCESS_KEY',null),
-        'api_url' => env('PANTHERMEDIA_URL','https://rest.panthermedia.net/v1.0/host-info'),
+        'api_url' => env('PANTHERMEDIA_URL','https://rest.panthermedia.net'),
         'home_categories' => ''
     ],
     'pond5' => [

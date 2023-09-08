@@ -26,14 +26,14 @@ class PromotionController extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'event_name' => 'required',
-            'date_start'      => 'required',
-            'date_end'        => 'required|date|after:date_start',
+            //'date_start'      => 'required',
+            //'date_end'        => 'after:date_start',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',
             'page_type' => 'required',
-            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1280,height=797',
-            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=236,height=354',
+            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
+            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
             'event_name.required' => 'The Event Name field is required.',
             'date_start.required' => 'The Start Date field is required.',
@@ -158,14 +158,14 @@ class PromotionController extends Controller
             }
        $this->validate($request, [
             'event_name' => 'required',
-            'date_start' => 'required',
-            'date_end' => 'required',
+            //'date_start' => 'required',
+            //'date_end' => 'required',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',
             'page_type' => 'required',
-            'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1280,height=797',
-            'mobile_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=236,height=354',
+            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
+            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
             'event_name.required' => 'The Event Name field is required.',
             'date_start.required' => 'The Start Date field is required.',
