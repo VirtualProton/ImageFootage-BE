@@ -135,4 +135,31 @@ class MusicApi
         $contents = json_decode($response, true);
         return $contents;
     }
+
+    public function download($data, $id, $version = "")
+    {
+        ini_set('max_execution_time', 0);
+        if (count($data) > 0) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $this->url . '/api/v3/items/download/' . $version . '/' . $id,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'accept: application/json',
+                    'key: cJ70pBIk119',
+                    'secret: j5weLX518rMP119'
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $contents = json_decode($response, true);
+            return $contents;
+        }
+    }
 }
