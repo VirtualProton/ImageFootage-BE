@@ -16,6 +16,7 @@ use App\Models\UserPackage;
 use App\Models\UserProductDownload;
 use CORS;
 use Image;
+use App\Http\Pond5\MusicApi;
 
 class MediaController extends Controller
 {
@@ -236,6 +237,49 @@ class MediaController extends Controller
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
 
+                    $dataInsert = array(
+                        'user_id' => $id,
+                        'package_id' => $allFields['product']['package'],
+                        'product_id' => $product_id,
+                        'product_id_api' => $allFields['product']['product_info']['media']['id'],
+                        'id_media' => $allFields['product']['product_info']['media']['id'],
+                        'download_url' => $product_details_data['url'],
+                        'downloaded_date' => date('Y-m-d H:i:s'),
+                        'product_name' => $allFields['product']['product_info']['metadata']['title'],
+                        'product_desc' => $allFields['product']['product_info']['metadata']['description'],
+                        'product_thumb' => $allFields['product']['product_info']['media']['thumb_170_url'],
+                        'web_type' => $allFields['product']['type'],
+                        'product_size' => $allFields['product']['selected_product']['width'],
+                        'product_price' => $allFields['product']['selected_product']['price'],
+                        'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
+                        'selected_product' => json_encode($allFields['product']['selected_product']),
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+
+                    UserProductDownload::insert($dataInsert);
+
+                    if (!$dataCheck) {
+                        UserPackage::where('user_id', '=', $id)
+                            ->where('package_type', '=', $flag)
+                            ->where('id', '=', $pacakeg_id)
+                            ->update([
+                                'downloaded_product' => DB::raw('downloaded_product+1'),
+                                'updated_at' => date('Y-m-d H:i:s')
+                            ]);
+                    }
+                }
+                return response()->json($product_details_data);
+            } else if ($allFields['product']['type'] == 3) {
+                $musicMedia = new MusicApi();
+
+                $product_details_data = $musicMedia->download($allFields, $id);
+                if (!empty($product_details_data)) {
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
+
+                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
+
+                    /** TODO : set the array as per response */
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],

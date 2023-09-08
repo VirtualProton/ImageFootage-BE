@@ -307,7 +307,7 @@ class SearchController extends Controller
 
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
-            if (count($pondfootageMediaData) > 0) {
+            if ($pondfootageMediaData && count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
                         $pond_id_withprefix = $eachmedia['id'];
@@ -349,7 +349,7 @@ class SearchController extends Controller
                 $all_products = $all_products['data'];
                 return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
             }
-        } else {
+        } else { 
             $musicMedia = new MusicApi();
             $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
             if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
