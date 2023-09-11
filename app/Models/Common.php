@@ -241,6 +241,13 @@ class Common extends Model
             $data["email"] = $data['email'];
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
             $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']); 
+            if($data['flag'] == 0) {
+                // For form2 quotation use other logo
+                $dataForEmail['company_logo'] = 'images/conceptual_logo.png';
+            } else {
+                // For other quotations use image footage logo
+                $dataForEmail['company_logo'] = 'images/new-design-logo.png';
+            }
             //echo view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]); die;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
@@ -321,7 +328,7 @@ class Common extends Model
         if(!empty($invoice_id) && !empty($user_id) ){
            // DB::enableQueryLog();
            $all_datas = DB::table('imagefootage_performa_invoices')
-            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.description','usr.gst', 'usr.pan','usr.company','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.id as package_id','imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
+            ->select('imagefootage_performa_invoices.*','imagefootage_performa_invoices.modified as invicecreted','usr.first_name','usr.last_name','usr.title','usr.user_name','usr.contact_owner','usr.email','usr.mobile','usr.phone','usr.postal_code','usr.address','usr.address2','usr.description','usr.gst', 'usr.pan','usr.company','ct.name as cityname','st.state as statename','cn.name as countryname', 'imagefootage_user_package.id as package_id','imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
             ->join('imagefootage_user_package','imagefootage_user_package.id','=','imagefootage_performa_invoices.package_id')
             ->join('imagefootage_users as usr','usr.id','=','imagefootage_performa_invoices.user_id')
             ->where('imagefootage_performa_invoices.id','=',$invoice_id)
@@ -575,6 +582,16 @@ class Common extends Model
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['package_expiry_yearly']." years"));
         }
         $packge->save();
+        $package_name = '';
+        if($packge->package_expiry == 1) {
+            $package_name = 'Monthly';
+        } else if($packge->package_expiry_yearly == 1) {
+            $package_name = 'Annual';
+        } else if($packge->package_expiry_quarterly == 1) {
+            $package_name = 'Quarterly';
+        } else if($packge->package_expiry_half_yearly == 1) {
+            $package_name = 'Half Year';
+        }
                 
         $insert = array(
             'user_id'=> $data['uid'],
@@ -660,6 +677,13 @@ class Common extends Model
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words   =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
+        $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        $dataForEmail[0]['signature'] = 'images/signature.png';
+        $dataForEmail[0]['description'] = 'Subscription Plan – Images – ' . $package_name .' Pack';
+        $front_end_url_name = config('app.front_end_url');
+        $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+        $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+        $dataForEmail[0]["frontend_url"] = $front_end_url_name;
 
         $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"]."subscription_quotation.pdf";

@@ -37,7 +37,7 @@
                 <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
-                <img src="images/conceptual_logo.png" alt="logo" width="1920" height="351">
+                <img src="<?php echo $quotation['company_logo']; ?>" alt="logo" width="1920" height="351">
             </div>
         </div>
     </header>
@@ -100,7 +100,7 @@
             <div class="row mb-0 amount-divs-row">
                 <div class="col-lg-12 amount-divs">
                     <div class="start">Amount (INR)</div>
-                    <div class="end"><strong><?php echo $amount . '/-'; ?></strong></div>
+                    <div class="end"><strong><?php echo number_format($amount, 2); ?></strong></div>
                 </div>
             </div>
             <div class="row">
