@@ -307,7 +307,7 @@ class SearchController extends Controller
 
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
-            if ($pondfootageMediaData && count($pondfootageMediaData) > 0) {
+            if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
                         $pond_id_withprefix = $eachmedia['id'];

@@ -161,7 +161,7 @@ class CronController extends Controller
             $common     = new Common();
             $categoryId = $common->checkCategory($percategory);
 
-            if (count($pondMusicMediaData['items']) > 0) {
+            if (!empty($pondMusicMediaData) && count($pondMusicMediaData['items']) > 0) {
                 $this->product->savePond5Music($pondMusicMediaData['items'], $categoryId);
             }
         }
