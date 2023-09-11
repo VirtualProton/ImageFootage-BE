@@ -248,6 +248,11 @@ class Common extends Model
                 // For other quotations use image footage logo
                 $dataForEmail['company_logo'] = 'images/new-design-logo.png';
             }
+            $dataForEmail['signature'] = 'images/signature.png';
+            $front_end_url_name = config('app.front_end_url');
+            $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+            $dataForEmail["frontend_name"] = $frontend_name[1] ?? '';
+            $dataForEmail["frontend_url"] = $front_end_url_name;
             //echo view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]); die;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
@@ -856,7 +861,13 @@ public function save_download_proforma($data){
                     $data["subject"] = "Download Quotation (".$dataForEmail[0]['invoice_name'].")";
                     $data["email"] =   $data['email'];
                     $data["invoice"] = $dataForEmail[0]['invoice_name'];
-                    
+                    $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+                    $dataForEmail[0]['signature'] = 'images/signature.png';
+                    $dataForEmail[0]['description'] = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
+                    $front_end_url_name = config('app.front_end_url');
+                    $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+                    $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+                    $dataForEmail[0]["frontend_url"] = $front_end_url_name;
 
                     $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words'=> $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
                     $fileName = $data["invoice"]."download_quotation.pdf";

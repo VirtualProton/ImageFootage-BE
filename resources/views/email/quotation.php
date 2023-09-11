@@ -68,8 +68,8 @@
                 </div>
             </div>
             <?php
+            $amount = 0;
             for ($i = 0; $i < count($quotation); $i++) {
-                $amount = 0;
                 if ($i % 3 == 0) {
             ?>
                     <div class="row">
@@ -100,7 +100,7 @@
             <div class="row mb-0 amount-divs-row">
                 <div class="col-lg-12 amount-divs">
                     <div class="start">Amount (INR)</div>
-                    <div class="end"><strong><?php echo number_format($amount, 2); ?></strong></div>
+                    <div class="end"><strong><?php echo number_format($amount,2); ?></strong></div>
                 </div>
             </div>
             <div class="row">
@@ -187,7 +187,7 @@
                     500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="www.imagefootage.com">www.imagefootage.com</a>
+                <a href="<?php echo $quotation['frontend_url']; ?>"><?php echo $quotation['frontend_url']; ?></a>
             </div>
             <div class="footer-right">
                 <h3 class="h2">looking forward</h3>
@@ -195,6 +195,26 @@
         </div>
     </footer>
     <!-- Footer end -->
+    <header>
+        <div class="container">
+            <div class="header-text">
+                <h1 class="h1"><strong>hi</strong></h1>
+                <span><strong>this is an estimate</strong></span>
+            </div>
+            <div class="header-logo">
+                <img src="<?php echo $quotation['company_logo']; ?>" alt="logo" width="1920" height="351">
+            </div>
+        </div>
+    </header>
+    <!-- Signature section start -->
+    <section class="signature">
+        <div class="container">
+            <p>For <span>Image Footage</span></p>
+            <img src="<?php echo $quotation['signature']; ?>" alt="signature" width="171" height="89">
+            <p>Authorized Signatory</p>
+        </div>
+    </section>
+    <!-- Signature section end -->
 </body>
 
 </html>

@@ -73,10 +73,9 @@
             <div class="client-info-bottom price-div">
                 <div class="client-info-leftside">
                     <!-- --------------------------Pending--------------------- -->
-                    <p>
-                        <strong><?php echo $orders['description'] ?? '' ?></strong>
-                        Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?>
-                    </p>
+                    <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
+                    <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
+                    
                 </div>
                 <div class="client-info-rightside">
                     <p><strong>INR <?php echo number_format($orders['total'],2); ?></strong></p>
@@ -89,7 +88,7 @@
             <div class="licensing-terms">
                 <h2 class="h3"><strong> Licensing Terms: </strong></h2>
                 <div class="licensing-condition">
-                    <h4 ><strong>With a Standard license, you may:</strong></h3>
+                    <h4 ><strong>With a Standard license, you may:</strong></h4>
                     <ul>
                         <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
                         <li>Include the asset in email marketing, mobile advertising, or a broadcast program if the expected number of viewers is fewer than 500,000.</li>
@@ -106,7 +105,7 @@
                 </div>
             </div>
             <div class="terms-of-payment licensing-terms">
-                <h4><strong>Terms of Payment: </strong></h3>
+                <h4><strong>Terms of Payment: </strong></h4>
                 <ul>
                     <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
                                 Commitment</strong></span>.</li>
