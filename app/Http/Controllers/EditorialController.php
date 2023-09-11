@@ -11,7 +11,9 @@ class EditorialController extends Controller
 {
     public function editorialListv2()
     {
-        $editoriallist = Editorial::all();
+        $editoriallist = Editorial::where('status', 1)
+            ->where('type','collection')
+            ->get();  
 
         $selectedValues = [];
         // Retrive all occured products Ids
