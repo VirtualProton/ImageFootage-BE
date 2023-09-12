@@ -10,7 +10,7 @@
          @include('admin.partials.message')
          <div class="box-body">
             <div class="panel-body">
-               <form role="form" name="downloadOnBehalf" method="post" class="" enctype="multipart/form-data" ng-submit="submitQuotation()" novalidate>
+               <form role="form" name="downloadOnBehalf" method="post" class="" enctype="multipart/form-data" ng-submit="submitQuotation()" id="quotationForm" novalidate>
                   <div class="row">
                      <div class="">
                         <div class="row">
@@ -100,7 +100,7 @@
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
                                     <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-                                    <!-- <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span> -->
+                                    <span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
                                     <span ng-show="product.image">
@@ -719,6 +719,33 @@
             }
          });
       });
+
+      // $(document).on("click", "#btn-submit", function(e) {
+         // $('#quotationForm').formValidation({
+         //    framework: "bootstrap",
+         //    button: {
+         //       selector: '#btn-submit',
+         //       disabled: 'disabled'
+         //    },
+         //    icon: null,
+         //    fields: {
+         //       product_name: {
+         //          validators: {
+         //             notEmpty: {
+         //                message: 'Image is required'
+         //             }
+         //          }
+         //       },
+         //       price: {
+         //          validators: {
+         //             notEmpty: {
+         //                message: 'Price is required'
+         //             }
+         //          }
+         //       }
+         //    }
+         // });
+      // });
 
    });
 </script>

@@ -178,7 +178,8 @@ class Common extends Model
                 if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) { 
                        $image = $eachproduct['image'];
                 } else{
-                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';    
+                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';   
+                       $eachproduct['name'] = ''; 
                 }
                 $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(

@@ -69,6 +69,8 @@ app.controller(
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.quotation.product.indexOf(product);
+                let productIndexId = index + 1;
+                $("#file" + productIndexId).val('');
                 $http({
                     method: "GET",
                     url:
@@ -116,6 +118,10 @@ app.controller(
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
+                        $("#product_1").val("");
+                        alert("image not found");
                         $("#loading").hide();
                     }
                 );
@@ -653,20 +659,22 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    setTimeout(
-                        function (index) {
-                            CKEDITOR.replace("licence_type-" + index, {
-                                readOnly: false,
-                            });
-                            CKEDITOR.instances[
-                                "licence_type-" + (index + 1)
-                            ].setData(
-                                $scope.quotation.product[index].licence_type
-                            );
-                        },
-                        0,
-                        i
-                    );
+                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                        setTimeout(
+                            function (index) {
+                                CKEDITOR.replace("licence_type-" + index, {
+                                    readOnly: false,
+                                });
+                                CKEDITOR.instances[
+                                    "licence_type-" + (index + 1)
+                                ].setData(
+                                    $scope.quotation.product[index].licence_type
+                                );
+                            },
+                            0,
+                            i
+                        );
+                    }
                 }
             }
         };
@@ -1800,6 +1808,10 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
+                if(el[0]['id']){ // If upload new file than reset scope product
+                    let productId = el[0]['id'].substring(4);
+                    $("#product_" + productId).val("");
+                }
                 fileReader.readAsDataUrl(file, $scope).then(function (result) {
                     $timeout(function () {
                         $scope.ngModel = result;
@@ -1995,6 +2007,8 @@ app.controller(
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
                         $("#product_1").val("");
                         alert("image not found");
                         $("#loading").hide();
