@@ -51,7 +51,9 @@
                 <div class="client-info-leftside">
                     <p>Customer Name: <span><strong><?php echo $orders['first_name'] ?? ''; ?> <?php echo $orders['last_name'] ?? ''; ?></span></strong></p>
                     <p>Address: <span><strong><?php echo $orders['address'] ?? ''; ?></strong></span>
-                        <span><strong><?php echo $orders['address2'] ?? ''; ?></strong></span>
+                        <?php if(!empty($orders['address2'])){ ?>
+                            <span><strong><?php echo $orders['address2'] ?? ''; ?></strong></span>
+                        <?php } ?>
                         <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
                     </p>
                     <p>Phone: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
@@ -72,10 +74,8 @@
             </div>
             <div class="client-info-bottom price-div">
                 <div class="client-info-leftside">
-                    <!-- --------------------------Pending--------------------- -->
                     <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
                     <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
-                    
                 </div>
                 <div class="client-info-rightside">
                     <p><strong>INR <?php echo number_format($orders['total'],2); ?></strong></p>

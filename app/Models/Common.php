@@ -477,6 +477,12 @@ class Common extends Model
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
          //}
+         $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+         $dataForEmail[0]['signature'] = 'images/signature.png';
+         $front_end_url_name = config('app.front_end_url');
+         $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+         $dataForEmail[0]["frontend_url"] = $front_end_url_name;
             $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
         
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
