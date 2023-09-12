@@ -151,6 +151,8 @@ class MediaController extends Controller
 
     public function download(Request $request)
     {
+ 
+
         $allFields = $request->all();
         //print_r($allFields); die;
         $tokens = json_decode($allFields['product']['token'], true);
@@ -170,8 +172,9 @@ class MediaController extends Controller
             ->get()->toArray();
         $download = 0;
         $downoad_type = 0;
-
+      
         if (count($pacakegalist) > 0) {
+
             foreach ($pacakegalist as $perpack) {
                 if ($perpack['downloaded_product'] < $perpack['package_products_count']) {
                     $download = 1;
@@ -270,7 +273,7 @@ class MediaController extends Controller
                     }
                 }
                 return response()->json($product_details_data);
-            } else if ($allFields['product']['type'] == 3) {
+            } else if ($allFields['product']['type'] == 4) {
                 $musicMedia = new MusicApi();
 
                 $product_details_data = $musicMedia->download($allFields, $id);
