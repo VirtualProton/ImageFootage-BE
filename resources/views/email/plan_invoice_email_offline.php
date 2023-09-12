@@ -60,10 +60,10 @@
                     <p>GSTIN: <span><strong><?php echo $orders['gst']; ?></strong></span></p>
                 </div>
                 <div class="client-info-rightside">
-                    <p>Invoice No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
+                    <p>Invoice No.: <span><strong><?php echo $orders['INVOICE_PREFIX'] . $orders['invoice_name']; ?></span></strong></p>
                     <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                    <p>GSTIN: <span><strong><?php echo $orders['gst']; ?></strong></span></p>
-                    <p>PAN No. <span><strong><?php echo $orders['pan']; ?></strong></span></p>
+                    <p>GSTIN: <span><strong><?php echo $orders['GSTIN_VALUE'] ?? ''; ?></strong></span></p>
+                    <p>PAN No.: <span><strong><?php echo $orders['PAN_VALUE'] ?? ''; ?></strong></span></p>
                     <!-- pending -->
                     <p>SAC Code:</p>
                     <p>Place: <span><strong><?php echo $orders['cityname'] . "-" . $orders['statename']; ?></strong></span></p>
@@ -82,13 +82,14 @@
             <div class="client-info-bottom">
                 <div class="client-info-leftside">
                     <p>Total number of image(s)/footage(s):</p>
+                    <p><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></p>
                 </div>
                 <div class="client-info-rightside">
                     <p>IF Sales Representative: <span><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>
                     <p>End Client:<span><strong><?php echo $orders['company'] ?></strong></span></p>
                 </div>
             </div>
-            <div class="price-div package-title-div">
+            <div class="price-div package-title-div pb-10">
                 <div class="client-info-leftside">
                     <p><strong><?php echo $orders['package_name'] ?? '' ?></strong></p>
                     <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
@@ -120,7 +121,7 @@
                     <p><strong>INR <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></p>
                 </div>
             </div>
-            <div class="price-div">
+            <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Amount (INR):</p>
                 </div>
@@ -128,7 +129,7 @@
                     <p><span class="block-text"><strong><?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></span></p>
                 </div>
             </div>
-            <div class="price-div">
+            <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Add: GST @: <?php echo config('constants.GST_VALUE') ?>%</p>
                 </div>
@@ -136,7 +137,7 @@
                     <p><span class="block-text"><strong><?php echo number_format($orders['tax'], 2) ?></strong></span></p>
                 </div>
             </div>
-            <div class="price-div">
+            <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Total Invoice Amount (INR)</p>
                 </div>

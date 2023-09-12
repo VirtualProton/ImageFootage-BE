@@ -346,3 +346,7 @@ footer {
 .pack_invoice .package-title-div {
     padding-top: 40px;
 }
+
+.pb-10 {
+    padding-bottom: 0px !important;
+}
