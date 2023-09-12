@@ -62,11 +62,11 @@ header {
 }
 
 .table-paragraph .container>div {
-    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .table-paragraph .container>div:last-child {
-    margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
 /* client-info start */
@@ -224,6 +224,10 @@ header {
     line-height: 25px;
 }
 
+.pack_invoice .licensing-terms {
+    margin-top: 20px;
+}
+
 /* licensing-terms end */
 
 /* Terms-of-payment start */
@@ -294,7 +298,7 @@ footer {
 .footer-right {
     width: 32%;
     display: inline-block;
-    vertical-align: bottom;
+    /* vertical-align: bottom; */
 }
 
 .footer-right .h2 {
@@ -305,3 +309,40 @@ footer {
 }
 
 /* Footer end */
+
+.upper-case {
+    text-transform:uppercase;
+}
+
+/* Signature section start */
+.signature {
+    text-align: right;
+    padding: 50px 0 0 0;
+}
+
+.signature p {
+    font-size: 16px;
+}
+
+.signature p span {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.signature img {
+    width: 110px;
+    height: auto;
+    margin: 7px 0;
+}
+
+/* Signature section end */
+
+.price-div {
+    background-color: rgba(89, 89, 89, 0.29);
+    width: 100%;
+    padding: 10px 10px 0 10px;
+}
+
+.pack_invoice .package-title-div {
+    padding-top: 40px;
+}
