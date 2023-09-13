@@ -1031,9 +1031,11 @@
                         </div>
                     </div>
                     </div>
+                    <div class="col-sm-12">
+                      <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                    </div>
                     </div>
                   </div>
-                  <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>

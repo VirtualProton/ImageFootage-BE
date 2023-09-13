@@ -27,7 +27,7 @@
             font-style: bold;
         }
     </style>
-    <link rel="stylesheet" href="assets/css/email/quotation.css">
+    <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
 
 <body>

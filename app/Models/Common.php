@@ -243,17 +243,17 @@ class Common extends Model
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
             $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']); 
             if($data['flag'] == 0) {
-                // For form2 quotation use other logo
-                $dataForEmail['company_logo'] = 'images/conceptual_logo.png';
-            } else {
                 // For other quotations use image footage logo
-                $dataForEmail['company_logo'] = 'images/new-design-logo.png';
+                $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+            } else {
+                // For form2 quotation use other logo
+                $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
             }
-            $dataForEmail['signature'] = 'images/signature.png';
+            $dataForEmail[0]['signature'] = 'images/signature.png';
             $front_end_url_name = config('app.front_end_url');
             $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
-            $dataForEmail["frontend_name"] = $frontend_name[1] ?? '';
-            $dataForEmail["frontend_url"] = $front_end_url_name;
+            $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+            $dataForEmail[0]["frontend_url"] = $front_end_url_name;
             //echo view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]); die;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));

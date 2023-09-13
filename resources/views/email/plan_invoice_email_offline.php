@@ -27,7 +27,7 @@
             font-style: bold;
         }
     </style>
-    <link rel="stylesheet" href="assets/css/email/quotation.css">
+    <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
 
 <body>
@@ -121,6 +121,7 @@
                     <p><strong>INR <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></p>
                 </div>
             </div>
+            <hr>
             <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Amount (INR):</p>
@@ -129,6 +130,7 @@
                     <p><span class="block-text"><strong><?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></span></p>
                 </div>
             </div>
+            <hr>
             <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Add: GST @: <?php echo config('constants.GST_VALUE') ?>%</p>
@@ -137,6 +139,7 @@
                     <p><span class="block-text"><strong><?php echo number_format($orders['tax'], 2) ?></strong></span></p>
                 </div>
             </div>
+            <hr>
             <div class="price-div pb-10">
                 <div class="client-info-leftside">
                     <p>Total Invoice Amount (INR)</p>
@@ -145,6 +148,7 @@
                     <p><span class="block-text"><strong><?php echo number_format($orders['total'], 2) ?></strong></span></p>
                 </div>
             </div>
+            <hr>
             <div class="price-div">
                 <div class="client-info-leftside">
                     <p>In words:</p>
@@ -159,7 +163,8 @@
                     <ul>
                         <li>License Rights are only assigned on payment of this invoice.</li>
                         <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
-                        <span><strong>Image Footage,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.</li>
+                            <span><strong>Image Footage,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
+                        </li>
                         <li>If not paid within credit period allowed, <span><strong>interest @ 24%</strong></span> will be charged.</li>
                         <li>Payment can be made in favour of <span><strong>Conceptual Pictures Worldwide Pvt. Ltd..</strong></span>.
                             <ol>
