@@ -44,34 +44,34 @@ class CreateEntryForCarryForwardBalance extends Command
         if ($getUserPackages->isNotEmpty()) {
             foreach ($getUserPackages as $package) {
                 if ($package->downloaded_product < $package->package_products_count) {
-                    $getCurrentSamePlan = UserPackage::where(['user_id' => $package->user_id, 'package_id' => $package->package_id])->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
+                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
 
                     if ($getCurrentSamePlan) {
                         $newCreditedPackage = new UserPackage();
                         $newCreditedPackage->user_id = $package->user_id;
-                        $newCreditedPackage->transaction_id = "";
+                        // TODO : need to update
+                        $newCreditedPackage->transaction_id = $package->package_id;
                         $newCreditedPackage->package_id = $package->package_id;
                         $newCreditedPackage->package_name = $package->package_name;
-                        $newCreditedPackage->package_price = '';
+                        // TODO : need to update
+                        $newCreditedPackage->package_price = $package->package_price;
                         $newCreditedPackage->package_description = $package->package_description;
                         $newCreditedPackage->package_products_count = $package->package_products_count - $package->downloaded_product;
                         $newCreditedPackage->package_type = $package->package_type;
                         $newCreditedPackage->package_permonth_download = $package->package_permonth_download;
                         $newCreditedPackage->package_expiry = $package->package_expiry;
                         $newCreditedPackage->package_plan = $package->package_plan;
-                        $newCreditedPackage->package_pcarry_forward = $package->package_pcarry_forward;
+                        $newCreditedPackage->package_pcarry_forward = "yes";
                         $newCreditedPackage->package_expiry_yearly = $package->package_expiry_yearly;
-                        $newCreditedPackage->payment_gatway_provider = "";
+                        // TODO : need to update
+                        $newCreditedPackage->payment_gatway_provider = $package->payment_gatway_provider;
                         $newCreditedPackage->pacage_size = $package->pacage_size;
                         $newCreditedPackage->created_at = date('Y-m-d H:i:s');
-                        $package->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry)->addYear();
+                        $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
                         $newCreditedPackage->save();
-                    } else {
-                        $package->update(['status' => 0]);
                     }
-                } else {
-                    $package->update(['status' => 0]);
                 }
+                $package->update(['status' => 0]);
             }
         }
     }

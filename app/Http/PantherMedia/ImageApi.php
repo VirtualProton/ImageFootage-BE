@@ -275,15 +275,16 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-        echo "<pre>";
-        print_r($data['product']);
-        die;
+        // echo "<pre>";
+        // print_r($data['product']);
+        // die;
         if (count($data['product']['selected_product']) > 0) {
             $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
         } else {
+
             $id = $data['product']['product_info']['media']['id'];
         }
-        echo "id=>" . $id;
+        // echo "id=>" . $id;
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post($this->url . '/download-media', [
             'headers' => [
