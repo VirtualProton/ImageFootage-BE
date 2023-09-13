@@ -37,7 +37,7 @@ class ImageApi
         $client = new Client(); //GuzzleHttp\Client
         // $client->setDefaultOption('headers', array('Content-Type' => 'application/x-www-form-urlencoded','Accept-Version'=>'1.0'));
         try {
-            $result = $client->post($this->url .'/v1.0/host-info', [
+            $result = $client->post($this->url . '/v1.0/host-info', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -188,7 +188,7 @@ class ImageApi
         // echo $this->access_key; die;
         try {
             $client = new Client(); //GuzzleHttp\Client
-            $response = $client->post($this->url .'/search', [
+            $response = $client->post($this->url . '/search', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -226,7 +226,7 @@ class ImageApi
     {
         $this->access_key = $this->getAccessKey();
         $client = new Client(); //GuzzleHttp\Client
-        $response = $client->post($this->url .'/get-media-info', [
+        $response = $client->post($this->url . '/get-media-info', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
@@ -275,14 +275,17 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-        // if(count($data['product']['selected_product'])>0){
-        //     $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
-        // }else{
-        $id = $data['product']['product_info']['media']['id'];
-        // }
+        echo "<pre>";
+        print_r($data['product']);
+        die;
+        if (count($data['product']['selected_product']) > 0) {
+            $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
+        } else {
+            $id = $data['product']['product_info']['media']['id'];
+        }
         echo "id=>" . $id;
         $client = new Client(); //GuzzleHttp\Client
-        $response = $client->post($this->url .'/download-media', [
+        $response = $client->post($this->url . '/download-media', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
@@ -306,7 +309,7 @@ class ImageApi
             $hostname = env('APP_URL');
 
             $client2 = new Client(); //GuzzleHttp\Client
-            $response2 = $client2->post($this->url .'/download-media', [
+            $response2 = $client2->post($this->url . '/download-media', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -351,7 +354,7 @@ class ImageApi
             $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, [
-                CURLOPT_URL => $this->url .'/v1.0/get-media-info',
+                CURLOPT_URL => $this->url . '/v1.0/get-media-info',
                 CURLOPT_POST => TRUE,
                 CURLOPT_MAXREDIRS => 20,
                 CURLOPT_POSTFIELDS => $data_req,
@@ -377,7 +380,7 @@ class ImageApi
     {
         $hostname = env('APP_URL');
         $client2 = new Client(); //GuzzleHttp\Client
-        $response2 = $client2->post($this->url .'/download-media', [
+        $response2 = $client2->post($this->url . '/download-media', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
