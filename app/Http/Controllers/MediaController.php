@@ -17,6 +17,8 @@ use App\Models\UserProductDownload;
 use CORS;
 use Image;
 use App\Http\Pond5\MusicApi;
+use App\Models\ProductsDownload;
+use Carbon\Carbon;
 
 class MediaController extends Controller
 {
@@ -151,34 +153,58 @@ class MediaController extends Controller
 
     public function download(Request $request)
     {
- 
-
         $allFields = $request->all();
         //print_r($allFields); die;
         $tokens = json_decode($allFields['product']['token'], true);
         $id = $tokens['Utype'];
-        $pacakeg_id = $allFields['product']['package'];
+        $package_id = $allFields['product']['package'];
         if ($allFields['product']['type'] == 2) {
             $flag = 'Image';
         } else {
             $flag = 'Footage';
         }
+
         $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)
-            ->where('id', '=', $pacakeg_id)
+            ->where('id', '=', $package_id)
             ->where('package_expiry_date_from_purchage', '>', Now())
-            //->select()
-            ->get()->toArray();
+            ->get();
+
         $download = 0;
         $downoad_type = 0;
-      
-        if (count($pacakegalist) > 0) {
 
+        if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
-                if ($perpack['downloaded_product'] < $perpack['package_products_count']) {
+                if ($perpack->package_plan == 1) { // For subscriprion type package
+                    // Check subscription is monthly or not 
+
+                    if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
+
+                        $subscriptionStartDate = Carbon::parse($perpack->created_at);
+
+                        $latestDates = $this->getDateGaps($subscriptionStartDate);
+                        $startDateOfSpecificMonth = $latestDates['startDate'];
+                        $endDateOfSpecificMonth = $latestDates['endDate'];
+
+                        // Count the number of downloads for the current month
+                        $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
+                            ->whereBetween('downloaded_date', [$startDateOfSpecificMonth, $endDateOfSpecificMonth])
+                            ->distinct('product_id')
+                            ->count();
+
+                        if ($monthlyDownloads >= $perpack->package_products_count) {
+                            return response()->json(['status' => '0', 'message' => 'You have exceeded a monthly download limit.']);
+                        } else {
+                            $download = 1;
+                        }
+                    } else if ($perpack->downloaded_product < $perpack->package_products_count) {
+                        $download = 1;
+                    }
+                } else if ($perpack->package_plan == 2 && $perpack->downloaded_product < $perpack->package_products_count) { // For download type package
                     $download = 1;
                 }
+
                 if ($allFields['product']['type'] == 3) {
                     if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
                         $downoad_type = 1;
@@ -187,6 +213,8 @@ class MediaController extends Controller
                     }
                 }
             }
+        } else {
+            return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
         }
 
         if ($download == 1) {
@@ -223,7 +251,7 @@ class MediaController extends Controller
                         UserProductDownload::insert($dataInsert);
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
-                            ->where('id', '=', $pacakeg_id)
+                            ->where('id', '=', $package_id)
                             ->update([
                                 'downloaded_product' => DB::raw('downloaded_product+1'),
                                 'updated_at' => date('Y-m-d H:i:s')
@@ -265,7 +293,7 @@ class MediaController extends Controller
                     if (!$dataCheck) {
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
-                            ->where('id', '=', $pacakeg_id)
+                            ->where('id', '=', $package_id)
                             ->update([
                                 'downloaded_product' => DB::raw('downloaded_product+1'),
                                 'updated_at' => date('Y-m-d H:i:s')
@@ -308,7 +336,7 @@ class MediaController extends Controller
                     if (!$dataCheck) {
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
-                            ->where('id', '=', $pacakeg_id)
+                            ->where('id', '=', $package_id)
                             ->update([
                                 'downloaded_product' => DB::raw('downloaded_product+1'),
                                 'updated_at' => date('Y-m-d H:i:s')
@@ -320,6 +348,26 @@ class MediaController extends Controller
         } else {
             return response()->json(['status' => '0', 'message' => 'Download pack limit has been over already !!']);
         }
+    }
+
+    public function getDateGaps($packageStartDate)
+    {
+        $currentDate = Carbon::today();
+        // Define an array to store date ranges
+        $dateRanges = [];
+
+        // Loop through 12 months and calculate date ranges
+        for ($i = 0; $i < 12; $i++) {
+            $startDate = Carbon::parse($packageStartDate)->addMonths($i);
+            $endDate = Carbon::parse($packageStartDate)->addMonths($i + 1);
+
+            // Check if the current date is within this date range
+            if ($currentDate >= $startDate && $currentDate <= $endDate) {
+                $dateRanges = ['startDate' => $startDate, 'endDate' => $endDate];
+                break; // Exit the loop once a match is found
+            }
+        }
+        return $dateRanges;
     }
 
     public function downloadindi(Request $request)
