@@ -163,7 +163,7 @@ class MusicApi
         }
     }
 
-    public function getMusicData($music_id)
+    public function getMusicInfo($music_id)
     {
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
