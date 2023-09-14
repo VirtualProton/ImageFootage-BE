@@ -410,4 +410,33 @@ class ImageApi
             return $downloadcontents;
         }
     }
+
+
+    public function reDownloadMedia($data)
+    {
+        $this->access_key = $this->getAccessKey();
+        $client = new Client(); //GuzzleHttp\Client
+        $response = $client->post($this->url . '/download-media', [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Version' => '1.0'
+            ],
+            'form_params' => [
+                'api_key' => $this->api_key,
+                'access_key' => $this->access_key,
+                'timestamp' => $this->timestamp,
+                'nonce' => $this->nonce,
+                'algo' => $this->algo,
+                'content_type' => 'application/json',
+                'lang' => 'en',
+                'id_media' => $data['id_media'],
+                'id_download' => $data['id_download'],
+            ]
+        ]);
+
+        if ($response->getBody()) {
+            $downloadcontents = json_decode($response->getBody(), true);
+            return $downloadcontents;
+        }
+    }
 }

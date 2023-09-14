@@ -133,6 +133,7 @@ Route::group([
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
+    Route::post('re-download', 'MediaController@reDownload');
     Route::post('downloadindi', 'MediaController@downloadindi');
     Route::post('getuseraddress', 'UserController@getUserAddress');
     Route::post('update_profile', 'UserController@update_profile');

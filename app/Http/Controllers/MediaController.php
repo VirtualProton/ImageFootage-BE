@@ -36,6 +36,7 @@ class MediaController extends Controller
     /** Check the image is already downloaded by user or not */
     public function getAlreadyDownloadedImage(Request $request)
     {
+        // TODO : need to update the code (need to send all the downloaded image with different size)
         $checkExists = UserProductDownload::where(['user_id' => $request->user_id, 'product_id_api' => $request->media_id])->exists();
         return response()->json(["status" => $checkExists]);
     }
@@ -160,8 +161,10 @@ class MediaController extends Controller
         $package_id = $allFields['product']['package'];
         if ($allFields['product']['type'] == 2) {
             $flag = 'Image';
-        } else {
+        } else if ($allFields['product']['type'] == 3) {
             $flag = 'Footage';
+        } else {
+            $flag = 'Music';
         }
 
         $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
@@ -228,27 +231,27 @@ class MediaController extends Controller
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $allFields['product']['selected_product']['id'])->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['selected_product']['id'])->first()->product_id;
+                    $dataInsert = array(
+                        'user_id' => $id,
+                        'package_id' => $allFields['product']['package'],
+                        'product_id' => $product_id,
+                        'product_id_api' => $allFields['product']['selected_product']['id'],
+                        'id_media' => $allFields['product']['selected_product']['id'],
+                        'download_url' => $product_details_data['url'],
+                        'downloaded_date' => date('Y-m-d H:i:s'),
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['pic_name'],
+                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
+                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
+                        'web_type' => $allFields['product']['type'],
+                        'product_size' => $allFields['product']['selected_product']['size'],
+                        'product_price' => $allFields['product']['selected_product']['pr'],
+                        'product_poster' => $allFields['product']['product_info'][2],
+                        'selected_product' => json_encode($allFields['product']['selected_product']),
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+                    UserProductDownload::insert($dataInsert);
                     if (!$dataCheck) {
-                        $dataInsert = array(
-                            'user_id' => $id,
-                            'package_id' => $allFields['product']['package'],
-                            'product_id' => $product_id,
-                            'product_id_api' => $allFields['product']['selected_product']['id'],
-                            'id_media' => $allFields['product']['selected_product']['id'],
-                            'download_url' => $product_details_data['url'],
-                            'downloaded_date' => date('Y-m-d H:i:s'),
-                            'product_name' => $allFields['product']['product_info'][0]['clip_data']['pic_name'],
-                            'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
-                            'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
-                            'web_type' => $allFields['product']['type'],
-                            'product_size' => $allFields['product']['selected_product']['size'],
-                            'product_price' => $allFields['product']['selected_product']['pr'],
-                            'product_poster' => $allFields['product']['product_info'][2],
-                            'selected_product' => json_encode($allFields['product']['selected_product']),
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s')
-                        );
-                        UserProductDownload::insert($dataInsert);
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
                             ->where('id', '=', $package_id)
@@ -272,6 +275,7 @@ class MediaController extends Controller
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
                         'product_id' => $product_id,
+                        'id_download' => $product_details_data['download_status']['id_download'],
                         'product_id_api' => $allFields['product']['product_info']['media']['id'],
                         'id_media' => $allFields['product']['product_info']['media']['id'],
                         'download_url' => $product_details_data['download_status']['download_url'],
@@ -347,6 +351,57 @@ class MediaController extends Controller
             }
         } else {
             return response()->json(['status' => '0', 'message' => 'Download pack limit has been over already !!']);
+        }
+    }
+
+    public function reDownload(Request $request)
+    {
+        $checkUserDownloads = UserProductDownload::where(
+            [
+                'user_id' => $request->user_id,
+                'id_media' => $request->id_media,
+                'web_type' => $request->type
+            ]
+        )->first();
+
+        if ($checkUserDownloads) {
+            if ($request->type == 2) {
+                $imageMedia = new ImageApi();
+                $product_details_data = $imageMedia->reDownloadMedia($checkUserDownloads);
+                if (!empty($product_details_data)) {
+
+                    $dataInsert = array(
+                        'user_id' => $checkUserDownloads->user_id,
+                        'package_id' => $checkUserDownloads->package_id,
+                        'product_id' => $checkUserDownloads->product_id,
+                        'id_download' => $product_details_data['download_status']['id_download'],
+                        'product_id_api' => $checkUserDownloads->product_id,
+                        'id_media' => $product_details_data['download_status']['id_media'],
+                        'download_url' => $product_details_data['download_status']['download_url'],
+                        'downloaded_date' => date('Y-m-d H:i:s'),
+                        'product_name' => $checkUserDownloads->product_name,
+                        'product_desc' => $checkUserDownloads->product_desc,
+                        'product_thumb' => $checkUserDownloads->product_thumb,
+                        'web_type' => $checkUserDownloads->web_type,
+                        'product_size' => $checkUserDownloads->product_size,
+                        'product_price' => $checkUserDownloads->product_price,
+                        'product_poster' => $checkUserDownloads->product_poster,
+                        'selected_product' => $checkUserDownloads->selected_product,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+
+                    UserProductDownload::insert($dataInsert);
+                }
+                return response()->json($product_details_data);
+            } else if ($request->type == 3) {
+                // TODO : need to do for footage
+            } else if ($request->type == 4) {
+                // TODO : need to do for music
+
+            }
+        } else {
+            return response()->json(['status' => '0', 'message' => 'Requested Image is not found in downloaded history!!']);
         }
     }
 
