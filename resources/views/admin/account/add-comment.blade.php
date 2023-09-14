@@ -6,7 +6,7 @@
   <div class="col-sm-4 comment-sec-wrap">
     <div class="custom-width">
       <label>Status</label>
-      <select name="status">
+      <select name="status" required>
         <option value="">-Select-</option>
         <option value="Open">Open</option>
         <option value="In Progress">In Progress</option>
@@ -35,7 +35,7 @@
         <div class="form-group comment-sub-wrap">
           <label>Subject</label>
           <input type="hidden" name="tabId2" value="tab2">
-          <input type="text" class="form-control" width="200" name="subject" id="subject{{isset($tab) ? $tab : ''}}" placeholder="Subject" value="">
+          <input type="text" class="form-control" width="200" name="subject" id="subject{{isset($tab) ? $tab : ''}}" placeholder="Subject" value="" required>
           <input type="hidden" name="user_id" value="{{$user_id}}">
           <input type="hidden" name="created_by" value="{{Auth::guard('admins')->user()->id}}">
         </div>
@@ -45,7 +45,7 @@
     <div class="col-12">
       <div class="form-group comme-desc">
         <label>Description</label>
-        <textarea name="comment" rows="10" cols="10" class="form-control"></textarea>
+        <textarea name="comment" rows="10" cols="10" class="form-control" required></textarea>
       </div>
     </div>
   </div> 
