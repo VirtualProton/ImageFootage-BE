@@ -20,7 +20,7 @@ class CreateEntryForCarryForwardBalance extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'This command is used to create a new entry in user_package table with order_type flag is 3(means consider it as a credited package) if the user have unused balance from previous plan.';
 
     /**
      * Create a new command instance.
@@ -49,14 +49,15 @@ class CreateEntryForCarryForwardBalance extends Command
                     if ($getCurrentSamePlan) {
                         $newCreditedPackage = new UserPackage();
                         $newCreditedPackage->user_id = $package->user_id;
-                        // TODO : need to update
+                        // TODO : need to update transaction_id
                         $newCreditedPackage->transaction_id = $package->package_id;
                         $newCreditedPackage->package_id = $package->package_id;
                         $newCreditedPackage->package_name = $package->package_name;
-                        // TODO : need to update
+                        // TODO : need to update package_price
                         $newCreditedPackage->package_price = $package->package_price;
                         $newCreditedPackage->package_description = $package->package_description;
                         $newCreditedPackage->package_products_count = $package->package_products_count - $package->downloaded_product;
+                        $newCreditedPackage->payment_status = "Completed";
                         $newCreditedPackage->package_type = $package->package_type;
                         $newCreditedPackage->package_permonth_download = $package->package_permonth_download;
                         $newCreditedPackage->package_expiry = $package->package_expiry;
@@ -66,7 +67,7 @@ class CreateEntryForCarryForwardBalance extends Command
                         // TODO : need to update
                         $newCreditedPackage->payment_gatway_provider = $package->payment_gatway_provider;
                         $newCreditedPackage->pacage_size = $package->pacage_size;
-                        $newCreditedPackage->created_at = date('Y-m-d H:i:s');
+                        $newCreditedPackage->created_at = Carbon::today();
                         $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
                         $newCreditedPackage->save();
                     }
