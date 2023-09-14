@@ -69,6 +69,7 @@ class CreateEntryForCarryForwardBalance extends Command
                         $newCreditedPackage->pacage_size = $package->pacage_size;
                         $newCreditedPackage->created_at = Carbon::today();
                         $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
+                        $newCreditedPackage->order_type = 3;
                         $newCreditedPackage->save();
                     }
                 }
