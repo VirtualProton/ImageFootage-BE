@@ -26,6 +26,22 @@
             font-weight: normal;
             font-style: bold;
         }
+        @page {
+            margin-top: 200px;
+            margin-bottom: 400px;
+        }
+        header{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100px;
+        }
+        footer{
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            height: 130px;
+        }
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
@@ -62,7 +78,6 @@
     <!-- Wrap the content of your PDF inside a main tag -->
     <main>
         <!-- Table paragraph section start -->
-        <br>
         <section class="table-paragraph">
             <div class="container">
                 <div class="client-info-top">
@@ -90,7 +105,7 @@
                         <p>Product Description: <span class="block-text"><strong><?php echo $orders['description'] ?? ''; ?></strong></span></p>
                     </div>
                 </div>
-                <div class="client-info-bottom price-div">
+                <div class="client-info-bottom price-div" style="padding-top: 15px;padding-bottom:0px;">
                     <div class="client-info-leftside">
                         <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
                         <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
@@ -99,7 +114,6 @@
                         <p><strong>INR <?php echo number_format($orders['total'], 2); ?></strong></p>
                     </div>
                 </div>
-                <hr>
                 <div class="price-div">
                     <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                 </div>
@@ -123,7 +137,6 @@
                     </div>
                 </div>
                 <div class="terms-of-payment licensing-terms">
-                    <br>
                     <h4><strong>Terms of Payment: </strong></h4>
                     <ul>
                         <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
@@ -142,7 +155,6 @@
                 </div>
             </div>
         </section>
-        <br>
         <!-- Table paragraph section end -->
         <!-- Signature section start -->
         <section class="signature">

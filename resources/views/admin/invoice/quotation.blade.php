@@ -589,26 +589,9 @@
                   $('#span-message').removeAttr('class');
                   $('#span-message').text(result.message);
                   $('#span-message').addClass('text-success');
-                  // $('#btn-promocode').hide();
-                  // $("#promo_code").prop('disabled', true);
 
                   let discountValue = result.data.discount;
                   let discountType = result.data.type;
-
-                  // let currentAmount = $('#total_amount').val();
-
-                  // let grossAmount = 0;
-                  // let discount    = 0;
-                  // if (discountType === 'flat') {
-                  //    // discount = discountValue;
-                  //    // grossAmount = currentAmount - discount;
-                  //    angular.element($("#btn-promocode")).scope().checkThetax(true, 'GST', {'type' : 'flat', 'discount' : discountValue});
-                  //    angular.element('#btn-promocode').scope().$apply();
-                  // }
-                  // if (discountType === 'percentage') {
-                  //    discount = (currentAmount*discountValue)/100;
-                  //    grossAmount = currentAmount - discount;
-                  // }
                   console.log(angular.element($("#btn-promocode")).scope().tax);
                   let gsttax = angular.element($("#btn-promocode")).scope().tax;
                   let isGST = gsttax > 0 ? true : false;
@@ -617,22 +600,11 @@
                      'discount': discountValue
                   });
                   angular.element('#btn-promocode').scope().$apply();
-
-                  // $('#total_amount').val(grossAmount);
                   $('#promo_code_id').val(result.data.id);
-                  // $('#total_amount').trigger('input');
-                  // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
-                  // $('#amount-caption').text(messsage);
-
                }
             }
          });
       });
-
-
-      // $('.licence_type').each(function() {
-      //    CKEDITOR.replace($(this).prop('id'));
-      // });
 
       $(document).on("click", "#btn-promocode-sub", function(e) {
 
@@ -721,33 +693,6 @@
             }
          });
       });
-
-      // $(document).on("click", "#btn-submit", function(e) {
-         // $('#quotationForm').formValidation({
-         //    framework: "bootstrap",
-         //    button: {
-         //       selector: '#btn-submit',
-         //       disabled: 'disabled'
-         //    },
-         //    icon: null,
-         //    fields: {
-         //       product_name: {
-         //          validators: {
-         //             notEmpty: {
-         //                message: 'Image is required'
-         //             }
-         //          }
-         //       },
-         //       price: {
-         //          validators: {
-         //             notEmpty: {
-         //                message: 'Price is required'
-         //             }
-         //          }
-         //       }
-         //    }
-         // });
-      // });
 
    });
 </script>
