@@ -162,4 +162,31 @@ class MusicApi
             return $contents;
         }
     }
+
+    public function getMusicData($music_id)
+    {
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        //https://api-reseller.pond5.com
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->url . '/api/v3/items/' . $music_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'accept: application/json',
+                'key: ' . $this->api_key,
+                'secret: ' . $this->api_secret
+            ),
+        ));
+        // Send the request & save response to $resp
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $contents = json_decode($response, true);
+        return $contents;
+    }
 }

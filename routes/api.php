@@ -149,6 +149,7 @@ Route::group([
     Route::post('/add-products-to-wishlist', 'WishListController@addProductToWishlist');
     Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
+    Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
 });
 
 

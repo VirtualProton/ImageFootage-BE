@@ -85,27 +85,40 @@ class MediaController extends Controller
             // $product_details_data['media']['preview_url_high_no_wm'] = str_replace('http:', 'https:', $product_details_data['media']['preview_url_high_no_wm']);
             $product_details = array($product_details_data, $imagefootage_id, $downlaod_image);
         } else if ($origin == '3') {
-            $media_id = decrypt($media_id);
-            $keyword['search'] = $media_id;
-            $footageMedia = new FootageApi();
-            $product_details_data = $footageMedia->getclipdata($media_id);
-            //print_r($product_details_data);
-            if (isset($product_details_data['id'])) {
-                $pond_id_withprefix = $product_details_data['id'];
-                if (strlen($product_details_data['id']) < 9) {
-                    $add_zero = 9 - (strlen($product_details_data['id']));
-                    for ($i = 0; $i < $add_zero; $i++) {
-                        $pond_id_withprefix = "0" . $pond_id_withprefix;
-                    }
-                }
-                $b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
-                $downlaod_image = '';
+
+            if($type == 'Music'){
+                
+                $media_id = decrypt($media_id);
+                $musicMedia = new MusicApi();
+                $product_details_data = $musicMedia->getMusicdata($media_id);
                 if (count($product_details_data) > 0) {
                     $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                 }
+                $product_details = array($product_details_data); 
+
+            }else{
+                $media_id = decrypt($media_id);
+                $keyword['search'] = $media_id;
+                $footageMedia = new FootageApi();
+                $product_details_data = $footageMedia->getclipdata($media_id);
+
+                if (isset($product_details_data['id'])) {
+                    $pond_id_withprefix = $product_details_data['id'];
+                    if (strlen($product_details_data['id']) < 9) {
+                        $add_zero = 9 - (strlen($product_details_data['id']));
+                        for ($i = 0; $i < $add_zero; $i++) {
+                            $pond_id_withprefix = "0" . $pond_id_withprefix;
+                        }
+                    }
+                    $b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
+                    $downlaod_image = '';
+                    if (count($product_details_data) > 0) {
+                        $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                    }
+                }
+                $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);  
             }
-            $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);
-        } else {
+        }else {
             $product = new Product();
             $product_details = $product->getProductDetail($media_id, $type);
         }
