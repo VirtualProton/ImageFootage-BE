@@ -274,7 +274,7 @@ class MediaController extends Controller
                         'product_id' => $product_id,
                         'product_id_api' => $allFields['product']['product_info']['media']['id'],
                         'id_media' => $allFields['product']['product_info']['media']['id'],
-                        'download_url' => $product_details_data['url'],
+                        'download_url' => $product_details_data['download_status']['download_url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $allFields['product']['product_info']['metadata']['title'],
                         'product_desc' => $allFields['product']['product_info']['metadata']['description'],

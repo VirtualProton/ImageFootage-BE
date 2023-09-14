@@ -244,6 +244,8 @@ class ImageApi
                 'show_top10_keywords' => 'yes'
             ]
         ]);
+
+
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
@@ -275,16 +277,18 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-        // echo "<pre>";
-        // print_r($data['product']);
-        // die;
-        if (count($data['product']['selected_product']) > 0) {
-            $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
-        } else {
 
+        if (count($data['product']['selected_product']) > 0) {
+            if (isset($data['product']['product_info']['articles'])) {
+                $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
+            } else {
+                $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
+                $id = $getIdArticle['articles']['subscription_list']['subscription']['article']['id'];
+            }
+        } else {
             $id = $data['product']['product_info']['media']['id'];
         }
-        // echo "id=>" . $id;
+
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post($this->url . '/download-media', [
             'headers' => [
@@ -304,6 +308,7 @@ class ImageApi
                 'test' => 'yes'
             ]
         ]);
+
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
@@ -330,9 +335,7 @@ class ImageApi
                 ]
             ]);
             if ($response2->getBody()) {
-                $downloadcontents = json_decode($response2->getBody());
-                //  print_r($downloadcontents); die;
-                // die;
+                $downloadcontents = json_decode($response2->getBody(), true);
                 return $downloadcontents;
             }
         }
