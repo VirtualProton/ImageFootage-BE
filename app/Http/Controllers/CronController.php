@@ -22,29 +22,39 @@ class CronController extends Controller
 
     }
 
-    public function pantherImageUpload(){
+    public function pantherImageUpload()
+    {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
-        // TODO: Need to manage via constant array
-        $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
-        foreach($home_categories as $percategory){
-            $keyword['search'] = $percategory;
-            $pantherMediaImages = new ImageApi();
-            $pantharmediaData = $pantherMediaImages->search($keyword);
 
-            $common = new Common();
-            $category_id = $common->checkCategory($percategory);
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
+      
+        foreach($home_categories as $percategory){
+            $keyword['search']  = $percategory['category_name'];
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData   = $pantherMediaImages->search($keyword);
+
             if(count($pantharmediaData) > 0){
-                $this->product->savePantherImage($pantharmediaData,$category_id);
+                $this->product->savePantherImage($pantharmediaData, $percategory['category_id']);
             }
         } 
     }
 
-    public function pantherImageUploadCategory(){
+    public function pantherImageUploadCategory()
+    {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
         
-        $categories = ProductCategory::get()->toArray();
+        $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                    ->where('is_display_home', '=', '0')
+                    ->where('category_status', '=', 'Active')
+                    ->get()
+                    ->toArray();
+       
         foreach($categories as $percategory){
             $keyword['search']  = $percategory['category_name'];
             $pantherMediaImages = new ImageApi();
