@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <!-- Header start -->
+    <!-- Define header and footer blocks before your content -->
     <header>
         <div class="container">
             <div class="header-text">
@@ -43,97 +43,7 @@
             </div>
         </div>
     </header>
-    <!-- Header end -->
-    <!-- Table paragraph section start -->
-    <section class="table-paragraph">
-        <div class="container">
-            <div class="client-info-top">
-                <div class="client-info-leftside">
-                    <p>Customer Name: <span><strong><?php echo $orders['first_name'] ?? ''; ?> <?php echo $orders['last_name'] ?? ''; ?></span></strong></p>
-                    <p>Address: <span><strong><?php echo $orders['address'] ?? ''; ?></strong></span>
-                        <?php if(!empty($orders['address2'])){ ?>
-                            <span><strong><?php echo $orders['address2'] ?? ''; ?></strong></span>
-                        <?php } ?>
-                        <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
-                    </p>
-                    <p>Phone: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
-                </div>
-                <div class="client-info-rightside">
-                    <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
-                    <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                    <p>Place: <span><strong><?php echo $orders['cityname'] . "-" . $orders['statename']; ?></strong></span></p>
-                </div>
-            </div>
-            <div class="client-info-bottom">
-                <div class="client-info-leftside">
-                    <p>Kind Attention: <span class="block-text"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
-                </div>
-                <div class="client-info-rightside">
-                    <p>Product Description: <span class="block-text"><strong><?php echo $orders['description'] ?? ''; ?></strong></span></p>
-                </div>
-            </div>
-            <div class="client-info-bottom price-div">
-                <div class="client-info-leftside">
-                    <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
-                    <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
-                </div>
-                <div class="client-info-rightside">
-                    <p><strong>INR <?php echo number_format($orders['total'],2); ?></strong></p>
-                </div>
-            </div>
-            <hr>
-            <div class="price-div">
-                <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
-            </div>
-            <div class="licensing-terms">
-                <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                <div class="licensing-condition">
-                    <h4 ><strong>With a Standard license, you may:</strong></h4>
-                    <ul>
-                        <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
-                        <li>Include the asset in email marketing, mobile advertising, or a broadcast program if the expected number of viewers is fewer than 500,000.</li>
-                        <li>Post the asset to a website with no limitation on viewers. If the asset is used in an editorial manner, attribution is required in this format (© Author Name - <?php echo $orders['frontend_name']; ?>).</li>
-                        <li>Include the asset in products in a minor way, such as in a textbook.</li>
-                    </ul>
-                    <p><strong>With a Standard license, you may not:</strong></p>
-                    <ul>
-                        <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
-                    </ul>
-                </div>
-                <div class="licensing-condition">
-                    <h4><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
-                </div>
-            </div>
-            <div class="terms-of-payment licensing-terms">
-                <h4><strong>Terms of Payment: </strong></h4>
-                <ul>
-                    <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
-                                Commitment</strong></span>.</li>
-                    <li>Payment can be made in favour of <span><strong>M/s. Conceptual Pictures Worldwide Private
-                                Limited</strong></span>.
-                        <ol>
-                            <li>Through A/c. Payee Cheques/DD payable at Hyderabad</li>
-                            <li> RTGS/NEFT to <span><strong>A/c. No. 50200000502220, HDFC Bank Ltd</strong></span>, Vijay Nagar Branch,
-                                Hyderabad
-                                IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
-                        </ol>
-                    </li>
-                    <li>All disputes are subject to Hyderabad Jurisdiction.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Table paragraph section end -->
-    <!-- Signature section start -->
-    <section class="signature">
-        <div class="container">
-            <p>For <span>Image Footage</span></p>
-            <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
-            <p>Authorized Signatory</p>
-        </div>
-    </section>
-    <!-- Signature section end -->
-    <!-- Footer start -->
+
     <footer>
         <div class="container">
             <div class="footer-left">
@@ -148,7 +58,102 @@
             </div>
         </div>
     </footer>
-    <!-- Footer end -->
+
+    <!-- Wrap the content of your PDF inside a main tag -->
+    <main>
+        <!-- Table paragraph section start -->
+        <br>
+        <section class="table-paragraph">
+            <div class="container">
+                <div class="client-info-top">
+                    <div class="client-info-leftside">
+                        <p>Customer Name: <span><strong><?php echo $orders['first_name'] ?? ''; ?> <?php echo $orders['last_name'] ?? ''; ?></span></strong></p>
+                        <p>Address: <span><strong><?php echo $orders['address'] ?? ''; ?></strong></span>
+                            <?php if (!empty($orders['address2'])) { ?>
+                                <span><strong><?php echo $orders['address2'] ?? ''; ?></strong></span>
+                            <?php } ?>
+                            <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
+                        </p>
+                        <p>Phone: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
+                    </div>
+                    <div class="client-info-rightside">
+                        <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
+                        <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
+                        <p>Place: <span><strong><?php echo $orders['cityname'] . "-" . $orders['statename']; ?></strong></span></p>
+                    </div>
+                </div>
+                <div class="client-info-bottom">
+                    <div class="client-info-leftside">
+                        <p>Kind Attention: <span class="block-text"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
+                    </div>
+                    <div class="client-info-rightside">
+                        <p>Product Description: <span class="block-text"><strong><?php echo $orders['description'] ?? ''; ?></strong></span></p>
+                    </div>
+                </div>
+                <div class="client-info-bottom price-div">
+                    <div class="client-info-leftside">
+                        <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
+                        <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
+                    </div>
+                    <div class="client-info-rightside">
+                        <p><strong>INR <?php echo number_format($orders['total'], 2); ?></strong></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="price-div">
+                    <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                </div>
+                <div class="licensing-terms">
+                    <h2 class="h3"><strong> Licensing Terms: </strong></h2>
+                    <div class="licensing-condition">
+                        <h4><strong>With a Standard license, you may:</strong></h4>
+                        <ul>
+                            <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
+                            <li>Include the asset in email marketing, mobile advertising, or a broadcast program if the expected number of viewers is fewer than 500,000.</li>
+                            <li>Post the asset to a website with no limitation on viewers. If the asset is used in an editorial manner, attribution is required in this format (© Author Name - <?php echo $orders['frontend_name']; ?>).</li>
+                            <li>Include the asset in products in a minor way, such as in a textbook.</li>
+                        </ul>
+                        <p><strong>With a Standard license, you may not:</strong></p>
+                        <ul>
+                            <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
+                        </ul>
+                    </div>
+                    <div class="licensing-condition">
+                        <h4><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
+                    </div>
+                </div>
+                <div class="terms-of-payment licensing-terms">
+                    <br>
+                    <h4><strong>Terms of Payment: </strong></h4>
+                    <ul>
+                        <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
+                                    Commitment</strong></span>.</li>
+                        <li>Payment can be made in favour of <span><strong>M/s. Conceptual Pictures Worldwide Private
+                                    Limited</strong></span>.
+                            <ol>
+                                <li>Through A/c. Payee Cheques/DD payable at Hyderabad</li>
+                                <li> RTGS/NEFT to <span><strong>A/c. No. 50200000502220, HDFC Bank Ltd</strong></span>, Vijay Nagar Branch,
+                                    Hyderabad
+                                    IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
+                            </ol>
+                        </li>
+                        <li>All disputes are subject to Hyderabad Jurisdiction.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <br>
+        <!-- Table paragraph section end -->
+        <!-- Signature section start -->
+        <section class="signature">
+            <div class="container">
+                <p>For <span>Image Footage</span></p>
+                <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
+                <p>Authorized Signatory</p>
+            </div>
+        </section>
+        <!-- Signature section end -->
+    </main>
 </body>
 
 </html>

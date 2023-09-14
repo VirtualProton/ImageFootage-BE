@@ -26,11 +26,8 @@ body {
 /* Header start */
 header {
     padding: 20px 0 0 0;
-    position: fixed;
-    top: 0cm;
-    left: 0cm;
     right: 0cm;
-    height: 3cm;
+    bottom: 5cm;
 }
 
 .header-text {
@@ -81,7 +78,7 @@ header {
 /* client-info start */
 
 .client-info-leftside {
-    width: 67%;
+    width: 49%;
     display: inline-block;
 }
 
@@ -103,7 +100,7 @@ header {
 }
 
 .client-info-rightside {
-    width: 32%;
+    width: 50%;
     display: inline-block;
     vertical-align: top;
 }
@@ -236,12 +233,12 @@ header {
     margin-bottom: 15px;
     word-spacing: 4px;
 }
-
+.licensing-terms ol,
 .licensing-terms ul {
     margin-left: 50px;
     margin-bottom: 20px;
 }
-
+.licensing-terms ol li,
 .licensing-terms ul li {
     line-height: 25px;
 }
@@ -282,11 +279,7 @@ header {
 /* Footer start */
 footer {
     padding: 20px 0 0 0;
-    position: fixed;
-    bottom: 0cm;
-    left: 0cm;
     right: 0cm;
-    height: 3cm;
 }
 
 .footer-left {
