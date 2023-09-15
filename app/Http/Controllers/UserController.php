@@ -500,6 +500,7 @@ class UserController extends Controller
      */
     public function getAvailablePackageList(Request $request)
     {
+        // TODO : set this values from angular side while calling this API
         $request->downloadCount = 17;
         $request->user_id = 208;
         $request->imageIds = [26549795, 30882795, 30882790];
@@ -513,7 +514,7 @@ class UserController extends Controller
 
         if ($getUserPackages->isNotEmpty()) {
             $checkAlreadyDownloadedImage = ProductsDownload::where('user_id', 208)
-                ->whereIn('id_media', [26549795, 30882795, 30882790])
+                ->whereIn('id_media', $request->imageIds)
                 ->distinct('id_media')
                 ->pluck('id_media')->count();
 
