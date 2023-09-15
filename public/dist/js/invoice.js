@@ -100,18 +100,31 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
-                                $scope.prices[index] =
-                                    response.data[0].clip_data.versions;
+                                if(response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                    $scope.prices[index] =
+                                        response.data[0].clip_data.versions;
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                    $scope.prices[index] =
+                                        response.data[0].versions;
+                                }
                                 //  console.log($scope.prices[index]);
                                 //$scope.quotation.product[index] = response.data[0];
                             }
@@ -1986,16 +1999,27 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
+                                if (response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                }
                                 $scope.prices[index] = [
                                     { size: "4K", pr: "16500" },
                                     { size: "HD (1080)", pr: "11500" },

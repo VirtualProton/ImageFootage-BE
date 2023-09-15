@@ -55,6 +55,14 @@
             margin-right: 2cm;
             margin-bottom: 3cm;
         }
+
+        .col-lg-4 {
+            padding-top: 0 !important;
+        }
+
+        .col-lg-4 div img {
+            padding-top: 0 !important;
+        }
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
