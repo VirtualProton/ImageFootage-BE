@@ -397,6 +397,13 @@ class Common extends Model
         $dataForEmail[0]['payment_url'] = $url;
 
         $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        if($dataForEmail[0]['flag'] == 0) {
+            // For other quotations use image footage logo
+            $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        } else {
+            // For form2 quotation use other logo
+            $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+        }
         $dataForEmail[0]['signature'] = 'images/signature.png';
         $front_end_url_name = config('app.front_end_url');
         $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));

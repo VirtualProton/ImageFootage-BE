@@ -83,21 +83,40 @@
    </header>
    <!-- Header end -->
    <!-- Footer start -->
-   <footer>
-      <div class="container">
-         <div class="footer-left">
-            <h2 class="h4"><strong>Image Footage</strong></h2>
-            <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
-               500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
-            </p>
-            <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-            <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+   <?php if ($quotation[0]['flag'] == 0) { ?>
+      <footer>
+         <div class="container">
+            <div class="footer-left">
+               <h2 class="h4"><strong>Image Footage</strong></h2>
+               <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
+                  500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
+               </p>
+               <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
+               <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+            </div>
+            <div class="footer-right">
+               <h3 class="h2">THANK YOU</h3>
+            </div>
          </div>
-         <div class="footer-right">
-            <h3 class="h2">looking forward</h3>
+      </footer>
+   <?php } else { ?>
+      <footer>
+         <div class="container">
+            <div class="footer-left">
+               <h2 class="h4"><strong>Conceptual Pictures Worldwide Private Limited</strong></h2>
+               <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers,
+                  Humayun Nagar, Hyderabad - 500028, Telangana,
+                  Andhra Pradesh, India Phone: +91 40 6720 6720
+               </p>
+               <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
+               <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+            </div>
+            <div class="footer-right">
+               <h3 class="h2">THANK YOU</h3>
+            </div>
          </div>
-      </div>
-   </footer>
+      </footer>
+   <?php } ?>
    <!-- Footer end -->
    <!-- Wrap the content of your PDF inside a main tag -->
    <main>

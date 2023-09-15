@@ -1059,7 +1059,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Trasaction Id :</label>
                           <div class="col-md-6">
-                              <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
+                              <p>Q<%cusQuotationObj.invoice_name%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1089,7 +1089,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Subtotal :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
+                              <p><%cusQuotationObj.total - cusQuotationObj.tax%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1101,13 +1101,13 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Tax :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                              <p><%cusQuotationObj.tax%></p>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">Total :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->total : ''}}</p>
+                              <p><%cusQuotationObj.total%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1253,7 +1253,7 @@
                   <div class="form-group">
                     <div class="col-sm-12">
                         <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
-                          <tr ng-repeat="item in quotationObjCus.items">
+                          <tr ng-repeat="item in cusQuotationObj.items">
                             <td style="padding:5px;"><%item.type%></td>
                             <td style="padding:5px;"><img src="<%item.product_image%>" width="150px" /></td>
                             <td style="padding:5px;"><%item.product_id%></td>
@@ -1269,7 +1269,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                   @if(isset($quotations) && !empty($quotations))
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus({{$quotations->id}}, {{$user_id}})">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(cusQuotationObj.id, {{$user_id}})">Confirm Submission</button>
                   @endif
                 </div>
               </div>
