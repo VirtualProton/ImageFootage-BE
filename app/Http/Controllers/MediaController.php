@@ -89,17 +89,16 @@ class MediaController extends Controller
             $product_details = array($product_details_data, $imagefootage_id, $downlaod_image);
         } else if ($origin == '3') {
 
-            if($type == 'Music'){
-                
+            if ($type == 'Music') {
+
                 $media_id = decrypt($media_id);
                 $musicMedia = new MusicApi();
                 $product_details_data = $musicMedia->getMusicInfo($media_id);
                 if (count($product_details_data) > 0) {
                     $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                 }
-                $product_details = array($product_details_data); 
-
-            }else{
+                $product_details = array($product_details_data);
+            } else {
                 $media_id = decrypt($media_id);
                 $keyword['search'] = $media_id;
                 $footageMedia = new FootageApi();
@@ -119,9 +118,9 @@ class MediaController extends Controller
                         $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
                     }
                 }
-                $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);  
+                $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);
             }
-        }else {
+        } else {
             $product = new Product();
             $product_details = $product->getProductDetail($media_id, $type);
         }
@@ -206,8 +205,8 @@ class MediaController extends Controller
                         // Count the number of downloads for the current month
                         $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
                             ->whereBetween('downloaded_date', [$startDateOfSpecificMonth, $endDateOfSpecificMonth])
-                            ->distinct('product_id')
-                            ->count();
+                            ->distinct('id_media')
+                            ->pluck('id_media')->count();
 
                         if ($monthlyDownloads >= $perpack->package_products_count) {
                             return response()->json(['status' => '0', 'message' => 'You have exceeded a monthly download limit.']);
@@ -367,6 +366,9 @@ class MediaController extends Controller
         }
     }
 
+    /**
+     * This API is used to re-download the image
+     */
     public function reDownload(Request $request)
     {
         $checkUserDownloads = UserProductDownload::where(

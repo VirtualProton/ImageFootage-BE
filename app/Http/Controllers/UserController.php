@@ -24,7 +24,8 @@ use App\Mail\ChangeMobileMail;
 use App\Mail\ChangeAddressEmail;
 use Carbon\Carbon;
 use App\Models\ProductsDownload;
-
+use App\Models\UserPackage;
+use App\Models\UserProductDownload;
 
 class UserController extends Controller
 {
@@ -491,6 +492,53 @@ class UserController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json(['error' => true, "message" => $e->getMessage()], 200);
+        }
+    }
+
+    /**
+     * Get the list of user packages which is best match for the requested amount of images.
+     */
+    public function getAvailablePackageList(Request $request)
+    {
+        $request->downloadCount = 17;
+        $request->user_id = 208;
+        $request->imageIds = [26549795, 30882795, 30882790];
+
+        $getUserPackages = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->where(['status' => 1, 'user_id' => $request->user_id, 'package_type' => 'Image'])
+            ->whereRaw('package_products_count > downloaded_product')
+            ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
+            ->orderBy('id', 'desc')
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type')->get();
+
+        if ($getUserPackages->isNotEmpty()) {
+            $checkAlreadyDownloadedImage = ProductsDownload::where('user_id', 208)
+                ->whereIn('id_media', [26549795, 30882795, 30882790])
+                ->distinct('id_media')
+                ->pluck('id_media')->count();
+
+            $finalPackagelist = [];
+            $setHighestCountPackage = ['available_balance' => 0]; // Initialize to null before the loop
+            foreach ($getUserPackages as $package) {
+                $availableBalance = $package->package_products_count - $package->downloaded_product;
+                if (($availableBalance) > ($request->downloadCount - $checkAlreadyDownloadedImage)) {
+                    $finalPackagelist[] = $package->toArray();
+                } else {
+                    if (($availableBalance >= $setHighestCountPackage['available_balance'])) {
+                        $setHighestCountPackage = [
+                            'package_name' => $package->package_name,
+                            'available_balance' => $availableBalance,
+                        ];
+                    }
+                }
+            }
+            if (isset($finalPackagelist) && $finalPackagelist) {
+                return response()->json(['status' => true, 'data' => $finalPackagelist]);
+            } else {
+                return response()->json(['status' => true, 'data' => "No suitable package is available for your requirement. Currently, you have a " . $setHighestCountPackage['available_balance'] . " images package with the highest available compared to your requirement. Please update your selection and use the " . $setHighestCountPackage['package_name'] . " plan to download."]);
+            }
+        } else {
+            return response()->json(["success" => false, "message" => "At the moment, there are no packages associated with your account. To get started, consider acquiring a package."], 200);
         }
     }
 }
