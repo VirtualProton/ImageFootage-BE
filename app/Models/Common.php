@@ -395,6 +395,14 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+
+        $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        $dataForEmail[0]['signature'] = 'images/signature.png';
+        $front_end_url_name = config('app.front_end_url');
+        $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+        $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+        $dataForEmail[0]["frontend_url"] = $front_end_url_name;
+
         $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date ]));
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
