@@ -39,9 +39,11 @@ class UserController extends Controller
             ->with([
                 'plans' => function ($query) {
                     $query->whereIn('payment_status', ['Completed', 'Transction Success'])
-                        //->whereRaw('package_products_count > downloaded_product')
+                        ->where(['status' => 1])
+                        ->whereRaw('package_products_count > downloaded_product')
+                        ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type')
                         ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }]);
@@ -126,6 +128,7 @@ class UserController extends Controller
                         //->whereRaw('package_products_count > downloaded_product')
                         ->whereDate('created_at', '>=', $startDate)
                         ->whereDate('created_at', '<=', $endDate)
+                        ->where('order_type', '!=', 3)
                         ->orderBy('id', 'desc')
                         ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
                         ->with(['downloads' => function ($down_query) {
@@ -378,14 +381,14 @@ class UserController extends Controller
                 break;
         }
 
-        if ($request->user_id) {            
+        if ($request->user_id) {
 
             $downloads = ProductsDownload::with(['product' => function ($productquery) use ($mediaType) {
                 if ($mediaType != 'All') {
                     $productquery->where('product_main_type', $mediaType);
                 }
             }])
-               
+
                 ->where('user_id', '=', $userId)
                 ->whereDate('created_at', '>=', $startDate)
                 ->whereDate('created_at', '<=', $endDate)

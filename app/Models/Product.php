@@ -287,7 +287,7 @@ class Product extends Model
     public function savePond5Image($data, $category_id)
     {        
         $eachmedia = $data;
-        // foreach($data['clip_data'] as $eachmedia){
+        foreach($data['items'] as $eachmedia){
         if (isset($eachmedia['id'])) {
             $pond_id_withprefix = $eachmedia['id'];
             if (strlen($eachmedia['id']) < 9) {
@@ -334,7 +334,7 @@ class Product extends Model
                 return $data2[0]->product_id;
             }
         }
-        //}
+        }
 
     }
 

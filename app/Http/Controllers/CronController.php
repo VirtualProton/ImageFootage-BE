@@ -104,7 +104,7 @@ class CronController extends Controller
             $pondfootageMediaData = $footageMedia->search($keyword,[]);
             $common               = new Common();
             $category_id          = $common->checkCategory($percategory);
-            if (count($pondfootageMediaData) > 0) {
+            if (!empty($pondfootageMediaData) && count($pondfootageMediaData) > 0) {
                 $this->product->savePond5Image($pondfootageMediaData, $category_id);
             }
         }
@@ -140,7 +140,7 @@ class CronController extends Controller
             $keyword['search'] = $percategory['category_name'];
             $footageMedia = new FootageApi();
             $pondfootageMediaData = $footageMedia->search($keyword,[]);
-            if (count($pondfootageMediaData) > 0) {
+            if (!empty($pondfootageMediaData) && count($pondfootageMediaData) > 0) {
                 $this->product->savePond5Image($pondfootageMediaData, $percategory['category_id']);
             }
         }
