@@ -94,7 +94,7 @@
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                        <p>Place: <span><strong><?php echo $orders['cityname'] . "-" . $orders['statename']; ?></strong></span></p>
+                        <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
                 <div class="client-info-bottom">

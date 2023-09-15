@@ -355,3 +355,7 @@ footer {
     font-size: 20px;
     background-color: rgba(89, 89, 89, 0.29);
 }
+
+.page-break {
+    page-break-before:always
+}

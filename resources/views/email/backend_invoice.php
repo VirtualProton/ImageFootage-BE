@@ -143,10 +143,14 @@
             </div>
             <?php
             $amount = 0;
+            $page_break_class = '';
             for ($i = 0; $i < count($quotation); $i++) {
+               if ($i > 1 && $i % 6 == 0) {
+                  $page_break_class = ' page-break';
+               }
                if ($i % 3 == 0) {
             ?>
-                  <div class="row">
+                  <div class="<?php echo "row" . $page_break_class ?>">
                   <?php
                }
                if (!empty($quotation[$i])) {
@@ -175,7 +179,12 @@
                }
             }
             ?>
-            <div class="row mb-0 amount-divs-row">
+            <?php
+            $break_amount_div = '';
+            if (count($quotation) > 3 && count($quotation) < 7) {
+               $break_amount_div = 'page-break';
+            } ?>
+            <div class="<?php echo 'row mb-0 amount-divs-row' . $break_amount_div; ?>">
                <div class="col-lg-12 amount-divs">
                   <div class="start">Amount (INR)</div>
                   <div class="end"><strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong></div>
