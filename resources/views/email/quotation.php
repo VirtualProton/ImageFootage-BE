@@ -84,19 +84,36 @@
     <!-- Header end -->
     <!-- Footer start -->
     <footer>
-        <div class="container">
-            <div class="footer-left">
-                <h2 class="h4"><strong>Image Footage</strong></h2>
-                <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
-                    500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
-                </p>
-                <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+        <?php if ($quotation[0]['flag'] == 0) { ?>
+            <div class="container">
+                <div class="footer-left">
+                    <h2 class="h4"><strong>Image Footage</strong></h2>
+                    <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
+                        500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
+                    </p>
+                    <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
+                    <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+                </div>
+                <div class="footer-right">
+                    <h3 class="h2">looking forward</h3>
+                </div>
             </div>
-            <div class="footer-right">
-                <h3 class="h2">looking forward</h3>
+        <?php } else { ?>
+            <div class="container">
+                <div class="footer-left">
+                    <h2 class="h4"><strong>Conceptual Pictures Worldwide Private Limited</strong></h2>
+                    <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers,
+                        Humayun Nagar, Hyderabad - 500028, Telangana,
+                        Andhra Pradesh, India Phone: +91 40 6720 6720
+                    </p>
+                    <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
+                    <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+                </div>
+                <div class="footer-right">
+                    <h3 class="h2">looking forward</h3>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </footer>
     <!-- Footer end -->
     <!-- Wrap the content of your PDF inside a main tag -->
@@ -143,9 +160,11 @@
                         } ?>
                             <div class="<?php echo $class; ?>">
                                 <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
-                                <p>Image ID: <?php echo $quotation[$i]['product_id'] ?></p>
-                                <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                                <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                                <?php if (!empty($quotation[$i]['product_id'])) { ?>
+                                    <p>Image ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
+                                    <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
+                                    <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                                <?php  } ?>
                             </div>
                         <?php
                     }

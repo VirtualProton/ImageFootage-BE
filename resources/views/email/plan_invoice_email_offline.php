@@ -118,7 +118,7 @@
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
                         <p>Total number of image(s)/footage(s):</p>
-                        <p><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></p>
+                        <p><span><strong><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <p>IF Sales Representative: <span><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>

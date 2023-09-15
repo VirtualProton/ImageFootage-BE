@@ -203,7 +203,7 @@
             if (count($quotation) > 3 && count($quotation) < 7) {
                $break_amount_div = 'page-break';
             } ?>
-            <div class="<?php echo 'row mb-0 amount-divs-row' . $break_amount_div; ?>">
+            <div class="<?php echo 'row mb-0 amount-divs-row ' . $break_amount_div; ?>">
                <div class="col-lg-12 amount-divs">
                   <div class="start">Amount (INR)</div>
                   <div class="end"><strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong></div>
