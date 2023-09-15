@@ -40,8 +40,6 @@ class FrontuserController extends Controller {
     public function addtocart(Request $request){
         //$lub = new Lcobucci();
 
-       // echo $request['product']['type'];
-       // dd($request->all());
 		$Usercart=new Usercart;
 		$already_image = 0;	
 		$counterImage  = 0;	
@@ -201,6 +199,41 @@ class FrontuserController extends Controller {
 			}
 			//echo "<pre>";
 			//print_r($request['data']);
+		}else if($request[0]['type'] == 'Music'){
+
+			
+			$product_id = $request[0]['id'];
+			$product_type = "Music";
+			
+			$tokens =  $request[0]['token']; // token
+            $product_addedby = json_decode($tokens)->Utype;
+			
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            if(empty($cart_list)){
+                $Usercart=new Usercart;
+                $Usercart->cart_product_id=$product_id;
+                $Usercart->cart_product_type= $product_type;
+                $Usercart->cart_added_by= $product_addedby;
+                $Usercart->standard_type= $request[0]['fileType'];
+                $Usercart->cart_added_on= date('Y-m-d H:i:s');
+                $Usercart->standard_size= $request[0]['versions'][0]['size'];
+                $Usercart->standard_price = $request[0]['versions'][0]['price'];
+				$Usercart->total = $request[0]['versions'][0]['price'];
+                $Usercart->product_name= $request[0]['title'];
+                $Usercart->product_thumb= $request[0]['thumbnail'];
+                $Usercart->product_desc= $request[0]['description'];
+                $Usercart->product_web= 3;
+                $Usercart->product_json= json_encode($request[0]);
+                $Usercart->selected_product = json_encode($request[0]['versions']);
+                $result=$Usercart->save();
+                if($result){
+                    echo '{"status":"1","message":"Product added to cart successfully"}';
+                }else{
+                    echo '{"status":"0","message":"Some problem occured."}';
+                }
+            }else{
+                echo '{"status":"0","message":"Already this product is in your cart."}';
+            }
 		}
 	}
 

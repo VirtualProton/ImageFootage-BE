@@ -37,7 +37,7 @@
                 <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
-                <img src="<?php echo $quotation['company_logo']; ?>" alt="logo" width="1920" height="351">
+                <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo" width="1920" height="351">
             </div>
         </div>
     </header>
@@ -177,7 +177,15 @@
         </div>
     </section>
     <!-- Table paragraph section end -->
-
+    <!-- Signature section start -->
+    <section class="signature">
+        <div class="container">
+            <p>For <span>Image Footage</span></p>
+            <img src="<?php echo $quotation[0]['signature']; ?>" alt="signature" width="171" height="89">
+            <p>Authorized Signatory</p>
+        </div>
+    </section>
+    <!-- Signature section end -->
     <!-- Footer start -->
     <footer>
         <div class="container">
@@ -187,7 +195,7 @@
                     500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="<?php echo $quotation['frontend_url']; ?>"><?php echo $quotation['frontend_url']; ?></a>
+                <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
             </div>
             <div class="footer-right">
                 <h3 class="h2">looking forward</h3>
@@ -195,26 +203,6 @@
         </div>
     </footer>
     <!-- Footer end -->
-    <header>
-        <div class="container">
-            <div class="header-text">
-                <h1 class="h1"><strong>hi</strong></h1>
-                <span><strong>this is an estimate</strong></span>
-            </div>
-            <div class="header-logo">
-                <img src="<?php echo $quotation['company_logo']; ?>" alt="logo" width="1920" height="351">
-            </div>
-        </div>
-    </header>
-    <!-- Signature section start -->
-    <section class="signature">
-        <div class="container">
-            <p>For <span>Image Footage</span></p>
-            <img src="<?php echo $quotation['signature']; ?>" alt="signature" width="171" height="89">
-            <p>Authorized Signatory</p>
-        </div>
-    </section>
-    <!-- Signature section end -->
 </body>
 
 </html>
