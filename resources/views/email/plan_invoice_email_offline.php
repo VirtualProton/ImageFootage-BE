@@ -26,17 +26,20 @@
             font-weight: normal;
             font-style: bold;
         }
+
         @page {
             margin-top: 200px;
             margin-bottom: 400px;
         }
-        header{
+
+        header {
             position: fixed;
             top: 0px;
             left: 0px;
             height: 100px;
         }
-        footer{
+
+        footer {
             position: fixed;
             bottom: 0px;
             left: 0px;
@@ -96,11 +99,10 @@
                     <div class="client-info-rightside">
                         <p>Invoice No.: <span><strong><?php echo $orders['INVOICE_PREFIX'] . $orders['invoice_name']; ?></span></strong></p>
                         <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo $orders['GSTIN_VALUE'] ?? ''; ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo $orders['PAN_VALUE'] ?? ''; ?></strong></span></p>
-                        <!-- pending -->
-                        <p>SAC Code:</p>
-                        <p>Place: <span><strong><?php echo $orders['cityname'] . "-" . $orders['statename']; ?></strong></span></p>
+                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                         <p>Payment Due: <span><strong><?php echo ucfirst($payment_method) ?></strong></span></p>
                     </div>
                 </div>
@@ -116,7 +118,7 @@
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
                         <p>Total number of image(s)/footage(s):</p>
-                        <p><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></p>
+                        <p><span><strong><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <p>IF Sales Representative: <span><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>
@@ -192,7 +194,7 @@
                     <div class="licensing-condition">
                         <ul>
                             <li>License Rights are only assigned on payment of this invoice.</li>
-                            
+
                             <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
                                 <span><strong>Image Footage,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
                             </li>

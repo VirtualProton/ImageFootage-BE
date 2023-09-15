@@ -1042,7 +1042,6 @@
                   </div>
                 </div>
               </div>
-              <!-- /.modal-content -->
             </div>
           </div>
           <div class="modal invoice-modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
@@ -1059,7 +1058,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Trasaction Id :</label>
                           <div class="col-md-6">
-                              <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
+                            <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1089,7 +1088,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Subtotal :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
+                            <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1101,13 +1100,13 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Tax :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                            <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">Total :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->total : ''}}</p>
+                            <p>{{isset($quotations) ? $quotations->total : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
