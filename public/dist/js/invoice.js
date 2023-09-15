@@ -1597,7 +1597,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.create_invoice = function (quotation, user_id) {
-        $scope.cusQuotationObj = quotation;
+        $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
         //  console.log($scope.quotationObjCus);
         // if (confirm('Do you want to send invoice for this quotation ?')) {
