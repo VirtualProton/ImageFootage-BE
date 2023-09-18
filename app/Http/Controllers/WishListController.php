@@ -328,6 +328,25 @@ class WishListController extends Controller
     }
 
     /**
+     * Add selected products to the user's wishlist.
+     *
+     * @param  Request $request The HTTP request object containing user's input data.
+     * @return JsonResponse A JSON response indicating the success or failure of the operation.
+     */
+    public function getUserWishlistData(Request $request) {
+        $postData = $request->all();
+        $userId = $postData['Utype'];               
+
+        $results = DB::table('imagefootage_users_wishlist')
+        ->join('imagefootage_wishlist_products', 'imagefootage_users_wishlist.wishlist_id', '=', 'imagefootage_wishlist_products.wishlist_id')
+        ->join('imagefootage_products', 'imagefootage_wishlist_products.product_id', '=', 'imagefootage_products.id')
+        ->where('imagefootage_users_wishlist.user_id', '=', $userId)
+        ->select('imagefootage_wishlist_products.product_id','imagefootage_products.product_thumbnail')
+        ->get();            
+        return json_encode(["status"=>"success",'data'=>$results]);                
+    }
+
+    /**
      * Create or update a user's wishlist along with adding products if provided.
      *
      * @param  Request $request The HTTP request object containing user's input data.
@@ -515,20 +534,26 @@ class WishListController extends Controller
         }
     }
 
-    public function getWishlistData(Request $request) {
+    public function getWishlistData(Request $request) {        
         
+
         $title = $request->input('title');
         $productId = $request->input('product_id');
+        $url = $request->input('url');        
 
         $query = Product::query();
 
         if (!empty($productId)) {
             $query->where('product_id', $productId);
-        } elseif (!empty($title)) {
-            $query->where('product_title', $title);
+        } else {
+            $query->where(function ($query) use ($title, $url) {
+                $query->where('product_title', $title);
+                $query->where('product_thumbnail', $url);
+            });
         }
 
         $product = $query->first();
+        
 
         if (!empty($product)) {   
             echo json_encode(["status"=>"success",'data'=>$product]);
