@@ -178,7 +178,8 @@ class Common extends Model
                 if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) { 
                        $image = $eachproduct['image'];
                 } else{
-                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';    
+                       $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';   
+                       $eachproduct['name'] = ''; 
                 }
                 $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
@@ -242,17 +243,17 @@ class Common extends Model
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
             $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']); 
             if($data['flag'] == 0) {
-                // For form2 quotation use other logo
-                $dataForEmail['company_logo'] = 'images/conceptual_logo.png';
-            } else {
                 // For other quotations use image footage logo
-                $dataForEmail['company_logo'] = 'images/new-design-logo.png';
+                $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+            } else {
+                // For form2 quotation use other logo
+                $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
             }
-            $dataForEmail['signature'] = 'images/signature.png';
+            $dataForEmail[0]['signature'] = 'images/signature.png';
             $front_end_url_name = config('app.front_end_url');
             $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
-            $dataForEmail["frontend_name"] = $frontend_name[1] ?? '';
-            $dataForEmail["frontend_url"] = $front_end_url_name;
+            $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+            $dataForEmail[0]["frontend_url"] = $front_end_url_name;
             //echo view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]); die;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
@@ -394,6 +395,21 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+
+        $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        if($dataForEmail[0]['flag'] == 0) {
+            // For other quotations use image footage logo
+            $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+        } else {
+            // For form2 quotation use other logo
+            $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+        }
+        $dataForEmail[0]['signature'] = 'images/signature.png';
+        $front_end_url_name = config('app.front_end_url');
+        $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
+        $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
+        $dataForEmail[0]["frontend_url"] = $front_end_url_name;
+
         $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date ]));
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
@@ -483,6 +499,10 @@ class Common extends Model
          $frontend_name = explode('//', rtrim($front_end_url_name,'/#/'));
          $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
          $dataForEmail[0]["frontend_url"] = $front_end_url_name;
+         $dataForEmail[0]["INVOICE_PREFIX"] = config('constants.INVOICE_PREFIX') ?? '';
+         $dataForEmail[0]["GSTIN_VALUE"] = config('constants.GSTIN_VALUE') ?? '';
+         $dataForEmail[0]["PAN_VALUE"] = config('constants.PAN_VALUE') ?? '';
+         $dataForEmail[0]['package_products_count_in_words'] =  $this->convert_number_to_words($dataForEmail[0]['package_products_count']) ?? '';
             $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
         
         $fileName = $dataForEmail[0]['invoice_name']."_invoice.pdf";

@@ -69,6 +69,8 @@ app.controller(
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.quotation.product.indexOf(product);
+                let productIndexId = index + 1;
+                $("#file" + productIndexId).val('');
                 $http({
                     method: "GET",
                     url:
@@ -98,24 +100,41 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
-                                $scope.prices[index] =
-                                    response.data[0].clip_data.versions;
+                                if(response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                    $scope.prices[index] =
+                                        response.data[0].clip_data.versions;
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                    $scope.prices[index] =
+                                        response.data[0].versions;
+                                }
                                 //  console.log($scope.prices[index]);
                                 //$scope.quotation.product[index] = response.data[0];
                             }
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
+                        $("#product_1").val("");
+                        alert("image not found");
                         $("#loading").hide();
                     }
                 );
@@ -653,20 +672,22 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    setTimeout(
-                        function (index) {
-                            CKEDITOR.replace("licence_type-" + index, {
-                                readOnly: false,
-                            });
-                            CKEDITOR.instances[
-                                "licence_type-" + (index + 1)
-                            ].setData(
-                                $scope.quotation.product[index].licence_type
-                            );
-                        },
-                        0,
-                        i
-                    );
+                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                        setTimeout(
+                            function (index) {
+                                CKEDITOR.replace("licence_type-" + index, {
+                                    readOnly: false,
+                                });
+                                CKEDITOR.instances[
+                                    "licence_type-" + (index + 1)
+                                ].setData(
+                                    $scope.quotation.product[index].licence_type
+                                );
+                            },
+                            0,
+                            i
+                        );
+                    }
                 }
             }
         };
@@ -1576,7 +1597,6 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.create_invoice = function (quotation, user_id) {
-        //  console.log(quotation);
         $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
         //  console.log($scope.quotationObjCus);
@@ -1800,6 +1820,10 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
+                if(el[0]['id']){ // If upload new file than reset scope product
+                    let productId = el[0]['id'].substring(4);
+                    $("#product_" + productId).val("");
+                }
                 fileReader.readAsDataUrl(file, $scope).then(function (result) {
                     $timeout(function () {
                         $scope.ngModel = result;
@@ -1974,16 +1998,27 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
+                                if (response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                }
                                 $scope.prices[index] = [
                                     { size: "4K", pr: "16500" },
                                     { size: "HD (1080)", pr: "11500" },
@@ -1995,6 +2030,8 @@ app.controller(
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
                         $("#product_1").val("");
                         alert("image not found");
                         $("#loading").hide();

@@ -37,7 +37,7 @@ class ImageApi
         $client = new Client(); //GuzzleHttp\Client
         // $client->setDefaultOption('headers', array('Content-Type' => 'application/x-www-form-urlencoded','Accept-Version'=>'1.0'));
         try {
-            $result = $client->post($this->url .'/v1.0/host-info', [
+            $result = $client->post($this->url . '/v1.0/host-info', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -184,8 +184,8 @@ class ImageApi
         $this->access_key = $this->getAccessKey();
         
         try {
-            $client   = new Client();
-            $response = $client->post($this->url .'/search', [
+            $client = new Client(); //GuzzleHttp\Client
+            $response = $client->post($this->url . '/search', [
                 'headers' => [
                     'Content-Type'   => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -222,7 +222,7 @@ class ImageApi
     {
         $this->access_key = $this->getAccessKey();
         $client = new Client(); //GuzzleHttp\Client
-        $response = $client->post($this->url .'/get-media-info', [
+        $response = $client->post($this->url . '/get-media-info', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
@@ -240,6 +240,8 @@ class ImageApi
                 'show_top10_keywords' => 'yes'
             ]
         ]);
+
+
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             //$contents = $response->getBody();
@@ -271,14 +273,20 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-        // if(count($data['product']['selected_product'])>0){
-        //     $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
-        // }else{
-        $id = $data['product']['product_info']['media']['id'];
-        // }
-        echo "id=>" . $id;
+
+        if (count($data['product']['selected_product']) > 0) {
+            if (isset($data['product']['product_info']['articles'])) {
+                $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
+            } else {
+                $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
+                $id = $getIdArticle['articles']['subscription_list']['subscription']['article']['id'];
+            }
+        } else {
+            $id = $data['product']['product_info']['media']['id'];
+        }
+
         $client = new Client(); //GuzzleHttp\Client
-        $response = $client->post($this->url .'/download-media', [
+        $response = $client->post($this->url . '/download-media', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
@@ -296,13 +304,14 @@ class ImageApi
                 'test' => 'yes'
             ]
         ]);
+
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
             $hostname = env('APP_URL');
 
             $client2 = new Client(); //GuzzleHttp\Client
-            $response2 = $client2->post($this->url .'/download-media', [
+            $response2 = $client2->post($this->url . '/download-media', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
@@ -322,9 +331,7 @@ class ImageApi
                 ]
             ]);
             if ($response2->getBody()) {
-                $downloadcontents = json_decode($response2->getBody());
-                //  print_r($downloadcontents); die;
-                // die;
+                $downloadcontents = json_decode($response2->getBody(), true);
                 return $downloadcontents;
             }
         }
@@ -347,7 +354,7 @@ class ImageApi
             $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, [
-                CURLOPT_URL => $this->url .'/v1.0/get-media-info',
+                CURLOPT_URL => $this->url . '/v1.0/get-media-info',
                 CURLOPT_POST => TRUE,
                 CURLOPT_MAXREDIRS => 20,
                 CURLOPT_POSTFIELDS => $data_req,
@@ -373,7 +380,7 @@ class ImageApi
     {
         $hostname = env('APP_URL');
         $client2 = new Client(); //GuzzleHttp\Client
-        $response2 = $client2->post($this->url .'/download-media', [
+        $response2 = $client2->post($this->url . '/download-media', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept-Version' => '1.0'
@@ -396,6 +403,35 @@ class ImageApi
             $downloadcontents = json_decode($response2->getBody());
             print_r($downloadcontents);
             die;
+            return $downloadcontents;
+        }
+    }
+
+
+    public function reDownloadMedia($data)
+    {
+        $this->access_key = $this->getAccessKey();
+        $client = new Client(); //GuzzleHttp\Client
+        $response = $client->post($this->url . '/download-media', [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept-Version' => '1.0'
+            ],
+            'form_params' => [
+                'api_key' => $this->api_key,
+                'access_key' => $this->access_key,
+                'timestamp' => $this->timestamp,
+                'nonce' => $this->nonce,
+                'algo' => $this->algo,
+                'content_type' => 'application/json',
+                'lang' => 'en',
+                'id_media' => $data['id_media'],
+                'id_download' => $data['id_download'],
+            ]
+        ]);
+
+        if ($response->getBody()) {
+            $downloadcontents = json_decode($response->getBody(), true);
             return $downloadcontents;
         }
     }

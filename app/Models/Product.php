@@ -285,10 +285,9 @@ class Product extends Model
     }
 
     public function savePond5Image($data, $category_id)
-    {
-        // dd($data);
+    {        
         $eachmedia = $data;
-        // foreach($data['clip_data'] as $eachmedia){
+        foreach($data['items'] as $eachmedia){
         if (isset($eachmedia['id'])) {
             $pond_id_withprefix = $eachmedia['id'];
             if (strlen($eachmedia['id']) < 9) {
@@ -308,7 +307,7 @@ class Product extends Model
                 'product_size' => '',
                 "product_keywords" => implode(',', $eachmedia['keywords']),
                 'product_status' => "Active",
-                'product_main_type' => "Footage",
+                'product_main_type' => $eachmedia['type'],
                 'product_sub_type' => "Photo",
                 'product_added_on' => date("Y-m-d H:i:s"),
                 'product_web' => '3',
@@ -335,7 +334,7 @@ class Product extends Model
                 return $data2[0]->product_id;
             }
         }
-        //}
+        }
 
     }
 

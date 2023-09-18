@@ -514,4 +514,26 @@ class WishListController extends Controller
             return jsonResponse(true, $errorMessage);
         }
     }
+
+    public function getWishlistData(Request $request) {
+        
+        $title = $request->input('title');
+        $productId = $request->input('product_id');
+
+        $query = Product::query();
+
+        if (!empty($productId)) {
+            $query->where('product_id', $productId);
+        } elseif (!empty($title)) {
+            $query->where('product_title', $title);
+        }
+
+        $product = $query->first();
+
+        if (!empty($product)) {   
+            echo json_encode(["status"=>"success",'data'=>$product]);
+        } else {           
+            echo json_encode(["status"=>"failed",'data'=>null]);
+        }
+    }
 }

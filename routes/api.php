@@ -126,6 +126,7 @@ Route::group([
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}', 'UserController@userProfile');
+    Route::post('get-available-package-list', 'UserController@getAvailablePackageList');
     Route::post('myplan', 'UserController@myPlan'); # My Plan
     Route::get('userOrders/{id}', 'UserController@userOrders');
     Route::post('purchase-history', 'UserController@purchaseHistory'); # Purchase History
@@ -133,6 +134,8 @@ Route::group([
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
+    Route::post('multi-download', 'MediaController@multipleDownload');
+    Route::post('re-download', 'MediaController@reDownload');
     Route::post('downloadindi', 'MediaController@downloadindi');
     Route::post('getuseraddress', 'UserController@getUserAddress');
     Route::post('update_profile', 'UserController@update_profile');
@@ -149,6 +152,7 @@ Route::group([
     Route::post('/add-products-to-wishlist', 'WishListController@addProductToWishlist');
     Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
+    Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
 });
 
 

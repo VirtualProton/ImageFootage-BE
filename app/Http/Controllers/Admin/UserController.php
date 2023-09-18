@@ -185,10 +185,10 @@ class UserController extends Controller
         $get_quotations3 = clone $get_quotations;
         $get_quotations4 = clone $get_quotations;
         $account_quotations = $get_quotations->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_subscription_quotations = $get_quotations2->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_custom_quotations = $get_quotations3->where('invoice_type', '=', 3)->where('flag', 0)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_custom_quotations2 = $get_quotations4->where('invoice_type', '=', 3)->where('flag', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+        $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'dq');
+        $account_subscription_quotations = $get_quotations2->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'sq');
+        $account_custom_quotations = $get_quotations3->where('invoice_type', '=', 3)->where('flag', 0)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'cq');
+        $account_custom_quotations2 = $get_quotations4->where('invoice_type', '=', 3)->where('flag', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'oq');
 
         $get_invoices = Invoice::with('items')
                     ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
@@ -200,10 +200,10 @@ class UserController extends Controller
         $get_invoices3 = clone $get_invoices;
         $get_invoices4 = clone $get_invoices;
         $account_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10');
-        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10');
-        $account_custom_invoices = $get_invoices3->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10');
-        $account_custom_invoices2 = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10');
+        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10', ['*'], 'di');
+        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10', ['*'], 'si');
+        $account_custom_invoices = $get_invoices3->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10', ['*'], 'ci');
+        $account_custom_invoices2 = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10', ['*'], 'oi');
         
 
         $this->Country = new Country();
