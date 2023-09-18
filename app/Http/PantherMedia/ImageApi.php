@@ -139,18 +139,15 @@ class ImageApi
         if (isset($getKeyword['product_imagesizes']) && !empty($getKeyword['product_imagesizes'])) {
             $imagesizes = explode(',', $getKeyword['product_imagesizes']);
             $count = count($imagesizes);
-            $imagesize_filter = $imagesizes[$count - 1];
+            $imagesize_filter = $imagesizes[$count - 1]; //TODO: $imagesize_filter is not used!
         }
         if (isset($getKeyword['product_locations']) && !empty($getKeyword['product_locations'])) {
             $locations = explode(',', $getKeyword['product_locations']);
             $count = count($locations);
-            $location_filter = $locations[$count - 1];
+            $location_filter = $locations[$count - 1]; //TODO: $location_filter is not used!
         }
         $color_filter = '';
         if (isset($getKeyword['product_colors']) && !empty($getKeyword['product_colors'])) {
-            //$colors = explode(',',$getKeyword['product_colors']);
-            //$count = count($colors);
-            //$color_filter = $colors[$count-1];
             if (trim($getKeyword['product_colors']) != 'Pick Color') {
                 $color_filter = "color:" . strtoupper(str_replace('#', '', $getKeyword['product_colors'])) . ';';
             }
@@ -162,7 +159,7 @@ class ImageApi
         if (isset($getKeyword['product_imagetypes']) && !empty($getKeyword['product_imagetypes'])) {
             $types = explode(',', $getKeyword['product_imagetypes']);
             $count = count($types);
-            $type_filter = $types[$count - 1];
+            $type_filter = $types[$count - 1]; //TODO: $type_filter is not used!
         }
         $orientation_filter_data = 'orientation:all;';
         if (isset($getKeyword['product_orientation']) && !empty($getKeyword['product_orientation'])) {
@@ -185,33 +182,32 @@ class ImageApi
         }
 
         $this->access_key = $this->getAccessKey();
-        // echo $this->access_key; die;
+        
         try {
-            $client = new Client(); //GuzzleHttp\Client
+            $client   = new Client();
             $response = $client->post($this->url .'/search', [
                 'headers' => [
-                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Content-Type'   => 'application/x-www-form-urlencoded',
                     'Accept-Version' => '1.0'
                 ],
                 'form_params' => [
-                    'api_key' => $this->api_key,
-                    'access_key' => $this->access_key,
-                    'timestamp' => $this->timestamp,
-                    'nonce' => $this->nonce,
-                    'algo' => $this->algo,
+                    'api_key'      => $this->api_key,
+                    'access_key'   => $this->access_key,
+                    'timestamp'    => $this->timestamp,
+                    'nonce'        => $this->nonce,
+                    'algo'         => $this->algo,
                     'content_type' => 'application/json',
-                    'lang' => 'en',
-                    'q' => $serach,
-                    'page' => $page,
-                    'limit' => $limit,
-                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                    'filters' => $sort . 'type: photos;' . $product_filter_data . $color_filter . $tolerance . $gender_filter_data . $ethinicities_filter_data . $orientation_filter_data . $liencence_filter_data
+                    'lang'         => 'en',
+                    'q'            => $serach,
+                    'page'         => $page,
+                    'limit'        => $limit,
+                    'extra_info'   => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                    'filters'      => $sort . 'type: photos;' . $product_filter_data . $color_filter . $tolerance . $gender_filter_data . $ethinicities_filter_data . $orientation_filter_data . $liencence_filter_data
                 ]
             ]);
 
             if ($response->getBody()) {
                 $contents = json_decode($response->getBody(), true);
-                //$contents = $response->getBody();
                 return $contents;
             }
         } catch (BadResponseException $ex) {
