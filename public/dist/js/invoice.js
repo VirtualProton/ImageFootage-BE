@@ -975,7 +975,7 @@ app.controller(
                     }
                 });
                 if(response.user_package){
-                    get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly,response.user_package.package_expiry_quarterly,response.user_package.package_expiry_half_yearly);
+                    get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly);
                     get_plan_data(response.user_package.package_id);
                 }
             },
@@ -1029,15 +1029,11 @@ app.controller(
                 }
             );
         }
-        function get_play_type(package_expiry,package_expiry_yearly,package_expiry_quarterly,package_expiry_half_yearly){
+        function get_play_type(package_expiry,package_expiry_yearly){
             if(package_expiry == 1){
                 $scope.plan_type = "monthly";
             } else if(package_expiry_yearly == 1) {
                 $scope.plan_type = "annual";
-            } else if (package_expiry_quarterly == 1) {
-                $scope.plan_type = "quarterly";
-            } else if(package_expiry_half_yearly == 1){
-                $scope.plan_type = "half_yearly";
             }
         }
         $scope.selectPlanfromlist = function (selectedPlanData, type) {
