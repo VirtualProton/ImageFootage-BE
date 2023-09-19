@@ -44,7 +44,7 @@ class CreateEntryForCarryForwardBalance extends Command
         if ($getUserPackages->isNotEmpty()) {
             foreach ($getUserPackages as $package) {
                 if ($package->downloaded_product < $package->package_products_count) {
-                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
+                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('created_at','>', $getUserPackages->package_expiry_date_from_purchage)->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
 
                     if ($getCurrentSamePlan) {
                         $newCreditedPackage = new UserPackage();
