@@ -164,8 +164,8 @@ class PromotionController extends Controller
             'event_des' => 'required',
             'media_type' => 'required',
             'page_type' => 'required',
-            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
-            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
+            'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
+            'mobile_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
             'event_name.required' => 'The Event Name field is required.',
             'date_start.required' => 'The Start Date field is required.',
