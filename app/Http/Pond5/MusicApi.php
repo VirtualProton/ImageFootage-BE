@@ -3,6 +3,8 @@
 namespace App\Http\Pond5;
 
 use App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 class MusicApi
 {
@@ -36,69 +38,32 @@ class MusicApi
             $sort = 'default';
         }
         $filters = '';
-        if (isset($getKeyword['searchFilter']) && count($getKeyword['searchFilter']) > 0) {
-            if (count($getKeyword['searchFilter']['fps']) > 0) {
-                foreach ($getKeyword['searchFilter']['fps'] as $perfps) {
-                    if ($perfps == '60+') {
-                        $filters .= ' fpsgt:' . $perfps;
-                    } else {
-                        $filters .= ' fps:' . $perfps;
-                    }
-                }
-            }
-            if (count($getKeyword['searchFilter']['people']) > 0) {
-                foreach ($getKeyword['searchFilter']['people'] as $perpeople) {
-                    if ($perpeople == '6') {
-                        $filters .= ' people:0';
-                    } elseif ($perpeople != '6' && $perpeople > 3) {
-                        $filters .= ' people:3';
-                    } else {
-                        $filters .= ' people:' . $perpeople;
-                    }
-                }
-            }
-            if (count($getKeyword['searchFilter']['gender']) > 0) {
-                foreach ($getKeyword['searchFilter']['gender'] as $pergender) {
-                    if ($pergender == '4') {
-                        $filters .= ' gender:3';
-                    } else if ($pergender == '1') {
-                        $filters .= ' gender:2';
-                    } elseif ($pergender == '2') {
-                        $filters .= ' gender:1';
-                    } else {
-                        $filters .= ' gender:3';
-                    }
-                }
-            }
+        
+        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $filter_mapping = "";
 
-            if (count($getKeyword['searchFilter']['resolution']) > 0) {
-                $array  = array("8K" => "5K+", "4K" => "4K", "HD1080" => "HD(1080)", "HD720" => "HD(720)", "2K" => "2K", "SD" => "SD");
-                $bitmak  = array("16515087" => "5K+", "262144" => "4K", "1048576" => "HD(1080)", "2097152" => "HD(720)", "0" => "2K", "0" => "SD");
-                $rs = [];
-
-                foreach ($getKeyword['searchFilter']['resolution'] as $resoulution) {
-                    $resolutionkey = array_search($resoulution, $array);
-                    $bit = array_search($resoulution, $bitmak);
-                    $bittotal = $bittotal + $bit;
-                    array_push($rs, $resolutionkey);
+        foreach($getFilters as $getFilterName => $getFilterValue){            
+            
+            if(!empty($getFilterValue)){                
+                
+                $filterData = DB::table('imagefootage_filters')
+                ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
+                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
+                ->whereIn('imagefootage_filters_options.id', explode(',', $getFilterValue))
+                ->get();
+            
+                foreach($filterData as $filter){
+                    $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
-                $all = implode(":", $rs);
-                $filters .= " resolutions:" . $all;
-            }
-            if ($getKeyword['durationless'] != 0 && $getKeyword['durationgrt'] != 2) {
-                $start = explode('.', $getKeyword['durationless']);
-                $end = explode('.', $getKeyword['durationgrt']);
-                $filters .= " durationgt:" . (($start[0] * 60) + $start[1]);
-                $filters .= " durationlt:" . (($end[0] * 60) + $end[1]);
-            }
-            if (isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial']) && $getKeyword['product_editorial'] == 'editorial') {
-                $editorial = 1;
-            }
-        }
+            } 
+        }   
+
+
         $search_cmd = array();
         $url = [];
-        if (!empty($search)) {
-            $url['query'] = $search;
+        if (!empty($filter_mapping)) {
+            $url['query'] = $filter_mapping;
         }
 
         $url['type'] = 'music';
@@ -109,7 +74,8 @@ class MusicApi
 
         $url['perPage'] = $limit;
 
-        $url['page'] = $page;
+        $url['page'] = $page;        
+
 
         $url1 = $this->url . '/api/v3/search?' . http_build_query($url);
 
