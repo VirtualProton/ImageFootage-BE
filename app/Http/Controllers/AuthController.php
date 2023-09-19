@@ -311,6 +311,7 @@ class AuthController extends Controller
                     'token_type' => 'bearer',
                     'expires_in' =>  20,
                     'user' => auth()->user()->first_name,
+                    'email' => auth()->user()->email,
                     'Utype' => auth()->user()->id,
                     'image_downlaod'=>$image_download,
                     'footage_downlaod'=>$footage_download
