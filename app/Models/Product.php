@@ -154,7 +154,7 @@ class Product extends Model
             $search = $keyword['search'];
             $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
 
-            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords', 'product_description', 'music_sound_bpm', 'music_duration', 'music_fileType', 'music_price', 'auther_name', 'license_type', 'product_keywords')
+            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords', 'product_description', 'music_sound_bpm', 'music_duration', 'music_fileType', 'music_price', 'auther_name', 'license_type', 'product_keywords', 'music_size')
                 ->leftJoin('imagefootage_productfilters', 'imagefootage_productfilters.filter_product_id', '=', 'imagefootage_products.id')
                 ->leftJoin('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
                 ->where(function ($query) {
