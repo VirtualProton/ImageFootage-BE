@@ -26,8 +26,6 @@ class PromotionController extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'event_name' => 'required',
-            //'date_start'      => 'required',
-            //'date_end'        => 'after:date_start',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',
@@ -41,7 +39,6 @@ class PromotionController extends Controller
             'product_name.required' => 'The Event Banner field is required.',
             'event_des.required' => 'The Event Description field is required.',
             'media_type.required' => 'The Media Type field is required.',
-            'product_name.required' => 'The Product Name field is required.',
             'page_type.required' => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
             'mobile_banner_image' => 'Please upload valid mobile banner image.',
@@ -149,7 +146,6 @@ class PromotionController extends Controller
         return view('admin.promotion.editpromotion', ['promotionDetails' => $promotionDetails]);
     }
     public function editPromotion(Request $request){
-      // dd( $request);
         $url = "";
             if($request->input('image_url') !=""){
                 $url = $request->input('image_url');
@@ -158,14 +154,12 @@ class PromotionController extends Controller
             }
        $this->validate($request, [
             'event_name' => 'required',
-            //'date_start' => 'required',
-            //'date_end' => 'required',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',
             'page_type' => 'required',
-            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
-            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
+            'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
+            'mobile_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
             'event_name.required' => 'The Event Name field is required.',
             'date_start.required' => 'The Start Date field is required.',
@@ -173,7 +167,6 @@ class PromotionController extends Controller
             'product_name.required' => 'The Event Banner field is required.',
             'event_des.required' => 'The Event Description field is required.',
             'media_type.required' => 'The Media Type field is required.',
-            'product_name.required' => 'The Product Name field is required.',
             'page_type.required' => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
             'mobile_banner_image' => 'Please upload valid mobile banner image.',

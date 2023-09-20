@@ -169,7 +169,7 @@ class SearchController extends Controller
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
-        $all_products = $product->getProductsNew($keyword, $getKeyword);
+        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
@@ -293,7 +293,7 @@ class SearchController extends Controller
     public function getFootageData($keyword,$getKeyword){
         $product = new Product();
         $all_products =[];
-        $all_products = $product->getProductsNew($keyword, $getKeyword);
+        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
         
         if(count($all_products)>0){

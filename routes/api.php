@@ -13,13 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-// //for api
-
-// //end api
-
 Route::group([
     'middleware' => ['api', 'CORS'],
 
@@ -48,7 +41,7 @@ Route::group([
     Route::post('relatedsearch', 'SearchController@relatedProductList');
     Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
-    
+
     Route::get('home', 'SearchController@home');
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
@@ -98,7 +91,6 @@ Route::group([
     Route::get('/product/{id}', 'ProductController@getproduct');
     Route::get('/search-keywords/get/{keyword?}', 'SearchController@getKeywords');
 
-    //  Route::post('/wishlistfolder','WishListController@getWishList');
     Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
 
 
@@ -127,10 +119,10 @@ Route::group([
     Route::post('orderDetails', 'PaymentController@orderDetails');
     Route::get('userprofile/{id}', 'UserController@userProfile');
     Route::post('get-available-package-list', 'UserController@getAvailablePackageList');
-    Route::post('myplan', 'UserController@myPlan'); # My Plan
+    Route::post('myplan', 'UserController@myPlan');
     Route::get('userOrders/{id}', 'UserController@userOrders');
-    Route::post('purchase-history', 'UserController@purchaseHistory'); # Purchase History
-    Route::post('download-history', 'UserController@downloadHistory'); # Download History
+    Route::post('purchase-history', 'UserController@purchaseHistory');
+    Route::post('download-history', 'UserController@downloadHistory');
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');

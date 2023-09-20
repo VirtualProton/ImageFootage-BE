@@ -103,7 +103,7 @@ class Product extends Model
     }
 
     //API search function
-    public function getProductsNew($keyword, $requestData)
+    public function getProductsUpdated($keyword, $requestData)
     {
         $data = [];
         if ($keyword['productType']['id'] == '1') {
