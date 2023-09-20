@@ -26,8 +26,6 @@ class PromotionController extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'event_name' => 'required',
-            //'date_start'      => 'required',
-            //'date_end'        => 'after:date_start',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',
@@ -149,7 +147,6 @@ class PromotionController extends Controller
         return view('admin.promotion.editpromotion', ['promotionDetails' => $promotionDetails]);
     }
     public function editPromotion(Request $request){
-      // dd( $request);
         $url = "";
             if($request->input('image_url') !=""){
                 $url = $request->input('image_url');
@@ -158,8 +155,6 @@ class PromotionController extends Controller
             }
        $this->validate($request, [
             'event_name' => 'required',
-            //'date_start' => 'required',
-            //'date_end' => 'required',
             'product_name'=> 'required',
             'event_des' => 'required',
             'media_type' => 'required',

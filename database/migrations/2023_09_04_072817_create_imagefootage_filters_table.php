@@ -17,7 +17,7 @@ class CreateImagefootageFiltersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('value')->index('value');
-            $table->string('type')->index('type'); // page type [image, footage, music, editorial]
+            $table->string('type')->index('type')->comment('image, footage, music, editorial (page type)');
             $table->integer('sort_order')->default(1);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

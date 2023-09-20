@@ -502,7 +502,7 @@ public function signupV2(Request $request)
         }
         $user = User::where("otp", $otp)->where('id', $user_id)->first();
         if (empty($user)) {
-            return response()->json(['status' => false, 'message' => 'User not found.'], 200);
+            return response()->json(['status' => false, 'message' => 'OTP is invalid.'], 200);
         }
         if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
