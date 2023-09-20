@@ -69,16 +69,16 @@ class EditorialController extends Controller
 
             $editorial =
                 [
-                    "id" => $editoriallist->id,
-                    "title" => $editoriallist->title,
-                    "type" => $editoriallist->type,
-                    "search_term" => $editoriallist->search_term,
-                    "selected_values" => $editoriallist->selected_values,
+                    "id"                         => $editoriallist->id,
+                    "title"                      => $editoriallist->title,
+                    "type"                       => $editoriallist->type,
+                    "search_term"                => $editoriallist->search_term,
+                    "selected_values"            => $editoriallist->selected_values,
                     "main_image_selected_values" => $editoriallist->main_image_selected_values,
-                    "main_image_upload" => $editoriallist->main_image_upload,
-                    "status" => $editoriallist->status,
-                    "created_at" => $editoriallist->created_at,
-                    "updated_at" => $editoriallist->updated_at,
+                    "main_image_upload"          => $editoriallist->main_image_upload,
+                    "status"                     => $editoriallist->status,
+                    "created_at"                 => $editoriallist->created_at,
+                    "updated_at"                 => $editoriallist->updated_at,
                 ];
 
 
