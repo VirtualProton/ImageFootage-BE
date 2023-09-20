@@ -282,6 +282,7 @@ class WishListController extends Controller
                     $wishListProductRelation = [];
                     $wishListProductRelation['wishlist_id'] = $wishlistId;
                     $wishListProductRelation['product_id'] = $product['id'];
+                    $wishListProductRelation['product_path_id'] = $product['product_id'];
                     $wishListProductRelation['type'] = $filteredData[0]['type'];
                     $wishListProductRelation['created_at'] = Carbon::now();
                     $wishListProductRelation['updated_at'] = Carbon::now();
@@ -341,7 +342,7 @@ class WishListController extends Controller
         ->join('imagefootage_wishlist_products', 'imagefootage_users_wishlist.wishlist_id', '=', 'imagefootage_wishlist_products.wishlist_id')
         ->join('imagefootage_products', 'imagefootage_wishlist_products.product_id', '=', 'imagefootage_products.id')
         ->where('imagefootage_users_wishlist.user_id', '=', $userId)
-        ->select('imagefootage_wishlist_products.product_id','imagefootage_products.product_thumbnail')
+        ->select('imagefootage_wishlist_products.product_path_id','imagefootage_products.product_thumbnail')
         ->get();            
         return json_encode(["status"=>"success",'data'=>$results]);                
     }
