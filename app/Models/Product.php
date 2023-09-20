@@ -288,57 +288,58 @@ class Product extends Model
     }
 
     public function savePond5Image($data, $category_id)
-    {        
+    {
         $eachmedia = $data;
-        foreach($data['items'] as $eachmedia){
-        if (isset($eachmedia['id'])) {
-            $pond_id_withprefix = $eachmedia['id'];
-            if (strlen($eachmedia['id']) < 9) {
-                $add_zero = 9 - (strlen($eachmedia['id']));
-                for ($i = 0; $i < $add_zero; $i++) {
-                    $pond_id_withprefix =  "0" . $pond_id_withprefix;
+        if (!empty($data['items'])) {
+            foreach ($data['items'] as $eachmedia) {
+                if (isset($eachmedia['id'])) {
+                    $pond_id_withprefix = $eachmedia['id'];
+                    if (strlen($eachmedia['id']) < 9) {
+                        $add_zero = 9 - (strlen($eachmedia['id']));
+                        for ($i = 0; $i < $add_zero; $i++) {
+                            $pond_id_withprefix =  "0" . $pond_id_withprefix;
+                        }
+                    }
+                    $media = array(
+                        'product_id'          => "",
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => $category_id,
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_size'        => '',
+                        "product_keywords"    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $eachmedia['type'],
+                        'product_sub_type'    => "Photo",
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '3',
+                        'product_vertical'    => 'Royalty Free',
+                        'updated_at'          => date("Y-m-d H:i:s")
+
+                    );
+                    // print_r($media); die;
+                    $data2 = DB::table('imagefootage_products')
+                        ->where('api_product_id', $eachmedia['id'])
+                        ->get()
+                        ->toArray();
+                    if (count($data2) == 0) {
+                        $flag = $this->get_api_flag('3', 'api_flag');
+                        $key  = $this->randomkey();
+                        DB::table('imagefootage_products')->insert($media);
+                        $id = DB::getPdo()->lastInsertId();
+                        DB::table('imagefootage_products')
+                            ->where('id', '=', $id)
+                            ->update(['product_id' => $flag . $key]);
+                        // echo "Inserted" . $id;
+                        return $flag . $key;
+                    } else {
+                        return $data2[0]->product_id;
+                    }
                 }
             }
-            $media = array(
-                'product_id'          => "",
-                'api_product_id'      => $eachmedia['id'],
-                'product_category'    => $category_id,
-                'product_title'       => $eachmedia['title'],
-                'product_thumbnail'   => $eachmedia['thumbnail'],
-                'product_main_image'  => $eachmedia['watermarkPreview'],
-                'product_description' => $eachmedia['description'],
-                'product_size'        => '',
-                "product_keywords"    => implode(',', $eachmedia['keywords']),
-                'product_status'      => "Active",
-                'product_main_type'   => $eachmedia['type'],
-                'product_sub_type'    => "Photo",
-                'product_added_on'    => date("Y-m-d H:i:s"),
-                'product_web'         => '3',
-                'product_vertical'    => 'Royalty Free',
-                'updated_at'          => date("Y-m-d H:i:s")
-
-            );
-            // print_r($media); die;
-            $data2 = DB::table('imagefootage_products')
-                ->where('api_product_id', $eachmedia['id'])
-                ->get()
-                ->toArray();
-            if (count($data2) == 0) {
-                $flag = $this->get_api_flag('3', 'api_flag');
-                $key  = $this->randomkey();
-                DB::table('imagefootage_products')->insert($media);
-                $id = DB::getPdo()->lastInsertId();
-                DB::table('imagefootage_products')
-                    ->where('id', '=', $id)
-                    ->update(['product_id' => $flag . $key]);
-                // echo "Inserted" . $id;
-                return $flag . $key;
-            } else {
-                return $data2[0]->product_id;
-            }
         }
-        }
-
     }
 
     # savePond5Music
