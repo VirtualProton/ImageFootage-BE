@@ -96,22 +96,20 @@ class ImageApi
             $sort = 'sort: buy;';
         } else {
             $sort = 'sort: rel;';
-        }        
+        }    
         
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
-
         foreach($getFilters as $getFilterName => $getFilterValue){            
             
             if(!empty($getFilterValue)){                
-                
                 $filterData = DB::table('imagefootage_filters')
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
                 ->where('imagefootage_filters.value', $getFilterName)                        
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.id', explode(',', $getFilterValue))
+                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
                 ->get();
-            
+
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
@@ -119,7 +117,6 @@ class ImageApi
         }        
 
         $this->access_key = $this->getAccessKey();
-        
         try {
             $client = new Client(); //GuzzleHttp\Client
             $response = $client->post($this->url . '/search', [

@@ -50,7 +50,7 @@ class MusicApi
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
                 ->where('imagefootage_filters.value', $getFilterName)                        
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.id', explode(',', $getFilterValue))
+                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
                 ->get();
             
                 foreach($filterData as $filter){
