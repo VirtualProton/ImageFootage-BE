@@ -142,6 +142,7 @@ Route::group([
     Route::post('/share-wishlist', 'WishListController@shareWishListCreateLink');
     Route::post('/accept-wishlist-link', 'WishListController@acceptWishlistFolder');
     Route::post('/add-products-to-wishlist', 'WishListController@addProductToWishlist');
+    Route::post('/get-user-wishlist-products', 'WishListController@getUserWishlistData');
     Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
     Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
