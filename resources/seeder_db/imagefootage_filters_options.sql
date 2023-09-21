@@ -1,229 +1,145 @@
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Landscape', 'Landscape', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Vertical', 'Vertical', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Square', 'Square', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Panoramic Horizontal', 'Panoramic Horizontal', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Panoramic Vertical', 'Panoramic Vertical', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', '141 x 94', '141 x 94', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', '148 x 98', '148 x 98', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', '297 x 198', '297 x 198', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', '360 x 240', '360 x 240', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('3', 'With People', 'With People', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('3', 'Without People', 'Without People', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('4', 'Editorial', 'Editorial', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('4', 'Commercial', 'Commercial', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'African', 'African', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'African American', 'African American', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Black', 'Black', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Brazilian', 'Brazilian', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Chinese', 'Chinese', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Caucasian', 'Caucasian', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'East Asian', 'East Asian', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Hispanic', 'Hispanic', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Japanese', 'Japanese', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Middle Eastern', 'Middle Eastern', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Native American', 'Native American', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Pacific Islander', 'Pacific Islander', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'South Asian', 'South Asian', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Southeast Asian', 'Southeast Asian', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Other', 'Other', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('6', '1', '1', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('6', '2', '2', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('6', '3', '3', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('6', '4+', '4+', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
--- //TODO count pending
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Albert Flores', 'Albert Flores', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Annette Black', 'Annette Black', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Arlene McCoy', 'Arlene McCoy', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Bessie Cooper', 'Bessie Cooper', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Brooklyn Simmons', 'Brooklyn Simmons', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Cameron Williamson', 'Cameron Williamson', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Cody Fisher', 'Cody Fisher', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Courtney Henry', 'Courtney Henry', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Darlene Robertson', 'Darlene Robertson', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Darrell Steward', 'Darrell Steward', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Devon Lane', 'Devon Lane', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Dianne Russell', 'Dianne Russell', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Eleanor Pena', 'Eleanor Pena', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Esther Howard', 'Esther Howard', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Floyd Miles', 'Floyd Miles', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Guy Hawkins', 'Guy Hawkins', '16', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', '5K', '5K', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', '4K', '4K', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', 'HD (1080)', 'HD (1080)', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', 'HD (720)', 'HD (720)', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', 'SD', 'SD', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('9', 'Editorial', 'Editorial', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('9', 'Commercial', 'Commercial', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('10', 'With People', 'With People', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('10', 'Without People', 'Without People', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '23.98', '23.98', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '24', '24', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '25', '25', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '29.87', '29.87', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '30', '30', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '50', '50', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '59.94', '59.94', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', '60', '60', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', 'Other', 'Other', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
--- //TODO count pending
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Albert Flores', 'Albert Flores', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Annette Black', 'Annette Black', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Arlene McCoy', 'Arlene McCoy', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Bessie Cooper', 'Bessie Cooper', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Brooklyn Simmons', 'Brooklyn Simmons', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Cameron Williamson', 'Cameron Williamson', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Cody Fisher', 'Cody Fisher', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Courtney Henry', 'Courtney Henry', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Darlene Robertson', 'Darlene Robertson', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Darrell Steward', 'Darrell Steward', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Devon Lane', 'Devon Lane', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Dianne Russell', 'Dianne Russell', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Eleanor Pena', 'Eleanor Pena', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Esther Howard', 'Esther Howard', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Floyd Miles', 'Floyd Miles', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Guy Hawkins', 'Guy Hawkins', '16', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Aerial', 'Aerial', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Alpha Channel', 'Alpha Channel', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Alpha Matte', 'Alpha Matte', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Contains Audio', 'Contains Audio', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Green Screen', 'Green Screen', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Loopable', 'Loopable', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Red Camera', 'Red Camera', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', '360/VR', '360/VR', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Public Domain', 'Public Domain', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('14', 'Image', 'Image', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('14', 'Footage', 'Footage', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('14', 'Both', 'Both', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Landscape', 'Landscape', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Vertical', 'Vertical', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Square', 'Square', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Panoramic Horizontal', 'Panoramic Horizontal', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Panoramic Vertical', 'Panoramic Vertical', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('16', '141 x 94', '141 x 94', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('16', '148 x 98', '148 x 98', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('16', '297 x 198', '297 x 198', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('16', '360 x 240', '360 x 240', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('17', 'With People', 'With People', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('17', 'Without People', 'Without People', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('18', 'Editorial', 'Editorial', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('18', 'Commercial', 'Commercial', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'African', 'African', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'African American', 'African American', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Black', 'Black', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Brazilian', 'Brazilian', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Chinese', 'Chinese', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Caucasian', 'Caucasian', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'East Asian', 'East Asian', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Hispanic', 'Hispanic', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Japanese', 'Japanese', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Middle Eastern', 'Middle Eastern', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Native American', 'Native American', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Pacific Islander', 'Pacific Islander', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'South Asian', 'South Asian', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Southeast Asian', 'Southeast Asian', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Other', 'Other', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('20', '1', '1', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('20', '2', '2', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('20', '3', '3', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('20', '4+', '4+', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
--- //TODO count pending
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Albert Flores', 'Albert Flores', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Annette Black', 'Annette Black', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Arlene McCoy', 'Arlene McCoy', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Bessie Cooper', 'Bessie Cooper', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Brooklyn Simmons', 'Brooklyn Simmons', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Cameron Williamson', 'Cameron Williamson', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Cody Fisher', 'Cody Fisher', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Courtney Henry', 'Courtney Henry', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Darlene Robertson', 'Darlene Robertson', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Darrell Steward', 'Darrell Steward', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Devon Lane', 'Devon Lane', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Dianne Russell', 'Dianne Russell', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Eleanor Pena', 'Eleanor Pena', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Esther Howard', 'Esther Howard', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Floyd Miles', 'Floyd Miles', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Guy Hawkins', 'Guy Hawkins', '16', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('22', '0-70 Slow', '0-70 Slow', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('22', '80-129 Medium', '80-129 Medium', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('22', '130+ Fast', '130+ Fast', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Action', 'Action', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Aggressive', 'Aggressive', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Cinematic', 'Cinematic', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Chill', 'Chill', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Dark', 'Dark', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Funny', 'Funny', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Happy', 'Happy', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Inspirational', 'Inspirational', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Romantic', 'Romantic', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Sad', 'Sad', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Suspense', 'Suspense', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Ambient', 'Ambient', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Orchestral', 'Orchestral', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Dance / EDM', 'Dance / EDM', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Chillout', 'Chillout', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Folk', 'Folk', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Hip Hop/ Rap', 'Hip Hop/ Rap', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Holiday', 'Holiday', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Jazz', 'Jazz', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Kids', 'Kids', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Corporate', 'Corporate', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Video Game', 'Video Game', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Rock', 'Rock', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Reggae', 'Reggae', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'World', 'World', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
--- //TODO count pending
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Albert Flores', 'Albert Flores', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Annette Black', 'Annette Black', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Arlene McCoy', 'Arlene McCoy', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Bessie Cooper', 'Bessie Cooper', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Brooklyn Simmons', 'Brooklyn Simmons', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Cameron Williamson', 'Cameron Williamson', '6', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Cody Fisher', 'Cody Fisher', '7', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Courtney Henry', 'Courtney Henry', '8', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Darlene Robertson', 'Darlene Robertson', '9', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Darrell Steward', 'Darrell Steward', '10', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Devon Lane', 'Devon Lane', '11', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Dianne Russell', 'Dianne Russell', '12', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Eleanor Pena', 'Eleanor Pena', '13', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Esther Howard', 'Esther Howard', '14', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Floyd Miles', 'Floyd Miles', '15', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Guy Hawkins', 'Guy Hawkins', '16', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'M4A', 'M4A', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'WAV', 'WAV', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'FLAC', 'FLAC', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'MP3', 'MP3', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'MP4', 'MP4', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('27', 'Editorial', 'Editorial', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('27', 'Commercial', 'Commercial', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'PremiumBeat', 'PremiumBeat', '1', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'Non P.R.O', 'Non P.R.O', '2', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'leared For Sampling', 'leared For Sampling', '3', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'Free', 'Free', '4', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
-INSERT INTO `imagefootage_filters_options` (`filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'Public Domain', 'Public Domain', '5', 'active', '2023-09-04 13:44:55', '2023-09-04 13:44:55');
+INSERT INTO `imagefootage_filters_options` (`id`, `filter_id`, `option_name`, `value`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Photos', 'photos', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(2, 1, 'Illustrations', 'illustrations', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(3, 1, 'Vectors', 'vectors', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(4, 1, 'AI Images', 'synth', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(5, 2, 'Commercial', 'commercial', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(6, 2, 'Editorial', 'editorial', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(7, 3, 'standard', 'standard', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(8, 3, 'spx', 'spx', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(9, 4, 'PantherMedia', 'panther', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(10, 5, 'low price', '1', 1, 'inactive', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(11, 6, 'minimum 1748 pixel', '1748', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(12, 6, 'minimum 3508 pixel', '3508\r\n', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(13, 6, 'minimum 5600 pixel', '5600\r\n', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(14, 7, 'Horizontal', 'horizontal', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(15, 7, 'Vertical', 'vertical', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(16, 7, 'Square', 'square', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(17, 7, 'Panorama', 'panorama', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(18, 8, 'No people', 'people_0', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(19, 8, '1 Person', 'people_1', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(20, 8, '2 People', 'people_2', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(21, 8, '3 People', 'people_3', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(22, 8, '4 People', 'people_4', 5, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(23, 8, '5 People or more', 'people_5', 6, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(24, 9, 'European / Caucasian', 'e', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(25, 9, 'American', 'xd', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(26, 9, 'Asian/Middle East', 'a', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(27, 9, 'African', 'f', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(28, 9, 'Australian/Oceanian', 'u', 5, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(29, 9, 'Multi-ethnic', 'b', 6, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(30, 9, 'Other', 'x', 7, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(31, 10, 'Babies', 'babies', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(32, 10, 'Kids', 'children', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(33, 10, 'Teenager', 'teenagers', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(34, 10, 'Adult', 'adults', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(35, 10, 'Seniors', 'seniors', 5, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(36, 11, 'Female', 'f', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(37, 11, 'Male', 'm', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(38, 12, 'Animals', '1', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(39, 12, 'Architecture', '2', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(40, 12, 'Food', '4', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(41, 12, 'Entertainment', '7', 4, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(42, 12, 'Graphics', '5', 5, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(43, 12, 'Lifestyle', '8', 6, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(44, 12, 'Nature', '9', 7, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(45, 12, 'People', '11', 8, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(46, 12, 'Business', '3', 9, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(47, 12, 'Symbols', '14', 10, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(48, 12, 'Society', '12', 11, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(49, 12, 'Sports', '13', 12, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(50, 12, 'Technology', '6', 13, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(51, 12, 'Transport', '15', 14, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(52, 12, 'Travel', '16', 15, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(53, 12, 'Objects', '10', 16, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(54, 14, 'small copyspace', 'small', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(55, 14, 'medium copyspace', 'medium', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(56, 14, 'large copyspace', 'large', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(57, 15, 'Isolated object', 'isolated', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(58, 16, 'Hide erotic and violent content', 'adult_content_filter', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(59, 17, 'Good', '6', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(60, 17, 'Very good', '8', 2, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(61, 17, 'Extremely good', '10', 3, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(62, 18, 'Only show media for AI data training', 'datasets_ai_content_filter', 1, 'active', '2023-09-04 08:14:55', '2023-09-04 08:14:55'),
+(63, 19, '<$29', '29', 1, 'active', NULL, NULL),
+(64, 19, '$29 - $49', '29|49', 2, 'active', NULL, NULL),
+(65, 19, '$49 - $79', '49|79', 3, 'active', NULL, NULL),
+(66, 19, '$79 - $99', '79|99', 4, 'active', NULL, NULL),
+(67, 19, '$99+', '99|', 5, 'active', NULL, NULL),
+(68, 20, 'Commercial', '0', 1, 'active', NULL, NULL),
+(69, 20, 'Editorial', '1', 2, 'active', NULL, NULL),
+(70, 21, '5K+', '8K', 1, 'active', NULL, NULL),
+(71, 21, '4K', '4K', 2, 'active', NULL, NULL),
+(72, 21, 'HD(1080)', 'HD1080', 3, 'active', NULL, NULL),
+(73, 21, 'HD(720)', 'HD720', 4, 'active', NULL, NULL),
+(74, 21, '2K', '2K', 5, 'active', NULL, NULL),
+(75, 21, 'SD', 'SD', 6, 'active', NULL, NULL),
+(76, 22, 'News Archival', 'news_archival', 1, 'active', NULL, NULL),
+(77, 22, 'Subscription', 'subscription', 2, 'active', NULL, NULL),
+(78, 23, 'All Exclusive', 'exclusive', 1, 'active', NULL, NULL),
+(79, 23, 'Marquee', 'marquee', 2, 'active', NULL, NULL),
+(80, 24, 'Duration Min', 'duration_min', 1, 'inactive', NULL, NULL),
+(81, 24, 'Duration Max', 'duration_max', 1, 'inactive', NULL, NULL),
+(82, 25, '23.98', '23.98', 1, 'active', NULL, NULL),
+(83, 25, '24', '24', 2, 'active', NULL, NULL),
+(84, 25, '25', '25', 3, 'active', NULL, NULL),
+(85, 25, '29.97', '29.97', 4, 'active', NULL, NULL),
+(86, 25, '30', '30', 5, 'active', NULL, NULL),
+(87, 25, '59.94', '59.94', 6, 'active', NULL, NULL),
+(88, 25, '60', '60', 7, 'active', NULL, NULL),
+(89, 25, '60+', '60+', 8, 'active', NULL, NULL),
+(90, 26, '0', '0', 1, 'active', NULL, NULL),
+(91, 26, '1', '1', 2, 'active', NULL, NULL),
+(92, 26, '2', '2', 3, 'active', NULL, NULL),
+(93, 26, '3+', '3', 4, 'active', NULL, NULL),
+(94, 27, 'Female', '1', 1, 'active', NULL, NULL),
+(95, 27, 'Male', '2', 2, 'active', NULL, NULL),
+(96, 27, 'Female & Male', '4', 3, 'active', NULL, NULL),
+(97, 29, 'Aerial', 'aerial', 1, 'active', NULL, NULL),
+(98, 29, 'Alpha channel', 'alpha_channel', 2, 'active', NULL, NULL),
+(99, 29, 'Alpha Matte', 'alpha_matte', 3, 'active', NULL, NULL),
+(100, 29, 'Contains Audio', 'contains_audio', 4, 'active', NULL, NULL),
+(101, 29, 'Green Screen', 'greenscreen', 5, 'active', NULL, NULL),
+(102, 29, 'Loopable', 'loopable', 6, 'active', NULL, NULL),
+(103, 29, 'RED Camera', 'camera', 7, 'active', NULL, NULL),
+(104, 29, '360/VR', 'misc', 8, 'active', NULL, NULL),
+(105, 29, 'Free', 'free', 9, 'active', NULL, NULL),
+(106, 29, 'Public Domain', 'public_domain', 10, 'active', NULL, NULL),
+(107, 30, 'Price Min', 'price_min', 1, 'active', NULL, NULL),
+(108, 30, 'Price Max', 'price_min', 2, 'active', NULL, NULL),
+(109, 31, 'Duration Min', 'duration_min', 1, 'active', NULL, NULL),
+(110, 31, 'Duration Max', 'duration_max', 2, 'active', NULL, NULL),
+(111, 32, '0 - 79 Slow', 'bpmlt', 1, 'active', NULL, NULL),
+(112, 32, '80 - 129 Medium', 'bpmbetween', 2, 'active', NULL, NULL),
+(113, 32, '130+ Fast', 'bpmgt', 3, 'active', NULL, NULL),
+(114, 33, 'Action', 'action', 1, 'active', NULL, NULL),
+(115, 33, 'Aggressive', 'aggressive', 2, 'active', NULL, NULL),
+(116, 33, 'Cinematic', 'cinematic', 3, 'active', NULL, NULL),
+(117, 33, 'Chill', 'chill', 4, 'active', NULL, NULL),
+(118, 33, 'Dark', 'dark', 5, 'active', NULL, NULL),
+(119, 33, 'Funny', 'funny', 6, 'active', NULL, NULL),
+(120, 33, 'Happy', 'happy', 7, 'active', NULL, NULL),
+(121, 33, 'Inspirational', 'inspirational', 8, 'active', NULL, NULL),
+(122, 33, 'Romantic', 'romantic', 9, 'active', NULL, NULL),
+(123, 33, 'Sad', 'sad', 10, 'active', NULL, NULL),
+(124, 33, 'Suspense', 'suspense', 11, 'active', NULL, NULL),
+(125, 34, 'Ambient', 'ambient', 1, 'active', NULL, NULL),
+(126, 34, 'Orchestral', 'orchestral', 2, 'active', NULL, NULL),
+(127, 34, 'Dance / EDM', 'dance', 3, 'active', NULL, NULL),
+(128, 34, 'Chillout', 'chillout', 4, 'active', NULL, NULL),
+(129, 34, 'Folk', 'folk', 5, 'active', NULL, NULL),
+(130, 34, 'Funk', 'funk', 6, 'active', NULL, NULL),
+(131, 34, 'Hip hop / Rap', 'hiphop', 7, 'active', NULL, NULL),
+(132, 34, 'Holiday', 'holiday', 8, 'active', NULL, NULL),
+(133, 34, 'Jazz', 'jazz', 9, 'active', NULL, NULL),
+(134, 34, 'Kids', 'kids', 10, 'active', NULL, NULL),
+(135, 34, 'Corporate', 'corporate', 11, 'active', NULL, NULL),
+(136, 34, 'Video Game', 'videogame', 12, 'active', NULL, NULL),
+(137, 34, 'Rock', 'rock', 13, 'active', NULL, NULL),
+(138, 34, 'Reggae', 'reggae', 14, 'active', NULL, NULL),
+(139, 34, 'World', 'world', 15, 'active', NULL, NULL),
+(140, 36, 'Premium Beat', 'premiumbeat', 1, 'active', NULL, NULL),
+(141, 36, 'Non P.R.O', 'nopro', 2, 'active', NULL, NULL),
+(142, 36, 'Cleared For Sampling', 'sampling_cleared', 3, 'active', NULL, NULL),
+(143, 36, 'Free', 'free', 4, 'active', NULL, NULL),
+(144, 36, 'Public Domain', 'public_domain', 5, 'active', NULL, NULL);
