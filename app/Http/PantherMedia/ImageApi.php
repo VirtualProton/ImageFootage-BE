@@ -6,8 +6,10 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
-
+use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Arr;
+
 
 class ImageApi
 {
@@ -94,95 +96,27 @@ class ImageApi
             $sort = 'sort: buy;';
         } else {
             $sort = 'sort: rel;';
-        }
-        $product_filter_data = 'people_number:all;';
-        if (isset($getKeyword['product_people']) && !empty($getKeyword['product_people'])) {
-            $peoples = explode(',', $getKeyword['product_people']);
-            $count = count($peoples);
-            $people_filter = $peoples[$count - 1];
-            if ($people_filter == '6') {
-                $product_filter_data = 'people_number:people_0;';
-            } else if ($people_filter == '5') {
-                $product_filter_data = 'people_number:people_any;';
-            } else {
-                $product_filter_data = 'people_number:people_' . $people_filter . ';';
-            }
-        }
-        $gender_filter_data = '';
-        if (isset($getKeyword['product_gender']) && !empty($getKeyword['product_gender'])) {
-            $genders = explode(',', $getKeyword['product_gender']);
-            $count = count($genders);
-            $gender_filter = $genders[$count - 1];
-            if ($gender_filter == '1') {
-                $gender_filter_data = 'people_gender:m;';
-            } else {
-                $gender_filter_data = 'people_gender:f;';
-            }
-        }
-        $ethinicities_filter_data = 'people_ethnicity:all;';
-        if (isset($getKeyword['product_ethinicities']) && !empty($getKeyword['product_ethinicities'])) {
-            $ethinicities = explode(',', $getKeyword['product_ethinicities']);
-            $count = count($ethinicities);
-            $ethinicities_filter = $ethinicities[$count - 1];
-            if ($ethinicities_filter == '2' || $ethinicities_filter == '4') {
-                $ethinicities_filter_data = 'people_ethnicity:f;';
-            } else if ($ethinicities_filter == '8' || $ethinicities_filter == '5') {
-                $ethinicities_filter_data = 'people_ethnicity:e;';
-            } else if ($ethinicities_filter == '7' || $ethinicities_filter == '1') {
-                $ethinicities_filter_data = 'people_ethnicity:a;';
-            } else if ($ethinicities_filter == '3') {
-                $ethinicities_filter_data = 'people_ethnicity:xd;';
-            } else if ($ethinicities_filter == '9') {
-                $ethinicities_filter_data = 'people_ethnicity:e;';
-            }
-        }
-        if (isset($getKeyword['product_imagesizes']) && !empty($getKeyword['product_imagesizes'])) {
-            $imagesizes = explode(',', $getKeyword['product_imagesizes']);
-            $count = count($imagesizes);
-            $imagesize_filter = $imagesizes[$count - 1]; //TODO: $imagesize_filter is not used!
-        }
-        if (isset($getKeyword['product_locations']) && !empty($getKeyword['product_locations'])) {
-            $locations = explode(',', $getKeyword['product_locations']);
-            $count = count($locations);
-            $location_filter = $locations[$count - 1]; //TODO: $location_filter is not used!
-        }
-        $color_filter = '';
-        if (isset($getKeyword['product_colors']) && !empty($getKeyword['product_colors'])) {
-            if (trim($getKeyword['product_colors']) != 'Pick Color') {
-                $color_filter = "color:" . strtoupper(str_replace('#', '', $getKeyword['product_colors'])) . ';';
-            }
-        }
-        $tolerance = '';
-        if (isset($getKeyword['tolerance']) && !empty($getKeyword['tolerance'])) {
-            $tolerance = "color_tolerance:" . $getKeyword['tolerance'] . ';';
-        }
-        if (isset($getKeyword['product_imagetypes']) && !empty($getKeyword['product_imagetypes'])) {
-            $types = explode(',', $getKeyword['product_imagetypes']);
-            $count = count($types);
-            $type_filter = $types[$count - 1]; //TODO: $type_filter is not used!
-        }
-        $orientation_filter_data = 'orientation:all;';
-        if (isset($getKeyword['product_orientation']) && !empty($getKeyword['product_orientation'])) {
-            $orientation = explode(',', $getKeyword['product_orientation']);
-            $count = count($orientation);
-            $orientation_filter = $orientation[$count - 1];
-            if ($orientation_filter == '1') {
-                $orientation_filter_data = 'orientation:vertical;';
-            } else if ($orientation_filter == '2') {
-                $orientation_filter_data = 'orientation:horizontal;';
-            } else if ($orientation_filter == '3') {
-                $orientation_filter_data = 'orientation:square;';
-            } else if ($orientation_filter == '4') {
-                $orientation_filter_data = 'orientation:panorama;';
-            }
-        }
-        $liencence_filter_data = 'license:commercial;';
-        if (isset($getKeyword['product_editorial']) && !empty($getKeyword['product_editorial'])) {
-            $liencence_filter_data = 'license:editorial;';
-        }
+        }    
+        
+        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $filter_mapping = "";
+        foreach($getFilters as $getFilterName => $getFilterValue){            
+            
+            if(!empty($getFilterValue)){                
+                $filterData = DB::table('imagefootage_filters')
+                ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
+                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
+                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
+                ->get();
+
+                foreach($filterData as $filter){
+                    $filter_mapping .= $getFilterName.":".$filter->value.';';
+                }
+            } 
+        }        
 
         $this->access_key = $this->getAccessKey();
-        
         try {
             $client = new Client(); //GuzzleHttp\Client
             $response = $client->post($this->url . '/search', [
@@ -197,12 +131,12 @@ class ImageApi
                     'nonce'        => $this->nonce,
                     'algo'         => $this->algo,
                     'content_type' => 'application/json',
-                    'lang'         => 'en',
-                    'q'            => $serach,
-                    'page'         => $page,
-                    'limit'        => $limit,
-                    'extra_info'   => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
-                    'filters'      => $sort . 'type: photos;' . $product_filter_data . $color_filter . $tolerance . $gender_filter_data . $ethinicities_filter_data . $orientation_filter_data . $liencence_filter_data
+                    'lang' => 'en',
+                    'q' => $serach,
+                    'page' => $page,
+                    'limit' => $limit,
+                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                    'filters' => $sort . 'type: photos;' . $filter_mapping
                 ]
             ]);
 

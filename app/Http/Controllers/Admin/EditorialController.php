@@ -71,14 +71,7 @@ class EditorialController extends Controller
             'status' => 'required',
             'selectedMainImages' => 'required_without_all:main_image_upload',
             'main_image_upload' => 'required_without_all:selectedMainImages|file|mimes:jpeg,png,jpg,gif'
-        ]);
-
-        // Custom validation for selectedImages
-        // $request->validate([
-        //     'selectedImages' => 'required|array|min:1',
-        // ], [
-        //     'selectedImages.required' => 'Please select at least one image from search result.',
-        // ]);
+        ]);        
 
         // Create a new Editorial instance and fill it with the validated data
         $editorial = new Editorial();
@@ -133,14 +126,7 @@ class EditorialController extends Controller
             'type' => 'required',
             'status' => 'required',
             'main_image_upload' => 'file|mimes:jpeg,png'
-        ]);
-
-        // Custom validation for selectedImages
-        // $request->validate([
-        //     'selectedImages' => 'required|array|min:1',
-        // ], [
-        //     'selectedImages.required' => 'Please select at least one image from search result.',
-        // ]);       
+        ]);          
 
         $editorial = Editorial::find($id);
         $editorial->title = $request->input('title');

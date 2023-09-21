@@ -1,35 +1,37 @@
--- image
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'Orientation', 'orientation_filter', 'image', '2', '1', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', 'Resolution', 'resolution_filter', 'image', '2', '2', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('3', 'People', 'people_filter', 'image', '1', '3', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('4', 'Usage', 'usage_filter', 'image', '2', '4', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('5', 'Ethnicity', 'ethnicity_filter', 'image', '2', '5', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('6', 'No of People', 'no_of_people_filter', 'image', '2', '6', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('7', 'Author', 'author_filter', 'image', '1', '7', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-
--- footage
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('8', 'Resolution', 'resolution_filter', 'footage', '2', '1', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('9', 'Usage', 'usage_filter', 'footage', '2', '2', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('10', 'People', 'people_filter', 'footage', '1', '3', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('11', 'FPS', 'fps_filter', 'footage', '2', '4', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('12', 'Author', 'author_filter', 'footage', '1', '5', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('13', 'Additional Filters', 'additional_filter', 'footage', '2', '6', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-
--- editorial
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('14', 'Type', 'type_filter', 'editorial', '2', '1', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('15', 'Orientation', 'orientation_filter', 'editorial', '2', '2', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('16', 'Resolution', 'resolution_filter', 'editorial', '2', '3', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('17', 'People', 'people_filter', 'editorial', '1', '4', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('18', 'Usage', 'usage_filter', 'editorial', '2', '5', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('19', 'Ethnicity', 'ethnicity_filter', 'editorial', '2', '6', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('20', 'No of People', 'no_of_people_filter', 'editorial', '2', '7', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('21', 'Author', 'author_filter', 'editorial', '1', '8', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-
--- music
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('22', 'Tempo', 'tempo_filter', 'music', '2', '1', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('23', 'Mood', 'mood_filter', 'music', '2', '2', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('24', 'Genre', 'genre_filter', 'music', '2', '3', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('25', 'Artist', 'artist_filter', 'editorial', '2', '4', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('26', 'Format', 'format_filter', 'editorial', '2', '5', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('27', 'Usage', 'usage_filter', 'editorial', '2', '6', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
-INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('28', 'Additional Filters', 'additional_filter', 'editorial', '2', '7', 'active', '2023-09-04 13:43:51', '2023-09-04 13:43:51');
+INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`, `default_filter_type`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Type', 'type', 'image', 2, 1, 1, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(2, 'License', 'license', 'image', 2, 1, 2, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(3, 'Collection', 'collection', 'image', 2, 1, 3, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(4, 'Contributor', 'contributor', 'image', 2, 1, 4, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(5, 'Price', 'price', 'image', 2, 1, 5, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(6, 'Size', 'size', 'image', 1, 1, 6, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(7, 'Orientation', 'orientation', 'image', 1, 1, 7, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(8, 'People Number', 'people_number', 'image', 1, 1, 8, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(9, 'People Ethnicity', 'people_ethnicity', 'image', 1, 1, 9, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(10, 'People Age', 'people_age', 'image', 1, 1, 10, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(11, 'People Gender\r\n', 'people_gender\r\n', 'image', 2, 1, 11, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(12, 'Category', 'category', 'image', 1, 1, 12, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(13, 'Author', 'author', 'image', 2, 1, 13, 'inactive', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(14, 'Copyspace', 'copyspace', 'image', 1, 1, 14, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(15, 'Isolated\r\n', 'isolated\r\n', 'image', 1, 1, 15, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(16, 'Adult Content Filter\r\n', 'adult_content_filter\r\n', 'image', 1, 1, 16, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(17, 'Ranking', 'ranking\r\n', 'image', 1, 1, 17, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(18, 'Datasets AI Content Filter\r\n', 'datasets_ai_content_filter\r\n', 'image', 1, 1, 18, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(19, 'Price', 'pricerange', 'footage', 2, 1, 1, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(20, 'Usage', 'editorial', 'footage', 1, 1, 2, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(21, 'Resolution', 'resolutions', 'footage', 2, 1, 3, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(22, 'Collections', 'collection', 'footage', 2, 0, 4, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(23, 'Exclusive Content', 'content', 'footage', 2, 0, 5, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(24, 'Duration', 'duration', 'footage', 2, 1, 6, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(25, 'FPS', 'fps', 'footage', 2, 1, 7, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(26, 'Number of People\r\n', 'people', 'footage', 2, 1, 8, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(27, 'Gender', 'gender', 'footage', 2, 1, 9, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(28, 'Artist', 'artist', 'footage', 1, 1, 10, 'inactive', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(29, 'Additional filters', 'additional_filters', 'footage', 2, 0, 11, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(30, 'Price', 'price', 'music', 2, 0, 1, 'inactive', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(31, 'Duration', 'duration', 'music', 2, 0, 2, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(32, 'Tempo', 'tempo', 'music', 2, 0, 3, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(33, 'Mood', 'mood', 'music', 2, 1, 4, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(34, 'Genre', 'genre', 'music', 2, 1, 5, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(35, 'Artist', 'artist', 'music', 2, 0, 6, 'inactive', '2023-09-04 08:13:51', '2023-09-04 08:13:51'),
+(36, 'Additional filters', 'collection', 'music', 2, 0, 7, 'active', '2023-09-04 08:13:51', '2023-09-04 08:13:51');
