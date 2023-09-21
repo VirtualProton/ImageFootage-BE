@@ -95,7 +95,7 @@ class MediaController extends Controller
                 $musicMedia = new MusicApi();
                 $product_details_data = $musicMedia->getMusicInfo($media_id);
                 if (count($product_details_data) > 0) {
-                    $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                    $imagefootage_id = $this->product->savePond5Music($product_details_data, 0);
                 }
                 $product_details = array($product_details_data);
             } else {

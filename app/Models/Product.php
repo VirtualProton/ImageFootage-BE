@@ -176,8 +176,10 @@ class Product extends Model
             $data = $data->distinct()->get()->toArray();
 
             if (count($data) > 0) {
-                $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
-                $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
+                foreach ($data as $key => $music) {
+                    $data[$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($music['product_title'])));
+                    $data[$key]['api_product_id'] = encrypt($music['api_product_id'], true);
+                }
                 $data = array('code' => 1, 'data' => $data);
             }
         }
