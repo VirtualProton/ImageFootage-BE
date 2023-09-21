@@ -115,7 +115,7 @@ class MediaController extends Controller
                     $b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
                     $downlaod_image = '';
                     if (count($product_details_data) > 0) {
-                        $imagefootage_id = $this->product->savePond5Image($product_details_data, 0);
+                        $imagefootage_id = $this->product->savePond5singleImage($product_details_data, 0);
                     }
                 }
                 $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);
@@ -192,7 +192,7 @@ class MediaController extends Controller
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
                 if ($perpack->package_plan == 1) { // For subscriprion type package
-                    // Check subscription is monthly or not 
+                    // Check subscription is monthly or not
 
                     if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
 

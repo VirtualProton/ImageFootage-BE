@@ -49,13 +49,13 @@ class SearchController extends Controller
                 $keyword['pagenumber']= $getKeyword['pagenumber'];
             }
                $all_products =$this->getFootageData($keyword,$getKeyword);
-              
+
         }else if($keyword['productType']['id']=='3'){
             if(isset($getKeyword['pagenumber'])){
                 $keyword['pagenumber']= $getKeyword['pagenumber'];
             }
                $all_products =$this->getMusicData($keyword,$getKeyword);
-              
+
         } else if ($keyword['productType']['id'] == '4') {
             $all_products = $this->getEditorialData($keyword, $getKeyword);
         } else{
@@ -156,6 +156,8 @@ class SearchController extends Controller
                             'product_added_on' => date("Y-m-d H:i:s"),
                             'product_web' => '3',
                             'product_keywords' => $eachmedia['keywords'],
+                            'product_price' => $eachmedia['versions'][0]['price'],
+                            'product_label' => $eachmedia['versions'][0]['label']
                         );
                     }
                     array_push($all_products, $media);
@@ -178,7 +180,7 @@ class SearchController extends Controller
                 return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
             }
         }
-        if($flag=='0'){ 
+        if($flag=='0'){
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             if (count($pantharmediaData) > 0) {
@@ -295,7 +297,7 @@ class SearchController extends Controller
         $all_products =[];
         $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
-        
+
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
@@ -343,13 +345,13 @@ class SearchController extends Controller
         $product = new Product();
         $all_products =[];
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
-        
+
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
                 return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
             }
-        } else { 
+        } else {
             $musicMedia = new MusicApi();
             $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
             if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
@@ -403,7 +405,7 @@ class SearchController extends Controller
                 $keyword = trim($keyword);
                 if($keyword != "") {
                     $query->where("name", "like", "%$keyword%");
-                } 
+                }
             })->get()->toArray();
             return response()->json(["status"=> true, "data"=> $products]);
         } catch (\Throwable $th) {
@@ -418,12 +420,12 @@ class SearchController extends Controller
                 $keyword = trim($keyword);
                 if($keyword != "") {
                     $query->where("name", "like", "%$keyword%");
-                } 
+                }
             })->orderBy('count', 'desc')->orderBy('id', 'desc')->get()->take(5);
             return response()->json(["status"=> true, "data"=> $result]);
         } catch (\Throwable $th) {
             return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
     }
-    
+
 }
