@@ -399,7 +399,7 @@ class AuthController extends Controller
         ];
         $validator = \Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return response()->json(['status' => false, 'message' => $validator->errors()], 200);
+            return response()->json(['status' => false, 'message' => $validator->errors()->first()], 200);
         }
         $checkEmail = User::where('email', '=', $request->input('email'))->count();
         $checkMobile = User::where('mobile', '=', $request->input('email'))->count();
