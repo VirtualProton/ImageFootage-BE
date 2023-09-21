@@ -68,7 +68,7 @@ class MediaController extends Controller
             // insert watermark at bottom-right corner with 10px offset
             //$downlaod_image1 = $img->insert(public_path('images/logoimage_new.png'), 'top-left', intval($left / 2), intval($height / 2));
             $time = time();
-            $img->save(public_path('images/dump' . $time . '.jpg'));
+            $img->save(public_path('images/dump/' . $time . '.jpg'));
             $img->encode('jpg');
             $type = 'jpg';
             // $downlaod_image = '';
