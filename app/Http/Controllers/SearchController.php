@@ -41,7 +41,7 @@ class SearchController extends Controller
         $keyword = array();
         $keyword['search'] = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
         $keyword['productType']['id']= $getKeyword['productType'];
-
+        $keyword['limit'] = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
         if($keyword['productType']['id']=='1'){
            $all_products = $this->getImagesData($keyword,$getKeyword);
         }else if($keyword['productType']['id']=='2'){
