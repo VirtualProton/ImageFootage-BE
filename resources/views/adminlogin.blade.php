@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><img src="{{asset('images/logo.png')}}"></a>
+    <a href="../../index2.html"><img src="{{asset('images/new-design-logo.png')}}"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -41,7 +41,7 @@
      {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
 @endif
 </span>
-    <form action="{{ url('admin/authenticate') }}" method="post">
+    <form action="{{ generate_custom_url('admin/authenticate') }}" method="post">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email" value="{{old('email')}}">

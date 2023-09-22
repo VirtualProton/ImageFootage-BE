@@ -27,7 +27,7 @@
                       </a>
                     </li>
                     <li class="@if($active_tab=="tab2") active @endif">
-                      <a href="#posts" role="tab" data-toggle="tab" onclick="activeSubscriptionTab()">
+                      <a href="#posts" role="tab" data-toggle="tab" onclick="loadFirstTab()">
                         <i class="fa fa-user"></i> Sale
                       </a>
                     </li>
@@ -109,6 +109,11 @@
                       <div class="box-body">
                         <div class="tabs">
                           <ul class="nav nav-tabs">
+                            <li class="@if($active_tab=="active_plans") active @endif">
+                              <a href="#active_plans_invoices" role="tab" data-toggle="tab">
+                                <i class="fa fa-user"></i> Current Active Plans
+                              </a>
+                            </li>
                             <li class="@if($active_tab=="subscription_tab") active @endif">
                               <a href="#subscription_invoices" role="tab" data-toggle="tab">
                                 <i class="fa fa-user"></i> Subscription Plan
@@ -127,11 +132,6 @@
                             <li class="@if($active_tab=="others_tab") active @endif">
                               <a href="#other_invoices" role="tab" data-toggle="tab">
                                 <i class="fa fa-user"></i> Others
-                              </a>
-                            </li>
-                            <li class="@if($active_tab=="active_plans") active @endif">
-                              <a href="#active_plans" role="tab" data-toggle="tab">
-                                <i class="fa fa-user"></i> Current Active Plans
                               </a>
                             </li>
                           </ul>
@@ -220,19 +220,22 @@
                                     @if(count($account_subscriptions_invoices) > 0)
                                       @foreach($account_subscriptions_invoices as $k=>$invioces)
                                       <tr role="row" class="odd">
-                                      <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
+                                      <td>{{(($account_subscriptions_invoices->currentPage()-1)*10)+$k+1}}</td>
 
                                       <td>
                                           @if($invioces->invoice_url)
-                                            <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                            <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                           @else
-                                            IN{{$invioces->invoice_name}}
+                                          {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
                                           @endif
                                       </td>
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -257,7 +260,7 @@
                                         <?php } ?>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -322,11 +325,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        @if($quotations->invoice_type == 3)
-                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        @else
                                         <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        @endif
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -368,18 +367,21 @@
                                     @if(count($account_download_pack_invoices) > 0)
                                       @foreach($account_download_pack_invoices as $k=>$invioces)
                                       <tr role="row" class="odd">
-                                      <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
+                                      <td>{{(($account_download_pack_invoices->currentPage()-1)*10)+$k+1}}</td>
                                       <td>
                                           @if($invioces->invoice_url)
-                                            <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                            <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                           @else
-                                            IN{{$invioces->invoice_name}}
+                                          {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
                                           @endif
                                       </td>
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -402,7 +404,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -466,11 +468,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        @if($quotations->invoice_type == 3)
                                         <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        @else
-                                        <a  href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice"  data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                        @endif
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -511,18 +509,21 @@
                                     @if(count($account_custom_invoices) > 0)
                                       @foreach($account_custom_invoices as $k=>$invioces)
                                       <tr role="row" class="odd">
-                                      <td>{{(($account_custom_quotations->currentPage()-1)*10)+$k+1}}</td>
+                                      <td>{{(($account_custom_invoices->currentPage()-1)*10)+$k+1}}</td>
                                       <td>
                                           @if($invioces->invoice_url)
-                                            <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                            <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                           @else
-                                            IN{{$invioces->invoice_name}}
+                                          {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
                                           @endif
                                       </td>
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -545,7 +546,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -650,18 +651,21 @@
                                     @if(count($account_custom_invoices2) > 0)
                                       @foreach($account_custom_invoices2 as $k=>$invioces)
                                       <tr role="row" class="odd">
-                                      <td>{{(($account_custom_quotations2->currentPage()-1)*10)+$k+1}}</td>
+                                      <td>{{(($account_custom_invoices2->currentPage()-1)*10)+$k+1}}</td>
                                       <td>
                                           @if($invioces->invoice_url)
-                                            <a href="{{$invioces->invoice_url}}" target="_blank">IN{{$invioces->invoice_name}}</a>
+                                            <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                           @else
-                                            IN{{$invioces->invoice_name}}
+                                          {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
                                           @endif
                                       </td>
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method}}</td>
+                                      <td>{{$invioces->payment_method == 'chq' 
+                                        ? 'Terms Granted' : 
+                                          ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
+                                        }}</td>
                                       <td>
                                         <?php if($invioces->status =='0'){
                                               echo "Pending";
@@ -684,7 +688,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -705,7 +709,7 @@
                               </div>
                             </div>
 
-                            <div class="tab-pane fade @if($active_tab=="active_plans") in active @endif" id="active_plans">
+                            <div class="tab-pane fade @if($active_tab=="active_plans") in active @endif" id="active_plans_invoices">
                               <div class="box-body">
                                   <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Subscription Plans</h4>
                                   @if(!empty($data['active_subscription_plans']))
@@ -786,6 +790,8 @@
                                     </tbody>
                                   </table>
                                   @endif
+                                  @include('admin.account.add-comment', ['tab' => 'plan'])
+                                  @include('admin.account.comment')
                               </div>
                             </div>
 
@@ -905,6 +911,20 @@
                         </select></p>
                         </div>
                     </div>
+                    <div class="form-group row" ng-show="payment_method=='chq'">
+                          <label for="" class="col-md-6">How many days : </label>
+                          <div class="col-md-6">
+                              <p>
+                                <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                                  <option value="">Select Days</option>
+                                  <option value="7">7 Days</option>
+                                  <option value="15">15 Days</option>
+                                  <option value="30">30 Days</option>
+                                  <option value="45">45 Days</option>
+                                </select>
+                              </p>
+                          </div>
+                      </div>
                     <div class="form-group row">
                         <label for="" class="col-md-6">Pan No. :</label>
                         <div class="col-md-6">
@@ -1011,16 +1031,17 @@
                         </div>
                     </div>
                     </div>
+                    <div class="col-sm-12">
+                      <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                    </div>
                     </div>
                   </div>
-                  <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
                   </div>
                 </div>
               </div>
-              <!-- /.modal-content -->
             </div>
           </div>
           <div class="modal invoice-modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
@@ -1037,7 +1058,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Trasaction Id :</label>
                           <div class="col-md-6">
-                              <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
+                            <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1067,7 +1088,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Subtotal :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
+                            <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1079,13 +1100,13 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Tax :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                            <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">Total :</label>
                           <div class="col-md-6">
-                              <p>{{isset($quotations) ? $quotations->total : ''}}</p>
+                            <p>{{isset($quotations) ? $quotations->total : ''}}</p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1298,12 +1319,27 @@
       $(".tab-pane").removeClass("active in");
       $("#" + activeTab).addClass("active in");
       $('a[href="#' + activeTab + '"]').tab('show');
-      $('a[href="#' + nestedActiveTabId + 'invoices"]').tab('show');
+      if(nestedActiveTab == 'active_plans') {
+        loadFirstTab();
+      } else {
+        $('a[href="#' + nestedActiveTabId + 'invoices"]').tab('show');
+      }
+    }
+
+    // pagination
+    if(url.indexOf('?sq') > -1 || url.indexOf('?si') > -1) {
+      $('a[href="#subscription_invoices"]').tab('show');
+    } else if(url.indexOf('?dq') > -1 || url.indexOf('?di') > -1) {
+      $('a[href="#download_invoices"]').tab('show');
+    } else if(url.indexOf('?cq') > -1 || url.indexOf('?ci') > -1) {
+      $('a[href="#custom_invoices"]').tab('show');
+    } else if(url.indexOf('?oq') > -1 || url.indexOf('?oi') > -1) {
+      $('a[href="#other_invoices"]').tab('show');
     }
   });
 
-  function activeSubscriptionTab() {
-    $('a[href="#subscription_invoices"]').tab('show');
+  function loadFirstTab() {
+    $('a[href="#active_plans_invoices"]').tab('show');
   }
 
   function changestatus(statust, quotation_id, oldstatus) {

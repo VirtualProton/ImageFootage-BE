@@ -321,7 +321,7 @@ class PaymentController extends Controller
 
             $this->invoiceWithemail($orders,$params['txnid']);
             Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-            return redirect($this->baseurl.'/orderConfirmation/'.$params['txnid']);
+            return redirect($this->baseurl.'/profile');
         } else {
             return redirect($this->baseurl.'/orderFailed/'.$params['txnid']);
         }
@@ -354,7 +354,7 @@ class PaymentController extends Controller
            Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
                   ->update(['order_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
                  Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-            $url = $this->baseurl.'/orderConfirmation/'.$orders[0]['txn_id'];
+            $url = $this->baseurl.'/profile';
        }else{
             $url = $this->baseurl.'/orderFailed/'.$orders[0]['txn_id'];
         }
@@ -592,7 +592,7 @@ class PaymentController extends Controller
         }])->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
         if($success===true){
             $this->invoiceWithemailPlan($orders,$orders['transaction_id']);
-            $url = $this->baseurl.'/user-profile';
+            $url = $this->baseurl.'/myplan';
         }else{
             $url = $this->baseurl.'/planFailed/'.$orders['transaction_id'];
         }

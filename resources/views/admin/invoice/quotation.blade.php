@@ -10,7 +10,7 @@
          @include('admin.partials.message')
          <div class="box-body">
             <div class="panel-body">
-               <form role="form" name="downloadOnBehalf" method="post" class="" enctype="multipart/form-data" ng-submit="submitQuotation()" novalidate>
+               <form role="form" name="downloadOnBehalf" method="post" class="" enctype="multipart/form-data" ng-submit="submitQuotation()" id="quotationForm" novalidate>
                   <div class="row">
                      <div class="">
                         <div class="row">
@@ -99,8 +99,9 @@
                                     </div>
                                  </div>
                                  <div class="form-group" ng-show="product.type=='Image'">
-                                    <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
-                                    <!-- <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span> -->
+                                    <label>OR Upload New Image</label>
+                                    <span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
+                                    <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" style="margin-top: 6px;" /></span>
                                  </div>
                                  <div class="form-group" ng-show="product.type =='Footage'">
                                     <span ng-show="product.image">
@@ -127,7 +128,7 @@
                                        <option value="Small">Web</option>
                                        <option value="Medium">Medium</option>
                                        <option value="X-Large">XX-Large</option>
-                                       <option value="Custom">Custom</option>
+                                       <option value="Custom" ng-show="product.type == 'Image' && quotation_type_var != 'custom'">Custom</option>
                                     </select>
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
@@ -267,21 +268,7 @@
                         <div class="row">
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
-                                 <div class="form-group" ng-if="plan_type_var == 'monthly'">
-                                    <label for="sub_total">Plan Name</label>
-                                    <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-                                       <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
-                                    </select>
-                                 </div>
-                                 <div class="form-group" ng-if="plan_type_var == 'quarterly'">
-                                    <label for="sub_total">Plan Name</label>
-                                    <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-                                       <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
-                                    </select>
-                                 </div>
-                                 <div class="form-group" ng-if="plan_type_var == 'half_yearly'">
+                                 <div class="form-group" ng-if="plan_type_var != 'annual'">
                                     <label for="sub_total">Plan Name</label>
                                     <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
                                        <option value="" selected="">--Select a plan--</option>
@@ -587,26 +574,9 @@
                   $('#span-message').removeAttr('class');
                   $('#span-message').text(result.message);
                   $('#span-message').addClass('text-success');
-                  // $('#btn-promocode').hide();
-                  // $("#promo_code").prop('disabled', true);
 
                   let discountValue = result.data.discount;
                   let discountType = result.data.type;
-
-                  // let currentAmount = $('#total_amount').val();
-
-                  // let grossAmount = 0;
-                  // let discount    = 0;
-                  // if (discountType === 'flat') {
-                  //    // discount = discountValue;
-                  //    // grossAmount = currentAmount - discount;
-                  //    angular.element($("#btn-promocode")).scope().checkThetax(true, 'GST', {'type' : 'flat', 'discount' : discountValue});
-                  //    angular.element('#btn-promocode').scope().$apply();
-                  // }
-                  // if (discountType === 'percentage') {
-                  //    discount = (currentAmount*discountValue)/100;
-                  //    grossAmount = currentAmount - discount;
-                  // }
                   console.log(angular.element($("#btn-promocode")).scope().tax);
                   let gsttax = angular.element($("#btn-promocode")).scope().tax;
                   let isGST = gsttax > 0 ? true : false;
@@ -615,22 +585,11 @@
                      'discount': discountValue
                   });
                   angular.element('#btn-promocode').scope().$apply();
-
-                  // $('#total_amount').val(grossAmount);
                   $('#promo_code_id').val(result.data.id);
-                  // $('#total_amount').trigger('input');
-                  // let messsage = currentAmount+" - "+ discount + " = " + grossAmount;
-                  // $('#amount-caption').text(messsage);
-
                }
             }
          });
       });
-
-
-      // $('.licence_type').each(function() {
-      //    CKEDITOR.replace($(this).prop('id'));
-      // });
 
       $(document).on("click", "#btn-promocode-sub", function(e) {
 

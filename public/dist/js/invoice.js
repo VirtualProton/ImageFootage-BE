@@ -69,6 +69,8 @@ app.controller(
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.quotation.product.indexOf(product);
+                let productIndexId = index + 1;
+                $("#file" + productIndexId).val('');
                 $http({
                     method: "GET",
                     url:
@@ -98,24 +100,41 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
-                                $scope.prices[index] =
-                                    response.data[0].clip_data.versions;
+                                if(response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                    $scope.prices[index] =
+                                        response.data[0].clip_data.versions;
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                    $scope.prices[index] =
+                                        response.data[0].versions;
+                                }
                                 //  console.log($scope.prices[index]);
                                 //$scope.quotation.product[index] = response.data[0];
                             }
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
+                        $("#product_1").val("");
+                        alert("image not found");
                         $("#loading").hide();
                     }
                 );
@@ -490,6 +509,7 @@ app.controller(
                     GSTS: $scope.GSTD,
                     email: $("#download_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);
@@ -546,6 +566,7 @@ app.controller(
                     GSTS: $scope.GSTS,
                     email: $("#subsc_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
                 };
                 // console.log(sendData);
                 //  console.log($scope.quotation);
@@ -651,20 +672,22 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    setTimeout(
-                        function (index) {
-                            CKEDITOR.replace("licence_type-" + index, {
-                                readOnly: false,
-                            });
-                            CKEDITOR.instances[
-                                "licence_type-" + (index + 1)
-                            ].setData(
-                                $scope.quotation.product[index].licence_type
-                            );
-                        },
-                        0,
-                        i
-                    );
+                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                        setTimeout(
+                            function (index) {
+                                CKEDITOR.replace("licence_type-" + index, {
+                                    readOnly: false,
+                                });
+                                CKEDITOR.instances[
+                                    "licence_type-" + (index + 1)
+                                ].setData(
+                                    $scope.quotation.product[index].licence_type
+                                );
+                            },
+                            0,
+                            i
+                        );
+                    }
                 }
             }
         };
@@ -875,6 +898,11 @@ app.controller(
         $scope.tax = 0;
         $scope.is_gst_applied = false;
         $scope.total_saved = 0;
+        $scope.prod_type = "";
+        $scope.plan_type = "";
+        $scope.plansData = [];
+        $scope.selected_plan = "";
+        $scope.subsc_expiry_time = "";
         var path = window.location.pathname.split("/").pop();
         $("#loading").show();
         $http({
@@ -899,6 +927,27 @@ app.controller(
                 $scope.expiry_time = response.expiry_invoices;
                 $scope.flag = response.flag;
                 $scope.quotation.product = [];
+                $scope.prod_type = response.user_package?.package_type;
+                if(response.invoice_type == 1){
+                    // subscription
+                    $scope.subsc_expiry_time = response.expiry_invoices;
+                    $scope.subscriptionprice = response.total - response.tax;
+                    $scope.subsc_tax = response.tax;
+                    $scope.subsc_total = response.total;
+                    $scope.GSTS = $scope.subsc_tax > 0;
+                } else if (response.invoice_type == 2) {
+                    // download
+                    $scope.download_expiry = response.expiry_invoices;
+                    $scope.downloadprice = response.total - response.tax;
+                    $scope.taxdownload = response.tax;
+                    $scope.total_download = response.total;
+                    $scope.GSTS = $scope.taxdownload > 0;
+                } else {
+                    // custom
+                    $scope.expiry_time = response.expiry_invoices;
+                    //other
+                    $scope.end_client = response.end_client;
+                }
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
                 angular.forEach(tax_selected, function (value, key) {
@@ -917,17 +966,91 @@ app.controller(
                         licence_type: value.licence_type,
                     };
                     $scope.quotation.product.push(obj);
-                    setTimeout(function () {
-                        CKEDITOR.replace(
-                            "licence_type-" + $scope.quotation.product.length
-                        );
-                    }, 0);
+                    if(value.product_type == 'right_managed'){
+                        setTimeout(function () {
+                            CKEDITOR.replace(
+                                "licence_type-" + $scope.quotation.product.length
+                            );
+                        }, 100);
+                    }
                 });
+                if(response.user_package){
+                    get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly);
+                    get_plan_data(response.user_package.package_id);
+                }
             },
             function (error) {
                 $("#loading").hide();
             }
         );
+
+        $scope.edit_quotation_type_set = function (type) {
+            $scope.quotation_type = type;
+            if(type == 3 ){
+                $scope.addProduct();
+            }
+        };
+        $scope.edit_prod_type_set = function (type) {
+            $scope.prod_type = type;
+        };
+        $scope.edit_plan_type_select = function (value) {
+            $scope.plan_type = value;
+            $scope.plansData = []; // on change set options null
+            $scope.subscriptionprice = ""; // Reset sub total
+            $scope.subsc_total = ""; // Reset total
+            $scope.subsc_tax = ""; // Reset tax
+            $scope.GSTS = false; // Reset gst checkbox
+        };
+        $scope.getPlans = function () {
+            $scope.plansData = [];
+            $("#loading").show();
+            get_plan_data();
+            $("#loading").hide();
+        };
+        /* Call to get quotation_type name for subscription and download only */
+        function get_plan_data(get_package_id = ''){
+            $http({
+                method: "POST",
+                url: api_path + "plans",
+                data: {
+                    quotation_type: $scope.quotation_type == 2 ? "download" : 'subscription',
+                    prod_type: $scope.prod_type == "Image" ? 'img' : ($scope.prod_type == 'Footage' ? 'foot' : ''),
+                    product_dur: $scope.quotation_type == 1 ? $scope.plan_type : "",
+                },
+            }).then(
+                function (response) {
+                    if (response.data.status == "success") {
+                        $scope.plansData = response.data.data;
+                        if(get_package_id){
+                            $scope.selectedPlanData = $scope.plansData.filter(package => package.package_id == get_package_id);
+                            $scope.selected_sub_plan = get_package_id;
+                        }
+                    }
+                }
+            );
+        }
+        function get_play_type(package_expiry,package_expiry_yearly){
+            if(package_expiry == 1){
+                $scope.plan_type = "monthly";
+            } else if(package_expiry_yearly == 1) {
+                $scope.plan_type = "annual";
+            }
+        }
+        $scope.selectPlanfromlist = function (selectedPlanData, type) {
+            if(selectedPlanData){
+                var plan = $scope.plansData.filter(package => package.package_id == selectedPlanData);
+                $scope.selected_sub_plan = plan[0].package_id;
+                $scope.subsc_tax = ""; // Reset tax
+                $scope.GSTS = false; // Reset gst checkbox
+                if (type == "download") {
+                    $scope.downloadprice = plan[0].package_price;
+                    $scope.total_download = plan[0].package_price;
+                } else {
+                    $scope.subscriptionprice = plan[0].package_price;
+                    $scope.subsc_total = plan[0].package_price;
+                }
+            }
+        };
 
         $scope.addProduct = function () {
             var newProduct = {
@@ -938,6 +1061,8 @@ app.controller(
                 image: "",
                 price: "",
                 licence_type: "",
+                footage: "",
+                type: "Image",
             };
             $scope.quotation.product.push(newProduct);
             setTimeout(function () {
@@ -959,28 +1084,45 @@ app.controller(
             var index = $scope.quotation.product.indexOf(product);
             $http({
                 method: "GET",
-                url: +"product/" + product.name,
+                url:
+                    image_path +
+                    "api/product/" +
+                    product.name +
+                    "?type=" +
+                    product.type,
             }).then(
                 function (response) {
-                    if (
-                        response.status == "200" &&
-                        response.statusText == "OK"
-                    ) {
+                    if (response.status == "200") {
                         $("#loading").hide();
-                        $scope.quotation.product[index].name =
-                            response.data[0].product_code;
-                        $scope.quotation.product[index].id =
-                            response.data[0].id;
-                        if (response.data[0].type == "Royalty Free") {
-                            $scope.quotation.product[index].pro_type =
-                                "royalty_free";
+                        if (product.type == "Image") {
+                            $scope.quotation.product[index].name =
+                                response.data[0].product_code;
+                            $scope.quotation.product[index].id =
+                                response.data[0].id;
+                            if (response.data[0].type == "Royalty Free") {
+                                $scope.quotation.product[index].pro_type =
+                                    "royalty_free";
+                            } else {
+                                $scope.quotation.product[index].pro_type =
+                                    "right_managed";
+                            }
+                            $scope.quotation.product[index].image =
+                                response.data[0].thumbnail_image;
+                            $scope.prices[index] = response.data[0];
                         } else {
-                            $scope.quotation.product[index].pro_type =
-                                "right_managed";
+                            $scope.quotation.product[index].name =
+                                response.data[0].clip_data.id;
+                            $scope.quotation.product[index].id =
+                                response.data[0].clip_data.n;
+                            $scope.quotation.product[index].image =
+                                "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                response.data[2];
+                            $scope.quotation.product[index].footage =
+                                "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                response.data[1];
+                            $scope.prices[index] =
+                                response.data[0].clip_data.versions;
                         }
-                        $scope.quotation.product[index].image =
-                            response.data[0].thumbnail_image;
-                        $scope.prices[index] = response.data[0];
                     }
                 },
                 function (error) {
@@ -1117,8 +1259,83 @@ app.controller(
             }
         };
 
+        $scope.checksubsctax = function (tax_percent, type) {
+            var subtotalvalue = $scope.subscriptionprice;
+            if (tax_percent == true) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.subsc_tax = total;
+            $scope.subsc_total = total + subtotal;
+        };
+
+        $scope.checkTheSubtax = function (tax_percent, type, promo = {}) {
+            var subtotalvalue = $scope.subscriptionprice;
+            if ($scope.subsc_tax > 0) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.subsc_total = total + subtotal;
+
+            if (promo.type == "flat") {
+                $scope.subsc_total = total + subtotal - promo.discount;
+                console.log("flat" ,total, subtotal, promo.discount)
+            }
+
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.subsc_total = total + subtotal - discount;
+                console.log("percentage" ,total, subtotal, promo.discount)
+            }
+        };
+
+        $scope.checkDownloadtax = function (tax_percent, type) {
+            var subtotalvalue = $scope.downloadprice;
+            if (tax_percent == true) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.taxdownload = total;
+            $scope.total_download = total + subtotal;
+        };
+
+        $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
+            var subtotalvalue = $scope.downloadprice;
+            if ($scope.taxdownload > 0) {
+                if (type == "GST") {
+                    total = (subtotalvalue * gst_value) / 100;
+                }
+            } else {
+                total = 0;
+            }
+            subtotal = Number(subtotalvalue);
+            total = Number(total);
+            $scope.taxdownload = total;
+            if (promo.type == "flat") {
+                $scope.total_download = total + subtotal - promo.discount;
+            }
+            if (promo.type == "percentage") {
+                discount = ((total + subtotal) * promo.discount) / 100;
+                $scope.total_download = total + subtotal - discount;
+            }
+        };
+
         $scope.submitQuotation = function () {
-            //  console.log($scope.quotation);
             $scope.quotation.product.map(function (editor, index) {
                 for (var i in CKEDITOR.instances) {
                     if (
@@ -1135,7 +1352,123 @@ app.controller(
                 }
                 return editor;
             });
+            if ($scope.quotation_type == "1") {
+                $scope.submitEditSubscription();
+            } else if ($scope.quotation_type == "2") {
+                $scope.submitEditDownload();
+            } else {
+                $scope.submitEditCustom();
+            }
+        };
+
+        $scope.submitEditSubscription = function () {
+            if (!$scope.selected_sub_plan) {
+                alert("Please select plan");
+                return false;
+            } else if (!$scope.subscriptionprice) {
+                alert("Please enter subtotal");
+                return false;
+            } else if(!$scope.subsc_expiry_time) {
+                alert("Please select expiry period");
+                return false;
+            } else {
+                $("#loading").show();
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type,
+                    plan_id: $scope.selected_sub_plan,
+                    plan_type_var: $scope.plan_type,
+                    expiry_date: $scope.subsc_expiry_time,
+                    tax: $scope.subsc_tax,
+                    total: $scope.subsc_total,
+                    subscription_subtotal: $scope.subscriptionprice,
+                    GSTS: $scope.GSTS,
+                    email: $("#subsc_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                    old_quotation: path,
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveSubscriptionInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
+        };
+
+        $scope.submitEditDownload = function () {
+            if (!$scope.selected_sub_plan) {
+                alert("Please select Plan");
+                return false;
+            } else if (!$scope.downloadprice) {
+                alert("Please enter Subtotal");
+                return false;
+            } else if(!$scope.download_expiry) {
+                alert("Please select expiry period");
+                return false;
+            } else {
+                $("#loading").show();
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type,
+                    plan_id: $scope.selected_sub_plan,
+                    plan_type_var: $scope.plan_type,
+                    expiry_date: $scope.download_expiry,
+                    tax: $scope.taxdownload,
+                    total: $scope.total_download,
+                    subscription_subtotal: $scope.downloadprice,
+                    GSTS: $scope.GSTD,
+                    email: $("#download_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveDownloadInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
+        };
+
+        $scope.submitEditCustom = function () {
+            if(!$scope.expiry_time) {
+                alert("Please select expiry period");
+                return false;
+            }
             $("#loading").show();
+            
             var sendData = {
                 uid: $("#uid").val(),
                 quotation_type: $scope.quotation_type,
@@ -1153,15 +1486,11 @@ app.controller(
                 email: $scope.email,
                 old_quotation: path,
                 image1: $("#file1")[0] ? $("#file1")[0].files[0] : "",
-                flag: "0",
+                flag: $scope.flag ?? "0",
                 promo_code_id: $("#promo_code_id").val(),
+                end_client: $scope.end_client,
             };
-
-            //   console.log($scope.quotation);
             var fd = new FormData();
-            // angular.forEach($scope.quotation[0],function(file){
-            //     fd.append('file',file);
-            // });
             $http({
                 method: "POST",
                 url: api_path + "saveInvoice",
@@ -1177,16 +1506,6 @@ app.controller(
                     }
                     window.location =
                         api_path + "users/invoices/" + $("#uid").val();
-                    // $scope.quotation.product[index].name = response.data[0].product_code;
-                    // $scope.quotation.product[index].id = response.data[0].id;
-                    // if(response.data[0].type =="Royalty Free"){
-                    //     $scope.quotation.product[index].pro_type = "royalty_free";
-                    // }else{
-                    //     $scope.quotation.product[index].pro_type = "right_managed";
-                    // }
-                    // $scope.quotation.product[index].image = response.data[0].thumbnail_image;
-                    // $scope.prices[index] = response.data[0];
-                    //}
                 },
                 function (error) {
                     $("#loading").hide();
@@ -1194,24 +1513,74 @@ app.controller(
             );
         };
 
+        $scope.submitSubscription = function () {
+            if (!$scope.selected_plan) {
+                alert("Please select Plan");
+                return false;
+            } else if (!$scope.subscriptionprice) {
+                alert("Please enter Subtotal");
+                return false;
+            } else {
+                $("#loading").show();
+
+                var sendData = {
+                    uid: $("#uid").val(),
+                    quotation_type: $scope.quotation_type_var,
+                    plan_id: $scope.selected_plan,
+                    plan_type_var: $scope.plan_type_var,
+                    expiry_date: $scope.subsc_expiry_time,
+                    tax: $scope.subsc_tax,
+                    total: $scope.subsc_total,
+                    subscription_subtotal: $scope.subscriptionprice,
+                    GSTS: $scope.GSTS,
+                    email: $("#subsc_email_id").val(),
+                    promo_code_id: $("#promo_code_id").val(),
+                    flag: $("#flag").val(),
+                };
+                var fd = new FormData();
+                $http({
+                    method: "POST",
+                    url: base_url + "saveSubscriptionInvoice",
+                    data: sendData,
+                    headers: { "Content-Type": undefined },
+                }).then(
+                    function (response) {
+                        $("#loading").hide();
+                        if (response.data.this.statuscode == "1") {
+                            alert(response.data.this.statusdesc);
+                        } else {
+                            alert(response.data.this.statusdesc);
+                        }
+                        window.location =
+                            api_path + "users/invoices/" + $("#uid").val();
+                    },
+                    function (error) {
+                        $("#loading").hide();
+                    }
+                );
+            }
+        };
+
         // CKEditor initialization for all editors
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    setTimeout(
-                        function (index) {
-                            CKEDITOR.replace("licence_type-" + index, {
-                                readOnly: false,
-                            });
-                            CKEDITOR.instances[
-                                "licence_type-" + (index + 1)
-                            ].setData(
-                                $scope.quotation.product[index].licence_type
-                            );
-                        },
-                        0,
-                        i
-                    );
+                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                        setTimeout(
+                            function (index) {
+                                CKEDITOR.replace("licence_type-" + index, {
+                                    readOnly: false,
+                                });
+                                CKEDITOR.instances[
+                                    "licence_type-" + (index + 1)
+                                ].setData(
+                                    $scope.quotation.product[index].licence_type
+                                );
+                            },
+                            0,
+                            i
+                        );
+                    }
                 }
             }
         };
@@ -1224,7 +1593,6 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.create_invoice = function (quotation, user_id) {
-        //  console.log(quotation);
         $scope.quotationObjCus = quotation;
         $scope.quotation_user_cus = user_id;
         //  console.log($scope.quotationObjCus);
@@ -1297,6 +1665,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address: $("#address_invoice").val() ?? "",
                         address2: $("#address2_invoice").val() ?? "",
                         postal_code: $("#postal_code_invoice").val() ?? "",
+                        expiry_due_date: $scope.expiry_due_date ?? "",
                     },
                 }).then(
                     function (result) {
@@ -1354,7 +1723,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         gst: $("#gstNocus").val(),
                         pan: $("#panNocus").val(),
                         phone: $("#phonecus").val(),
-                        expiry_due_date: $("#expiry_due_date").val(),
+                        expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
                         state: $("#state_invoice_cus").val() ?? "",
                         city: $("#city_invoice_cus").val() ?? "",
@@ -1402,7 +1771,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         }
     };
 
-    $scope.open_modal_update_po = function (id = null, job_number = null) {
+    $scope.open_modal_update_po = function (id = null, job_number = 0) {
+        job_number = job_number == 0 ? '' : job_number;
         $(".modal-body #invoice_id").val(id);
         $(".modal-body #po_no").val(job_number);
         $scope.invoice_id = id;
@@ -1446,6 +1816,10 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
+                if(el[0]['id']){ // If upload new file than reset scope product
+                    let productId = el[0]['id'].substring(4);
+                    $("#product_" + productId).val("");
+                }
                 fileReader.readAsDataUrl(file, $scope).then(function (result) {
                     $timeout(function () {
                         $scope.ngModel = result;
@@ -1620,16 +1994,27 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                $scope.quotation.product[index].name =
-                                    response.data[0].clip_data.id;
-                                $scope.quotation.product[index].id =
-                                    response.data[0].clip_data.n;
-                                $scope.quotation.product[index].image =
-                                    "https://p5iconsp.s3-accelerate.amazonaws.com/" +
-                                    response.data[2];
-                                $scope.quotation.product[index].footage =
-                                    "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                    response.data[1];
+                                if (response.data[0].clip_data) {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].clip_data.id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].clip_data.n;
+                                    $scope.quotation.product[index].image =
+                                        "https://p5iconsp.s3-accelerate.amazonaws.com/" +
+                                        response.data[2];
+                                    $scope.quotation.product[index].footage =
+                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
+                                        response.data[1];
+                                } else {
+                                    $scope.quotation.product[index].name =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].id =
+                                        response.data[0].id;
+                                    $scope.quotation.product[index].image =
+                                        response.data[0].thumbnail
+                                    $scope.quotation.product[index].footage =
+                                        response.data[0].thumbnail
+                                }
                                 $scope.prices[index] = [
                                     { size: "4K", pr: "16500" },
                                     { size: "HD (1080)", pr: "11500" },
@@ -1641,6 +2026,8 @@ app.controller(
                         }
                     },
                     function (error) {
+                        $scope.quotation.product[index].image = ''; // Refresh previous display image
+                        $scope.quotation.product[index].value = null;
                         $("#product_1").val("");
                         alert("image not found");
                         $("#loading").hide();

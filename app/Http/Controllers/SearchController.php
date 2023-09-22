@@ -13,9 +13,10 @@ use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
-
+use App\Models\Editorial;
 use CORS;
 use App\Models\TrendingWord;
+use App\Http\Pond5\MusicApi;
 
 class SearchController extends Controller
 {
@@ -38,7 +39,7 @@ class SearchController extends Controller
         ini_set('max_execution_time', 0);
         $getKeyword = $request->all();
         $keyword = array();
-        $keyword['search'] = $getKeyword['search'];
+        $keyword['search'] = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
         $keyword['productType']['id']= $getKeyword['productType'];
 
         if($keyword['productType']['id']=='1'){
@@ -49,12 +50,22 @@ class SearchController extends Controller
             }
                $all_products =$this->getFootageData($keyword,$getKeyword);
               
-        }else{
+        }else if($keyword['productType']['id']=='3'){
+            if(isset($getKeyword['pagenumber'])){
+                $keyword['pagenumber']= $getKeyword['pagenumber'];
+            }
+               $all_products =$this->getMusicData($keyword,$getKeyword);
+              
+        } else if ($keyword['productType']['id'] == '4') {
+            $all_products = $this->getEditorialData($keyword, $getKeyword);
+        } else{
             $all_products =[];
-            $images = $this->getImagesData($keyword);
-            $footage = $this->getFootageData($keyword);
+            $images = $this->getImagesData($keyword,$getKeyword);
+            $footage = $this->getFootageData($keyword,$getKeyword);
+            $music =$this->getMusicData($keyword,$getKeyword);
             array_push($all_products,$images);
             array_push($all_products,$footage);
+            array_push($all_products,$music);
         }
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
@@ -90,8 +101,8 @@ class SearchController extends Controller
                     'api_product_id' => encrypt($pantharmediaData['items']['media']['id']),
                     'product_title' => $pantharmediaData['items']['media']['title'],
                     'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pantharmediaData['items']['media']['title']))),
-                    'product_main_image' => str_replace('http','https',$pantharmediaData['items']['media']['preview_high']),
-                    'product_thumbnail' => str_replace('http','https',$pantharmediaData['items']['media']['preview_no_wm']),
+                    'product_main_image' => $pantharmediaData['items']['media']['preview_high'],
+                    'product_thumbnail' => $pantharmediaData['items']['media']['preview_no_wm'],
                     'product_description' => $pantharmediaData['items']['media']['description'],
                     'product_keywords' => $pantharmediaData['items']['media']['keywords'],
                     'product_main_type' => "Image",
@@ -106,8 +117,8 @@ class SearchController extends Controller
                             'api_product_id' => encrypt($eachmedia['id']),
                             'product_title' => $eachmedia['title'],
                             'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
-                            'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
+                            'product_main_image' => $eachmedia['preview_high'],
+                            'product_thumbnail' => $eachmedia['preview_no_wm'],
                             'product_description' => $eachmedia['description'],
                             'product_keywords' => $eachmedia['keywords'],
                             'product_main_type' => "Image",
@@ -158,7 +169,7 @@ class SearchController extends Controller
     public function getImagesData($keyword,$getKeyword){
         $all_products = [];
         $product = new Product();
-        $all_products = $product->getProducts($keyword);
+        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
@@ -178,8 +189,8 @@ class SearchController extends Controller
                             'api_product_id' => encrypt($eachmedia['id'],true),
                             'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_title' => $eachmedia['title'],
-                            'product_main_image' => str_replace('http','https',$eachmedia['preview_high']),
-                            'product_thumbnail' => str_replace('http','https',$eachmedia['preview_no_wm']),
+                            'product_main_image' => $eachmedia['preview_high'],
+                            'product_thumbnail' => $eachmedia['preview_no_wm'],
                             'product_description' => $eachmedia['description'],
                             'product_keywords' => $eachmedia['keywords'],
                             'product_main_type' => "Image",
@@ -197,10 +208,92 @@ class SearchController extends Controller
           return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30,'tp'=>'2');
     }
 
+    public function getEditorialData($keyword, $getKeyword)
+    {
+
+        if (!empty($keyword['search'])) {
+            $editoriallist = Editorial::where('status', 1)
+                ->where('search_term', $keyword['search'])
+                ->get();
+        } else {
+            $editoriallist = Editorial::where('status', 1)->get();
+        }
+
+        $selectedValues = [];
+        // Retrive all occured products Ids
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+
+            if (is_array($editorialValue)) {
+                $selectedValues = array_merge($selectedValues, $editorialValue);
+            }
+        }
+
+        // Retrive URLs based on Ids
+        $is_filter = 0;
+        $product_ids = [];
+        if(count($getKeyword) > 0) {
+            $requestFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+            $filtersArr = array_values(array_filter($requestFilters));
+            if(count($filtersArr) > 0) {
+                $is_filter = 1;
+            }
+        }
+        if($is_filter == 1) {
+            // Get filtered products
+            $products = Product::select('product_id', 'product_main_image')
+            ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
+            ->join('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
+            ->whereIn('product_id', $selectedValues)
+            ->whereIn('imagefootage_filters_options.id', $filtersArr)
+            ->distinct()->get();
+            // Get filtered product ids array
+            $product_ids = $products->pluck('product_id')->toArray();
+            // if filter apply editorials list result update by above product ids
+            $editoriallist = Editorial::select('*');
+            if(count($product_ids) > 0) {
+                foreach ($product_ids as $product_id) {
+                    // find in json by and condition
+                    $editoriallist = $editoriallist->whereJsonContains('selected_values', [$product_id]);
+                }
+            } else {
+                $editoriallist = $editoriallist->whereJsonContains('selected_values', ['']);
+            }
+            $editoriallist = $editoriallist->get();
+        } else {
+            $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+            $product_ids = $products->pluck('product_id')->toArray();
+        }
+
+        $productUrlMap = [];
+        foreach ($products as $product) {
+            $productUrlMap[$product->product_id] = $product->product_main_image;
+        }
+
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+            if (is_array($editorialValue)) {
+                $updatedEditorialValue = [];
+                foreach ($editorialValue as $productId) {
+                    if (isset($productUrlMap[$productId])) {
+                        $updatedEditorialValue[] = $productUrlMap[$productId];
+                    }
+                }
+                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
+                $editorial['selected_values_count'] = count($updatedEditorialValue);
+            }
+            if (!empty($editorial['main_image_upload'])) {
+                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
+            }
+        }
+        $total = count($editoriallist);
+        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => 15, 'tp' => '2');
+    }
+
     public function getFootageData($keyword,$getKeyword){
         $product = new Product();
         $all_products =[];
-        $all_products = $product->getProducts($keyword);
+        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
         
         if(count($all_products)>0){
@@ -241,6 +334,56 @@ class SearchController extends Controller
                     array_push($all_products, $media);
                 }
                 return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage'],'tp'=>'2');
+            }
+        }
+        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
+    }
+
+    public function getMusicData($keyword,$getKeyword){
+        $product = new Product();
+        $all_products =[];
+        $all_products = $product->getMusicProducts($keyword, $getKeyword);
+        
+        if(count($all_products)>0){
+            if(isset($all_products['code'])&& $all_products['code']=='1'){
+                $all_products = $all_products['data'];
+                return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
+            }
+        } else { 
+            $musicMedia = new MusicApi();
+            $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
+            if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
+                foreach ($pondmusicMediaData['items'] as $eachmedia) {
+                    if (isset($eachmedia['id'])) {
+                        $pond_id_withprefix = $eachmedia['id'];
+                        if (strlen($eachmedia['id']) < 9) {
+                            $add_zero = 9 - (strlen($eachmedia['id']));
+                            for ($i = 0; $i < $add_zero; $i++) {
+                                $pond_id_withprefix = "0" . $pond_id_withprefix;
+                            }
+                        }
+                        $media = array(
+                            'product_id' => $eachmedia['id'],
+                            'api_product_id' => encrypt($eachmedia['id'],true),
+                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_title' => $eachmedia['title'],
+                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
+                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
+                            'product_main_type' => "Music",
+                            'product_added_on' => date("Y-m-d H:i:s"),
+                            'product_web' => '3',
+                            'product_keywords' => implode(',',$eachmedia['keywords']),
+                            'music_sound_bpm' => $eachmedia['soundBpm'] ?? null,
+                            'music_duration' => $eachmedia['versions'][0]['duration'] ?? null,
+                            'music_fileType' => $eachmedia['versions'][0]['fileType'] ?? null,
+                            'music_price' => $eachmedia['versions'][0]['price'] ?? null,
+                            'music_size' => $eachmedia['versions'][0]['size'] ?? null,
+                        );
+                    }
+                    array_push($all_products, $media);
+                }
+                return array('imgfootage'=>$all_products,'total'=>$pondmusicMediaData['totalNumberOfItems'],'perpage'=>$pondmusicMediaData['itemsPerPage'],'tp'=>'2');
             }
         }
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');

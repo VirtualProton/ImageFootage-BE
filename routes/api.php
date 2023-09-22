@@ -13,15 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-// //for api
-
-// //end api
-
 Route::group([
-    'middleware' => ['api','CORS'],
+    'middleware' => ['api', 'CORS'],
 
 ], function () {
 
@@ -32,11 +25,11 @@ Route::group([
     Route::post('verify_mobile', "AuthController@verifyMobile");
     Route::post('resend_otp', "AuthController@resendOtp");
 
-	Route::post('user_contactus', 'UserContactusController@submitContactUs');
-	Route::post('user_cart_list', 'FrontuserController@userCartList');
+    Route::post('user_contactus', 'UserContactusController@submitContactUs');
+    Route::post('user_cart_list', 'FrontuserController@userCartList');
 
-Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
-	Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
+    Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontributorPass');
+    Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
     Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
@@ -44,35 +37,39 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('/products_api', 'ProductController@productListApi');
-    Route::post('search','SearchController@index');
-	Route::post('relatedsearch','SearchController@relatedProductList');
-    Route::get('details/{id}/{origin}/{type}','MediaController@index');
-    Route::get('home','SearchController@home');
+    Route::post('search', 'SearchController@index');
+    Route::post('relatedsearch', 'SearchController@relatedProductList');
+    Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
+    Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
+
+    Route::get('home', 'SearchController@home');
     Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
     Route::get('pond5Upload', 'CronController@pond5Upload');
+    Route::get('pond5-get-music', 'CronController@pond5GetMusic');  # pond5GetMusic
     Route::get('pantherImageUploadCategory', 'CronController@pantherImageUploadCategory');
     Route::get('pond5UploadCategory', 'CronController@pond5UploadCategory');
-	Route::get('get_side_filtes', 'FiltersController@getAllFilters');
+    Route::get('get_side_filtes', 'FiltersController@getAllFilters');
+    Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
     Route::get('getCountyStatesList/{id}', 'UserContactusController@getCountyStatesList');
     Route::get('getStateCityList/{id}', 'UserContactusController@getStateCityList');
     Route::post('atomPayResponse', 'PaymentController@atomPayResponse');
-	Route::post('contributorSignup', 'UserContactusController@contributorSignup');
-	Route::get('packages','PackageApiController@packageList');
+    Route::post('contributorSignup', 'UserContactusController@contributorSignup');
+    Route::get('packages', 'PackageApiController@packageList');
 
-	Route::get('contributorprofile/{id}','UserController@contributorProfile');
+    Route::get('contributorprofile/{id}', 'UserController@contributorProfile');
     Route::post('resendOtp', 'UserContactusController@resendOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
     Route::post('verifyOtp', 'UserContactusController@verifyOtp');
-    Route::get('categoryListApi', 'MediaController@categoryListApi');
+    Route::get('categories', 'MediaController@categoryListApi');
     Route::post('payUResponse', 'PaymentController@payUResponse');
     Route::post('validUser', 'UserController@validUser');
-	Route::post('validMobileUser', 'UserController@validMobileUser');
-	Route::post('requestChangePassword', 'UserController@requestChangePassword');
-	Route::post('socialLogin','AuthController@socialLogin');
-	Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
-	Route::post('userchangepassword', 'UserContactusController@uchangepassword');
+    Route::post('validMobileUser', 'UserController@validMobileUser');
+    Route::post('requestChangePassword', 'UserController@requestChangePassword');
+    Route::post('socialLogin', 'AuthController@socialLogin');
+    Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
+    Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
     Route::post('atomPayInvoiceResponse', 'PaymentController@atomPayInvoiceResponse');
     Route::post('sampledownloadFootage', 'MediaController@sampledownloadFootage');
@@ -90,27 +87,24 @@ Route::post('validate_otp_for_reset', 'FrontuserController@validateOtpForcontrib
     Route::get('/update_products_api/{id}', 'ProductApiController@getUpdateProduct');
     Route::post('/update_products_api', 'ProductApiController@postUpdateProduct');
     Route::get('emailHtml', 'PaymentController@emailHtml');
-    Route::get('categoryWiseData','SearchController@categoryWiseData');
+    Route::get('categoryWiseData', 'SearchController@categoryWiseData');
     Route::get('/product/{id}', 'ProductController@getproduct');
-    Route::get('/search-keywords/get/{keyword?}','SearchController@getKeywords');
+    Route::get('/search-keywords/get/{keyword?}', 'SearchController@getKeywords');
 
-  //  Route::post('/wishlistfolder','WishListController@getWishList');
     Route::post('delete_user_profile/{id}', 'AuthController@delete_user_profile');
 
 
     Route::post('user/delete-account/{user_id}', 'UserController@deleteUserAccount');
 
-    Route::get('/get_trending_keywords/{keyword?}','SearchController@getTrendingKeywords');
-    Route::get('/get_discount_messages/{page?}','Admin\DiscountMessageController@discountMessagesList');
-    Route::get('/get_countries_list','AuthController@getCountriesList');
-    Route::get('/get_states_list/{country_id?}','AuthController@getStatesList');
-    Route::get('/get_cities_list/{state_id?}','AuthController@getCitiesList');
-
-    
+    Route::get('/get_trending_keywords/{keyword?}', 'SearchController@getTrendingKeywords');
+    Route::get('/get_discount_messages/{page?}', 'Admin\DiscountMessageController@discountMessagesList');
+    Route::get('/get_countries_list', 'AuthController@getCountriesList');
+    Route::get('/get_states_list/{country_id?}', 'AuthController@getStatesList');
+    Route::get('/get_cities_list/{state_id?}', 'AuthController@getCitiesList');
 });
 
 Route::group([
-    'middleware' => ['api','CORS'], //'jwt.verify'
+    'middleware' => ['api', 'CORS'], //'jwt.verify'
 
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');
@@ -120,42 +114,54 @@ Route::group([
     Route::post('delete_wishlist_product', 'FrontuserController@deleteWishlistItem');
     Route::post('wishlist', 'FrontuserController@wishlist');
     Route::post('wishlist-app-v2', 'FrontuserController@wishlistAppV2');
-	Route::post('wishlistfs', 'FrontuserController@wishlistfs');
+    Route::post('wishlistfs', 'FrontuserController@wishlistfs');
     Route::post('payment', 'PaymentController@payment');
     Route::post('orderDetails', 'PaymentController@orderDetails');
-    Route::get('userprofile/{id}','UserController@userProfile');
-    Route::post('myplan','UserController@myPlan'); # My Plan
+    Route::get('userprofile/{id}', 'UserController@userProfile');
+    Route::post('get-available-package-list', 'UserController@getAvailablePackageList');
+    Route::post('myplan', 'UserController@myPlan');
     Route::get('userOrders/{id}', 'UserController@userOrders');
-    Route::post('purchase-history', 'UserController@purchaseHistory'); # Purchase History
+    Route::post('purchase-history', 'UserController@purchaseHistory');
+    Route::post('download-history', 'UserController@downloadHistory');
     Route::get('get_subscription_plan', 'PackageApiController@packageList');
     Route::post('paymentPlan', 'PaymentController@paymentPlan');
     Route::post('download', 'MediaController@download');
+    Route::post('multi-download', 'MediaController@multipleDownload');
+    Route::post('re-download', 'MediaController@reDownload');
     Route::post('downloadindi', 'MediaController@downloadindi');
-    Route::post('getuseraddress','UserController@getUserAddress');
-    Route::post('update_profile','UserController@update_profile');
-    Route::post('callback_download','MediaController@callback_download');
+    Route::post('getuseraddress', 'UserController@getUserAddress');
+    Route::post('update_profile', 'UserController@update_profile');
+    Route::post('callback_download', 'MediaController@callback_download');
 
-    Route::get('getIpAddress','FrontuserController@getIpAddress');
-    Route::get('getLocationDetails','FrontuserController@ip_details');
-    Route::get('getCurrencies','FrontuserController@getCurrencies');
+    Route::get('getIpAddress', 'FrontuserController@getIpAddress');
+    Route::get('getLocationDetails', 'FrontuserController@ip_details');
+    Route::get('getCurrencies', 'FrontuserController@getCurrencies');
     Route::post('/getCustomPage/{slug}', 'StaticController@getCustomPage');
 
     # Wishlist
-    Route::post('/share-wishlist','WishListController@shareWishListCreateLink');
-    Route::post('/accept-wishlist-link','WishListController@acceptWishlistFolder');
+    Route::post('/share-wishlist', 'WishListController@shareWishListCreateLink');
+    Route::post('/accept-wishlist-link', 'WishListController@acceptWishlistFolder');
+    Route::post('/add-products-to-wishlist', 'WishListController@addProductToWishlist');
+    Route::post('/get-user-wishlist-products', 'WishListController@getUserWishlistData');
+    Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
+    Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
+    Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
 });
 
 
 /**For new updated designs modules */
 
-Route::group(['prefix' => 'v2'], function(){
+Route::group(['prefix' => 'v2'], function () {
     Route::group([
-        'middleware' => ['api','CORS'],
+        'middleware' => ['api', 'CORS'],
 
     ], function () {
         Route::post('signup-v2', 'AuthController@signupV2');
         Route::post('login-v2', 'AuthController@loginV2');
         Route::get('packages-v2', 'PackageApiController@packageListv2');
+        Route::get('editorials-v2', 'EditorialController@editorialListv2');
+        Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
+        Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
     });
 });
 

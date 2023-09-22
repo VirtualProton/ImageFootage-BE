@@ -6,3 +6,13 @@ function jsonResponse($status, $message, $statusCode = 200) {
         'message' => $message,
     ], $statusCode);
 }
+
+function generate_custom_url($path) {
+    $environment = app()->environment();
+
+    if (config('urlconfig.secure.' . $environment)) {
+        return secure_url($path);
+    }
+
+    return url($path);
+}

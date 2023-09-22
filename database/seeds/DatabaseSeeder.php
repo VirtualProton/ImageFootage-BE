@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ImagefootageAdminSeeder::class,
             CurrencyConvertesSeeder::class,
             ImagefootageAccountsSeeder::class,
+            ImageFootageApiSeeder::class,
             ImagefootageModulesSeeder::class,
             ImagefootagePackagesSeeder::class,
             ContentsSeeder::class,
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
             PlansSeeder::class,
             TaxesSeeder::class,
             IndustryTypesSeeder::class,
+            ImageFootageFiltersSeeder::class,
+            ImageFootageFilterOptionsSeeder::class
         ]);
     }
 }

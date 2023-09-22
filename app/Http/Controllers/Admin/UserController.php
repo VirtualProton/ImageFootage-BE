@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin')->except('login','logout');
+        $this->middleware('admin')->except('login', 'logout');
         $this->Account = new Account();
         $this->Country = new Country();
         $this->User = new User();
@@ -49,8 +49,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userlist=$this->User->getUserData();
-        return view('admin.user.index',compact('userlist'));
+        $userlist = $this->User->getUserData();
+        return view('admin.user.index', compact('userlist'));
     }
 
     /**
@@ -63,8 +63,8 @@ class UserController extends Controller
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
         $this->Admin = new Admin();
-        $accountlist=$this->Admin->getAgentData();
-        return view('admin.user.create', compact('title','countries','accountlist'));
+        $accountlist = $this->Admin->getAgentData();
+        return view('admin.user.create', compact('title', 'countries', 'accountlist'));
     }
 
     /**
@@ -79,29 +79,20 @@ class UserController extends Controller
             'email' => 'required|email|unique:imagefootage_users|max:255',
         ]);
 
-
-        // return back()
-        // ->withInput();
-        // ->withErrors(['name.required', 'Name is required']);
-
-
         $title = "Add Lead/User/Account";
         $countries = $this->Country->getcountrylist();
         $this->Admin = new Admin();
-        $accountlist=$this->Admin->getAgentData();
+        $accountlist = $this->Admin->getAgentData();
         $user = User::where('email', $request['email'])->get()->toArray();
-        //$user['id'] = $user[0]['id'];
-        //$user['email'] = $user[0]['email'];
-        // print_r($user); die;
-        if(!empty($user)){
-            return view('admin.user.create', compact('title','countries','accountlist', 'user'));
+        if (!empty($user)) {
+            return view('admin.user.create', compact('title', 'countries', 'accountlist', 'user'));
         }
 
-            $data['email'] = $request->email;
-            $data['name'] = $request->first_name.' '.$request->last_name;
-            $data['text'] ="You are added as a client.";
-            $this->sendmail($data);
-        if($this->User->save_user($request)){
+        $data['email'] = $request->email;
+        $data['name'] = $request->first_name . ' ' . $request->last_name;
+        $data['text'] = "You are added as a client.";
+        $this->sendmail($data);
+        if ($this->User->save_user($request)) {
 
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
         } else {
@@ -119,9 +110,9 @@ class UserController extends Controller
     {
         $title = "Show User";
         $this->Account = new Account();
-        $account_data =    $this->Account->getAccountDataForShow($id);
+        $account_data = $this->Account->getAccountDataForShow($id);
 
-        return view('admin.account.show', compact('title','account_data'));
+        return view('admin.account.show', compact('title', 'account_data'));
     }
 
     public function invoices($id)
@@ -130,27 +121,26 @@ class UserController extends Controller
 
         $user_id = $id;
         $user = User::find($id);
-       // dd($user);
         $this->Account = new Account();
         $this->Admin = new Admin();
-        if(!empty($user->account_manager_id)){
+        if (!empty($user->account_manager_id)) {
             $account_manager = $this->Admin->getAgentData($user->account_manager_id);
             $account_manager_name = $account_manager['name'];
-        }else{
+        } else {
             $account_manager_name = "";
         }
         $city_name = '';
         $state_name = '';
         $country_name = '';
-        if(!empty($user->city)) {
+        if (!empty($user->city)) {
             $city = City::where('id', $user->city)->first();
             $city_name = $city['name'];
         }
-        if(!empty($user->state)) {
+        if (!empty($user->state)) {
             $state = State::where('id', $user->state)->first();
             $state_name = $state['state'];
         }
-        if(!empty($user->country)) {
+        if (!empty($user->country)) {
             $country = Country::where('id', $user->country)->first();
             $country_name = $country['name'];
         }
@@ -161,78 +151,85 @@ class UserController extends Controller
             ->with('state')
             ->with('city')
             ->where('id', $user_id)
-            ->with('orders')//i added this to include orders
-            ->with(['plans' => function ($query) {
-                $query->whereIn('payment_status', ['Completed', 'Transction Success'])
-                    ->with('downloads');
-            }
+            ->with('orders')
+            ->with([
+                'plans' => function ($query) {
+                    $query->whereIn('payment_status', ['Completed', 'Transction Success'])
+                        ->with('downloads');
+                }
             ])->whereHas("plans", function ($query) {
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
 
-          // echo "<pre>"; print_r($userPlanslist); die;
-
-        $agentlist=$this->Account->getAccountData();
+        $agentlist = $this->Account->getAccountData();
         $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
         $get_quotations = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name') 
-                    ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
-                    ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
-                    ->leftJoin('imagefootage_admins as calcelled_user','calcelled_user.id','=','imagefootage_performa_invoices.cancelled_by')
-                    ->where('imagefootage_performa_invoices.user_id','=', $id)
-                    ->where('imagefootage_performa_invoices.proforma_type', '=', '1');
+            ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name')
+            ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
+            ->join('imagefootage_users', 'imagefootage_users.id', '=', 'imagefootage_performa_invoices.user_id')
+            ->leftJoin('imagefootage_admins as calcelled_user', 'calcelled_user.id', '=', 'imagefootage_performa_invoices.cancelled_by')
+            ->where('imagefootage_performa_invoices.user_id', '=', $id)
+            ->where('imagefootage_performa_invoices.proforma_type', '=', '1');
         $get_quotations2 = clone $get_quotations;
         $get_quotations3 = clone $get_quotations;
         $get_quotations4 = clone $get_quotations;
         $account_quotations = $get_quotations->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_subscription_quotations = $get_quotations2->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_custom_quotations = $get_quotations3->where('invoice_type', '=', 3)->where('flag', 0)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_custom_quotations2 = $get_quotations4->where('invoice_type', '=', 3)->where('flag', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
+        $account_download_pack_quotations = $get_quotations->where('invoice_type', '=', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'dq');
+        $account_subscription_quotations = $get_quotations2->where('invoice_type', '=', 1)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'sq');
+        $account_custom_quotations = $get_quotations3->where('invoice_type', '=', 3)->where('flag', 0)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'cq');
+        $account_custom_quotations2 = $get_quotations4->where('invoice_type', '=', 3)->where('flag', 2)->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10', ['*'], 'oq');
 
         $get_invoices = Invoice::with('items')
-                    ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description') 
-                    ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
-                    ->join('imagefootage_users','imagefootage_users.id','=','imagefootage_performa_invoices.user_id')
-                    ->where('imagefootage_performa_invoices.user_id','=', $id)
-                    ->where('imagefootage_performa_invoices.proforma_type', '=', '2');
+            ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description')
+            ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
+            ->join('imagefootage_users', 'imagefootage_users.id', '=', 'imagefootage_performa_invoices.user_id')
+            ->where('imagefootage_performa_invoices.user_id', '=', $id)
+            ->where('imagefootage_performa_invoices.proforma_type', '=', '2');
         $get_invoices2 = clone $get_invoices;
         $get_invoices3 = clone $get_invoices;
         $get_invoices4 = clone $get_invoices;
         $account_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10');
-        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10');
-        $account_custom_invoices = $get_invoices3->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10');
-        $account_custom_invoices2 = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10');
-        
+        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10', ['*'], 'di');
+        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10', ['*'], 'si');
+        $account_custom_invoices = $get_invoices3->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10', ['*'], 'ci');
+        $account_custom_invoices2 = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10', ['*'], 'oi');
+
 
         $this->Country = new Country();
         $countries = $this->Country->getcountrylist();
         $this->User = new User();
-        $user_data =    $this->User->getUserData($user_id);
-        $states = $this->Country->getState('country_id',$user_data['country'] ?? '');
-        $cities = $this->Country->getCity('state_id',$user_data['state'] ?? '');
+        $user_data = $this->User->getUserData($user_id);
+        $states = $this->Country->getState('country_id', $user_data['country'] ?? '');
+        $cities = $this->Country->getCity('state_id', $user_data['state'] ?? '');
 
         $this->UserInfo = new UserInfo();
         $user_info =    $this->UserInfo->getUserInfo($user_id);
-        if($user_info == null){
+        if ($user_info == null) {
             $user_info = [];
         }
 
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
-           // dd($description);
-           $active_tab = "tab1";
-           $active_nested_tab = "subscription_tab";
+        $active_tab = "tab1";
+        $active_nested_tab = "active_plans";
 
-
-        $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function($join){
+        $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id',$user_id)->where('imagefootage_user_package.package_plan', 2)->whereIn('payment_status',['Completed','Transction Success'])->where('package_expiry_date_from_purchage','>',Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
-        $data['active_download_plans'] = UserPackage::leftjoin('imagefootage_packages', function($join){
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->where('imagefootage_user_package.package_plan', 2)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        $data['active_download_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id',$user_id)->whereIn('payment_status',['Completed','Transction Success'])->where('package_expiry_date_from_purchage','>',Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
 
-        return view('admin.account.invoices', compact('title','user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments','user_data','states','countries','cities','user_info','descriptions','active_tab', 'active_nested_tab'))->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)->with('account_download_pack_quotations', $account_download_pack_quotations)->with('account_download_pack_invoices', $account_download_pack_invoices)->with('account_subscription_quotations', $account_subscription_quotations)->with('account_subscriptions_invoices', $account_subscriptions_invoices)->with('account_custom_quotations', $account_custom_quotations)->with('account_custom_invoices', $account_custom_invoices)->with('account_custom_quotations2', $account_custom_quotations2)->with('account_custom_invoices2', $account_custom_invoices2)->with('data', $data);
+        return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab'))
+            ->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)
+            ->with('account_download_pack_quotations', $account_download_pack_quotations)
+            ->with('account_download_pack_invoices', $account_download_pack_invoices)
+            ->with('account_subscription_quotations', $account_subscription_quotations)
+            ->with('account_subscriptions_invoices', $account_subscriptions_invoices)
+            ->with('account_custom_quotations', $account_custom_quotations)
+            ->with('account_custom_invoices', $account_custom_invoices)
+            ->with('account_custom_quotations2', $account_custom_quotations2)
+            ->with('account_custom_invoices2', $account_custom_invoices2)
+            ->with('data', $data);
     }
 
     /**
@@ -244,20 +241,18 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = Auth::guard('admins')->user();
-        if($user->role['role'] != 'Super Admin'){
-          return back()->with('success','You dont have acess to edit.');
+        if ($user->role['role'] != 'Super Admin') {
+            return back()->with('success', 'You dont have acess to edit.');
         }
         $title = "Edit Lead/User/Contact";
 
         $countries = $this->Country->getcountrylist();
-        // $accountlist=$this->Account->getAccountData();
         $this->Admin = new Admin();
-        $accountlist=$this->Admin->getAgentData();
+        $accountlist = $this->Admin->getAgentData();
         $user_data =    $this->User->getUserData($id);
-        $states = $this->Country->getState('country_id',$user_data['country']);
-        $cities = $this->Country->getCity('state_id',$user_data['state']);
-        return view('admin.user.edit', compact('title','countries','user_data','states','cities','accountlist'));
-
+        $states = $this->Country->getState('country_id', $user_data['country']);
+        $cities = $this->Country->getCity('state_id', $user_data['state']);
+        return view('admin.user.edit', compact('title', 'countries', 'user_data', 'states', 'cities', 'accountlist'));
     }
 
     /**
@@ -271,10 +266,10 @@ class UserController extends Controller
     {
         $user_data = $this->User->getUserData($id);
         $this->validate($request, [
-            'email' => 'required|email|unique:imagefootage_users,email,'.$id,
+            'email' => 'required|email|unique:imagefootage_users,email,' . $id,
 
         ]);
-        if($this->User->update_user($request,$id)){
+        if ($this->User->update_user($request, $id)) {
             return redirect("admin/users")->with("success", "Account has been updated successfully !!!");
         } else {
             return redirect("admin/users/$id/edit")->with("error", "Due to some error, Account is not updated yet. Please try again!");
@@ -300,10 +295,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function status($type,$id)
+    public function status($type, $id)
     {
         $title = "Change Status User";
-        if($this->User->change_status($type,$id)){
+        if ($this->User->change_status($type, $id)) {
             return redirect("admin/users")->with("success", "User status has been changed successfully !!!");
         } else {
             return redirect("admin/users")->with("error", "Due to some error, User status is not changed yet. Please try again!");
@@ -317,8 +312,8 @@ class UserController extends Controller
      */
     public function newRegistrants()
     {
-        $userlist=$this->User->getNewRegistrants();
-        return view('admin.user.newregistrants',compact('userlist'));
+        $userlist = $this->User->getNewRegistrants();
+        return view('admin.user.newregistrants', compact('userlist'));
     }
 
 
@@ -332,12 +327,8 @@ class UserController extends Controller
         $date->modify('-1 hours');
         $formatted_date = $date->format('Y-m-d H:i:s');
 
-        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
-        //Usercart::where('cart_added_on', '2020-10-05 16:20:23.000000')->with('product')->get()->toArray();
-
-
-        // echo "<pre>"; print_r($userlist); die;
-        return view('admin.user.usercart',compact('userlist'));
+        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>', $formatted_date)->get()->toArray();
+        return view('admin.user.usercart', compact('userlist'));
     }
 
 
@@ -350,37 +341,35 @@ class UserController extends Controller
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
 
-        $userlist=$this->User->getUserData();
+        $userlist = $this->User->getUserData();
         $date = new \DateTime();
         $formatted_date1 = $date->format('Y-m-d H:i:s');
 
-        if($request->hours > 0){
+        if ($request->hours > 0) {
             $date->modify("-{$request->hours} hours");
         }
-        if($request->minutes > 0){
+        if ($request->minutes > 0) {
             $date->modify("-{$request->minutes} minutes");
         }
-        if(!$request->hours && !$request->minutes){
+        if (!$request->hours && !$request->minutes) {
             $date->modify("-60 minutes");
         }
 
         $formatted_date = $date->format('Y-m-d H:i:s');
 
-        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>',$formatted_date)->get()->toArray();
-        if($user->department['department'] == 'Sales'){
-
-              $userCart = Usercart::whereHas('user', function($q) use($userState){
-              $q->where('state', $userState);
-              })
-              ->where('cart_added_on', '>',$formatted_date)
-              ->with('product')
-              ->with('user')
-              ->get()
-              ->toArray();
-
+        $userCart = Usercart::with('product')->with('user')->where('cart_added_on', '>', $formatted_date)->get()->toArray();
+        if ($user->department['department'] == 'Sales') {
+            $userCart = Usercart::whereHas('user', function ($q) use ($userState) {
+                $q->where('state', $userState);
+            })
+                ->where('cart_added_on', '>', $formatted_date)
+                ->with('product')
+                ->with('user')
+                ->get()
+                ->toArray();
         }
 
-        return view('admin.user.abandonedcart',compact('userCart'));
+        return view('admin.user.abandonedcart', compact('userCart'));
     }
 
     /**
@@ -389,80 +378,53 @@ class UserController extends Controller
      */
     public function changeAbandonedCartStatus(Request $request, $id)
     {
-        // print_r($request->status); die;
-
         $status = $request->status;
         DB::table('imagefootage_usercart')
             ->where('cart_id', $id)
             ->update(['status' => $status]);
 
-            return redirect("admin/abandoned_cart")->with("success", "Abandoned Cart is updated successfully !!!");
-        // $cart_data = Usercart::where('cart_id', $id)->get()->toArray();
-        // $cart_data['status'] = $status;
-        // $cart_data->update();
-
-       // echo "<pre>"; print_r($cart_data); die;
-
-
+        return redirect("admin/abandoned_cart")->with("success", "Abandoned Cart is updated successfully !!!");
     }
 
-    public function newClientSales(){
+    public function newClientSales()
+    {
 
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
-      // $orders = Orders::all()->unique('user_id')->toArray();
-
-        // $orders = DB::table('imagefootage_orders')
-        //          ->select('*', DB::raw('count(*) as total'))
-        //          // ->select('*')
-        //          ->groupBy('user_id')
-        //          ->where(DB::raw('count(*) as total'),1)
-        //          ->get();
-
         $orders1 = Orders::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
-
         $orders2 = UserPackage::with('user')->groupBy('user_id')->havingRaw('COUNT(*) = 1')->get()->toArray();
 
-        if($user->department['department'] == 'Sales'){
+        if ($user->department['department'] == 'Sales') {
+            $orders1 = Orders::whereHas('user', function ($q) use ($userState) {
+                $q->where('state', $userState);
+            })
+                ->with('user')
+                ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
+                ->get()
+                ->toArray();
 
-              $orders1 = Orders::whereHas('user', function($q) use($userState){
-              $q->where('state', $userState);
-              })
-              ->with('user')
-              ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
-              ->get()
-              ->toArray();
-
-              $orders2 = UserPackage::whereHas('user', function($q) use($userState){
-              $q->where('state', $userState);
-              })
-              ->with('user')
-              ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
-              ->get()
-              ->toArray();
-
+            $orders2 = UserPackage::whereHas('user', function ($q) use ($userState) {
+                $q->where('state', $userState);
+            })
+                ->with('user')
+                ->groupBy('user_id')->havingRaw('COUNT(*) = 1')
+                ->get()
+                ->toArray();
         }
-        // echo "<pre>"; print_r($orders1); die;
-
-        // $orders = array_merge($orders1,$orders2);
-
         $userlist1 = array();
-        foreach($orders1 as $order){
-                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
-                    $userlist1[] = $order;
-                }
-
+        foreach ($orders1 as $order) {
+            if (date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')) {
+                $userlist1[] = $order;
+            }
         }
 
         $userlist2 = array();
-        foreach($orders2 as $order){
-                if(date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')){
-                    $userlist2[] = $order;
-                }
-
+        foreach ($orders2 as $order) {
+            if (date("Y-m-d", strtotime($order['created_at'])) == date('Y-m-d')) {
+                $userlist2[] = $order;
+            }
         }
-        return view('admin.user.clientfirstsale',compact('userlist1', 'userlist2'));
-
+        return view('admin.user.clientfirstsale', compact('userlist1', 'userlist2'));
     }
 
 
@@ -471,22 +433,17 @@ class UserController extends Controller
 
         $data["email"] = $request['email'];
         $data["text"] =  $request['text'];
-        //print_r($data); die;
-        // $data["subject"]=$request->get("subject");
         ini_set('max_execution_time', 0);
-        //$data["email"]="amitpathak.bansal@gmail.com";
-        //$data["client_name"]="Test email";
-        $data["subject"] = "Registration Email";
-
-        // $pdf = PDF::loadHTML($data["text"]);
+        $data["subject"]        = "Registration Email";
+        $front_end_url_name     = config('app.front_end_url');
+        $frontend_name          = explode('//', rtrim($front_end_url_name, '/#/'));
+        $data["frontend_name"]  = $frontend_name[1] ?? '';
 
         try {
             Mail::send('registrationemail', $data, function ($message) use ($data) {
-              // echo "<pre>";print_r($data); die;
                 $message->to($data["email"])
                     ->subject($data["subject"])
                     ->from('admin@imagefootage.com', 'Imagefootage');
-                    // ->attachData($pdf->output(), "invoice.pdf");
             });
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";
@@ -503,61 +460,60 @@ class UserController extends Controller
         return response()->json(compact('this'));
     }
 
-    public function updateUser(Request $request){
+    public function updateUser(Request $request)
+    {
         if (isset($_POST['updatebtn'])) {
-
-     //  dd( $request);
-       $this->validate($request, [
-        'user_name' => 'required',
-        'user_last_name' => 'required',
-        'user_email' => 'required'
-    ], [
-        'user_name.required' => 'The First Name field is required.',
-        'user_last_name.required' => 'The Last Name field is required.',
-        'user_email.required' => 'The Email field is required.'
-    ]);
-    try {
-            $update_array=array('first_name'=>$request->user_name,
-                                'last_name'=>$request->user_last_name,
-                                'email'=>$request->user_email,
-                                'company' => $request->user_company,
-                                'occupation' => $request->user_occupation,
-                                'address'=>$request->user_address,
-                                'phone'=>$request->user_phone,
-                                'gst'=>$request->user_gst,
-                                'pan'=>$request->user_pan,
-                                'description'=>$request->user_client_des
-                            );
+            $this->validate($request, [
+                'user_name' => 'required',
+                'user_last_name' => 'required',
+                'user_email' => 'required'
+            ], [
+                'user_name.required' => 'The First Name field is required.',
+                'user_last_name.required' => 'The Last Name field is required.',
+                'user_email.required' => 'The Email field is required.'
+            ]);
+            try {
+                $update_array = array(
+                    'first_name' => $request->user_name,
+                    'last_name' => $request->user_last_name,
+                    'email' => $request->user_email,
+                    'company' => $request->user_company,
+                    'occupation' => $request->user_occupation,
+                    'address' => $request->user_address,
+                    'phone' => $request->user_phone,
+                    'gst' => $request->user_gst,
+                    'pan' => $request->user_pan,
+                    'description' => $request->user_client_des
+                );
                 $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
                 if ($userinfo === null) {
-                        $userinfo=new UserInfo;
-                        $userinfo->partner =$request->user_partner;
-                        $userinfo->whitelist=$request->user_whitelist;
-                        $userinfo->blacklist=$request->user_blacklist;
-                        $userinfo->frozen=$request->user_checkout_frozen;
-                        $userinfo->allow_certi=$request->user_allow_certi;
-                        $userinfo->enable_subs_multi=$request->user_enable_subs_multi;
-                        $userinfo->preferred_contact_method=$request->user_preferred_contact_method;
-                        $userinfo->user_id=$request->user_id;
-                        $userinfo->save();
-            }
-            $description = Description::where('user_id', '=', $request->user_id)->where('description',$request->user_client_des)->first();
-            if ($description === null) {
-                $description=new Description;
-                    $description->user_id=$request->user_id;
-                    $description->description=$request->user_client_des;
+                    $userinfo = new UserInfo;
+                    $userinfo->partner = $request->user_partner;
+                    $userinfo->whitelist = $request->user_whitelist;
+                    $userinfo->blacklist = $request->user_blacklist;
+                    $userinfo->frozen = $request->user_checkout_frozen;
+                    $userinfo->allow_certi = $request->user_allow_certi;
+                    $userinfo->enable_subs_multi = $request->user_enable_subs_multi;
+                    $userinfo->preferred_contact_method = $request->user_preferred_contact_method;
+                    $userinfo->user_id = $request->user_id;
+                    $userinfo->save();
+                }
+                $description = Description::where('user_id', '=', $request->user_id)->where('description', $request->user_client_des)->first();
+                if ($description === null) {
+                    $description = new Description;
+                    $description->user_id = $request->user_id;
+                    $description->description = $request->user_client_des;
                     $description->save();
-            }
-            User::where('id',$request->user_id)->update($update_array);
-                return redirect('admin/users')->with('success','Users updated successful');
+                }
+                User::where('id', $request->user_id)->update($update_array);
+                return redirect('admin/users')->with('success', 'Users updated successful');
             } catch (\Exception $e) {
                 dd($e->getMessage());
             }
-            return back()->with('warning','Some problem occured.');
-
-        }
-        else{
-            echo "error1"; die();
+            return back()->with('warning', 'Some problem occured.');
+        } else {
+            echo "error1";
+            die();
         }
     }
 }

@@ -7,23 +7,27 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\{
     User,
     ImageFootageWishlist,
-    ImagefootageSharedWishlistsLog
+    ImagefootageSharedWishlistsLog,
+    Product,
 };
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Arr;
 
 class WishListController extends Controller
 {
-   public $userModel, $imageFootageWishlist, $imageFootageSharedWishlistLogModel;
+   public $userModel, $imageFootageWishlist, $imageFootageSharedWishlistLogModel, $productModel;
    public function __construct(
         User $userModel,
         ImageFootageWishlist $imageFootageWishlist,
-        ImagefootageSharedWishlistsLog $imageFootageSharedWishlistLogModel
+        ImagefootageSharedWishlistsLog $imageFootageSharedWishlistLogModel,
+        Product $productModel
    ) {
         $this->userModel = $userModel;
         $this->imageFootageWishlistModel = $imageFootageWishlist;
         $this->imageFootageSharedWishlistLogModel = $imageFootageSharedWishlistLogModel;
+        $this->productModel = $productModel;
    }
 
    public function getWishList(Request $request)
@@ -208,6 +212,354 @@ class WishListController extends Controller
                 $errorMessage = "Something is wrong";
             }
             return jsonResponse(true, $errorMessage);
+        }
+    }
+
+    /**
+     * Add selected products to the user's wishlist.
+     *
+     * @param  Request $request The HTTP request object containing user's input data.
+     * @return JsonResponse A JSON response indicating the success or failure of the operation.
+     */
+    public function addProductToWishlist(Request $request) {
+        $postData = $request->all();
+
+        $customMessages = [
+            'wishlist_id.required' => "Sorry, we couldn't access the shared wishlist details.",
+            'wishlist_id.exists' => "Oops, the selected wishlist doesn't exist.",
+            'Utype.required' => "Oops, it seems we can't identify the user.",
+            'Utype.exists' => 'Oops, this user is no longer active in our system.',
+            'products.required' => 'Please select at least one product to proceed.',
+            'products.array' => 'There seems to be an issue with the selected products.',
+            'products.*.product_id.exists' => 'Some of the selected products are not available.',
+            'products.*.type.required' => 'Please specify the type of product.',
+            'products.*.type.in' => 'Invalid product type selected.',
+        ];
+
+        $rules = [
+            'wishlist_id' => 'required|exists:imagefootage_wishlists,id',
+            'Utype' => 'required|exists:imagefootage_users,id',
+            'products' => 'required|array|min:1',
+            'products.*.product_id' => 'required|exists:imagefootage_products,product_id',
+            'products.*.type' => 'required|in:image,footage,music',
+        ];
+
+        $validator = Validator::make($postData, $rules, $customMessages);
+        if (!$validator->fails()) {
+            try {
+                $userId = $postData['Utype'];
+                $wishlistId = $postData['wishlist_id'];
+                $products = $postData['products'];
+
+                $productIds = Arr::pluck($products, 'product_id');
+
+                // Getting products primary keys based on passed product_id
+                $allProductPrimaryIds = $this->productModel
+                    ->whereIn('product_id', $productIds)
+                    ->pluck('id')->toArray();
+
+                // Getting products which are already added to wishlist but passed in payload
+                $productsAlreadyLinkedToWishlist = DB::table('imagefootage_wishlist_products')
+                    ->where('wishlist_id', $wishlistId)
+                    ->whereIn('product_id', $allProductPrimaryIds)
+                    ->pluck('product_id')->toArray();
+
+                // Filtering products_id of products which are not already added to wishlist
+                $addToWishListProductIds = array_values(array_diff($allProductPrimaryIds, $productsAlreadyLinkedToWishlist));
+
+                // Getting products based on products_id which are not already added to wishlist and need to add to wishlist
+                $addToWishListProducts = $this->productModel->select('id', 'product_id')
+                    ->whereIn('id', $addToWishListProductIds)
+                    ->get()->toArray();
+
+                $wishListProductRelationData = [];
+                foreach ($addToWishListProducts as $product) {
+                    // Filtering data for getting product type based on product_id
+                    $filteredData = array_filter($products, function ($item) use($product) {
+                        return $item['product_id'] === $product['product_id'];
+                    });
+
+                    $wishListProductRelation = [];
+                    $wishListProductRelation['wishlist_id'] = $wishlistId;
+                    $wishListProductRelation['product_id'] = $product['id'];
+                    $wishListProductRelation['product_path_id'] = $product['product_id'];
+                    $wishListProductRelation['type'] = $filteredData[0]['type'];
+                    $wishListProductRelation['created_at'] = Carbon::now();
+                    $wishListProductRelation['updated_at'] = Carbon::now();
+
+                    // Preparing data for bulk inserting records
+                    $wishListProductRelationData[] = $wishListProductRelation;
+                }
+
+                if (!empty($wishListProductRelation)) {
+                    $newWishListProductRelation = DB::table('imagefootage_wishlist_products')
+                        ->insert($wishListProductRelationData);
+
+                    if (!empty($newWishListProductRelation)) {
+                        $successMessage = "Congratulations! The product has been successfully added to your wishlist.";
+                        if (!empty($productsAlreadyLinkedToWishlist)) {
+                            $alreadyAddedCount = count($productsAlreadyLinkedToWishlist);
+                            $successMessage = "Success! {$alreadyAddedCount} in wishlist, others added.";
+                        }
+                        return jsonResponse(false, $successMessage);
+                    } else {
+                        return jsonResponse(true, "Oops, Something went wrong!");
+                    }
+                } else {
+                    $productCount = count($products);
+                    if ($productCount == 1) {
+                        $errorMessage = "Sorry, this product is already added to your wishlist.";
+                    } else {
+                        $errorMessage = "Sorry, these products are already added to your wishlist.";
+                    }
+                    return jsonResponse(true, $errorMessage);
+                }
+            } catch (\Exception $e) {
+                return $e->getMessage();
+                return jsonResponse(true, "Oops, Something went wrong!");
+            }
+        } else {
+            if (!empty($validator->errors()->first())) {
+                $errorMessage = $validator->errors()->first();
+            } else {
+                $errorMessage = "Something is wrong";
+            }
+            return jsonResponse(true, $errorMessage);
+        }
+    }
+
+    /**
+     * Add selected products to the user's wishlist.
+     *
+     * @param  Request $request The HTTP request object containing user's input data.
+     * @return JsonResponse A JSON response indicating the success or failure of the operation.
+     */
+    public function getUserWishlistData(Request $request) {
+        $postData = $request->all();
+        $userId = $postData['Utype'];               
+
+        $results = DB::table('imagefootage_users_wishlist')
+        ->join('imagefootage_wishlist_products', 'imagefootage_users_wishlist.wishlist_id', '=', 'imagefootage_wishlist_products.wishlist_id')
+        ->join('imagefootage_products', 'imagefootage_wishlist_products.product_id', '=', 'imagefootage_products.id')
+        ->where('imagefootage_users_wishlist.user_id', '=', $userId)
+        ->select('imagefootage_wishlist_products.product_path_id','imagefootage_products.product_thumbnail')
+        ->get();            
+        return json_encode(["status"=>"success",'data'=>$results]);                
+    }
+
+    /**
+     * Create or update a user's wishlist along with adding products if provided.
+     *
+     * @param  Request $request The HTTP request object containing user's input data.
+     * @return JsonResponse A JSON response indicating the success or failure of the operation.
+     */
+    public function createOrUpdateWishlist(Request $request) {
+        $postData = $request->all();
+
+        $customMessages = [
+            'wishlist_id.required' => "Sorry, we couldn't access the shared wishlist details.",
+            'wishlist_id.exists' => "Oops, the selected wishlist doesn't exist.",
+            'Utype.required' => "Oops, it seems we can't identify the user.",
+            'Utype.exists' => 'Oops, this user is no longer active in our system.',
+            'wishlist_name.required' => 'The wishlist name is required.',
+            'wishlist_name.string' => 'The wishlist name must be a string.',
+            'wishlist_name.min' => 'The wishlist name must be at least :min characters.',
+            'products.required' => 'Please select at least one product to proceed.',
+            'products.array' => 'There seems to be an issue with the selected products.',
+            'products.*.product_id.required' => 'Product ID is required.',
+            'products.*.product_id.exists' => 'Some of the selected products are not available.',
+            'products.*.type.required' => 'Please specify the type of product.',
+            'products.*.type.in' => 'Invalid product type selected.',
+        ];
+
+        $rules = [
+            'Utype' => 'required|exists:imagefootage_users,id',
+            'wishlist_name' => 'required|string|min:3'
+        ];
+
+        if (!empty($postData['wishlist_id'])) {
+            $rules['wishlist_id'] = 'required|exists:imagefootage_wishlists,id';
+        } else {
+            if (isset($rules['products'])) {
+                $rules['products'] = 'required|array|min:1';
+                $rules['products.*.product_id'] = 'required|exists:imagefootage_products,product_id';
+                $rules['products.*.type'] = 'required|in:type,image';
+            }
+        }
+
+        $validator = Validator::make($postData, $rules, $customMessages);
+        if (!$validator->fails()) {
+
+            $userId = $postData['Utype'];
+            // Update Wishlist
+            if (!empty($postData['wishlist_id'])) {
+                $wishlistId = $postData['wishlist_id'];
+                $wishlistName = $postData['wishlist_name'];
+
+                $updateWishlistNameStatus = $this->imageFootageWishlistModel
+                    ->where('id', $wishlistId)
+                    ->update(['name' => $wishlistName]);
+
+                if (!empty($updateWishlistNameStatus)) {
+                    return jsonResponse(false, "Your wishlist name has been successfully updated.");
+                } else {
+                    return jsonResponse(true, "Oops! Your wishlist name couldn't be updated. Please try again later.");
+                }
+
+            } else { // Create User Wishlist
+                $wishlistName = $postData['wishlist_name'];
+
+                // Creating new Wishlist
+                $wishlistData = [];
+                $wishlistData['name'] = $wishlistName;
+                $newWishlist = $this->imageFootageWishlistModel->create($wishlistData);
+
+                if (!empty($newWishlist->id)) {
+                    $userWishlistData = [
+                        'user_id' => $userId,
+                        'wishlist_id' => $newWishlist->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+
+                    // Assigning new created wishlist to user account
+                    $newUserWishlist = DB::table('imagefootage_users_wishlist')->insert($userWishlistData);
+                    if (!empty($newUserWishlist)) {
+
+                        // Create wishlist and also add products
+                        if (!empty($postData['products'])) {
+                            $products = $postData['products'];
+                            $productIds = Arr::pluck($products, 'product_id');
+
+                            // Getting products primary keys based on passed product_id
+                            $allProductPrimaryIds = $this->productModel
+                                ->select('id', 'product_id')
+                                ->whereIn('product_id', $productIds)
+                                ->get()->toArray();
+
+                            $wishListProductRelationData = [];
+                            foreach ($allProductPrimaryIds as $product) {
+                                // Filtering data for getting product type based on product_id
+                                $filteredData = array_filter($products, function ($item) use($product) {
+                                    return $item['product_id'] === $product['product_id'];
+                                });
+
+                                $wishListProductRelation = [];
+                                $wishListProductRelation['wishlist_id'] = $newWishlist->id;
+                                $wishListProductRelation['product_id'] = $product['id'];
+                                $wishListProductRelation['type'] = $filteredData[0]['type'];
+                                $wishListProductRelation['created_at'] = Carbon::now();
+                                $wishListProductRelation['updated_at'] = Carbon::now();
+
+                                // Preparing data for bulk inserting records
+                                $wishListProductRelationData[] = $wishListProductRelation;
+                            }
+
+                            $newWishListProductRelation = DB::table('imagefootage_wishlist_products')
+                                ->insert($wishListProductRelationData);
+
+                            if (!empty($newWishListProductRelation)) {
+                                $successMessage = "Congratulations! Wishlist created and product added successfully!";
+                                return jsonResponse(false, $successMessage);
+                            } else {
+                                return jsonResponse(true, "Oops! Something went wrong while adding the product to your wishlist. Please try again.");
+                            }
+                        } else { // Only Create Wishlist
+                            return jsonResponse(false, "Congratulations! Your wishlist has been created successfully!");
+                        }
+                    }
+                }
+                return jsonResponse(true, "Wishlist couldn't be created. Please try again later.");
+            }
+        } else {
+            if (!empty($validator->errors()->first())) {
+                $errorMessage = $validator->errors()->first();
+            } else {
+                $errorMessage = "Something is wrong";
+            }
+            return jsonResponse(true, $errorMessage);
+        }
+    }
+
+    /**
+     * Remove selected products from a user's wishlist.
+     *
+     * @param  Request $request The HTTP request object containing user's input data.
+     * @return JsonResponse A JSON response indicating the success or failure of the operation.
+     */
+    public function removeProductFromWishlist(Request $request) {
+        $postData = $request->all();
+
+        $customMessages = [
+            'wishlist_id.required' => "Sorry, we couldn't access the shared wishlist details.",
+            'wishlist_id.exists' => "Oops, the selected wishlist doesn't exist.",
+            'Utype.required' => "Oops, it seems we can't identify the user.",
+            'Utype.exists' => 'Oops, this user is no longer active in our system.',
+            'product_id.required' => 'Please select at least one product to proceed.',
+            'product_id.array' => 'There seems to be an issue with the selected products.',
+            'product_id.*.exists' => 'Some of the selected products are not available.',
+        ];
+
+        $rules = [
+            'wishlist_id' => 'required|exists:imagefootage_wishlists,id',
+            'Utype' => 'required|exists:imagefootage_users,id',
+            'product_id' => 'required|array|min:1',
+            'product_id.*' => 'exists:imagefootage_products,product_id',
+        ];
+
+        $validator = Validator::make($postData, $rules, $customMessages);
+        if (!$validator->fails()) {
+            $userId = $postData['Utype'];
+            $wishlistId = $postData['wishlist_id'];
+            $productIds = $postData['product_id'];
+
+            // Get Primary Ids of products for deleting from wishlist
+            $allProductPrimaryIds = $this->productModel
+                ->whereIn('product_id', $productIds)
+                ->pluck('id')->toArray();
+
+            DB::table('imagefootage_wishlist_products')
+                ->where('wishlist_id', $wishlistId)
+                ->whereIn('product_id', $allProductPrimaryIds)
+                ->delete();
+
+            $successMessage = "Product Removed from wishlist";
+            return jsonResponse(false, $successMessage);
+        } else {
+            if (!empty($validator->errors()->first())) {
+                $errorMessage = $validator->errors()->first();
+            } else {
+                $errorMessage = "Something is wrong";
+            }
+            return jsonResponse(true, $errorMessage);
+        }
+    }
+
+    public function getWishlistData(Request $request) {        
+        
+
+        $title = $request->input('title');
+        $productId = $request->input('product_id');
+        $url = $request->input('url');        
+
+        $query = Product::query();
+
+        if (!empty($productId)) {
+            $query->where('product_id', $productId);
+        } else {
+            $query->where(function ($query) use ($title, $url) {
+                $query->where('product_title', $title);
+                $query->where('product_thumbnail', $url);
+            });
+        }
+
+        $product = $query->first();
+        
+
+        if (!empty($product)) {   
+            echo json_encode(["status"=>"success",'data'=>$product]);
+        } else {           
+            echo json_encode(["status"=>"failed",'data'=>null]);
         }
     }
 }

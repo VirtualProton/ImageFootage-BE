@@ -40,5 +40,10 @@ return [
             'value' => 'extended',
             'price' => '2000'
         ],
-    ]
+    ],
+    'INVOICE_PREFIX' => 'IF',
+    'GSTIN_VALUE' => 'AMCPR8180N',
+    'PAN_VALUE' => '36AMCPR8180N1Z3',
+    'SAC_CODE' => '997339',
+    'QI_ADDRESS' => 'Hyderabad - Telangana'
 ];

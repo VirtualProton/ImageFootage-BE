@@ -1,5 +1,11 @@
 @extends('admin.layouts.default')
-
+@section('styles')
+<style>
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #000;
+  }
+</style>
+@endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -22,11 +28,16 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Add Product</h3><a href="{{ URL::to('admin/add_product') }}" class="btn pull-right">Back</a>
                 </div>
-               @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
-			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
-			   @endif
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
+                @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session()->get('error') }}
+                </div>
+                @endif
                 <form action="{{ url('admin/createproduct') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="box-body">
@@ -316,6 +327,7 @@
                       <label for="exampleInputEmail1">Price For Extra Large </label>
                       <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="">
                     </div>
+                    <div class="dynamic_filters"></div>
                     <div class="form-group">
                       <label for="exampleInputFile">Product</label>
                       <input type="file" id="product_image" name="product_image">
@@ -355,6 +367,22 @@
 				   $("#sub_product_type").css("display","none");
 			   }
     }
+ });
+ $('.product_type').on('change', function(){
+  var product_type = $(this).val().toLowerCase();
+  var csrf = '{{ csrf_token() }}';
+  $.ajax({
+    url: '{{ url("admin/get-filters") }}',
+    type: 'POST',
+    data: { 'type' : product_type, '_token' : csrf},
+    success: function(res) {
+      if(res.status){
+        $(".dynamic_filters").html('');
+        $(".dynamic_filters").html(res.data);
+        $('.select2').select2();
+      }
+    }
+  });
  });
  $("#product_category").on('change',function(){
 	var prod_id=$(this).val();

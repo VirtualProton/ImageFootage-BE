@@ -77,7 +77,7 @@
                     </br><img src="{{$promotionDetails['desktop_banner_image']}}" width="150" height="150" /></br></br>
                     @endif
                     <input type="file" id="desktop_banner_image" name="desktop_banner_image">
-                    <p class="help-block">Image upload size (1280px * 797px)</p>
+                    <p class="help-block">Image upload size (1920px * 554px)</p>
                     @if ($errors->has('desktop_banner_image'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('desktop_banner_image') }}</div>
                     @endif
@@ -88,7 +88,7 @@
                     </br><img src="{{$promotionDetails['mobile_banner_image']}}" width="150" height="150" /></br></br>
                     @endif
                     <input type="file" id="mobile_banner_image" name="mobile_banner_image">
-                    <p class="help-block">Image upload size (236px * 354px)</p>
+                    <p class="help-block">Image upload size (575px * 380px)</p>
                     @if ($errors->has('mobile_banner_image'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('mobile_banner_image') }}</div>
                     @endif
