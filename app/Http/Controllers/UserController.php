@@ -211,15 +211,13 @@ class UserController extends Controller
         if (empty($request['email']['user_email'])) {
             return response()->json(['status' => false, 'message' => 'Email is required.'], 200);
         }
-        $hostname = \Request::server('HTTP_REFERER');
         $count = User::where('email', '=', $request['email']['user_email'])->count();
         if ($count > 0) {
             $randnum = rand(1000, 10000);
             $sm = $request['email']['user_email'];
             $update_array = array('otp' => $randnum);
             $result = User::where('email', $request['email']['user_email'])->update($update_array);
-            // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-            $url = $hostname . "/resetpassword/" . $randnum . "/" . $request['email']['user_email'];
+            $url = config('app.front_end_url') . "resetpassword/" . $randnum . "/" . $request['email']['user_email'];
             $data = array('url' => $url, 'email' => $request['email']['user_email']);
             Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
                 $message->to($data['email'], '')->subject('Image Footage Forget Password')
