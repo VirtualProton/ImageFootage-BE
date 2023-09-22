@@ -296,6 +296,10 @@ class AuthController extends Controller
                          ->get()->toArray();
                 $image_download=0;
                 $footage_download=0;
+                $profileCompleted = false;
+                if (!$this->isProfileCompleted(auth()->user()->id)) {
+                    $profileCompleted = true;
+                }
                 if(count($plans)>0){
 
                     foreach($plans as $plan){
@@ -307,19 +311,31 @@ class AuthController extends Controller
                     }
                 }
                 return response()->json([
-                    'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' =>  20,
-                    'user' => auth()->user()->first_name,
-                    'email' => auth()->user()->email,
-                    'Utype' => auth()->user()->id,
-                    'image_downlaod'=>$image_download,
-                    'footage_downlaod'=>$footage_download
+                    'access_token'      => $token,
+                    'token_type'        => 'bearer',
+                    'expires_in'        =>  20,
+                    'user'              => auth()->user()->first_name,
+                    'email'             => auth()->user()->email,
+                    'Utype'             => auth()->user()->id,
+                    'image_downlaod'    => $image_download,
+                    'footage_downlaod'  => $footage_download,
+                    'profile_completed' => $profileCompleted
 
                 ]);
             } else {
                 return null;
             }
+    }
+
+    # Check logged User profile completed
+    private function isProfileCompleted($userId)
+    {
+        return User::where('id', $userId)
+                    ->whereNull('country')
+                    ->whereNull('state')
+                    ->whereNull('city')
+                    ->whereNull('address')
+                    ->exists();
     }
 
     public function authenticate(Request $request)

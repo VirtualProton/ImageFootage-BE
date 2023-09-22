@@ -154,7 +154,7 @@ class Product extends Model
             $search = $keyword['search'];
             $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
 
-            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords', 'product_description', 'music_sound_bpm', 'music_duration', 'music_fileType', 'music_price')
+            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords', 'product_description', 'music_sound_bpm', 'music_duration', 'music_fileType', 'music_price', 'auther_name', 'license_type', 'product_keywords', 'music_size')
                 ->leftJoin('imagefootage_productfilters', 'imagefootage_productfilters.filter_product_id', '=', 'imagefootage_products.id')
                 ->leftJoin('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
                 ->where(function ($query) {
@@ -162,7 +162,8 @@ class Product extends Model
                 })->Where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%')
+                        ->orWhere('auther_name', 'LIKE', '%' . $search . '%');
                 });
 
             //filters apply pending
@@ -175,8 +176,10 @@ class Product extends Model
             $data = $data->distinct()->get()->toArray();
 
             if (count($data) > 0) {
-                $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
-                $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
+                foreach ($data as $key => $music) {
+                    $data[$key]['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($music['product_title'])));
+                    $data[$key]['api_product_id'] = encrypt($music['api_product_id'], true);
+                }
                 $data = array('code' => 1, 'data' => $data);
             }
         }
@@ -297,22 +300,22 @@ class Product extends Model
                 }
             }
             $media = array(
-                'product_id' => "",
-                'api_product_id' => $eachmedia['id'],
-                'product_category' => $category_id,
-                'product_title' => $eachmedia['title'],
-                'product_thumbnail' => $eachmedia['thumbnail'],
-                'product_main_image' => $eachmedia['watermarkPreview'],
+                'product_id'          => "",
+                'api_product_id'      => $eachmedia['id'],
+                'product_category'    => $category_id,
+                'product_title'       => $eachmedia['title'],
+                'product_thumbnail'   => $eachmedia['thumbnail'],
+                'product_main_image'  => $eachmedia['watermarkPreview'],
                 'product_description' => $eachmedia['description'],
-                'product_size' => '',
-                "product_keywords" => implode(',', $eachmedia['keywords']),
-                'product_status' => "Active",
-                'product_main_type' => $eachmedia['type'],
-                'product_sub_type' => "Photo",
-                'product_added_on' => date("Y-m-d H:i:s"),
-                'product_web' => '3',
-                'product_vertical' => 'Royalty Free',
-                'updated_at' => date("Y-m-d H:i:s")
+                'product_size'        => '',
+                "product_keywords"    => implode(',', $eachmedia['keywords']),
+                'product_status'      => "Active",
+                'product_main_type'   => $eachmedia['type'],
+                'product_sub_type'    => "Photo",
+                'product_added_on'    => date("Y-m-d H:i:s"),
+                'product_web'         => '3',
+                'product_vertical'    => 'Royalty Free',
+                'updated_at'          => date("Y-m-d H:i:s")
 
             );
             // print_r($media); die;
@@ -354,23 +357,24 @@ class Product extends Model
                 }
 
                 $media = array(
-                    'product_id' => "",
-                    'api_product_id' => $music['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $music['title'],
-                    'product_thumbnail' => $music['thumbnail'],
-                    'product_main_image' => $music['watermarkPreview'],
+                    'product_id'          => "",
+                    'api_product_id'      => $music['id'],
+                    'product_category'    => $category_id,
+                    'product_title'       => $music['title'],
+                    'product_thumbnail'   => $music['thumbnail'],
+                    'product_main_image'  => $music['watermarkPreview'],
                     'product_description' => $music['description'],
-                    'product_size' => '',
-                    "product_keywords" => implode(',', $music['keywords']),
-                    'product_status' => "Active",
-                    'product_main_type' => "Music",
-                    'product_sub_type' => "Music",
-                    'product_added_on' => date("Y-m-d H:i:s"),
-                    'product_web' => '3',
-                    'product_vertical' => 'Royalty Free',
-                    'music_sound_bpm' => $music['soundBpm'] ?? null,
-                    'updated_at' => date("Y-m-d H:i:s")
+                    'product_size'        => '',
+                    "product_keywords"    => implode(',', $music['keywords']),
+                    'product_status'      => "Active",
+                    'product_main_type'   => "Music",
+                    'product_sub_type'    => "Music",
+                    'product_added_on'    => date("Y-m-d H:i:s"),
+                    'product_web'         => '3',
+                    'product_vertical'    => 'Royalty Free',
+                    'music_sound_bpm'     => $music['soundBpm'] ?? null,
+                    'auther_name'         => $music['authorName'] ?? null,
+                    'updated_at'          => date("Y-m-d H:i:s")
                 );
 
                 if (!empty($music['versions'])) {
