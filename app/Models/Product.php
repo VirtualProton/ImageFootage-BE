@@ -177,7 +177,7 @@ class Product extends Model
 
             if (count($data) > 0) {
                 foreach ($data as $key => $music) {
-                    $data[$key]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($music['product_title'])));
+                    $data[$key]['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($music['product_title'])));
                     $data[$key]['api_product_id'] = encrypt($music['api_product_id'], true);
                 }
                 $data = array('code' => 1, 'data' => $data);
@@ -300,22 +300,22 @@ class Product extends Model
                 }
             }
             $media = array(
-                'product_id' => "",
-                'api_product_id' => $eachmedia['id'],
-                'product_category' => $category_id,
-                'product_title' => $eachmedia['title'],
-                'product_thumbnail' => $eachmedia['thumbnail'],
-                'product_main_image' => $eachmedia['watermarkPreview'],
+                'product_id'          => "",
+                'api_product_id'      => $eachmedia['id'],
+                'product_category'    => $category_id,
+                'product_title'       => $eachmedia['title'],
+                'product_thumbnail'   => $eachmedia['thumbnail'],
+                'product_main_image'  => $eachmedia['watermarkPreview'],
                 'product_description' => $eachmedia['description'],
-                'product_size' => '',
-                "product_keywords" => implode(',', $eachmedia['keywords']),
-                'product_status' => "Active",
-                'product_main_type' => $eachmedia['type'],
-                'product_sub_type' => "Photo",
-                'product_added_on' => date("Y-m-d H:i:s"),
-                'product_web' => '3',
-                'product_vertical' => 'Royalty Free',
-                'updated_at' => date("Y-m-d H:i:s")
+                'product_size'        => '',
+                "product_keywords"    => implode(',', $eachmedia['keywords']),
+                'product_status'      => "Active",
+                'product_main_type'   => $eachmedia['type'],
+                'product_sub_type'    => "Photo",
+                'product_added_on'    => date("Y-m-d H:i:s"),
+                'product_web'         => '3',
+                'product_vertical'    => 'Royalty Free',
+                'updated_at'          => date("Y-m-d H:i:s")
 
             );
             // print_r($media); die;
@@ -357,24 +357,24 @@ class Product extends Model
                 }
 
                 $media = array(
-                    'product_id' => "",
-                    'api_product_id' => $music['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $music['title'],
-                    'product_thumbnail' => $music['thumbnail'],
-                    'product_main_image' => $music['watermarkPreview'],
+                    'product_id'          => "",
+                    'api_product_id'      => $music['id'],
+                    'product_category'    => $category_id,
+                    'product_title'       => $music['title'],
+                    'product_thumbnail'   => $music['thumbnail'],
+                    'product_main_image'  => $music['watermarkPreview'],
                     'product_description' => $music['description'],
-                    'product_size' => '',
-                    "product_keywords" => implode(',', $music['keywords']),
-                    'product_status' => "Active",
-                    'product_main_type' => "Music",
-                    'product_sub_type' => "Music",
-                    'product_added_on' => date("Y-m-d H:i:s"),
-                    'product_web' => '3',
-                    'product_vertical' => 'Royalty Free',
-                    'music_sound_bpm' => $music['soundBpm'] ?? null,
-                    'auther_name' => $music['authorName'] ?? null,
-                    'updated_at' => date("Y-m-d H:i:s")
+                    'product_size'        => '',
+                    "product_keywords"    => implode(',', $music['keywords']),
+                    'product_status'      => "Active",
+                    'product_main_type'   => "Music",
+                    'product_sub_type'    => "Music",
+                    'product_added_on'    => date("Y-m-d H:i:s"),
+                    'product_web'         => '3',
+                    'product_vertical'    => 'Royalty Free',
+                    'music_sound_bpm'     => $music['soundBpm'] ?? null,
+                    'auther_name'         => $music['authorName'] ?? null,
+                    'updated_at'          => date("Y-m-d H:i:s")
                 );
 
                 if (!empty($music['versions'])) {

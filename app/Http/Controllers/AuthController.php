@@ -311,15 +311,15 @@ class AuthController extends Controller
                     }
                 }
                 return response()->json([
-                    'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' =>  20,
-                    'user' => auth()->user()->first_name,
-                    'email' => auth()->user()->email,
-                    'Utype' => auth()->user()->id,
-                    'image_downlaod'=>$image_download,
-                    'footage_downlaod'=>$footage_download,
-                    'profile_completed'=>$profileCompleted
+                    'access_token'      => $token,
+                    'token_type'        => 'bearer',
+                    'expires_in'        =>  20,
+                    'user'              => auth()->user()->first_name,
+                    'email'             => auth()->user()->email,
+                    'Utype'             => auth()->user()->id,
+                    'image_downlaod'    => $image_download,
+                    'footage_downlaod'  => $footage_download,
+                    'profile_completed' => $profileCompleted
 
                 ]);
             } else {
