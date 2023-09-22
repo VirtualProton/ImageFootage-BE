@@ -39,8 +39,6 @@ class Product extends Model
 
     public function getProducts($keyword)
     {
-        // dd($keyword);
-        //DB::enableQueryLog();
         if ($keyword['productType']['id'] == '1') {
             $type = 'Image';
         } else if ($keyword['productType']['id'] == '2') {
@@ -48,55 +46,35 @@ class Product extends Model
         } else {
             $type = 'Editorial';
         }
-        // dd($keyword['search']);
         if (!empty($keyword['search'])) {
             $serach = $keyword['search'];
             $filterTypes = array(
-                'product_colors' => 'product_color',
-                'product_gender' => 'product_gender',
+                'product_colors'       => 'product_color',
+                'product_gender'       => 'product_gender',
                 'product_ethinicities' => 'product_ethinicities',
-                'product_imagesizes' => 'product_image_size',
-                'product_imagetypes' => 'product_glow_type',
+                'product_imagesizes'   => 'product_image_size',
+                'product_imagetypes'   => 'product_glow_type',
                 'product_orientations' => 'product_orientations',
-                'product_peoples' => 'product_peoples',
-                'product_locations' => 'product_locations',
-                'product_sorttype' => 'product_sort_types'
+                'product_peoples'      => 'product_peoples',
+                'product_locations'    => 'product_locations',
+                'product_sorttype'     => 'product_sort_types'
             );
-            // DB::enableQueryLog();
             $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords')
-                //->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
                 ->where(function ($query) use ($type) {
                     $query->whereIn('product_web', [1, 2, 3])->where('product_main_type', '=', $type);
                 })->Where(function ($query) use ($serach) {
                     $query->orWhere('product_id', '=', $serach);
-                    //->orWhere('product_title','LIKE', ''. $serach .'%')
-                    //->orWhere('product_keywords','LIKE',''. $serach .'%');
                 })->get()->toArray();
-            //dd(DB::getQueryLog());
 
             if (count($data) > 0) {
                 if ($serach == $data[0]['product_id'] && count($data) == 1) {
-                    //if($data[0]['product_web']=='2'){
                     $url = 'detail/' . $data[0]['api_product_id'] . '/' . $data[0]['product_web'] . "/" . $data[0]['product_main_type'];
                     $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
                     $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
                     $data = array('code' => 1, 'url' => $url, 'data' => $data);
-                    //}else{
-
-                    //}
                 }
             }
-
-            //dd(DB::getQueryLog());
-            //            if($getKeyword['product_colors']){
-            //
-            //            }
         } else {
-            //            $data =Product::where('product_main_type','=',$type)
-            //                    ->select('product_id','api_product_id','product_title','product_web','product_main_type','product_thumbnail','product_main_image','product_added_on','product_keywords')
-            //                    ->where('product_web','!=','1')
-            //                    ->get()
-            //                    ->toArray();
             $data = [];
         }
         return  $data;
@@ -123,7 +101,7 @@ class Product extends Model
                 ->where(function ($query) use ($type) {
                     $query->whereIn('product_web', [1, 2, 3])->where('product_main_type', '=', $type);
                 })->Where(function ($query) use ($search) {
-                    $query->orWhere('product_id', '=', $search) //exact match
+                    $query->orWhere('product_id', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
@@ -137,10 +115,10 @@ class Product extends Model
             }
             $data = $data->distinct()->get()->toArray();
             if (count($data) > 0) {
-                $url = 'detail/' . $data[0]['api_product_id'] . '/' . $data[0]['product_web'] . "/" . $data[0]['product_main_type'];
-                $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
+                $url                       = 'detail/' . $data[0]['api_product_id'] . '/' . $data[0]['product_web'] . "/" . $data[0]['product_main_type'];
+                $data[0]['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
                 $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
-                $data = array('code' => 1, 'url' => $url, 'data' => $data);
+                $data                      = array('code' => 1, 'url' => $url, 'data' => $data);
             }
         }
         return  $data;
@@ -206,25 +184,24 @@ class Product extends Model
         foreach ($data['items']['media'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
                 $media = array(
-                    'product_id' => "",
-                    'api_product_id' => $eachmedia['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $eachmedia['title'],
-                    'product_thumbnail' => $eachmedia['preview_no_wm'],
-                    'product_main_image' => $eachmedia['preview_high'],
+                    'product_id'          => "",
+                    'api_product_id'      => $eachmedia['id'],
+                    'product_category'    => $category_id,
+                    'product_title'       => $eachmedia['title'],
+                    'product_thumbnail'   => $eachmedia['preview_no_wm'],
+                    'product_main_image'  => $eachmedia['preview_high'],
                     'product_description' => $eachmedia['description'],
-                    'product_size' => $eachmedia['width'] . "X" . $eachmedia['height'],
-                    "product_keywords" => $eachmedia['keywords'],
-                    'product_status' => "Active",
-                    'product_main_type' => "Image",
-                    'product_sub_type' => "Photo",
-                    'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
-                    'product_web' => '2',
-                    'product_vertical' => 'Royalty Free',
-                    'updated_at' => date("Y-m-d H:i:s")
+                    'product_size'        => $eachmedia['width'] . "X" . $eachmedia['height'],
+                    "product_keywords"    => $eachmedia['keywords'],
+                    'product_status'      => "Active",
+                    'product_main_type'   => "Image",
+                    'product_sub_type'    => "Photo",
+                    'product_added_on'    => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
+                    'product_web'         => '2',
+                    'product_vertical'    => 'Royalty Free',
+                    'updated_at'          => date("Y-m-d H:i:s")
 
                 );
-                // print_r($media); die;
                 $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $eachmedia['id'])
                     ->get()
@@ -238,21 +215,17 @@ class Product extends Model
                     DB::table('imagefootage_products')
                         ->where('id', '=', $id)
                         ->update(['product_id' => $flag . $key]);
-                    //return $flag.$key;
                     echo "Inserted" . $id;
                 } else {
-
-                    //echo "hello";
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $eachmedia['id'])
                         ->update([
-                            'product_thumbnail' => $eachmedia['preview_no_wm'],
-                            'product_main_image' => $eachmedia['preview_high'],
-                            'product_description' => $eachmedia['description'],
-                            'product_title' => $eachmedia['title'],
-                            'updated_at' => date('Y-m-d H:i:s')
+                            'product_thumbnail'    => $eachmedia['preview_no_wm'],
+                            'product_main_image'   => $eachmedia['preview_high'],
+                            'product_description'  => $eachmedia['description'],
+                            'product_title'        => $eachmedia['title'],
+                            'updated_at'           => date('Y-m-d H:i:s')
                         ]);
-                    // return $data2[0]->product_id;
                     echo "Updated" . $eachmedia['id'];
                 }
             }
@@ -262,7 +235,6 @@ class Product extends Model
     {
 
         if (isset($data['media']['id'])) {
-            // print_r($media); die;
             $count = DB::table('imagefootage_products')
                 ->where('api_product_id', $data['media']['id'])
                 ->count();
@@ -273,13 +245,13 @@ class Product extends Model
                 DB::table('imagefootage_products')
                     ->where('api_product_id', '=', $data['media']['id'])
                     ->update([
-                        'product_thumbnail' => $data['media']['preview_url_no_wm'],
-                        'product_main_image' => $data['media']['preview_url'],
+                        'product_thumbnail'   => $data['media']['preview_url_no_wm'],
+                        'product_main_image'  => $data['media']['preview_url'],
                         'product_description' => $data['metadata']['description'],
-                        'product_title' => $data['metadata']['title'],
-                        'updated_at' => date('Y-m-d H:i:s'),
-                        'width_thumb' => $imgData[0],
-                        'height_thumb' => $imgData[1],
+                        'product_title'       => $data['metadata']['title'],
+                        'updated_at'          => date('Y-m-d H:i:s'),
+                        'width_thumb'         => $imgData[0],
+                        'height_thumb'        => $imgData[1],
                         'thumb_update_status' =>  1
                     ]);
                 echo "Updated" . $data['media']['id'];
@@ -317,9 +289,7 @@ class Product extends Model
                         'product_web'         => '3',
                         'product_vertical'    => 'Royalty Free',
                         'updated_at'          => date("Y-m-d H:i:s")
-
                     );
-                    // print_r($media); die;
                     $data2 = DB::table('imagefootage_products')
                         ->where('api_product_id', $eachmedia['id'])
                         ->get()
@@ -332,7 +302,6 @@ class Product extends Model
                         DB::table('imagefootage_products')
                             ->where('id', '=', $id)
                             ->update(['product_id' => $flag . $key]);
-                        // echo "Inserted" . $id;
                         return $flag . $key;
                     } else {
                         return $data2[0]->product_id;
@@ -381,8 +350,8 @@ class Product extends Model
                 if (!empty($music['versions'])) {
                     $media['music_duration'] = $music['versions'][0]['duration'] ?? null;
                     $media['music_fileType'] = $music['versions'][0]['fileType'] ?? null;
-                    $media['music_price'] = $music['versions'][0]['price'] ?? null;
-                    $media['music_size'] = $music['versions'][0]['size'] ?? null;
+                    $media['music_price']    = $music['versions'][0]['price'] ?? null;
+                    $media['music_size']     = $music['versions'][0]['size'] ?? null;
                 }
 
                 $data2 = DB::table('imagefootage_products')
@@ -409,102 +378,28 @@ class Product extends Model
         ini_set('max_execution_time', 0);
         $final_data = [];
         $data =   DB::table('imagefootage_products as pr')
-            //->where('pr.product_web','2')
-            //->where('pr.width_thumb','<>',NULL)
             ->select('id', 'product_id', 'api_product_id', 'product_title', 'product_description', 'product_thumbnail', 'product_main_image', 'product_web', 'category_name', 'category_id', 'product_main_type', 'width_thumb', 'height_thumb', 'thumb_update_status')
             ->join('imagefootage_productcategory as pc', 'pc.category_id', '=', 'pr.product_category')
-            //->whereIn('pc.category_name',['Christmas', 'SkinCare', 'Cannabis', 'Business', 'Curated',
-            //   'Video', 'Autumn', 'Family', 'Halloween', 'Seniors', 'Cats', 'Dogs', 'Party', 'Food'])
             ->where('pc.is_display_home', '=', '1')
             ->where('pr.thumb_update_status', '=', '1')
             ->whereRaw("date(pr.updated_at) >= '2020-05-01'")
             ->orderBy('pc.category_order', 'asc')
             ->inRandomOrder()
-
-            // ->limit(Product::HomeLimit)
             ->get()
             ->groupBy("category_name")
             ->map(function ($product) {
                 return $product->take(Product::HomeLimit);
-                // return $product->take(4);
             });
 
-
-        // print_r(count($data)); die;
-        // print_r($data); die;
-
-        // foreach($data as $dat){
-
-        //     foreach($dat as $da){
-        //         echo "<pre>"; print_r($da); die;
-
-        //         $check_url_status = $this->check_urls($da->product_thumbnail);
-        //         if ($check_url_status != '200'){
-        //             $da->product_thumbnail = $da->product_main_image;
-
-
-
-        //             }
-
-        //     }
-
-        // }
-
-
-
-        //$data = (array)$data;
         $home = [];
-        //$n = 0;
 
         foreach ($data as $k => $perdata) {
-            // $n2 = 0;
-            // $n++;
 
-            // $final_data[$k] = (array)$perdata;
-            // $imgData =getimagesize($perdata->product_thumbnail);
-            //$final_data[$k]['width_img'] = $imgData[0];
-            // $final_data[$k] ['height_img']= $imgData[1];
-            //$final_data[$k]['attr'] = $imgData[3];
             foreach ($perdata as $j => $eachproduct) {
-                //$n2++;
-
-
-
-                // $ch = curl_init();
-                // curl_setopt($ch, CURLOPT_URL, $eachproduct->product_main_image);
-                // curl_setopt($ch, CURLOPT_HEADER, 1);
-                // curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
-                // $data2 = curl_exec($ch);
-                // $headers = curl_getinfo($ch);
-                // curl_close($ch);
-
-                // if ($headers['http_code'] != '200')
                 $ldate = date('d');
-                // echo $ldate;
-                // die;
                 if ($ldate == "28" || $ldate == "29" ||  $ldate == "30" ||  $ldate == "31" ||  $ldate == "1") {
                     $eachproduct->product_thumbnail = $eachproduct->product_main_image;
                 }
-
-                // if($n<=8)
-                // {
-                //     if($n2<=4)
-                //     {
-                //         //echo $n; echo $k; echo $n2; echo "<br>";
-
-
-                //         $file_headers = get_headers($eachproduct->product_thumbnail); 
-                //         if(!$file_headers || $file_headers[0] != '200')
-                //         {
-                //             $eachproduct->product_thumbnail = $eachproduct->product_main_image;               
-
-                //         }
-
-                //     }
-
-                // }
-                // echo "<pre>"; print_r($eachproduct); die;
-
                 $data[$k][$j]->api_product_id = encrypt($eachproduct->api_product_id);
                 $data[$k][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
                 if ($j < 4) {
@@ -521,25 +416,24 @@ class Product extends Model
         if ($data['stat'] == 'ok') {
             if (isset($data['media']['id'])) {
                 $media = array(
-                    'product_id' => "",
-                    'api_product_id' => $data['media']['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $data['metadata']['title'],
-                    'product_thumbnail' => $data['media']['preview_url_no_wm'],
-                    'product_main_image' => $data['media']['preview_url'],
+                    'product_id'          => "",
+                    'api_product_id'      => $data['media']['id'],
+                    'product_category'    => $category_id,
+                    'product_title'       => $data['metadata']['title'],
+                    'product_thumbnail'   => $data['media']['preview_url_no_wm'],
+                    'product_main_image'  => $data['media']['preview_url'],
                     'product_description' => $data['metadata']['description'],
-                    'product_size' => $data['media']['width'] . "X" . $data['media']['height'],
-                    "product_keywords" => $data['metadata']['keywords'],
-                    'product_status' => "Active",
-                    'product_main_type' => "Image",
-                    'product_sub_type' => "Photo",
-                    'product_added_on' => date("Y-m-d H:i:s", strtotime($data['metadata']['date'])),
-                    'product_web' => '2',
-                    'product_vertical' => 'Royalty Free',
-                    'updated_at' => date("Y-m-d H:i:s")
+                    'product_size'        => $data['media']['width'] . "X" . $data['media']['height'],
+                    "product_keywords"    => $data['metadata']['keywords'],
+                    'product_status'      => "Active",
+                    'product_main_type'   => "Image",
+                    'product_sub_type'    => "Photo",
+                    'product_added_on'    => date("Y-m-d H:i:s", strtotime($data['metadata']['date'])),
+                    'product_web'         => '2',
+                    'product_vertical'    => 'Royalty Free',
+                    'updated_at'          => date("Y-m-d H:i:s")
 
                 );
-                // print_r($media); die;
                 $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $data['media']['id'])
                     ->get()
@@ -554,21 +448,17 @@ class Product extends Model
                         ->where('id', '=', $id)
                         ->update(['product_id' => $flag . $key]);
                     return $flag . $key;
-                    // echo "Inserted" . $id;
                 } else {
-
-                    //echo "hello";
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $data['media']['id'])
                         ->update([
-                            'product_thumbnail' => $data['media']['preview_url_no_wm'],
-                            'product_main_image' => $data['media']['preview_url'],
+                            'product_thumbnail'   => $data['media']['preview_url_no_wm'],
+                            'product_main_image'  => $data['media']['preview_url'],
                             'product_description' => $data['metadata']['description'],
-                            'product_title' => $data['metadata']['title'],
-                            'updated_at' => date('Y-m-d H:i:s')
+                            'product_title'       => $data['metadata']['title'],
+                            'updated_at'          => date('Y-m-d H:i:s')
                         ]);
                     return $data2[0]->product_id;
-                    //echo "Updated". $eachmedia['id'];
                 }
             }
         }
@@ -589,21 +479,21 @@ class Product extends Model
     {
         if ($productData['product_web'] == 3) {
             $media = array(
-                'product_id' => "",
-                'api_product_id' => $productData['product_id'],
-                'product_category' => "",
-                'product_title' => $productData['product_title'],
-                'product_thumbnail' => $productData['product_thumbnail'],
-                'product_main_image' => $productData['product_main_image'],
+                'product_id'          => "",
+                'api_product_id'      => $productData['product_id'],
+                'product_category'    => "",
+                'product_title'       => $productData['product_title'],
+                'product_thumbnail'   => $productData['product_thumbnail'],
+                'product_main_image'  => $productData['product_main_image'],
                 'product_description' => $productData['product_description'],
-                'product_size' => '',
-                "product_keywords" => $productData['product_keywords'],
-                'product_status' => "Active",
-                'product_main_type' => "Footage",
-                'product_sub_type' => "Photo",
-                'product_added_on' => date("Y-m-d H:i:s"),
-                'product_web' => '3',
-                'product_vertical' => 'Royalty Free'
+                'product_size'        => '',
+                "product_keywords"    => $productData['product_keywords'],
+                'product_status'      => "Active",
+                'product_main_type'   => "Footage",
+                'product_sub_type'    => "Photo",
+                'product_added_on'    => date("Y-m-d H:i:s"),
+                'product_web'         => '3',
+                'product_vertical'    => 'Royalty Free'
 
             );
             $flag = $this->get_api_flag('3', 'api_flag');
@@ -615,21 +505,21 @@ class Product extends Model
                 ->update(['product_id' => $flag . $key]);
         } else {
             $media = array(
-                'product_id' => "",
-                'api_product_id' => $productData['product_id'],
-                'product_category' => "",
-                'product_title' => $productData['product_title'],
-                'product_thumbnail' => $productData['product_thumbnail'],
-                'product_main_image' => $productData['product_main_image'],
+                'product_id'          => "",
+                'api_product_id'      => $productData['product_id'],
+                'product_category'    => "",
+                'product_title'       => $productData['product_title'],
+                'product_thumbnail'   => $productData['product_thumbnail'],
+                'product_main_image'  => $productData['product_main_image'],
                 'product_description' => $productData['product_description'],
-                'product_size' => '',
-                "product_keywords" => $productData['product_keywords'],
-                'product_status' => "Active",
-                'product_main_type' => "Image",
-                'product_sub_type' => "Photo",
-                'product_added_on' => $productData['product_added_on'],
-                'product_web' => '2',
-                'product_vertical' => 'Royalty Free'
+                'product_size'        => '',
+                "product_keywords"    => $productData['product_keywords'],
+                'product_status'      => "Active",
+                'product_main_type'   => "Image",
+                'product_sub_type'    => "Photo",
+                'product_added_on'    => $productData['product_added_on'],
+                'product_web'         => '2',
+                'product_vertical'    => 'Royalty Free'
             );
             DB::table('imagefootage_products')->insert($media);
             $id = DB::getPdo()->lastInsertId();
@@ -660,27 +550,17 @@ class Product extends Model
             ->map(function ($product) {
                 return $product->take(Product::HomeLimit);
             });
-        //echo "<pre>";print_r($data->toArray()); die;
         foreach ($data as $k => $perdata) {
-            // $final_data[$k] = (array)$perdata;
-            // $imgData =getimagesize($perdata->product_thumbnail);
-            // $final_data[$k]['width_img'] = $imgData[0];
-            // $final_data[$k] ['height_img']= $imgData[1];
-            // $final_data[$k]['attr'] = $imgData[3];
             foreach ($perdata as $j => $eachproduct) {
                 if ($eachproduct->product_web == '2') {
-                    $home[$k]["images"][$j] = $eachproduct;
+                    $home[$k]["images"][$j]                 = $eachproduct;
                     $home[$k]["images"][$j]->api_product_id = encrypt($eachproduct->api_product_id);
-                    $home[$k]["images"][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
+                    $home[$k]["images"][$j]->slug           =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
                 } else {
-                    $home[$k]["footages"][$j] = $eachproduct;
+                    $home[$k]["footages"][$j]                 = $eachproduct;
                     $home[$k]["footages"][$j]->api_product_id = encrypt($eachproduct->api_product_id);
-                    $home[$k]["footages"][$j]->slug =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
+                    $home[$k]["footages"][$j]->slug           =  preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachproduct->product_title)));
                 }
-
-                // if($j<4){
-                //     array_push($home,$data[$k][$j]);
-                // }
             }
         }
         return $home;
@@ -693,7 +573,7 @@ class Product extends Model
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $data = curl_exec($ch);
+        $data    = curl_exec($ch);
         $headers = curl_getinfo($ch);
         curl_close($ch);
 

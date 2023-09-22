@@ -37,15 +37,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function test()
-    {
-        echo "test";
-        exit();
-    }
     public function login()
     {
         $validator = \Validator::make(request()->all(), [
-            'email' => 'required',
+            'email'    => 'required',
             'password' => 'required',
         ]);
 
@@ -75,7 +70,7 @@ class AuthController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'first_name' => 'required',
-            'mobile' => 'required'
+            'mobile'     => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -110,7 +105,7 @@ class AuthController extends Controller
                 $match_token = sha1(time()) . random_int(111, 999);
                 User::where('id', $save_data->id)->update([
                     'email_verify_token' => $match_token,
-                    'token_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " days"))
+                    'token_valid_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " days"))
                 ]);
                 $cont_url = url('/active_user_account') . '/' . $match_token;
 
@@ -365,9 +360,9 @@ class AuthController extends Controller
         if ($user->status == 1) {
             return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
         }
-        $match_token = sha1(time()) . random_int(111, 999);
+        $match_token              = sha1(time()) . random_int(111, 999);
         $user->email_verify_token = $match_token;
-        $user->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"));
+        $user->token_valid_date   = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +1 days"));
         $user->save();
         $cont_url = config('app.front_end_url') . 'account-verification/' . $match_token;
 
@@ -401,41 +396,41 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'message' => $validator->errors()->first()], 200);
         }
-        $checkEmail = User::where('email', '=', $request->input('email'))->count();
+        $checkEmail  = User::where('email', '=', $request->input('email'))->count();
         $checkMobile = User::where('mobile', '=', $request->input('email'))->count();
         if ($checkEmail > 0 || $checkMobile > 0) {
             return response()->json(['status' => false, 'message' => 'User have been already registered.'], 200);
         }
-        $emailPattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        $emailPattern  = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
         $mobilePattern = '/^\d{10,15}$/';
         $email = '';
         $mobile = '';
         if (preg_match($emailPattern, $request->input('email'))) {
-            $email = $request->input('email');
+            $email  = $request->input('email');
         } else {
             $mobile = $request->input('email');
         }
-        $save_data = new User();
+        $save_data             = new User();
         $save_data->first_name = $request->input('name');
-        $save_data->user_name = Helper::generateUserName();
-        $save_data->email = $email;
-        $save_data->mobile = $mobile;
-        $save_data->password = Hash::make($request->input('password'));
-        $save_data->type = 'U';
-        $save_data->status = '0';
+        $save_data->user_name  = Helper::generateUserName();
+        $save_data->email      = $email;
+        $save_data->mobile     = $mobile;
+        $save_data->password   = Hash::make($request->input('password'));
+        $save_data->type       = 'U';
+        $save_data->status     = '0';
         $result = $save_data->save();
         if ($result) {
             if (!empty($email)) {
                 // send email
-                $cname = $request->input('name');
-                $cemail = $request->input('email');
+                $cname       = $request->input('name');
+                $cemail      = $request->input('email');
                 $match_token = sha1(time()) . random_int(111, 999);
                 User::where('id', $save_data->id)->update([
                     'email_verify_token' => $match_token,
                     'token_valid_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " hours"))
                 ]);
-                $cont_url = config('app.front_end_url') . 'account-verification/' . $match_token;
-                $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
+                $cont_url    = config('app.front_end_url') . 'account-verification/' . $match_token;
+                $data        = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
                 Mail::send('createusermail', $data, function ($message) use ($data) {
                     $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
                 });
@@ -445,11 +440,11 @@ class AuthController extends Controller
                 // send sms
                 $otp = rand(1000, 9999);
                 $update = User::where('id', $save_data->id)->update([
-                    'otp' => $otp,
+                    'otp'            => $otp,
                     'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
                 ]);
                 if ($update) {
-                    $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+                    $message  = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
                     $smsClass = new TnnraoSms;
                     $smsClass->sendSms($message, $mobile);
                     $user_data = ['user_id' => $save_data->id, 'is_email' => false, 'mobile' => $mobile];
