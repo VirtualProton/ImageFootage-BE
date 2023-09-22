@@ -87,10 +87,18 @@ class SearchController extends Controller
 	public function relatedProductList(Request $request){
         $all_products = [];
 		ini_set('max_execution_time', 0);
+        $keyword = array();
 		$getKeyword = $request->all();
-		$keyword = array();
-		$keyword['search'] = $getKeyword['searchData'];
-        $keyword['pagenumber'] = $getKeyword['pagenumber'];
+        if(!empty($getKeyword['searchData']['keyword'])){
+            $keyword['search'] = $getKeyword['searchData']['keyword'];
+            $keyword['pagenumber'] = $getKeyword['pagenumber'];
+            $keyword['authorname'] = '';
+        }else{
+            $keyword['search'] = '';
+            $keyword['authorname'] = $getKeyword['searchData']['authorName'];
+            $keyword['pagenumber'] = $getKeyword['pagenumber'];
+        }
+
 		if($getKeyword['imgtype']=='2') {
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword, 30);

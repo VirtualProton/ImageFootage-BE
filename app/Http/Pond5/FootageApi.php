@@ -31,11 +31,12 @@ class FootageApi
             $allowed_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         }
         return substr(str_shuffle($allowed_charset), 0, $len);
-    }   
+    }
 
     public function search($keyword, $getKeyword, $limit = 30, $page = 0)
     {
         $search = $keyword['search'];
+        $authorname = $keyword['authorname'];
         $editorial = 0;
         $bittotal = 0;
         if (isset($keyword['pagenumber'])) {
@@ -53,29 +54,35 @@ class FootageApi
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
 
-        foreach($getFilters as $getFilterName => $getFilterValue){            
-            
-            if(!empty($getFilterValue)){                
-                
+        foreach($getFilters as $getFilterName => $getFilterValue){
+
+            if(!empty($getFilterValue)){
                 $filterData = DB::table('imagefootage_filters')
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->where('imagefootage_filters.value', $getFilterName)
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
                 ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
                 ->get();
-            
+
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
-            } 
-        } 
+            }
+        }
         $search_cmd = array();
-        
+
         $url = [];
         if (!empty($filter_mapping)) {
             $url['query'] = $filter_mapping;
         }
-        
+        if(!empty($search)){
+            $url['query']=$search;
+        }
+        if(!empty($authorname)){
+            $url['query'] = 'authorName:'.$authorname;
+        }
+
+
         $url['type'] = 'video';
 
         if (!empty($sort)) {
