@@ -76,6 +76,7 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;
@@ -166,6 +167,7 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;

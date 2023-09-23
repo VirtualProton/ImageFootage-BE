@@ -271,6 +271,7 @@ class AuthController extends Controller
                 ->get()->toArray();
             $image_download = 0;
             $footage_download = 0;
+            $music_download = 0;
             $profileCompleted = false;
             if (!$this->isProfileCompleted(auth()->user()->id)) {
                 $profileCompleted = true;
