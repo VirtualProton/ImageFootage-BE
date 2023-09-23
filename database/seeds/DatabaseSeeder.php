@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             ImagefootageAccountsSeeder::class,
             ImageFootageApiSeeder::class,
             ImagefootageModulesSeeder::class,
-            ImagefootagePackagesSeeder::class,
             ContentsSeeder::class,
+            ImageFootageProductCategorySeeder::class,
             ImagefootageProductLocationsSeeder::class,
             ImagefootageProductOrientationSeeder::class,
             ImagefootageProductSortTypesSeeder::class,
@@ -38,7 +38,11 @@ class DatabaseSeeder extends Seeder
             TaxesSeeder::class,
             IndustryTypesSeeder::class,
             ImageFootageFiltersSeeder::class,
-            ImageFootageFilterOptionsSeeder::class
+            ImageFootageFilterOptionsSeeder::class,
+            DataInitializerDiscountSeeder::class,
+            DataInitializerPlanPackageSeeder::class,
+            DataInitializerPromotionSeeder::class,
+            DataInitializerStaticPageSeeder::class
         ]);
     }
 }
