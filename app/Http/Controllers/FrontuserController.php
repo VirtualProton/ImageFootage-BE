@@ -237,11 +237,16 @@ class FrontuserController extends Controller {
 		}
 	}
 
-	public function userCartList(Request $request){
-        $Usercart = new Usercart;
-		$cart_list= $Usercart->where('cart_added_by',$request['Utype'])->with('product')->get()->toArray();
-		echo json_encode($cart_list,true);
+	public function userCartList(Request $request)
+	{
+		$Usercart = new Usercart;
+		$cart_list = $Usercart->where('cart_added_by', $request['Utype'])->with('product')->get()->toArray();
+		foreach ($cart_list as $item => $eachmedia) {
+			$cart_list[$item]['product']['api_product_id'] = encrypt($eachmedia['product']['api_product_id'], true);
+		}
+		echo json_encode($cart_list, true);
 	}
+
 	public function deleteCartItem(Request $request){
         //dd($request['product']);
        // $tokens=json_decode($request['product']['token'],true);
