@@ -271,6 +271,7 @@ class AuthController extends Controller
                 ->get()->toArray();
             $image_download = 0;
             $footage_download = 0;
+            $music_download = 0;
             $profileCompleted = false;
             if (!$this->isProfileCompleted(auth()->user()->id)) {
                 $profileCompleted = true;
@@ -282,6 +283,8 @@ class AuthController extends Controller
                         $image_download = 1;
                     } else if ($plan['package_type'] == 'Footage') {
                         $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
                     }
                 }
             }
@@ -294,6 +297,7 @@ class AuthController extends Controller
                 'Utype'             => auth()->user()->id,
                 'image_downlaod'    => $image_download,
                 'footage_downlaod'  => $footage_download,
+                'music_download'    => $music_download,
                 'profile_completed' => $profileCompleted
 
             ]);

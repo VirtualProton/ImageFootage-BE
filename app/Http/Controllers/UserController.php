@@ -76,15 +76,19 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;
                     } else if ($plan['package_type'] == 'Footage') {
                         $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
                     }
                 }
                 $send_data['image_download'] = $image_download;
                 $send_data['footage_download'] = $footage_download;
+                $send_data['music_download'] = $music_download;
             }
             return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
         } else {
@@ -163,15 +167,19 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;
                     } else if ($plan['package_type'] == 'Footage') {
                         $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
                     }
                 }
                 $send_data['image_download'] = $image_download;
                 $send_data['footage_download'] = $footage_download;
+                $send_data['music_download'] = $music_download;
             }
             return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
         } else {
