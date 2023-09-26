@@ -91,7 +91,7 @@ class Product extends Model
         } else {
             $type = 'Editorial';
         }
-      
+
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
         $adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
@@ -120,7 +120,7 @@ class Product extends Model
                 $data = $data->whereIn('imagefootage_filters_options.id', $filtersArr);
             }
         }
-            
+
         $data = $data->distinct()->limit($limit)->get()->toArray();
 
         if (count($data) > 0) {
@@ -206,7 +206,8 @@ class Product extends Model
                     'product_web' => '2',
                     'product_vertical' => 'Royalty Free',
                     'updated_at' => date("Y-m-d H:i:s"),
-                    'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no'
+                    'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
+                    'author_name' => $eachmedia['author_username']
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -293,12 +294,12 @@ class Product extends Model
                     'updated_at'          => date("Y-m-d H:i:s")
 
                 );
-                
+
                 $data2 = DB::table('imagefootage_products')
                     ->where('api_product_id', $eachmedia['id'])
                     ->get()
                     ->toArray();
-              
+
                 if (count($data2) == 0) {
                     $flag = $this->get_api_flag('3', 'api_flag');
                     $key  = $this->randomkey();
@@ -481,7 +482,8 @@ class Product extends Model
                     'product_added_on'    => date("Y-m-d H:i:s", strtotime($data['metadata']['date'])),
                     'product_web'         => '2',
                     'product_vertical'    => 'Royalty Free',
-                    'updated_at'          => date("Y-m-d H:i:s")
+                    'updated_at'          => date("Y-m-d H:i:s"),
+                    'author_name'         => $data['metadata']['author_username']
 
                 );
                 $data2 = DB::table('imagefootage_products')

@@ -101,6 +101,7 @@ Route::group([
     Route::get('/get_countries_list', 'AuthController@getCountriesList');
     Route::get('/get_states_list/{country_id?}', 'AuthController@getStatesList');
     Route::get('/get_cities_list/{state_id?}', 'AuthController@getCitiesList');
+    Route::post('relatedsearchImage', 'SearchController@relatedSimilarImageList');
 });
 
 Route::group([
