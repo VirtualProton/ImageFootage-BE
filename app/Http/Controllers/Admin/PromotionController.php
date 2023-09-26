@@ -236,9 +236,9 @@ class PromotionController extends Controller
          }
 		 $result = Promotion::where('id',$request->promotion_id)->update($update_array);
 		 if($result){
-				return redirect('admin/list_promotion')->with('success','Promotion updated successful');
+				return redirect('admin/list_promotion')->with('success','Promotion updated successfully.');
 		 }else{
-			    return back()->with('warning','Some problem occured.');
+			    return redirect()->back()->with('error','Some problem occured.');
 		 }
 		       
     }

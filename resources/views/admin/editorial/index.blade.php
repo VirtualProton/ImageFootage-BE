@@ -9,7 +9,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Admin/Editorial List</li>
+            <li class="active">Editorial List</li>
         </ol>
     </section>
     <section class="content">
@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Admin List</h3>
+                        <h3 class="box-title">Editorial List</h3>
                     </div>
                     @include('admin.partials.message')
                     <!-- /.box-header -->
