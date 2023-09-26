@@ -28,12 +28,12 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-4">
-                <div class="checkbox">
-                    <label>
-                        <input type="radio" name="type" value="flat" class="type" {{ $promoCode['type'] == 'flat' ? 'checked' : '' }}> Flat
+                <div class="form-group">
+                    <label style="font-weight: 500">
+                        <input type="radio" name="type" value="flat" {{ $promoCode['type'] == 'flat' ? 'checked' : '' }}> Flat
                     </label>
-                    <label>
-                        <input type="radio" name="type" value="percentage" class="type" {{ $promoCode['type'] == 'percentage' ? 'checked' : '' }}> Percentage
+                    <label style="font-weight: 500">
+                        <input type="radio" name="type" value="percentage" {{ $promoCode['type'] == 'percentage' ? 'checked' : '' }}> Percentage
                     </label>
                 </div>
                 </div>
@@ -60,12 +60,12 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Valid Upto Type</label>
                 <div class="col-sm-4">
-                <div class="checkbox">
-                    <label>
-                        <input type="radio" name="valid_type" value="fixed" class="type" {{ $promoCode['valid_upto_type'] == 'fixed' ? 'checked' : '' }}> Fixed
+                <div class="form-group">
+                    <label style="font-weight: 500">
+                        <input type="radio" name="valid_type" value="fixed" {{ $promoCode['valid_upto_type'] == 'fixed' ? 'checked' : '' }}> Fixed
                     </label>
-                    <label>
-                        <input type="radio" name="valid_type" value="range" class="type" {{ $promoCode['valid_upto_type'] == 'range' ? 'checked' : '' }}> Range
+                    <label style="font-weight: 500">
+                        <input type="radio" name="valid_type" value="range" {{ $promoCode['valid_upto_type'] == 'range' ? 'checked' : '' }}> Range
                     </label>
                     </div>
                 </div>
