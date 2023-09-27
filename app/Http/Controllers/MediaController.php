@@ -132,6 +132,7 @@ class MediaController extends Controller
     {
         $categories  = ProductCategory::select('category_id', 'category_name')
             ->where('is_display_home', 1)
+            ->where('category_status','Active')
             ->orderBy('category_order', 'asc')
             ->limit(24)
             ->get()
