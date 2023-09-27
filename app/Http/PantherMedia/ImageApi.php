@@ -96,16 +96,16 @@ class ImageApi
             $sort = 'sort: buy;';
         } else {
             $sort = 'sort: rel;';
-        }    
-        
+        }
+
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
-        foreach($getFilters as $getFilterName => $getFilterValue){            
-            
-            if(!empty($getFilterValue)){                
+        foreach($getFilters as $getFilterName => $getFilterValue){
+
+            if(!empty($getFilterValue)){
                 $filterData = DB::table('imagefootage_filters')
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->where('imagefootage_filters.value', $getFilterName)
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
                 ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
                 ->get();
@@ -113,8 +113,8 @@ class ImageApi
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
-            } 
-        }        
+            }
+        }
 
         $this->access_key = $this->getAccessKey();
         try {
@@ -367,6 +367,75 @@ class ImageApi
         if ($response->getBody()) {
             $downloadcontents = json_decode($response->getBody(), true);
             return $downloadcontents;
+        }
+    }
+
+    public function searchWithMedia($mediaId, $limit = 30,$pageNumber = 0){
+        try {
+            $this->access_key = $this->getAccessKey();
+            $client = new Client(); //GuzzleHttp\Client
+            $response = $client->post($this->url . '/search-similar', [
+                'headers' => [
+                    'Content-Type'   => 'application/x-www-form-urlencoded',
+                    'Accept-Version' => '1.0'
+                ],
+                'form_params' => [
+                    'api_key'      => $this->api_key,
+                    'access_key'   => $this->access_key,
+                    'timestamp'    => $this->timestamp,
+                    'nonce'        => $this->nonce,
+                    'algo'         => $this->algo,
+                    'content_type' => 'application/json',
+                    'lang' => 'en',
+                    'id_media'=>$mediaId,
+                    'page' => $pageNumber,
+                    'limit' => $limit,
+                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                ]
+            ]);
+
+            if ($response->getBody()) {
+                $contents = json_decode($response->getBody(), true);
+                return $contents;
+            }
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            $jsonBody = (string) $response->getBody();
+        }
+    }
+
+    public function searchWithAuthor($authorName, $limit = 30,$pageNumber = 0){
+        try {
+            $this->access_key = $this->getAccessKey();
+            $client = new Client(); //GuzzleHttp\Client
+            $response = $client->post($this->url . '/search', [
+                'headers' => [
+                    'Content-Type'   => 'application/x-www-form-urlencoded',
+                    'Accept-Version' => '1.2'
+                ],
+                'form_params' => [
+                    'api_key'      => $this->api_key,
+                    'access_key'   => $this->access_key,
+                    'timestamp'    => $this->timestamp,
+                    'nonce'        => $this->nonce,
+                    'algo'         => $this->algo,
+                    'content_type' => 'application/json',
+                    'lang' => 'en',
+                    'page' => $pageNumber,
+                    'limit' => $limit,
+                    'q'=>'',
+                    'filter'=>'sort:date;type:photos;author:'.$authorName,
+                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                ]
+            ]);
+
+            if ($response->getBody()) {
+                $contents = json_decode($response->getBody(), true);
+                return $contents;
+            }
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            $jsonBody = (string) $response->getBody();
         }
     }
 }

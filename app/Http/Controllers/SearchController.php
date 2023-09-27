@@ -436,5 +436,60 @@ class SearchController extends Controller
             return response()->json(["status"=> false, "message"=> "Cannot get keywords"]);
         }
     }
+    public function relatedSimilarImageList(Request $request){
+        try{
+            $all_products = [];
+            $requestData = $request->all();
+
+            $pantherMediaImages = new ImageApi();
+            if(isset($requestData['searchData']['mediaId']) && !empty($requestData['searchData']['mediaId'])){
+                $pantharmediaData = $pantherMediaImages->searchWithMedia($requestData['searchData']['mediaId'], 30,$requestData['pagenumber']);
+            } else{
+                $pantharmediaData = $pantherMediaImages->searchWithAuthor($requestData['searchData']['authorName'], 30,$requestData['pagenumber']);
+            }
+            if (count($pantharmediaData) > 0) {
+                if(empty($pantharmediaData['items']['media'][0] ) ){
+                     $all_products = array(
+                         'product_id' => $pantharmediaData['items']['media']['id'],
+                         'api_product_id' => encrypt($pantharmediaData['items']['media']['id']),
+                         'product_title' => $pantharmediaData['items']['media']['title'],
+                         'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pantharmediaData['items']['media']['title']))),
+                         'product_main_image' => $pantharmediaData['items']['media']['preview_high'],
+                         'product_thumbnail' => $pantharmediaData['items']['media']['preview_no_wm'],
+                         'product_description' => $pantharmediaData['items']['media']['description'],
+                         'product_keywords' => $pantharmediaData['items']['media']['keywords'],
+                         'product_main_type' => "Image",
+                         'product_added_on' => date("Y-m-d H:i:s", strtotime($pantharmediaData['items']['media']['date'])),
+                         'product_web' => '2',
+                         'product_authorName' => $pantharmediaData['items']['media']['author-username']
+                     );
+                 }else{
+                         foreach ($pantharmediaData['items']['media'] as $eachmedia) {
+                          if (isset($eachmedia['id'])) {
+                             $media = array(
+                                 'product_id' => $eachmedia['id'],
+                                 'api_product_id' => encrypt($eachmedia['id']),
+                                 'product_title' => $eachmedia['title'],
+                                 'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                                 'product_main_image' => $eachmedia['preview_high'],
+                                 'product_thumbnail' => $eachmedia['preview_no_wm'],
+                                 'product_description' => $eachmedia['description'],
+                                 'product_keywords' => $eachmedia['keywords'],
+                                 'product_main_type' => "Image",
+                                 'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
+                                 'product_web' => '2',
+                                 'product_authorName' => $eachmedia['author-username']
+                             );
+                         }
+                         array_push($all_products, $media);
+                     }
+                 }
+                 return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items']);
+                 }
+
+        }catch(\Exception $e){
+            return response()->json(["status"=> false, "message"=> "Please try after some times"]);
+        }
+    }
 
 }
