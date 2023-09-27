@@ -165,7 +165,8 @@ class SearchController extends Controller
                             'product_web' => '3',
                             'product_keywords' => $eachmedia['keywords'],
                             'product_price' => $eachmedia['versions'][0]['price'],
-                            'product_label' => $eachmedia['versions'][0]['label']
+                            'product_label' => $eachmedia['versions'][0]['label'],
+                            'product_authorName' => $eachmedia['authorName']
                         );
                     }
                     array_push($all_products, $media);

@@ -36,7 +36,10 @@ class FootageApi
     public function search($keyword, $getKeyword, $limit = 30, $page = 0)
     {
         $search = $keyword['search'];
-        $authorname = $keyword['authorname'];
+        if(isset($keyword['authorname']) && !empty($keyword['authorname'])){
+            $authorname = $keyword['authorname'];
+        }
+
         $editorial = 0;
         $bittotal = 0;
         if (isset($keyword['pagenumber'])) {
@@ -94,6 +97,7 @@ class FootageApi
         $url['page'] = $page;
 
         $url1 = $this->url . '/api/v3/search?' . http_build_query($url);
+
 
         $curl = curl_init();
 
