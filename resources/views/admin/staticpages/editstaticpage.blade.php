@@ -75,6 +75,7 @@
               <div class="form-group">
                 <label for="exampleInputPassword1">Page Content</label>
                 <textarea type="text" class="form-control" name="page_content" id="page_content" placeholder="Page Content">{{ $page[0]['page_content'] }}</textarea>
+                <div id="ckeditor_error" class="has_error hidden" style="color:red;">Page content is required.</div>
                 @if ($errors->has('page_content'))
                 <div class="has_error" style="color:red;">{{ $errors->first('page_content') }}</div>
                 @endif
@@ -129,9 +130,15 @@
 </script>
 <script>
   $(document).ready(function($) {
-    CKEDITOR.replace('page_content');
-    // Example Validataion Standard Mode
-    // ---------------------------------
+    var editor = CKEDITOR.replace('page_content');
+
+    editor.on('change', function() {
+      $("#ckeditor_error").addClass(' hidden');
+      $("#ckeditor_error").parent('.form-group').removeClass(' has-error ').addClass(' has-success ');
+      $("button[type=submit]").removeClass('disabled');
+      $("button[type=submit]").removeAttr('disabled');
+    });
+
     (function() {
 
       var i = 1;
@@ -147,38 +154,59 @@
           page_title: {
             validators: {
               notEmpty: {
-                message: 'Page Title is required'
+                message: 'Page title is required.'
               }
             }
           },
           page_url: {
             validators: {
               notEmpty: {
-                message: 'Page URL is required'
+                message: 'Page URL is required.'
               }
             }
           },
           page_meta_desc: {
             validators: {
               notEmpty: {
-                message: 'Page Meta Description is required'
+                message: 'Page meta description is required.'
               }
             }
           },
           page_meta_keywords: {
             validators: {
               notEmpty: {
-                message: 'Page Meta Keywords is required'
+                message: 'Page meta keywords is required.'
+              }
+            }
+          },
+          page_slug: {
+            validators: {
+              notEmpty: {
+                message: 'Page slug is required.'
               }
             }
           },
           page_content: {
             validators: {
+              notEmpty: {
+                message: 'Page content is required.'
+              },
               stringLength: {
-                message: 'Page Content is required'
+                message: 'Page content is required.'
               }
             }
           }
+        }
+      }).on('success.form.fv', function(e) {
+        var editor = CKEDITOR.instances.page_content;
+        var content = editor.getData().trim();
+        if (content === '') {
+          e.preventDefault();
+          $("#ckeditor_error").removeClass('hidden');
+          $("#ckeditor_error").parent('.form-group').addClass(' has-error ');
+        } else {
+          $("button[type=submit]").removeClass('disabled');
+          $("button[type=submit]").removeAttr('disabled');
         }
       });
     })();
