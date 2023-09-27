@@ -28,9 +28,13 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-4">
-                <div class="checkbox">
-                    <input type="radio" name="type" value="flat" @if (old('type') == "flat") {{ 'checked' }} @endif class="type"> Flat
-                    <input type="radio" name="type" value="percentage" @if (old('type') == "percentage") {{ 'checked' }} @endif class="type"> Percentage
+                <div class="form-group">
+                    <label style="font-weight: 500">
+                        <input type="radio" name="type" value="flat" @if (old('type') == "flat") {{ 'checked' }} @endif> Flat
+                    </label>
+                    <label style="font-weight: 500">
+                        <input type="radio" name="type" value="percentage" @if (old('type') == "percentage") {{ 'checked' }} @endif> Percentage
+                    </label>
                 </div>
                 </div>
             </div>
@@ -56,9 +60,13 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Valid Upto Type</label>
                 <div class="col-sm-4">
-                <div class="checkbox">
-                        <input type="radio" name="valid_type" value="fixed" @if (old('valid_type') == "fixed") {{ 'checked' }} @endif class="type"> Fixed
-                        <input type="radio" name="valid_type" value="range" @if (old('valid_type') == "range") {{ 'checked' }} @endif class="type"> Range
+                <div class="form-group">
+                    <label style="font-weight: 500">
+                        <input type="radio" name="valid_type" value="fixed" @if (old('valid_type') == "fixed") {{ 'checked' }} @endif> Fixed
+                    </label>
+                    <label style="font-weight: 500">
+                        <input type="radio" name="valid_type" value="range" @if (old('valid_type') == "range") {{ 'checked' }} @endif> Range
+                    </label>
                     </div>
                 </div>
             </div>
