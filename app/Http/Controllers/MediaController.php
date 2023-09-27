@@ -166,8 +166,7 @@ class MediaController extends Controller
 
     public function download(Request $request)
     {
-        $allFields = $request->all();
-        //print_r($allFields); die;
+        $allFields = $request->all();        
         $tokens = json_decode($allFields['product']['token'], true);
         $id = $tokens['Utype'];
         $package_id = $allFields['product']['package'];
@@ -366,6 +365,105 @@ class MediaController extends Controller
         }
     }
 
+    public function multipleDownload(Request $request)
+    {
+        $allFields = $request->all();
+        $tokens = json_decode($allFields['userData'], true);
+        $id = $tokens['Utype'];
+        $flag = 'Image';
+        $package_id = $allFields['planId'];
+
+        $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->where('user_id', '=', $id)
+            ->where('package_type', '=', $flag)
+            ->where('id', '=', $package_id)
+            ->where('package_expiry_date_from_purchage', '>', Now())
+            ->get();
+
+        $download = 0;
+        $downoad_type = 0;
+
+        if ($pacakegalist->isNotEmpty()) {
+            foreach ($pacakegalist as $perpack) {
+                if ($perpack->package_plan == 1) { // For subscriprion type package
+                    // Check subscription is monthly or not
+
+                    if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
+
+                        $subscriptionStartDate = Carbon::parse($perpack->created_at);
+
+                        $latestDates = $this->getDateGaps($subscriptionStartDate);
+                        $startDateOfSpecificMonth = $latestDates['startDate'];
+                        $endDateOfSpecificMonth = $latestDates['endDate'];
+
+                        // Count the number of downloads for the current month
+                        $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
+                            ->whereBetween('downloaded_date', [$startDateOfSpecificMonth, $endDateOfSpecificMonth])
+                            ->distinct('id_media')
+                            ->pluck('id_media')->count();
+
+                        if ($monthlyDownloads >= $perpack->package_products_count) {
+                            return response()->json(['status' => '0', 'message' => 'You have exceeded a monthly download limit.']);
+                        } else {
+                            $download = 1;
+                        }
+                    } else if ($perpack->downloaded_product < $perpack->package_products_count) {
+                        $download = 1;
+                    }
+                } else if ($perpack->package_plan == 2 && $perpack->downloaded_product < $perpack->package_products_count) { // For download type package
+                    $download = 1;
+                }
+            }
+        } else {
+            return response()->json(['status' => 'wrong_plan', 'message' => 'Please select correct package to download!!']);
+        }
+
+        if ($download == 1) {
+            if ($flag == "Image") {                
+
+                $products = Product::whereIn('product_id', $allFields['selectedValues'])                            
+                            ->get();
+                foreach($products as $product){
+
+                    $dataCheck = UserProductDownload::where('product_id_api', $product['api_product_id'])->where('product_size', $product["product_size"])->where('web_type', $product['product_web'])->first();
+                    
+                    $dataInsert = array(
+                        'user_id' => $id,
+                        'package_id' => $package_id,
+                        'product_id' => $product['product_id'],
+                        'id_download' => 0,
+                        'product_id_api' => $product['api_product_id'],
+                        'id_media' => $product['product_id'],
+                        'download_url' => $product['product_thumbnail'],
+                        'downloaded_date' => date('Y-m-d H:i:s'),
+                        'product_name' => $product['product_title'],
+                        'product_desc' => $product['product_description'],
+                        'product_thumb' => $product['product_thumbnail'],
+                        'web_type' => $product['product_web'],
+                        'product_size' => $product["product_size"],                        
+                        'selected_product' => json_encode($product),
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    );
+
+                    UserProductDownload::insert($dataInsert);
+                }                               
+
+                if (!$dataCheck) {
+                    UserPackage::where('user_id', '=', $id)
+                        ->where('package_type', '=', $flag)
+                        ->where('id', '=', $package_id)
+                        ->update([
+                            'downloaded_product' => DB::raw('downloaded_product+1'),
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+                }                
+                return response()->json(['status' => 'download_success', 'message' => 'Products downloaded successfully !!']);
+            } 
+        } else {
+            return response()->json(['status' => 'download_limit', 'message' => 'Download pack limit has been over already !!']);
+        }
+    }
     /**
      * This API is used to re-download the image
      */

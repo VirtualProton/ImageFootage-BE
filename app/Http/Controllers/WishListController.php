@@ -535,6 +535,37 @@ class WishListController extends Controller
         }
     }
 
+    public function deleteWishlist(Request $request) {   
+
+        $collectionData = $request->all();
+        if(!empty($collectionData)){
+            if($collectionData['id']){
+                DB::table('imagefootage_wishlists')
+                ->where('id', $collectionData['id'])
+                ->delete();
+            } 
+            foreach($collectionData['products'] as $product){
+                $allSelectedValues[] = $product['id'];
+            }
+
+            if(isset($allSelectedValues) && !empty($allSelectedValues)){
+                DB::table('imagefootage_wishlist_products')
+                ->whereIn('product_id', $allSelectedValues)
+                ->delete();
+            }
+
+            return response()->json([ 
+                'status' => "success",            
+                'message' => "Collection Removed Succesfully.",
+            ]);
+        }else{
+            return response()->json([ 
+                'status' => "failed" ,               
+                'message' => "Collection not found.",
+            ]);
+        }
+    }
+
     public function getWishlistData(Request $request) {        
         
 
