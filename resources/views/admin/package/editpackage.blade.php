@@ -230,48 +230,54 @@
           package_name: {
             validators: {
               notEmpty: {
-                message: 'Package name is required'
+                message: 'Package name is required.'
               }
             }
           },
           package_price: {
             validators: {
               notEmpty: {
-                message: 'Package price is required'
+                message: 'Package price is required.'
+              },
+              numeric: {
+                message: 'The value must be an integer.'
               }
             }
           },
           package_description: {
             validators: {
               notEmpty: {
-                message: 'Package description is required'
+                message: 'Package description is required.'
               }
             }
           },
           package_products_count: {
             validators: {
               notEmpty: {
-                message: 'Package products count is required'
+                message: 'Package products count is required.'
+              },
+              numeric: {
+                message: 'The value must be an integer.'
               }
             }
           },
           package_type: {
             validators: {
               stringLength: {
-                message: 'Package type is required'
+                message: 'Package type is required.'
               }
             }
           },
           package_expiry: {
             validators: {
               notEmpty: {
-                message: 'Package expiry in months is required'
+                message: 'Package expiry in months is required.'
               },
               numeric: {
-                message: 'The value is not an integer'
+                message: 'The value must be an integer.'
               },
               callback: {
-                message: 'Invalid value',
+                message: 'Invalid value.',
                 callback: function(value, validator, $field) {
                   var packageExpiryYear = validator.getFieldValue('package_expiry_year');
                   var packageExpiry = $field.val();
@@ -289,13 +295,13 @@
           package_expiry_year: {
             validators: {
               notEmpty: {
-                message: 'Package expiry per year is required'
+                message: 'Package expiry per year is required.'
               },
               numeric: {
-                message: 'The value is not an integer'
+                message: 'The value must be an integer.'
               },
               callback: {
-                message: 'Invalid value',
+                message: 'Invalid value.',
                 callback: function(value, validator, $field) {
                   var packageExpiry = validator.getFieldValue('package_expiry');
                   var packageExpiryYear = $field.val();
@@ -313,7 +319,7 @@
           display_for: {
             validators: {
               stringLength: {
-                message: 'Display for is required'
+                message: 'Display for is required.'
               }
             }
           },

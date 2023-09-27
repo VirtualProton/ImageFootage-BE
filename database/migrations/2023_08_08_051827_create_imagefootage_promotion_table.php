@@ -24,7 +24,7 @@ class CreateImagefootagePromotionTable extends Migration
             $table->text('event_des');
             $table->enum('status', ['1', '0'])->default('1');
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('update_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->string('page_type', 20)->nullable();
             $table->string('desktop_banner_image', 255)->nullable();
             $table->string('mobile_banner_image', 255)->nullable();

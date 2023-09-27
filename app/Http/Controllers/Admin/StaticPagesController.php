@@ -36,7 +36,7 @@ class StaticPagesController extends Controller
 		$staticpages->page_added_by=Auth::guard('admins')->user()->id;	
 		$result=$staticpages->save();
 		if($result){
-		  	 return back()->with('success','Static page created successful');
+		  	 return back()->with('success','Static page created successfully.');
 		}else{
 			 return back()->with('warning','Some problem occured.');
 		}	
@@ -49,7 +49,7 @@ class StaticPagesController extends Controller
    public function changePackageStatus($status,$id){
 	  	$result = StaticPages::where('page_id',$id)->update(array('image_status'=>$status));
 		if($result){
-          return back()->with('success','Static page status changed successful');
+          return back()->with('success','Static page status changed successfully.');
 		}else{
 		  return back()->with('warning','Some problem occured.');
   		}
@@ -77,7 +77,7 @@ class StaticPagesController extends Controller
 							 );
 		$result = StaticPages::where('page_id',$request->page_id)->update($update_array);
 		if($result){
-				return back()->with('success','Static page updated successful');
+				return back()->with('success','Static page updated successfully.');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
@@ -85,7 +85,7 @@ class StaticPagesController extends Controller
     public function deleteStaticPage($id){
 	  $del_result=StaticPages::find($id)->delete();
 	  if($del_result){
-			return back()->with('success','Static page deleated successfully');
+			return back()->with('success','Static page deleted successfully.');
 		}else{
 			 return back()->with('warning','Some problem occured.');
 		}
