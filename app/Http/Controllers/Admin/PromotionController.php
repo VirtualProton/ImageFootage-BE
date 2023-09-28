@@ -26,19 +26,13 @@ class PromotionController extends Controller
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'event_name' => 'required',
-            'product_name'=> 'required',
             'event_des' => 'required',
-            'media_type' => 'required',
             'page_type' => 'required',
             'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
             'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
-            'event_name.required' => 'The Event Name field is required.',
-            'date_start.required' => 'The Start Date field is required.',
-            'date_end.required' => 'The End Date field is required.',
-            'product_name.required' => 'The Event Banner field is required.',
-            'event_des.required' => 'The Event Description field is required.',
-            'media_type.required' => 'The Media Type field is required.',
+            'event_name.required' => 'The Name field is required.',
+            'event_des.required' => 'The Description field is required.',
             'page_type.required' => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
             'mobile_banner_image' => 'Please upload valid mobile banner image.',
@@ -101,11 +95,6 @@ class PromotionController extends Controller
     		}
             $promotion = Promotion::create([
                 'event_name' => strip_tags($request->input('event_name')),
-                'date_start' => $request->input('date_start'),
-                'date_end' => $request->input('date_end'),
-                'media_type' => $request->input('media_type'),
-                'product_name' => $request->input('product_name'),
-                'media_url' =>  $url,
                 'event_des' => $request->input('event_des'),
                 'status' => $request->input('status'),
                 'page_type' => $request->input('page_type'),
@@ -154,19 +143,13 @@ class PromotionController extends Controller
             }
        $this->validate($request, [
             'event_name' => 'required',
-            'product_name'=> 'required',
             'event_des' => 'required',
-            'media_type' => 'required',
             'page_type' => 'required',
             'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
             'mobile_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
-            'event_name.required' => 'The Event Name field is required.',
-            'date_start.required' => 'The Start Date field is required.',
-            'date_end.required' => 'The End Date field is required.',
-            'product_name.required' => 'The Event Banner field is required.',
-            'event_des.required' => 'The Event Description field is required.',
-            'media_type.required' => 'The Media Type field is required.',
+            'event_name.required' => 'The Name field is required.',
+            'event_des.required' => 'The Description field is required.',
             'page_type.required' => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
             'mobile_banner_image' => 'Please upload valid mobile banner image.',
@@ -219,11 +202,6 @@ class PromotionController extends Controller
 				}
     		}
 		 $update_array=array('event_name'=>$request->event_name,
-		 					 'date_start'=>$request->date_start,
-		 					 'date_end'=>$request->date_end,
-                              'media_type' => $request->input('media_type'),
-                             'product_name' => $request->input('product_name'),
-                             'media_url' =>  $url,
 							 'event_des'=>$request->event_des,
                              'status'=>$request->status,
                              'page_type' => $request->page_type
@@ -245,10 +223,8 @@ class PromotionController extends Controller
 
     public function getPromotion(Request $request, $page =  null)
     {
-       $current_event = Promotion::select( 'id','event_name','media_type', 'media_url','date_start', 'date_end', 'page_type', 'desktop_banner_image', 'mobile_banner_image', 'event_des')
-            ->where('status', '=', '1')
-            ->where('date_start', '<=', Carbon::now())
-            ->where('date_end', '>=', Carbon::now());
+       $current_event = Promotion::select( 'id','event_name','page_type', 'desktop_banner_image', 'mobile_banner_image', 'event_des')
+            ->where('status', '=', '1');
             if(!empty($page)){
                 $current_event = $current_event->where('page_type', $page)->first();
             } else {
