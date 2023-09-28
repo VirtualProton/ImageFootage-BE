@@ -86,16 +86,17 @@ class ImageApi
 
     public function search($keyword, $getKeyword = [], $limit = 30, $page = 0)
     {
+        
         $serach = $keyword['search'];
         if (isset($getKeyword['pagenumber']) && $getKeyword['pagenumber'] > '0') {
             $page = $getKeyword['pagenumber'];
         }
-        if (isset($getKeyword['letest']) && $getKeyword['letest'] == '1') {
+        if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'sort: date;';
-        } else if (isset($getKeyword['populer']) && $getKeyword['populer'] == '1') {
+        } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
             $sort = 'sort: buy;';
-        } else {
-            $sort = 'sort: rel;';
+        } else { 
+            $sort = 'sort: rel;'; // For Best Match
         }
 
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
