@@ -53,9 +53,6 @@
                         <th>Id</th>
                         <th>Event Name</th>
                         <th>Page Type</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Items</th>
                         <th>Actions</th>
                     </thead>
 
@@ -65,9 +62,6 @@
                         <td>{{ $promotion['id'] }} </td>
                         <td>{{ $promotion['event_name'] }} </td>
                         <td> {{ $promotion['page_type'] }} </td>
-                        <td>{{ isset($promotion['date_start']) ? date('Y-m-d',strtotime($promotion['date_start'])) : '' }} </td>
-                        <td>{{ isset($promotion['date_end']) ? date('Y-m-d',strtotime($promotion['date_end'])) : '' }} </td>
-                        <td>{{ $promotion['media_type'] }} </td>
                         <td>  @if($promotion['status'] =='1')
                             <a href="{{ url('admin/promotionstatus/0/'.$promotion['id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
                             @elseif($promotion['status'] =='0')
