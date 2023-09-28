@@ -45,5 +45,11 @@ return [
     'GSTIN_VALUE' => 'AMCPR8180N',
     'PAN_VALUE' => '36AMCPR8180N1Z3',
     'SAC_CODE' => '997339',
-    'QI_ADDRESS' => 'Hyderabad - Telangana'
+    'QI_ADDRESS' => 'Hyderabad - Telangana',
+    'image_licence_details' => [
+        'small' => '550',
+        'medium' => '2500',
+        'large' => '3500',
+        'extra_large' => '4600',
+    ],
 ];
