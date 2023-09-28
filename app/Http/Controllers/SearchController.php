@@ -350,6 +350,29 @@ class SearchController extends Controller
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
     }
 
+    # Music search by music title
+    public function musicSearchByTitle($query)
+    {
+        $titles = Product::select('product_title')
+                            ->where('product_main_type', 'Music')
+                            ->where('product_sub_type', 'Music')
+                            ->where('product_title', 'LIKE', "%{$query}%")
+                            ->get();
+
+        $keywords = [];
+        if (!empty($titles)) {
+            foreach ($titles as $key => $musicRecord) {
+                $keywords [] = $musicRecord->product_title;
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('List of music search words'),
+            'data' => $keywords ?? null,
+        ], 200);
+    }
+
     public function getMusicData($keyword,$getKeyword){
         $product = new Product();
         $all_products =[];
