@@ -302,6 +302,7 @@ class SearchController extends Controller
     }
 
     public function getFootageData($keyword,$getKeyword){
+
         $product = new Product();
         $all_products =[];
         $all_products = $product->getProductsUpdated($keyword, $getKeyword);
@@ -351,11 +352,16 @@ class SearchController extends Controller
     }
 
     public function getMusicData($keyword,$getKeyword){
+        
+        $flag = 0;
+        if(!empty($getKeyword['all_filters'])){
+            $flag = 1;
+        }
         $product = new Product();
         $all_products =[];
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
 
-        if(count($all_products)>0){
+        if(count($all_products)>0 && $flag == 0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
                 return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
