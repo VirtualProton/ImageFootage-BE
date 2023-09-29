@@ -28,21 +28,34 @@ class MusicApi
         $bittotal  = 0;
         if (isset($keyword['pagenumber'])) {
             $page = $keyword['pagenumber'];
-        }
-
-        if (isset($getKeyword['letest']) && $getKeyword['letest'] == '1') {
+        }     
+        if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'newest';
-        } else if (isset($getKeyword['populer']) && $getKeyword['populer'] == '1') {
+        } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
             $sort = 'popular';
+        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: Low to High'){
+            $sort = 'price_low_high';
+        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: High to Low'){
+            $sort = 'price_high_low';
+        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Duration: Long to Short'){
+            $sort = 'duration_short_long';
         } else {
             $sort = 'default';
         }
         $filters = '';
         
-        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','sort']);
         $filter_mapping = "";
 
-        foreach($getFilters as $getFilterName => $getFilterValue){            
+        $transformedArray = [];
+        
+        foreach ($getFilters['all_filters'] as $filter) {
+            $key = $filter['key'];
+            $values = $filter['value'];            
+            $transformedArray[$key] = $values;
+        }        
+
+        foreach($transformedArray as $getFilterName => $getFilterValue){            
             
             if(!empty($getFilterValue)){                
                 
@@ -50,16 +63,14 @@ class MusicApi
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
                 ->where('imagefootage_filters.value', $getFilterName)                        
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
+                ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
                 ->get();
             
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
             } 
-        }   
-
-
+        }
         $search_cmd = array();
         $url = [];
         if (!empty($filter_mapping)) {
@@ -78,7 +89,6 @@ class MusicApi
 
 
         $url1 = $this->url . '/api/v3/search?' . http_build_query($url);
-
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
