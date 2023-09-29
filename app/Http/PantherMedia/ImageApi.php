@@ -84,7 +84,7 @@ class ImageApi
     }
 
 
-    public function search($keyword, $getKeyword = [], $limit = 30, $page = 0)
+    public function search($keyword, $getKeyword = [], $limit = 15, $page = 0)
     {
         
         $serach = $keyword['search'];
@@ -99,8 +99,9 @@ class ImageApi
             $sort = 'sort: rel;'; // For Best Match
         }
 
-        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
-        $filter_mapping = "";
+        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','limit']);
+        $filter_mapping = "";        
+
         foreach($getFilters as $getFilterName => $getFilterValue){
 
             if(!empty($getFilterValue)){
@@ -108,7 +109,7 @@ class ImageApi
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
                 ->where('imagefootage_filters.value', $getFilterName)
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
+                ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
                 ->get();
 
                 foreach($filterData as $filter){

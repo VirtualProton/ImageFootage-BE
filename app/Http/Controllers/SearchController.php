@@ -186,7 +186,7 @@ class SearchController extends Controller
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
                 $flag =1;
-                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
+                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'15','tp'=>'1');
             }
         }
         if($flag=='0'){
@@ -216,7 +216,7 @@ class SearchController extends Controller
             }
         }
 
-          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>30,'tp'=>'2');
+          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>15,'tp'=>'2');
     }
 
     public function getEditorialData($keyword, $getKeyword)
