@@ -182,14 +182,20 @@ class SearchController extends Controller
         $product = new Product();
         $all_products = $product->getProductsUpdated($keyword, $getKeyword);
         $flag =0;
-        if(count($all_products)>0){
+
+        if (count($all_products)>0) {
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
-                $flag =1;
-                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'15','tp'=>'1');
+                $flag         = 1;
+                $total        = count($all_products);
+                $perpage      = 15;
+                $totalPages   = ceil($total / $perpage);
+
+                return array('imgfootage' => $all_products, 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
             }
         }
-        if($flag=='0'){
+
+        if($flag=='0') {
             $pantherMediaImages = new ImageApi();
             $pantharmediaData = $pantherMediaImages->search($keyword, $getKeyword);
             if (count($pantharmediaData) > 0) {
@@ -212,11 +218,15 @@ class SearchController extends Controller
                     array_push($all_products, $media);
                     $all_products [] = shuffle($all_products);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pantharmediaData['items']['total'],'perpage'=>$pantharmediaData['items']['items'],'tp'=>'2');
+                $total        = $pantharmediaData['items']['total'];
+                $perpage      = $pantharmediaData['items']['items'];
+                $totalPages   = ceil($total / $perpage);
+
+                return array('imgfootage'=>$all_products, 'total'=>$total, 'perpage'=>$perpage, 'tp'=> $totalPages);
             }
         }
 
-          return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>15,'tp'=>'2');
+        return array('imgfootage'=>$all_products, 'total'=>0, 'perpage'=>15, 'tp'=>'0');
     }
 
     public function getEditorialData($keyword, $getKeyword)
@@ -298,7 +308,10 @@ class SearchController extends Controller
             }
         }
         $total = count($editoriallist);
-        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => 15, 'tp' => '2');
+        $perpage = 15;
+        $totalPages = ceil($total / $perpage);
+
+        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
     }
 
     public function getFootageData($keyword,$getKeyword){
@@ -311,8 +324,12 @@ class SearchController extends Controller
         if(count($all_products)>0){
             if(isset($all_products['code'])&& $all_products['code']=='1'){
                 $all_products = $all_products['data'];
-                $flag =1;
-                return array('imgfootage'=>$all_products,'total'=>'1','perpage'=>'30','tp'=>'1');
+                $flag         = 1;
+                $total        = count($all_products);
+                $perpage      = 30;
+                $totalPages   = ceil($total / $perpage);
+
+                return array('imgfootage'=>$all_products, 'total'=>$total, 'perpage'=> $perpage, 'tp'=> $totalPages);
             }
         }
         if($flag=='0'){
@@ -375,7 +392,7 @@ class SearchController extends Controller
     }
 
     public function getMusicData($keyword,$getKeyword){
-        
+
         $flag = 0;
         if(!empty($getKeyword['all_filters'])){
             $flag = 1;
@@ -423,10 +440,15 @@ class SearchController extends Controller
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pondmusicMediaData['totalNumberOfItems'],'perpage'=>$pondmusicMediaData['itemsPerPage'],'tp'=>'2');
+
+                $total      = $pondmusicMediaData['totalNumberOfItems'];
+                $perpage    = $pondmusicMediaData['itemsPerPage'];
+                $totalPages = ceil($total / $perpage);
+
+                return array('imgfootage'=>$all_products,'total'=>$total,'perpage'=>$perpage, 'tp'=> $totalPages);
             }
         }
-        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
+        return array('imgfootage'=>$all_products,'total'=>0, 'perpage'=>20, 'tp'=>'0');
     }
 
     public function categoryWiseData() {
