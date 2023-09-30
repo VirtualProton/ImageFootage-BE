@@ -84,9 +84,9 @@ class ImageApi
     }
 
 
-    public function search($keyword, $getKeyword = [], $limit = 15, $page = 0)
+    public function search($keyword, $getKeyword = [], $limit = 15, $page = 1)
     {
-        
+
         $serach = $keyword['search'];
         if (isset($getKeyword['pagenumber']) && $getKeyword['pagenumber'] > '0') {
             $page = $getKeyword['pagenumber'];
@@ -95,12 +95,12 @@ class ImageApi
             $sort = 'sort: date;';
         } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
             $sort = 'sort: buy;';
-        } else { 
+        } else {
             $sort = 'sort: rel;'; // For Best Match
         }
 
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','limit']);
-        $filter_mapping = "";        
+        $filter_mapping = "";
 
         foreach($getFilters as $getFilterName => $getFilterValue){
 

@@ -21,14 +21,14 @@ class MusicApi
     }
 
     # searchMusic form pond5
-    public function searchMusic($keyword, $getKeyword, $limit = 30, $page = 0)
+    public function searchMusic($keyword, $getKeyword, $limit = 30, $page = 1)
     {
         $search = $keyword['search'];
         $editorial = 0;
         $bittotal  = 0;
         if (isset($keyword['pagenumber'])) {
             $page = $keyword['pagenumber'];
-        }     
+        }
         if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'newest';
         } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
@@ -43,33 +43,33 @@ class MusicApi
             $sort = 'default';
         }
         $filters = '';
-        
+
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','sort']);
         $filter_mapping = "";
 
         $transformedArray = [];
-        
+
         foreach ($getFilters['all_filters'] as $filter) {
             $key = $filter['key'];
-            $values = $filter['value'];            
+            $values = $filter['value'];
             $transformedArray[$key] = $values;
-        }        
+        }
 
-        foreach($transformedArray as $getFilterName => $getFilterValue){            
-            
-            if(!empty($getFilterValue)){                
-                
+        foreach($transformedArray as $getFilterName => $getFilterValue){
+
+            if(!empty($getFilterValue)){
+
                 $filterData = DB::table('imagefootage_filters')
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->where('imagefootage_filters.value', $getFilterName)
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
                 ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
                 ->get();
-            
+
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
-            } 
+            }
         }
         $search_cmd = array();
         $url = [];
@@ -85,7 +85,7 @@ class MusicApi
 
         $url['perPage'] = $limit;
 
-        $url['page'] = $page;        
+        $url['page'] = $page;
 
 
         $url1 = $this->url . '/api/v3/search?' . http_build_query($url);

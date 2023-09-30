@@ -33,9 +33,9 @@ class FootageApi
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
 
-    public function search($keyword, $getKeyword, $limit = 30, $page = 0)
+    public function search($keyword, $getKeyword, $limit = 30, $page = 1)
     {
-        
+
         $search = $keyword['search'];
         if(isset($keyword['authorname']) && !empty($keyword['authorname'])){
             $authorname = $keyword['authorname'];
@@ -46,7 +46,7 @@ class FootageApi
         if (isset($keyword['pagenumber'])) {
             $page = $keyword['pagenumber'];
         }
-       
+
         if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'newest';
         } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
@@ -60,7 +60,7 @@ class FootageApi
         } else {
             $sort = 'default';
         }
-        
+
         $filters = '';
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
