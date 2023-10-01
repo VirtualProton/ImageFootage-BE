@@ -35,48 +35,45 @@ class SearchController extends Controller
         $all_products = $product->getProductsRandom();
         return array('api'=>$all_products[0],'home'=>$all_products[1]);
     }
+
     public function index(SearchRequest $request){
         ini_set('max_execution_time', 0);
-        $getKeyword = $request->all();
-        $keyword = array();
-        $keyword['search'] = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
-        $keyword['productType']['id']= $getKeyword['productType'];
-        $keyword['limit'] = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
-        if($keyword['productType']['id']=='1'){
-           $all_products = $this->getImagesData($keyword,$getKeyword);
-        }else if($keyword['productType']['id']=='2'){
-            if(isset($getKeyword['pagenumber'])){
-                $keyword['pagenumber']= $getKeyword['pagenumber'];
-            }
-               $all_products =$this->getFootageData($keyword,$getKeyword);
 
-        }else if($keyword['productType']['id']=='3'){
-            if(isset($getKeyword['pagenumber'])){
-                $keyword['pagenumber']= $getKeyword['pagenumber'];
-            }
-               $all_products =$this->getMusicData($keyword,$getKeyword);
+        $getKeyword                   = $request->all();
+        $all_products                 = array();
+        $keyword                      = array();
+        $keyword['search']            = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
+        $keyword['productType']['id'] = $getKeyword['productType'];
+        $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
+        $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
 
+        if ($keyword['productType']['id'] == '1') {
+           $all_products = $this->getImagesData($keyword, $getKeyword);
+        } else if ($keyword['productType']['id'] == '2') {
+           $all_products = $this->getFootageData($keyword, $getKeyword);
+        } else if ($keyword['productType']['id'] == '3') {
+           $all_products = $this->getMusicData($keyword, $getKeyword);
         } else if ($keyword['productType']['id'] == '4') {
             $all_products = $this->getEditorialData($keyword, $getKeyword);
-        } else{
-            $all_products =[];
-            $images = $this->getImagesData($keyword,$getKeyword);
-            $footage = $this->getFootageData($keyword,$getKeyword);
-            $music =$this->getMusicData($keyword,$getKeyword);
-            array_push($all_products,$images);
-            array_push($all_products,$footage);
-            array_push($all_products,$music);
+        } else {
+            $images  = $this->getImagesData($keyword, $getKeyword);
+            $footage = $this->getFootageData($keyword, $getKeyword);
+            $music   = $this->getMusicData($keyword, $getKeyword);
+            array_push($all_products, $images);
+            array_push($all_products, $footage);
+            array_push($all_products, $music);
         }
+
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
             $search_keyword = Str::slug($keyword['search']);
-            $trending_word = TrendingWord::where('name', $search_keyword)->first();
+            $trending_word  = TrendingWord::where('name', $search_keyword)->first();
             if(!empty($trending_word)){
                 $trending_word->count += 1;
                 $trending_word->save();
             } else {
-                $trending_word = new TrendingWord();
-                $trending_word->name = $search_keyword;
+                $trending_word        = new TrendingWord();
+                $trending_word->name  = $search_keyword;
                 $trending_word->count = 1;
                 $trending_word->save();
             }
@@ -84,6 +81,7 @@ class SearchController extends Controller
 
         return response()->json($all_products);
     }
+
 	public function relatedProductList(Request $request){
         $all_products = [];
 		ini_set('max_execution_time', 0);
@@ -177,22 +175,20 @@ class SearchController extends Controller
         return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20);
 	}
 
-    public function getImagesData($keyword,$getKeyword){
+    public function getImagesData($keyword, $getKeyword)
+    {
         $all_products = [];
-        $product = new Product();
+        $product      = new Product();
         $all_products = $product->getProductsUpdated($keyword, $getKeyword);
-        $flag =0;
+        $flag         = 0;
 
-        if (count($all_products)>0) {
-            if(isset($all_products['code'])&& $all_products['code']=='1'){
-                $all_products = $all_products['data'];
-                $flag         = 1;
-                $total        = count($all_products);
-                $perpage      = 15;
-                $totalPages   = ceil($total / $perpage);
+        if (count($all_products) > 0) {
+            $flag         = 1;
+            $total        = count($all_products);
+            $perpage      = 15;
+            $totalPages   = ceil($total / $perpage);
 
-                return array('imgfootage' => $all_products, 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
-            }
+            return array('imgfootage' => $all_products, 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
         }
 
         if($flag=='0') {
@@ -314,28 +310,26 @@ class SearchController extends Controller
         return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
     }
 
-    public function getFootageData($keyword,$getKeyword){
-
-        $product = new Product();
-        $all_products =[];
+    public function getFootageData($keyword,$getKeyword)
+    {
+        $all_products = [];
+        $product      = new Product();
         $all_products = $product->getProductsUpdated($keyword, $getKeyword);
-        $flag =0;
+        $flag         = 0;
 
-        if(count($all_products)>0){
-            if(isset($all_products['code'])&& $all_products['code']=='1'){
-                $all_products = $all_products['data'];
-                $flag         = 1;
-                $total        = count($all_products);
-                $perpage      = 30;
-                $totalPages   = ceil($total / $perpage);
+        if (count($all_products) > 0) {
+            $flag         = 1;
+            $total        = count($all_products);
+            $perpage      = 30;
+            $totalPages   = ceil($total / $perpage);
 
-                return array('imgfootage'=>$all_products, 'total'=>$total, 'perpage'=> $perpage, 'tp'=> $totalPages);
-            }
+            return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
         }
-        if($flag=='0'){
 
-            $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword,$getKeyword);
+        if ($flag =='0') {
+            $footageMedia         = new FootageApi();
+            $pondfootageMediaData = $footageMedia->search($keyword, $getKeyword);
+
             if (count($pondfootageMediaData) > 0) {
                 foreach ($pondfootageMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -346,26 +340,33 @@ class SearchController extends Controller
                                 $pond_id_withprefix = "0" . $pond_id_withprefix;
                             }
                         }
+
                         $media = array(
-                            'product_id' => $eachmedia['id'],
-                            'api_product_id' => encrypt($eachmedia['id'],true),
-                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'product_title' => $eachmedia['title'],
-                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
-                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'product_id'          => $eachmedia['id'],
+                            'api_product_id'      => encrypt($eachmedia['id'],true),
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_title'       => $eachmedia['title'],
+                            'product_thumbnail'   => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
+                            'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'product_main_type' => "Footage",
-                            'product_added_on' => date("Y-m-d H:i:s"),
-                            'product_web' => '3',
-                            'product_keywords' => implode(',',$eachmedia['keywords'])
+                            'product_main_type'   => "Footage",
+                            'product_added_on'    => date("Y-m-d H:i:s"),
+                            'product_web'         => '3',
+                            'product_keywords'    => implode(',',$eachmedia['keywords'])
                         );
                     }
                     array_push($all_products, $media);
                 }
-                return array('imgfootage'=>$all_products,'total'=>$pondfootageMediaData['totalNumberOfItems'],'perpage'=>$pondfootageMediaData['itemsPerPage'],'tp'=>'2');
+
+                $total      = $pondfootageMediaData['totalNumberOfItems'];
+                $perpage    = $pondfootageMediaData['itemsPerPage'];
+                $totalPages = ceil($total / $perpage);
+
+                return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
             }
         }
-        return array('imgfootage'=>$all_products,'total'=>0,'perpage'=>20,'tp'=>'2');
+
+        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 0, 'tp'=> 0);
     }
 
     # Music search by music title
@@ -394,21 +395,25 @@ class SearchController extends Controller
     public function getMusicData($keyword,$getKeyword){
 
         $flag = 0;
-        if(!empty($getKeyword['all_filters'])){
+        if (!empty($getKeyword['all_filters'])) {
             $flag = 1;
         }
-        $product = new Product();
-        $all_products =[];
+
+        $all_products = [];
+        $product      = new Product();
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
 
-        if(count($all_products)>0 && $flag == 0){
-            if(isset($all_products['code'])&& $all_products['code']=='1'){
-                $all_products = $all_products['data'];
-                return array('imgfootage'=>$all_products,'total'=>count($all_products),'perpage'=>'30','tp'=>'1');
-            }
+        // TODO: need to remove this condition after mongodb filters code implementation
+        if ( count($all_products) > 0 && $flag == 0) {
+            $total        = count($all_products);
+            $perpage      = 30;
+            $totalPages   = ceil($total / $perpage);
+
+            return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
         } else {
-            $musicMedia = new MusicApi();
+            $musicMedia         = new MusicApi();
             $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
+
             if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
                 foreach ($pondmusicMediaData['items'] as $eachmedia) {
                     if (isset($eachmedia['id'])) {
@@ -420,22 +425,22 @@ class SearchController extends Controller
                             }
                         }
                         $media = array(
-                            'product_id' => $eachmedia['id'],
+                            'product_id'     => $eachmedia['id'],
                             'api_product_id' => encrypt($eachmedia['id'],true),
-                            'slug' => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'product_title' => $eachmedia['title'],
-                            'product_thumbnail' => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
-                            'product_main_image' => $eachmedia['watermarkPreview'],
+                            'slug'           => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_title'       => $eachmedia['title'],
+                            'product_thumbnail'   => "https://p5iconsp.s3-accelerate.amazonaws.com/" . $pond_id_withprefix . "_iconl.jpeg",
+                            'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
                             'product_main_type' => "Music",
-                            'product_added_on' => date("Y-m-d H:i:s"),
-                            'product_web' => '3',
-                            'product_keywords' => implode(',',$eachmedia['keywords']),
-                            'music_sound_bpm' => $eachmedia['soundBpm'] ?? null,
-                            'music_duration' => $eachmedia['versions'][0]['duration'] ?? null,
-                            'music_fileType' => $eachmedia['versions'][0]['fileType'] ?? null,
-                            'music_price' => $eachmedia['versions'][0]['price'] ?? null,
-                            'music_size' => $eachmedia['versions'][0]['size'] ?? null,
+                            'product_added_on'  => date("Y-m-d H:i:s"),
+                            'product_web'       => '3',
+                            'product_keywords'  => implode(',',$eachmedia['keywords']),
+                            'music_sound_bpm'   => $eachmedia['soundBpm'] ?? null,
+                            'music_duration'    => $eachmedia['versions'][0]['duration'] ?? null,
+                            'music_fileType'    => $eachmedia['versions'][0]['fileType'] ?? null,
+                            'music_price'       => $eachmedia['versions'][0]['price'] ?? null,
+                            'music_size'        => $eachmedia['versions'][0]['size'] ?? null,
                         );
                     }
                     array_push($all_products, $media);
@@ -445,10 +450,11 @@ class SearchController extends Controller
                 $perpage    = $pondmusicMediaData['itemsPerPage'];
                 $totalPages = ceil($total / $perpage);
 
-                return array('imgfootage'=>$all_products,'total'=>$total,'perpage'=>$perpage, 'tp'=> $totalPages);
+                return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
             }
         }
-        return array('imgfootage'=>$all_products,'total'=>0, 'perpage'=>20, 'tp'=>'0');
+
+        return array('imgfootage' => $all_products, 'total' => 0, 'perpage' => 30, 'tp' => 0);
     }
 
     public function categoryWiseData() {
