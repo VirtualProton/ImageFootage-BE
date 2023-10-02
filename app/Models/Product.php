@@ -224,7 +224,11 @@ class Product extends Model
         return $all_produst_list;
     }
 
-    public function savePantherImage($data, $category_id)
+    /**
+    * This is main function for storing the panther media data via CRON execution
+    * It manages the data storage in Mysql and MongoDB both
+    */
+    public function savePantherMediaImage($data, $category_id)
     {
         foreach ($data['items']['media'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
@@ -337,12 +341,11 @@ class Product extends Model
         }
     }
 
-    public function savePond5Image($data, $category_id)
+    public function savePond5Footage($data, $category_id)
     {
-        $eachmedia = $data;
         foreach ($data['items'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id'];
+                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
                 if (strlen($eachmedia['id']) < 9) {
                     $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
@@ -356,14 +359,14 @@ class Product extends Model
                     'product_thumbnail'   => $eachmedia['thumbnail'],
                     'product_main_image'  => $eachmedia['watermarkPreview'],
                     'product_description' => $eachmedia['description'],
-                    'product_size'        => '',
+                    'product_size'        => '', //TODO: check for this value
                     "product_keywords"    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
-                    'product_main_type'   => $eachmedia['type'],
-                    'product_sub_type'    => "Photo",
+                    'product_main_type'   => "Footage",
+                    'product_sub_type'    => "Footage",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free',
+                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s")
 
                 );
@@ -378,9 +381,48 @@ class Product extends Model
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
-                    return $flag . $key;
+
+                    $productData  = array(
+                        'editorial'        => '0',
+                        'people'           => ['2'],
+                        'resolutions'      => ['8K'],
+                        'subscription'     => '1',
+                        'news_archival'    => '1',
+                        'fps'              => [$eachmedia['videoFps']],
+                        'gender'           => ['1'],
+                        'artist'           => $eachmedia['authorName']
+                    );
+                    $imageFilterValue = new ImageFilterValue([
+                        'api_product_id' => $eachmedia['id'],
+                        'attributes'     => $productData
+                    ]);
+                    $imageFilterValue->save();
                 } else {
-                    return $data2[0]->product_id;
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $eachmedia['id'])
+                        ->update([
+                            'product_title'       => $eachmedia['title'],
+                            'product_thumbnail'   => $eachmedia['thumbnail'],
+                            'product_main_image'  => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
+                            'updated_at'           => date('Y-m-d H:i:s')
+                        ]);
+
+                    $apiProductId = $eachmedia['id'];
+                    $productData  = array(
+                        'editorial'        => '1',
+                        'people'           => ['1'],
+                        'resolutions'      => ['4K'],
+                        'artist'           => $eachmedia['authorName']
+                    );
+
+                    // Find the existing document by api_product_id, or create a new one
+                    $imageFilterValue = ImageFilterValue::updateOrCreate(
+                        ['api_product_id' => $apiProductId],
+                        [
+                            'attributes' => $productData,
+                        ]
+                    );
                 }
             }
         }

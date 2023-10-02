@@ -29,7 +29,7 @@ class FootageApi
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
 
-    public function search($keyword, $getKeyword, $limit = 30, $page = 1)
+    public function search($keyword, $getKeyword = [], $limit = 30, $page = 1)
     {
         $search = $keyword['search'];
         $page   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : $page;
@@ -55,22 +55,6 @@ class FootageApi
 
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
-
-        // TODO: need to add the correct filters code
-        // foreach ($getFilters as $getFilterName => $getFilterValue) {
-        //     if (!empty($getFilterValue)) {
-        //         $filterData = DB::table('imagefootage_filters')
-        //         ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-        //         ->where('imagefootage_filters.value', $getFilterName)
-        //         ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-        //         ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
-        //         ->get();
-
-        //         foreach($filterData as $filter){
-        //             $filter_mapping .= $getFilterName.":".$filter->value.';';
-        //         }
-        //     }
-        // }
 
         $url            = [];
         $url['type']    = 'video';
