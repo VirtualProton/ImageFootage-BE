@@ -58,21 +58,34 @@ class Product extends Model
         $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
 
         //TODO:  pricing and color filter pending
+        // $applied_filters = [
+        //     [
+        //         "name"   => "people_ethnicity",
+        //         "value"  => "u",
+        //         "hasMultipleValues" => false
+        //     ],
+        //     [
+        //         "name"  => "people_number",
+        //         "value" => "people_1",
+        //         "hasMultipleValues" => false
+        //     ],
+        //     [
+        //         "name"  => "collection",
+        //         "value" => ["spx", "standard"],
+        //         "hasMultipleValues" => true
+        //     ]
+        // ];
+
         $applied_filters = [
             [
-                "name"   => "people_ethnicity",
-                "value"  => "u",
+                "name"   => "people",
+                "value"  => "1",
                 "hasMultipleValues" => false
             ],
             [
-                "name"  => "people_number",
-                "value" => "people_1",
+                "name"  => "resolutions",
+                "value" => "4K",
                 "hasMultipleValues" => false
-            ],
-            [
-                "name"  => "collection",
-                "value" => ["spx", "standard"],
-                "hasMultipleValues" => true
             ]
         ];
 
@@ -230,6 +243,9 @@ class Product extends Model
     */
     public function savePantherMediaImage($data, $category_id)
     {
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('panther_media_image', 'api_flag');
+
         foreach ($data['items']['media'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
                 $media = array(
@@ -258,7 +274,6 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('2', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -343,6 +358,9 @@ class Product extends Model
 
     public function savePond5Footage($data, $category_id)
     {
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('pond5_footage', 'api_flag');
+
         foreach ($data['items'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
                 $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
@@ -377,7 +395,6 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('3', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -433,6 +450,7 @@ class Product extends Model
     public function savePond5singleImage($data, $category_id)
     {
         $eachmedia = $data;
+        $flag = $this->get_api_flag('pond5_footage', 'api_flag');
 
         if (isset($eachmedia['id'])) {
             $pond_id_withprefix = $eachmedia['id'];
@@ -466,7 +484,6 @@ class Product extends Model
                 ->get()
                 ->toArray();
             if (count($data2) == 0) {
-                $flag = $this->get_api_flag('3', 'api_flag');
                 $key  = $this->randomkey();
                 DB::table('imagefootage_products')->insert($media);
                 $id = DB::getPdo()->lastInsertId();
@@ -486,6 +503,8 @@ class Product extends Model
     public function savePond5Music($data, $category_id)
     {
         $eachmedia = $data;
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('pond5_music', 'api_flag');
 
         foreach ($eachmedia as $key => $music) {
             if (isset($music['id'])) {
@@ -529,7 +548,6 @@ class Product extends Model
                     ->get()
                     ->toArray();
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('5', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -578,6 +596,7 @@ class Product extends Model
 
     public function savePantherImagedetail($data, $category_id)
     {
+        $flag = $this->get_api_flag('panther_media_image', 'api_flag');
 
         if ($data['stat'] == 'ok') {
             if (isset($data['media']['id'])) {
@@ -607,7 +626,6 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('2', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -628,9 +646,9 @@ class Product extends Model
         }
     }
 
-    public function get_api_flag($flag, $field)
+    public function get_api_flag($slug, $field)
     {
-        return Api::where('api_id', $flag)->first()->$field;
+        return Api::where('api_slug', $slug)->first()->$field;
     }
 
     public function randomkey()
@@ -660,7 +678,7 @@ class Product extends Model
                 'product_vertical'    => 'Royalty Free'
 
             );
-            $flag = $this->get_api_flag('3', 'api_flag');
+            $flag = $this->get_api_flag('pond5_footage', 'api_flag');
             $key  = $this->randomkey();
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);
@@ -682,7 +700,7 @@ class Product extends Model
                 'product_web'         => '2',
                 'product_vertical'    => 'Royalty Free'
             );
-            $flag = $this->get_api_flag('3', 'api_flag');
+            $flag = $this->get_api_flag('panther_media_image', 'api_flag');
             $key  = $this->randomkey();
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);
