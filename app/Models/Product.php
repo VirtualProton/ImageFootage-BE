@@ -285,10 +285,10 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                     'product_web' => '2',
-                    'product_vertical' => 'Royalty Free',
+                    'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'author_name' => $eachmedia['author_username']
+                    'auther_name' => $eachmedia['author-username']
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -301,8 +301,24 @@ class Product extends Model
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
-                    echo "Inserted" . $id;
+
+                    $productData = array(
+                        'people_ethnicity' => 'xd',
+                        'people_number'    => 'people_1',
+                        'orientation'      => 'horizontal',
+                        'people_age'       => 'babies',
+                        'people_gender'    => 'f',
+                        'license'          => ['commercial', 'editorial'],
+                        'type'             => ['photos'],
+                        'collection'       => ['standard', 'spx']
+                    );
+                    $imageFilterValue = new ImageFilterValue([
+                        'api_product_id' => $eachmedia['id'],
+                        'attributes'     => $productData
+                    ]);
+                    $imageFilterValue->save();
                 } else {
+
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $eachmedia['id'])
                         ->update([
@@ -312,7 +328,26 @@ class Product extends Model
                             'product_title'        => $eachmedia['title'],
                             'updated_at'           => date('Y-m-d H:i:s')
                         ]);
-                    echo "Updated" . $eachmedia['id'];
+
+                    $apiProductId = $eachmedia['id'];
+                    $productData  = [
+                        'people_ethnicity' => 'u',
+                        'people_number'    => 'people_2',
+                        'orientation'      => 'horizontal',
+                        'people_age'       => 'babies',
+                        'people_gender'    => 'f',
+                        'license'          => ['commercial'],
+                        'type'             => ['photos'],
+                        'collection'       => ['standard']
+                    ];
+
+                    // Find the existing document by api_product_id, or create a new one
+                    $imageFilterValue = ImageFilterValue::updateOrCreate(
+                        ['api_product_id' => $apiProductId],
+                        [
+                            'attributes' => $productData,
+                        ]
+                    );
                 }
             }
         }
@@ -707,90 +742,5 @@ class Product extends Model
     public function downloads()
     {
         return $this->hasMany(ProductsDownload::class, 'product_id', 'product_id');
-    }
-
-    public function savePantherImageMongo($data, $category_id)
-    {
-        // // get all filters
-        // $all_available_filters_list = ImageFootageFilter::where('status', 'active')
-        //     ->select('id', 'value')
-        //     ->get()
-        //     ->keyBy('value')
-        //     ->toArray();
-
-        // // get all filters values
-        // $all_available_filters_values_list = ImageFootageFilterOption::where('status', 'active')
-        //     ->select('value as fo', 'filter_id')
-        //     ->get()
-        //     ->keyBy('fo')
-        //     ->toArray();
-
-        foreach ($data['items']['media'] as $eachmedia) {
-            if (isset($eachmedia['id'])) {
-                $media = array(
-                    'api_product_id' => $eachmedia['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $eachmedia['title'],
-                    'product_thumbnail' => $eachmedia['preview_no_wm'],
-                    'product_main_image' => $eachmedia['preview_high'],
-                    'product_description' => $eachmedia['description'],
-                    'product_size' => $eachmedia['width'] . "X" . $eachmedia['height'],
-                    "product_keywords" => $eachmedia['keywords'],
-                    'product_status' => "Active",
-                    'product_main_type' => "Image",
-                    'product_sub_type' => "Photo",
-                    'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
-                    'product_web' => '2',
-                    'product_vertical' => 'Royalty Free',
-                    'updated_at' => date("Y-m-d H:i:s"),
-                    'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'auther_name' => $eachmedia['author-username']
-                );
-
-                $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $eachmedia['id'])
-                    ->get()
-                    ->toArray();
-
-                if (1==1) {
-                    $flag = $this->get_api_flag('2', 'api_flag');
-                    $key  = $this->randomkey();
-                    $media['product_id'] = $flag . $key;
-                    DB::table('imagefootage_products')->insert($media);
-
-                    $productData = array(
-                        'people_ethnicity' => 'xd',
-                        'people_number'    => 'people_1',
-                        'orientation'      => 'horizontal',
-                        'people_age'       => 'babies',
-                        'people_gender'    => 'f',
-                        'license'          => ['commercial', 'editorial'],
-                        'type'             => ['photos'],
-                        'collection'       => ['standard', 'spx']
-                    );
-                    $imageFilterValue = new ImageFilterValue([
-                        'api_product_id' => $eachmedia['id'],
-                        'attributes'     => $productData
-                    ]);
-                    $imageFilterValue->save();
-
-                    // $people_number    = 'people_1';
-                    // $people_ethnicity = 'xd';
-
-                    // $people_number_filter_id    = $all_available_filters_values_list[$people_number]['filter_id'];
-                    // $people_ethnicity_filter_id = $all_available_filters_values_list[$people_ethnicity]['filter_id'];
-                } else {
-                    DB::table('imagefootage_products')
-                        ->where('api_product_id', '=', $eachmedia['id'])
-                        ->update([
-                            'product_thumbnail'    => $eachmedia['preview_no_wm'],
-                            'product_main_image'   => $eachmedia['preview_high'],
-                            'product_description'  => $eachmedia['description'],
-                            'product_title'        => $eachmedia['title'],
-                            'updated_at'           => date('Y-m-d H:i:s')
-                        ]);
-                }
-            }
-        }
     }
 }
