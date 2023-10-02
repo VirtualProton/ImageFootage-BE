@@ -392,19 +392,15 @@ class SearchController extends Controller
         ], 200);
     }
 
-    public function getMusicData($keyword,$getKeyword){
-
-        $flag = 0;
-        if (!empty($getKeyword['all_filters'])) {
-            $flag = 1;
-        }
-
+    public function getMusicData($keyword,$getKeyword)
+    {
         $all_products = [];
         $product      = new Product();
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
+        $flag         = 0;
 
-        // TODO: need to remove this condition after mongodb filters code implementation
-        if ( count($all_products) > 0 && $flag == 0) {
+        if (count($all_products) > 0) {
+            $flag         = 1;
             $total        = count($all_products);
             $perpage      = 30;
             $totalPages   = ceil($total / $perpage);
@@ -412,7 +408,7 @@ class SearchController extends Controller
             return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
         } else {
             $musicMedia         = new MusicApi();
-            $pondmusicMediaData = $musicMedia->searchMusic($keyword,$getKeyword);
+            $pondmusicMediaData = $musicMedia->search($keyword,$getKeyword);
 
             if (!empty($pondmusicMediaData) && count($pondmusicMediaData) > 0) {
                 foreach ($pondmusicMediaData['items'] as $eachmedia) {
