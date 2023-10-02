@@ -39,51 +39,8 @@ class Product extends Model
         return $this->pivot->type;
     }
 
-    public function getProducts($keyword)
-    {
-        if ($keyword['productType']['id'] == '1') {
-            $type = 'Image';
-        } else if ($keyword['productType']['id'] == '2') {
-            $type = 'Footage';
-        } else {
-            $type = 'Editorial';
-        }
-        if (!empty($keyword['search'])) {
-            $serach = $keyword['search'];
-            $filterTypes = array(
-                'product_colors'       => 'product_color',
-                'product_gender'       => 'product_gender',
-                'product_ethinicities' => 'product_ethinicities',
-                'product_imagesizes'   => 'product_image_size',
-                'product_imagetypes'   => 'product_glow_type',
-                'product_orientations' => 'product_orientations',
-                'product_peoples'      => 'product_peoples',
-                'product_locations'    => 'product_locations',
-                'product_sorttype'     => 'product_sort_types'
-            );
-            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords')
-                ->where(function ($query) use ($type) {
-                    $query->whereIn('product_web', [1, 2, 3])->where('product_main_type', '=', $type);
-                })->Where(function ($query) use ($serach) {
-                    $query->orWhere('product_id', '=', $serach);
-                })->get()->toArray();
-
-            if (count($data) > 0) {
-                if ($serach == $data[0]['product_id'] && count($data) == 1) {
-                    $url = 'detail/' . $data[0]['api_product_id'] . '/' . $data[0]['product_web'] . "/" . $data[0]['product_main_type'];
-                    $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
-                    $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
-                    $data = array('code' => 1, 'url' => $url, 'data' => $data);
-                }
-            }
-        } else {
-            $data = [];
-        }
-        return  $data;
-    }
-
     //API search function
-    public function getProductsUpdated($keyword, $requestData)
+    public function getProductsData($keyword, $requestData)
     {
         $data = [];
         if ($keyword['productType']['id'] == '1') {
