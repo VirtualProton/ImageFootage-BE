@@ -39,51 +39,8 @@ class Product extends Model
         return $this->pivot->type;
     }
 
-    public function getProducts($keyword)
-    {
-        if ($keyword['productType']['id'] == '1') {
-            $type = 'Image';
-        } else if ($keyword['productType']['id'] == '2') {
-            $type = 'Footage';
-        } else {
-            $type = 'Editorial';
-        }
-        if (!empty($keyword['search'])) {
-            $serach = $keyword['search'];
-            $filterTypes = array(
-                'product_colors'       => 'product_color',
-                'product_gender'       => 'product_gender',
-                'product_ethinicities' => 'product_ethinicities',
-                'product_imagesizes'   => 'product_image_size',
-                'product_imagetypes'   => 'product_glow_type',
-                'product_orientations' => 'product_orientations',
-                'product_peoples'      => 'product_peoples',
-                'product_locations'    => 'product_locations',
-                'product_sorttype'     => 'product_sort_types'
-            );
-            $data = Product::select('product_id', 'api_product_id', 'product_category', 'product_title', 'product_web', 'product_main_type', 'product_thumbnail', 'product_main_image', 'product_added_on', 'product_keywords')
-                ->where(function ($query) use ($type) {
-                    $query->whereIn('product_web', [1, 2, 3])->where('product_main_type', '=', $type);
-                })->Where(function ($query) use ($serach) {
-                    $query->orWhere('product_id', '=', $serach);
-                })->get()->toArray();
-
-            if (count($data) > 0) {
-                if ($serach == $data[0]['product_id'] && count($data) == 1) {
-                    $url = 'detail/' . $data[0]['api_product_id'] . '/' . $data[0]['product_web'] . "/" . $data[0]['product_main_type'];
-                    $data[0]['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data[0]['product_title'])));
-                    $data[0]['api_product_id'] = encrypt($data[0]['api_product_id'], true);
-                    $data = array('code' => 1, 'url' => $url, 'data' => $data);
-                }
-            }
-        } else {
-            $data = [];
-        }
-        return  $data;
-    }
-
     //API search function
-    public function getProductsUpdated($keyword, $requestData)
+    public function getProductsData($keyword, $requestData)
     {
         $data = [];
         if ($keyword['productType']['id'] == '1') {
@@ -96,54 +53,107 @@ class Product extends Model
 
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
-        $adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
-        $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        //TODO : Need to check with support team and do required changes for adult_content filter
+        //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
+        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
 
-        $data = Product::select(
-                'product_id',
-                'api_product_id',
-                'product_category',
-                'product_title',
-                'product_web',
-                'product_main_type',
-                'product_thumbnail',
-                'product_main_image',
-                'product_added_on',
-                'product_keywords'
-            )
-            //->leftJoin('imagefootage_productfilters', 'imagefootage_productfilters.filter_product_id', '=', 'imagefootage_products.id')
-            //->leftJoin('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
-            ->where(function ($query) use ($type) {
-                // TODO: Need to check the use of product_web field
-                //$query->whereIn('product_web', [1, 2, 3])
-                $query->where('product_main_type', '=', $type);
-            });
+        //TODO:  pricing and color filter pending
+        // $applied_filters = [
+        //     [
+        //         "name"   => "people_ethnicity",
+        //         "value"  => "u",
+        //         "hasMultipleValues" => false
+        //     ],
+        //     [
+        //         "name"  => "people_number",
+        //         "value" => "people_1",
+        //         "hasMultipleValues" => false
+        //     ],
+        //     [
+        //         "name"  => "collection",
+        //         "value" => ["spx", "standard"],
+        //         "hasMultipleValues" => true
+        //     ]
+        // ];
 
-        if (!empty($keyword['search'])) {
-            $data->where(function ($query) use ($search) {
-                $query->orWhere('product_id', '=', $search) //exact match
-                    ->orWhere('product_title', 'LIKE', '%' . $search . '%')
-                    ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
-            });
-        }
+        $applied_filters = [
+            [
+                "name"   => "people",
+                "value"  => "1",
+                "hasMultipleValues" => false
+            ],
+            [
+                "name"  => "resolutions",
+                "value" => "4K",
+                "hasMultipleValues" => false
+            ]
+        ];
 
-        //TODO: filters apply pending
-        // if (count($requestFilters) > 0) {
-        //     //TODO:  pricing and color filter pending
-        //     $filtersArr = array_values(array_filter($requestFilters));
-        //     if (count($filtersArr) > 0) {
-        //         $data = $data->whereIn('imagefootage_filters_options.id', $filtersArr);
-        //     }
-        // }
+        $products = ImageFilterValue::query();
 
-        $data = $data->distinct()->limit($limit)->get()->toArray();
-        if (count($data) > 0) {
-            foreach($data as &$item) {
-                $item['url'] = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                $item['slug'] = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
-                $item['api_product_id'] = encrypt($item['api_product_id'], true);
+        foreach ($applied_filters as $filter) {
+            $name  = $filter['name'];
+            $value = $filter['value'];
+
+            if ($filter['hasMultipleValues']) {
+                // Use $in for filters with multiple values
+                $products->whereIn("attributes.$name", $value);
+            } else {
+                // For other filters, use dot notation
+                $products->where("attributes.$name", $value);
             }
         }
+
+        // Filter Data from MongoDB
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+
+        // Extract the api_product_id values from $filteredProducts
+        $apiProductIds = collect($filteredProducts)->pluck('api_product_id')->toArray();
+
+        // Fetch product data if filters not applied OR if applied then filtered records present
+        if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
+            // Fetch Related Data from MySQL
+            $data = Product::select(
+                    'product_id',
+                    'api_product_id',
+                    'product_category',
+                    'product_title',
+                    'product_web',
+                    'product_main_type',
+                    'product_thumbnail',
+                    'product_main_image',
+                    'product_added_on',
+                    'product_keywords'
+                )
+                ->where(function ($query) use ($type) {
+                    // TODO: Need to check the use of product_web field
+                    //$query->whereIn('product_web', [1, 2, 3])
+                    $query->where('product_main_type', '=', $type);
+                });
+
+            if (!empty($keyword['search'])) {
+                $data->where(function ($query) use ($search) {
+                    $query->orWhere('product_id', '=', $search) //exact match
+                        ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+                });
+            }
+
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
+
+            $data = $data->distinct()->limit($limit)->get()->toArray();
+
+            if (count($data) > 0) {
+                foreach($data as &$item) {
+                    $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id'] =  encrypt($item['api_product_id'], true);
+                }
+            }
+        }
+
         return  $data;
     }
 
@@ -227,8 +237,15 @@ class Product extends Model
         return $all_produst_list;
     }
 
-    public function savePantherImage($data, $category_id)
+    /**
+    * This is main function for storing the panther media data via CRON execution
+    * It manages the data storage in Mysql and MongoDB both
+    */
+    public function savePantherMediaImage($data, $category_id)
     {
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('panther_media_image', 'api_flag');
+
         foreach ($data['items']['media'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
                 $media = array(
@@ -245,10 +262,10 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                     'product_web' => '2',
-                    'product_vertical' => 'Royalty Free',
+                    'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'author_name' => $eachmedia['author_username']
+                    'auther_name' => $eachmedia['author-username']
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -257,12 +274,27 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('2', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
-                    echo "Inserted" . $id;
+
+                    $productData = array(
+                        'people_ethnicity' => 'xd',
+                        'people_number'    => 'people_1',
+                        'orientation'      => 'horizontal',
+                        'people_age'       => 'babies',
+                        'people_gender'    => 'f',
+                        'license'          => ['commercial', 'editorial'],
+                        'type'             => ['photos'],
+                        'collection'       => ['standard', 'spx']
+                    );
+                    $imageFilterValue = new ImageFilterValue([
+                        'api_product_id' => $eachmedia['id'],
+                        'attributes'     => $productData
+                    ]);
+                    $imageFilterValue->save();
                 } else {
+
                     DB::table('imagefootage_products')
                         ->where('api_product_id', '=', $eachmedia['id'])
                         ->update([
@@ -272,7 +304,26 @@ class Product extends Model
                             'product_title'        => $eachmedia['title'],
                             'updated_at'           => date('Y-m-d H:i:s')
                         ]);
-                    echo "Updated" . $eachmedia['id'];
+
+                    $apiProductId = $eachmedia['id'];
+                    $productData  = [
+                        'people_ethnicity' => 'u',
+                        'people_number'    => 'people_2',
+                        'orientation'      => 'horizontal',
+                        'people_age'       => 'babies',
+                        'people_gender'    => 'f',
+                        'license'          => ['commercial'],
+                        'type'             => ['photos'],
+                        'collection'       => ['standard']
+                    ];
+
+                    // Find the existing document by api_product_id, or create a new one
+                    $imageFilterValue = ImageFilterValue::updateOrCreate(
+                        ['api_product_id' => $apiProductId],
+                        [
+                            'attributes' => $productData,
+                        ]
+                    );
                 }
             }
         }
@@ -305,12 +356,14 @@ class Product extends Model
         }
     }
 
-    public function savePond5Image($data, $category_id)
+    public function savePond5Footage($data, $category_id)
     {
-        $eachmedia = $data;
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('pond5_footage', 'api_flag');
+
         foreach ($data['items'] as $eachmedia) {
             if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id'];
+                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
                 if (strlen($eachmedia['id']) < 9) {
                     $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
@@ -324,14 +377,14 @@ class Product extends Model
                     'product_thumbnail'   => $eachmedia['thumbnail'],
                     'product_main_image'  => $eachmedia['watermarkPreview'],
                     'product_description' => $eachmedia['description'],
-                    'product_size'        => '',
+                    'product_size'        => '', //TODO: check for this value
                     "product_keywords"    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
-                    'product_main_type'   => $eachmedia['type'],
-                    'product_sub_type'    => "Photo",
+                    'product_main_type'   => "Footage",
+                    'product_sub_type'    => "Footage",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free',
+                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s")
 
                 );
@@ -342,13 +395,51 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('3', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
-                    return $flag . $key;
+
+                    $productData  = array(
+                        'editorial'        => '0',
+                        'people'           => ['2'],
+                        'resolutions'      => ['8K'],
+                        'subscription'     => '1',
+                        'news_archival'    => '1',
+                        'fps'              => [$eachmedia['videoFps']],
+                        'gender'           => ['1'],
+                        'artist'           => $eachmedia['authorName']
+                    );
+                    $imageFilterValue = new ImageFilterValue([
+                        'api_product_id' => $eachmedia['id'],
+                        'attributes'     => $productData
+                    ]);
+                    $imageFilterValue->save();
                 } else {
-                    return $data2[0]->product_id;
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $eachmedia['id'])
+                        ->update([
+                            'product_title'       => $eachmedia['title'],
+                            'product_thumbnail'   => $eachmedia['thumbnail'],
+                            'product_main_image'  => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
+                            'updated_at'           => date('Y-m-d H:i:s')
+                        ]);
+
+                    $apiProductId = $eachmedia['id'];
+                    $productData  = array(
+                        'editorial'        => '1',
+                        'people'           => ['1'],
+                        'resolutions'      => ['4K'],
+                        'artist'           => $eachmedia['authorName']
+                    );
+
+                    // Find the existing document by api_product_id, or create a new one
+                    $imageFilterValue = ImageFilterValue::updateOrCreate(
+                        ['api_product_id' => $apiProductId],
+                        [
+                            'attributes' => $productData,
+                        ]
+                    );
                 }
             }
         }
@@ -359,6 +450,7 @@ class Product extends Model
     public function savePond5singleImage($data, $category_id)
     {
         $eachmedia = $data;
+        $flag = $this->get_api_flag('pond5_footage', 'api_flag');
 
         if (isset($eachmedia['id'])) {
             $pond_id_withprefix = $eachmedia['id'];
@@ -392,7 +484,6 @@ class Product extends Model
                 ->get()
                 ->toArray();
             if (count($data2) == 0) {
-                $flag = $this->get_api_flag('3', 'api_flag');
                 $key  = $this->randomkey();
                 DB::table('imagefootage_products')->insert($media);
                 $id = DB::getPdo()->lastInsertId();
@@ -412,6 +503,8 @@ class Product extends Model
     public function savePond5Music($data, $category_id)
     {
         $eachmedia = $data;
+        // prefetch the api_flag value
+        $flag = $this->get_api_flag('pond5_music', 'api_flag');
 
         foreach ($eachmedia as $key => $music) {
             if (isset($music['id'])) {
@@ -455,7 +548,6 @@ class Product extends Model
                     ->get()
                     ->toArray();
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('5', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -504,6 +596,7 @@ class Product extends Model
 
     public function savePantherImagedetail($data, $category_id)
     {
+        $flag = $this->get_api_flag('panther_media_image', 'api_flag');
 
         if ($data['stat'] == 'ok') {
             if (isset($data['media']['id'])) {
@@ -533,7 +626,6 @@ class Product extends Model
                     ->toArray();
 
                 if (count($data2) == 0) {
-                    $flag = $this->get_api_flag('2', 'api_flag');
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
@@ -554,9 +646,9 @@ class Product extends Model
         }
     }
 
-    public function get_api_flag($flag, $field)
+    public function get_api_flag($slug, $field)
     {
-        return Api::where('api_id', $flag)->first()->$field;
+        return Api::where('api_slug', $slug)->first()->$field;
     }
 
     public function randomkey()
@@ -586,7 +678,7 @@ class Product extends Model
                 'product_vertical'    => 'Royalty Free'
 
             );
-            $flag = $this->get_api_flag('3', 'api_flag');
+            $flag = $this->get_api_flag('pond5_footage', 'api_flag');
             $key  = $this->randomkey();
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);
@@ -608,7 +700,7 @@ class Product extends Model
                 'product_web'         => '2',
                 'product_vertical'    => 'Royalty Free'
             );
-            $flag = $this->get_api_flag('3', 'api_flag');
+            $flag = $this->get_api_flag('panther_media_image', 'api_flag');
             $key  = $this->randomkey();
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);

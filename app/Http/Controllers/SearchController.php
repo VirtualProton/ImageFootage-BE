@@ -179,7 +179,7 @@ class SearchController extends Controller
     {
         $all_products = [];
         $product      = new Product();
-        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
+        $all_products = $product->getProductsData($keyword, $getKeyword);
         $flag         = 0;
 
         if (count($all_products) > 0) {
@@ -314,7 +314,7 @@ class SearchController extends Controller
     {
         $all_products = [];
         $product      = new Product();
-        $all_products = $product->getProductsUpdated($keyword, $getKeyword);
+        $all_products = $product->getProductsData($keyword, $getKeyword);
         $flag         = 0;
 
         if (count($all_products) > 0) {

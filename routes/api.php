@@ -44,12 +44,12 @@ Route::group([
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');
-    Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
+    Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
-    Route::get('pond5Upload', 'CronController@pond5Upload');
+    Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
     Route::get('pond5-get-music', 'CronController@pond5GetMusic');  # pond5GetMusic
-    Route::get('pantherImageUploadCategory', 'CronController@pantherImageUploadCategory');
-    Route::get('pond5UploadCategory', 'CronController@pond5UploadCategory');
+    Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
+    Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
@@ -147,7 +147,7 @@ Route::group([
     Route::post('/get-user-wishlist-products', 'WishListController@getUserWishlistData');
     Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
-    Route::post('/delete-wishlist-data', 'WishListController@deleteWishlist');    
+    Route::post('/delete-wishlist-data', 'WishListController@deleteWishlist');
     Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
 });
 
