@@ -67,17 +67,17 @@ class Product extends Model
                 $applied_filters[] = [
                     "name" => $name,
                     "value" => array($result),
-                    "hasMultipleValues" => ($value['hasValue'] == 0) ? false : true
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
                 ];
             } else {
                 $result = $value['value'];
                 $applied_filters[] = [
                     "name" => $name,
                     "value" => $result,
-                    "hasMultipleValues" => ($value['hasValue'] == 0) ? false : true
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
                 ];
             }                         
-        }        
+        }           
         
         //TODO:  pricing and color filter pending
         // $applied_filters = [
