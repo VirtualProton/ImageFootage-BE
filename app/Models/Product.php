@@ -256,7 +256,7 @@ class Product extends Model
                 $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
                 $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                 $item['api_product_id']   = encrypt($item['api_product_id'], true);
-                $item['product_keywords'] = $this->processMusicKeywords($item['product_keywords']);
+                $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
             }
         }
 
