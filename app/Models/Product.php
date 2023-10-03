@@ -55,8 +55,30 @@ class Product extends Model
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
         //TODO : Need to check with support team and do required changes for adult_content filter
         //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
-        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
-
+        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);        
+        $applied_filters = [];       
+                
+        foreach ($filters as $name => $value) {          
+            
+            if (strpos($value['value'], ',') == true) {
+                
+                $elements = explode(', ', $value['value']);
+                $result = $elements;
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => array($result),
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            } else {
+                $result = $value['value'];
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => $result,
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            }                         
+        }           
+        
         //TODO:  pricing and color filter pending
         // $applied_filters = [
         //     [
@@ -88,13 +110,13 @@ class Product extends Model
                 "hasMultipleValues" => false
             ]
         ];
-
+       
         $products = ImageFilterValue::query();
 
         foreach ($applied_filters as $filter) {
             $name  = $filter['name'];
             $value = $filter['value'];
-
+           
             if ($filter['hasMultipleValues']) {
                 // Use $in for filters with multiple values
                 $products->whereIn("attributes.$name", $value);
@@ -102,14 +124,16 @@ class Product extends Model
                 // For other filters, use dot notation
                 $products->where("attributes.$name", $value);
             }
+
         }
 
         // Filter Data from MongoDB
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
-
+        $filteredProducts = $products
+        ->project(['_id' => 0, 'api_product_id' => 1])
+        ->get()->toArray();
         // Extract the api_product_id values from $filteredProducts
         $apiProductIds = collect($filteredProducts)->pluck('api_product_id')->toArray();
-
+       
         // Fetch product data if filters not applied OR if applied then filtered records present
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
             // Fetch Related Data from MySQL
@@ -144,7 +168,6 @@ class Product extends Model
             }
 
             $data = $data->distinct()->limit($limit)->get()->toArray();
-
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
