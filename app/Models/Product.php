@@ -51,17 +51,18 @@ class Product extends Model
             $type = 'Editorial';
         }
 
-        $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
-        $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
+        $limit  = isset($keyword['limit']) ? $keyword['limit'] : 30;
+        $search = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+
         //TODO : Need to check with support team and do required changes for adult_content filter
         //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
-        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);        
-        $applied_filters = [];       
-                
-        foreach ($filters as $name => $value) {          
-            
+        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        $applied_filters = [];
+
+        foreach ($filters as $name => $value) {
+
             if (strpos($value['value'], ',') == true) {
-                
+
                 $elements = explode(', ', $value['value']);
                 $result = $elements;
                 $applied_filters[] = [
@@ -76,67 +77,42 @@ class Product extends Model
                     "value" => $result,
                     "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
                 ];
-            }                         
-        }           
-        
+            }
+        }
+
         //TODO:  pricing and color filter pending
+        //TODO: need to confirm from both API providers how the attributes will be returned in API response
         // $applied_filters = [
         //     [
-        //         "name"   => "people_ethnicity",
-        //         "value"  => "u",
+        //         "name"   => "people",
+        //         "value"  => "1",
         //         "hasMultipleValues" => false
         //     ],
         //     [
-        //         "name"  => "people_number",
-        //         "value" => "people_1",
+        //         "name"  => "resolutions",
+        //         "value" => "4K",
         //         "hasMultipleValues" => false
-        //     ],
-        //     [
-        //         "name"  => "collection",
-        //         "value" => ["spx", "standard"],
-        //         "hasMultipleValues" => true
         //     ]
         // ];
-        //TODO: need to confirm from both API providers how the attributes will be returned in API response
-        $applied_filters = [
-            [
-                "name"   => "people",
-                "value"  => "1",
-                "hasMultipleValues" => false
-            ],
-            [
-                "name"  => "resolutions",
-                "value" => "4K",
-                "hasMultipleValues" => false
-            ]
-        ];
-       
+
         $products = ImageFilterValue::query();
 
         foreach ($applied_filters as $filter) {
             $name  = $filter['name'];
             $value = $filter['value'];
-           
+
             if ($filter['hasMultipleValues']) {
-                // Use $in for filters with multiple values
                 $products->whereIn("attributes.$name", $value);
             } else {
-                // For other filters, use dot notation
                 $products->where("attributes.$name", $value);
             }
-
         }
 
         // Filter Data from MongoDB
-        $filteredProducts = $products
-        ->project(['_id' => 0, 'api_product_id' => 1])
-        ->get()->toArray();
-        // Extract the api_product_id values from $filteredProducts
-        $apiProductIds = collect($filteredProducts)->pluck('api_product_id')->toArray();
-       
-        // Fetch product data if filters not applied OR if applied then filtered records present
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
+
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
-            // Fetch Related Data from MySQL
             $data = Product::select(
                     'product_id',
                     'api_product_id',
@@ -210,20 +186,15 @@ class Product extends Model
             $value = $filter['value'];
 
             if ($filter['hasMultipleValues']) {
-                // Use $in for filters with multiple values
                 $products->whereIn("attributes.$name", $value);
             } else {
-                // For other filters, use dot notation
                 $products->where("attributes.$name", $value);
             }
         }
 
-        // Filter Data from MongoDB
-        $filteredProducts = $products
-        ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])
-        ->get()->toArray();
-
-        // Create a new array with array index as the value of api_product_id
+        $filteredProducts        = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])
+                                            ->get()
+                                            ->toArray();
         $indexedFilteredProducts = [];
         $apiProductIds           = [];
 
