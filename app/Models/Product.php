@@ -123,7 +123,9 @@ class Product extends Model
                     'product_thumbnail',
                     'product_main_image',
                     'product_added_on',
-                    'product_keywords'
+                    'product_keywords',
+                    'product_price_small',
+                    'product_size'
                 )
                 ->where(function ($query) use ($type) {
                     // TODO: Need to check the use of product_web field
