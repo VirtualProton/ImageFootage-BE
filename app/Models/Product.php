@@ -42,76 +42,58 @@ class Product extends Model
     //API search function
     public function getProductsData($keyword, $requestData)
     {
-        $data = [];
+        $data         = [];
+        $totalRecords = 0;
+
         if ($keyword['productType']['id'] == '1') {
             $type = 'Image';
         } else if ($keyword['productType']['id'] == '2') {
             $type = 'Footage';
+        } else if ($keyword['productType']['id'] == '3') {
+            $type = 'Music';
         } else {
             $type = 'Editorial';
         }
 
-        $limit  = isset($keyword['limit']) ? $keyword['limit'] : 30;
-        $search = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+        $pageNumber = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
+        $limit      = isset($keyword['limit']) ? $keyword['limit'] : 1;
+        $offset     = ($pageNumber - 1) * $limit;
+        $search     = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
 
-        //TODO : Need to check with support team and do required changes for adult_content filter
-        //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
-        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        //TODO :
+        // 1. Need to check with support team and do required changes for adult_content filter
+        // 2. pricing and color filter pending
+        // 3. need to confirm from both API providers how the attributes will be returned in API response
+
+        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
         $applied_filters = [];
 
         foreach ($filters as $name => $value) {
-
-            if (strpos($value['value'], ',') == true) {
-
+            if(isset($value['value'])) {
                 $elements = explode(', ', $value['value']);
-                $result = $elements;
+                $result   = $elements;
                 $applied_filters[] = [
-                    "name" => $name,
-                    "value" => array($result),
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
-            } else {
-                $result = $value['value'];
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => $result,
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    "name"  => $name,
+                    "value" => (strpos($value['value'], ',') == true) ? $result : [$value['value']],
+                    "hasMultipleValues" => true
                 ];
             }
         }
 
-        //TODO:  pricing and color filter pending
-        //TODO: need to confirm from both API providers how the attributes will be returned in API response
-        // $applied_filters = [
-        //     [
-        //         "name"   => "people",
-        //         "value"  => "1",
-        //         "hasMultipleValues" => false
-        //     ],
-        //     [
-        //         "name"  => "resolutions",
-        //         "value" => "4K",
-        //         "hasMultipleValues" => false
-        //     ]
-        // ];
-
         $products = ImageFilterValue::query();
-
-        foreach ($applied_filters as $filter) {
-            $name  = $filter['name'];
-            $value = $filter['value'];
-
-            if ($filter['hasMultipleValues']) {
-                $products->whereIn("attributes.$name", $value);
-            } else {
-                $products->where("attributes.$name", $value);
+        if (!empty($applied_filters)) {
+            foreach ($applied_filters as $filter) {
+                $name  = $filter['name'];
+                $value = $filter['value'];
+                if ($filter['hasMultipleValues']) {
+                    $products->whereIn("attributes.$name", $value);
+                }
             }
         }
 
         // Filter Data from MongoDB
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
-
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
             $data = Product::select(
                     'product_id',
@@ -145,7 +127,9 @@ class Product extends Model
                 $data->whereIn('api_product_id', $apiProductIds);
             }
 
-            $data = $data->distinct()->limit($limit)->get()->toArray();
+            $totalRecords = count($data->get());
+            $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
@@ -155,48 +139,53 @@ class Product extends Model
             }
         }
 
-        return  $data;
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
     }
 
     //API search function
     public function getMusicProducts($keyword, $requestData)
     {
-        $data           = [];
-        $type           = 'Music';
-        $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
-        $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
-        $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $data       = [];
+        $type       = 'Music';
+        $limit      = isset($keyword['limit']) ? $keyword['limit'] : 30;
+        $search     = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+        $pageNumber = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
+        $offset     = ($pageNumber - 1) * $limit;
 
+        $filters    = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort']);
         //TODO: need to confirm from both API providers how the attributes will be returned in API response
-        $applied_filters = [
-            [
-                "name"   => "music_sound_bpm",
-                "value"  => ["119", "135", "127"],
-                "hasMultipleValues" => true
-            ],
-            [
-                "name"  => "genre",
-                "value" => ["kids", "ambient"],
-                "hasMultipleValues" => true
-            ]
-        ];
+        //TODO:  pricing and color filter pending
+        $applied_filters = [];
 
-        $products = ImageFilterValue::query();
-
-        foreach ($applied_filters as $filter) {
-            $name  = $filter['name'];
-            $value = $filter['value'];
-
-            if ($filter['hasMultipleValues']) {
-                $products->whereIn("attributes.$name", $value);
-            } else {
-                $products->where("attributes.$name", $value);
+        foreach ($filters as $name => $value) {
+            if(isset($value['value'])) {
+                $elements = explode(', ', $value['value']);
+                $result   = $elements;
+                $applied_filters[] = [
+                    "name"  => $name,
+                    "value" => (strpos($value['value'], ',') == true) ? $result : [$value['value']],
+                    "hasMultipleValues" => true
+                ];
             }
         }
 
-        $filteredProducts        = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])
-                                            ->get()
-                                            ->toArray();
+        $products = ImageFilterValue::query();
+        if (!empty($applied_filters)) {
+            foreach ($applied_filters as $filter) {
+                $name  = $filter['name'];
+                $value = $filter['value'];
+                if ($filter['hasMultipleValues']) {
+                    $products->whereIn("attributes.$name", $value);
+                }
+            }
+        }
+
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])->get()->toArray();
         $indexedFilteredProducts = [];
         $apiProductIds           = [];
 
@@ -239,12 +228,12 @@ class Product extends Model
             });
         }
 
-        //TODO:  pricing and color filter pending
         if (!empty($apiProductIds)) {
             $data->whereIn('api_product_id', $apiProductIds);
         }
 
-        $data = $data->distinct()->limit($limit)->get()->toArray();
+        $totalRecords = count($data->get());
+        $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
 
         if (count($data)>0) {
             foreach ($data as &$item) {
@@ -256,7 +245,12 @@ class Product extends Model
             }
         }
 
-        return  $data;
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
     }
 
 

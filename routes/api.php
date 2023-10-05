@@ -103,6 +103,8 @@ Route::group([
     Route::get('/get_states_list/{country_id?}', 'AuthController@getStatesList');
     Route::get('/get_cities_list/{state_id?}', 'AuthController@getCitiesList');
     Route::post('relatedsearchImage', 'SearchController@relatedSimilarImageList');
+    Route::get('/category-list', 'ProductController@categoryLists');
+    Route::post('/category-details', 'ProductController@categoryDetails');
 });
 
 Route::group([

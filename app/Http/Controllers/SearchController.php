@@ -46,19 +46,19 @@ class SearchController extends Controller
         $keyword['productType']['id'] = $getKeyword['productType'];
         $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
-
+        
         if ($keyword['productType']['id'] == '1') {
-           $all_products = $this->getProducts($keyword, $getKeyword, 15);
+           $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '2') {
-           $all_products = $this->getProducts($keyword, $getKeyword, 30);
+           $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '3') {
-           $all_products = $this->getMusicData($keyword, $getKeyword, 30);
+           $all_products = $this->getMusicData($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '4') {
             $all_products = $this->getEditorialData($keyword, $getKeyword);
         } else {
-            $images  = $this->getProducts($keyword, $getKeyword, 15);
-            $footage = $this->getProducts($keyword, $getKeyword, 30);
-            $music   = $this->getProducts($keyword, $getKeyword, 30);
+            $images  = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
+            $footage = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
+            $music   = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
             array_push($all_products, $images);
             array_push($all_products, $footage);
             array_push($all_products, $music);
@@ -181,12 +181,13 @@ class SearchController extends Controller
         $all_products = $product->getProductsData($keyword, $getKeyword);
         $total        = $totalPages = 0;
 
-        if (count($all_products) > 0) {
-            $total        = count($all_products);
+        $jsonData = json_decode($all_products->getContent(), true);           
+        
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);
         }
-
-        return array('imgfootage' => $all_products, 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
     public function getEditorialData($keyword, $getKeyword)
@@ -305,12 +306,13 @@ class SearchController extends Controller
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
         $total        = $totalPages = 0;
 
-        if (count($all_products) > 0) {
-            $total        = count($all_products);
+        $jsonData = json_decode($all_products->getContent(), true);           
+        
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);
         }
-
-        return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
     public function categoryWiseData() {
