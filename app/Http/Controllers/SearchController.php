@@ -182,12 +182,12 @@ class SearchController extends Controller
         $total        = $totalPages = 0;
 
         $jsonData = json_decode($all_products->getContent(), true);           
-
+        
         if ($jsonData['total_count'] > 0) {
             $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);
         }
-        return array('imgfootage' => $all_products, 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
     public function getEditorialData($keyword, $getKeyword)
