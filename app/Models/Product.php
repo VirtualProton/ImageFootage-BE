@@ -52,7 +52,7 @@ class Product extends Model
         }
 
         $pageNumber = $keyword['pagenumber'];
-        $recordsPerPage = 15; 
+        $recordsPerPage = $keyword['limit']; 
         $offset = ($pageNumber - 1) * $recordsPerPage;
 
         $limit  = isset($keyword['limit']) ? $keyword['limit'] : 30;
@@ -62,7 +62,7 @@ class Product extends Model
         //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
         $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
         $applied_filters = [];
-
+        
         foreach ($filters as $name => $value) {
 
             if (strpos($value['value'], ',') == true) {
@@ -178,7 +178,7 @@ class Product extends Model
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
         $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort']);
-
+        $requestFilters = $requestFilters['all_filters'];
         //TODO: need to confirm from both API providers how the attributes will be returned in API response
         // $applied_filters = [
         //     [
