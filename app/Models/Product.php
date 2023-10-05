@@ -51,6 +51,10 @@ class Product extends Model
             $type = 'Editorial';
         }
 
+        $pageNumber = $keyword['pagenumber'];
+        $recordsPerPage = 15; 
+        $offset = ($pageNumber - 1) * $recordsPerPage;
+
         $limit  = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
 
@@ -145,7 +149,10 @@ class Product extends Model
                 $data->whereIn('api_product_id', $apiProductIds);
             }
 
-            $data = $data->distinct()->limit($limit)->get()->toArray();
+            $totalRecords = count($data->get());
+            $data = $data->distinct()->offset($offset)->limit($recordsPerPage)->get()->toArray();
+            
+
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
@@ -155,7 +162,12 @@ class Product extends Model
             }
         }
 
-        return  $data;
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
     }
 
     //API search function
@@ -165,21 +177,43 @@ class Product extends Model
         $type           = 'Music';
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
-        $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort']);
 
         //TODO: need to confirm from both API providers how the attributes will be returned in API response
-        $applied_filters = [
-            [
-                "name"   => "music_sound_bpm",
-                "value"  => ["119", "135", "127"],
-                "hasMultipleValues" => true
-            ],
-            [
-                "name"  => "genre",
-                "value" => ["kids", "ambient"],
-                "hasMultipleValues" => true
-            ]
-        ];
+        // $applied_filters = [
+        //     [
+        //         "name"   => "music_sound_bpm",
+        //         "value"  => ["119", "135", "127"],
+        //         "hasMultipleValues" => true
+        //     ],
+        //     [
+        //         "name"  => "genre",
+        //         "value" => ["kids", "ambient"],
+        //         "hasMultipleValues" => true
+        //     ]
+        // ];
+
+        $applied_filters = [];        
+
+        foreach ($requestFilters as $name => $value) {           
+            if (strpos($value['value'], ',') == true) {
+
+                $elements = explode(', ', $value['value']);
+                $result = $elements;
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => array($result),
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            } else {
+                $result = $value['value'];
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => $result,
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            }
+        }
 
         $products = ImageFilterValue::query();
 
