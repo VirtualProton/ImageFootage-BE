@@ -56,27 +56,27 @@ class Product extends Model
 
         //TODO : Need to check with support team and do required changes for adult_content filter
         //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
-        $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
         $applied_filters = [];
 
-        foreach ($filters as $name => $value) {
-
-            if (strpos($value['value'], ',') == true) {
-
-                $elements = explode(', ', $value['value']);
-                $result = $elements;
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => array($result),
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
-            } else {
-                $result = $value['value'];
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => $result,
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
+        if(isset($filters['all_filters'])) {
+            foreach ($filters['all_filters'] as $name => $value) {
+                if (strpos($value['value'], ',') == true) {
+                    $elements = explode(', ', $value['value']);
+                    $result   = $elements;
+                    $applied_filters[] = [
+                        "name"  => $name,
+                        "value" => array($result),
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                } else {
+                    $result = $value['value'];
+                    $applied_filters[] = [
+                        "name"  => $name,
+                        "value" => $result,
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                }
             }
         }
 
