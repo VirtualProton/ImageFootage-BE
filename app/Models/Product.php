@@ -43,6 +43,7 @@ class Product extends Model
     public function getProductsData($keyword, $requestData)
     {
         $data = [];
+        $totalRecords = 0;
         if ($keyword['productType']['id'] == '1') {
             $type = 'Image';
         } else if ($keyword['productType']['id'] == '2') {
