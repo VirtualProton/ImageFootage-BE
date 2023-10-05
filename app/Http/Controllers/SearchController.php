@@ -306,12 +306,13 @@ class SearchController extends Controller
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
         $total        = $totalPages = 0;
 
-        if (count($all_products) > 0) {
-            $total        = count($all_products);
+        $jsonData = json_decode($all_products->getContent(), true);           
+        
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);
         }
-
-        return array('imgfootage' => $all_products, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
     public function categoryWiseData() {

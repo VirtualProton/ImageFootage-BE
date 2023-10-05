@@ -179,7 +179,10 @@ class Product extends Model
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
         $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort']);
-        $requestFilters = $requestFilters['all_filters'];
+        $pageNumber = $keyword['pagenumber'];
+        $recordsPerPage = 15; 
+        $offset = ($pageNumber - 1) * $recordsPerPage;
+        
         //TODO: need to confirm from both API providers how the attributes will be returned in API response
         // $applied_filters = [
         //     [
@@ -278,7 +281,7 @@ class Product extends Model
         if (!empty($apiProductIds)) {
             $data->whereIn('api_product_id', $apiProductIds);
         }
-
+        $totalRecords = count($data->get());
         $data = $data->distinct()->limit($limit)->get()->toArray();
 
         if (count($data)>0) {
@@ -291,7 +294,12 @@ class Product extends Model
             }
         }
 
-        return  $data;
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
     }
 
 
