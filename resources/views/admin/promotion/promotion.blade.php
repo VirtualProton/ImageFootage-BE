@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label class="">Page Type</label>
-                        <select class="form-control" ng-model="product.page_type" name="page_type">
+                        <select class="form-control" ng-model="product.page_type" name="page_type" id="PageType">
                             <option value="">--Select a Type--</option>
                             <option value="home_page">Home</option>
                             <option value="image_page">Image</option>
@@ -106,4 +106,10 @@
 @section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
+<script>
+    $(document).ready(function(e) {
+        $("#PageType").val("{{ old('page_type') ?? '' }}")
+        $("#PageType").trigger('change')
+    })
+</script>
 @stop
