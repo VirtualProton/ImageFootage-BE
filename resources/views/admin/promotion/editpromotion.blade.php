@@ -118,8 +118,6 @@
     $(document).ready(function(e) {
         $("#PageType").val("{{ $promotionDetails['page_type'] }}")
         $("#PageType").trigger('change')
-        $("#ProductType").val("{{ $promotionDetails['media_type'] }}")
-        $("#ProductType").trigger('change')
     })
 </script>
 @stop
