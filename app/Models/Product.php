@@ -48,6 +48,8 @@ class Product extends Model
             $type = 'Image';
         } else if ($keyword['productType']['id'] == '2') {
             $type = 'Footage';
+        } else if ($keyword['productType']['id'] == '3') {
+            $type = 'Music';
         } else {
             $type = 'Editorial';
         }
@@ -65,23 +67,24 @@ class Product extends Model
         $applied_filters = [];
         
         foreach ($filters as $name => $value) {
-
-            if (strpos($value['value'], ',') == true) {
-
-                $elements = explode(', ', $value['value']);
-                $result = $elements;
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => array($result),
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
-            } else {
-                $result = $value['value'];
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => $result,
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
+            if(isset($value['value'])) {
+                if (strpos($value['value'], ',') == true) {
+    
+                    $elements = explode(', ', $value['value']);
+                    $result = $elements;
+                    $applied_filters[] = [
+                        "name" => $name,
+                        "value" => array($result),
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                } else {
+                    $result = $value['value'];
+                    $applied_filters[] = [
+                        "name" => $name,
+                        "value" => $result,
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                }
             }
         }
 
@@ -101,15 +104,16 @@ class Product extends Model
         // ];
 
         $products = ImageFilterValue::query();
+        if (!empty($applied_filters)) {
+            foreach ($applied_filters as $filter) {
+                $name  = $filter['name'];
+                $value = $filter['value'];
 
-        foreach ($applied_filters as $filter) {
-            $name  = $filter['name'];
-            $value = $filter['value'];
-
-            if ($filter['hasMultipleValues']) {
-                $products->whereIn("attributes.$name", $value);
-            } else {
-                $products->where("attributes.$name", $value);
+                if ($filter['hasMultipleValues']) {
+                    $products->whereIn("attributes.$name", $value);
+                } else {
+                    $products->where("attributes.$name", $value);
+                }
             }
         }
 
@@ -199,36 +203,39 @@ class Product extends Model
 
         $applied_filters = [];        
 
-        foreach ($requestFilters as $name => $value) {           
-            if (strpos($value['value'], ',') == true) {
-
-                $elements = explode(', ', $value['value']);
-                $result = $elements;
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => array($result),
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
-            } else {
-                $result = $value['value'];
-                $applied_filters[] = [
-                    "name" => $name,
-                    "value" => $result,
-                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
-                ];
-            }
+        foreach ($requestFilters as $name => $value) { 
+            if(isset($value['value'])) {
+                if (strpos($value['value'], ',') == true) {
+    
+                    $elements = explode(', ', $value['value']);
+                    $result = $elements;
+                    $applied_filters[] = [
+                        "name" => $name,
+                        "value" => array($result),
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                } else {
+                    $result = $value['value'];
+                    $applied_filters[] = [
+                        "name" => $name,
+                        "value" => $result,
+                        "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                    ];
+                }
+            }          
         }
 
         $products = ImageFilterValue::query();
-
-        foreach ($applied_filters as $filter) {
-            $name  = $filter['name'];
-            $value = $filter['value'];
-
-            if ($filter['hasMultipleValues']) {
-                $products->whereIn("attributes.$name", $value);
-            } else {
-                $products->where("attributes.$name", $value);
+        if (!empty($applied_filters)) {
+            foreach ($applied_filters as $filter) {
+                $name  = $filter['name'];
+                $value = $filter['value'];
+    
+                if ($filter['hasMultipleValues']) {
+                    $products->whereIn("attributes.$name", $value);
+                } else {
+                    $products->where("attributes.$name", $value);
+                }
             }
         }
 
