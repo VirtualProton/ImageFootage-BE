@@ -20,15 +20,13 @@ class MusicApi
         $this->url = config('thirdparty.pond5.api_url');
     }
 
-    # searchMusic form pond5
-    public function searchMusic($keyword, $getKeyword, $limit = 30, $page = 1)
+
+    public function search($keyword, $getKeyword, $limit = 30, $page = 1)
     {
         $search = $keyword['search'];
-        $editorial = 0;
-        $bittotal  = 0;
-        if (isset($keyword['pagenumber'])) {
-            $page = $keyword['pagenumber'];
-        }
+        $page   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : $page;
+
+        // TODO: change the frontend value for the sort, use slug
         if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'newest';
         } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
@@ -42,65 +40,37 @@ class MusicApi
         } else {
             $sort = 'default';
         }
-        $filters = '';
+
 
         $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','sort']);
         $filter_mapping = "";
 
-        $transformedArray = [];
+        $url            = [];
+        $url['type']    = 'music';
+        $url['perPage'] = $limit;
+        $url['page']    = $page;
 
-        foreach ($getFilters['all_filters'] as $filter) {
-            $key = $filter['key'];
-            $values = $filter['value'];
-            $transformedArray[$key] = $values;
-        }
-
-        foreach($transformedArray as $getFilterName => $getFilterValue){
-
-            if(!empty($getFilterValue)){
-
-                $filterData = DB::table('imagefootage_filters')
-                ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-                ->where('imagefootage_filters.value', $getFilterName)
-                ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
-                ->get();
-
-                foreach($filterData as $filter){
-                    $filter_mapping .= $getFilterName.":".$filter->value.';';
-                }
-            }
-        }
-        $search_cmd = array();
-        $url = [];
         if (!empty($filter_mapping)) {
             $url['query'] = $filter_mapping;
         }
-
-        $url['type'] = 'music';
 
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }
 
-        $url['perPage'] = $limit;
-
-        $url['page'] = $page;
-
-
-        $url1 = $this->url . '/api/v3/search?' . http_build_query($url);
-        $curl = curl_init();
+        $apiUrl = $this->url . '/api/v3/search?' . http_build_query($url);
+        $curl   = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url1,
+            CURLOPT_URL            => $apiUrl,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_ENCODING       => '',
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => 0,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST  => 'GET',
+            CURLOPT_HTTPHEADER     => array(
                 'accept: application/json',
                 'key: ' . $this->api_key,
                 'secret: ' . $this->api_secret,

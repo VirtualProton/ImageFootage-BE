@@ -51,43 +51,49 @@ class Product extends Model
             $type = 'Editorial';
         }
 
-        $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
-        $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
+        $limit  = isset($keyword['limit']) ? $keyword['limit'] : 30;
+        $search = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+
         //TODO : Need to check with support team and do required changes for adult_content filter
         //$adult_content  = isset($keyword['adult_content']) ? $keyword['adult_content'] : 'nil';
         $filters        = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        $applied_filters = [];
+
+        foreach ($filters as $name => $value) {
+
+            if (strpos($value['value'], ',') == true) {
+
+                $elements = explode(', ', $value['value']);
+                $result = $elements;
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => array($result),
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            } else {
+                $result = $value['value'];
+                $applied_filters[] = [
+                    "name" => $name,
+                    "value" => $result,
+                    "hasMultipleValues" => ($value['hasMultipleValue'] == 0) ? false : true
+                ];
+            }
+        }
 
         //TODO:  pricing and color filter pending
+        //TODO: need to confirm from both API providers how the attributes will be returned in API response
         // $applied_filters = [
         //     [
-        //         "name"   => "people_ethnicity",
-        //         "value"  => "u",
+        //         "name"   => "people",
+        //         "value"  => "1",
         //         "hasMultipleValues" => false
         //     ],
         //     [
-        //         "name"  => "people_number",
-        //         "value" => "people_1",
+        //         "name"  => "resolutions",
+        //         "value" => "4K",
         //         "hasMultipleValues" => false
-        //     ],
-        //     [
-        //         "name"  => "collection",
-        //         "value" => ["spx", "standard"],
-        //         "hasMultipleValues" => true
         //     ]
         // ];
-
-        $applied_filters = [
-            [
-                "name"   => "people",
-                "value"  => "1",
-                "hasMultipleValues" => false
-            ],
-            [
-                "name"  => "resolutions",
-                "value" => "4K",
-                "hasMultipleValues" => false
-            ]
-        ];
 
         $products = ImageFilterValue::query();
 
@@ -96,23 +102,17 @@ class Product extends Model
             $value = $filter['value'];
 
             if ($filter['hasMultipleValues']) {
-                // Use $in for filters with multiple values
                 $products->whereIn("attributes.$name", $value);
             } else {
-                // For other filters, use dot notation
                 $products->where("attributes.$name", $value);
             }
         }
 
         // Filter Data from MongoDB
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
 
-        // Extract the api_product_id values from $filteredProducts
-        $apiProductIds = collect($filteredProducts)->pluck('api_product_id')->toArray();
-
-        // Fetch product data if filters not applied OR if applied then filtered records present
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
-            // Fetch Related Data from MySQL
             $data = Product::select(
                     'product_id',
                     'api_product_id',
@@ -123,7 +123,9 @@ class Product extends Model
                     'product_thumbnail',
                     'product_main_image',
                     'product_added_on',
-                    'product_keywords'
+                    'product_keywords',
+                    'product_price_small',
+                    'product_size'
                 )
                 ->where(function ($query) use ($type) {
                     // TODO: Need to check the use of product_web field
@@ -144,7 +146,6 @@ class Product extends Model
             }
 
             $data = $data->distinct()->limit($limit)->get()->toArray();
-
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
@@ -161,9 +162,48 @@ class Product extends Model
     public function getMusicProducts($keyword, $requestData)
     {
         $data           = [];
+        $type           = 'Music';
         $limit          = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search         = isset($keyword['search']) ? $keyword['search'] : '' ;
         $requestFilters = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial']);
+
+        //TODO: need to confirm from both API providers how the attributes will be returned in API response
+        $applied_filters = [
+            [
+                "name"   => "music_sound_bpm",
+                "value"  => ["119", "135", "127"],
+                "hasMultipleValues" => true
+            ],
+            [
+                "name"  => "genre",
+                "value" => ["kids", "ambient"],
+                "hasMultipleValues" => true
+            ]
+        ];
+
+        $products = ImageFilterValue::query();
+
+        foreach ($applied_filters as $filter) {
+            $name  = $filter['name'];
+            $value = $filter['value'];
+
+            if ($filter['hasMultipleValues']) {
+                $products->whereIn("attributes.$name", $value);
+            } else {
+                $products->where("attributes.$name", $value);
+            }
+        }
+
+        $filteredProducts        = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])
+                                            ->get()
+                                            ->toArray();
+        $indexedFilteredProducts = [];
+        $apiProductIds           = [];
+
+        foreach ($filteredProducts as $product) {
+            $indexedFilteredProducts[$product['api_product_id']] = $product;
+            $apiProductIds[] = $product['api_product_id'];
+        }
 
         $data = Product::select(
             'product_id',
@@ -177,7 +217,6 @@ class Product extends Model
             'product_added_on',
             'product_keywords',
             'product_description',
-            'music_sound_bpm',
             'music_duration',
             'music_fileType',
             'music_price',
@@ -186,41 +225,51 @@ class Product extends Model
             'product_keywords',
             'music_size'
         )
-        //TODO: filters apply pending
-        //->leftJoin('imagefootage_productfilters', 'imagefootage_productfilters.filter_product_id', '=', 'imagefootage_products.id')
-        //->leftJoin('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
-        ->where(function ($query) {
+        ->where(function ($query) use ($type){
             // TODO: Need to check the use of product_web field
             //$query->whereIn('product_web', [1, 2, 3])
-            $query->where('product_main_type', '=', 'Music');
+            $query->where('product_main_type', '=', $type);
         });
 
         if (!empty($keyword['search'])) {
             $data->where(function ($query) use ($search) {
                 $query->orWhere('product_id', '=', $search)
                     ->orWhere('product_title', 'LIKE', '%' . $search . '%')
-                    ->orWhere('product_keywords', 'LIKE', '%' . $search . '%')
-                    ->orWhere('auther_name', 'LIKE', '%' . $search . '%');
+                    ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
             });
         }
 
         //TODO:  pricing and color filter pending
-        // if (count($requestFilters) > 0) {
-        //     $filtersArr = array_values(array_filter($requestFilters));
-        //     if (count($filtersArr) > 0) {
-        //         $data = $data->whereIn('imagefootage_filters_options.id', $filtersArr);
-        //     }
-        // }
+        if (!empty($apiProductIds)) {
+            $data->whereIn('api_product_id', $apiProductIds);
+        }
+
         $data = $data->distinct()->limit($limit)->get()->toArray();
 
-        if (count($data) > 0) {
-            foreach ($data as $key => $music) {
-                $data[$key]['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($music['product_title'])));
-                $data[$key]['api_product_id'] = encrypt($music['api_product_id'], true);
+        if (count($data)>0) {
+            foreach ($data as &$item) {
+                $item['music_sound_bpm']  = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
+                $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                $item['api_product_id']   = encrypt($item['api_product_id'], true);
+                $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
             }
         }
 
         return  $data;
+    }
+
+
+    public function processMusicKeywords($valuesString = '') {
+        $selectedValues = [];
+        if (!empty($valuesString)) {
+            $valuesArray = explode(',', $valuesString);
+            $valuesArray = array_map('ucfirst', $valuesArray);
+            shuffle($valuesArray);
+            $selectedValues = array_slice($valuesArray, 0, 3);
+        }
+
+        return implode(', ', $selectedValues);
     }
 
     public function getProductDetail($media_id, $type)
@@ -356,6 +405,10 @@ class Product extends Model
         }
     }
 
+    /**
+    * This is main function for storing the pond5 footage data via CRON execution
+    * It manages the data storage and update in Mysql and MongoDB both
+    */
     public function savePond5Footage($data, $category_id)
     {
         // prefetch the api_flag value
@@ -445,8 +498,6 @@ class Product extends Model
         }
     }
 
-    #SavesinglePond5Footage
-
     public function savePond5singleImage($data, $category_id)
     {
         $eachmedia = $data;
@@ -499,58 +550,98 @@ class Product extends Model
         }
 
     }
-    # savePond5Music
+
+    /**
+    * This is main function for storing the pond5 music data via CRON execution
+    * It manages the data storage and update in Mysql and MongoDB both
+    */
     public function savePond5Music($data, $category_id)
     {
-        $eachmedia = $data;
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_music', 'api_flag');
 
-        foreach ($eachmedia as $key => $music) {
-            if (isset($music['id'])) {
-                $pond_id_withprefix = $music['id'];
-                if (strlen($music['id']) < 9) {
-                    $add_zero = 9 - (strlen($music['id']));
+        foreach ($data['items'] as $eachmedia) {
+            if (isset($eachmedia['id'])) {
+                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
+                if (strlen($eachmedia['id']) < 9) {
+                    $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
                         $pond_id_withprefix =  "0" . $pond_id_withprefix;
                     }
                 }
 
                 $media = array(
-                    'api_product_id'      => $music['id'],
+                    'api_product_id'      => $eachmedia['id'],
                     'product_category'    => $category_id,
-                    'product_title'       => $music['title'],
-                    'product_thumbnail'   => $music['thumbnail'],
-                    'product_main_image'  => $music['watermarkPreview'],
-                    'product_description' => $music['description'],
-                    'product_size'        => '',
-                    "product_keywords"    => implode(',', $music['keywords']),
+                    'product_title'       => $eachmedia['title'],
+                    'product_thumbnail'   => $eachmedia['thumbnail'],
+                    'product_main_image'  => $eachmedia['watermarkPreview'],
+                    'product_description' => $eachmedia['description'],
+                    'product_size'        => '', //TODO: check for this value
+                    "product_keywords"    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
                     'product_main_type'   => "Music",
                     'product_sub_type'    => "Music",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free',
-                    'music_sound_bpm'     => $music['soundBpm'] ?? null,
-                    'auther_name'         => $music['authorName'] ?? null,
+                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s")
                 );
 
-                if (!empty($music['versions'])) {
-                    $media['music_duration'] = $music['versions'][0]['duration'] ?? null;
-                    $media['music_fileType'] = $music['versions'][0]['fileType'] ?? null;
-                    $media['music_price']    = $music['versions'][0]['price'] ?? null;
-                    $media['music_size']     = $music['versions'][0]['size'] ?? null;
+                if (!empty($eachmedia['versions'])) {
+                    $media['music_duration'] = $eachmedia['versions'][0]['duration'] ?? null;
+                    $media['music_fileType'] = $eachmedia['versions'][0]['fileType'] ?? null;
+                    $media['music_price']    = $eachmedia['versions'][0]['price'] ?? null;
+                    $media['music_size']     = $eachmedia['versions'][0]['size'] ?? null;
                 }
 
                 $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $music['id'])
+                    ->where('api_product_id', $eachmedia['id'])
                     ->get()
                     ->toArray();
+
                 if (count($data2) == 0) {
                     $key  = $this->randomkey();
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
+
+                    $productData  = array(
+                        'music_sound_bpm'  => $eachmedia['soundBpm'] ?? '',
+                        'mood'             => ['action', 'chill'],
+                        'genre'            => ['ambient', 'jazz'],
+                        'artist'           => $eachmedia['authorName']
+                    );
+
+                    $imageFilterValue = new ImageFilterValue([
+                        'api_product_id' => $eachmedia['id'],
+                        'attributes'     => $productData
+                    ]);
+                    $imageFilterValue->save();
+                } else {
+                    DB::table('imagefootage_products')
+                        ->where('api_product_id', '=', $eachmedia['id'])
+                        ->update([
+                            'product_title'       => $eachmedia['title'],
+                            'product_thumbnail'   => $eachmedia['thumbnail'],
+                            'product_main_image'  => $eachmedia['watermarkPreview'],
+                            'product_description' => $eachmedia['description'],
+                            'updated_at'           => date('Y-m-d H:i:s')
+                        ]);
+
+                    $apiProductId = $eachmedia['id'];
+                    $productData  = array(
+                        'music_sound_bpm'  => $eachmedia['soundBpm'] ?? '',
+                        'mood'             => ['chill'],
+                        'genre'            => ['ambient']
+                    );
+
+                    // Find the existing document by api_product_id, or create a new one
+                    $imageFilterValue = ImageFilterValue::updateOrCreate(
+                        ['api_product_id' => $apiProductId],
+                        [
+                            'attributes' => $productData,
+                        ]
+                    );
                 }
             }
         }

@@ -158,25 +158,32 @@ class CronController extends Controller
         }
     }
 
-    public function pond5GetMusic()
+    /**
+    * This function will be executed as a separate CRON for getting the pond5 Music
+    * for all the categories which are active and set for home display
+    * This CRON should run frequently may be once in a day
+    */
+    public function pond5HomeCategoriesMusicUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
-        // TODO: Need to manage via constant array
-        $homeCategories = ['COVID-19', 'Summer', 'Work from Home', 'Mothers day', 'Earth Day', 'Nature'];
 
-        foreach ($homeCategories as $percategory) {
-            $keyword['search']  = $percategory;
-            $musicMedia         = new MusicApi();
-            $pondMusicMediaData = $musicMedia->searchMusic($keyword, []);
-            $common             = new Common();
-            $categoryId         = $common->checkCategory($percategory);
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
 
-            if (!empty($pondMusicMediaData) && count($pondMusicMediaData['items']) > 0) {
-                $this->product->savePond5Music($pondMusicMediaData['items'], $categoryId);
+        foreach ($home_categories as $percategory) {
+            $keyword['search']   = $percategory['category_name'];
+            $musicMedia          = new MusicApi();
+            $pond5MusicMediaData = $musicMedia->search($keyword, []);
+
+            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
+                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
             }
         }
     }
 
-
+    //TODO: pending function for othercategories processing for music
 }

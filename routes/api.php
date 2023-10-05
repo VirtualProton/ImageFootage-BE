@@ -47,7 +47,7 @@ Route::group([
     Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
     Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
-    Route::get('pond5-get-music', 'CronController@pond5GetMusic');  # pond5GetMusic
+    Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
     Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
     Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
