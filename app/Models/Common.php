@@ -129,6 +129,12 @@ class Common extends Model
 
     public function save_proforma($data)
     {
+        $res = $this->verifyUserDetailsExist($data['uid']);
+        if(!$res) {
+            $this->statusdesc  =   "Please complete the user details.";
+            $this->statuscode  =   "0";
+            return response()->json(compact('this'));
+        }
         ini_set('max_execution_time', 0);
         $selected_taxes = array();
 
@@ -586,7 +592,12 @@ class Common extends Model
 
     public function save_subscription_proforma($data)
     {
-
+        $res = $this->verifyUserDetailsExist($data['uid']);
+        if(!$res) {
+            $this->statusdesc  =   "Please complete the user details.";
+            $this->statuscode  =   "0";
+            return response()->json(compact('this'));
+        }
         ini_set('max_execution_time', 0);
 
         $selected_taxes = array();
@@ -780,7 +791,12 @@ class Common extends Model
 
     public function save_download_proforma($data)
     {
-
+        $res = $this->verifyUserDetailsExist($data['uid']);
+        if(!$res) {
+            $this->statusdesc  =   "Please complete the user details.";
+            $this->statuscode  =   "0";
+            return response()->json(compact('this'));
+        }
         ini_set('max_execution_time', 0);
         //echo "<pre>"; print_r($data); die;
         $selected_taxes = array();
@@ -1134,5 +1150,18 @@ class Common extends Model
             $resp['statuscode'] = "0";
         }
         return response()->json(compact('resp'));
+    }
+
+    public function verifyUserDetailsExist($user_id)
+    {
+        if (!empty($user_id)) {
+            $count = DB::table('imagefootage_users')
+                ->where('imagefootage_users.id', '=', $user_id)
+                ->join('countries as cn', 'cn.id', '=', 'imagefootage_users.country')
+                ->join('states as st', 'st.id', '=', 'imagefootage_users.state')
+                ->join('cities as ct', 'ct.id', '=', 'imagefootage_users.city')
+                ->count();
+            return $count > 0 ? true : false;
+        }
     }
 }

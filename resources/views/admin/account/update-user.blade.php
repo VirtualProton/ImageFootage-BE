@@ -33,7 +33,12 @@
             <div class="custom-width"><span class="custom-font">Address:<span>
               <textarea name="user_address" id="user_address" rows="4"  cols="50">{{$user->address}}</textarea>
             </div> 
-            <div class="custom-width">   
+            <div class="custom-width"><span class="custom-font">Address2:<span>
+              <textarea name="user_address2" id="user_address2" rows="4"  cols="50">{{$user->address2}}</textarea>
+            </div>
+        </div>
+        <div class="select-button-wrap">
+          <div class="custom-width">   
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
                 <div class="">
@@ -50,9 +55,6 @@
                 </div>
               </div>
           </div> 
-         
-        </div>
-        <div class="select-button-wrap">
           <div class="custom-width">  
             <div class="form-group">
               <label for="inputPassword3" class="col-sm-2 control-label">State</label>
@@ -90,15 +92,14 @@
               </div>
             </div>
             <div class="custom-width"><span class="custom-font">Postal Code :</span> {{$user->postal_code}}</div>
-            <div class="custom-width"><span class="custom-font">Phone :</span> <input type="text" class="" name="user_phone" id="user_phone" value="{{$user->phone}}" /></div>
+            
         </div>  
           
         {{-- <h5>City : {{$city_name}}</h5>
         <h5>State : {{$state_name}}</h5>
         <h5>Country : {{$country_name}}</h5> --}}
         <div class="postal-code">
-          
-         
+          <div class="custom-width"><span class="custom-font">Phone :</span> <input type="text" class="" name="user_phone" id="user_phone" value="{{$user->phone}}" /></div>
           <div class="custom-width"><span class="custom-font">GST :</span> <input type="text" class="" name="user_gst" id="user_gst" value="{{$user->gst}}" /></div>
           <div class="custom-width"><span class="custom-font">PAN :</span> <input type="text" class="" name="user_pan" id="user_pan" value="{{$user->pan}}" /></div>
         </div>
