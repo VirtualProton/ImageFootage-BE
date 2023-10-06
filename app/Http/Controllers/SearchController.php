@@ -46,7 +46,7 @@ class SearchController extends Controller
         $keyword['productType']['id'] = $getKeyword['productType'];
         $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
-        
+
         if ($keyword['productType']['id'] == '1') {
            $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '2') {
@@ -54,11 +54,11 @@ class SearchController extends Controller
         } else if ($keyword['productType']['id'] == '3') {
            $all_products = $this->getMusicData($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '4') {
-            $all_products = $this->getEditorialData($keyword, $getKeyword);
+            $all_products = $this->getEditorialData($keyword, $getKeyword, $keyword['limit']);
         } else {
             $images  = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
             $footage = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
-            $music   = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
+            $music   = $this->getMusicData($keyword, $getKeyword, $keyword['limit']);
             array_push($all_products, $images);
             array_push($all_products, $footage);
             array_push($all_products, $music);
@@ -181,8 +181,8 @@ class SearchController extends Controller
         $all_products = $product->getProductsData($keyword, $getKeyword);
         $total        = $totalPages = 0;
 
-        $jsonData = json_decode($all_products->getContent(), true);           
-        
+        $jsonData = json_decode($all_products->getContent(), true);
+
         if ($jsonData['total_count'] > 0) {
             $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);
@@ -190,92 +190,21 @@ class SearchController extends Controller
         return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
-    public function getEditorialData($keyword, $getKeyword)
+    public function getEditorialData($keyword, $getKeyword, $perpage = 30)
     {
+        $product      = new Product();
+        $all_products = $product->getEditorialData($keyword, $getKeyword);
+        $total        = $totalPages = 0;
 
-        if (!empty($keyword['search'])) {
-            $editoriallist = Editorial::where('status', 1)
-                ->where('search_term', $keyword['search'])
-                ->get();
-        } else {
-            $editoriallist = Editorial::where('status', 1)->get();
+        $jsonData = json_decode($all_products->getContent(), true);
+
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
+            $totalPages   = ceil($total / $perpage);
         }
 
-        $selectedValues = [];
-        // Retrive all occured products Ids
-        foreach ($editoriallist as $editorial) {
-            $editorialValue = json_decode($editorial['selected_values'], true);
-
-            if (is_array($editorialValue)) {
-                $selectedValues = array_merge($selectedValues, $editorialValue);
-            }
-        }
-
-        // Retrive URLs based on Ids
-        $is_filter = 0;
-        $product_ids = [];
-        if(count($getKeyword) > 0) {
-            $requestFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
-            $filtersArr = array_values(array_filter($requestFilters));
-            if(count($filtersArr) > 0) {
-                $is_filter = 1;
-            }
-        }
-        if($is_filter == 1) {
-            // Get filtered products
-            $products = Product::select('product_id', 'product_main_image')
-            ->join('imagefootage_productfilters','imagefootage_productfilters.filter_product_id','=','imagefootage_products.id')
-            ->join('imagefootage_filters_options', 'imagefootage_filters_options.id', 'imagefootage_productfilters.filter_type_id')
-            ->whereIn('product_id', $selectedValues)
-            ->whereIn('imagefootage_filters_options.id', $filtersArr)
-            ->distinct()->get();
-            // Get filtered product ids array
-            $product_ids = $products->pluck('product_id')->toArray();
-            // if filter apply editorials list result update by above product ids
-            $editoriallist = Editorial::select('*');
-            if(count($product_ids) > 0) {
-                foreach ($product_ids as $product_id) {
-                    // find in json by and condition
-                    $editoriallist = $editoriallist->whereJsonContains('selected_values', [$product_id]);
-                }
-            } else {
-                $editoriallist = $editoriallist->whereJsonContains('selected_values', ['']);
-            }
-            $editoriallist = $editoriallist->get();
-        } else {
-            $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
-            $product_ids = $products->pluck('product_id')->toArray();
-        }
-
-        $productUrlMap = [];
-        foreach ($products as $product) {
-            $productUrlMap[$product->product_id] = $product->product_main_image;
-        }
-
-        foreach ($editoriallist as $editorial) {
-            $editorialValue = json_decode($editorial['selected_values'], true);
-            if (is_array($editorialValue)) {
-                $updatedEditorialValue = [];
-                foreach ($editorialValue as $productId) {
-                    if (isset($productUrlMap[$productId])) {
-                        $updatedEditorialValue[] = $productUrlMap[$productId];
-                    }
-                }
-                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
-                $editorial['selected_values_count'] = count($updatedEditorialValue);
-            }
-            if (!empty($editorial['main_image_upload'])) {
-                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
-            }
-        }
-        $total = count($editoriallist);
-        $perpage = 15;
-        $totalPages = ceil($total / $perpage);
-
-        return array('imgfootage' => $editoriallist, 'total' => $total, 'perpage' => $perpage, 'tp' => $totalPages);
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
-
-
 
     # Music search by music title
     public function musicSearchByTitle($query)
@@ -306,8 +235,8 @@ class SearchController extends Controller
         $all_products = $product->getMusicProducts($keyword, $getKeyword);
         $total        = $totalPages = 0;
 
-        $jsonData = json_decode($all_products->getContent(), true);           
-        
+        $jsonData = json_decode($all_products->getContent(), true);
+
         if ($jsonData['total_count'] > 0) {
             $total        = $jsonData['total_count'];
             $totalPages   = ceil($total / $perpage);

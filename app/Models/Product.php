@@ -49,10 +49,6 @@ class Product extends Model
             $type = 'Image';
         } else if ($keyword['productType']['id'] == '2') {
             $type = 'Footage';
-        } else if ($keyword['productType']['id'] == '3') {
-            $type = 'Music';
-        } else {
-            $type = 'Editorial';
         }
 
         $pageNumber = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
@@ -114,6 +110,92 @@ class Product extends Model
                     //$query->whereIn('product_web', [1, 2, 3])
                     $query->where('product_main_type', '=', $type);
                 });
+
+            if (!empty($keyword['search'])) {
+                $data->where(function ($query) use ($search) {
+                    $query->orWhere('product_id', '=', $search) //exact match
+                        ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+                });
+            }
+
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
+
+            $totalRecords = count($data->get());
+            $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
+            if (count($data) > 0) {
+                foreach($data as &$item) {
+                    $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id'] =  encrypt($item['api_product_id'], true);
+                }
+            }
+        }
+
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getEditorialData($keyword, $requestData)
+    {
+        $data         = [];
+        $totalRecords = 0;
+        $pageNumber   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
+        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 1;
+        $offset       = ($pageNumber - 1) * $limit;
+        $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        $applied_filters = [];
+
+        foreach ($filters as $name => $value) {
+            if(isset($value['value'])) {
+                $elements = explode(', ', $value['value']);
+                $result   = $elements;
+                $applied_filters[] = [
+                    "name"  => $name,
+                    "value" => (strpos($value['value'], ',') == true) ? $result : [$value['value']],
+                    "hasMultipleValues" => true
+                ];
+            }
+        }
+
+        $products = ImageFilterValue::query();
+        if (!empty($applied_filters)) {
+            foreach ($applied_filters as $filter) {
+                $name  = $filter['name'];
+                $value = $filter['value'];
+                if ($filter['hasMultipleValues']) {
+                    $products->whereIn("attributes.$name", $value);
+                }
+            }
+        }
+
+        // Filter Data from MongoDB
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
+        if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
+            $data = Product::select(
+                    'product_id',
+                    'api_product_id',
+                    'product_category',
+                    'product_title',
+                    'product_web',
+                    'product_main_type',
+                    'product_thumbnail',
+                    'product_main_image',
+                    'product_added_on',
+                    'product_keywords',
+                    'product_price_small',
+                    'product_size'
+                )
+                ->whereIn('product_main_type', ['Image', 'Footage']);
 
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
