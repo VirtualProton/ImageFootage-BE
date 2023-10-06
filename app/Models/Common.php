@@ -245,6 +245,7 @@ class Common extends Model
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
             $data["email"] = $data['email'];
             $data["invoice"] = $dataForEmail[0]['invoice_name'];
+            $data["name"] = $dataForEmail[0]['first_name'];
             $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
             if ($data['flag'] == 0) {
                 // For other quotations use image footage logo
@@ -304,7 +305,7 @@ class Common extends Model
                 $this->statusdesc  =   "Error sending mail";
                 $this->statuscode  =   "0";
             } else {
-                $this->statusdesc  =   "Quotation sent Succesfully";
+                $this->statusdesc  =   "Quotation sent succesfully";
                 $this->statuscode  =   "1";
             }
             return response()->json(compact('this'));
@@ -423,7 +424,9 @@ class Common extends Model
         $data["subject"] = "Invoice (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"] = $dataForEmail[0]['email_id'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
-        Mail::send('mail', $data, function ($message) use ($data, $pdf, $fileName) {
+        $data["name"] = $dataForEmail[0]['first_name'];
+        
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
                 ->subject($data["subject"])
@@ -462,7 +465,7 @@ class Common extends Model
             $resp['statusdesc']  =   "Error sending mail";
             $resp['statuscode']   =   "0";
         } else {
-            $resp['statusdesc']  =   "Invoice sent Succesfully";
+            $resp['statusdesc']  =   "Invoice sent succesfully";
             $resp['statuscode']  =   "1";
         }
         return response()->json(compact('resp'));
@@ -517,7 +520,8 @@ class Common extends Model
         $data["subject"] = "Invoice (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"] = $dataForEmail[0]['email_id'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
-        Mail::send('mail', $data, function ($message) use ($data, $pdf, $fileName) {
+        $data['name'] = $dataForEmail[0]['first_name'];
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
                 ->subject($data["subject"])
@@ -559,7 +563,7 @@ class Common extends Model
             $resp['statusdesc']  =   "Error sending mail";
             $resp['statuscode']   =   "0";
         } else {
-            $resp['statusdesc']  =   "Invoice sent Succesfully";
+            $resp['statusdesc']  =   "Invoice sent succesfully";
             $resp['statuscode']  =   "1";
         }
         return response()->json(compact('resp'));
@@ -571,7 +575,7 @@ class Common extends Model
             ->update(['status' => $status]);
         $resp = array();
         if ($update) {
-            $resp['statusdesc'] = "Your Quotation/Invoice status changed Successfully!!";
+            $resp['statusdesc'] = "Your Quotation/Invoice status changed successfully!!";
             $resp['statuscode'] = "1";
         } else {
             $resp['statusdesc']  =   "Error in change status";
@@ -713,6 +717,7 @@ class Common extends Model
         $data["subject"] = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"] =   $data['email'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"] = $dataForEmail[0]['first_name'];
         $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words   =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
         $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
@@ -766,7 +771,7 @@ class Common extends Model
             $this->statusdesc  =   "Error sending mail";
             $this->statuscode  =   "0";
         } else {
-            $this->statusdesc  =   "Subscription Quotation sent Succesfully";
+            $this->statusdesc  =   "Subscription quotation sent succesfully";
             $this->statuscode  =   "1";
         }
         return response()->json(compact('this'));
@@ -894,6 +899,7 @@ class Common extends Model
         $data["subject"] = "Download Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"] =   $data['email'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"] = $dataForEmail[0]['first_name'];
         $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
         $dataForEmail[0]['signature'] = 'images/signature.png';
         $dataForEmail[0]['description'] = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
@@ -945,7 +951,7 @@ class Common extends Model
             $this->statusdesc  =   "Error sending mail";
             $this->statuscode  =   "0";
         } else {
-            $this->statusdesc  =   "Download Quotation sent Succesfully";
+            $this->statusdesc  =   "Download quotation sent succesfully";
             $this->statuscode  =   "1";
         }
         return response()->json(compact('this'));
