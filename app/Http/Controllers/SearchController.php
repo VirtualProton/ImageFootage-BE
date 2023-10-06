@@ -46,6 +46,7 @@ class SearchController extends Controller
         $keyword['productType']['id'] = $getKeyword['productType'];
         $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
+        $keyword['category_id']        = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
 
         if ($keyword['productType']['id'] == '1') {
            $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
