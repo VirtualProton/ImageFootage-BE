@@ -149,8 +149,8 @@ Route::group([
     Route::post('/delete-wishlist-data', 'WishListController@deleteWishlist');
     Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
 
-    //Route::post('/get-author-products', 'SearchController@getAuthorProducts');
-    //Route::post('/get-author-musics', 'SearchController@getAuthorMusics');
+    Route::post('/get-author-products', 'SearchController@getAuthorProducts');
+    Route::post('/get-author-musics', 'SearchController@getAuthorMusics');
 });
 
 
