@@ -44,12 +44,9 @@ Route::group([
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');
-    Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
+
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
-    Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
-    Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
-    Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
-    Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
+
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
@@ -151,6 +148,9 @@ Route::group([
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
     Route::post('/delete-wishlist-data', 'WishListController@deleteWishlist');
     Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
+
+    //Route::post('/get-author-products', 'SearchController@getAuthorProducts');
+    //Route::post('/get-author-musics', 'SearchController@getAuthorMusics');
 });
 
 
@@ -174,3 +174,16 @@ Route::group(['prefix' => 'v2'], function () {
 # Elasticsearch
 Route::get('/search/{query}', 'ElasticSearchController@search');
 Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');
+
+
+// CRONS path
+Route::group([
+    'middleware' => ['api', 'CORS']
+], function () {
+    Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
+    Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
+    Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
+    Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
+    Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
+    Route::get('pond5-other-categories-music-upload', 'CronController@pond5OtherCategoriesMusicUpload');
+});
