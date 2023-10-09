@@ -501,7 +501,7 @@ class UserController extends Controller
                     $userinfo->save();
                 }
                 $description = Description::where('user_id', '=', $request->user_id)->where('description', $request->user_client_des)->first();
-                if (!empty($request->user_client_des)) {
+                if (!empty($request->user_client_des) && empty($description)) {
                     $description = new Description;
                     $description->user_id = $request->user_id;
                     $description->description = $request->user_client_des;
