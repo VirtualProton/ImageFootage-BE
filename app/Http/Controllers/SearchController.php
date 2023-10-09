@@ -245,6 +245,38 @@ class SearchController extends Controller
         return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
+    public function getAuthorProducts(Request $keyword)
+    {
+        $product      = new Product();
+        $perpage      = isset($keyword['limit']) ? $keyword['limit'] : 10;
+        $all_products = $product->getAuthorProductsData($keyword);
+        $total        = $totalPages = 0;
+
+        $jsonData = json_decode($all_products->getContent(), true);
+
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
+            $totalPages   = ceil($total / $perpage);
+        }
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
+    }
+
+    public function getAuthorMusics(Request $keyword)
+    {
+        $product      = new Product();
+        $perpage      = isset($keyword['limit']) ? $keyword['limit'] : 10;
+        $all_products = $product->getAuthorMusicData($keyword);
+        $total        = $totalPages = 0;
+
+        $jsonData = json_decode($all_products->getContent(), true);
+
+        if ($jsonData['total_count'] > 0) {
+            $total        = $jsonData['total_count'];
+            $totalPages   = ceil($total / $perpage);
+        }
+        return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
+    }
+
     public function categoryWiseData() {
         $product = new Product();
         $all_products = $product->categoryWiseData();

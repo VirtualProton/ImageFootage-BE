@@ -11,6 +11,8 @@ class ImageFilterValue extends Eloquent
 
     protected $fillable = [
         'api_product_id',
+        'product_main_type',
+        'product_id',
         'attributes'
     ];
 }

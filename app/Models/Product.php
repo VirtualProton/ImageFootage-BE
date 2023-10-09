@@ -238,6 +238,7 @@ class Product extends Model
     {
         $data       = [];
         $type       = 'Music';
+        $totalRecords = 0;
         $limit      = isset($keyword['limit']) ? $keyword['limit'] : 30;
         $search     = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
         $pageNumber = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
@@ -248,6 +249,12 @@ class Product extends Model
         //TODO:  pricing and color filter pending
         $applied_filters = [];
 
+        if(empty($filters['all_filters']) && $search!='') {
+            $filters = array(
+                'product_id' => array('value' => $search, 'standalone' => true)
+            );
+        }
+
         foreach ($filters as $name => $value) {
             if(isset($value['value'])) {
                 $elements = explode(', ', $value['value']);
@@ -255,7 +262,7 @@ class Product extends Model
                 $applied_filters[] = [
                     "name"  => $name,
                     "value" => (strpos($value['value'], ',') == true) ? $result : [$value['value']],
-                    "hasMultipleValues" => true
+                    "hasMultipleValues" => (isset($value['standalone']) && $value['standalone'] == true) ?  false : true
                 ];
             }
         }
@@ -267,11 +274,13 @@ class Product extends Model
                 $value = $filter['value'];
                 if ($filter['hasMultipleValues']) {
                     $products->whereIn("attributes.$name", $value);
+                } else {
+                    $products->whereIn('product_id', $value);
                 }
             }
         }
 
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1])->get()->toArray();
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])->get()->toArray();
         $indexedFilteredProducts = [];
         $apiProductIds           = [];
 
@@ -280,54 +289,60 @@ class Product extends Model
             $apiProductIds[] = $product['api_product_id'];
         }
 
-        $data = Product::select(
-            'product_id',
-            'api_product_id',
-            'product_category',
-            'product_title',
-            'product_web',
-            'product_main_type',
-            'product_thumbnail',
-            'product_main_image',
-            'product_added_on',
-            'product_keywords',
-            'product_description',
-            'music_duration',
-            'music_fileType',
-            'music_price',
-            'auther_name',
-            'license_type',
-            'product_keywords',
-            'music_size'
-        )
-        ->where(function ($query) use ($type){
-            // TODO: Need to check the use of product_web field
-            //$query->whereIn('product_web', [1, 2, 3])
-            $query->where('product_main_type', '=', $type);
-        });
-
-        if (!empty($keyword['search'])) {
-            $data->where(function ($query) use ($search) {
-                $query->orWhere('product_id', '=', $search)
-                    ->orWhere('product_title', 'LIKE', '%' . $search . '%')
-                    ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+        if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
+            $data = Product::select(
+                'product_id',
+                'api_product_id',
+                'product_category',
+                'product_title',
+                'product_web',
+                'product_main_type',
+                'product_thumbnail',
+                'product_main_image',
+                'product_added_on',
+                'product_keywords',
+                'product_description',
+                'music_duration',
+                'music_fileType',
+                'music_price',
+                'license_type',
+                'product_keywords',
+                'music_size'
+            )
+            ->where(function ($query) use ($type){
+                // TODO: Need to check the use of product_web field
+                //$query->whereIn('product_web', [1, 2, 3])
+                $query->where('product_main_type', '=', $type);
             });
-        }
 
-        if (!empty($apiProductIds)) {
-            $data->whereIn('api_product_id', $apiProductIds);
-        }
+            if (!empty($keyword['search'])) {
+                $data->where(function ($query) use ($search) {
+                    $query->orWhere('product_id', '=', $search)
+                        ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+                });
+            }
 
-        $totalRecords = count($data->get());
-        $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
 
-        if (count($data)>0) {
-            foreach ($data as &$item) {
-                $item['music_sound_bpm']  = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
-                $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
-                $item['api_product_id']   = encrypt($item['api_product_id'], true);
-                $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
+            $totalRecords = count($data->get());
+            $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
+            if (count($data)>0) {
+                foreach ($data as &$item) {
+                    // dont change below variables
+                    $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
+                    $music_sound_bpm = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
+
+                    $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id']   = encrypt($item['api_product_id'], true);
+                    $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
+                    $item['music_sound_bpm']  = $music_sound_bpm;
+                    $item['auther_name']      = $auther_name;
+                }
             }
         }
 
@@ -339,6 +354,161 @@ class Product extends Model
         return response()->json($response);
     }
 
+    public function getAuthorProductsData($keyword)
+    {
+        $data         = [];
+        $totalRecords = 0;
+        $type         = isset($keyword['type']) ? $keyword['type'] : 'Image';
+        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 10;
+        $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+        $pageNumber   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
+        $offset       = ($pageNumber - 1) * $limit;
+
+        $products = ImageFilterValue::query();
+        $products->where("attributes.artist", $search);
+
+        $filteredProducts = $products
+                            ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.artist' => 1])
+                            ->get()
+                            ->toArray();
+        $indexedFilteredProducts = [];
+        $apiProductIds           = [];
+
+        foreach ($filteredProducts as $product) {
+            $indexedFilteredProducts[$product['api_product_id']] = $product;
+            $apiProductIds[] = $product['api_product_id'];
+        }
+
+        if ($search!='' && !empty($apiProductIds)) {
+            $data = Product::select(
+                'product_id',
+                'api_product_id',
+                'product_category',
+                'product_title',
+                'product_web',
+                'product_main_type',
+                'product_thumbnail',
+                'product_main_image',
+                'product_added_on',
+                'product_keywords',
+                'product_price_small',
+                'product_size'
+            )
+            ->where(function ($query) use ($type){
+                // TODO: Need to check the use of product_web field
+                //$query->whereIn('product_web', [1, 2, 3])
+                $query->where('product_main_type', '=', $type);
+            });
+
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
+
+            $totalRecords = count($data->get());
+            $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
+            if (count($data)>0) {
+                foreach ($data as &$item) {
+                    // dont change below variables
+                    $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
+
+                    $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id'] =  encrypt($item['api_product_id'], true);
+                    $item['auther_name']    = $auther_name;
+                }
+            }
+        }
+
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAuthorMusicData($keyword)
+    {
+        $data         = [];
+        $totalRecords = 0;
+        $type         = isset($keyword['type']) ? $keyword['type'] : 'Music';
+        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 10;
+        $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
+        $pageNumber   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
+        $offset       = ($pageNumber - 1) * $limit;
+
+        $products = ImageFilterValue::query();
+        $products->where("attributes.artist", $search);
+
+        $filteredProducts = $products
+                            ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])
+                            ->get()
+                            ->toArray();
+        $indexedFilteredProducts = [];
+        $apiProductIds           = [];
+
+        foreach ($filteredProducts as $product) {
+            $indexedFilteredProducts[$product['api_product_id']] = $product;
+            $apiProductIds[] = $product['api_product_id'];
+        }
+
+        if ($search!='' && !empty($apiProductIds)) {
+            $data = Product::select(
+                'product_id',
+                'api_product_id',
+                'product_category',
+                'product_title',
+                'product_web',
+                'product_main_type',
+                'product_thumbnail',
+                'product_main_image',
+                'product_added_on',
+                'product_keywords',
+                'product_description',
+                'music_duration',
+                'music_fileType',
+                'music_price',
+                'license_type',
+                'product_keywords',
+                'music_size'
+            )
+            ->where(function ($query) use ($type){
+                // TODO: Need to check the use of product_web field
+                //$query->whereIn('product_web', [1, 2, 3])
+                $query->where('product_main_type', '=', $type);
+            });
+
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
+
+            $totalRecords = count($data->get());
+            $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
+            if (count($data)>0) {
+                foreach ($data as &$item) {
+                    // dont change below variables
+                    $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
+                    $music_sound_bpm = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
+
+                    $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id']   = encrypt($item['api_product_id'], true);
+                    $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
+                    $item['music_sound_bpm']  = $music_sound_bpm;
+                    $item['auther_name']      = $auther_name;
+                }
+            }
+        }
+
+        $response = [
+            'data' => $data,
+            'total_count' => $totalRecords,
+        ];
+
+        return response()->json($response);
+    }
 
     public function processMusicKeywords($valuesString = '') {
         $selectedValues = [];
@@ -418,8 +588,10 @@ class Product extends Model
                         'collection'       => ['standard', 'spx']
                     );
                     $imageFilterValue = new ImageFilterValue([
-                        'api_product_id' => $eachmedia['id'],
-                        'attributes'     => $productData
+                        'api_product_id'    => $eachmedia['id'],
+                        'product_id'        => $media['product_id'],
+                        'product_main_type' => "Image",
+                        'attributes'        => $productData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -543,8 +715,10 @@ class Product extends Model
                         'artist'           => $eachmedia['authorName']
                     );
                     $imageFilterValue = new ImageFilterValue([
-                        'api_product_id' => $eachmedia['id'],
-                        'attributes'     => $productData
+                        'api_product_id'    => $eachmedia['id'],
+                        'product_id'        => $media['product_id'],
+                        'product_main_type' => "Footage",
+                        'attributes'        => $productData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -555,7 +729,7 @@ class Product extends Model
                             'product_thumbnail'   => $eachmedia['thumbnail'],
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'updated_at'           => date('Y-m-d H:i:s')
+                            'updated_at'          => date('Y-m-d H:i:s')
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -686,15 +860,17 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'music_sound_bpm'  => $eachmedia['soundBpm'] ?? '',
-                        'mood'             => ['action', 'chill'],
-                        'genre'            => ['ambient', 'jazz'],
-                        'artist'           => $eachmedia['authorName']
+                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
+                        'mood'              => ['action', 'chill'],
+                        'genre'             => ['ambient', 'jazz'],
+                        'artist'            => $eachmedia['authorName'],
                     );
 
                     $imageFilterValue = new ImageFilterValue([
-                        'api_product_id' => $eachmedia['id'],
-                        'attributes'     => $productData
+                        'product_id'        => $media['product_id'],
+                        'api_product_id'    => $eachmedia['id'],
+                        'product_main_type' => 'Music',
+                        'attributes'        => $productData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -705,14 +881,15 @@ class Product extends Model
                             'product_thumbnail'   => $eachmedia['thumbnail'],
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'updated_at'           => date('Y-m-d H:i:s')
+                            'updated_at'          => date('Y-m-d H:i:s')
                         ]);
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
                         'music_sound_bpm'  => $eachmedia['soundBpm'] ?? '',
                         'mood'             => ['chill'],
-                        'genre'            => ['ambient']
+                        'genre'            => ['ambient'],
+                        'artist'           => $eachmedia['authorName']
                     );
 
                     // Find the existing document by api_product_id, or create a new one

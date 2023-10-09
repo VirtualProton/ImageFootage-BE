@@ -97,7 +97,7 @@ class FiltersController extends Controller {
 					->whereHas('options', function($options){
 						$options->where('status', 'active')->orderBy('sort_order', 'asc');
 					})
-					->with('options:id,filter_id,option_name,value')
+					->with('options:id,filter_id,option_name,value,is_group_value')
 					->when(!empty($type), function($query) use ($type) {
 						return $query->where('type', $type);
 					})
