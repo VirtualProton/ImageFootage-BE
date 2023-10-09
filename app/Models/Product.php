@@ -581,7 +581,8 @@ class Product extends Model
                         'people_gender'    => 'f',
                         'license'          => ['commercial', 'editorial'],
                         'type'             => ['photos'],
-                        'collection'       => ['standard', 'spx']
+                        'collection'       => ['standard', 'spx'],
+                        'artist'           => $eachmedia['author-username']
                     );
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
@@ -611,7 +612,8 @@ class Product extends Model
                         'people_gender'    => 'f',
                         'license'          => ['commercial'],
                         'type'             => ['photos'],
-                        'collection'       => ['standard']
+                        'collection'       => ['standard'],
+                        'artist'           => $eachmedia['author-username']
                     ];
 
                     // Find the existing document by api_product_id, or create a new one
