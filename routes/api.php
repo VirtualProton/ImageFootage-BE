@@ -151,6 +151,7 @@ Route::group([
 
     Route::post('/get-author-products', 'SearchController@getAuthorProducts');
     Route::post('/get-author-musics', 'SearchController@getAuthorMusics');
+    Route::post('/get-category-products', 'SearchController@getCategoryProducts');
 });
 
 
