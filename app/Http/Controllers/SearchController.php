@@ -369,4 +369,14 @@ class SearchController extends Controller
         }
     }
 
+    public function getCategoryProducts(Request $keyword)
+    {
+        $product  = new Product();
+        $data     = $product->getCategoryProductsData($keyword);
+
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
 }

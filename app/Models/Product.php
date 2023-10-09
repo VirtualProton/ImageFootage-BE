@@ -1118,4 +1118,40 @@ class Product extends Model
     {
         return $this->hasMany(ProductsDownload::class, 'product_id', 'product_id');
     }
+
+    public function getCategoryProductsData($keyword)
+    {
+        $data         = [];
+        $type         = isset($keyword['type']) ? $keyword['type'] : 'Image';
+        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 9;
+        $category_id  = isset($keyword['category_id']) ? $keyword['category_id'] : null;
+        $product_id  = isset($keyword['product_id']) ? $keyword['product_id'] : null;
+
+        if (!empty($category_id)) {
+            $data = Product::select(
+                'product_id',
+                'api_product_id',
+                'product_category',
+                'product_title',
+                'product_web',
+                'product_main_type',
+                'product_thumbnail',
+                'product_main_image',
+                'product_added_on',
+                'product_keywords',
+                'product_price_small',
+                'product_size'
+            )
+            ->where('product_category', '=', $category_id)
+            ->where('product_id', '!=', $product_id)
+            ->where('product_main_type', '=', $type);
+            $data = $data->distinct()->limit($limit)->get()->toArray();
+        }
+
+        $response = [
+            'data' => $data
+        ];
+
+        return response()->json($response);
+    }
 }
