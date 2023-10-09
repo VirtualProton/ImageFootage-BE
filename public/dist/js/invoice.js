@@ -1706,12 +1706,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        if (result.data.resp.statuscode == "1") {
-                            alert(result.data.resp.statusdesc);
-                        } else {
-                            alert(result.data.resp.statusdesc);
-                        }
-                        window.location.reload();
+                        window.location = api_path + "users/invoices/" + user_id;
                     },
                     function (error) {
                         $("#loading").hide();
@@ -1770,12 +1765,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        if (result.data.resp.statuscode == "1") {
-                            alert(result.data.resp.statusdesc);
-                        } else {
-                            alert(result.data.resp.statusdesc);
-                        }
-                        window.location.reload();
+                        window.location = api_path + "users/invoices/" + user_id;
                     },
                     function (error) {
                         $("#loading").hide();
