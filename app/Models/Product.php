@@ -201,6 +201,10 @@ class Product extends Model
                 )
                 ->whereIn('product_main_type', ['Image', 'Footage']);
 
+                if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+                    $data->where('product_category',$keyword['category_id']);
+                }
+
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search) //exact match
