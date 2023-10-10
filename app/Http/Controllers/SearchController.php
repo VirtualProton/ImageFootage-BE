@@ -369,13 +369,23 @@ class SearchController extends Controller
         }
     }
 
-    public function getCategoryProducts(Request $keyword)
+    public function getCategoryProducts(Request $request)
     {
         $product  = new Product();
-        $data     = $product->getCategoryProductsData($keyword);
+        $data     = $product->getCategoryProductsData($request);
 
         return response()->json([
-            'data' => $data
+            'imgfootage' => $data
+        ]);
+    }
+
+    public function getCategoryMusics(Request $request)
+    {
+        $product  = new Product();
+        $data     = $product->getCategoryMusicsData($request);
+
+        return response()->json([
+            'imgfootage' => $data
         ]);
     }
 
