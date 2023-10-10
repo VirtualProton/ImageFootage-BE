@@ -20,6 +20,7 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.is_display_product_image = false;
 
         //$scope.uid
         $scope.quotation.product = [
@@ -693,6 +694,41 @@ app.controller(
         };
         // Call the initialization function after rendering the editors
         setTimeout($scope.initEditors, 1000);
+
+        $scope.getProductImage = function () {
+            productName = $("#product_id").val();
+            $("#loading").show();
+            $scope.is_display_product_image = false;
+            $("#display_image").val('');
+            $http({
+                method: "GET",
+                url:
+                    image_path +
+                    "api/product/" +
+                    productName +
+                    "?type=Image",
+            }).then(
+                function (response) {
+                    if (response.status == "200") {
+                        $scope.is_display_product_image = true;
+                        $("#loading").hide();
+                        let img = response.data[0].thumbnail_image;
+                        if(img) {
+                            setTimeout(function() {
+                                console.log($("#display_image"));
+                                $("#display_image").attr('src', img);
+                            }, 1000);
+                        }
+                    }
+                },
+                function (error) {
+                    $scope.is_display_product_image = false;
+                    $("#display_image").val('');
+                    alert("Image not found");
+                    $("#loading").hide();
+                }
+            );
+        };
     }
 );
 app.controller(
