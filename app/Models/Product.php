@@ -319,6 +319,10 @@ class Product extends Model
                 $query->where('product_main_type', '=', $type);
             });
 
+            if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+                $data->where('product_category',$keyword['category_id']);
+            }
+
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search)
