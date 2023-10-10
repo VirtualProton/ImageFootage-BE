@@ -311,7 +311,8 @@ class Product extends Model
                 'music_price',
                 'license_type',
                 'product_keywords',
-                'music_size'
+                'music_size',
+                'slug'
             )
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
@@ -325,7 +326,7 @@ class Product extends Model
 
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
-                    $query->orWhere('product_id', '=', $search)
+                    $query->orWhere('slug', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
