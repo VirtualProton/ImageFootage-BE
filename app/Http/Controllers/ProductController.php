@@ -1735,8 +1735,13 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		}
 
   }
-    public function categoryLists(){
-        $categoryList = ProductCategory::where('category_status','Active')->limit(14)->get();
+    public function categoryLists(Request $request){
+        if(isset($request->category_name) &&  !empty($request->category_name)){
+            $categoryList = ProductCategory::where('category_name',$request->category_name)->first();
+        } else {
+            $categoryList = ProductCategory::where('category_status','Active')->limit(14)->get();
+        }
+
         return response()->json(['data'=> $categoryList,'status'=>'success','message'=>'Categories details fetched successfully']);
     }
 
