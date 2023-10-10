@@ -1119,15 +1119,15 @@ class Product extends Model
         return $this->hasMany(ProductsDownload::class, 'product_id', 'product_id');
     }
 
-    public function getCategoryProductsData($keyword)
+    public function getCategoryProductsData($request)
     {
         $data         = [];
-        $type         = isset($keyword['type']) ? $keyword['type'] : 'Image';
-        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 9;
-        $category_id  = isset($keyword['category_id']) ? $keyword['category_id'] : null;
-        $product_id  = isset($keyword['product_id']) ? $keyword['product_id'] : null;
+        $type         = isset($request['type']) ? $request['type'] : 'Image';
+        $limit        = isset($request['limit']) ? $request['limit'] : 9;
+        $product_id  = isset($request['product_id']) ? $request['product_id'] : null;
 
-        if (!empty($category_id)) {
+        if (!empty($product_id)) {
+            $category = Product::select('product_category')->where('product_id', '!=', $product_id)->first();
             $data = Product::select(
                 'product_id',
                 'api_product_id',
@@ -1142,16 +1142,16 @@ class Product extends Model
                 'product_price_small',
                 'product_size'
             )
-            ->where('product_category', '=', $category_id)
+            ->where('product_category', '=', $category->product_category)
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
             $data = $data->distinct()->limit($limit)->get()->toArray();
         }
 
-        $response = [
-            'data' => $data
-        ];
+        return $data;
+    }
 
-        return response()->json($response);
+    public function getCategoryMusicsData($request) {
+        
     }
 }
