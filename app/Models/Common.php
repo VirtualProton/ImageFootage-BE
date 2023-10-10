@@ -20,6 +20,7 @@ use App\Models\PromoCode;
 use App\Models\InvoiceItem;
 use App\Models\Package;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class Common extends Model
 {
@@ -450,10 +451,12 @@ class Common extends Model
         }
         $resp = array();
         if (Mail::failures()) {
-            $resp['statusdesc']  =   "Error sending mail.";
-            $resp['statuscode']  =   "0";
+            Session::flash("error", "Error sending mail");
+            $resp['statusdesc']   =   "Error sending mail";
+            $resp['statuscode']   =   "0";
         } else {
-            $resp['statusdesc']  =   "Invoice sent succesfully.";
+            Session::flash("success", "Invoice sent succesfully");
+            $resp['statusdesc']  =   "Invoice sent succesfully";
             $resp['statuscode']  =   "1";
         }
         return response()->json(compact('resp'));
@@ -546,10 +549,12 @@ class Common extends Model
         }
         $resp = array();
         if (Mail::failures()) {
-            $resp['statusdesc']  =   "Error sending mail.";
-            $resp['statuscode']  =   "0";
+            Session::flash("error", "Error sending mail");
+            $resp['statusdesc']  =   "Error sending mail";
+            $resp['statuscode']   =   "0";
         } else {
-            $resp['statusdesc']  =   "Invoice sent succesfully.";
+            Session::flash("success", "Invoice sent succesfully");
+            $resp['statusdesc']  =   "Invoice sent succesfully";
             $resp['statuscode']  =   "1";
         }
         return response()->json(compact('resp'));
