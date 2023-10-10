@@ -1124,10 +1124,10 @@ class Product extends Model
         $data         = [];
         $type         = isset($request['type']) ? $request['type'] : 'Image';
         $limit        = isset($request['limit']) ? $request['limit'] : 9;
-        $product_id  = isset($request['product_id']) ? $request['product_id'] : null;
+        $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
 
-        if (!empty($product_id)) {
-            $category = Product::select('product_category')->where('product_id', '!=', $product_id)->first();
+        $product = Product::select('product_category')->where('product_id', '=', $product_id)->first();
+        if (!empty($product_id) && !empty($product)) {
             $data = Product::select(
                 'product_id',
                 'api_product_id',
@@ -1142,7 +1142,7 @@ class Product extends Model
                 'product_price_small',
                 'product_size'
             )
-            ->where('product_category', '=', $category->product_category)
+            ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
             $data = $data->distinct()->limit($limit)->get()->toArray();
@@ -1151,7 +1151,65 @@ class Product extends Model
         return $data;
     }
 
-    public function getCategoryMusicsData($request) {
-        
+    public function getCategoryMusicsData($request)
+    {
+        $data         = [];
+        $limit        = isset($request['limit']) ? $request['limit'] : 9;
+        $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
+
+        $product = Product::select('*')->where('product_id', '=', $product_id)->first();
+        if (!empty($product_id) && !empty($product)) {
+            $data = Product::select(
+                'product_id',
+                'api_product_id',
+                'product_category',
+                'product_title',
+                'product_web',
+                'product_main_type',
+                'product_thumbnail',
+                'product_main_image',
+                'product_added_on',
+                'product_keywords',
+                'product_price_small',
+                'product_size',
+                'music_duration',
+                'music_fileType',
+                'music_price'
+            )
+                ->where('product_category', '=', $product->product_category)
+                ->where('product_id', '!=', $product_id)
+                ->where('product_main_type', '=', 'Music');
+            $data = $data->distinct()->limit($limit)->get();
+
+            if (count($data) > 0) {
+                $getAPIProductIds = $data->pluck('api_product_id');
+                $filteredProducts = ImageFilterValue::project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])
+                    ->whereIn("api_product_id", $getAPIProductIds)
+                    ->get()
+                    ->toArray();
+
+                $indexedFilteredProducts = [];
+                if (!empty($filteredProducts)) {
+                    foreach ($filteredProducts as $product) {
+                        $indexedFilteredProducts[$product['api_product_id']] = $product;
+                    }
+                }
+
+                $data = $data->toArray();
+                foreach ($data as &$item) {
+                    $auther_name                   = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
+                    $music_sound_bpm               = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
+
+                    $item['url']                   = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['slug']                  = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
+                    $item['api_product_id']        = encrypt($item['api_product_id'], true);
+                    $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
+                    $item['music_sound_bpm']       = $music_sound_bpm;
+                    $item['auther_name']           = $auther_name;
+                }
+            }
+        }
+
+        return $data;
     }
 }
