@@ -16,7 +16,7 @@ class Product extends Model
 {
     protected $table = 'imagefootage_products';
     protected $primaryKey = 'id';
-    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content'];
+    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug'];
     const HomeLimit = '32';
 
     public function api()
@@ -568,7 +568,6 @@ class Product extends Model
                     'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'auther_name' => $eachmedia['author-username']
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -589,7 +588,8 @@ class Product extends Model
                         'people_gender'    => 'f',
                         'license'          => ['commercial', 'editorial'],
                         'type'             => ['photos'],
-                        'collection'       => ['standard', 'spx']
+                        'collection'       => ['standard', 'spx'],
+                        'artist'           =>  $eachmedia['author-username']
                     );
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
@@ -619,7 +619,9 @@ class Product extends Model
                         'people_gender'    => 'f',
                         'license'          => ['commercial'],
                         'type'             => ['photos'],
-                        'collection'       => ['standard']
+                        'collection'       => ['standard'],
+                        'artist'           =>  $eachmedia['author-username']
+
                     ];
 
                     // Find the existing document by api_product_id, or create a new one
