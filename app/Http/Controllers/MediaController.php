@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common;
+use App\Models\ImageFilterValue;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,22 @@ class MediaController extends Controller
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
         $product_details = Product::where(['slug'=>$slug,'product_main_type'=>$origin])->first();
-        return response()->json($product_details);
+        if ($product_details) {
+            // Use the $product_details['id'] to query MongoDB
+            $apiProductId = $product_details['api_product_id'];
+            // Retrieve data from MongoDB where api_product_id matches
+            $matchingData = ImageFilterValue::where('api_product_id',$apiProductId)->get();
+            $attributes = [];
+
+            foreach ($matchingData as $data) {
+
+                $attributes = $data->attributes;
+
+            }
+            $product_details['attributes'] = $attributes;
+
+        }
+        return response()->json(['data'=>$product_details,'status'=>'success']);
     }
 
 
