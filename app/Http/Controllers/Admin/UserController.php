@@ -465,11 +465,9 @@ class UserController extends Controller
         if (isset($_POST['updatebtn'])) {
             $this->validate($request, [
                 'user_name' => 'required',
-                'user_last_name' => 'required',
                 'user_email' => 'required'
             ], [
                 'user_name.required' => 'The First Name field is required.',
-                'user_last_name.required' => 'The Last Name field is required.',
                 'user_email.required' => 'The Email field is required.'
             ]);
             try {
@@ -480,10 +478,14 @@ class UserController extends Controller
                     'company' => $request->user_company,
                     'occupation' => $request->user_occupation,
                     'address' => $request->user_address,
+                    'address2' => $request->user_address2,
                     'phone' => $request->user_phone,
                     'gst' => $request->user_gst,
                     'pan' => $request->user_pan,
-                    'description' => $request->user_client_des
+                    'description' => $request->user_client_des,
+                    'country' => $request->country,
+                    'state' => $request->state,
+                    'city' => $request->city
                 );
                 $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
                 if ($userinfo === null) {
@@ -499,21 +501,21 @@ class UserController extends Controller
                     $userinfo->save();
                 }
                 $description = Description::where('user_id', '=', $request->user_id)->where('description', $request->user_client_des)->first();
-                if ($description === null) {
+                if (!empty($request->user_client_des) && empty($description)) {
                     $description = new Description;
                     $description->user_id = $request->user_id;
                     $description->description = $request->user_client_des;
                     $description->save();
                 }
                 User::where('id', $request->user_id)->update($update_array);
-                return redirect('admin/users')->with('success', 'Users updated successful');
+                return redirect('admin/users')->with('success', 'User updated successfully.');
             } catch (\Exception $e) {
                 dd($e->getMessage());
+                return back()->with('error', 'Some problem occured.');
             }
-            return back()->with('warning', 'Some problem occured.');
+            return back()->with('error', 'Some problem occured.');
         } else {
-            echo "error1";
-            die();
+            return back()->with('error', 'Some problem occured.');
         }
     }
 }
