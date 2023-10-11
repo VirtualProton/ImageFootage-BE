@@ -435,8 +435,8 @@ class UserController extends Controller
             $update_data = [
                 'first_name' => $data['profileData']['first_name'],
                 'mobile' => $data['profileData']['mobile'],
-                // 'phone' => $data['profileData']['phone'],
                 'address' => $data['profileData']['address'],
+                'country' => $data['profileData']['country'],
                 'state' => $data['profileData']['state'],
                 'city' => $data['profileData']['city'],
                 'postal_code' => $data['profileData']['pincode'],
