@@ -714,8 +714,8 @@ app.controller(
                         $("#loading").hide();
                         let img = response.data[0].thumbnail_image;
                         if(img) {
+                            $("#image_path").val(img);
                             setTimeout(function() {
-                                console.log($("#display_image"));
                                 $("#display_image").attr('src', img);
                             }, 1000);
                         }

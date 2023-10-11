@@ -17,22 +17,25 @@ class ProductCategoryController extends Controller
 	}
 	public function createCategory(Request $request){
 		$this->validate($request, [
-		 	'category_name'=>'required'
+		 	'category_name' => 'required',
+		 	'product_id'    => 'required',
+		 	'image_path'    => 'required'
         ]);
 		if(ProductCategory::where('category_name',$request->category_name)->exists()){
-		  return back()->with('warning','Product Category name allready exists.');
+		  return back()->with('warning','Product Category name already exists.');
 		  exit();
 		}
-		$ProductCategory=new ProductCategory;
-		$ProductCategory->category_name=$request->category_name;
-		$ProductCategory->category_keywords=$request->category_keywords;
-	    $ProductCategory->category_order=$request->category_order;
-		$ProductCategory->category_added_by=Auth::guard('admins')->user()->id;
-        $ProductCategory->is_display_home = $request->display;
-		$ProductCategory->category_added_on=date('Y-m-d H:i:s');
+		$ProductCategory                    = new ProductCategory;
+		$ProductCategory->category_name     = $request->category_name;
+		$ProductCategory->category_keywords = $request->category_keywords;
+	    $ProductCategory->category_order    = $request->category_order;
+		$ProductCategory->category_added_by = Auth::guard('admins')->user()->id;
+        $ProductCategory->is_display_home   =  $request->display;
+		$ProductCategory->category_added_on = date('Y-m-d H:i:s');
+		$ProductCategory->product_id        = $request->product_id;
+		$ProductCategory->image_path        = $request->image_path;
 		$result=$ProductCategory->save();
 		if($result){
-          // return back()->with('success','Product Category added successfully');
 		  return redirect('admin/all_product_category/')->with('success','Product Category added successfully');
           
 		}else{
@@ -56,7 +59,7 @@ class ProductCategoryController extends Controller
 	 public function destroy($id){
 		$del_result=ProductCategory::find($id)->delete();
 		if($del_result){
-			return back()->with('success','Product Category deleated successfully.');
+			return back()->with('success','Product Category deleted successfully.');
 		}else{
 			 return back()->with('warning','Some problem occured.');
 		}
@@ -72,18 +75,21 @@ class ProductCategoryController extends Controller
     }
 	 public function editProductCategory(Request $request){
 		$this->validate($request, [
-            'category_name'   => 'required'
+            'category_name' => 'required',
+            'product_id'    => 'required',
+            'image_path'    => 'required'
         ]);
-		 $update_array=array('category_name'=>$request->category_name,
-		 					 'category_keywords'=>$request->category_keywords,
-		 					 'category_order'=>$request->category_order,
-                             'is_display_home'=>$request->display,
-							 'updated_at'=>date('Y-m-d H:i:s')
+		 $update_array=array('category_name'     => $request->category_name,
+		 					 'category_keywords' => $request->category_keywords,
+		 					 'category_order'    => $request->category_order,
+                             'is_display_home'   => $request->display,
+							 'product_id'        => $request->product_id,
+							 'image_path'        => $request->image_path,
+							 'updated_at'        => date('Y-m-d H:i:s')
 							 );
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);
 		
 		 if($result){
-				// return back()->with('success','Product Category updated successful');
 		  		return redirect('admin/all_product_category/')->with('success','Product Category updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');

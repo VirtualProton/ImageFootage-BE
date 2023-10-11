@@ -22,10 +22,15 @@
           <div class="box-header with-border">
             <h3 class="box-title">Add Product Category</h3><a href="{{ URL::to('admin/all_product_category') }}" class="btn pull-right">Back</a>
           </div>
-          @if( Session::has( 'success' ))
-          {{ Session::get( 'success' ) }}
-          @elseif( Session::has( 'warning' ))
-          {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
+          @if(session()->has('success'))
+          <div class="alert alert-success">
+              {{ session()->get('success') }}
+          </div>
+          @endif
+          @if(session()->has('error'))
+          <div class="alert alert-danger">
+              {{ session()->get('error') }}
+          </div>
           @endif
           <form action="{{ url('admin/insert_product_category') }}" role="form" method="post" id="productform" enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -52,10 +57,14 @@
                 @endif
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Image</label>
-                <input type="text" class="form-control" name="product_id" id="product_id" placeholder="Enter Product ID" ng-blur="getProductImage()">
+                <label for="exampleInputEmail1">Product ID</label>
+                <input type="text" class="form-control" name="product_id" id="product_id" placeholder="Product ID" ng-blur="getProductImage()">
+                <input type="hidden" name="image_path" id="image_path" value="" />
                 @if ($errors->has('product_id'))
                 <div class="has_error" style="color:red;">{{ $errors->first('product_id') }}</div>
+                @endif
+                @if ($errors->has('image_path'))
+                <div class="has_error" style="color:red;">{{ $errors->first('image_path') }}</div>
                 @endif
               </div>
               <div class="form-group" ng-if="is_display_product_image">
@@ -131,7 +140,14 @@
                 message: 'The value is not an integer'
               }
             }
-          }
+          },
+          product_id: {
+            validators: {
+              notEmpty: {
+                message: 'Product ID is required'
+              }
+            }
+          },
         }
       });
     })();
