@@ -2,7 +2,7 @@
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
+ <div class="content-wrapper" ng-controller="quotatationController">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>Edit Product Category
@@ -21,11 +21,16 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Edit Product Category</h3><a href="{{ URL::to('admin/all_product_category') }}" class="btn pull-right">Back</a>
                 </div>
-               @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
-			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
-			   @endif
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
+                @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session()->get('error') }}
+                </div>
+                @endif
                 <form action="{{ url('admin/editproductcategory') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                  <input type="hidden" name="product_category_id" value="{{ $productcategory['category_id'] }}">
@@ -50,6 +55,20 @@
                        @if ($errors->has('category_keywords'))
                       		<div class="has_error" style="color:red;">{{ $errors->first('category_keywords') }}</div>
                        @endif
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Product ID</label>
+                      <input type="text" class="form-control" name="product_id" id="product_id" placeholder="Product ID" value="{{ $productcategory['product_id'] }}" ng-init="getProductImageEditPageInit()" ng-blur="getProductImageEditPage()">
+                      <input type="hidden" name="image_path" id="image_path" value="{{ $productcategory['image_path'] }}" />
+                      @if ($errors->has('product_id'))
+                      <div class="has_error" style="color:red;">{{ $errors->first('product_id') }}</div>
+                      @endif
+                      @if ($errors->has('image_path'))
+                      <div class="has_error" style="color:red;">{{ $errors->first('image_path') }}</div>
+                      @endif
+                    </div>
+                    <div class="form-group" ng-if="is_display_product_image_edit_page">
+                      <span><img id="display_image" src="{{ $productcategory['image_path'] }}" width="150" height="150" style="margin-top: 6px;" /></span>
                     </div>
                       <div class="form-group">
                           <label for="exampleInputEmail1">Want to Display on Home</label>
@@ -78,17 +97,6 @@
   <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
   <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
   <script>
- //sub_product_type
- $('.product_type').click(function(){
- 	if($(this).is(":checked")){
-               var ptype=$(this).val();
-			   if(ptype == 'Image' || ptype == 'Editorial' ){
-				   $("#sub_product_type").css("display","block");
-			   }else{
-				   $("#sub_product_type").css("display","none");
-			   }
-    }
- });
   $(document).ready(function ($) {
 
    // Example Validataion Standard Mode
@@ -105,20 +113,30 @@
             },
             icon: null,
             fields: {
-                category_name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Category Name is required'
-                        }
-                    }
-                },
-                category_order: {
-                    validators: {
-                        numeric: {
-                        	message: 'The value is not an integer'
-                    	}
-                    }
+              category_name: {
+                validators: {
+                  notEmpty: {
+                    message: 'Category Name is required'
+                  }
                 }
+              },
+              category_order: {
+                validators: {
+                  notEmpty: {
+                    message: 'Category Name is required'
+                  },
+                  numeric: {
+                    message: 'The value is not an integer'
+                  }
+                }
+              },
+              product_id: {
+                validators: {
+                  notEmpty: {
+                    message: 'Product ID is required'
+                  }
+                }
+              },
             }
         });
     })();

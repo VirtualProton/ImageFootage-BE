@@ -21,6 +21,7 @@ app.controller(
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
         $scope.is_display_product_image = false;
+        $scope.is_display_product_image_edit_page = true;
 
         //$scope.uid
         $scope.quotation.product = [
@@ -728,6 +729,59 @@ app.controller(
                     $("#loading").hide();
                 }
             );
+        };
+
+        $scope.getProductImageEditPage = function () {
+            productName = $("#product_id").val();
+            if(productName) {
+                $("#loading").show();
+                $scope.is_display_product_image_edit_page = true;
+                $("#image_path").val("");
+                $http({
+                    method: "GET",
+                    url:
+                        image_path +
+                        "api/product/" +
+                        productName +
+                        "?type=Image",
+                }).then(
+                    function (response) {
+                        if (response.status == "200") {
+                            $scope.is_display_product_image_edit_page = true;
+                            $("#loading").hide();
+                            let img = response.data[0].thumbnail_image;
+                            if(img) {
+                                $("#image_path").val(img);
+                                setTimeout(function() {
+                                    $("#display_image").attr('src', img);
+                                }, 200);
+                            }
+                        }
+                    },
+                    function (error) {
+                        $scope.is_display_product_image_edit_page = false;
+                        $("#display_image").val('');
+                        alert("Image not found");
+                        $("#loading").hide();
+                    }
+                );
+            } else {
+                $scope.is_display_product_image_edit_page = false;
+            }
+        };
+
+        $scope.getProductImageEditPageInit = function () {
+            productName = $("#product_id").val();
+            if(productName) {
+                $("#loading").show();
+                const existingImage = $("#image_path").val();
+                if(existingImage == "") {
+                    $scope.is_display_product_image_edit_page = false;
+                }
+                $("#loading").hide();
+            } else {
+                $scope.is_display_product_image_edit_page = false;
+            }
         };
     }
 );
