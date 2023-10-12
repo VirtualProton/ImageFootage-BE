@@ -52,4 +52,12 @@ return [
         'large' => '3500',
         'extra_large' => '4600',
     ],
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID', '606623025930-j8olaio1tl20r6d20ho8vik535fidl06.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
+    ],
+    'facebook' => [
+        'client_id'     => env('FACEBOOK_CLIENT_ID', '311148397985250'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET', 'c9b8857a8d1ba7cc2f53bc59c127dbf1'),
+    ],
 ];
