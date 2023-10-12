@@ -25,17 +25,19 @@ class PromotionController extends Controller
     }
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'event_name' => 'required',
-            'event_des' => 'required',
-            'page_type' => 'required',
-            'desktop_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
-            'mobile_banner_image' => 'required|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
+            'event_name'           => 'required',
+            'event_des'            => 'required',
+            'page_type'            => 'required',
+            'desktop_banner_image' => 'required_if:media_type,Image|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
+            'mobile_banner_image'  => 'required_if:media_type,Image|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
+            'footage_url'          => 'required_if:media_type,Footage'
         ], [
-            'event_name.required' => 'The Name field is required.',
-            'event_des.required' => 'The Description field is required.',
-            'page_type.required' => 'The Page Type field is required.',
+            'event_name.required'  => 'The Name field is required.',
+            'event_des.required'   => 'The Description field is required.',
+            'page_type.required'   => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
-            'mobile_banner_image' => 'Please upload valid mobile banner image.',
+            'mobile_banner_image'  => 'Please upload valid mobile banner image.',
+            'footage_url'          => 'Please upload valid video.'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
@@ -48,13 +50,13 @@ class PromotionController extends Controller
             if($request->input('image_url') !=""){
                 $url = $request->input('image_url');
             }else {
-                $url = "https://p5resellerp.s3-accelerate.amazonaws.com/".$request->input('footage_url');
+                $url = $request->input('footage_url');
             }
             $file_path = strstr($request->product_type, '_page').'/photo/';
             if($request->hasFile('desktop_banner_image')) {
-				$image = $request->file('desktop_banner_image');
-				$name = time().'.'.$image->getClientOriginalExtension();
-				$files2bucketemp= $image->getPathName();
+				$image           = $request->file('desktop_banner_image');
+				$name            = time().'.'.$image->getClientOriginalExtension();
+				$files2bucketemp = $image->getPathName();
 				$s3Client = new S3Client([
 					'region' => 'us-east-2',
 					'version' => '2006-03-01'
@@ -73,16 +75,16 @@ class PromotionController extends Controller
 				}
     		}
             if($request->hasFile('mobile_banner_image')) {
-				$image = $request->file('mobile_banner_image');
-				$name = time().'.'.$image->getClientOriginalExtension();
-				$files2bucketemp= $image->getPathName();
+				$image           = $request->file('mobile_banner_image');
+				$name            = time().'.'.$image->getClientOriginalExtension();
+				$files2bucketemp = $image->getPathName();
 				$s3Client = new S3Client([
 					'region' => 'us-east-2',
 					'version' => '2006-03-01'
 				]);
-				$finelname=$file_path.$name;
-				$source = $files2bucketemp;
-				$uploader = new MultipartUploader($s3Client, $source, [
+				$finelname = $file_path.$name;
+				$source    = $files2bucketemp;
+				$uploader  = new MultipartUploader($s3Client, $source, [
 					'bucket' => 'imgfootage',
 					'key' => $finelname,
 				]);
@@ -93,13 +95,15 @@ class PromotionController extends Controller
 					echo $e->getMessage() . "\n";
 				}
     		}
+            $desktop_banner_image = $request->input('media_type') == 'Footage' ? $url : $fileupresult;
+            $mobile_banner_image  = $request->input('media_type') == 'Footage' ? $url : $fileupresult1;
             $promotion = Promotion::create([
-                'event_name' => strip_tags($request->input('event_name')),
-                'event_des' => $request->input('event_des'),
-                'status' => $request->input('status'),
-                'page_type' => $request->input('page_type'),
-                'desktop_banner_image' => $fileupresult ?? '',
-                'mobile_banner_image' => $fileupresult1 ?? ''
+                'event_name'           => strip_tags($request->input('event_name')),
+                'event_des'            => $request->input('event_des'),
+                'status'               => $request->input('status'),
+                'page_type'            => $request->input('page_type'),
+                'desktop_banner_image' => $desktop_banner_image ?? '',
+                'mobile_banner_image'  => $mobile_banner_image ?? ''
                 
             ]);
             $promotion->save();
@@ -142,17 +146,17 @@ class PromotionController extends Controller
                 $url = "https://p5resellerp.s3-accelerate.amazonaws.com/".$request->input('footage_url');
             }
        $this->validate($request, [
-            'event_name' => 'required',
-            'event_des' => 'required',
-            'page_type' => 'required',
+            'event_name'           => 'required',
+            'event_des'            => 'required',
+            'page_type'            => 'required',
             'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
-            'mobile_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
+            'mobile_banner_image'  => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
         ], [
-            'event_name.required' => 'The Name field is required.',
-            'event_des.required' => 'The Description field is required.',
-            'page_type.required' => 'The Page Type field is required.',
+            'event_name.required'  => 'The Name field is required.',
+            'event_des.required'   => 'The Description field is required.',
+            'page_type.required'   => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
-            'mobile_banner_image' => 'Please upload valid mobile banner image.',
+            'mobile_banner_image'  => 'Please upload valid mobile banner image.',
         ]);
         if($request->status == 1 && Promotion::where('id','!=',$request->promotion_id)->where('page_type', $request->page_type)->where('status', '1')->count() > 0){
             Session::flash('error', 'Active record found. You can not add another active record.');
@@ -160,9 +164,9 @@ class PromotionController extends Controller
         }
         $file_path = strstr($request->product_type, '_page').'/photo/';
             if($request->hasFile('desktop_banner_image')) {
-				$image = $request->file('desktop_banner_image');
-				$name = time().'.'.$image->getClientOriginalExtension();
-				$files2bucketemp= $image->getPathName();
+				$image           = $request->file('desktop_banner_image');
+				$name            = time().'.'.$image->getClientOriginalExtension();
+				$files2bucketemp = $image->getPathName();
 				$s3Client = new S3Client([
 					'region' => 'us-east-2',
 					'version' => '2006-03-01'
@@ -181,16 +185,16 @@ class PromotionController extends Controller
 				}
     		}
             if($request->hasFile('mobile_banner_image')) {
-				$image = $request->file('mobile_banner_image');
-				$name = time().'.'.$image->getClientOriginalExtension();
-				$files2bucketemp= $image->getPathName();
+				$image           = $request->file('mobile_banner_image');
+				$name            = time().'.'.$image->getClientOriginalExtension();
+				$files2bucketemp = $image->getPathName();
 				$s3Client = new S3Client([
 					'region' => 'us-east-2',
 					'version' => '2006-03-01'
 				]);
-				$finelname=$file_path.$name;
-				$source = $files2bucketemp;
-				$uploader = new MultipartUploader($s3Client, $source, [
+				$finelname = $file_path.$name;
+				$source    = $files2bucketemp;
+				$uploader  = new MultipartUploader($s3Client, $source, [
 					'bucket' => 'imgfootage',
 					'key' => $finelname,
 				]);
@@ -201,11 +205,12 @@ class PromotionController extends Controller
 					echo $e->getMessage() . "\n";
 				}
     		}
-		 $update_array=array('event_name'=>$request->event_name,
-							 'event_des'=>$request->event_des,
-                             'status'=>$request->status,
-                             'page_type' => $request->page_type
-							 );
+		 $update_array=array(
+            'event_name' =>$request->event_name,
+			'event_des'  =>$request->event_des,
+            'status'     =>$request->status,
+            'page_type'  => $request->page_type
+		 );
          if(!empty($fileupresult)) {
             $update_array['desktop_banner_image'] = $fileupresult;
          }

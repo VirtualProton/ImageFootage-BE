@@ -841,7 +841,6 @@ app.controller(
         };
         $scope.prices = [];
         $scope.getproduct = function (product) {
-            // console.log(product); return;
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.promotion.product.indexOf(product);
@@ -855,7 +854,6 @@ app.controller(
                         product.type,
                 }).then(
                     function (response) {
-                        console.log("==>", response);
                         if (response.status == "200") {
                             $("#loading").hide();
                             if (product.type == "Image") {
@@ -876,10 +874,8 @@ app.controller(
                                 }
                             } else {
                                 if (response.data[1] != "") {
-                                    $("#footage_url").val(response.data[1]);
-                                    let url =
-                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                        response.data[1];
+                                    let url = response.data[0].watermarkPreview;
+                                    $("#footage_url").val(url);
                                     $("#product_footage").attr("src", url);
                                     $("#product_footage").show();
                                 } else {
@@ -896,10 +892,10 @@ app.controller(
             }
         };
 
-        $scope.checkProduct = function (product) {
-            console.log("**", product);
-            $scope.getproduct(product);
-        };
+        // $scope.checkProduct = function (product) {
+        //     console.log("**", product);
+        //     $scope.getproduct(product);
+        // };
     }
 );
 app.directive("ngFileModel", [
