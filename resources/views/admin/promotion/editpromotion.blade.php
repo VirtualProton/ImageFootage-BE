@@ -58,6 +58,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="">Media Type (Image/Footage)</label>
+                        <select id="ProductType" class="form-control" ng-model="product.type" name="media_type" ng-change="checkProduct(product)">
+                        <option [ngValue]="Image" {{ $promotionDetails['media_type'] == "Image" ? 'selected' : '' }}>Image</option>
+                        <option [ngValue]="Footage" {{ $promotionDetails['media_type'] == "Footage" ? 'selected' : '' }}>Footage</option>
+                        </select>
+                        <div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputFile">Desktop Banner Image</label>
                         @if(!empty($promotionDetails['desktop_banner_image']))
                         </br><img src="{{$promotionDetails['desktop_banner_image']}}" width="150" height="150" /></br></br>
@@ -78,6 +87,29 @@
                         @if ($errors->has('mobile_banner_image'))
                         <div class="has_error" style="color:red;">{{ $errors->first('mobile_banner_image') }}</div>
                         @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="eventBanner">Event Banner</label>
+                        <input type="hidden" class="form-control" ng-model="product.id" ng-init="product.name = '{{ $promotionDetails['product_name'] }}'">
+                        <input type="text" class="form-control" value="{{ $promotionDetails['product_name'] }}" name="product_name" id="product_1" ng-blur="getproduct(product)" >
+
+                        @if ($errors->has('product_name'))
+                                <div class="has_error" style="color:red;">{{ $errors->first('product_name') }}</div>
+                        @endif
+                    </div>
+                    <div class="form-group" ng-show="product.type=='Image'">
+                        <input type="hidden" class="form-control" id="image_url" name="image_url">
+
+                        <span id="product_image_container" style="display: none">
+                            <img id="product_image" width="150" height="150" />
+                        </span>
+                    </div>
+                    <div class="form-group" ng-show="product.type =='Footage'">
+                        <input type="hidden" class="form-control" id="footage_url" name="footage_url">
+                        <video style="display: none" id="product_footage" class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
+                        <source type="video/mp4" src="<%product.footage%>"> 
+                        Your browser does not support the video tag. 
+                        </video>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Description</label>
@@ -118,6 +150,8 @@
     $(document).ready(function(e) {
         $("#PageType").val("{{ $promotionDetails['page_type'] }}")
         $("#PageType").trigger('change')
+        $("#ProductType").val("{{ $promotionDetails['media_type'] }}")
+        $("#ProductType").trigger('change')
     })
 </script>
 @stop

@@ -142,6 +142,58 @@
     $(document).ready(function(e) {
         $("#PageType").val("{{ old('page_type') ?? '' }}")
         $("#PageType").trigger('change')
+
+        (function () {
+
+            $('#promotionform').formValidation({
+                framework: "bootstrap",
+                button: {
+                    selector: '#validateButton2',
+                    disabled: 'disabled'
+                },
+                icon: null,
+                fields: {
+                    event_name: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Event name is required'
+                            }
+                        }
+                    },
+                    page_type: {
+                        validators: {
+                        notEmpty: {
+                            message: 'Page type is required'
+                            }
+                        }
+                    },
+                    discount: {
+                        validators: {
+                        notEmpty: {
+                            message: 'Discount is required'
+                        },
+                        integer: {
+                            message: 'Discount should be number only'
+                        }
+                        },
+                    },
+                    media_type: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Media type is required'
+                            }
+                        }
+                    },
+                    status: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Status is required'
+                            }
+                        }
+                    }
+                }
+            });
+            })();
     })
 </script>
 @stop
