@@ -103,7 +103,8 @@ class Product extends Model
                     'product_added_on',
                     'product_keywords',
                     'product_price_small',
-                    'product_size'
+                    'product_size',
+                    'slug'
                 )
                 ->where(function ($query) use ($type) {
                     // TODO: Need to check the use of product_web field
@@ -133,7 +134,6 @@ class Product extends Model
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                 }
             }
@@ -156,9 +156,9 @@ class Product extends Model
         $offset       = ($pageNumber - 1) * $limit;
         $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
         $selectedPrApiIds  = [];
-         
+
         if(isset($requestData['api_product_ids']) && !empty($requestData['api_product_ids'])){
-            $selectedPrApiIds = explode(',', $requestData['api_product_ids']);            
+            $selectedPrApiIds = explode(',', $requestData['api_product_ids']);
         }
 
         $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit','api_product_ids']);
@@ -190,7 +190,7 @@ class Product extends Model
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
-            
+
                 $data = Product::select(
                     'product_id',
                     'api_product_id',
@@ -203,10 +203,11 @@ class Product extends Model
                     'product_added_on',
                     'product_keywords',
                     'product_price_small',
-                    'product_size'
+                    'product_size',
+                    'slug'
                 )
                 ->whereIn('product_main_type', ['Image', 'Footage']);
-                 
+
 
             if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
                 $data->where('product_category',$keyword['category_id']);
@@ -221,9 +222,9 @@ class Product extends Model
             }
 
             if(!empty($selectedPrApiIds)){
-                $exceptSelectedRecords = clone $data; 
+                $exceptSelectedRecords = clone $data;
                 $exceptSelectedRecords = $exceptSelectedRecords->whereNotIn('api_product_id', $selectedPrApiIds)->get();
-                $selectedData = $data->whereIn('api_product_id', $selectedPrApiIds)->get();                
+                $selectedData = $data->whereIn('api_product_id', $selectedPrApiIds)->get();
 
                 $totalRecords = count($selectedData) + count($exceptSelectedRecords);
                 $combinedData = array_merge($selectedData->toArray(), $exceptSelectedRecords->toArray());
@@ -234,12 +235,11 @@ class Product extends Model
                 }
                 $totalRecords = count($data->get());
                 $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
-            }   
-            
+            }
+
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                 }
             }
@@ -362,7 +362,6 @@ class Product extends Model
                     $music_sound_bpm = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
 
                     $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id']   = encrypt($item['api_product_id'], true);
                     $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
                     $item['music_sound_bpm']  = $music_sound_bpm;
@@ -417,7 +416,8 @@ class Product extends Model
                 'product_added_on',
                 'product_keywords',
                 'product_price_small',
-                'product_size'
+                'product_size',
+                'slug'
             )
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
@@ -438,7 +438,6 @@ class Product extends Model
                     $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
 
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']           = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                     $item['auther_name']    = $auther_name;
                 }
@@ -496,7 +495,8 @@ class Product extends Model
                 'music_price',
                 'license_type',
                 'product_keywords',
-                'music_size'
+                'music_size',
+                'slug'
             )
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
@@ -518,7 +518,6 @@ class Product extends Model
                     $music_sound_bpm = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
 
                     $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']             = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id']   = encrypt($item['api_product_id'], true);
                     $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
                     $item['music_sound_bpm']  = $music_sound_bpm;
@@ -589,6 +588,7 @@ class Product extends Model
                     'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
+                    'slug'           => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -717,7 +717,8 @@ class Product extends Model
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
-                    'updated_at'          => date("Y-m-d H:i:s")
+                    'updated_at'          => date("Y-m-d H:i:s"),
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
 
                 );
 
@@ -808,7 +809,8 @@ class Product extends Model
                 'product_added_on' => date("Y-m-d H:i:s"),
                 'product_web' => '3',
                 'product_vertical' => 'Royalty Free',
-                'updated_at' => date("Y-m-d H:i:s")
+                'updated_at' => date("Y-m-d H:i:s"),
+                'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
 
             );
             $data2 = DB::table('imagefootage_products')
@@ -866,7 +868,8 @@ class Product extends Model
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
-                    'updated_at'          => date("Y-m-d H:i:s")
+                    'updated_at'          => date("Y-m-d H:i:s"),
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                 );
 
                 if (!empty($eachmedia['versions'])) {
@@ -992,7 +995,8 @@ class Product extends Model
                     'product_web'         => '2',
                     'product_vertical'    => 'Royalty Free',
                     'updated_at'          => date("Y-m-d H:i:s"),
-                    'author_name'         => $data['metadata']['author_username']
+                    'author_name'         => $data['metadata']['author_username'],
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($data['metadata']['title'])))
 
                 );
                 $data2 = DB::table('imagefootage_products')
@@ -1157,7 +1161,8 @@ class Product extends Model
                 'product_added_on',
                 'product_keywords',
                 'product_price_small',
-                'product_size'
+                'product_size',
+                'slug'
             )
             ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
@@ -1191,7 +1196,8 @@ class Product extends Model
                 'product_size',
                 'music_duration',
                 'music_fileType',
-                'music_price'
+                'music_price',
+                'slug'
             )
                 ->where('product_category', '=', $product->product_category)
                 ->where('product_id', '!=', $product_id)
@@ -1218,7 +1224,6 @@ class Product extends Model
                     $music_sound_bpm               = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
 
                     $item['url']                   = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['slug']                  = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($item['product_title'])));
                     $item['api_product_id']        = encrypt($item['api_product_id'], true);
                     $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
                     $item['music_sound_bpm']       = $music_sound_bpm;
