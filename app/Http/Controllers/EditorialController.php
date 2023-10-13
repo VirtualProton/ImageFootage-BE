@@ -26,6 +26,55 @@ class EditorialController extends Controller
         }
 
         // Retrive URLs based on Ids
+        $products = Product::select('product_id', 'product_main_image','api_product_id')->whereIn('product_id', $selectedValues)->get();
+
+        $productUrlMap = [];
+        $productApiMap = [];
+        foreach ($products as $product) {
+            $productUrlMap[$product->product_id] = $product->product_main_image;
+            $productApiMap[$product->product_id] = $product->api_product_id;
+        }
+
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+            if (is_array($editorialValue)) {
+                $updatedEditorialValue = [];
+                $updatedApiEditorialValue = [];
+                foreach ($editorialValue as $productId) {
+                    if (isset($productUrlMap[$productId])) {
+                        $updatedEditorialValue[] = $productUrlMap[$productId];
+                    }
+                    if (isset($productApiMap[$productId])) {
+                        $updatedApiEditorialValue[] = $productApiMap[$productId];
+                    }
+                }
+                $editorial['selected_values'] = implode(',', $updatedEditorialValue);
+                $editorial['selected_api_product_values'] = implode(',', $updatedApiEditorialValue);
+                $editorial['selected_values_count'] = count($updatedEditorialValue);
+            }
+            if (!empty($editorial['main_image_upload'])) {
+                $editorial['main_image_upload'] = asset('uploads/editorialmainimage/' . $editorial['main_image_upload']);
+            }
+        }
+        echo json_encode(["status" => "success", 'data' => $editoriallist]);
+    }
+
+    public function editorialStoryListv2()
+    {
+        $editoriallist = Editorial::where('status', 1)
+            ->where('type','story')
+            ->limit(4)
+            ->get();  
+
+        $selectedValues = [];
+        foreach ($editoriallist as $editorial) {
+            $editorialValue = json_decode($editorial['selected_values'], true);
+
+            if (is_array($editorialValue)) {
+                $selectedValues = array_merge($selectedValues, $editorialValue);
+            }
+        }
+
         $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
 
         $productUrlMap = [];
@@ -51,6 +100,7 @@ class EditorialController extends Controller
         }
         echo json_encode(["status" => "success", 'data' => $editoriallist]);
     }
+    
 
     public function editorialDetailv2($id)
     {

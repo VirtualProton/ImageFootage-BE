@@ -155,9 +155,15 @@ class Product extends Model
         $limit        = isset($keyword['limit']) ? $keyword['limit'] : 1;
         $offset       = ($pageNumber - 1) * $limit;
         $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
-        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
-        $applied_filters = [];
+        $selectedPrApiIds  = [];
+         
+        if(isset($requestData['api_product_ids']) && !empty($requestData['api_product_ids'])){
+            $selectedPrApiIds = explode(',', $requestData['api_product_ids']);            
+        }
 
+        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit','api_product_ids']);
+
+        $applied_filters = [];
         foreach ($filters as $name => $value) {
             if(isset($value['value'])) {
                 $elements = explode(', ', $value['value']);
@@ -169,7 +175,6 @@ class Product extends Model
                 ];
             }
         }
-
         $products = ImageFilterValue::query();
         if (!empty($applied_filters)) {
             foreach ($applied_filters as $filter) {
@@ -185,7 +190,8 @@ class Product extends Model
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
-            $data = Product::select(
+            
+                $data = Product::select(
                     'product_id',
                     'api_product_id',
                     'product_category',
@@ -200,10 +206,11 @@ class Product extends Model
                     'product_size'
                 )
                 ->whereIn('product_main_type', ['Image', 'Footage']);
+                 
 
-                if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
-                    $data->where('product_category',$keyword['category_id']);
-                }
+            if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+                $data->where('product_category',$keyword['category_id']);
+            }
 
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
@@ -213,13 +220,22 @@ class Product extends Model
                 });
             }
 
-            if (!empty($apiProductIds)) {
-                $data->whereIn('api_product_id', $apiProductIds);
-            }
+            if(!empty($selectedPrApiIds)){
+                $exceptSelectedRecords = clone $data; 
+                $exceptSelectedRecords = $exceptSelectedRecords->whereNotIn('api_product_id', $selectedPrApiIds)->get();
+                $selectedData = $data->whereIn('api_product_id', $selectedPrApiIds)->get();                
 
-            $totalRecords = count($data->get());
-            $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
-
+                $totalRecords = count($selectedData) + count($exceptSelectedRecords);
+                $combinedData = array_merge($selectedData->toArray(), $exceptSelectedRecords->toArray());
+                $data = array_slice($combinedData, $offset, $limit);
+            }else{
+                if (!empty($apiProductIds)) {
+                    $data->whereIn('api_product_id', $apiProductIds);
+                }
+                $totalRecords = count($data->get());
+                $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+            }   
+            
             if (count($data) > 0) {
                 foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
