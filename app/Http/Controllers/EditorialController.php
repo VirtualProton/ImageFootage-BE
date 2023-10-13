@@ -13,7 +13,7 @@ class EditorialController extends Controller
     {
         $editoriallist = Editorial::where('status', 1)
             ->where('type','collection')
-            ->get();  
+            ->get();
 
         $selectedValues = [];
         // Retrive all occured products Ids
@@ -26,7 +26,7 @@ class EditorialController extends Controller
         }
 
         // Retrive URLs based on Ids
-        $products = Product::select('product_id', 'product_main_image','api_product_id')->whereIn('product_id', $selectedValues)->get();
+        $products = Product::select('product_id', 'product_main_image','api_product_id','slug')->whereIn('product_id', $selectedValues)->get();
 
         $productUrlMap = [];
         $productApiMap = [];
@@ -64,7 +64,7 @@ class EditorialController extends Controller
         $editoriallist = Editorial::where('status', 1)
             ->where('type','story')
             ->limit(4)
-            ->get();  
+            ->get();
 
         $selectedValues = [];
         foreach ($editoriallist as $editorial) {
@@ -75,7 +75,7 @@ class EditorialController extends Controller
             }
         }
 
-        $products = Product::select('product_id', 'product_main_image')->whereIn('product_id', $selectedValues)->get();
+        $products = Product::select('product_id', 'product_main_image','slug')->whereIn('product_id', $selectedValues)->get();
 
         $productUrlMap = [];
         foreach ($products as $product) {
@@ -100,7 +100,7 @@ class EditorialController extends Controller
         }
         echo json_encode(["status" => "success", 'data' => $editoriallist]);
     }
-    
+
 
     public function editorialDetailv2($id)
     {
