@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common;
+use App\Models\ImageFilterValue;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,90 +42,28 @@ class MediaController extends Controller
         return response()->json(["status" => $checkExists]);
     }
 
-    public function index($media_id, $origin, $type)
+    public function index(Request $request)
     {
-        if ($origin == '2') {
-            $imageMedia = new ImageApi();
-            $media_id = decrypt($media_id);
-            $product_details_data = $imageMedia->get_media_info($media_id);
+        $requestData = $request->json()->all();
+        $origin = $requestData['type'];
+        $slug = $requestData['slug'];
+        $product_details = Product::where(['slug'=>$slug,'product_main_type'=>$origin])->first();
+        if ($product_details) {
+            // Use the $product_details['id'] to query MongoDB
+            $apiProductId = $product_details['api_product_id'];
+            // Retrieve data from MongoDB where api_product_id matches
+            $matchingData = ImageFilterValue::where('api_product_id',$apiProductId)->get();
+            $attributes = [];
 
-            $product_details_data['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'] = [
-                ["name" => 'web', "description" => "Web", "price" => "550", "width" => "141", "height" => "94"],
-                ["name" => 'medium', "description" => "Medium", "price" => "2500", "width" => "148", "height" => "98"],
-                ["name" => 'large', "description" => "Large", "price" => "3500", "width" => "297", "height" => "198"],
-                ["name" => 'xxl', "description" => "XXL", "price" => "4600", "width" => "360", "height" => "240"]
-            ];
+            foreach ($matchingData as $data) {
 
-            $b64image = base64_encode(file_get_contents($product_details_data['media']['preview_url_no_wm']));
-            $size = getimagesize($product_details_data['media']['preview_url_no_wm']);
-            $height = $size[1];
-            $width = $size[0];
-            $left = 0;
-            if ($width > 300) {
-                $left = $width - 300;
+                $attributes = $data->attributes;
+
             }
+            $product_details['attributes'] = $attributes;
 
-            $img = Image::make($product_details_data['media']['preview_url_no_wm']);
-            // insert watermark at bottom-right corner with 10px offset
-            //$downlaod_image1 = $img->insert(public_path('images/logoimage_new.png'), 'top-left', intval($left / 2), intval($height / 2));
-            $time = time();
-            $img->save(public_path('images/dump/' . $time . '.jpg'));
-            $img->encode('jpg');
-            $type = 'jpg';
-            // $downlaod_image = '';
-            $downlaod_image = 'data:image/' . $type . ';base64,' . base64_encode($img);
-            // dd($downlaod_image);
-            // unlink(public_path('images/dump/' . $time . '.jpg'));
-
-            if (count($product_details_data) > 0) {
-                $imagefootage_id = $this->product->savePantherImagedetail($product_details_data, 0);
-            }
-
-            // $product_details_data['media']['thumb_150_url'] = str_replace('http:', 'https:', $product_details_data['media']['thumb_150_url']);
-            // $product_details_data['media']['thumb_170_url'] = str_replace('http:', 'https:', $product_details_data['media']['thumb_170_url']);
-            // $product_details_data['media']['preview_url'] = str_replace('http:', 'https:', $product_details_data['media']['preview_url']);
-            // $product_details_data['media']['preview_url_high'] = str_replace('http:', 'https:', $product_details_data['media']['preview_url_high']);
-            // $product_details_data['media']['preview_url_no_wm'] = str_replace('http:', 'https:', $product_details_data['media']['preview_url_no_wm']);
-            // $product_details_data['media']['preview_url_high_no_wm'] = str_replace('http:', 'https:', $product_details_data['media']['preview_url_high_no_wm']);
-            $product_details = array($product_details_data, $imagefootage_id, $downlaod_image);
-        } else if ($origin == '3') {
-
-            if ($type == 'Music') {
-
-                $media_id = decrypt($media_id);
-                $musicMedia = new MusicApi();
-                $product_details_data = $musicMedia->getMusicInfo($media_id);
-                if (count($product_details_data) > 0) {
-                    $imagefootage_id = $this->product->savePond5Music($product_details_data, 0);
-                }
-                $product_details = array($product_details_data);
-            } else {
-                $media_id = decrypt($media_id);
-                $keyword['search'] = $media_id;
-                $footageMedia = new FootageApi();
-                $product_details_data = $footageMedia->getclipdata($media_id);
-
-                if (isset($product_details_data['id'])) {
-                    $pond_id_withprefix = $product_details_data['id'];
-                    if (strlen($product_details_data['id']) < 9) {
-                        $add_zero = 9 - (strlen($product_details_data['id']));
-                        for ($i = 0; $i < $add_zero; $i++) {
-                            $pond_id_withprefix = "0" . $pond_id_withprefix;
-                        }
-                    }
-                    $b64image = base64_encode(file_get_contents($product_details_data['watermarkPreview']));
-                    $downlaod_image = '';
-                    if (count($product_details_data) > 0) {
-                        $imagefootage_id = $this->product->savePond5singleImage($product_details_data, 0);
-                    }
-                }
-                $product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg', $imagefootage_id, $downlaod_image);
-            }
-        } else {
-            $product = new Product();
-            $product_details = $product->getProductDetail($media_id, $type);
         }
-        return response()->json($product_details);
+        return response()->json(['data'=>$product_details,'status'=>'success']);
     }
 
 
@@ -167,7 +106,7 @@ class MediaController extends Controller
 
     public function download(Request $request)
     {
-        $allFields = $request->all();        
+        $allFields = $request->all();
         $tokens = json_decode($allFields['product']['token'], true);
         $id = $tokens['Utype'];
         $package_id = $allFields['product']['package'];
@@ -420,14 +359,14 @@ class MediaController extends Controller
         }
 
         if ($download == 1) {
-            if ($flag == "Image") {                
+            if ($flag == "Image") {
 
-                $products = Product::whereIn('product_id', $allFields['selectedValues'])                            
+                $products = Product::whereIn('product_id', $allFields['selectedValues'])
                             ->get();
                 foreach($products as $product){
 
                     $dataCheck = UserProductDownload::where('product_id_api', $product['api_product_id'])->where('product_size', $product["product_size"])->where('web_type', $product['product_web'])->first();
-                    
+
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $package_id,
@@ -441,14 +380,14 @@ class MediaController extends Controller
                         'product_desc' => $product['product_description'],
                         'product_thumb' => $product['product_thumbnail'],
                         'web_type' => $product['product_web'],
-                        'product_size' => $product["product_size"],                        
+                        'product_size' => $product["product_size"],
                         'selected_product' => json_encode($product),
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
                     );
 
                     UserProductDownload::insert($dataInsert);
-                }                               
+                }
 
                 if (!$dataCheck) {
                     UserPackage::where('user_id', '=', $id)
@@ -458,9 +397,9 @@ class MediaController extends Controller
                             'downloaded_product' => DB::raw('downloaded_product+1'),
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
-                }                
+                }
                 return response()->json(['status' => 'download_success', 'message' => 'Products downloaded successfully !!']);
-            } 
+            }
         } else {
             return response()->json(['status' => 'download_limit', 'message' => 'Download pack limit has been over already !!']);
         }

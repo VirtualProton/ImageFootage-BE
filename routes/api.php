@@ -40,7 +40,7 @@ Route::group([
     Route::post('search', 'SearchController@index');
     Route::get('music-search/{query}', 'SearchController@musicSearchByTitle'); # search by music title
     Route::post('relatedsearch', 'SearchController@relatedProductList');
-    Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
+    Route::post('details', 'MediaController@index');
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');

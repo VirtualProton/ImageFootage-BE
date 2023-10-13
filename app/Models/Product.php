@@ -16,7 +16,7 @@ class Product extends Model
 {
     protected $table = 'imagefootage_products';
     protected $primaryKey = 'id';
-    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content'];
+    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug'];
     const HomeLimit = '32';
 
     public function api()
@@ -311,7 +311,8 @@ class Product extends Model
                 'music_price',
                 'license_type',
                 'product_keywords',
-                'music_size'
+                'music_size',
+                'slug'
             )
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
@@ -325,7 +326,7 @@ class Product extends Model
 
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
-                    $query->orWhere('product_id', '=', $search)
+                    $query->orWhere('slug', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
@@ -572,7 +573,6 @@ class Product extends Model
                     'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'auther_name' => $eachmedia['author-username']
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -594,7 +594,7 @@ class Product extends Model
                         'license'          => ['commercial', 'editorial'],
                         'type'             => ['photos'],
                         'collection'       => ['standard', 'spx'],
-                        'artist'           => $eachmedia['author-username']
+                        'artist'           =>  $eachmedia['author-username']
                     );
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
@@ -625,7 +625,8 @@ class Product extends Model
                         'license'          => ['commercial'],
                         'type'             => ['photos'],
                         'collection'       => ['standard'],
-                        'artist'           => $eachmedia['author-username']
+                        'artist'           =>  $eachmedia['author-username']
+
                     ];
 
                     // Find the existing document by api_product_id, or create a new one
