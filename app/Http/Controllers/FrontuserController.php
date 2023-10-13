@@ -358,6 +358,16 @@ class FrontuserController extends Controller {
 				->withCount('wishlists')
 				->find($userId);
 
+				if(!empty($userData->wishlists)) {
+					foreach($userData->wishlists as $wishlist) {
+						if(!empty($wishlist->products)) {
+							foreach($wishlist->products as $product) {
+								$product->api_product_id = encrypt($product->api_product_id, true);
+							}
+						}
+					}
+				}
+
 				echo '{"status":"1","data":'.json_encode($userData, true).',"message":""}';
 			} else {
 				echo '{"status":"0","data":{},"message":"No user id passed."}';
