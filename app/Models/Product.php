@@ -1126,7 +1126,7 @@ class Product extends Model
         $type         = isset($request['type']) ? $request['type'] : 'Image';
         $limit        = isset($request['limit']) ? $request['limit'] : 9;
         $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
-
+        //TODO: Get category id in request
         $product = Product::select('product_category')->where('product_id', '=', $product_id)->first();
         if (!empty($product_id) && !empty($product)) {
             $data = Product::select(
@@ -1157,7 +1157,7 @@ class Product extends Model
         $data         = [];
         $limit        = isset($request['limit']) ? $request['limit'] : 9;
         $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
-
+        //TODO: Get category id in request
         $product = Product::select('*')->where('product_id', '=', $product_id)->first();
         if (!empty($product_id) && !empty($product)) {
             $data = Product::select(
