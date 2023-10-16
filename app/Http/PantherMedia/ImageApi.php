@@ -137,7 +137,8 @@ class ImageApi
                     'q' => $serach,
                     'page' => $page,
                     'limit' => $limit,
-                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                    'extra_info'   => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content,license,contributor,type,collection,orientation,people_number,price,isolated,spx",
+
                     'filters' => $sort . 'type: photos;' . $filter_mapping
                 ]
             ]);
