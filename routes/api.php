@@ -170,6 +170,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::get('editorials-stories-v2', 'EditorialController@editorialStoryListv2');
         Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
         Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
+        Route::get('refresh', 'AuthController@refresh');
     });
 });
 
@@ -189,4 +190,6 @@ Route::group([
     Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
     Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
     Route::get('pond5-other-categories-music-upload', 'CronController@pond5OtherCategoriesMusicUpload');
+    Route::get('pond5-media-home-categories-image-upload', 'CronController@pond5MediaHomeCategoriesImageUpload');
 });
+
