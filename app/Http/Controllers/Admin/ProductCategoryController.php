@@ -34,10 +34,12 @@ class ProductCategoryController extends Controller
 		$ProductCategory->category_added_on = date('Y-m-d H:i:s');
 		$ProductCategory->product_id        = $request->product_id;
 		$ProductCategory->image_path        = $request->image_path;
+        $ProductCategory->category_slug     = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($request->category_name)));
+        $ProductCategory->type              =  1;
 		$result=$ProductCategory->save();
 		if($result){
 		  return redirect('admin/all_product_category/')->with('success','Product Category added successfully');
-          
+
 		}else{
 		  return back()->with('warning','Some problem occured.');
 		}
@@ -88,12 +90,12 @@ class ProductCategoryController extends Controller
 							 'updated_at'        => date('Y-m-d H:i:s')
 							 );
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);
-		
+
 		 if($result){
 		  		return redirect('admin/all_product_category/')->with('success','Product Category updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
-		       
+
     }
 }
