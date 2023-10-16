@@ -186,10 +186,14 @@ Route::group([
 ], function () {
     Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
     Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
+
     Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
     Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
+
     Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
     Route::get('pond5-other-categories-music-upload', 'CronController@pond5OtherCategoriesMusicUpload');
-    Route::get('pond5-media-home-categories-image-upload', 'CronController@pond5MediaHomeCategoriesImageUpload');
+
+    Route::get('pond5-home-categories-image-upload', 'CronController@pond5HomeCategoriesImageUpload');
+    Route::get('pond5-other-categories-image-upload', 'CronController@pond5OtherCategoriesImageUpload');
 });
 

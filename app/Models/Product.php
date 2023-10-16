@@ -627,7 +627,8 @@ class Product extends Model
                             'product_main_image'   => $eachmedia['preview_high'],
                             'product_description'  => $eachmedia['description'],
                             'product_title'        => $eachmedia['title'],
-                            'updated_at'           => date('Y-m-d H:i:s')
+                            'updated_at'           => date('Y-m-d H:i:s'),
+                            'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -756,7 +757,8 @@ class Product extends Model
                             'product_thumbnail'   => $eachmedia['thumbnail'],
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'updated_at'          => date('Y-m-d H:i:s')
+                            'updated_at'          => date('Y-m-d H:i:s'),
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -910,7 +912,8 @@ class Product extends Model
                             'product_thumbnail'   => $eachmedia['thumbnail'],
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'updated_at'          => date('Y-m-d H:i:s')
+                            'updated_at'          => date('Y-m-d H:i:s'),
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -1237,7 +1240,7 @@ class Product extends Model
     public function savePond5Image($data, $category_id)
     {
         // prefetch the api_flag value
-        $flag = $this->get_api_flag('pond5_footage', 'api_flag');
+        $flag = $this->get_api_flag('pond5_image', 'api_flag');
 
         foreach ($data['items'] as $eachmedia) {
 
@@ -1264,8 +1267,8 @@ class Product extends Model
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '2',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
-                    'updated_at'          => date("Y-m-d H:i:s")
-
+                    'updated_at'          => date("Y-m-d H:i:s"),
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -1304,7 +1307,8 @@ class Product extends Model
                             'product_thumbnail'   => $eachmedia['thumbnail'],
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
-                            'updated_at'          => date('Y-m-d H:i:s')
+                            'updated_at'          => date('Y-m-d H:i:s'),
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
                         ]);
 
                     $apiProductId = $eachmedia['id'];

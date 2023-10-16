@@ -213,7 +213,7 @@ class CronController extends Controller
     }
 
 
-    public function pond5MediaHomeCategoriesImageUpload()
+    public function pond5HomeCategoriesImageUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
@@ -224,13 +224,13 @@ class CronController extends Controller
                         ->get()
                         ->toArray();
 
-        foreach($home_categories as $percategory){
+        foreach($home_categories as $percategory) {
             $keyword['search']  = $percategory['category_name'];
-            $pantherMediaImages = new \App\Http\Pond5\ImageApi();
-            $pantharmediaData   = $pantherMediaImages->search($keyword);
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
 
-            if(count($pantharmediaData) > 0){
-                $this->product->savePond5Image($pantharmediaData, $percategory['category_id']);
+            if(count($pond5ImagesData) > 0){
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
             }
         }
     }
@@ -248,11 +248,11 @@ class CronController extends Controller
 
         foreach($categories as $percategory){
             $keyword['search']  = $percategory['category_name'];
-            $pantherMediaImages = new \App\Http\Pond5\ImageApi();
-            $pantharmediaData   = $pantherMediaImages->search($keyword);
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
 
-            if (count($pantharmediaData) > 0) {
-                $this->product->savePond5Image($pantharmediaData,$percategory['category_id']);
+            if (count($pond5ImagesData) > 0) {
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
             }
         }
     }
