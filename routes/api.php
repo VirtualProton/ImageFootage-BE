@@ -32,7 +32,7 @@ Route::group([
     Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
     Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
+    Route::post('refresh', 'AuthController@refresh')->middleware('jwt.verify');
     Route::post('me', 'AuthController@me');
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
@@ -105,7 +105,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['api', 'CORS'], //'jwt.verify'
+    'middleware' => ['api', 'CORS','jwt.verify'],
 
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');
@@ -196,4 +196,5 @@ Route::group([
     Route::get('pond5-home-categories-image-upload', 'CronController@pond5HomeCategoriesImageUpload');
     Route::get('pond5-other-categories-image-upload', 'CronController@pond5OtherCategoriesImageUpload');
 });
+
 

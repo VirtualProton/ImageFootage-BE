@@ -336,8 +336,8 @@ class AuthController extends Controller
                 'image_downlaod'    => $image_download,
                 'footage_downlaod'  => $footage_download,
                 'music_download'    => $music_download,
-                'profile_completed' => $profileCompleted
-
+                'profile_completed' => $profileCompleted,
+                'refresh_token'     => auth()->fromUser(auth()->user())
             ]);
         } else {
             return null;
