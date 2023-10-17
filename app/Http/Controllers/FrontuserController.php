@@ -41,10 +41,10 @@ class FrontuserController extends Controller {
         //$lub = new Lcobucci();
 
 		$Usercart=new Usercart;
-		$already_image = 0;	
-		$counterImage  = 0;	
-		$already_footage = 0;	
-		$counterFootage  = 0;	
+		$already_image = 0;
+		$counterImage  = 0;
+		$already_footage = 0;
+		$counterFootage  = 0;
 		if(isset($request['product']['type']) && $request['product']['type'] =='2'){
             $product_id = $request['product']['product_info']['media']['id'];
             $product_type = "Image";
@@ -56,16 +56,16 @@ class FrontuserController extends Controller {
                 $Usercart->cart_product_id=$product_id;
                 $Usercart->cart_product_type= $product_type;
                 $Usercart->cart_added_by= $product_addedby;
-                $Usercart->standard_type= $request['product']['selected_product']['name'];
+                $Usercart->standard_type= isset($request['product']['selected_product']['name']) ?$request['product']['selected_product']['name'] : '';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= $request['product']['selected_product']['width']." X ".$request['product']['selected_product']['height'];
-                $Usercart->standard_price = $request['product']['selected_product']['price'];
-                $Usercart->extended_name= ($request['product']['extended'])? $request['product']['extended']['id']:'';
-                $Usercart->extended_price= ($request['product']['extended'])?$request['product']['extended']['price']:'0';
-                $Usercart->total= $request['product']['total'];
-                $Usercart->product_name= $request['product']['product_info']['metadata']['title'];
-                $Usercart->product_thumb= $request['product']['product_info']['media']['thumb_170_url'];
-                $Usercart->product_desc= $request['product']['product_info']['metadata']['description'];
+                $Usercart->standard_size= isset($request['product']['selected_product']['width']) && isset($request['product']['selected_product']['height']) ?  $request['product']['selected_product']['width'] ." X ".$request['product']['selected_product']['height'] : '';
+                $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']: 0;
+                $Usercart->extended_name= isset($request['product']['extended'])? $request['product']['extended']['id']:'';
+                $Usercart->extended_price= isset($request['product']['extended'])?$request['product']['extended']['price']:'0';
+                $Usercart->total= isset($request['product']['total'])?$request['product']['total']:0;
+                $Usercart->product_name= isset($request['product']['product_info']['metadata']['title']) ? $request['product']['product_info']['metadata']['title'] : '';
+                $Usercart->product_thumb= isset($request['product']['product_info']['media']['thumb_170_url']) ? $request['product']['product_info']['media']['thumb_170_url']:'';
+                $Usercart->product_desc= isset($request['product']['product_info']['metadata']['description']) ? $request['product']['product_info']['metadata']['description'] : '';
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_json= json_encode($request['product']['product_info']);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
@@ -90,17 +90,17 @@ class FrontuserController extends Controller {
                 $Usercart->cart_product_id=$product_id;
                 $Usercart->cart_product_type= $product_type;
                 $Usercart->cart_added_by= $product_addedby;
-                $Usercart->standard_type= $request['product']['selected_product']['size'];
+                $Usercart->standard_type= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= $request['product']['selected_product']['size'];
-                $Usercart->standard_price = $request['product']['selected_product']['price'];
+                $Usercart->standard_size= isset($request['product']['selected_product']['size']) ?$request['product']['selected_product']['size']:'' ;
+                $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price'] : 0;
                 // $Usercart->total= $request['product']['total'];
-				$Usercart->total = $request['product']['selected_product']['price'];
-                $Usercart->product_name= $request['product']['product_info'][0]['clip_data']['n'];
-                $Usercart->product_thumb= $request['product']['product_info'][2];
-                $Usercart->product_desc= $request['product']['product_info'][0]['clip_data']['pic_description'];
-                $Usercart->product_web= $request['product']['type'];
-                $Usercart->product_main_footage = $request['product']['product_info'][2];
+				$Usercart->total = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:0;
+                $Usercart->product_name= isset($request['product']['product_info'][0]['clip_data']['n']) ? $request['product']['product_info'][0]['clip_data']['n'] : '';
+                $Usercart->product_thumb= isset($request['product']['product_info'][2]) ? $request['product']['product_info'][2] : '';
+                $Usercart->product_desc= isset($request['product']['product_info'][0]['clip_data']['pic_description']) ? $request['product']['product_info'][0]['clip_data']['pic_description'] : '';
+                $Usercart->product_web= isset($request['product']['type']) ? $request['product']['type'] :0;
+                $Usercart->product_main_footage = isset($request['product']['product_info'][2]) ?$request['product']['product_info'][2] : '' ;
                 $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $result=$Usercart->save();
@@ -143,7 +143,7 @@ class FrontuserController extends Controller {
 							$counterFootage++;
 							//echo '{"status":"1","message":"Product added to cart successfully"}';
 						}else{
-							
+
 							//echo '{"status":"0","message":"Some problem occured."}';
 						}
 					}else{
@@ -201,13 +201,13 @@ class FrontuserController extends Controller {
 			//print_r($request['data']);
 		}else if($request[0]['type'] == 'Music'){
 
-			
+
 			$product_id = $request[0]['id'];
 			$product_type = "Music";
-			
+
 			$tokens =  $request[0]['token']; // token
             $product_addedby = json_decode($tokens)->Utype;
-			
+
             $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
             if(empty($cart_list)){
                 $Usercart=new Usercart;
@@ -285,7 +285,7 @@ class FrontuserController extends Controller {
 			$UserWishlist->wishlist_user_id=$product_addedby;
 			$UserWishlist->wishlist_added_on=date('Y-m-d H:i:s');
 			$result=$UserWishlist->save();
-			
+
 			if($result){
 				echo '{"status":"1","message":"Product added to Wishlist successfully"}';
 			}else{
@@ -299,7 +299,7 @@ class FrontuserController extends Controller {
 				echo '{"status":"0","message":"Some problem occured."}';
 			}
 		}
-		
+
 	}
 	public function deleteWishlistItem(Request $request){
         $del_result=UserWishlist::where('wishlist_user_id',$request['tokenData']['Utype'])->where('wishlist_product',$request['product']['id'])->delete();
@@ -357,6 +357,16 @@ class FrontuserController extends Controller {
 				}])
 				->withCount('wishlists')
 				->find($userId);
+
+				if(!empty($userData->wishlists)) {
+					foreach($userData->wishlists as $wishlist) {
+						if(!empty($wishlist->products)) {
+							foreach($wishlist->products as $product) {
+								$product->api_product_id = encrypt($product->api_product_id, true);
+							}
+						}
+					}
+				}
 
 				echo '{"status":"1","data":'.json_encode($userData, true).',"message":""}';
 			} else {
@@ -438,7 +448,7 @@ class FrontuserController extends Controller {
 	}
 
 
-	public function ip_details() 
+	public function ip_details()
 	{
 		$ipaddress = '';
 	    if (getenv('HTTP_CLIENT_IP'))
@@ -465,7 +475,7 @@ class FrontuserController extends Controller {
   //       	echo "hi"; die;
 
 	 //    } else{
-	    
+
 	 //    $IPaddress = $request->ip;
 		// print_r($IPaddress); die;
 		// print_r($IPaddress); die;
@@ -493,8 +503,8 @@ class FrontuserController extends Controller {
     	return json_encode($position);
 
 
-		
-			
+
+
 	}
 
 
@@ -522,8 +532,8 @@ class FrontuserController extends Controller {
 
 		$eur = $response_data->rates->INR;
 
-		
-		
+
+
 
 	}
 }

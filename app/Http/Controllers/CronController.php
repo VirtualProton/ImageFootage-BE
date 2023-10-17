@@ -211,4 +211,49 @@ class CronController extends Controller
             }
         }
     }
+
+
+    public function pond5HomeCategoriesImageUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
+
+        foreach($home_categories as $percategory) {
+            $keyword['search']  = $percategory['category_name'];
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
+
+            if(count($pond5ImagesData) > 0){
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
+            }
+        }
+    }
+
+    public function pond5OtherCategoriesImageUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                    ->where('is_display_home', '=', '0')
+                    ->where('category_status', '=', 'Active')
+                    ->get()
+                    ->toArray();
+
+        foreach($categories as $percategory){
+            $keyword['search']  = $percategory['category_name'];
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
+
+            if (count($pond5ImagesData) > 0) {
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
+            }
+        }
+    }
 }

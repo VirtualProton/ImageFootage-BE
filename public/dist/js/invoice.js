@@ -795,6 +795,7 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.is_display_footage = true;
 
         //$scope.uid
         $scope.promotion.product = [
@@ -841,7 +842,7 @@ app.controller(
         };
         $scope.prices = [];
         $scope.getproduct = function (product) {
-            // console.log(product); return;
+            console.log("====")
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.promotion.product.indexOf(product);
@@ -855,7 +856,6 @@ app.controller(
                         product.type,
                 }).then(
                     function (response) {
-                        console.log("==>", response);
                         if (response.status == "200") {
                             $("#loading").hide();
                             if (product.type == "Image") {
@@ -876,10 +876,8 @@ app.controller(
                                 }
                             } else {
                                 if (response.data[1] != "") {
-                                    $("#footage_url").val(response.data[1]);
-                                    let url =
-                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                        response.data[1];
+                                    let url = response.data[0].watermarkPreview;
+                                    $("#footage_url").val(url);
                                     $("#product_footage").attr("src", url);
                                     $("#product_footage").show();
                                 } else {
@@ -896,8 +894,60 @@ app.controller(
             }
         };
 
+        $scope.getProductImageEditPage = function () {
+            productName = $("#product_id").val();
+            if(productName) {
+                $("#loading").show();
+                $scope.is_display_footage = true;
+                $("#image_path").val("");
+                $http({
+                    method: "GET",
+                    url:
+                        image_path +
+                        "api/product/" +
+                        productName +
+                        "?type=Image",
+                }).then(
+                    function (response) {
+                        if (response.status == "200") {
+                            $scope.is_display_footage = true;
+                            $("#loading").hide();
+                            let img = response.data[0].thumbnail_image;
+                            if(img) {
+                                $("#image_path").val(img);
+                                setTimeout(function() {
+                                    $("#display_image").attr('src', img);
+                                }, 200);
+                            }
+                        }
+                    },
+                    function (error) {
+                        $scope.is_display_footage = false;
+                        $("#display_image").val('');
+                        alert("Image not found");
+                        $("#loading").hide();
+                    }
+                );
+            } else {
+                $scope.is_display_footage = false;
+            }
+        };
+
+        $scope.getProductImageEditPageInit = function () {
+            productName = $("#product_id").val();
+            if(productName) {
+                $("#loading").show();
+                const existingImage = $("#image_path").val();
+                if(existingImage == "") {
+                    $scope.is_display_footage = false;
+                }
+                $("#loading").hide();
+            } else {
+                $scope.is_display_footage = false;
+            }
+        };
+
         $scope.checkProduct = function (product) {
-            console.log("**", product);
             $scope.getproduct(product);
         };
     }

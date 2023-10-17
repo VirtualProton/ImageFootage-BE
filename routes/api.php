@@ -40,7 +40,7 @@ Route::group([
     Route::post('search', 'SearchController@index');
     Route::get('music-search/{query}', 'SearchController@musicSearchByTitle'); # search by music title
     Route::post('relatedsearch', 'SearchController@relatedProductList');
-    Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
+    Route::post('details', 'MediaController@index');
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');
@@ -167,8 +167,10 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('login-v2', 'AuthController@loginV2');
         Route::get('packages-v2', 'PackageApiController@packageListv2');
         Route::get('editorials-v2', 'EditorialController@editorialListv2');
+        Route::get('editorials-stories-v2', 'EditorialController@editorialStoryListv2');
         Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
         Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
+        Route::get('refresh', 'AuthController@refresh');
     });
 });
 
@@ -184,8 +186,14 @@ Route::group([
 ], function () {
     Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
     Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
+
     Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
     Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
+
     Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
     Route::get('pond5-other-categories-music-upload', 'CronController@pond5OtherCategoriesMusicUpload');
+
+    Route::get('pond5-home-categories-image-upload', 'CronController@pond5HomeCategoriesImageUpload');
+    Route::get('pond5-other-categories-image-upload', 'CronController@pond5OtherCategoriesImageUpload');
 });
+
