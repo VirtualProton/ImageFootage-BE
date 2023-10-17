@@ -177,6 +177,7 @@ class AuthController extends Controller
             if ($request->provider == 'google') {
 
                 $payload = $client->verifyIdToken($request->token);
+                $payload['login_type'] = 'google';
                 if ($payload) {
                     $count = User::where('email', '=', $payload['email'])->count();
                     if ($count > 0) {
@@ -216,6 +217,7 @@ class AuthController extends Controller
                         if ($count > 0) {
                             $payload['name']  = $request->first_name;
                             $payload['email'] = $request->email;
+                            $payload['login_type'] = 'facebook';
                             return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
                         }
                         $save_data = new User();
@@ -231,6 +233,7 @@ class AuthController extends Controller
                         if ($result) {
                             $payload['name']  = $request->first_name;
                             $payload['email'] = $request->email;
+                            $payload['login_type'] = 'facebook';
                             return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
                         }
                     } else {
@@ -298,6 +301,7 @@ class AuthController extends Controller
             $footage_download = 0;
             $music_download = 0;
             $profileCompleted = false;
+            $loginType = 'normal';
             if ($payload) {
                 $user = User::where('email', $payload['email'])->first();
                 if ($user) {
@@ -306,6 +310,7 @@ class AuthController extends Controller
                     if (!$this->isProfileCompleted($user->id)) {
                         $profileCompleted = true;
                     }
+                    $loginType = $payload['login_type'];
                 }
             } else {
                 $plans = UserPackage::where('user_id', '=', auth()->user()->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
@@ -337,7 +342,8 @@ class AuthController extends Controller
                 'footage_downlaod'  => $footage_download,
                 'music_download'    => $music_download,
                 'profile_completed' => $profileCompleted,
-                'refresh_token'     => auth()->fromUser(auth()->user())
+                'refresh_token'     => auth()->user() ? auth()->fromUser(auth()->user()) : null,
+                'login_type'        => $loginType
             ]);
         } else {
             return null;

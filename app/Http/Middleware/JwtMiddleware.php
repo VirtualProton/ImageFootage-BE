@@ -6,6 +6,8 @@ use JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use Illuminate\Support\Facades\Route;
+use Google_Client;
+use GuzzleHttp\Client;
 
 class JwtMiddleware extends BaseMiddleware
 {
@@ -22,7 +24,48 @@ class JwtMiddleware extends BaseMiddleware
 
         //print_r($request->all()); die;
         try {
-            $user = JWTAuth::parseToken()->authenticate();
+            if ($request->header('Login-Type') == 'normal') {
+                $user = JWTAuth::parseToken()->authenticate();
+            }
+            // google
+            if ($request->header('Login-Type') == 'google') {
+                $tokenString = $request->header('Authorization');
+                $tokenParts  = explode(" ", $tokenString);
+                $token       = $tokenParts[1];
+
+                $client = new Google_Client();
+                $client->setClientId(config('constants.google.client_id'));
+                $client->setClientSecret(config('constants.google.client_secret'));
+
+                $payload = $client->verifyIdToken($token);
+                if (!$payload) {
+                    return response()->json(['status' => 'Google token is Invalid'], 401);
+                }
+            }
+
+            // facebook
+            if ($request->header('Login-Type') == 'facebook') {
+                $client = new Client();
+                $response = $client->get("https://graph.facebook.com/oauth/access_token?client_id=".config('constants.facebook.client_id')."&client_secret=".config('constants.facebook.client_secret')."&grant_type=client_credentials");
+
+                $body = $response->getBody();
+                $data = json_decode($body, true);
+
+                if ($data['access_token']) {
+                    $tokenString = $request->header('Authorization');
+                    $tokenParts  = explode(" ", $tokenString);
+                    $token       = $tokenParts[1];
+
+                    $tokenVerifyResponse = $client->get("https://graph.facebook.com/debug_token?input_token=".$token."&access_token=".$data['access_token']);
+
+                    $tokenBody = $tokenVerifyResponse->getBody();
+                    $tokenData = json_decode($tokenBody, true);
+
+                    if (!$tokenData['data']['is_valid'] && $tokenData['data']['is_valid'] != true) {
+                        return response()->json(['status' => 'Facebook token is Invalid'], 401);
+                    }
+                }
+            }
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json(['status' => 'Token is Invalid'],401);
