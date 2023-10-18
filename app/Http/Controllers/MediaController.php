@@ -177,7 +177,8 @@ class MediaController extends Controller
                     return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
                 }
                 $footageMedia = new FootageApi();
-                $product_details_data = $footageMedia->download($allFields['product']['selected_product'], $id);
+                $download_id = $allFields['product']['product_info']['media']['id'];
+                $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
 
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $allFields['product']['selected_product']['id'])->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
@@ -214,9 +215,12 @@ class MediaController extends Controller
                 }
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
-                $imageMedia = new ImageApi();
 
-                $product_details_data = $imageMedia->download($allFields, $id);
+                // Download Images from Pond5
+                $footageMedia = new FootageApi();
+                $download_id = $allFields['product']['product_info']['media']['id'];                
+                $product_details_data = $footageMedia->download($download_id ,$download_id.":1");
+
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
@@ -256,10 +260,13 @@ class MediaController extends Controller
                     }
                 }
                 return response()->json($product_details_data);
-            } else if ($allFields['product']['type'] == 4) {
-                $musicMedia = new MusicApi();
+            } else if ($allFields['product']['type'] == 4) {                
 
-                $product_details_data = $musicMedia->download($allFields, $id);
+                // Download music from pond5
+                $footageMedia = new FootageApi();
+                $download_id = $allFields['product']['product_info']['media']['id'];                
+                $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
+
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 

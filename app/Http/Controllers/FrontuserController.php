@@ -60,7 +60,7 @@ class FrontuserController extends Controller {
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
                 $Usercart->standard_size= isset($request['product']['selected_product']['width']) && isset($request['product']['selected_product']['height']) ?  $request['product']['selected_product']['width'] ." X ".$request['product']['selected_product']['height'] : '';
                 $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']: 0;
-                $Usercart->extended_name= isset($request['product']['extended'])? $request['product']['extended']['id']:'';
+                $Usercart->extended_name= isset($request['product']['extended']) ? $request['product']['extended']['id']:'';
                 $Usercart->extended_price= isset($request['product']['extended'])?$request['product']['extended']['price']:'0';
                 $Usercart->total= isset($request['product']['total'])?$request['product']['total']:0;
                 $Usercart->product_name= isset($request['product']['product_info']['metadata']['title']) ? $request['product']['product_info']['metadata']['title'] : '';
