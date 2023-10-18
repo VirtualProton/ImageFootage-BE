@@ -215,13 +215,10 @@ class MediaController extends Controller
                 }
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
-                
-                // $imageMedia = new ImageApi();
-                // $product_details_data = $imageMedia->download($allFields, $id);
 
                 // Download Images from Pond5
-                $download_id = $allFields['product']['product_info']['media']['id'];
                 $footageMedia = new FootageApi();
+                $download_id = $allFields['product']['product_info']['media']['id'];                
                 $product_details_data = $footageMedia->download($download_id ,$download_id.":1");
 
                 if (!empty($product_details_data)) {
@@ -263,13 +260,11 @@ class MediaController extends Controller
                     }
                 }
                 return response()->json($product_details_data);
-            } else if ($allFields['product']['type'] == 4) {
-                // $musicMedia = new MusicApi();
-                // $product_details_data = $musicMedia->download($allFields, $id);
+            } else if ($allFields['product']['type'] == 4) {                
 
                 // Download music from pond5
-                $download_id = $allFields['product']['product_info']['media']['id'];
                 $footageMedia = new FootageApi();
+                $download_id = $allFields['product']['product_info']['media']['id'];                
                 $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
 
                 if (!empty($product_details_data)) {

@@ -101,7 +101,6 @@ class FootageApi
     public function download($id, $version = "")
     {
         ini_set('max_execution_time', 0);
-        
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . '/api/v3/items/download/' . $version . '/' . $id,
@@ -114,8 +113,8 @@ class FootageApi
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
                 'accept: application/json',
-                'key: cJ70pBIk119',
-                'secret: j5weLX518rMP119'
+                'key: ' . $this->api_key,
+                'secret: ' . $this->api_secret,
             ),
         ));
         $response = curl_exec($curl);
