@@ -65,7 +65,6 @@ Route::group([
     Route::post('validUser', 'UserController@validUser');
     Route::post('validMobileUser', 'UserController@validMobileUser');
     Route::post('requestChangePassword', 'UserController@requestChangePassword');
-    Route::post('socialLogin', 'AuthController@socialLogin');
     Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
     Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');

@@ -59,5 +59,7 @@ return [
     'facebook' => [
         'client_id'     => env('FACEBOOK_CLIENT_ID', '311148397985250'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET', 'c9b8857a8d1ba7cc2f53bc59c127dbf1'),
+        'app_access_token_endpoint' => "https://graph.facebook.com/oauth/access_token?client_id=:facebook_client_id&client_secret=:facebook_client_secret&grant_type=client_credentials",
+        'user_access_token_endpoint' => "https://graph.facebook.com/debug_token?input_token=:request_token&access_token=:data_access_token",
     ],
 ];

@@ -32,7 +32,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'signup', 'socialLogin', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -123,124 +123,99 @@ class AuthController extends Controller
             return response()->json(['status' => '0', 'message' => 'User have been already registered'], 200);
         }
     }
-    public function socialLogin(Request $request)
-    {
-        $count = User::where('email', '=', $request['userData']['email'])->count();
-        if ($count > 0) {
-            $credentials = ['email' => $request['userData']['email'], 'password' => '123456'];
-            $token = auth()->attempt($credentials);
-            return $this->respondWithToken($token);
-        } else {
-            if ($request['userData']['provider'] == 'google') {
-                $save_data = new User();
-                $save_data->email         = $request['userData']['email'];
-                $save_data->first_name    = $request['userData']['name'];
-                $save_data->user_name     = $request['userData']['name'];
-                $save_data->password      = Hash::make('123456');
-                $save_data->gmail_idtoken = $request['userData']['idToken'];
-                $save_data->profile_photo = $request['userData']['image'];
-                $save_data->provider      = $request['userData']['provider'];
-                $save_data->type          = 'U';
-                $result = $save_data->save();
-                if ($result) {
-                    $credentials = ['email' => $request['userData']['email'], 'password' => '123456'];
-                    $token = auth()->attempt($credentials);
-                    return $this->respondWithToken($token);
-                }
-            } else  if ($request['userData']['provider'] == 'facebook') {
-                $save_data = new User();
-                $save_data->email         = $request['userData']['email'];
-                $save_data->first_name    = $request['userData']['name'];
-                $save_data->user_name     = $request['userData']['name'];
-                $save_data->password      = Hash::make('123456');
-                $save_data->fb_token      = $request['userData']['token'];
-                $save_data->profile_photo = $request['userData']['image'];
-                $save_data->provider      = $request['userData']['provider'];
-                $save_data->type          = 'U';
-                $result = $save_data->save();
-                if ($result) {
-                    $credentials = ['email' => $request['userData']['email'], 'password' => '123456'];
-                    $token = auth()->attempt($credentials);
-                    return $this->respondWithToken($token);
-                }
-            }
-        }
-    }
 
     # New socialLogin V2
     public function socialLoginv2(Request $request)
     {
-        $client = new Google_Client();
-        $client->setClientId(config('constants.google.client_id'));
-        $client->setClientSecret(config('constants.google.client_secret'));
+        if ($request->provider == 'google') {
 
-            if ($request->provider == 'google') {
+            $client = new Google_Client();
+            $client->setClientId(config('constants.google.client_id'));
+            $client->setClientSecret(config('constants.google.client_secret'));
 
-                $payload = $client->verifyIdToken($request->token);
-                $payload['login_type'] = 'google';
-                if ($payload) {
-                    $count = User::where('email', '=', $payload['email'])->count();
-                    if ($count > 0) {
-                        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
-                    }
-                }
-
-                $save_data = new User();
-
-                $save_data->email         = $request->email;
-                $save_data->first_name    = $request->name;
-                $save_data->user_name     = $request->name;
-                $save_data->gmail_idtoken = $request->idToken;
-                $save_data->profile_photo = $request->image;
-                $save_data->provider      = $request->provider;
-                $save_data->type          = 'U';
-                $result = $save_data->save();
-                if ($result) {
+            $payload = $client->verifyIdToken($request->token);
+            $payload['login_type'] = 'google';
+            if ($payload) {
+                $count = User::where('email', '=', $payload['email'])->count();
+                if ($count > 0) {
                     return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
                 }
             }
-            if ($request->provider == 'facebook') {
 
-                $client = new Client();
-                $response = $client->get("https://graph.facebook.com/oauth/access_token?client_id=".config('constants.facebook.client_id')."&client_secret=".config('constants.facebook.client_secret')."&grant_type=client_credentials");
+            $save_data = new User();
 
-                $body = $response->getBody();
-                $data = json_decode($body, true);
+            $save_data->email         = $request->email;
+            $save_data->first_name    = $request->name;
+            $save_data->user_name     = $request->name;
+            $save_data->gmail_idtoken = $request->idToken;
+            $save_data->profile_photo = $request->image;
+            $save_data->provider      = $request->provider;
+            $save_data->type          = 'U';
+            $result = $save_data->save();
+            if ($result) {
+                return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
+            }
+        }
+        if ($request->provider == 'facebook') {
 
-                if ($data['access_token']) {
-                    $tokenVerifyResponse = $client->get("https://graph.facebook.com/debug_token?input_token=".$request->token."&access_token=".$data['access_token']);
+            $client = new Client();
+            $getAppAccessTokenEndpoint = str_replace([
+                ':facebook_client_id',
+                ':facebook_client_secret'
+            ], [
+                config('constants.facebook.client_id'),
+                config('constants.facebook.client_secret')
+            ],
+                config('constants.facebook.app_access_token_endpoint')
+            );
+            $response = $client->get($getAppAccessTokenEndpoint);
 
-                    $tokenBody = $tokenVerifyResponse->getBody();
-                    $tokenData = json_decode($tokenBody, true);
-                    if ($tokenData['data']['is_valid'] && $tokenData['data']['is_valid'] == true) {
-                        $count = User::where('email', '=', $request->email)->count();
-                        if ($count > 0) {
-                            $payload['name']  = $request->first_name;
-                            $payload['email'] = $request->email;
-                            $payload['login_type'] = 'facebook';
-                            return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
-                        }
-                        $save_data = new User();
+            $body = $response->getBody();
+            $data = json_decode($body, true);
 
-                        $save_data->email      = $request->email;
-                        $save_data->first_name = $request->first_name;
-                        $save_data->last_name  = $request->last_name;
-                        $save_data->user_name  = $request->user_name;
-                        $save_data->fb_token   = $request->idToken;
-                        $save_data->provider   = $request->provider;
-                        $save_data->type       = 'U';
-                        $result = $save_data->save();
-                        if ($result) {
-                            $payload['name']  = $request->first_name;
-                            $payload['email'] = $request->email;
-                            $payload['login_type'] = 'facebook';
-                            return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
-                        }
-                    } else {
-                        return response()->json(['status' => false, 'message' => 'Invalid facebook token please try again.'], 200);
+            if ($data['access_token']) {
+                $userAccessTokenEndpoint = str_replace([
+                    ':request_token',
+                    ':data_access_token'
+                ], [
+                    $request->token,
+                    $data['access_token']
+                ],
+                    config('constants.facebook.user_access_token_endpoint')
+                );
+                $tokenVerifyResponse = $client->get($userAccessTokenEndpoint);
+
+                $tokenBody = $tokenVerifyResponse->getBody();
+                $tokenData = json_decode($tokenBody, true);
+                if ($tokenData['data']['is_valid'] && $tokenData['data']['is_valid'] == true) {
+                    $count = User::where('email', '=', $request->email)->count();
+                    if ($count > 0) {
+                        $payload['name']  = $request->first_name;
+                        $payload['email'] = $request->email;
+                        $payload['login_type'] = 'facebook';
+                        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
                     }
+                    $save_data = new User();
+
+                    $save_data->email      = $request->email;
+                    $save_data->first_name = $request->first_name;
+                    $save_data->last_name  = $request->last_name;
+                    $save_data->user_name  = $request->user_name;
+                    $save_data->fb_token   = $request->idToken;
+                    $save_data->provider   = $request->provider;
+                    $save_data->type       = 'U';
+                    $result = $save_data->save();
+                    if ($result) {
+                        $payload['name']  = $request->first_name;
+                        $payload['email'] = $request->email;
+                        $payload['login_type'] = 'facebook';
+                        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
+                    }
+                } else {
+                    return response()->json(['status' => false, 'message' => 'Invalid facebook token please try again.'], 200);
                 }
             }
+        }
     }
 
     public function contactUs(Request $request)

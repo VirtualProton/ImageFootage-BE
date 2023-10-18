@@ -21,8 +21,6 @@ class JwtMiddleware extends BaseMiddleware
      */
     public function handle($request, Closure $next)
     {
-
-        //print_r($request->all()); die;
         try {
             if ($request->header('Login-Type') == 'normal') {
                 $user = JWTAuth::parseToken()->authenticate();
@@ -30,12 +28,19 @@ class JwtMiddleware extends BaseMiddleware
             // google
             if ($request->header('Login-Type') == 'google') {
                 $tokenString = $request->header('Authorization');
-                $tokenParts  = explode(" ", $tokenString);
-                $token       = $tokenParts[1];
+                $token = null;
+                if (isset($tokenString) && !empty($tokenString)) {
+                    $tokenParts  = explode(" ", $tokenString);
+                    $token       = $tokenParts[1];
+                }
 
                 $client = new Google_Client();
                 $client->setClientId(config('constants.google.client_id'));
                 $client->setClientSecret(config('constants.google.client_secret'));
+
+                if (empty($token) || is_null($token)) {
+                    return response()->json(['status' => 'Google Token not found'], 401);
+                }
 
                 $payload = $client->verifyIdToken($token);
                 if (!$payload) {
@@ -46,7 +51,16 @@ class JwtMiddleware extends BaseMiddleware
             // facebook
             if ($request->header('Login-Type') == 'facebook') {
                 $client = new Client();
-                $response = $client->get("https://graph.facebook.com/oauth/access_token?client_id=".config('constants.facebook.client_id')."&client_secret=".config('constants.facebook.client_secret')."&grant_type=client_credentials");
+                $getAppAccessTokenEndpoint = str_replace([
+                    ':facebook_client_id',
+                    ':facebook_client_secret'
+                ], [
+                    config('constants.facebook.client_id'),
+                    config('constants.facebook.client_secret')
+                ],
+                    config('constants.facebook.app_access_token_endpoint')
+                );
+                $response = $client->get($getAppAccessTokenEndpoint);
 
                 $body = $response->getBody();
                 $data = json_decode($body, true);
@@ -56,7 +70,16 @@ class JwtMiddleware extends BaseMiddleware
                     $tokenParts  = explode(" ", $tokenString);
                     $token       = $tokenParts[1];
 
-                    $tokenVerifyResponse = $client->get("https://graph.facebook.com/debug_token?input_token=".$token."&access_token=".$data['access_token']);
+                    $userAccessTokenEndpoint = str_replace([
+                        ':request_token',
+                        ':data_access_token'
+                    ], [
+                        $token,
+                        $data['access_token']
+                    ],
+                        config('constants.facebook.user_access_token_endpoint')
+                    );
+                    $tokenVerifyResponse = $client->get($userAccessTokenEndpoint);
 
                     $tokenBody = $tokenVerifyResponse->getBody();
                     $tokenData = json_decode($tokenBody, true);
