@@ -1737,7 +1737,8 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
   }
     public function categoryLists(Request $request){
         if(isset($request->type) && isset($request->slug) && !empty($request->type) && !empty($request->slug)){
-            $categoryList = ProductCategory::where(['category_slug'=>$request->slug,'type'=>$request->type])->first();
+            $categoryList = ProductCategory::where([ 'category_slug'=> $request->slug, 'type'=> $request->type ])->first();
+
         } elseif(isset($request->type) && !empty($request->type)){
             $categoryList = ProductCategory::where('type',$request->type)->get();
         }

@@ -16,7 +16,7 @@ class AddColumnInImagefootageProductcategoryTable extends Migration
         if(!Schema::hasColumns('imagefootage_productcategory',['category_slug','type'])){
         Schema::table('imagefootage_productcategory', function (Blueprint $table) {
             $table->longText('category_slug')->nullable();
-            $table->integer('type')->default(1);
+            $table->integer('type')->default(1)->comment("1=>image, 2=>footage, 3=>music");
         });
     }
     }
