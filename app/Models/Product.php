@@ -264,15 +264,16 @@ class Product extends Model
         $pageNumber = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
         $offset     = ($pageNumber - 1) * $limit;
 
-        $filters    = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort']);
+        $filters    = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort', 'category_id']);
         //TODO: need to confirm from both API providers how the attributes will be returned in API response
         //TODO:  pricing and color filter pending
         $applied_filters = [];
 
         if(empty($filters['all_filters']) && $search!='') {
-            $filters = array(
-                'product_id' => array('value' => $search, 'standalone' => true)
-            );
+            //TODO: quick fix, need to correct
+            // $filters = array(
+            //     'product_id' => array('value' => $search, 'standalone' => true)
+            // );
         }
 
         foreach ($filters as $name => $value) {
