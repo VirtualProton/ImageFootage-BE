@@ -306,18 +306,19 @@ class AuthController extends Controller
                     }
                 }
             }
+            $authUserObject = auth()->user();
             return response()->json([
                 'access_token'      => $token,
                 'token_type'        => 'bearer',
                 'expires_in'        =>  20,
-                'user'              => auth()->user()->first_name ?? $payload['name'],
-                'email'             => auth()->user()->email ?? $payload['email'],
-                'Utype'             => auth()->user()->id ?? $user->id,
+                'user'              => $authUserObject->first_name ?? $payload['name'],
+                'email'             => $authUserObject->email ?? $payload['email'],
+                'Utype'             => $authUserObject->id ?? $user->id,
                 'image_downlaod'    => $image_download,
                 'footage_downlaod'  => $footage_download,
                 'music_download'    => $music_download,
                 'profile_completed' => $profileCompleted,
-                'refresh_token'     => auth()->user() ? auth()->fromUser(auth()->user()) : null,
+                'refresh_token'     => $authUserObject ? auth()->fromUser($authUserObject) : null,
                 'login_type'        => $loginType
             ]);
         } else {
