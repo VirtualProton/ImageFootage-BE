@@ -142,16 +142,16 @@ class AuthController extends Controller
                 }
             }
 
-            $save_data = new User();
+            $googleUser = new User();
 
-            $save_data->email         = $request->email;
-            $save_data->first_name    = $request->name;
-            $save_data->user_name     = $request->name;
-            $save_data->gmail_idtoken = $request->idToken;
-            $save_data->profile_photo = $request->image;
-            $save_data->provider      = $request->provider;
-            $save_data->type          = 'U';
-            $result = $save_data->save();
+            $googleUser->email         = $request->email;
+            $googleUser->first_name    = $request->name;
+            $googleUser->user_name     = $request->name;
+            $googleUser->gmail_idtoken = $request->idToken;
+            $googleUser->profile_photo = $request->image;
+            $googleUser->provider      = $request->provider;
+            $googleUser->type          = 'U';
+            $result = $googleUser->save();
             if ($result) {
                 return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
             }
@@ -195,16 +195,16 @@ class AuthController extends Controller
                         $payload['login_type'] = 'facebook';
                         return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
                     }
-                    $save_data = new User();
+                    $facebookUser = new User();
 
-                    $save_data->email      = $request->email;
-                    $save_data->first_name = $request->first_name;
-                    $save_data->last_name  = $request->last_name;
-                    $save_data->user_name  = $request->user_name;
-                    $save_data->fb_token   = $request->idToken;
-                    $save_data->provider   = $request->provider;
-                    $save_data->type       = 'U';
-                    $result = $save_data->save();
+                    $facebookUser->email      = $request->email;
+                    $facebookUser->first_name = $request->first_name;
+                    $facebookUser->last_name  = $request->last_name;
+                    $facebookUser->user_name  = $request->user_name;
+                    $facebookUser->fb_token   = $request->idToken;
+                    $facebookUser->provider   = $request->provider;
+                    $facebookUser->type       = 'U';
+                    $result = $facebookUser->save();
                     if ($result) {
                         $payload['name']  = $request->first_name;
                         $payload['email'] = $request->email;
