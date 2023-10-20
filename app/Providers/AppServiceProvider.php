@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Modules;
 use Illuminate\Support\Facades\URL;
-
+use App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
     }
 
     /**
@@ -27,7 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \URL::forceScheme('http');
+        if (App::environment('local')) {
+            \URL::forceScheme('http');
+        } else {
+            \URL::forceScheme('https');
+        }
         Schema::defaultStringLength(191); //NEW: Increase StringLength
 
         view()->composer('admin.layouts.default', function($view)

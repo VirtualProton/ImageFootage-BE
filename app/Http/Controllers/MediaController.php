@@ -69,7 +69,7 @@ class MediaController extends Controller
 
     public function categoryListApi()
     {
-        $categories  = ProductCategory::select('category_id', 'category_name')
+        $categories  = ProductCategory::select('category_id', 'category_name','category_slug')
             ->where('is_display_home', 1)
             ->where('category_status','Active')
             ->orderBy('category_order', 'asc')
@@ -218,7 +218,7 @@ class MediaController extends Controller
 
                 // Download Images from Pond5
                 $footageMedia = new FootageApi();
-                $download_id = $allFields['product']['product_info']['media']['id'];                
+                $download_id = $allFields['product']['product_info']['media']['id'];
                 $product_details_data = $footageMedia->download($download_id ,$download_id.":1");
 
                 if (!empty($product_details_data)) {
@@ -260,11 +260,11 @@ class MediaController extends Controller
                     }
                 }
                 return response()->json($product_details_data);
-            } else if ($allFields['product']['type'] == 4) {                
+            } else if ($allFields['product']['type'] == 4) {
 
                 // Download music from pond5
                 $footageMedia = new FootageApi();
-                $download_id = $allFields['product']['product_info']['media']['id'];                
+                $download_id = $allFields['product']['product_info']['media']['id'];
                 $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
 
                 if (!empty($product_details_data)) {
