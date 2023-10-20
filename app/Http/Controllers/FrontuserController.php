@@ -247,9 +247,7 @@ class FrontuserController extends Controller {
 		echo json_encode($cart_list, true);
 	}
 
-	public function deleteCartItem(Request $request){
-        //dd($request['product']);
-       // $tokens=json_decode($request['product']['token'],true);
+	public function deleteCartItem(Request $request){        
         $id = $request['product']['cart_id'];
 		$del_result=Usercart::find($id)->delete();
 		if($del_result){

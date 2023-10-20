@@ -338,25 +338,27 @@ class UserController extends Controller
         }
 
         if ($request->user_id) {
-            $OrderData = Orders::with(['items' => function ($query) use ($mediaType, $licenseType) {
-                $query->with(['product' => function ($productquery) use ($mediaType, $licenseType) {
+            $orderData = Orders::with(['items.product'])
+                ->where('user_id', '=', $userId)
+                ->whereIn('order_status', ['Completed', 'Transction Success'])
+                ->whereDate('order_date', '>=', $startDate)
+                ->whereDate('order_date', '<=', $endDate)
+                ->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {                    
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }
                     if ($licenseType != 'All') {
                         $productquery->where('license_type', $licenseType);
                     }
-                }]);
-            }])
-                ->where('user_id', '=', $userId)
-                ->whereIn('order_status', ['Completed', 'Transction Success'])
-                ->whereDate('order_date', '>=', $startDate)
-                ->whereDate('order_date', '<=', $endDate)
+                })                
                 ->orderBy('id', 'desc')
-                ->paginate(5)->toArray();
-            echo json_encode(['status' => "success", 'data' => $OrderData]);
+                ->paginate(5)
+                ->toArray();
+            
+            return json_encode(['status' => "success", 'data' => $orderData]);
+            
         } else {
-            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+            return json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }
     }
 
