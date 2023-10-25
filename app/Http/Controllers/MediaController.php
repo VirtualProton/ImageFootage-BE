@@ -58,9 +58,11 @@ class MediaController extends Controller
             foreach ($matchingData as $data) {
 
                 $attributes = $data->attributes;
+                $options    = $data->options;
 
             }
             $product_details['attributes'] = $attributes;
+            $product_details['options'] = $options;
 
         }
         return response()->json(['data'=>$product_details,'status'=>'success']);

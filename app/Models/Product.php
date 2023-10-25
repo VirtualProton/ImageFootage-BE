@@ -570,6 +570,7 @@ class Product extends Model
         // prefetch the api_flag value
         $flag = $this->get_api_flag('panther_media_image', 'api_flag');
         foreach ($data['items']['media'] as $eachmedia) {
+            $optionData = [];
             if (isset($eachmedia['id'])) {
                 $media = array(
                     'api_product_id' => $eachmedia['id'],
@@ -616,7 +617,8 @@ class Product extends Model
                         'api_product_id'    => $eachmedia['id'],
                         'product_id'        => $media['product_id'],
                         'product_main_type' => "Image",
-                        'attributes'        => $productData
+                        'attributes'        => $productData,
+                        'options'           => $optionData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -651,6 +653,7 @@ class Product extends Model
                         ['api_product_id' => $apiProductId],
                         [
                             'attributes' => $productData,
+                            'options'    =>$optionData
                         ]
                     );
                 }
@@ -695,6 +698,7 @@ class Product extends Model
         $flag = $this->get_api_flag('pond5_footage', 'api_flag');
 
         foreach ($data['items'] as $eachmedia) {
+            $optionData = [];
             if (isset($eachmedia['id'])) {
                 $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
                 if (strlen($eachmedia['id']) < 9) {
@@ -743,11 +747,15 @@ class Product extends Model
                         'gender'           => ['1'],
                         'artist'           => $eachmedia['authorName']
                     );
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                    }
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
                         'product_id'        => $media['product_id'],
                         'product_main_type' => "Footage",
-                        'attributes'        => $productData
+                        'attributes'        => $productData,
+                        'options'           => $optionData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -777,6 +785,16 @@ class Product extends Model
                             'attributes' => $productData,
                         ]
                     );
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                        $imageFilterValue = ImageFilterValue::updateOrCreate(
+                            ['api_product_id' => $apiProductId],
+                            [
+                                'options' => $optionData,
+                            ]
+                        );
+                    }
+
                 }
             }
         }
@@ -846,6 +864,7 @@ class Product extends Model
         $flag = $this->get_api_flag('pond5_music', 'api_flag');
 
         foreach ($data['items'] as $eachmedia) {
+            $optionData = [];
             if (isset($eachmedia['id'])) {
                 $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
                 if (strlen($eachmedia['id']) < 9) {
@@ -897,12 +916,16 @@ class Product extends Model
                         'genre'             => ['ambient', 'jazz'],
                         'artist'            => $eachmedia['authorName'],
                     );
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                    }
 
                     $imageFilterValue = new ImageFilterValue([
                         'product_id'        => $media['product_id'],
                         'api_product_id'    => $eachmedia['id'],
                         'product_main_type' => 'Music',
-                        'attributes'        => $productData
+                        'attributes'        => $productData,
+                        'options'           => $optionData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -932,6 +955,16 @@ class Product extends Model
                             'attributes' => $productData,
                         ]
                     );
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                        $imageFilterValue = ImageFilterValue::updateOrCreate(
+                            ['api_product_id' => $apiProductId],
+                            [
+                                'options' => $optionData,
+                            ]
+                        );
+                    }
+
                 }
             }
         }
@@ -1244,7 +1277,7 @@ class Product extends Model
         $flag = $this->get_api_flag('pond5_image', 'api_flag');
 
         foreach ($data['items'] as $eachmedia) {
-
+            $optionData = [];
             if (isset($eachmedia['id'])) {
                 $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
                 if (strlen($eachmedia['id']) < 9) {
@@ -1293,11 +1326,16 @@ class Product extends Model
                         'collection'       => ['standard', 'spx'],
                         'artist'           =>  $eachmedia['authorName']
                     );
+
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                    }
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
                         'product_id'        => $media['product_id'],
                         'product_main_type' => "Image",
-                        'attributes'        => $productData
+                        'attributes'        => $productData,
+                        'options'           => $optionData
                     ]);
                     $imageFilterValue->save();
                 } else {
@@ -1327,6 +1365,16 @@ class Product extends Model
                             'attributes' => $productData,
                         ]
                     );
+                    foreach($eachmedia['versions'] as $key=>$value){
+                        $optionData[] = $value;
+                        $imageFilterValue = ImageFilterValue::updateOrCreate(
+                            ['api_product_id' => $apiProductId],
+                            [
+                                'options' => $optionData,
+                            ]
+                        );
+                    }
+
                 }
             }
         }
