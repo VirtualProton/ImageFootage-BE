@@ -54,11 +54,12 @@ class MediaController extends Controller
             // Retrieve data from MongoDB where api_product_id matches
             $matchingData = ImageFilterValue::where('api_product_id',$apiProductId)->get();
             $attributes = [];
+            $options = [];
 
             foreach ($matchingData as $data) {
 
-                $attributes = $data->attributes;
-                $options    = $data->options;
+                $attributes = isset($data->attributes) ? $data->attributes : [];
+                $options    = isset($data->options) ? $data->options : [];
 
             }
             $product_details['attributes'] = $attributes;
@@ -67,7 +68,6 @@ class MediaController extends Controller
         }
         return response()->json(['data'=>$product_details,'status'=>'success']);
     }
-
 
     public function categoryListApi()
     {
@@ -180,7 +180,8 @@ class MediaController extends Controller
                 }
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
+                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $product_details_data = $footageMedia->download($download_id ,$version);
 
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $allFields['product']['selected_product']['id'])->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
@@ -221,7 +222,8 @@ class MediaController extends Controller
                 // Download Images from Pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $product_details_data = $footageMedia->download($download_id ,$download_id.":1");
+                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $product_details_data = $footageMedia->download($download_id ,$version);
 
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
@@ -267,7 +269,8 @@ class MediaController extends Controller
                 // Download music from pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $product_details_data = $footageMedia->download($download_id ,$download_id.":0");
+                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $product_details_data = $footageMedia->download($download_id ,$version);
 
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
