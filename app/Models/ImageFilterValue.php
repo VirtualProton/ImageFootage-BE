@@ -13,6 +13,7 @@ class ImageFilterValue extends Eloquent
         'api_product_id',
         'product_main_type',
         'product_id',
-        'attributes'
+        'attributes',
+        'options'
     ];
 }
