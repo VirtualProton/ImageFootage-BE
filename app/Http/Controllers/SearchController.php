@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +49,14 @@ class SearchController extends Controller
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
 
+        if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+            $getCategoryId = ProductCategory::where(['category_slug'=> $request->category_id,'type'=>$keyword['productType']['id']])->first();
+            if(!empty($getCategoryId)){
+                $keyword['category_id'] = $getCategoryId->category_id;
+            }else{
+                $keyword['category_id'] = '';
+            }
+        }
         if ($keyword['productType']['id'] == '1') {
            $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
         } else if ($keyword['productType']['id'] == '2') {

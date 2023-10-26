@@ -79,8 +79,11 @@ class FrontuserController extends Controller {
                 echo '{"status":"0","message":"Already this product is in your cart."}';
             }
         }else if(isset($request['product']['type']) && $request['product']['type'] =='3'){
-            $product_id = $request['product']['product_info'][0]['clip_data']['pic_objectid'];
-			$product_type = "Footage";
+            $product_id = $request['product']['product_info']['media']['id'];
+            if($request['product']['product_type'] == 'music'){
+                $product_id = decrypt($product_id);
+            }
+			$product_type =  $request['product']['product_type'];
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
             $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
