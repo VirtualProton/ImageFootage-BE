@@ -184,7 +184,7 @@ class MediaController extends Controller
                 $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);                
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->first();
+                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
                     $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
                     $dataInsert = array(
                         'user_id' => $id,
