@@ -433,6 +433,17 @@ class Product extends Model
             $totalRecords = count($data->get());
             $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
 
+            foreach($data as $key => $value) {
+
+                $matchingData = ImageFilterValue::where('api_product_id',$value['api_product_id'])->first();
+                $attributes = [];
+                $options = [];
+                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                $options    = isset($matchingData->options) ? $matchingData->options : [];
+
+                $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
+                $data[$key]['options'] = isset($options) ? $options : [];
+            }
             if (count($data)>0) {
                 foreach ($data as &$item) {
                     // dont change below variables
@@ -1204,6 +1215,17 @@ class Product extends Model
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
             $data = $data->distinct()->limit($limit)->get()->toArray();
+            foreach($data as $key => $value) {
+
+                $matchingData = ImageFilterValue::where('api_product_id',$value['api_product_id'])->first();
+                $attributes = [];
+                $options = [];
+                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                $options    = isset($matchingData->options) ? $matchingData->options : [];
+
+                $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
+                $data[$key]['options'] = isset($options) ? $options : [];
+            }
         }
 
         return $data;

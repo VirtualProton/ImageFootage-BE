@@ -343,20 +343,20 @@ class UserController extends Controller
                 ->whereIn('order_status', ['Completed', 'Transction Success'])
                 ->whereDate('order_date', '>=', $startDate)
                 ->whereDate('order_date', '<=', $endDate)
-                ->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {                    
+                ->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }
                     if ($licenseType != 'All') {
                         $productquery->where('license_type', $licenseType);
                     }
-                })                
+                })
                 ->orderBy('id', 'desc')
                 ->paginate(5)
                 ->toArray();
-            
+
             return json_encode(['status' => "success", 'data' => $orderData]);
-            
+
         } else {
             return json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }
@@ -459,11 +459,12 @@ class UserController extends Controller
                 $content = array('name' => $userlist->first_name, 'email' => $userlist->email);
                 Mail::to($content['email'])->send(new ChangeAddressEmail($content));
             }
+           $user_data=User::where('id',$data['tokenData']['Utype'])->with('country')->with('state')->with('city')->first();
 
 
             $result = clone $userlist;
             $result = $result->toArray();
-            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $result]);
+            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $user_data]);
         } else {
             echo json_encode(['status' => "fail", 'message' => 'Some error happened', 'data' => '']);
         }
