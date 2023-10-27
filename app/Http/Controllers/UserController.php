@@ -389,18 +389,18 @@ class UserController extends Controller
                 $endDate = $request->input('end_date');
                 break;
         }
-
+           
         if ($request->user_id) {
 
-            $downloads = ProductsDownload::with(['product' => function ($productquery) use ($mediaType) {
-                if ($mediaType != 'All') {
-                    $productquery->where('product_main_type', $mediaType);
-                }
-            }])
-
+            $downloads = ProductsDownload::with(['product'])
                 ->where('user_id', '=', $userId)
                 ->whereDate('created_at', '>=', $startDate)
                 ->whereDate('created_at', '<=', $endDate)
+                ->whereHas('product', function ($productquery) use ($mediaType) {                    
+                    if ($mediaType != 'All') {
+                        $productquery->where('product_main_type', $mediaType);
+                    }                    
+                }) 
                 ->orderBy('id', 'desc')
                 ->paginate(5)
                 ->toArray();
