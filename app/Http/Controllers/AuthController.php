@@ -251,7 +251,8 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        $returnData =  $this->respondWithToken(auth()->refresh());
+        return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => isset($returnData->original) ? $returnData->original : []], 200);
     }
 
     public function delete_user_profile($id)
@@ -310,7 +311,7 @@ class AuthController extends Controller
             return response()->json([
                 'access_token'      => $token,
                 'token_type'        => 'bearer',
-                'expires_in'        =>  20,
+                'expires_in'        =>  21,
                 'user'              => $authUserObject->first_name ?? $payload['name'],
                 'email'             => $authUserObject->email ?? $payload['email'],
                 'Utype'             => $authUserObject->id ?? $user->id,

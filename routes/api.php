@@ -169,7 +169,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::get('editorials-stories-v2', 'EditorialController@editorialStoryListv2');
         Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
         Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
-        Route::get('refresh', 'AuthController@refresh');
+        Route::post('refresh', 'AuthController@refresh');
     });
 });
 
