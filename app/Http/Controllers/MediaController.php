@@ -221,9 +221,8 @@ class MediaController extends Controller
                 // Download Images from Pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
-
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
@@ -268,7 +267,7 @@ class MediaController extends Controller
                 // Download music from pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
@@ -417,29 +416,32 @@ class MediaController extends Controller
      * This API is used to re-download the image
      */
     public function reDownload(Request $request)
-    {
+    {        
         $checkUserDownloads = UserProductDownload::where(
             [
                 'user_id' => $request->user_id,
                 'id_media' => $request->id_media,
                 'web_type' => $request->type
             ]
-        )->first();
+        )->first();       
 
+        $data = json_decode($checkUserDownloads['selected_product'], true);
+        $version = $data['version'];
+        #FOR POND5 PRODUCTS
         if ($checkUserDownloads) {
             if ($request->type == 2) {
-                $imageMedia = new ImageApi();
-                $image_product_details_data = $imageMedia->reDownloadMedia($checkUserDownloads);
+                $imageMedia = new FootageApi();
+                $image_product_details_data = $imageMedia->download($checkUserDownloads['product_id_api'], $version);
                 if (!empty($product_details_data)) {
 
                     $imageDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $image_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $image_product_details_data['download_status']['id_media'],
-                        'download_url' => $image_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
@@ -457,17 +459,17 @@ class MediaController extends Controller
                 return response()->json($image_product_details_data);
             } else if ($request->type == 3) {
                 $footageMedia = new FootageApi();
-                $footage_product_details_data = $footageMedia->download($checkUserDownloads, $checkUserDownloads['user_id']);
+                $footage_product_details_data = $footageMedia->download($checkUserDownloads['product_id_api'], $version);
 
                 if (!empty($footage_product_details_data)) {
                     $footageDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $footage_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $footage_product_details_data['download_status']['id_media'],
-                        'download_url' => $footage_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
@@ -485,18 +487,19 @@ class MediaController extends Controller
                 }
                 return response()->json($footage_product_details_data);
             } else if ($request->type == 4) {
-                $musicMedia = new MusicApi();
-                $music_product_details_data = $musicMedia->download($checkUserDownloads, $checkUserDownloads['user_id']);
+                // Calling pond5 download from FootageAPi
+                $musicMedia = new FootageApi();
+                $music_product_details_data = $musicMedia->download($checkUserDownloads['product_id_api'], $version);
 
                 if (!empty($music_product_details_data)) {
                     $musicDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $music_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $music_product_details_data['download_status']['id_media'],
-                        'download_url' => $music_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
