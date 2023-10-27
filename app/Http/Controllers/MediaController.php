@@ -125,10 +125,10 @@ class MediaController extends Controller
             ->where('package_type', '=', $flag)
             ->where('id', '=', $package_id)
             ->where('package_expiry_date_from_purchage', '>', Now())
-            ->get();
+            ->get();            
 
         $download = 0;
-        $downoad_type = 0;       
+        $downoad_type = 0;
 
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
@@ -162,13 +162,14 @@ class MediaController extends Controller
                     $download = 1;
                 }
 
-                if ($allFields['product']['type'] == 3) {
-                    if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
-                        $downoad_type = 1;
-                    } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
-                        $downoad_type = 1;
-                    }
-                }
+                #TODO : Need to discuss with client for pac
+                // if ($allFields['product']['type'] == 3) {
+                //     if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
+                //         $downoad_type = 1;
+                //     } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
+                //         $downoad_type = 1;
+                //     }
+                // }
             }
         } else {
             return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
@@ -194,12 +195,12 @@ class MediaController extends Controller
                         'id_media' => $download_id,
                         'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['pic_name'],
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'],
                         'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
                         'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
                         'web_type' => $allFields['product']['type'],
                         'product_size' => $allFields['product']['selected_product']['size'],
-                        'product_price' => $allFields['product']['selected_product']['pr'],
+                        'product_price' => $allFields['product']['selected_product']['price'],
                         'product_poster' => $allFields['product']['product_info'][2],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
@@ -222,7 +223,16 @@ class MediaController extends Controller
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
-                $product_details_data = $footageMedia->download($download_id ,$version);
+                dd($allFields['product']['product_info']['productWeb']);
+
+                if($allFields['product']['product_info']['productWeb'] == 2){ // If image is from PantherMedia
+                    $imageMedia = new ImageApi();
+                    $product_details_data = $imageMedia->download($allFields ,$download_id);
+
+                }elseif($allFields['product']['product_info']['productWeb'] == 3){ // If image is from Pond5
+                    $footageMedia = new FootageApi();
+                    $product_details_data = $footageMedia->download($download_id ,$version);
+                }
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
