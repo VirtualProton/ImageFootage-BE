@@ -125,20 +125,21 @@ class MediaController extends Controller
             ->where('package_type', '=', $flag)
             ->where('id', '=', $package_id)
             ->where('package_expiry_date_from_purchage', '>', Now())
-            ->get();
+            ->get();            
 
         $download = 0;
         $downoad_type = 0;
 
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
+                
                 if ($perpack->package_plan == 1) { // For subscriprion type package
                     // Check subscription is monthly or not
 
                     if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
 
                         $subscriptionStartDate = Carbon::parse($perpack->created_at);
-
+                        
                         $latestDates = $this->getDateGaps($subscriptionStartDate);
                         $startDateOfSpecificMonth = $latestDates['startDate'];
                         $endDateOfSpecificMonth = $latestDates['endDate'];
@@ -161,18 +162,19 @@ class MediaController extends Controller
                     $download = 1;
                 }
 
-                if ($allFields['product']['type'] == 3) {
-                    if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
-                        $downoad_type = 1;
-                    } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
-                        $downoad_type = 1;
-                    }
-                }
+                #TODO : Need to discuss with client for pac
+                // if ($allFields['product']['type'] == 3) {
+                //     if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
+                //         $downoad_type = 1;
+                //     } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
+                //         $downoad_type = 1;
+                //     }
+                // }
             }
         } else {
             return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
         }
-
+        
         if ($download == 1) {
             if ($allFields['product']['type'] == 3) {
                 if ($downoad_type == 0) {
@@ -181,25 +183,24 @@ class MediaController extends Controller
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
-                $product_details_data = $footageMedia->download($download_id ,$version);
-
+                $product_details_data = $footageMedia->download($download_id ,$version);                
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::where('product_id_api', $allFields['product']['selected_product']['id'])->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
-                    $product_id = Product::where('api_product_id', '=', $allFields['product']['selected_product']['id'])->first()->product_id;
+                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
+                    $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
                         'product_id' => $product_id,
-                        'product_id_api' => $allFields['product']['selected_product']['id'],
-                        'id_media' => $allFields['product']['selected_product']['id'],
+                        'product_id_api' => $download_id,
+                        'id_media' => $download_id,
                         'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['pic_name'],
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'],
                         'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
                         'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
                         'web_type' => $allFields['product']['type'],
                         'product_size' => $allFields['product']['selected_product']['size'],
-                        'product_price' => $allFields['product']['selected_product']['pr'],
+                        'product_price' => $allFields['product']['selected_product']['price'],
                         'product_poster' => $allFields['product']['product_info'][2],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
@@ -218,26 +219,33 @@ class MediaController extends Controller
                 }
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
-
                 // Download Images from Pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
-                $product_details_data = $footageMedia->download($download_id ,$version);
+                $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
+                dd($allFields['product']['product_info']['productWeb']);
 
+                if($allFields['product']['product_info']['productWeb'] == 2){ // If image is from PantherMedia
+                    $imageMedia = new ImageApi();
+                    $product_details_data = $imageMedia->download($allFields ,$download_id);
+
+                }elseif($allFields['product']['product_info']['productWeb'] == 3){ // If image is from Pond5
+                    $footageMedia = new FootageApi();
+                    $product_details_data = $footageMedia->download($download_id ,$version);
+                }
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
-                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
+                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
                         'product_id' => $product_id,
-                        'id_download' => $product_details_data['download_status']['id_download'],
+                        'id_download' => $product_details_data['transaction'],
                         'product_id_api' => $allFields['product']['product_info']['media']['id'],
                         'id_media' => $allFields['product']['product_info']['media']['id'],
-                        'download_url' => $product_details_data['download_status']['download_url'],
+                        'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $allFields['product']['product_info']['metadata']['title'],
                         'product_desc' => $allFields['product']['product_info']['metadata']['description'],
@@ -269,9 +277,8 @@ class MediaController extends Controller
                 // Download music from pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
-
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
@@ -334,7 +341,6 @@ class MediaController extends Controller
 
         $download = 0;
         $downoad_type = 0;
-
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
                 if ($perpack->package_plan == 1) { // For subscriprion type package
@@ -420,29 +426,32 @@ class MediaController extends Controller
      * This API is used to re-download the image
      */
     public function reDownload(Request $request)
-    {
+    {        
         $checkUserDownloads = UserProductDownload::where(
             [
                 'user_id' => $request->user_id,
                 'id_media' => $request->id_media,
                 'web_type' => $request->type
             ]
-        )->first();
+        )->first();       
 
+        $data = json_decode($checkUserDownloads['selected_product'], true);
+        $version = $data['version'];
+        #FOR POND5 PRODUCTS
         if ($checkUserDownloads) {
             if ($request->type == 2) {
-                $imageMedia = new ImageApi();
-                $image_product_details_data = $imageMedia->reDownloadMedia($checkUserDownloads);
+                $imageMedia = new FootageApi();
+                $image_product_details_data = $imageMedia->download($checkUserDownloads['product_id_api'], $version);
                 if (!empty($product_details_data)) {
 
                     $imageDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $image_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $image_product_details_data['download_status']['id_media'],
-                        'download_url' => $image_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
@@ -460,17 +469,17 @@ class MediaController extends Controller
                 return response()->json($image_product_details_data);
             } else if ($request->type == 3) {
                 $footageMedia = new FootageApi();
-                $footage_product_details_data = $footageMedia->download($checkUserDownloads, $checkUserDownloads['user_id']);
+                $footage_product_details_data = $footageMedia->download($checkUserDownloads['product_id_api'], $version);
 
                 if (!empty($footage_product_details_data)) {
                     $footageDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $footage_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $footage_product_details_data['download_status']['id_media'],
-                        'download_url' => $footage_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
@@ -488,18 +497,19 @@ class MediaController extends Controller
                 }
                 return response()->json($footage_product_details_data);
             } else if ($request->type == 4) {
-                $musicMedia = new MusicApi();
-                $music_product_details_data = $musicMedia->download($checkUserDownloads, $checkUserDownloads['user_id']);
+                // Calling pond5 download from FootageAPi
+                $musicMedia = new FootageApi();
+                $music_product_details_data = $musicMedia->download($checkUserDownloads['product_id_api'], $version);
 
                 if (!empty($music_product_details_data)) {
                     $musicDataInsert = array(
                         'user_id' => $checkUserDownloads->user_id,
                         'package_id' => $checkUserDownloads->package_id,
                         'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $music_product_details_data['download_status']['id_download'],
-                        'product_id_api' => $checkUserDownloads->product_id,
-                        'id_media' => $music_product_details_data['download_status']['id_media'],
-                        'download_url' => $music_product_details_data['download_status']['download_url'],
+                        'id_download' => $checkUserDownloads->id_download,
+                        'product_id_api' => $checkUserDownloads->product_id_api,
+                        'id_media' => $checkUserDownloads->id_media,
+                        'download_url' => $checkUserDownloads->download_url,
                         'downloaded_date' => date('Y-m-d H:i:s'),
                         'product_name' => $checkUserDownloads->product_name,
                         'product_desc' => $checkUserDownloads->product_desc,
@@ -523,7 +533,8 @@ class MediaController extends Controller
 
     public function getDateGaps($packageStartDate)
     {
-        $currentDate = Carbon::today();
+        
+        $currentDate = Carbon::now();
         // Define an array to store date ranges
         $dateRanges = [];
 
@@ -532,7 +543,7 @@ class MediaController extends Controller
             $startDate = Carbon::parse($packageStartDate)->addMonths($i);
             $endDate = Carbon::parse($packageStartDate)->addMonths($i + 1);
 
-            // Check if the current date is within this date range
+            // Check if the current date is within this date range           
             if ($currentDate >= $startDate && $currentDate <= $endDate) {
                 $dateRanges = ['startDate' => $startDate, 'endDate' => $endDate];
                 break; // Exit the loop once a match is found
