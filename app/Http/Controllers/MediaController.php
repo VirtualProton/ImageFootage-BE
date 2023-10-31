@@ -223,7 +223,6 @@ class MediaController extends Controller
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
-                dd($allFields['product']['product_info']['productWeb']);
 
                 if($allFields['product']['product_info']['productWeb'] == 2){ // If image is from PantherMedia
                     $imageMedia = new ImageApi();
