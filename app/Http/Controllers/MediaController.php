@@ -72,7 +72,7 @@ class MediaController extends Controller
     public function categoryListApi()
     {
         $categories  = ProductCategory::select('category_id', 'category_name','category_slug')
-            ->where('is_display_home', 1)
+            ->where(['is_display_home'=> 1,'type'=>'1'])
             ->where('category_status','Active')
             ->orderBy('category_order', 'asc')
             ->limit(24)
@@ -125,21 +125,21 @@ class MediaController extends Controller
             ->where('package_type', '=', $flag)
             ->where('id', '=', $package_id)
             ->where('package_expiry_date_from_purchage', '>', Now())
-            ->get();            
+            ->get();
 
         $download = 0;
         $downoad_type = 0;
 
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
-                
+
                 if ($perpack->package_plan == 1) { // For subscriprion type package
                     // Check subscription is monthly or not
 
                     if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
 
                         $subscriptionStartDate = Carbon::parse($perpack->created_at);
-                        
+
                         $latestDates = $this->getDateGaps($subscriptionStartDate);
                         $startDateOfSpecificMonth = $latestDates['startDate'];
                         $endDateOfSpecificMonth = $latestDates['endDate'];
@@ -174,7 +174,7 @@ class MediaController extends Controller
         } else {
             return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
         }
-        
+
         if ($download == 1) {
             if ($allFields['product']['type'] == 3) {
                 if ($downoad_type == 0) {
@@ -183,7 +183,7 @@ class MediaController extends Controller
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
-                $product_details_data = $footageMedia->download($download_id ,$version);                
+                $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
                     $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
@@ -275,7 +275,8 @@ class MediaController extends Controller
 
                 // Download music from pond5
                 $footageMedia = new FootageApi();
-                $download_id = $allFields['product']['product_info']['media']['id'];
+                //TODO Need to change for api_product_id
+                $download_id = decrypt($allFields['product']['product_info']['media']['id']);
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
@@ -425,14 +426,14 @@ class MediaController extends Controller
      * This API is used to re-download the image
      */
     public function reDownload(Request $request)
-    {        
+    {
         $checkUserDownloads = UserProductDownload::where(
             [
                 'user_id' => $request->user_id,
                 'id_media' => $request->id_media,
                 'web_type' => $request->type
             ]
-        )->first();       
+        )->first();
 
         $data = json_decode($checkUserDownloads['selected_product'], true);
         $version = $data['version'];
@@ -532,7 +533,7 @@ class MediaController extends Controller
 
     public function getDateGaps($packageStartDate)
     {
-        
+
         $currentDate = Carbon::now();
         // Define an array to store date ranges
         $dateRanges = [];
@@ -542,7 +543,7 @@ class MediaController extends Controller
             $startDate = Carbon::parse($packageStartDate)->addMonths($i);
             $endDate = Carbon::parse($packageStartDate)->addMonths($i + 1);
 
-            // Check if the current date is within this date range           
+            // Check if the current date is within this date range
             if ($currentDate >= $startDate && $currentDate <= $endDate) {
                 $dateRanges = ['startDate' => $startDate, 'endDate' => $endDate];
                 break; // Exit the loop once a match is found
