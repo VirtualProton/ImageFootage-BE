@@ -20,6 +20,7 @@ use Image;
 use App\Http\Pond5\MusicApi;
 use App\Models\ProductsDownload;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class MediaController extends Controller
 {
@@ -47,12 +48,12 @@ class MediaController extends Controller
         $requestData = $request->json()->all();
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
-        $product_details = Product::where(['slug'=>$slug,'product_main_type'=>$origin])->first();
+        $product_details = Product::where(['slug' => $slug, 'product_main_type' => $origin])->first();
         if ($product_details) {
             // Use the $product_details['id'] to query MongoDB
             $apiProductId = $product_details['api_product_id'];
             // Retrieve data from MongoDB where api_product_id matches
-            $matchingData = ImageFilterValue::where('api_product_id',$apiProductId)->get();
+            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->get();
             $attributes = [];
             $options = [];
 
@@ -60,13 +61,11 @@ class MediaController extends Controller
 
                 $attributes = isset($data->attributes) ? $data->attributes : [];
                 $options    = isset($data->options) ? $data->options : [];
-
             }
             $product_details['attributes'] = $attributes;
             $product_details['options'] = $options;
-
         }
-        return response()->json(['data'=>$product_details,'status'=>'success']);
+        return response()->json(['data' => $product_details, 'status' => 'success']);
     }
 
     public function categoryListApi()
@@ -224,13 +223,12 @@ class MediaController extends Controller
                 $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
 
-                if($allFields['product']['product_info']['productWeb'] == 2){ // If image is from PantherMedia
+                if ($allFields['product']['product_info']['productWeb'] == 2) { // If image is from PantherMedia
                     $imageMedia = new ImageApi();
-                    $product_details_data = $imageMedia->download($allFields ,$download_id);
-
-                }elseif($allFields['product']['product_info']['productWeb'] == 3){ // If image is from Pond5
+                    $product_details_data = $imageMedia->download($allFields, $download_id);
+                } elseif ($allFields['product']['product_info']['productWeb'] == 3) { // If image is from Pond5
                     $footageMedia = new FootageApi();
-                    $product_details_data = $footageMedia->download($download_id ,$version);
+                    $product_details_data = $footageMedia->download($download_id, $version);
                 }
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
@@ -380,8 +378,8 @@ class MediaController extends Controller
             if ($flag == "Image") {
 
                 $products = Product::whereIn('product_id', $allFields['selectedValues'])
-                            ->get();
-                foreach($products as $product){
+                    ->get();
+                foreach ($products as $product) {
 
                     $dataCheck = UserProductDownload::where('product_id_api', $product['api_product_id'])->where('product_size', $product["product_size"])->where('web_type', $product['product_web'])->first();
 
@@ -595,8 +593,9 @@ class MediaController extends Controller
 
     public function callback_download(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
-        die;
+        $first = $request->all();
+        $second = file_get_contents('php://input');
+        $final = $first . '<>' . $second;
+        Log::channel('panther_media')->debug('FINAL: ' . $final);
     }
 }

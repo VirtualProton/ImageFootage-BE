@@ -263,7 +263,7 @@ class ImageApi
                     'lang' => 'en',
                     'id_media' => $data['product']['product_info']['media']['id'],
                     'queue_hash' => $contents['download_status']['queue_hash'],
-                    'callback_url' => $hostname . '/backend/api/callback_download',
+                    'callback_url' => $hostname . '/api/callback_download',
                     'test' => 'yes'
                 ]
             ]);
