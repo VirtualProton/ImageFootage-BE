@@ -545,10 +545,7 @@ class AuthController extends Controller
         $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'User not found.'], 200);
-        }
-        if ($user->status == 1) {
-            return response()->json(['status' => false, 'message' => 'Your account is already activated.'], 200);
-        }
+        }        
         $user->otp            = $otp;
         $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
         $update = $user->save();
@@ -556,6 +553,7 @@ class AuthController extends Controller
             $user_data = ['user_id' => $user->id];
             $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
             $smsClass = new TnnraoSms;
+            
             $smsClass->sendSms($message, $mobile);
             return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
         }
