@@ -95,10 +95,10 @@ return [
             'path' => storage_path('logs/quotationlog.log'),
             'level' => 'info'
         ],
-        
+
         'panther_media' => [
-            'driver' => 'stack',
-            'path' => storage_path('logs/panthermedia.log'),
+            'driver' => 'single',
+            'path' => storage_path('logs/panther-media/panther_media.log'),
             'level' => 'debug',
             'days' => 14,
         ],
