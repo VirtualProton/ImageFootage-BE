@@ -94,7 +94,14 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/quotationlog.log'),
             'level' => 'info'
-        ]
+        ],
+        
+        'panther_media' => [
+            'driver' => 'stack',
+            'path' => storage_path('logs/panthermedia.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
     ],
 
 ];
