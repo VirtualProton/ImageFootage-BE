@@ -203,7 +203,8 @@ class MediaController extends Controller
                         'product_poster' => $allFields['product']['product_info'][2],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'redownloded_date' => null,
                     );
                     UserProductDownload::insert($dataInsert);
                     if (!$dataCheck) {
@@ -253,7 +254,8 @@ class MediaController extends Controller
                         'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'redownloded_date' => null,
                     );
 
                     UserProductDownload::insert($dataInsert);
@@ -300,7 +302,8 @@ class MediaController extends Controller
                         'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'redownloded_date' => null,
                     );
 
                     UserProductDownload::insert($dataInsert);
@@ -433,99 +436,44 @@ class MediaController extends Controller
             ]
         )->first();
 
-        $data = json_decode($checkUserDownloads['selected_product'], true);
-        $version = $data['version'];
-        #FOR POND5 PRODUCTS
-        if ($checkUserDownloads) {
-            if ($request->type == 2) {
-                $imageMedia = new FootageApi();
-                $image_product_details_data = $imageMedia->download($checkUserDownloads['product_id_api'], $version);
-                if (!empty($product_details_data)) {
 
-                    $imageDataInsert = array(
-                        'user_id' => $checkUserDownloads->user_id,
-                        'package_id' => $checkUserDownloads->package_id,
-                        'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $checkUserDownloads->id_download,
-                        'product_id_api' => $checkUserDownloads->product_id_api,
-                        'id_media' => $checkUserDownloads->id_media,
-                        'download_url' => $checkUserDownloads->download_url,
-                        'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $checkUserDownloads->product_name,
-                        'product_desc' => $checkUserDownloads->product_desc,
-                        'product_thumb' => $checkUserDownloads->product_thumb,
-                        'web_type' => $checkUserDownloads->web_type,
-                        'product_size' => $checkUserDownloads->product_size,
-                        'product_price' => $checkUserDownloads->product_price,
-                        'product_poster' => $checkUserDownloads->product_poster,
-                        'selected_product' => $checkUserDownloads->selected_product,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    );
-                    UserProductDownload::insert($imageDataInsert);
+        if (!$checkUserDownloads) {
+            return response()->json(['status'=> 'success', 'message'=> 'Requested Image is not found in downloaded history!!','data'=>null]);
+        }else{
+            $imageDownloadData = '';
+            if($request->type == 2){
+                $getPantherMediaDetail =Product::where(['api_product_id'=>$request->id_media,'product_web'=>2])->first();
+                if(!empty($getPantherMediaDetail)) {
+                    $image = new ImageApi();
+                    $data = ['id_media'=>$checkUserDownloads->id_media,'id_download'=>$checkUserDownloads->id_download];
+                    $imageDownloadData = $image->reDownloadMedia($data);
+
                 }
-                return response()->json($image_product_details_data);
-            } else if ($request->type == 3) {
-                $footageMedia = new FootageApi();
-                $footage_product_details_data = $footageMedia->download($checkUserDownloads['product_id_api'], $version);
 
-                if (!empty($footage_product_details_data)) {
-                    $footageDataInsert = array(
-                        'user_id' => $checkUserDownloads->user_id,
-                        'package_id' => $checkUserDownloads->package_id,
-                        'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $checkUserDownloads->id_download,
-                        'product_id_api' => $checkUserDownloads->product_id_api,
-                        'id_media' => $checkUserDownloads->id_media,
-                        'download_url' => $checkUserDownloads->download_url,
-                        'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $checkUserDownloads->product_name,
-                        'product_desc' => $checkUserDownloads->product_desc,
-                        'product_thumb' => $checkUserDownloads->product_thumb,
-                        'web_type' => $checkUserDownloads->web_type,
-                        'product_size' => $checkUserDownloads->product_size,
-                        'product_price' => $checkUserDownloads->product_price,
-                        'product_poster' => $checkUserDownloads->product_poster,
-                        'selected_product' => $checkUserDownloads->selected_product,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    );
-
-                    UserProductDownload::insert($footageDataInsert);
-                }
-                return response()->json($footage_product_details_data);
-            } else if ($request->type == 4) {
-                // Calling pond5 download from FootageAPi
-                $musicMedia = new FootageApi();
-                $music_product_details_data = $musicMedia->download($checkUserDownloads['product_id_api'], $version);
-
-                if (!empty($music_product_details_data)) {
-                    $musicDataInsert = array(
-                        'user_id' => $checkUserDownloads->user_id,
-                        'package_id' => $checkUserDownloads->package_id,
-                        'product_id' => $checkUserDownloads->product_id,
-                        'id_download' => $checkUserDownloads->id_download,
-                        'product_id_api' => $checkUserDownloads->product_id_api,
-                        'id_media' => $checkUserDownloads->id_media,
-                        'download_url' => $checkUserDownloads->download_url,
-                        'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $checkUserDownloads->product_name,
-                        'product_desc' => $checkUserDownloads->product_desc,
-                        'product_thumb' => $checkUserDownloads->product_thumb,
-                        'web_type' => $checkUserDownloads->web_type,
-                        'product_size' => $checkUserDownloads->product_size,
-                        'product_price' => $checkUserDownloads->product_price,
-                        'product_poster' => $checkUserDownloads->product_poster,
-                        'selected_product' => $checkUserDownloads->selected_product,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    );
-                    UserProductDownload::insert($musicDataInsert);
-                }
-                return response()->json($music_product_details_data);
             }
-        } else {
-            return response()->json(['status' => '0', 'message' => 'Requested Image is not found in downloaded history!!']);
+            $imageDataInsert = array(
+                'user_id' => $checkUserDownloads->user_id,
+                'package_id' => $checkUserDownloads->package_id,
+                'product_id' => $checkUserDownloads->product_id,
+                'id_download' => $checkUserDownloads->id_download,
+                'product_id_api' => $checkUserDownloads->product_id_api,
+                'id_media' => $checkUserDownloads->id_media,
+                'download_url' => isset($imageDownloadData) && !empty($imageDownloadData) ? $imageDownloadData['download_url'] : $checkUserDownloads->download_url,
+                'downloaded_date'=>null,
+                'redownloded_date' => date('Y-m-d H:i:s'),
+                'product_name' => $checkUserDownloads->product_name,
+                'product_desc' => $checkUserDownloads->product_desc,
+                'product_thumb' => $checkUserDownloads->product_thumb,
+                'web_type' => $checkUserDownloads->web_type,
+                'product_size' => $checkUserDownloads->product_size,
+                'product_price' => $checkUserDownloads->product_price,
+                'product_poster' => $checkUserDownloads->product_poster,
+                'selected_product' => $checkUserDownloads->selected_product,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            );
+            UserProductDownload::insert($imageDataInsert);
+            return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
         }
     }
 
