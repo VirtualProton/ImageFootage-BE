@@ -1765,18 +1765,18 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNocus").val().substr(2, 10);
+        var panno = $("#gstNo").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
 
-        if (!$("#gstNocus").val()) {
+        if (!$("#gstNo").val()) {
             alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNocus").val())) {
+        } else if (!reggst.test($("#gstNo").val())) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNocus").val()) {
+        } else if (!$("#panNo").val()) {
             alert("Please add pan no.");
-        } else if (!regex.test($("#panNocus").val())) {
+        } else if (!regex.test($("#panNo").val())) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNocus").val()) {
+        } else if (panno != $("#panNo").val()) {
             alert("Please enter valid pan no or GST Number.");
         } else if (!$("#phonecus").val()) {
             alert("Please add phone no .");
@@ -1824,18 +1824,18 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNocus").val().substr(2, 10);
+        var panno = $("#gstNo").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
 
-        if (!$("#gstNocus").val()) {
+        if (!$("#gstNo").val()) {
             alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNocus").val())) {
+        } else if (!reggst.test($("#gstNo").val())) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNocus").val()) {
+        } else if (!$("#panNo").val()) {
             alert("Please add pan no.");
-        } else if (!regex.test($("#panNocus").val())) {
+        } else if (!regex.test($("#panNo").val())) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNocus").val()) {
+        } else if (panno != $("#panNo").val()) {
             alert("Please enter valid pan no or GST Number.");
         } else if (!$("#phonecus").val()) {
             alert("Please add phone no .");
@@ -1855,8 +1855,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         po: $scope.poCustom,
                         po_date: $scope.poDateCustom,
                         payment_method: $scope.payment_method,
-                        gst: $("#gstNocus").val(),
-                        pan: $("#panNocus").val(),
+                        gst: $("#gstNo").val(),
+                        pan: $("#panNo").val(),
                         phone: $("#phonecus").val(),
                         expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
