@@ -35,7 +35,7 @@ class ProductCategoryController extends Controller
 		$ProductCategory->product_id        = $request->product_id;
 		$ProductCategory->image_path        = $request->image_path;
         $ProductCategory->category_slug     = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($request->category_name)));
-        $ProductCategory->type              =  1;//1 is for image set the dynamic value when getting from admin
+        $ProductCategory->type              =  $request->product_type;
 		$result=$ProductCategory->save();
 		if($result){
 		  return redirect('admin/all_product_category/')->with('success','Product Category added successfully');
@@ -87,7 +87,8 @@ class ProductCategoryController extends Controller
                              'is_display_home'   => $request->display,
 							 'product_id'        => $request->product_id,
 							 'image_path'        => $request->image_path,
-							 'updated_at'        => date('Y-m-d H:i:s')
+							 'updated_at'        => date('Y-m-d H:i:s'),
+                             'type'              => $request->product_type,
 							 );
 		 $result = ProductCategory::where('category_id',$request->product_category_id)->update($update_array);
 

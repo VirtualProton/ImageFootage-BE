@@ -76,6 +76,12 @@
                 <input type="radio" name="display" value="0" checked /> No
               </div>
 
+              <div class="form-group">
+                <label for="exampleInputEmail1">Select Category Type </label>
+                <input type="radio" name="product_type" value="1" checked /> Image
+                <input type="radio" name="product_type" value="2"  /> Footage
+                <input type="radio" name="product_type" value="3"  /> Music
+              </div>
 
             </div>
             <!-- /.box-body -->

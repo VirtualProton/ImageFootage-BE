@@ -162,13 +162,15 @@ class MediaController extends Controller
                 }
 
                 #TODO : Need to discuss with client for pac
-                // if ($allFields['product']['type'] == 3) {
-                //     if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
-                //         $downoad_type = 1;
-                //     } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
-                //         $downoad_type = 1;
-                //     }
-                // }
+                if ($allFields['product']['type'] == 3) {
+                    // if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
+                    //     $downoad_type = 1;
+                    // } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
+                    //     $downoad_type = 1;
+                    // }
+                    $downoad_type = 1;
+                }
+
             }
         } else {
             return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
@@ -176,6 +178,7 @@ class MediaController extends Controller
 
         if ($download == 1) {
             if ($allFields['product']['type'] == 3) {
+
                 if ($downoad_type == 0) {
                     return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
                 }
@@ -272,7 +275,6 @@ class MediaController extends Controller
                 }
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 4) {
-
                 // Download music from pond5
                 $footageMedia = new FootageApi();
                 //TODO Need to change for api_product_id

@@ -1380,7 +1380,7 @@ class Product extends Model
                     'product_main_type'   => "Image",
                     'product_sub_type'    => "Photo",
                     'product_added_on'    => date("Y-m-d H:i:s"),
-                    'product_web'         => '2',
+                    'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
@@ -1428,7 +1428,8 @@ class Product extends Model
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
-                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'product_web'         => '3',
                         ]);
 
                     $apiProductId = $eachmedia['id'];

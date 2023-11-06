@@ -76,10 +76,28 @@
                           <input type="radio"  name="display"  value="0" <?php if($productcategory['is_display_home']=='0'){ echo "checked";} ?> /> No
                       </div>
 
-           
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Product Type</label>
+                        <div class="checkbox">
+                            <label>
+                              <input type="radio" name="product_type" value="1" class="product_type" <?php if($productcategory['type']=='1'){ echo "checked";}?> /> Image
+                            </label>
+                            <label>
+                              <input type="radio" name="product_type" value="2" class="product_type" <?php if($productcategory['type']=='2'){ echo "checked";}?> /> Footage
+                            </label>
+                            <label>
+                              <input type="radio" name="product_type" value="3" class="product_type" <?php if($productcategory['type']=='3'){ echo "checked";}?> /> Music
+                            </label>
+                          </div>
+                      </div>
+                      @if ($errors->has('product_type'))
+                                <div class="has_error" style="color:red;">{{ $errors->first('product_type') }}</div>
+                      @endif
+
+
                   </div>
                   <!-- /.box-body -->
-    
+
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
                     <a href="{{ url('admin/all_product_category') }}" class="btn btn-primary">Back</a>
