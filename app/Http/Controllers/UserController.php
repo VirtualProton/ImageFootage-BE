@@ -189,7 +189,7 @@ class UserController extends Controller
     public function getUserAddress(Request $request)
     {
         $id = $request->Utype;
-        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->first();
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->with(['country','city','state'])->first();
         return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
     }
     public function contributorProfile($id)
@@ -389,18 +389,18 @@ class UserController extends Controller
                 $endDate = $request->input('end_date');
                 break;
         }
-           
+
         if ($request->user_id) {
 
             $downloads = ProductsDownload::with(['product'])
                 ->where('user_id', '=', $userId)
                 ->whereDate('created_at', '>=', $startDate)
                 ->whereDate('created_at', '<=', $endDate)
-                ->whereHas('product', function ($productquery) use ($mediaType) {                    
+                ->whereHas('product', function ($productquery) use ($mediaType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
-                    }                    
-                }) 
+                    }
+                })
                 ->orderBy('id', 'desc')
                 ->paginate(5)
                 ->toArray();
