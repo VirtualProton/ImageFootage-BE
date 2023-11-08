@@ -1778,9 +1778,9 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Please enter valid pan no.");
         } else if (panno != $("#panNo").val()) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phonecus").val()) {
+        } else if (!$("#phone").val()) {
             alert("Please add phone no .");
-        } else if (!regmob.test($("#phonecus").val())) {
+        } else if (!regmob.test($("#phone").val())) {
             alert("Please enter 10 digit mobile no .");
         } else if (!$scope.payment_method) {
             alert("Please select payment method.");
@@ -1824,18 +1824,18 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNo").val().substr(2, 10);
+        var panno = $("#gstNocus").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
 
-        if (!$("#gstNo").val()) {
+        if (!$("#gstNocus").val()) {
             alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNo").val())) {
+        } else if (!reggst.test($("#gstNocus").val())) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNo").val()) {
+        } else if (!$("#panNocus").val()) {
             alert("Please add pan no.");
-        } else if (!regex.test($("#panNo").val())) {
+        } else if (!regex.test($("#panNocus").val())) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNo").val()) {
+        } else if (panno != $("#panNocus").val()) {
             alert("Please enter valid pan no or GST Number.");
         } else if (!$("#phonecus").val()) {
             alert("Please add phone no .");
@@ -1855,8 +1855,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         po: $scope.poCustom,
                         po_date: $scope.poDateCustom,
                         payment_method: $scope.payment_method,
-                        gst: $("#gstNo").val(),
-                        pan: $("#panNo").val(),
+                        gst: $("#gstNocus").val(),
+                        pan: $("#panNocus").val(),
                         phone: $("#phonecus").val(),
                         expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",

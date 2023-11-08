@@ -10,6 +10,8 @@ body {
     font-family: 'Lato', sans-serif;
     color: #000000;
     font-weight: 400;
+    margin-bottom: 140px;
+    margin-top: 140px;
 }
 
 .container {
@@ -21,7 +23,11 @@ body {
 
 /* Header start */
 header {
+    margin-left: 2cm;
+    margin-right: 2cm;
     padding: 20px 0 0 0;
+    bottom: 3cm;
+    /* display: table; */
 }
 
 .header-text {
@@ -45,7 +51,9 @@ header {
 .header-logo {
     width: 43%;
     display: inline-block;
-    margin-bottom: 23px;
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-top: -30px;
 }
 
 .header-logo img {
@@ -58,7 +66,7 @@ header {
 
 /* Table paragraph section start */
 .table-paragraph {
-    padding: 20px 0 0 0;
+    padding: 0px 0 0 0;
 }
 
 .table-paragraph .container>div {
@@ -273,6 +281,8 @@ header {
 /* Footer start */
 footer {
     padding: 20px 0 0 0;
+    margin-left: 2cm;
+    margin-right: 2cm;
 }
 
 .footer-left {
@@ -357,5 +367,5 @@ footer {
 }
 
 .page-break {
-    page-break-before:always
+    page-break-before: always
 }
