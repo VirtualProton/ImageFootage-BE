@@ -102,7 +102,7 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                if(response.data[0].clip_data) {
+                                if (response.data[0].clip_data) {
                                     $scope.quotation.product[index].name =
                                         response.data[0].clip_data.id;
                                     $scope.quotation.product[index].id =
@@ -674,7 +674,7 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                    if ($scope.quotation.product[i].pro_type == 'right_managed') {
                         setTimeout(
                             function (index) {
                                 CKEDITOR.replace("licence_type-" + index, {
@@ -714,9 +714,9 @@ app.controller(
                         $scope.is_display_product_image = true;
                         $("#loading").hide();
                         let img = response.data[0].thumbnail_image;
-                        if(img) {
+                        if (img) {
                             $("#image_path").val(img);
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $("#display_image").attr('src', img);
                             }, 1000);
                         }
@@ -733,7 +733,7 @@ app.controller(
 
         $scope.getProductImageEditPage = function () {
             productName = $("#product_id").val();
-            if(productName) {
+            if (productName) {
                 $("#loading").show();
                 $scope.is_display_product_image_edit_page = true;
                 $("#image_path").val("");
@@ -750,9 +750,9 @@ app.controller(
                             $scope.is_display_product_image_edit_page = true;
                             $("#loading").hide();
                             let img = response.data[0].thumbnail_image;
-                            if(img) {
+                            if (img) {
                                 $("#image_path").val(img);
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     $("#display_image").attr('src', img);
                                 }, 200);
                             }
@@ -772,10 +772,10 @@ app.controller(
 
         $scope.getProductImageEditPageInit = function () {
             productName = $("#product_id").val();
-            if(productName) {
+            if (productName) {
                 $("#loading").show();
                 const existingImage = $("#image_path").val();
-                if(existingImage == "") {
+                if (existingImage == "") {
                     $scope.is_display_product_image_edit_page = false;
                 }
                 $("#loading").hide();
@@ -896,7 +896,7 @@ app.controller(
 
         $scope.getProductImageEditPage = function () {
             productName = $("#product_id").val();
-            if(productName) {
+            if (productName) {
                 $("#loading").show();
                 $scope.is_display_footage = true;
                 $("#image_path").val("");
@@ -913,9 +913,9 @@ app.controller(
                             $scope.is_display_footage = true;
                             $("#loading").hide();
                             let img = response.data[0].thumbnail_image;
-                            if(img) {
+                            if (img) {
                                 $("#image_path").val(img);
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     $("#display_image").attr('src', img);
                                 }, 200);
                             }
@@ -935,10 +935,10 @@ app.controller(
 
         $scope.getProductImageEditPageInit = function () {
             productName = $("#product_id").val();
-            if(productName) {
+            if (productName) {
                 $("#loading").show();
                 const existingImage = $("#image_path").val();
-                if(existingImage == "") {
+                if (existingImage == "") {
                     $scope.is_display_footage = false;
                 }
                 $("#loading").hide();
@@ -1068,7 +1068,7 @@ app.controller(
                 $scope.flag = response.flag;
                 $scope.quotation.product = [];
                 $scope.prod_type = response.user_package?.package_type;
-                if(response.invoice_type == 1){
+                if (response.invoice_type == 1) {
                     // subscription
                     $scope.subsc_expiry_time = response.expiry_invoices;
                     $scope.subscriptionprice = response.total - response.tax;
@@ -1106,7 +1106,7 @@ app.controller(
                         licence_type: value.licence_type,
                     };
                     $scope.quotation.product.push(obj);
-                    if(value.product_type == 'right_managed'){
+                    if (value.product_type == 'right_managed') {
                         setTimeout(function () {
                             CKEDITOR.replace(
                                 "licence_type-" + $scope.quotation.product.length
@@ -1114,8 +1114,8 @@ app.controller(
                         }, 100);
                     }
                 });
-                if(response.user_package){
-                    get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly);
+                if (response.user_package) {
+                    get_play_type(response.user_package.package_expiry, response.user_package.package_expiry_yearly);
                     get_plan_data(response.user_package.package_id);
                 }
             },
@@ -1124,9 +1124,24 @@ app.controller(
             }
         );
 
+        $scope.getTheTotal = function () {
+            var subtotal = $scope.quotation.product;
+            var subtotalvalue = 0;
+            var total = 0;
+            for (var j = 0; j < subtotal.length; j++) {
+                subtotalvalue += Number(subtotal[j].price);
+            }
+            if ($('input[name="tax_checkbox[]"]:checked').length > 0) {
+                total = (subtotalvalue * gst_value) / 100;
+            }
+            subtotal = Number(subtotalvalue);
+            $scope.total = subtotal + total;
+            $scope.tax = total;
+        };
+
         $scope.edit_quotation_type_set = function (type) {
             $scope.quotation_type = type;
-            if(type == 3 ){
+            if (type == 3) {
                 $scope.addProduct();
             }
         };
@@ -1148,7 +1163,7 @@ app.controller(
             $("#loading").hide();
         };
         /* Call to get quotation_type name for subscription and download only */
-        function get_plan_data(get_package_id = ''){
+        function get_plan_data(get_package_id = '') {
             $http({
                 method: "POST",
                 url: api_path + "plans",
@@ -1161,7 +1176,7 @@ app.controller(
                 function (response) {
                     if (response.data.status == "success") {
                         $scope.plansData = response.data.data;
-                        if(get_package_id){
+                        if (get_package_id) {
                             $scope.selectedPlanData = $scope.plansData.filter(package => package.package_id == get_package_id);
                             $scope.selected_sub_plan = get_package_id;
                         }
@@ -1169,15 +1184,15 @@ app.controller(
                 }
             );
         }
-        function get_play_type(package_expiry,package_expiry_yearly){
-            if(package_expiry == 1){
+        function get_play_type(package_expiry, package_expiry_yearly) {
+            if (package_expiry == 1) {
                 $scope.plan_type = "monthly";
-            } else if(package_expiry_yearly == 1) {
+            } else if (package_expiry_yearly == 1) {
                 $scope.plan_type = "annual";
             }
         }
         $scope.selectPlanfromlist = function (selectedPlanData, type) {
-            if(selectedPlanData){
+            if (selectedPlanData) {
                 var plan = $scope.plansData.filter(package => package.package_id == selectedPlanData);
                 $scope.selected_sub_plan = plan[0].package_id;
                 $scope.subsc_tax = ""; // Reset tax
@@ -1429,13 +1444,13 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
-                console.log("flat" ,total, subtotal, promo.discount)
+                console.log("flat", total, subtotal, promo.discount)
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
-                console.log("percentage" ,total, subtotal, promo.discount)
+                console.log("percentage", total, subtotal, promo.discount)
             }
         };
 
@@ -1508,7 +1523,7 @@ app.controller(
             } else if (!$scope.subscriptionprice) {
                 alert("Please enter subtotal");
                 return false;
-            } else if(!$scope.subsc_expiry_time) {
+            } else if (!$scope.subsc_expiry_time) {
                 alert("Please select expiry period");
                 return false;
             } else {
@@ -1559,7 +1574,7 @@ app.controller(
             } else if (!$scope.downloadprice) {
                 alert("Please enter Subtotal");
                 return false;
-            } else if(!$scope.download_expiry) {
+            } else if (!$scope.download_expiry) {
                 alert("Please select expiry period");
                 return false;
             } else {
@@ -1603,12 +1618,12 @@ app.controller(
         };
 
         $scope.submitEditCustom = function () {
-            if(!$scope.expiry_time) {
+            if (!$scope.expiry_time) {
                 alert("Please select expiry period");
                 return false;
             }
             $("#loading").show();
-            
+
             var sendData = {
                 uid: $("#uid").val(),
                 quotation_type: $scope.quotation_type,
@@ -1705,7 +1720,7 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                    if ($scope.quotation.product[i].pro_type == 'right_managed') {
                         setTimeout(
                             function (index) {
                                 CKEDITOR.replace("licence_type-" + index, {
@@ -1946,7 +1961,7 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
-                if(el[0]['id']){ // If upload new file than reset scope product
+                if (el[0]['id']) { // If upload new file than reset scope product
                     let productId = el[0]['id'].substring(4);
                     $("#product_" + productId).val("");
                 }
