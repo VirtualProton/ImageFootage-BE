@@ -268,7 +268,7 @@
 										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
 											<div class="form-group">
 												<label for="sub_total">Sub Total</label>
-												<input type="text" class="form-control" ng-model="subscriptionprice" name="subscriptionprice" ng-keyup="getTheTotal(product);" ngMousedown="getTheTotal(product);">
+												<input type="text" class="form-control" ng-model="subscriptionprice" name="subscriptionprice" ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
 											</div>
 										</div>
 									</div>
