@@ -86,7 +86,6 @@ class ImageApi
 
     public function search($keyword, $getKeyword = [], $limit = 15, $page = 1)
     {
-
         $serach = $keyword['search'];
         if (isset($getKeyword['pagenumber']) && $getKeyword['pagenumber'] > '0') {
             $page = $getKeyword['pagenumber'];
@@ -210,18 +209,18 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-
+        
         if (count($data['product']['selected_product']) > 0) {
             if (isset($data['product']['product_info']['articles'])) {
                 $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
             } else {
                 $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
-                $id = $getIdArticle['articles']['subscription_list']['subscription']['article']['id'];
+                $id = $getIdArticle['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][0]['id'];
             }
         } else {
             $id = $data['product']['product_info']['media']['id'];
         }
-
+        
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post($this->url . '/download-media', [
             'headers' => [
@@ -241,34 +240,13 @@ class ImageApi
                 'test' => 'yes'
             ]
         ]);
-
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
             $hostname = env('APP_URL');
-
-            $client2 = new Client(); //GuzzleHttp\Client
-            $response2 = $client2->post($this->url . '/download-media', [
-                'headers' => [
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Accept-Version' => '1.0'
-                ],
-                'form_params' => [
-                    'api_key' => $this->api_key,
-                    'access_key' => $this->access_key,
-                    'timestamp' => $this->timestamp,
-                    'nonce' => $this->nonce,
-                    'algo' => $this->algo,
-                    'content_type' => 'application/json',
-                    'lang' => 'en',
-                    'id_media' => $data['product']['product_info']['media']['id'],
-                    'queue_hash' => $contents['download_status']['queue_hash'],
-                    'callback_url' => $hostname . '/api/callback_download',
-                    'test' => 'yes'
-                ]
-            ]);
-            if ($response2->getBody()) {
-                $downloadcontents = json_decode($response2->getBody(), true);
+            
+            if ($response->getBody()) {
+                $downloadcontents = json_decode($response->getBody(), true);         
                 return $downloadcontents;
             }
         }
@@ -364,6 +342,7 @@ class ImageApi
                 'lang' => 'en',
                 'id_media' => $data['id_media'],
                 'id_download' => $data['id_download'],
+                'queue_hash'=> $data['queue_hash'],
             ]
         ]);
 
