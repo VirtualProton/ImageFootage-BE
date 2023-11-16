@@ -16,7 +16,7 @@ class Product extends Model
 {
     protected $table = 'imagefootage_products';
     protected $primaryKey = 'id';
-    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug'];
+    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug','is_premium'];
     const HomeLimit = '32';
 
     public function api()
@@ -543,7 +543,8 @@ class Product extends Model
                 'license_type',
                 'product_keywords',
                 'music_size',
-                'slug'
+                'slug',
+                'is_premium'
             )
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
@@ -648,7 +649,8 @@ class Product extends Model
                     'product_vertical' => 'Royalty Free', //TODO: why hard coded value
                     'updated_at' => date("Y-m-d H:i:s"),
                     'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'slug'           => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                    'slug'           => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -690,7 +692,8 @@ class Product extends Model
                             'product_description'  => $eachmedia['description'],
                             'product_title'        => $eachmedia['title'],
                             'updated_at'           => date('Y-m-d H:i:s'),
-                            'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                            'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -740,7 +743,9 @@ class Product extends Model
                         'updated_at'          => date('Y-m-d H:i:s'),
                         'width_thumb'         => $imgData[0],
                         'height_thumb'        => $imgData[1],
-                        'thumb_update_status' =>  1
+                        'thumb_update_status' =>  1,
+                        'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+
                     ]);
                 echo "Updated" . $data['media']['id'];
             }
@@ -782,7 +787,8 @@ class Product extends Model
                     'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
-                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
 
                 );
 
@@ -826,7 +832,8 @@ class Product extends Model
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
-                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -889,7 +896,8 @@ class Product extends Model
                 'product_web' => '3',
                 'product_vertical' => 'Royalty Free',
                 'updated_at' => date("Y-m-d H:i:s"),
-                'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                'is_premium'          => 0 //TODO:need to check with dynamic column in API response
 
             );
             $data2 = DB::table('imagefootage_products')
@@ -949,7 +957,8 @@ class Product extends Model
                     'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
-                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                 );
 
                 if (!empty($eachmedia['versions'])) {
@@ -996,7 +1005,8 @@ class Product extends Model
                             'product_main_image'  => $eachmedia['watermarkPreview'],
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
-                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -1257,7 +1267,8 @@ class Product extends Model
                 'product_keywords',
                 'product_price_small',
                 'product_size',
-                'slug'
+                'slug',
+                'is_premium'
             )
             ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
@@ -1303,7 +1314,8 @@ class Product extends Model
                 'music_duration',
                 'music_fileType',
                 'music_price',
-                'slug'
+                'slug',
+                'is_premium'
             )
                 ->where('product_category', '=', $product->product_category)
                 ->where('product_id', '!=', $product_id)
@@ -1383,7 +1395,8 @@ class Product extends Model
                     'product_web'         => '3',
                     'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
-                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title'])))
+                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -1430,6 +1443,7 @@ class Product extends Model
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_web'         => '3',
+                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
                         ]);
 
                     $apiProductId = $eachmedia['id'];

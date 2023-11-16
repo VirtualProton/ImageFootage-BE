@@ -47,6 +47,20 @@
               </div>
 
               <div class="form-group">
+                <label for="exampleInputEmail1">Package Type</label>
+                <select type="text" class="form-control" name="package_type" id="package_type">
+                  <option value="Image">Image</option>
+                  <option value="Footage">Footage</option>
+                  <option value="Music">Music</option>
+                </select>
+              </div>
+              @if ($errors->has('package_type'))
+              <div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
+              @endif
+
+
+
+              <div class="form-group">
                 <label for="exampleInputEmail1">HD/4K </label>
                 <select class="form-control" name="pacage_size" id="pacage_size">
                   <option value="1">HD</option>
@@ -98,19 +112,9 @@
 
                 </div>
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Package Type</label>
-                <select type="text" class="form-control" name="package_type" id="package_type">
-                  <option value="Image">Image</option>
-                  <option value="Footage">Footage</option>
-                  <option value="Music">Music</option>
-                </select>
-              </div>
-              @if ($errors->has('package_type'))
-              <div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
-              @endif
+
               <div class="form-group" id="footageTierDiv">
-                <label for="exampleInputEmail1">Licence Type</label>
+                <label for="exampleInputEmail1">Footage Licence Type</label>
                 <select type="text" class="form-control" name="footage_tier" id="footage_tier">
                   <option value="">Select</option>
                   <option value="1">Commercial</option>
@@ -122,6 +126,21 @@
               @if ($errors->has('footage_tier'))
               <div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
               @endif
+
+              <div class="form-group" id="musicTierDiv">
+                <label for="exampleInputEmail1">Music Licence Type</label>
+                <select type="text" class="form-control" name="footage_tier" id="music_tier">
+                  <option value="">Select</option>
+                  <option value="1">Standard</option>
+                  <option value="2">Extended</option>
+                  <option value="3">Digital</option>
+                </select>
+              </div>
+              @if ($errors->has('footage_tier'))
+              <div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
+              @endif
+
+
               <div class="form-group">
                 <label for="exampleInputPassword1">Package Expiry in Months</label>
                 <input type="text" class="form-control" name="package_expiry" id="package_expiry" placeholder="Package Expiry in Months">
@@ -206,7 +225,7 @@
 </script>
 <script>
   $(document).ready(function($) {
-
+    $('#music_tier').find('option[value=\'3\']').css('display','none');
     // Example Validataion Standard Mode
     // ---------------------------------
     (function() {
@@ -326,21 +345,44 @@
   });
   $("#package_plan").change(function() {
     var pack_type = $(this).val();
+    const dropdown = $('#package_type');
+    const optionToHide = dropdown.find('option[value=\'Footage\']');
+    const secondOptionToHide = dropdown.find('option[value=\'Music\']');
     if (pack_type == '1') {
-      $("#package_month_count").val("");
-      $('#for_pro').css('display', 'none');
+        optionToHide.css('display', 'block');
+        secondOptionToHide.css('display', 'block');
+        $("#package_month_count").val("");
+        $('#for_pro').css('display', 'none');
     } else {
-      $('#for_pro').css('display', 'block');
+        optionToHide.css('display', 'none');
+        secondOptionToHide.css('display', 'none');
+        $('#for_pro').css('display', 'block');
     }
 
   });
   $("#package_type").change(function() {
     var pack_type = $(this).val();
     if (pack_type == 'Footage') {
-      $("#footageTierDiv").show();
-    } else {
-      $("#footageTierDiv").hide();
+        $('#musicTierDiv').hide();
+        $("#footageTierDiv").show();
+    } else if(pack_type == 'Music'){
+        $("#footageTierDiv").hide();
+        $('#musicTierDiv').show();
+    }
+    else {
+        $('#musicTierDiv').hide();
+        $("#footageTierDiv").hide();
     }
   });
+
+  $("#display_for").change(function() {
+    var type = $(this).val();
+    if(type == '2'){
+        $('#music_tier').find('option[value=\'3\']').css('display','block');
+    }else{
+        $('#music_tier').find('option[value=\'3\']').css('display','none');
+    }
+  })
+
 </script>
 @endsection
