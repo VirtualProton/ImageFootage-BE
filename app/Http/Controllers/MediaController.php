@@ -474,7 +474,7 @@ class MediaController extends Controller
                 $getPantherMediaDetail =Product::where(['api_product_id'=>$request->id_media,'product_web'=>2])->first();
                 if(!empty($getPantherMediaDetail)) {
                     $image = new ImageApi();
-                    $data = ['id_media'=>$checkUserDownloads->id_media,'id_download'=>$checkUserDownloads->id_download,'queue_hash'=>$checkUserDownloads->download_url];
+                    $data = ['id_media'=>$checkUserDownloads->id_media,'id_download'=>$checkUserDownloads->id_download,'queue_hash'=>$checkUserDownloads->queue_hash];
                     $imageDownloadData = $image->reDownloadMedia($data);
                 }
             }
