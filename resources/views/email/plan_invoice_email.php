@@ -1,7 +1,7 @@
 <style>
     /* * {
         font-size: 12px;
-        
+
     } */
     @media print {
     @page {
@@ -9,7 +9,7 @@
         margin: 5px;
     }
 }
-    
+
     th {
         background-color: #f7f7f7;
         border-color: #959594;
@@ -17,25 +17,25 @@
         border-width: 1px;
         text-align: center;
     }
-    
+
     .bordered td {
         border-color: #959594;
         border-style: solid;
         border-width: 1px;
-        
+
     }
     .bordered td  p {
-        font-size: 12px;   
+        font-size: 12px;
     }
 
     .bordered td ul li{
-        font-size: 12px;   
+        font-size: 12px;
     }
-    
+
     table {
         border-collapse: collapse;
     }
-    
+
     /* Para sobrescribir lo que está en div-table.css */
     .divTableCell,
     .divTableHead {
@@ -53,8 +53,8 @@
                                 <h1>hi <br/>Invoice</h1>
                             </td>
                             <td width="50%" style="border: none;">
-                                <p style="float:right;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png"
-                                        width="200px"></p>
+                                <p style="float:right;"><img src="{{ asset('new/assets/images/IF_Logo_Final.png') }}" width="200px" alt="Image">
+</p>
                             </td>
                         </tr>
                     </tbody>
@@ -82,8 +82,8 @@
                <p><strong>Online</strong>&nbsp;</p>
                </td>
                <td>
-               <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong> 
-               <?php 
+               <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong>
+               <?php
                if($orders['package_plan']==1){
                   $plan = 'Download Pack For 1 year';
                }else{
@@ -190,31 +190,31 @@
                      <tr>
                            <td width="50%" style="border: none;">
                               &nbsp;
-                           </td>  
+                           </td>
                            <td width="50%" style="border: none;">
                               <p style="float: right;">For&nbsp;<strong>Image Footage</strong>&nbsp;</p>
-                           </td> 
-                     </tr>   
+                           </td>
+                     </tr>
                      <tr>
                            <td width="50%" style="border: none;">
                               &nbsp;
-                           </td>  
+                           </td>
                            <td width="50%" style="border: none;">
                               <p style="float: right;">&nbsp;</p>
-                           </td> 
-                     </tr>   
+                           </td>
+                     </tr>
                      <tr>
                            <td width="50%" style="border: none;">
                               &nbsp;
-                           </td>  
+                           </td>
                            <td width="50%" style="border: none;">
                               <p style="float: right;"><strong>Authorized Signatory&nbsp;</strong>&nbsp;</p>
-                           </td> 
-                     </tr> 
+                           </td>
+                     </tr>
                   </tbody>
                </table>
             </div>
-         
+
             <div class="divTableRow">
                 <table class="bordered width-100pc" width="100%">
                     <tbody>
@@ -235,4 +235,4 @@
                 </table>
             </div>
         </div>
-    </div>    
+    </div>
