@@ -225,7 +225,12 @@
 </script>
 <script>
   $(document).ready(function($) {
-    $('#music_tier').find('option[value=\'3\']').css('display','none');
+    if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
+        $('#music_tier').find('option[value=\'3\']').css('display','block');
+    }else {
+        $('#music_tier').val('1');
+        $('#music_tier').find('option[value=\'3\']').css('display','none');
+    }
     // Example Validataion Standard Mode
     // ---------------------------------
     (function() {
@@ -341,6 +346,7 @@
     })();
 
     $("#footageTierDiv").hide();
+    $("#musicTierDiv").hide();
 
   });
   $("#package_plan").change(function() {
@@ -354,9 +360,12 @@
         $("#package_month_count").val("");
         $('#for_pro').css('display', 'none');
     } else {
+        $("#footageTierDiv").hide();
+        $('#musicTierDiv').hide();
         optionToHide.css('display', 'none');
         secondOptionToHide.css('display', 'none');
         $('#for_pro').css('display', 'block');
+        $('#package_type').val('Image');
     }
 
   });
@@ -380,6 +389,7 @@
     if(type == '2'){
         $('#music_tier').find('option[value=\'3\']').css('display','block');
     }else{
+        $('#music_tier').val('1');
         $('#music_tier').find('option[value=\'3\']').css('display','none');
     }
   })
