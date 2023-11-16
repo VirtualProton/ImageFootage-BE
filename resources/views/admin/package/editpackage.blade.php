@@ -234,7 +234,13 @@
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
     }
-    $('#music_tier').find('option[value=\'3\']').css('display','none');
+    if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
+        $('#music_tier').find('option[value=\'3\']').css('display','block');
+    }else {
+        $('#music_tier').val('1');
+        $('#music_tier').find('option[value=\'3\']').css('display','none');
+    }
+
     // Example Validataion Standard Mode
     // ---------------------------------
     (function() {
@@ -384,9 +390,10 @@
   });
   $("#display_for").change(function() {
     var type = $(this).val();
-    if(type == '2'){
+    if(type == '2' || type == '3'){
         $('#music_tier').find('option[value=\'3\']').css('display','block');
     }else{
+        $('#music_tier').val('1');
         $('#music_tier').find('option[value=\'3\']').css('display','none');
     }
   })
