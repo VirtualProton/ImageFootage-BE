@@ -242,6 +242,11 @@ class MediaController extends Controller
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
+                    //In the case when product is not avilable anymore.
+                    if($product_details_data['stat'] == "fail"){
+                        return $product_details_data;
+                    }
+
                     if($product_details_data['download_status']['status'] == "pending"){
                         $dataInsert = array(
                             'user_id' => $id,
@@ -500,7 +505,11 @@ class MediaController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             );
-            UserProductDownload::insert($imageDataInsert);            
+
+            $userProductDownload = new UserProductDownload();
+            $condition = ['product_id' => $checkUserDownloads->product_id];
+            $userProductDownload->updateOrInsert($condition, $imageDataInsert);   
+
             if($imageDownloadData['download_status']['status'] == "ready"){
                 return response()->json(['status'=> 'ready', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }else{
