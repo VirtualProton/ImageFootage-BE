@@ -215,7 +215,13 @@ class ImageApi
                 $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
             } else {
                 $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
-                $id = $getIdArticle['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][0]['id'];
+                if(isset($getIdArticle['articles'])){
+                    #Currently we are taking highest size based record. 
+                    #ToDO: Need to update size selection dynamically after confirmation.
+                    $id = $getIdArticle['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][0]['id'];
+                }else{
+                    return $getIdArticle;                    
+                }                
             }
         } else {
             $id = $data['product']['product_info']['media']['id'];
