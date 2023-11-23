@@ -254,11 +254,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -424,11 +432,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -448,11 +464,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -1405,11 +1429,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -1443,13 +1475,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
-                console.log("flat", total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
-                console.log("percentage", total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
         };
 
@@ -1482,10 +1520,18 @@ app.controller(
             $scope.taxdownload = total;
             if (promo.type == "flat") {
                 $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
         };
 
@@ -2288,11 +2334,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
