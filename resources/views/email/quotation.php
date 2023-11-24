@@ -178,7 +178,7 @@
                 <div class="row mb-0 amount-divs-row">
                     <div class="col-lg-12 amount-divs">
                         <div class="start">Amount (INR)</div>
-                        <div class="end"><strong><?php echo number_format($amount, 2); ?></strong></div>
+                        <div class="end"><strong><?php echo number_format($amount/count($quotation), 2); ?></strong></div>
                     </div>
                 </div>
                 <div class="row">

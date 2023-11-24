@@ -213,7 +213,7 @@ app.controller(
                 total = (subtotalvalue * gst_value) / 100;
             }
             subtotal = Number(subtotalvalue);
-            $scope.total = subtotal + total;
+            $scope.total = (subtotal + total).toFixed(2);;
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -250,17 +250,24 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);;
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
-            console.log($scope.total);
         };
 
         $scope.prod_type = function (type) {
@@ -371,7 +378,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checksubsctax = function (tax_percent, type) {
@@ -425,11 +432,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -448,12 +463,20 @@ app.controller(
             $scope.taxdownload = total;
 
             if (promo.type == "flat") {
-                $scope.total_download = total + subtotal - promo.discount;
+                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = total + subtotal - discount;
+                $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -1135,7 +1158,7 @@ app.controller(
                 total = (subtotalvalue * gst_value) / 100;
             }
             subtotal = Number(subtotalvalue);
-            $scope.total = subtotal + total;
+            $scope.total = (subtotal + total).toFixed(2);
             $scope.tax = total;
         };
 
@@ -1358,7 +1381,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             intialtotal = Number(intialtotal);
             $scope.tax = intialtotal;
-            $scope.total = intialtotal + subtotal;
+            $scope.total = (intialtotal + subtotal).toFixed(2);
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -1402,15 +1425,23 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -1444,13 +1475,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
-                console.log("flat", total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
-                console.log("percentage", total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
         };
 
@@ -1466,7 +1503,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
@@ -1482,11 +1519,19 @@ app.controller(
             total = Number(total);
             $scope.taxdownload = total;
             if (promo.type == "flat") {
-                $scope.total_download = total + subtotal - promo.discount;
+                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = total + subtotal - discount;
+                $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
         };
 
@@ -2248,7 +2293,7 @@ app.controller(
                 total = (subtotalvalue * gst_value) / 100;
             }
             subtotal = Number(subtotalvalue);
-            $scope.total = subtotal + total;
+            $scope.total = (subtotal + total).toFixed(2);
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -2285,17 +2330,24 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
-            console.log($scope.total);
         };
 
         $scope.prod_type = function (type) {
@@ -2401,7 +2453,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checksubsctax = function (tax_percent, type) {
