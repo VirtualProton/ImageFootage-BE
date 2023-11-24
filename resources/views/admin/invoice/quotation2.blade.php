@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.default')
 
 @section('content')
@@ -95,7 +96,7 @@
                                  <div class="form-group">
                                     <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
-                                    <input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
+                                    <input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-change="getproduct(product)">
                                     <input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="">
                                     <div>
                                     </div>

@@ -105,7 +105,7 @@
 											<div class="form-group" ng-if="product.type">
 												<label class=""><%product.type%> <%$index+1%> (Product ID)</label>
 												<input type="hidden" class="form-control" ng-model="product.id">
-												<input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-blur="getproduct(product)">
+												<input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-change="getproduct(product)">
 												<input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1">
 												<div>
 												</div>
@@ -344,7 +344,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
@@ -384,7 +384,7 @@
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
 									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
-									<button type="reset" class="btn btn-danger">Reset</button>
+									<button type="reset" class="btn btn-danger">Reset11</button>
 									<a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
 								</div>
 							</div>
