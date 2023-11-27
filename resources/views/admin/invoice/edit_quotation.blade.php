@@ -105,7 +105,7 @@
 											<div class="form-group" ng-if="product.type">
 												<label class=""><%product.type%> <%$index+1%> (Product ID)</label>
 												<input type="hidden" class="form-control" ng-model="product.id">
-												<input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-blur="getproduct(product)">
+												<input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-change="getproduct(product)">
 												<input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1">
 												<div>
 												</div>
@@ -344,7 +344,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
