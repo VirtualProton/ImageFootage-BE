@@ -384,7 +384,7 @@
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">
 									<button type="submit" class="btn btn-danger ng-binding">Submit</button>
-									<button type="reset" class="btn btn-danger">Reset11</button>
+									<button type="reset" class="btn btn-danger">Reset</button>
 									<a href="{{ url('admin/users/invoices', $userDetail->id) }}" class="btn btn-primary">Back</a>
 								</div>
 							</div>
