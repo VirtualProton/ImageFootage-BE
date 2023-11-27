@@ -183,6 +183,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
     /*

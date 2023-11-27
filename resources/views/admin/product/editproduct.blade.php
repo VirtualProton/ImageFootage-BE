@@ -303,19 +303,19 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Small </label>
-                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_small'] }}">
+                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Price For Small" value="{{ $product['product_price_small'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Medium </label>
-                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_medium'] }}">
+                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Price For Medium" value="{{ $product['product_price_medium'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Large </label>
-                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_large'] }}">
+                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Price For Large" value="{{ $product['product_price_large'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Extra Large </label>
-                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_extralarge'] }}">
+                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Price For Extra Large" value="{{ $product['product_price_extralarge'] }}">
                     </div>
                     <div class="dynamic_filters"></div>
                     <div class="form-group">
@@ -387,6 +387,25 @@
  $('.product_type').on('change', function(){
   var product_type=$(this).val();
   loadFilters(product_type);
+  if(product_type == 'Image') {
+    $("input[name=price_extra_large]").val('{{ config("constants.image_licence_details.extra_large") }}');
+    $("input[name=price_extra_large]").prop('readonly', true);
+    $("input[name=price_large]").val('{{ config("constants.image_licence_details.large") }}');
+    $("input[name=price_large]").prop('readonly', true);
+    $("input[name=price_medium]").val('{{ config("constants.image_licence_details.medium") }}');
+    $("input[name=price_medium]").prop('readonly', true);
+    $("input[name=Price_small]").val('{{ config("constants.image_licence_details.small") }}');
+    $("input[name=Price_small]").prop('readonly', true);
+  } else {
+    $("input[name=price_extra_large]").val('');
+    $("input[name=price_extra_large]").prop('readonly', false);
+    $("input[name=price_large]").val('');
+    $("input[name=price_large]").prop('readonly', false);
+    $("input[name=price_medium]").val('');
+    $("input[name=price_medium]").prop('readonly', false);
+    $("input[name=Price_small]").val('');
+    $("input[name=Price_small]").prop('readonly', false);
+  }
  });
  function loadFilters(product_type) {
   /* New filters apply */
@@ -422,11 +441,20 @@
     }
   });
  }
+ function loadImagePrices(product_type) {
+  if(product_type == 'image') {
+    $("input[name=price_extra_large]").prop('readonly', true);
+    $("input[name=price_large]").prop('readonly', true);
+    $("input[name=price_medium]").prop('readonly', true);
+    $("input[name=Price_small]").prop('readonly', true);
+  }
+ }
   </script>
   <script>
 
 $(document).ready(function ($) {
 var load_product_type = '{{ strtolower($product["product_main_type"]) }}';
+loadImagePrices(load_product_type);
 loadFilters(load_product_type);
 editFilters();
 $('.select2').select2();

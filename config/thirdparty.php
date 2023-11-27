@@ -12,9 +12,9 @@ return [
         'home_categories' => ''
     ],
     'pond5' => [
-        'api_key' => env('POND5_API_KEY', '22frBD55299'),
-        'api_secret' => env('POND5_API_SECRET', 'v72OkjirkV6D299'),
-        'api_url' => env('POND5_URL','https://reseller-preprod.pond5.com'),
+        'api_key' => env('POND5_API_KEY', 'cJ70pBIk119'),
+        'api_secret' => env('POND5_API_SECRET', 'j5weLX518rMP119'),
+        'api_url' => env('POND5_URL','https://api-reseller.pond5.com'),
         'home_categories' => ''
     ]
 ];

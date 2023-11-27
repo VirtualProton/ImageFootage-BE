@@ -86,7 +86,7 @@ class ProductController extends Controller
     public function create(Request $request){
 		$image = $request->file('product_image');
 		$name = time().'.'.$image->getClientOriginalExtension();
-		
+
 		$this->validate($request, [
 		 	'product_title'=>'required',
             'owner_name'   => 'required',
@@ -229,8 +229,8 @@ class ProductController extends Controller
 					   $result=$productFilters->save();
 				  }
 			 }
-			 
-			 
+
+
 			  $product_orientations=$request->product_orientations;
 			 if(isset($product_orientations) && !empty($product_orientations)){
 				  foreach($product_ethinicities as $key=>$eth){
@@ -267,10 +267,10 @@ class ProductController extends Controller
 					   $result=$productFilters->save();
 				  }
 			 }
-			 
+
 			 /* end filters */
-			 
-			 
+
+
 			 if($last_id < 10){
 				 $last_id='00'.$last_id;
 			 }else if($last_id < 100){
@@ -317,7 +317,7 @@ class ProductController extends Controller
 					'bucket' => 'imgfootage',
 					'key' => $finelname,
 				]);
-				
+
 				try {
 					$fileupresult = $uploader->upload();
 				} catch (MultipartUploadException $e) {
@@ -329,14 +329,14 @@ class ProductController extends Controller
 			 $product_update->product_id=$productid;
 			 $product_update->product_main_image=$fileupresult['ObjectURL'];
 			 $product_update->save();
-			 
+
 			 $productimages->image_name=$name;
 			 $productimages->image_product_id=$last_id;
 			 $productimages->image_added_on=date('Y-m-d H:i:s');
 			 $productimages->image_added_by=Auth::guard('admins')->user()->id;
 			 $productimages->save();
 			 // print($product->id); die;
-			 
+
 			 // return back()->with('success','Product Upload successful');
 			return redirect('admin/viewproduct/'.$product->id)->with('success','Product Upload successful');
 		 }else{
@@ -344,7 +344,7 @@ class ProductController extends Controller
 		 }
     }
     public function updateProduct($id)
-    {   
+    {
     	$user = Auth::guard('admins')->user();
         if($user->role['role'] !='Super Admin'){
           return back()->with('success','You dont have acess to edit.');
@@ -419,8 +419,8 @@ class ProductController extends Controller
 		foreach($product_peoples_array as $key=>$val1){
 			$filterpeoplessarray[]=$val1['filter_type_id'];
 		}
-		
-		
+
+
 		$product_orientations_array=$productFilters->where('filter_type','product_orientations')->where('filter_product_id',$id)->get()->toArray();
 		$filterproductorientationsarray=array();
 		foreach($product_orientations_array as $key=>$val1){
@@ -435,16 +435,16 @@ class ProductController extends Controller
 		$filtersort_typessarray=array();
 		foreach($product_sort_types_array as $key=>$val1){
 			$filtersort_typessarray[]=$val1['filter_type_id'];
-		}	
-		
-		
+		}
+
+
         return view('admin.product.editproduct', ['product' => $product,'productcategory' => $all_produstcategory_list,'productsubcategory'=>$all_produstsubcategory_list,'contributor'=>$all_contributor_list,'pcolorlist'=>$all_produstcolors_list,'productGenders'=>$all_productgender_list,'productimagetypes'=>$all_productimagetypes_list,'productimagesize'=>$all_productimagesize_list,'productagewises'=>$all_productagewises_list,'product_gender_array'=>$filtergenderarray,'product_color_array'=>$filtercolourarray,'product_glow_type_array'=>$filterglowarray,'product_image_size_array'=>$filterimgsizearray,'product_image_age_array'=>$filterimgagearray,'productethinicities'=>$all_productethinicities_list,'productlocations'=>$all_productlocations_list,'filterethinicitiesarray'=>$filterethinicitiesarray,'filterlocationsarray'=>$filterlocationsarray,'productPeoples'=>$all_productPeoples_list,'filterpeoplessarray'=>$filterpeoplessarray,'imageResolution'=>$all_productresolution_list,'productOrientations'=>$all_productorientations_list,'imageSortTypes'=>$all_isorttypes_list,'filterproductorientationsarray'=>$filterproductorientationsarray,'filterresolutionarray'=>$filterresolutionarray,'filtersort_typessarray'=>$filtersort_typessarray]);
     }
 
    public function productsList(){
    		//echo "hi"; die;
 	  $product = new Product;
-	  $all_produst_list = Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->orderBy('id', 'DESC')->paginate(100);  
+	  $all_produst_list = Product::leftJoin('imagefootage_productcategory', 'imagefootage_products.product_category', '=','imagefootage_productcategory.category_id')->leftJoin('imagefootage_productsubcategory', 'imagefootage_products.product_subcategory', '=','imagefootage_productsubcategory.subcategory_id' )->leftJoin('imagefootage_productimages', 'imagefootage_products.id', '=','imagefootage_productimages.image_product_id')->orderBy('id', 'DESC')->paginate(100);
 	  //$all_produst_list=$product->adminAllProductList();
 	  //$all_produst_list=array();
 	  // print_r(count($all_produst_list)); die;
@@ -545,13 +545,13 @@ class ProductController extends Controller
 					'bucket' => 'imgfootage',
 					'key' => $finelname,
 				]);
-				
+
 				try {
 					$fileupresult = $uploader->upload();
 				} catch (MultipartUploadException $e) {
 					echo $e->getMessage() . "\n";
 				}
-    		 
+
 			  $image = $request->file('product_image');
 			  $file = $request->file('product_image');
 			  //$name = time().'.'.$image->getClientOriginalExtension();
@@ -596,7 +596,7 @@ class ProductController extends Controller
 			 }
 		 	 $product_glow_type=$request->product_glow_type;
 			 if(isset($product_glow_type) && !empty($product_glow_type)){
-				  
+
 				  foreach($product_glow_type as $key=>$pgt){
 					  $productFilters=new ProductFilters;
 					   $productFilters->filter_product_id=$product_id;
@@ -609,7 +609,7 @@ class ProductController extends Controller
 			 }
 		 	 $product_image_size=$request->product_image_size;
 			 if(isset( $product_image_size) && !empty( $product_image_size)){
-				  
+
 				  foreach($product_image_size as $key=>$pis){
 					   $productFilters=new ProductFilters;
 					   $productFilters->filter_product_id=$product_id;
@@ -706,7 +706,7 @@ class ProductController extends Controller
 			 }
 			 }
 			 /* end filters */
-			 
+
 
 			 if($request->hasFile('product_image')) {
 				$file_path='/uploads/';
@@ -718,7 +718,7 @@ class ProductController extends Controller
 					}else{
 						$file_path.='image/photo/';
 					}
-					
+
 				}else if($request->product_type=='Footage'){
 					$file_path.='footage/';
 				}else if($request->product_type=='Editorial'){
@@ -733,17 +733,17 @@ class ProductController extends Controller
 				$destinationPath = public_path($file_path);
 				 //File::delete($destinationPath.$request->file_name);
 				//$image->move($destinationPath, $name);
-				
+
 				$imgarray=explode('https://imgfootage.s3.us-east-2.amazonaws.com/',$request->product_url);
 				$s3img=str_replace('%2F','/',$imgarray[1]);
 				$bucket = 'imgfootage';
 				$keyname = $s3img;
-				try {	
+				try {
 					$s3 = new S3Client([
 						'version' => '2006-03-01',
 						'region'  => 'us-east-2'
 					]);
-					
+
 					// Delete an object from the bucket.
 					$result=$s3->deleteObject([
 						'Bucket' => $bucket,
@@ -752,15 +752,15 @@ class ProductController extends Controller
 					} catch (S3Exception $e) {
 							echo $e->getMessage() . "\n";
 					}
-				
-				
-				
+
+
+
 			 }
 				return back()->with('success','Product updated successful');
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
-		       
+
     }
 
     /**
@@ -801,12 +801,12 @@ class ProductController extends Controller
 			$s3img=str_replace('%2F','/',$imgarray[1]);
 			$bucket = 'imgfootage';
 			$keyname = $s3img;
-			try {	
+			try {
 				$s3 = new S3Client([
 					'version' => '2006-03-01',
 					'region'  => 'us-east-2'
 				]);
-				
+
 				// Delete an object from the bucket.
 				$result=$s3->deleteObject([
 					'Bucket' => $bucket,
@@ -815,7 +815,7 @@ class ProductController extends Controller
 				} catch (S3Exception $e) {
     					echo $e->getMessage() . "\n";
 				}
-				
+
 			}
 			// return back()->with('success','Product deleated successfully');
 			return redirect('admin/all_products')->with('success','Product deleated successfully');
@@ -909,8 +909,8 @@ class ProductController extends Controller
 		foreach($product_peoples_array as $key=>$val1){
 			$filterpeoplessarray[]=$val1['filter_type_id'];
 		}
-		
-		
+
+
 		$product_orientations_array=$productFilters->where('filter_type','product_orientations')->where('filter_product_id',$id)->get()->toArray();
 		$filterproductorientationsarray=array();
 		foreach($product_orientations_array as $key=>$val1){
@@ -933,7 +933,7 @@ class ProductController extends Controller
 	}
 	public function html_email() {
 		ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
-ini_set('max_execution_time', '0'); // for infinite time of execution 
+ini_set('max_execution_time', '0'); // for infinite time of execution
       $data = array('name'=>"srinivas");
       Mail::send('mail', $data, function($message) {
          $message->to('aksrinivas49@gmail.com', 'aksrinivas')->subject('Laravel HTML Testing Mail');
@@ -994,7 +994,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// $result['all_isorttypes_list']=$imageSortTypes->where('status', '1')->get()->toArray();
 		// $result['title'] = "Add Product";
 
-		
+
 		// return json_encode($result);
 
   //  }
@@ -1006,7 +1006,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// $name = time().'.'.$image->getClientOriginalExtension();
   //  		 //print_r($name); die;
   //  		}
-		
+
 		//  $product = new Product;
 		//  $productimages=new ProductImages;
 		//  $file = $request->file('product_image');
@@ -1138,8 +1138,8 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 			   $result=$productFilters->save();
 		// 		  }
 		// 	 }
-			 
-			 
+
+
 		// 	  $product_orientations=$request->product_orientations;
 		// 	 if(isset($product_orientations) && !empty($product_orientations)){
 		// 		  foreach($product_ethinicities as $key=>$eth){
@@ -1176,10 +1176,10 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 			   $result=$productFilters->save();
 		// 		  }
 		// 	 }
-			 
+
 		// 	 /* end filters */
-			 
-			 
+
+
 		// 	 if($last_id < 10){
 		// 		 $last_id='00'.$last_id;
 		// 	 }else if($last_id < 100){
@@ -1226,7 +1226,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 			'bucket' => 'imgfootage',
 		// 			'key' => $finelname,
 		// 		]);
-				
+
 		// 		try {
 		// 			$fileupresult = $uploader->upload();
 		// 		} catch (MultipartUploadException $e) {
@@ -1238,21 +1238,21 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 	 $product_update->product_id=$productid;
 		// 	 $product_update->product_main_image=$fileupresult['ObjectURL'];
 		// 	 $product_update->save();
-			 
+
 		// 	 $productimages->image_name=$name;
 		// 	 $productimages->image_product_id=$last_id;
 		// 	 $productimages->image_added_on=date('Y-m-d H:i:s');
 		// 	 $productimages->image_added_by=Auth::guard('admins')->user()->id;
 		// 	 $productimages->save();
-			 
+
 
 		// 	echo '{"status":"1","message":"Product Upload successful"}';
 		//  }else{
 		// 	echo '{"status":"0","message":"Some problem occured."}';
 		//  }
-			
+
   //  }
-   
+
   //  public function getUpdateProduct($id)
   //  {
   //  		// echo "$id"; die;
@@ -1334,8 +1334,8 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// foreach($product_peoples_array as $key=>$val1){
 		// 	$filterpeoplessarray[]=$val1['filter_type_id'];
 		// }
-		
-		
+
+
 		// $product_orientations_array=$productFilters->where('filter_type','product_orientations')->where('filter_product_id',$id)->get()->toArray();
 		// $filterproductorientationsarray=array();
 		// foreach($product_orientations_array as $key=>$val1){
@@ -1350,9 +1350,9 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// $filtersort_typessarray=array();
 		// foreach($product_sort_types_array as $key=>$val1){
 		// 	$filtersort_typessarray[]=$val1['filter_type_id'];
-		// }	
-		
-		
+		// }
+
+
   //       $result = (['product' => $product,
   //       			'productcategory' => $all_produstcategory_list,
   //       			'productsubcategory'=>$all_produstsubcategory_list,
@@ -1379,7 +1379,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
   //       			'filterproductorientationsarray'=>$filterproductorientationsarray,
   //       			'filterresolutionarray'=>$filterresolutionarray,
   //       			'filtersort_typessarray'=>$filtersort_typessarray]);
-		
+
 		// return json_encode($result);
 
   //  }
@@ -1446,13 +1446,13 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 		'bucket' => 'imgfootage',
 		// 		'key' => $finelname,
 		// 	]);
-			
+
 		// 	try {
 		// 		$fileupresult = $uploader->upload();
 		// 	} catch (MultipartUploadException $e) {
 		// 		echo $e->getMessage() . "\n";
 		// 	}
-		 
+
 		//   $image = $request->file('product_image');
 		//   $file = $request->file('product_image');
 		//   //$name = time().'.'.$image->getClientOriginalExtension();
@@ -1497,7 +1497,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		//  }
 	 // 	 $product_glow_type=$request->product_glow_type;
 		//  if(isset($product_glow_type) && !empty($product_glow_type)){
-			  
+
 		// 	  foreach($product_glow_type as $key=>$pgt){
 		// 		  $productFilters=new ProductFilters;
 		// 		   $productFilters->filter_product_id=$product_id;
@@ -1510,7 +1510,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		//  }
 	 // 	 $product_image_size=$request->product_image_size;
 		//  if(isset( $product_image_size) && !empty( $product_image_size)){
-			  
+
 		// 	  foreach($product_image_size as $key=>$pis){
 		// 		   $productFilters=new ProductFilters;
 		// 		   $productFilters->filter_product_id=$product_id;
@@ -1607,7 +1607,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		//  }
 		//  }
 		//  /* end filters */
-		 
+
 
 		//  if($request->hasFile('product_image')) {
 		// 	$file_path='/uploads/';
@@ -1619,7 +1619,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 		}else{
 		// 			$file_path.='image/photo/';
 		// 		}
-				
+
 		// 	}else if($request->product_type=='Footage'){
 		// 		$file_path.='footage/';
 		// 	}else if($request->product_type=='Editorial'){
@@ -1634,17 +1634,17 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 	$destinationPath = public_path($file_path);
 		// 	 //File::delete($destinationPath.$request->file_name);
 		// 	//$image->move($destinationPath, $name);
-			
+
 		// 	$imgarray=explode('https://imgfootage.s3.us-east-2.amazonaws.com/',$request->product_url);
 		// 	$s3img=str_replace('%2F','/',$imgarray[1]);
 		// 	$bucket = 'imgfootage';
 		// 	$keyname = $s3img;
-		// 	try {	
+		// 	try {
 		// 		$s3 = new S3Client([
 		// 			'version' => '2006-03-01',
 		// 			'region'  => 'us-east-2'
 		// 		]);
-				
+
 		// 		// Delete an object from the bucket.
 		// 		$result=$s3->deleteObject([
 		// 			'Bucket' => $bucket,
@@ -1653,16 +1653,16 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 		// 		} catch (S3Exception $e) {
 		// 				echo $e->getMessage() . "\n";
 		// 		}
-			
-			
-			
+
+
+
 		//  }
-		
+
 		// echo '{"status":"1","message":"Product Updated successful"}';
 		//  }else{
 		// 	echo '{"status":"0","message":"Some problem occured."}';
 		//  }
-			
+
 
 
   //  }
@@ -1674,7 +1674,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 				->select('product_id','product_title','product_main_image','product_vertical','product_price_small','product_price_medium'
 				,'product_price_large','product_price_extralarge','product_web','api_product_id')
 				->where('product_id',$product_id);
-				
+
 			$crm_products = DB::table('imagefootage_crm_products')
 					->select('product_code','name','thumbnail_image','type','small_size','medium_size','large_size','x_large_size','product_web','api_product_id')
 					->where('product_code',$product_id)
@@ -1732,8 +1732,36 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 			}
 			$product_details = array($product_details_data,$pond_id_withprefix.'_main_xl.mp4',$pond_id_withprefix.'_iconl.jpeg');
 			return json_encode($product_details);
-		}  		
-         
-  }
+		}
 
-}  
+  }
+    public function categoryLists(Request $request){
+        if(isset($request->type) && isset($request->slug) && !empty($request->type) && !empty($request->slug)){
+            $categoryList = ProductCategory::where([ 'category_slug'=> $request->slug, 'type'=> $request->type ])->first();
+
+        } elseif(isset($request->type) && !empty($request->type)){
+            $categoryList = ProductCategory::where('type',$request->type)->get();
+        }
+        else {
+            $categoryList = ProductCategory::where('category_status','Active')->limit(14)->get();
+        }
+
+        return response()->json(['data'=> $categoryList,'status'=>'success','message'=>'Categories details fetched successfully']);
+    }
+
+    public function categoryDetails(Request $request){
+        if(isset($request->category_name) && !empty($request->category_name)){
+
+           $category_id = ProductCategory::where('category_name',$request->category_name)->first();
+           $keyword['type'] = $request->type;
+           $keyword['category_id'] = $category_id;
+           $getKeyword = $request->all();
+           $product      = new Product();
+            $all_products = $product->getProductsData($keyword, $getKeyword);
+            $total        = $totalPages = 0;
+
+        }
+
+    }
+
+}

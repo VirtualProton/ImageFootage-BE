@@ -45,5 +45,21 @@ return [
     'GSTIN_VALUE' => 'AMCPR8180N',
     'PAN_VALUE' => '36AMCPR8180N1Z3',
     'SAC_CODE' => '997339',
-    'QI_ADDRESS' => 'Hyderabad - Telangana'
+    'QI_ADDRESS' => 'Hyderabad - Telangana',
+    'image_licence_details' => [
+        'small' => '550',
+        'medium' => '2500',
+        'large' => '3500',
+        'extra_large' => '4600',
+    ],
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID', '606623025930-j8olaio1tl20r6d20ho8vik535fidl06.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
+    ],
+    'facebook' => [
+        'client_id'     => env('FACEBOOK_CLIENT_ID', '311148397985250'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET', 'c9b8857a8d1ba7cc2f53bc59c127dbf1'),
+        'app_access_token_endpoint' => "https://graph.facebook.com/oauth/access_token?client_id=:facebook_client_id&client_secret=:facebook_client_secret&grant_type=client_credentials",
+        'user_access_token_endpoint' => "https://graph.facebook.com/debug_token?input_token=:request_token&access_token=:data_access_token",
+    ],
 ];

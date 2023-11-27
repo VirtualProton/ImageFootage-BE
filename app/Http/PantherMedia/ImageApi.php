@@ -84,37 +84,38 @@ class ImageApi
     }
 
 
-    public function search($keyword, $getKeyword = [], $limit = 30, $page = 0)
+    public function search($keyword, $getKeyword = [], $limit = 15, $page = 1)
     {
         $serach = $keyword['search'];
         if (isset($getKeyword['pagenumber']) && $getKeyword['pagenumber'] > '0') {
             $page = $getKeyword['pagenumber'];
         }
-        if (isset($getKeyword['letest']) && $getKeyword['letest'] == '1') {
+        if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'sort: date;';
-        } else if (isset($getKeyword['populer']) && $getKeyword['populer'] == '1') {
+        } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
             $sort = 'sort: buy;';
         } else {
-            $sort = 'sort: rel;';
-        }    
-        
-        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+            $sort = 'sort: rel;'; // For Best Match
+        }
+
+        $getFilters = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial','limit']);
         $filter_mapping = "";
-        foreach($getFilters as $getFilterName => $getFilterValue){            
-            
-            if(!empty($getFilterValue)){                
+
+        foreach($getFilters as $getFilterName => $getFilterValue){
+
+            if(!empty($getFilterValue)){
                 $filterData = DB::table('imagefootage_filters')
                 ->select('imagefootage_filters.id', 'imagefootage_filters_options.value')
-                ->where('imagefootage_filters.value', $getFilterName)                        
+                ->where('imagefootage_filters.value', $getFilterName)
                 ->join('imagefootage_filters_options', 'imagefootage_filters.id', '=', 'imagefootage_filters_options.filter_id')
-                ->whereIn('imagefootage_filters_options.value', explode(',', $getFilterValue))
+                ->whereIn('imagefootage_filters_options.value', explode(', ', $getFilterValue))
                 ->get();
 
                 foreach($filterData as $filter){
                     $filter_mapping .= $getFilterName.":".$filter->value.';';
                 }
-            } 
-        }        
+            }
+        }
 
         $this->access_key = $this->getAccessKey();
         try {
@@ -135,7 +136,8 @@ class ImageApi
                     'q' => $serach,
                     'page' => $page,
                     'limit' => $limit,
-                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                    'extra_info'   => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content,license,contributor,type,collection,orientation,people_number,price,isolated,spx",
+
                     'filters' => $sort . 'type: photos;' . $filter_mapping
                 ]
             ]);
@@ -207,18 +209,24 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-
+        
         if (count($data['product']['selected_product']) > 0) {
             if (isset($data['product']['product_info']['articles'])) {
                 $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
             } else {
                 $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
-                $id = $getIdArticle['articles']['subscription_list']['subscription']['article']['id'];
+                if(isset($getIdArticle['articles'])){
+                    #Currently we are taking highest size based record. 
+                    #ToDO: Need to update size selection dynamically after confirmation.
+                    $id = $getIdArticle['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][0]['id'];
+                }else{
+                    return $getIdArticle;                    
+                }                
             }
         } else {
             $id = $data['product']['product_info']['media']['id'];
         }
-
+        
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post($this->url . '/download-media', [
             'headers' => [
@@ -238,34 +246,13 @@ class ImageApi
                 'test' => 'yes'
             ]
         ]);
-
         if ($response->getBody()) {
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
             $hostname = env('APP_URL');
-
-            $client2 = new Client(); //GuzzleHttp\Client
-            $response2 = $client2->post($this->url . '/download-media', [
-                'headers' => [
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Accept-Version' => '1.0'
-                ],
-                'form_params' => [
-                    'api_key' => $this->api_key,
-                    'access_key' => $this->access_key,
-                    'timestamp' => $this->timestamp,
-                    'nonce' => $this->nonce,
-                    'algo' => $this->algo,
-                    'content_type' => 'application/json',
-                    'lang' => 'en',
-                    'id_media' => $data['product']['product_info']['media']['id'],
-                    'queue_hash' => $contents['download_status']['queue_hash'],
-                    'callback_url' => $hostname . '/backend/api/callback_download',
-                    'test' => 'yes'
-                ]
-            ]);
-            if ($response2->getBody()) {
-                $downloadcontents = json_decode($response2->getBody(), true);
+            
+            if ($response->getBody()) {
+                $downloadcontents = json_decode($response->getBody(), true);         
                 return $downloadcontents;
             }
         }
@@ -361,12 +348,82 @@ class ImageApi
                 'lang' => 'en',
                 'id_media' => $data['id_media'],
                 'id_download' => $data['id_download'],
+                'queue_hash'=> $data['queue_hash'],
             ]
         ]);
 
         if ($response->getBody()) {
             $downloadcontents = json_decode($response->getBody(), true);
             return $downloadcontents;
+        }
+    }
+
+    public function searchWithMedia($mediaId, $limit = 30,$pageNumber = 0){
+        try {
+            $this->access_key = $this->getAccessKey();
+            $client = new Client(); //GuzzleHttp\Client
+            $response = $client->post($this->url . '/search-similar', [
+                'headers' => [
+                    'Content-Type'   => 'application/x-www-form-urlencoded',
+                    'Accept-Version' => '1.0'
+                ],
+                'form_params' => [
+                    'api_key'      => $this->api_key,
+                    'access_key'   => $this->access_key,
+                    'timestamp'    => $this->timestamp,
+                    'nonce'        => $this->nonce,
+                    'algo'         => $this->algo,
+                    'content_type' => 'application/json',
+                    'lang' => 'en',
+                    'id_media'=>$mediaId,
+                    'page' => $pageNumber,
+                    'limit' => $limit,
+                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                ]
+            ]);
+
+            if ($response->getBody()) {
+                $contents = json_decode($response->getBody(), true);
+                return $contents;
+            }
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            $jsonBody = (string) $response->getBody();
+        }
+    }
+
+    public function searchWithAuthor($authorName, $limit = 30,$pageNumber = 0){
+        try {
+            $this->access_key = $this->getAccessKey();
+            $client = new Client(); //GuzzleHttp\Client
+            $response = $client->post($this->url . '/search', [
+                'headers' => [
+                    'Content-Type'   => 'application/x-www-form-urlencoded',
+                    'Accept-Version' => '1.2'
+                ],
+                'form_params' => [
+                    'api_key'      => $this->api_key,
+                    'access_key'   => $this->access_key,
+                    'timestamp'    => $this->timestamp,
+                    'nonce'        => $this->nonce,
+                    'algo'         => $this->algo,
+                    'content_type' => 'application/json',
+                    'lang' => 'en',
+                    'page' => $pageNumber,
+                    'limit' => $limit,
+                    'q'=>'',
+                    'filter'=>'sort:date;type:photos;author:'.$authorName,
+                    'extra_info' => "preview,preview_high,width,height,copyright,date,keywords,title,description,editorial,extended,packet,subscription,premium,rights_managed,mimetype,model_id,model_release,property_release,author_username,author_realname,adult_content",
+                ]
+            ]);
+
+            if ($response->getBody()) {
+                $contents = json_decode($response->getBody(), true);
+                return $contents;
+            }
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            $jsonBody = (string) $response->getBody();
         }
     }
 }

@@ -2,7 +2,8 @@
 
 return [
     'secure' => [
-        'local'      => false, // Use secure_url in local
-        'production' => true,  // Use secure_url in production
+        'local'       => false,
+        'production'  => true,  // Use secure_url in production
+        'development' => false,
     ],
 ];

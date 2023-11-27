@@ -22,7 +22,12 @@ class CronController extends Controller
 
     }
 
-    public function pantherImageUpload()
+    /**
+    * This function will be executed as a separate CRON for getting the pantherMedia images
+    * for all the categories which are active and set for home display
+    * This CRON should run frequently may be once in a day
+    */
+    public function pantherMediaHomeCategoriesImageUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
@@ -32,38 +37,45 @@ class CronController extends Controller
                         ->where('category_status', '=', 'Active')
                         ->get()
                         ->toArray();
-      
+
         foreach($home_categories as $percategory){
             $keyword['search']  = $percategory['category_name'];
             $pantherMediaImages = new ImageApi();
             $pantharmediaData   = $pantherMediaImages->search($keyword);
 
             if(count($pantharmediaData) > 0){
-                $this->product->savePantherImage($pantharmediaData, $percategory['category_id']);
+                $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id']);
             }
-        } 
+        }
     }
 
-    public function pantherImageUploadCategory()
+    /**
+    * This function will be executed as a separate CRON for getting the pantherMedia images
+    * for all the categories which are active but not set for home display
+    * This CRON should run less frequently may be twice in a week
+    */
+    public function pantherMediaOtherCategoriesImageUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
-        
+
         $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                     ->where('is_display_home', '=', '0')
                     ->where('category_status', '=', 'Active')
                     ->get()
                     ->toArray();
-       
+
         foreach($categories as $percategory){
             $keyword['search']  = $percategory['category_name'];
             $pantherMediaImages = new ImageApi();
             $pantharmediaData   = $pantherMediaImages->search($keyword);
+
             if (count($pantharmediaData) > 0) {
-                $this->product->savePantherImage($pantharmediaData,$percategory['category_id']);
+                $this->product->savePantherMediaImage($pantharmediaData,$percategory['category_id']);
             }
         }
     }
+
     public function pantherImageUpdate(){
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
@@ -81,7 +93,7 @@ class CronController extends Controller
             $keyword['search']  = $perproduct['api_product_id'];
             $pantherMediaImages = new ImageApi();
             $pantharmediaData   = $pantherMediaImages->get_media_infoNew($keyword['search']);
-            
+
             if (isset($pantharmediaData['stat'])) {
                 if ($pantharmediaData['stat'] != 'fail') {
                     $this->product->updatePantherImage($pantharmediaData);
@@ -92,56 +104,155 @@ class CronController extends Controller
         }
     }
 
-    public function pond5Upload()
+    /**
+    * This function will be executed as a separate CRON for getting the pond5 footages
+    * for all the categories which are active and set for home display
+    * This CRON should run frequently may be once in a day
+    */
+    public function pond5HomeCategoriesFootageUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
-        // TODO: Need to manage via constant array
-        $home_categories = array('COVID-19','Summer','Work from Home','Mothers day','Earth Day','Nature');
+
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
+
         foreach ($home_categories as $percategory) {
-            $keyword['search']    = $percategory;
-            $footageMedia         = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword,[]);
-            $common               = new Common();
-            $category_id          = $common->checkCategory($percategory);
-            if (!empty($pondfootageMediaData) && count($pondfootageMediaData) > 0) {
-                $this->product->savePond5Image($pondfootageMediaData, $category_id);
+            $keyword['search']     = $percategory['category_name'];
+            $footageMedia          = new FootageApi();
+            $pond5FootageMediaData = $footageMedia->search($keyword);
+
+            if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
+                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
             }
         }
     }
 
-    public function pond5GetMusic()
-    {
-        // allow the script to run for an infinite amount of time
-        ini_set('max_execution_time', 0);
-        // TODO: Need to manage via constant array
-        $homeCategories = ['COVID-19', 'Summer', 'Work from Home', 'Mothers day', 'Earth Day', 'Nature'];
-
-        foreach ($homeCategories as $percategory) {
-            $keyword['search']  = $percategory;
-            $musicMedia         = new MusicApi();
-            $pondMusicMediaData = $musicMedia->searchMusic($keyword, []);
-            $common             = new Common();
-            $categoryId         = $common->checkCategory($percategory);
-
-            if (!empty($pondMusicMediaData) && count($pondMusicMediaData['items']) > 0) {
-                $this->product->savePond5Music($pondMusicMediaData['items'], $categoryId);
-            }
-        }
-    }
-
-    public function pond5UploadCategory()
+    /**
+    * This function will be executed as a separate CRON for getting the pond5 footages
+    * for all the categories which are active but not set for home display
+    * This CRON should run less frequently may be twice in a week
+    */
+    public function pond5OtherCategoriesFootageUpload()
     {
         // allow the script to run for an infinite amount of time
         ini_set('max_execution_time', 0);
 
-        $categories = ProductCategory::get()->toArray();
+        $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                    ->where('is_display_home', '=', '0')
+                    ->where('category_status', '=', 'Active')
+                    ->get()
+                    ->toArray();
+
         foreach ($categories as $percategory) {
-            $keyword['search'] = $percategory['category_name'];
-            $footageMedia = new FootageApi();
-            $pondfootageMediaData = $footageMedia->search($keyword,[]);
-            if (!empty($pondfootageMediaData) && count($pondfootageMediaData) > 0) {
-                $this->product->savePond5Image($pondfootageMediaData, $percategory['category_id']);
+            $keyword['search']     = $percategory['category_name'];
+            $footageMedia          = new FootageApi();
+            $pond5FootageMediaData = $footageMedia->search($keyword);
+
+            if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
+                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
+            }
+        }
+    }
+
+    /**
+    * This function will be executed as a separate CRON for getting the pond5 Music
+    * for all the categories which are active and set for home display
+    * This CRON should run frequently may be once in a day
+    */
+    public function pond5HomeCategoriesMusicUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
+
+        foreach ($home_categories as $percategory) {
+            $keyword['search']   = $percategory['category_name'];
+            $musicMedia          = new MusicApi();
+            $pond5MusicMediaData = $musicMedia->search($keyword, []);
+
+            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
+                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
+            }
+        }
+    }
+
+    /**
+    * This function will be executed as a separate CRON for getting the pond5 Music
+    * for all the categories which are active but not set for home display
+    * This CRON should run less frequently may be twice in a week
+    */
+    public function pond5OtherCategoriesMusicUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                    ->where('is_display_home', '=', '0')
+                    ->where('category_status', '=', 'Active')
+                    ->get()
+                    ->toArray();
+
+        foreach ($categories as $percategory) {
+            $keyword['search']   = $percategory['category_name'];
+            $musicMedia          = new MusicApi();
+            $pond5MusicMediaData = $musicMedia->search($keyword,[]);
+
+            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
+                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
+            }
+        }
+    }
+
+
+    public function pond5HomeCategoriesImageUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                        ->where('is_display_home', '=', '1')
+                        ->where('category_status', '=', 'Active')
+                        ->get()
+                        ->toArray();
+
+        foreach($home_categories as $percategory) {
+            $keyword['search']  = $percategory['category_name'];
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
+
+            if(count($pond5ImagesData) > 0){
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
+            }
+        }
+    }
+
+    public function pond5OtherCategoriesImageUpload()
+    {
+        // allow the script to run for an infinite amount of time
+        ini_set('max_execution_time', 0);
+
+        $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
+                    ->where('is_display_home', '=', '0')
+                    ->where('category_status', '=', 'Active')
+                    ->get()
+                    ->toArray();
+
+        foreach($categories as $percategory){
+            $keyword['search']  = $percategory['category_name'];
+            $imagesMedia        = new \App\Http\Pond5\ImageApi();
+            $pond5ImagesData    = $imagesMedia->search($keyword);
+
+            if (count($pond5ImagesData) > 0) {
+                $this->product->savePond5Image($pond5ImagesData, $percategory['category_id']);
             }
         }
     }

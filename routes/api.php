@@ -32,23 +32,21 @@ Route::group([
     Route::post('reset_contributer_pass', 'FrontuserController@resetContributerPass');
     Route::post('contact_us', 'AuthController@contactUs');
     Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
+    Route::post('refresh', 'AuthController@refresh')->middleware('jwt.verify');
     Route::post('me', 'AuthController@me');
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('/products_api', 'ProductController@productListApi');
     Route::post('search', 'SearchController@index');
+    Route::get('music-search/{query}', 'SearchController@musicSearchByTitle'); # search by music title
     Route::post('relatedsearch', 'SearchController@relatedProductList');
-    Route::get('details/{id}/{origin}/{type}', 'MediaController@index');
+    Route::post('details', 'MediaController@index');
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');
-    Route::get('pantherImageUpload', 'CronController@pantherImageUpload');
+
     Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
-    Route::get('pond5Upload', 'CronController@pond5Upload');
-    Route::get('pond5-get-music', 'CronController@pond5GetMusic');  # pond5GetMusic
-    Route::get('pantherImageUploadCategory', 'CronController@pantherImageUploadCategory');
-    Route::get('pond5UploadCategory', 'CronController@pond5UploadCategory');
+
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');
     Route::get('getCountyStatesCityList', 'UserContactusController@getCountyStatesCityList');
@@ -67,7 +65,6 @@ Route::group([
     Route::post('validUser', 'UserController@validUser');
     Route::post('validMobileUser', 'UserController@validMobileUser');
     Route::post('requestChangePassword', 'UserController@requestChangePassword');
-    Route::post('socialLogin', 'AuthController@socialLogin');
     Route::post('forgotResetPassword', 'UserContactusController@forResetPassword');
     Route::post('userchangepassword', 'UserContactusController@uchangepassword');
     Route::post('atomPayPlanResponse', 'PaymentController@atomPayPlanResponse');
@@ -101,10 +98,13 @@ Route::group([
     Route::get('/get_countries_list', 'AuthController@getCountriesList');
     Route::get('/get_states_list/{country_id?}', 'AuthController@getStatesList');
     Route::get('/get_cities_list/{state_id?}', 'AuthController@getCitiesList');
+    Route::post('relatedsearchImage', 'SearchController@relatedSimilarImageList');
+    Route::get('/category-list', 'ProductController@categoryLists');
+    Route::post('/category-details', 'ProductController@categoryDetails');
 });
 
 Route::group([
-    'middleware' => ['api', 'CORS'], //'jwt.verify'
+    'middleware' => ['api', 'CORS','jwt.verify'],
 
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');
@@ -145,7 +145,13 @@ Route::group([
     Route::post('/get-user-wishlist-products', 'WishListController@getUserWishlistData');
     Route::post('/create-update-wishlist', 'WishListController@createOrUpdateWishlist');
     Route::post('/remove-products-from-wishlist', 'WishListController@removeProductFromWishlist');
+    Route::post('/delete-wishlist-data', 'WishListController@deleteWishlist');
     Route::post('/get-wishlist-data', 'WishListController@getWishlistData');
+
+    Route::post('/get-author-products', 'SearchController@getAuthorProducts');
+    Route::post('/get-author-musics', 'SearchController@getAuthorMusics');
+    Route::post('/get-category-products', 'SearchController@getCategoryProducts');
+    Route::post('/get-category-musics', 'SearchController@getCategoryMusics');
 });
 
 
@@ -160,8 +166,10 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('login-v2', 'AuthController@loginV2');
         Route::get('packages-v2', 'PackageApiController@packageListv2');
         Route::get('editorials-v2', 'EditorialController@editorialListv2');
+        Route::get('editorials-stories-v2', 'EditorialController@editorialStoryListv2');
         Route::get('editorials-v2/{id}', 'EditorialController@editorialDetailv2');
         Route::post('social-login', 'AuthController@socialLoginv2');  # new socialLogin
+        Route::post('refresh', 'AuthController@refresh');
     });
 });
 
@@ -169,3 +177,23 @@ Route::group(['prefix' => 'v2'], function () {
 # Elasticsearch
 Route::get('/search/{query}', 'ElasticSearchController@search');
 Route::post('/store-elasticword', 'ElasticSearchController@storeNewWorld');
+
+
+// CRONS path
+Route::group([
+    'middleware' => ['api', 'CORS']
+], function () {
+    Route::get('panther-media-home-categories-image-upload', 'CronController@pantherMediaHomeCategoriesImageUpload');
+    Route::get('panther-media-other-categories-image-upload', 'CronController@pantherMediaOtherCategoriesImageUpload');
+
+    Route::get('pond5-home-categories-footage-upload', 'CronController@pond5HomeCategoriesFootageUpload');
+    Route::get('pond5-other-categories-footage-upload', 'CronController@pond5OtherCategoriesFootageUpload');
+
+    Route::get('pond5-home-categories-music-upload', 'CronController@pond5HomeCategoriesMusicUpload');
+    Route::get('pond5-other-categories-music-upload', 'CronController@pond5OtherCategoriesMusicUpload');
+
+    Route::get('pond5-home-categories-image-upload', 'CronController@pond5HomeCategoriesImageUpload');
+    Route::get('pond5-other-categories-image-upload', 'CronController@pond5OtherCategoriesImageUpload');
+});
+
+

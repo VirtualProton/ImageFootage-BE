@@ -76,15 +76,19 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;
                     } else if ($plan['package_type'] == 'Footage') {
                         $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
                     }
                 }
                 $send_data['image_download'] = $image_download;
                 $send_data['footage_download'] = $footage_download;
+                $send_data['music_download'] = $music_download;
             }
             return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
         } else {
@@ -131,7 +135,7 @@ class UserController extends Controller
                         ->whereDate('created_at', '<=', $endDate)
                         ->where('order_type', '!=', 3)
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice','status')
                         ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }]);
@@ -163,15 +167,19 @@ class UserController extends Controller
 
                 $image_download = 0;
                 $footage_download = 0;
+                $music_download = 0;
                 foreach ($user['plans'] as $plan) {
                     if ($plan['package_type'] == 'Image') {
                         $image_download = 1;
                     } else if ($plan['package_type'] == 'Footage') {
                         $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
                     }
                 }
                 $send_data['image_download'] = $image_download;
                 $send_data['footage_download'] = $footage_download;
+                $send_data['music_download'] = $music_download;
             }
             return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
         } else {
@@ -181,7 +189,7 @@ class UserController extends Controller
     public function getUserAddress(Request $request)
     {
         $id = $request->Utype;
-        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->first();
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->with(['country','city','state'])->first();
         return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
     }
     public function contributorProfile($id)
@@ -211,15 +219,13 @@ class UserController extends Controller
         if (empty($request['email']['user_email'])) {
             return response()->json(['status' => false, 'message' => 'Email is required.'], 200);
         }
-        $hostname = \Request::server('HTTP_REFERER');
         $count = User::where('email', '=', $request['email']['user_email'])->count();
         if ($count > 0) {
             $randnum = rand(1000, 10000);
             $sm = $request['email']['user_email'];
             $update_array = array('otp' => $randnum);
             $result = User::where('email', $request['email']['user_email'])->update($update_array);
-            // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-            $url = $hostname . "/resetpassword/" . $randnum . "/" . $request['email']['user_email'];
+            $url = config('app.front_end_url') . "resetpassword/" . $randnum . "/" . $request['email']['user_email'];
             $data = array('url' => $url, 'email' => $request['email']['user_email']);
             Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
                 $message->to($data['email'], '')->subject('Image Footage Forget Password')
@@ -332,25 +338,27 @@ class UserController extends Controller
         }
 
         if ($request->user_id) {
-            $OrderData = Orders::with(['items' => function ($query) use ($mediaType, $licenseType) {
-                $query->with(['product' => function ($productquery) use ($mediaType, $licenseType) {
+            $orderData = Orders::with(['items.product'])
+                ->where('user_id', '=', $userId)
+                ->whereIn('order_status', ['Completed', 'Transction Success'])
+                ->whereDate('order_date', '>=', $startDate)
+                ->whereDate('order_date', '<=', $endDate)
+                ->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }
                     if ($licenseType != 'All') {
                         $productquery->where('license_type', $licenseType);
                     }
-                }]);
-            }])
-                ->where('user_id', '=', $userId)
-                ->whereIn('order_status', ['Completed', 'Transction Success'])
-                ->whereDate('order_date', '>=', $startDate)
-                ->whereDate('order_date', '<=', $endDate)
+                })
                 ->orderBy('id', 'desc')
-                ->paginate(5)->toArray();
-            echo json_encode(['status' => "success", 'data' => $OrderData]);
+                ->paginate(5)
+                ->toArray();
+
+            return json_encode(['status' => "success", 'data' => $orderData]);
+
         } else {
-            echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
+            return json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }
     }
 
@@ -384,15 +392,15 @@ class UserController extends Controller
 
         if ($request->user_id) {
 
-            $downloads = ProductsDownload::with(['product' => function ($productquery) use ($mediaType) {
-                if ($mediaType != 'All') {
-                    $productquery->where('product_main_type', $mediaType);
-                }
-            }])
-
+            $downloads = ProductsDownload::with(['product'])
                 ->where('user_id', '=', $userId)
                 ->whereDate('created_at', '>=', $startDate)
                 ->whereDate('created_at', '<=', $endDate)
+                ->whereHas('product', function ($productquery) use ($mediaType) {
+                    if ($mediaType != 'All') {
+                        $productquery->where('product_main_type', $mediaType);
+                    }
+                })
                 ->orderBy('id', 'desc')
                 ->paginate(5)
                 ->toArray();
@@ -429,8 +437,8 @@ class UserController extends Controller
             $update_data = [
                 'first_name' => $data['profileData']['first_name'],
                 'mobile' => $data['profileData']['mobile'],
-                // 'phone' => $data['profileData']['phone'],
                 'address' => $data['profileData']['address'],
+                'country' => $data['profileData']['country'],
                 'state' => $data['profileData']['state'],
                 'city' => $data['profileData']['city'],
                 'postal_code' => $data['profileData']['pincode'],
@@ -451,11 +459,12 @@ class UserController extends Controller
                 $content = array('name' => $userlist->first_name, 'email' => $userlist->email);
                 Mail::to($content['email'])->send(new ChangeAddressEmail($content));
             }
+           $user_data=User::where('id',$data['tokenData']['Utype'])->with('country')->with('state')->with('city')->first();
 
 
             $result = clone $userlist;
             $result = $result->toArray();
-            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $result]);
+            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $user_data]);
         } else {
             echo json_encode(['status' => "fail", 'message' => 'Some error happened', 'data' => '']);
         }

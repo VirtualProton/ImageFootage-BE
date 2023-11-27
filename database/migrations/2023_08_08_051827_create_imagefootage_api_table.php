@@ -16,6 +16,8 @@ class CreateImagefootageApiTable extends Migration
         Schema::create('imagefootage_api', function (Blueprint $table) {
             $table->integer('api_id', true);
             $table->string('api_provider', 100)->nullable();
+            $table->string('detail', 100)->nullable();
+            $table->string('api_slug', 255)->nullable();
             $table->integer('api_amount')->nullable();
             $table->string('api_flag', 5)->nullable();
             $table->dateTime('created_at');

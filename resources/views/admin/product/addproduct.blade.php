@@ -313,19 +313,19 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Small </label>
-                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="">
+                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Price For Small">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Medium </label>
-                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="">
+                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Price For Medium">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Large </label>
-                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="">
+                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Price For Large">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Extra Large </label>
-                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="">
+                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Price For Extra Large">
                     </div>
                     <div class="dynamic_filters"></div>
                     <div class="form-group">
@@ -383,6 +383,16 @@
       }
     }
   });
+  if(product_type == 'image') {
+    $("input[name=price_extra_large]").val('{{ config("constants.image_licence_details.extra_large") }}');
+    $("input[name=price_extra_large]").prop('readonly', true);
+    $("input[name=price_large]").val('{{ config("constants.image_licence_details.large") }}');
+    $("input[name=price_large]").prop('readonly', true);
+    $("input[name=price_medium]").val('{{ config("constants.image_licence_details.medium") }}');
+    $("input[name=price_medium]").prop('readonly', true);
+    $("input[name=Price_small]").val('{{ config("constants.image_licence_details.small") }}');
+    $("input[name=Price_small]").prop('readonly', true);
+  }
  });
  $("#product_category").on('change',function(){
 	var prod_id=$(this).val();

@@ -20,6 +20,8 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.is_display_product_image = false;
+        $scope.is_display_product_image_edit_page = true;
 
         //$scope.uid
         $scope.quotation.product = [
@@ -100,7 +102,7 @@ app.controller(
                                     response.data[0].thumbnail_image;
                                 $scope.prices[index] = response.data[0];
                             } else {
-                                if(response.data[0].clip_data) {
+                                if (response.data[0].clip_data) {
                                     $scope.quotation.product[index].name =
                                         response.data[0].clip_data.id;
                                     $scope.quotation.product[index].id =
@@ -211,7 +213,7 @@ app.controller(
                 total = (subtotalvalue * gst_value) / 100;
             }
             subtotal = Number(subtotalvalue);
-            $scope.total = subtotal + total;
+            $scope.total = (subtotal + total).toFixed(2);;
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -248,17 +250,24 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);;
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
-            console.log($scope.total);
         };
 
         $scope.prod_type = function (type) {
@@ -369,7 +378,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checksubsctax = function (tax_percent, type) {
@@ -423,11 +432,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -446,12 +463,20 @@ app.controller(
             $scope.taxdownload = total;
 
             if (promo.type == "flat") {
-                $scope.total_download = total + subtotal - promo.discount;
+                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = total + subtotal - discount;
+                $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -672,7 +697,7 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                    if ($scope.quotation.product[i].pro_type == 'right_managed') {
                         setTimeout(
                             function (index) {
                                 CKEDITOR.replace("licence_type-" + index, {
@@ -693,6 +718,94 @@ app.controller(
         };
         // Call the initialization function after rendering the editors
         setTimeout($scope.initEditors, 1000);
+
+        $scope.getProductImage = function () {
+            productName = $("#product_id").val();
+            $("#loading").show();
+            $scope.is_display_product_image = false;
+            $("#display_image").val('');
+            $http({
+                method: "GET",
+                url:
+                    image_path +
+                    "api/product/" +
+                    productName +
+                    "?type=Image",
+            }).then(
+                function (response) {
+                    if (response.status == "200") {
+                        $scope.is_display_product_image = true;
+                        $("#loading").hide();
+                        let img = response.data[0].thumbnail_image;
+                        if (img) {
+                            $("#image_path").val(img);
+                            setTimeout(function () {
+                                $("#display_image").attr('src', img);
+                            }, 1000);
+                        }
+                    }
+                },
+                function (error) {
+                    $scope.is_display_product_image = false;
+                    $("#display_image").val('');
+                    alert("Image not found");
+                    $("#loading").hide();
+                }
+            );
+        };
+
+        $scope.getProductImageEditPage = function () {
+            productName = $("#product_id").val();
+            if (productName) {
+                $("#loading").show();
+                $scope.is_display_product_image_edit_page = true;
+                $("#image_path").val("");
+                $http({
+                    method: "GET",
+                    url:
+                        image_path +
+                        "api/product/" +
+                        productName +
+                        "?type=Image",
+                }).then(
+                    function (response) {
+                        if (response.status == "200") {
+                            $scope.is_display_product_image_edit_page = true;
+                            $("#loading").hide();
+                            let img = response.data[0].thumbnail_image;
+                            if (img) {
+                                $("#image_path").val(img);
+                                setTimeout(function () {
+                                    $("#display_image").attr('src', img);
+                                }, 200);
+                            }
+                        }
+                    },
+                    function (error) {
+                        $scope.is_display_product_image_edit_page = false;
+                        $("#display_image").val('');
+                        alert("Image not found");
+                        $("#loading").hide();
+                    }
+                );
+            } else {
+                $scope.is_display_product_image_edit_page = false;
+            }
+        };
+
+        $scope.getProductImageEditPageInit = function () {
+            productName = $("#product_id").val();
+            if (productName) {
+                $("#loading").show();
+                const existingImage = $("#image_path").val();
+                if (existingImage == "") {
+                    $scope.is_display_product_image_edit_page = false;
+                }
+                $("#loading").hide();
+            } else {
+                $scope.is_display_product_image_edit_page = false;
+            }
+        };
     }
 );
 app.controller(
@@ -705,6 +818,7 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.is_display_footage = true;
 
         //$scope.uid
         $scope.promotion.product = [
@@ -751,7 +865,7 @@ app.controller(
         };
         $scope.prices = [];
         $scope.getproduct = function (product) {
-            // console.log(product); return;
+            console.log("====")
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.promotion.product.indexOf(product);
@@ -765,7 +879,6 @@ app.controller(
                         product.type,
                 }).then(
                     function (response) {
-                        console.log("==>", response);
                         if (response.status == "200") {
                             $("#loading").hide();
                             if (product.type == "Image") {
@@ -786,10 +899,8 @@ app.controller(
                                 }
                             } else {
                                 if (response.data[1] != "") {
-                                    $("#footage_url").val(response.data[1]);
-                                    let url =
-                                        "https://p5resellerp.s3-accelerate.amazonaws.com/" +
-                                        response.data[1];
+                                    let url = response.data[0].watermarkPreview;
+                                    $("#footage_url").val(url);
                                     $("#product_footage").attr("src", url);
                                     $("#product_footage").show();
                                 } else {
@@ -806,8 +917,60 @@ app.controller(
             }
         };
 
+        $scope.getProductImageEditPage = function () {
+            productName = $("#product_id").val();
+            if (productName) {
+                $("#loading").show();
+                $scope.is_display_footage = true;
+                $("#image_path").val("");
+                $http({
+                    method: "GET",
+                    url:
+                        image_path +
+                        "api/product/" +
+                        productName +
+                        "?type=Image",
+                }).then(
+                    function (response) {
+                        if (response.status == "200") {
+                            $scope.is_display_footage = true;
+                            $("#loading").hide();
+                            let img = response.data[0].thumbnail_image;
+                            if (img) {
+                                $("#image_path").val(img);
+                                setTimeout(function () {
+                                    $("#display_image").attr('src', img);
+                                }, 200);
+                            }
+                        }
+                    },
+                    function (error) {
+                        $scope.is_display_footage = false;
+                        $("#display_image").val('');
+                        alert("Image not found");
+                        $("#loading").hide();
+                    }
+                );
+            } else {
+                $scope.is_display_footage = false;
+            }
+        };
+
+        $scope.getProductImageEditPageInit = function () {
+            productName = $("#product_id").val();
+            if (productName) {
+                $("#loading").show();
+                const existingImage = $("#image_path").val();
+                if (existingImage == "") {
+                    $scope.is_display_footage = false;
+                }
+                $("#loading").hide();
+            } else {
+                $scope.is_display_footage = false;
+            }
+        };
+
         $scope.checkProduct = function (product) {
-            console.log("**", product);
             $scope.getproduct(product);
         };
     }
@@ -928,7 +1091,7 @@ app.controller(
                 $scope.flag = response.flag;
                 $scope.quotation.product = [];
                 $scope.prod_type = response.user_package?.package_type;
-                if(response.invoice_type == 1){
+                if (response.invoice_type == 1) {
                     // subscription
                     $scope.subsc_expiry_time = response.expiry_invoices;
                     $scope.subscriptionprice = response.total - response.tax;
@@ -966,7 +1129,7 @@ app.controller(
                         licence_type: value.licence_type,
                     };
                     $scope.quotation.product.push(obj);
-                    if(value.product_type == 'right_managed'){
+                    if (value.product_type == 'right_managed') {
                         setTimeout(function () {
                             CKEDITOR.replace(
                                 "licence_type-" + $scope.quotation.product.length
@@ -974,8 +1137,8 @@ app.controller(
                         }, 100);
                     }
                 });
-                if(response.user_package){
-                    get_play_type(response.user_package.package_expiry,response.user_package.package_expiry_yearly);
+                if (response.user_package) {
+                    get_play_type(response.user_package.package_expiry, response.user_package.package_expiry_yearly);
                     get_plan_data(response.user_package.package_id);
                 }
             },
@@ -984,9 +1147,24 @@ app.controller(
             }
         );
 
+        $scope.getTheTotal = function () {
+            var subtotal = $scope.quotation.product;
+            var subtotalvalue = 0;
+            var total = 0;
+            for (var j = 0; j < subtotal.length; j++) {
+                subtotalvalue += Number(subtotal[j].price);
+            }
+            if ($('input[name="tax_checkbox[]"]:checked').length > 0) {
+                total = (subtotalvalue * gst_value) / 100;
+            }
+            subtotal = Number(subtotalvalue);
+            $scope.total = (subtotal + total).toFixed(2);
+            $scope.tax = total;
+        };
+
         $scope.edit_quotation_type_set = function (type) {
             $scope.quotation_type = type;
-            if(type == 3 ){
+            if (type == 3) {
                 $scope.addProduct();
             }
         };
@@ -1008,7 +1186,7 @@ app.controller(
             $("#loading").hide();
         };
         /* Call to get quotation_type name for subscription and download only */
-        function get_plan_data(get_package_id = ''){
+        function get_plan_data(get_package_id = '') {
             $http({
                 method: "POST",
                 url: api_path + "plans",
@@ -1021,7 +1199,7 @@ app.controller(
                 function (response) {
                     if (response.data.status == "success") {
                         $scope.plansData = response.data.data;
-                        if(get_package_id){
+                        if (get_package_id) {
                             $scope.selectedPlanData = $scope.plansData.filter(package => package.package_id == get_package_id);
                             $scope.selected_sub_plan = get_package_id;
                         }
@@ -1029,15 +1207,15 @@ app.controller(
                 }
             );
         }
-        function get_play_type(package_expiry,package_expiry_yearly){
-            if(package_expiry == 1){
+        function get_play_type(package_expiry, package_expiry_yearly) {
+            if (package_expiry == 1) {
                 $scope.plan_type = "monthly";
-            } else if(package_expiry_yearly == 1) {
+            } else if (package_expiry_yearly == 1) {
                 $scope.plan_type = "annual";
             }
         }
         $scope.selectPlanfromlist = function (selectedPlanData, type) {
-            if(selectedPlanData){
+            if (selectedPlanData) {
                 var plan = $scope.plansData.filter(package => package.package_id == selectedPlanData);
                 $scope.selected_sub_plan = plan[0].package_id;
                 $scope.subsc_tax = ""; // Reset tax
@@ -1203,7 +1381,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             intialtotal = Number(intialtotal);
             $scope.tax = intialtotal;
-            $scope.total = intialtotal + subtotal;
+            $scope.total = (intialtotal + subtotal).toFixed(2);
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -1247,15 +1425,23 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
         };
 
@@ -1289,13 +1475,19 @@ app.controller(
 
             if (promo.type == "flat") {
                 $scope.subsc_total = total + subtotal - promo.discount;
-                console.log("flat" ,total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
                 $scope.subsc_total = total + subtotal - discount;
-                console.log("percentage" ,total, subtotal, promo.discount)
+
+                if ($scope.subsc_total < 0) {
+                    $scope.subsc_total = 0;
+                }
             }
         };
 
@@ -1311,7 +1503,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
@@ -1327,11 +1519,19 @@ app.controller(
             total = Number(total);
             $scope.taxdownload = total;
             if (promo.type == "flat") {
-                $scope.total_download = total + subtotal - promo.discount;
+                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = total + subtotal - discount;
+                $scope.total_download = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total_download < 0) {
+                    $scope.total_download = 0;
+                }
             }
         };
 
@@ -1368,7 +1568,7 @@ app.controller(
             } else if (!$scope.subscriptionprice) {
                 alert("Please enter subtotal");
                 return false;
-            } else if(!$scope.subsc_expiry_time) {
+            } else if (!$scope.subsc_expiry_time) {
                 alert("Please select expiry period");
                 return false;
             } else {
@@ -1419,7 +1619,7 @@ app.controller(
             } else if (!$scope.downloadprice) {
                 alert("Please enter Subtotal");
                 return false;
-            } else if(!$scope.download_expiry) {
+            } else if (!$scope.download_expiry) {
                 alert("Please select expiry period");
                 return false;
             } else {
@@ -1463,12 +1663,12 @@ app.controller(
         };
 
         $scope.submitEditCustom = function () {
-            if(!$scope.expiry_time) {
+            if (!$scope.expiry_time) {
                 alert("Please select expiry period");
                 return false;
             }
             $("#loading").show();
-            
+
             var sendData = {
                 uid: $("#uid").val(),
                 quotation_type: $scope.quotation_type,
@@ -1565,7 +1765,7 @@ app.controller(
         $scope.initEditors = function () {
             if ($scope.quotation.product) {
                 for (var i = 0; i < $scope.quotation.product.length; i++) {
-                    if($scope.quotation.product[i].pro_type == 'right_managed'){
+                    if ($scope.quotation.product[i].pro_type == 'right_managed') {
                         setTimeout(
                             function (index) {
                                 CKEDITOR.replace("licence_type-" + index, {
@@ -1625,22 +1825,22 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNocus").val().substr(2, 10);
+        var panno = $("#gstNo").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
 
-        if (!$("#gstNocus").val()) {
+        if (!$("#gstNo").val()) {
             alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNocus").val())) {
+        } else if (!reggst.test($("#gstNo").val())) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNocus").val()) {
+        } else if (!$("#panNo").val()) {
             alert("Please add pan no.");
-        } else if (!regex.test($("#panNocus").val())) {
+        } else if (!regex.test($("#panNo").val())) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNocus").val()) {
+        } else if (panno != $("#panNo").val()) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phonecus").val()) {
+        } else if (!$("#phone").val()) {
             alert("Please add phone no .");
-        } else if (!regmob.test($("#phonecus").val())) {
+        } else if (!regmob.test($("#phone").val())) {
             alert("Please enter 10 digit mobile no .");
         } else if (!$scope.payment_method) {
             alert("Please select payment method.");
@@ -1670,12 +1870,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        if (result.data.resp.statuscode == "1") {
-                            alert(result.data.resp.statusdesc);
-                        } else {
-                            alert(result.data.resp.statusdesc);
-                        }
-                        window.location.reload();
+                        window.location = api_path + "users/invoices/" + user_id;
                     },
                     function (error) {
                         $("#loading").hide();
@@ -1734,12 +1929,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        if (result.data.resp.statuscode == "1") {
-                            alert(result.data.resp.statusdesc);
-                        } else {
-                            alert(result.data.resp.statusdesc);
-                        }
-                        window.location.reload();
+                        window.location = api_path + "users/invoices/" + user_id;
                     },
                     function (error) {
                         $("#loading").hide();
@@ -1816,7 +2006,7 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
-                if(el[0]['id']){ // If upload new file than reset scope product
+                if (el[0]['id']) { // If upload new file than reset scope product
                     let productId = el[0]['id'].substring(4);
                     $("#product_" + productId).val("");
                 }
@@ -2103,7 +2293,7 @@ app.controller(
                 total = (subtotalvalue * gst_value) / 100;
             }
             subtotal = Number(subtotalvalue);
-            $scope.total = subtotal + total;
+            $scope.total = (subtotal + total).toFixed(2);
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {}) {
@@ -2140,17 +2330,24 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.tax = total;
-            $scope.total = total + subtotal;
+            $scope.total = (total + subtotal).toFixed(2);
 
             if (promo.type == "flat") {
-                $scope.total = total + subtotal - promo.discount;
+                $scope.total = (total + subtotal - promo.discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
 
             if (promo.type == "percentage") {
                 discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = total + subtotal - discount;
+                $scope.total = (total + subtotal - discount).toFixed(2);
+
+                if ($scope.total < 0) {
+                    $scope.total = 0;
+                }
             }
-            console.log($scope.total);
         };
 
         $scope.prod_type = function (type) {
@@ -2256,7 +2453,7 @@ app.controller(
             subtotal = Number(subtotalvalue);
             total = Number(total);
             $scope.taxdownload = total;
-            $scope.total_download = total + subtotal;
+            $scope.total_download = (total + subtotal).toFixed(2);
         };
 
         $scope.checksubsctax = function (tax_percent, type) {
