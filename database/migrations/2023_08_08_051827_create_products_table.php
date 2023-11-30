@@ -53,8 +53,8 @@ class CreateProductsTable extends Migration
             $table->dateTime('modified')->nullable();
             $table->integer('check_thumb')->nullable()->default(0);
             $table->string('extension', 100)->nullable();
-            $table->integer('ungraded_vid_price')->nullable();
-            $table->integer('4k_vid_price')->nullable();
+            $table->decimal('ungraded_vid_price', 10, 2)->nullable();
+            $table->decimal('4k_vid_price', 10, 2)->nullable();
         });
     }
 

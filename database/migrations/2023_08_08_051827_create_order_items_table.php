@@ -17,7 +17,7 @@ class CreateOrderItemsTable extends Migration
             $table->integer('id', true);
             $table->string('order_id', 50)->nullable();
             $table->string('order_title', 255)->nullable();
-            $table->decimal('subtotal', 10)->nullable();
+            $table->decimal('subtotal', 10, 2)->nullable();
             $table->string('user_id', 100)->nullable();
             $table->string('product_id', 100)->nullable();
             $table->string('product_type', 100)->nullable();

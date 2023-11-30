@@ -21,13 +21,13 @@ class CreateImagefootageOrdersTable extends Migration
             $table->string('invoice', 100)->nullable();
             $table->string('download_plan_id', 50)->nullable();
             $table->string('download_plan_title', 50)->nullable();
-            $table->decimal('tax', 10)->nullable();
+            $table->decimal('tax', 10, 2)->nullable();
             $table->text('tax_selected')->nullable();
             $table->string('coupon_code', 100)->nullable();
             $table->string('coupon_type', 50)->nullable();
             $table->double('coupon_value')->nullable();
             $table->double('coupon_discount')->nullable();
-            $table->decimal('order_total', 10)->nullable();
+            $table->decimal('order_total', 10, 2)->nullable();
             $table->date('order_date')->nullable();
             $table->text('order_status')->nullable();
             $table->string('order_title', 100)->nullable();

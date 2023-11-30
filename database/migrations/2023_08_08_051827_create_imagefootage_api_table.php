@@ -18,7 +18,7 @@ class CreateImagefootageApiTable extends Migration
             $table->string('api_provider', 100)->nullable();
             $table->string('detail', 100)->nullable();
             $table->string('api_slug', 255)->nullable();
-            $table->integer('api_amount')->nullable();
+            $table->decimal('api_amount', 10, 2)->nullable();
             $table->string('api_flag', 5)->nullable();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
