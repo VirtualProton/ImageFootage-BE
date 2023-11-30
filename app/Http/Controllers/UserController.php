@@ -485,11 +485,9 @@ class UserController extends Controller
      */
     public function deleteUserAccount($user_id, Request $request)
     {
-        try {
-            $user = auth('api')->user();
-
-            if ($user->id == $user_id) {
-                $userToDelete = User::find($user->id);
+        try {           
+            if ($user_id) {
+                $userToDelete = User::find($user_id);
                 if ($userToDelete) {
                     $userToDelete->delete();
                     return response()->json(["success" => true, "message" => "User deleted successfully."], 200);
