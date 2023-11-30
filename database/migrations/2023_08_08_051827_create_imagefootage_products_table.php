@@ -27,10 +27,10 @@ class CreateImagefootageProductsTable extends Migration
             $table->string('product_thumbnail', 255)->nullable();
             $table->string('product_main_image', 255)->nullable();
             $table->string('product_release_details')->nullable();
-            $table->string('product_price_small')->nullable();
-            $table->string('product_price_medium')->nullable();
-            $table->string('product_price_large')->nullable();
-            $table->string('product_price_extralarge')->nullable();
+            $table->decimal('product_price_small', 10, 2)->nullable();
+            $table->decimal('product_price_medium', 10, 2)->nullable();
+            $table->decimal('product_price_large', 10, 2)->nullable();
+            $table->decimal('product_price_extralarge', 10, 2)->nullable();
             $table->string('product_size')->nullable();
             $table->string('product_added_by')->nullable();
             $table->enum('product_status', ['Active', 'Inactive'])->default('Inactive');

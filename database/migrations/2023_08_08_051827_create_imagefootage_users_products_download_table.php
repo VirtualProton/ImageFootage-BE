@@ -31,7 +31,7 @@ class CreateImagefootageUsersProductsDownloadTable extends Migration
             $table->string('product_desc', 255)->nullable();
             $table->string('product_url', 255)->nullable();
             $table->string('product_size', 255)->nullable();
-            $table->string('product_price', 255)->nullable();
+            $table->decimal('product_price', 10, 2)->nullable();
             $table->integer('web_type')->nullable();
             $table->string('product_poster', 255)->nullable();
             $table->string('product_thumb', 255)->nullable();

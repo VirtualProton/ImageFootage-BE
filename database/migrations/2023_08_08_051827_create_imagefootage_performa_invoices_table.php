@@ -26,9 +26,9 @@ class CreateImagefootagePerformaInvoicesTable extends Migration
             $table->string('mode', 100)->nullable();
             $table->string('job_number', 100)->nullable();
             $table->string('promo_code', 100)->nullable();
-            $table->float('tax', 10, 0)->nullable();
+            $table->decimal('tax', 10, 2)->nullable();
             $table->text('tax_selected')->nullable();
-            $table->float('total', 10, 0)->nullable();
+            $table->decimal('total', 10, 2)->nullable();
             $table->integer('quotation_id')->nullable();
             $table->integer('invoice_type')->nullable()->comment('(1-subscriber,2-download,3-custom)');
             $table->integer('proforma_type')->nullable()->comment('(1-quotation,2-invoice)');

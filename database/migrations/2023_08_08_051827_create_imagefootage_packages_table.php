@@ -16,7 +16,7 @@ class CreateImagefootagePackagesTable extends Migration
         Schema::create('imagefootage_packages', function (Blueprint $table) {
             $table->bigIncrements('package_id');
             $table->string('package_name')->nullable();
-            $table->string('package_price')->nullable();
+            $table->decimal('package_price', 10, 2)->nullable();
             $table->string('package_description')->nullable();
             $table->integer('package_products_count')->nullable();
             $table->string('package_type')->nullable();

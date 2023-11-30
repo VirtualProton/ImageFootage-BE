@@ -20,7 +20,7 @@ class CreatePerformaInvoiceItemsTable extends Migration
             $table->string('product_id', 100);
             $table->string('product_type', 50);
             $table->string('product_size', 50);
-            $table->integer('subtotal');
+            $table->decimal('subtotal', 10, 2);
             $table->integer('product_subscription');
             $table->string('plan_id', 50);
             $table->integer('status');

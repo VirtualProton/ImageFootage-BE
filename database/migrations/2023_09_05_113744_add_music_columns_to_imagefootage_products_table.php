@@ -17,7 +17,7 @@ class AddMusicColumnsToImagefootageProductsTable extends Migration
             $table->string('music_sound_bpm')->after('thumb_update_status')->nullable();
             $table->string('music_duration')->after('music_sound_bpm')->nullable();
             $table->string('music_fileType')->after('music_duration')->nullable();
-            $table->string('music_price')->after('music_fileType')->nullable();
+            $table->decimal('music_price', 10, 2)->after('music_fileType')->nullable();
             $table->string('music_size')->after('music_price')->nullable();
         });
     }

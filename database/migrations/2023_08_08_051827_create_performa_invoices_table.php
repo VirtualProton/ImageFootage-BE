@@ -24,9 +24,9 @@ class CreatePerformaInvoicesTable extends Migration
             $table->string('mode', 100);
             $table->string('job_number', 100);
             $table->string('promo_code', 100);
-            $table->float('tax', 10, 0);
+            $table->decimal('tax', 10, 2);
             $table->text('tax_selected')->nullable();
-            $table->integer('total');
+            $table->decimal('total', 10, 2);
             $table->string('invoice_type', 100);
             $table->integer('expiry_invoices');
             $table->string('address', 100);
