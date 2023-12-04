@@ -19,10 +19,10 @@ class CreateImagefootageUsercartTable extends Migration
             $table->string('cart_product_type')->nullable();
             $table->string('standard_type', 255)->nullable();
             $table->string('standard_size', 255)->nullable();
-            $table->integer('standard_price')->nullable();
+            $table->decimal('standard_price', 10, 2)->nullable();
             $table->string('extended_name', 255)->nullable();
-            $table->integer('extended_price')->nullable();
-            $table->integer('total')->nullable();
+            $table->decimal('extended_price', 10, 2)->nullable();
+            $table->decimal('total', 10, 2)->nullable();
             $table->string('product_name', 255)->nullable();
             $table->string('product_main_footage', 255)->nullable();
             $table->string('product_thumb', 255)->nullable();

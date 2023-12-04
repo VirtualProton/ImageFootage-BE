@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('id', true);
             $table->string('order_id', 50)->nullable();
             $table->string('payer_id', 222);
-            $table->float('amount', 10, 0);
+            $table->decimal('amount', 10, 2);
             $table->string('currency', 50);
             $table->integer('paymentStatus')->default(0);
             $table->string('payment_mode', 50);

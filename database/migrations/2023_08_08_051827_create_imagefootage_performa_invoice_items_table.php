@@ -22,7 +22,7 @@ class CreateImagefootagePerformaInvoiceItemsTable extends Migration
             $table->string('product_type', 50)->nullable();
             $table->string('product_size', 50)->nullable();
             $table->string('product_image', 255)->nullable();
-            $table->integer('subtotal')->nullable();
+            $table->decimal('subtotal', 10, 2)->nullable();
             $table->integer('product_subscription')->nullable();
             $table->string('plan_id', 50)->nullable();
             $table->integer('status')->nullable();

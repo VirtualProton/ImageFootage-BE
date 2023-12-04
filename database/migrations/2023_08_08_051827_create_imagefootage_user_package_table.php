@@ -19,7 +19,7 @@ class CreateImagefootageUserPackageTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('package_id');
             $table->string('package_name')->nullable();
-            $table->string('package_price')->nullable();
+            $table->decimal('package_price', 10, 2)->nullable();
             $table->string('package_description')->nullable();
             $table->integer('package_products_count')->nullable();
             $table->string('package_type')->nullable();

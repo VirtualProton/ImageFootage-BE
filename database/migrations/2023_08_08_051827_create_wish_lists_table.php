@@ -18,7 +18,7 @@ class CreateWishListsTable extends Migration
             $table->string('session_id', 255)->nullable()->index('session_id');
             $table->string('product_id', 100)->nullable()->index('product_id');
             $table->integer('quantity')->nullable();
-            $table->decimal('price', 10)->nullable();
+            $table->decimal('price', 10, 2)->nullable();
             $table->string('status', 50);
             $table->string('attribute_id', 255)->nullable();
             $table->string('attribute_value_id', 255)->nullable();

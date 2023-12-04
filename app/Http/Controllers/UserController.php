@@ -189,7 +189,7 @@ class UserController extends Controller
     public function getUserAddress(Request $request)
     {
         $id = $request->Utype;
-        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code')->where('id', $id)->with(['country','city','state'])->first();
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code','company','gst')->where('id', $id)->with(['country','city','state'])->first();
         return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
     }
     public function contributorProfile($id)
@@ -443,7 +443,8 @@ class UserController extends Controller
                 'city' => $data['profileData']['city'],
                 'postal_code' => $data['profileData']['pincode'],
                 'address2' => $data['profileData']['address2'] ?? '',
-                'company' => $data['profileData']['company'] ?? ''
+                'company' => $data['profileData']['company'] ?? '',
+                'email' => $data['profileData']['email'] ?? ''
             ];
             if (empty($userlist['country'])) {
                 $update_data['country'] = $data['profileData']['country'];
@@ -485,11 +486,9 @@ class UserController extends Controller
      */
     public function deleteUserAccount($user_id, Request $request)
     {
-        try {
-            $user = auth('api')->user();
-
-            if ($user->id == $user_id) {
-                $userToDelete = User::find($user->id);
+        try {           
+            if ($user_id) {
+                $userToDelete = User::find($user_id);
                 if ($userToDelete) {
                     $userToDelete->delete();
                     return response()->json(["success" => true, "message" => "User deleted successfully."], 200);

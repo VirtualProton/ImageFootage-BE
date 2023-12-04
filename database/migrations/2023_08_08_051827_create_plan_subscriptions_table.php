@@ -22,7 +22,7 @@ class CreatePlanSubscriptionsTable extends Migration
             $table->integer('maximage_download')->nullable();
             $table->integer('maxvectors_download')->nullable();
             $table->integer('maxfootage_download')->nullable();
-            $table->decimal('plan_price', 10);
+            $table->decimal('plan_price', 10, 2);
             $table->string('plan_validity', 255)->nullable();
             $table->date('start_date');
             $table->date('end_date');
