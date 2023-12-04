@@ -442,7 +442,7 @@ class PaymentController extends Controller
             $displayCurrency = 'INR';
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
-                'receipt' => $transactionId,
+                'receipt' => 'IMGFTG'.$transactionId,
                 'amount' => ($allFields['plan']['package_price']) * 100, // 2000 rupees in paise
                 'currency' => 'INR',
                 'payment_capture' => 1 // auto capture
