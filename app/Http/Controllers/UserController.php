@@ -44,7 +44,7 @@ class UserController extends Controller
                         ->whereRaw('package_products_count > downloaded_product')
                         ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type','package_plan')
                         ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }]);
@@ -486,7 +486,7 @@ class UserController extends Controller
      */
     public function deleteUserAccount($user_id, Request $request)
     {
-        try {           
+        try {
             if ($user_id) {
                 $userToDelete = User::find($user_id);
                 if ($userToDelete) {
