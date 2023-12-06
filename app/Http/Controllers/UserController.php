@@ -423,6 +423,10 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first()], 200);
         }
+        $token = $request->header('Authorization');
+
+        // Assuming the token is in the format 'Bearer YOUR_ACCESS_TOKEN'
+        $token = str_replace('Bearer ', '', $token);
 
         if (count($data['profileData']) > 0 && count($data['tokenData']) > 0) {
             $userlist = User::where('id', '=', $data['tokenData']['Utype'])
@@ -465,7 +469,7 @@ class UserController extends Controller
 
             $result = clone $userlist;
             $result = $result->toArray();
-            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $user_data]);
+            echo json_encode(['status' => "success", 'message' => 'Profile updated successfully.', 'data' => $user_data,'user_data'=>$this->respondWithToken($token)]);
         } else {
             echo json_encode(['status' => "fail", 'message' => 'Some error happened', 'data' => '']);
         }
@@ -486,7 +490,7 @@ class UserController extends Controller
      */
     public function deleteUserAccount($user_id, Request $request)
     {
-        try {           
+        try {
             if ($user_id) {
                 $userToDelete = User::find($user_id);
                 if ($userToDelete) {
@@ -549,5 +553,73 @@ class UserController extends Controller
         } else {
             return response()->json(["success" => false, "message" => "At the moment, there are no packages associated with your account. To get started, consider acquiring a package."], 200);
         }
+    }
+
+    protected function respondWithToken($token, $payload = null)
+    {
+        if (auth()->user() || !empty($payload)) {
+            $image_download = 0;
+            $footage_download = 0;
+            $music_download = 0;
+            $profileCompleted = false;
+            $loginType = 'normal';
+            if ($payload) {
+                $user = User::where('email', $payload['email'])->first();
+                if ($user) {
+                    $plans = UserPackage::where('user_id', '=', $user->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                        ->get()->toArray();
+                    if (!$this->isProfileCompleted($user->id)) {
+                        $profileCompleted = true;
+                    }
+                    $loginType = $payload['login_type'];
+                }
+            } else {
+                $plans = UserPackage::where('user_id', '=', auth()->user()->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                    ->get()->toArray();
+                    if (!$this->isProfileCompleted(auth()->user()->id)) {
+                        $profileCompleted = true;
+                    }
+            }
+            if (count($plans) > 0) {
+
+                foreach ($plans as $plan) {
+                    if ($plan['package_type'] == 'Image') {
+                        $image_download = 1;
+                    } else if ($plan['package_type'] == 'Footage') {
+                        $footage_download = 1;
+                    } else if ($plan['package_type'] == 'Music') {
+                        $music_download = 1;
+                    }
+                }
+            }
+            $authUserObject = auth()->user();
+            return [
+                'access_token'      => $token,
+                'token_type'        => 'bearer',
+                'expires_in'        =>  21,
+                'user'              => $authUserObject->first_name ?? $payload['name'],
+                'email'             => $authUserObject->email ?? $payload['email'],
+                'Utype'             => $authUserObject->id ?? $user->id,
+                'image_downlaod'    => $image_download,
+                'footage_downlaod'  => $footage_download,
+                'music_download'    => $music_download,
+                'profile_completed' => $profileCompleted,
+                'refresh_token'     => $authUserObject ? auth()->fromUser($authUserObject) : null,
+                'login_type'        => $loginType
+            ];
+        } else {
+            return null;
+        }
+    }
+
+    # Check logged User profile completed
+    private function isProfileCompleted($userId)
+    {
+        return User::where('id', $userId)
+            ->whereNull('country')
+            ->whereNull('state')
+            ->whereNull('city')
+            ->whereNull('address')
+            ->exists();
     }
 }
