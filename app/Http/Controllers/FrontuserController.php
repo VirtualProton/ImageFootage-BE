@@ -39,7 +39,6 @@ class FrontuserController extends Controller {
 
     public function addtocart(Request $request){
         //$lub = new Lcobucci();
-
 		$Usercart=new Usercart;
 		$already_image = 0;
 		$counterImage  = 0;
@@ -58,7 +57,7 @@ class FrontuserController extends Controller {
                 $Usercart->cart_added_by= $product_addedby;
                 $Usercart->standard_type= isset($request['product']['selected_product']['name']) ?$request['product']['selected_product']['name'] : '';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= isset($request['product']['selected_product']['width']) && isset($request['product']['selected_product']['height']) ?  $request['product']['selected_product']['width'] ." X ".$request['product']['selected_product']['height'] : '';
+                $Usercart->standard_size= isset($request['product']['selected_product']['version'])  ?  $request['product']['selected_product']['version'] : '';
                 $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']: 0;
 				# TODO: After dynamic licenece Type call this should address
                  $Usercart->extended_name= isset($request['product']['extended']) ? $request['product']['extended']:'';
