@@ -200,6 +200,40 @@ class SearchController extends Controller
         return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
 
+    public function getHomePageProducts($keyword = [], $getKeyword = [], $perpage = 30)
+    {
+        $product      = new Product();
+        $all_products = $product->getProductsData($keyword, $getKeyword);
+        $total        = $totalPages = 0;
+
+        $jsonData = json_decode($all_products->getContent(), true);
+
+
+        $verticalRecords = [];
+        $horizontalRecords = [];
+        foreach ($jsonData['data'] as $record) {
+            if ($record['attributes']['orientation'] === 'vertical' && count($verticalRecords) < 5) {
+                $verticalRecords[] = $record;
+            } elseif ($record['attributes']['orientation'] === 'horizontal' && count($horizontalRecords) < 14) {
+                $horizontalRecords[] = $record;
+            }
+
+            if (count($verticalRecords) == 4 && count($horizontalRecords) == 13) {
+                break;
+            }
+        }
+        $filteredRecords = array_merge(
+            array_slice($verticalRecords, 0, 4),
+            array_slice($horizontalRecords, 0, 13)
+        );
+
+        if (count($filteredRecords) > 0) {
+            $total        = count($filteredRecords);
+            
+        }
+        return array('imgfootage' => $filteredRecords, 'total'=> count($filteredRecords), 'perpage'=> 17, 'tp'=> 1);
+    }
+
     public function getEditorialData($keyword, $getKeyword, $perpage = 30)
     {
         $product      = new Product();
