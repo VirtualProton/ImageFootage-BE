@@ -139,7 +139,7 @@ class Product extends Model
                 $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
                 $options    = isset($matchingData->options) ? $matchingData->options : [];
 
-                $data[$key]['attributes'] = isset($attributes['attributes']) ? $attributes['attributes'] : [];
+                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
             }
 
