@@ -38,6 +38,7 @@ Route::group([
     Route::post('resetPassword', 'ChangePasswordController@process');
     Route::post('/products_api', 'ProductController@productListApi');
     Route::post('search', 'SearchController@index');
+    Route::get('get-home-products', 'SearchController@getHomePageProducts');
     Route::get('music-search/{query}', 'SearchController@musicSearchByTitle'); # search by music title
     Route::post('relatedsearch', 'SearchController@relatedProductList');
     Route::post('details', 'MediaController@index');
