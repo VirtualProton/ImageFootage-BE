@@ -184,7 +184,7 @@ class MediaController extends Controller
                 }
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['select_product']['version']) ? $allFields['product']['select_product']['version'] : $download_id.':0';
+                $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
@@ -225,27 +225,30 @@ class MediaController extends Controller
                 // Download Images from Pond5
                 $footageMedia = new FootageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
+
+                $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
 
                 if ($allFields['product']['product_info']['productWeb'] == 2) { // If image is from PantherMedia
                     $imageMedia = new ImageApi();
                     $product_details_data = $imageMedia->download($allFields, $download_id);
-                    
+
                 } elseif ($allFields['product']['product_info']['productWeb'] == 3) { // If image is from Pond5
                     $footageMedia = new FootageApi();
                     $product_details_data = $footageMedia->download($download_id, $version);
-                }               
+                }
 
-               
+
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
-
-                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
                     //In the case when product is not avilable anymore.
                     if($product_details_data['stat'] == "fail"){
                         return $product_details_data;
                     }
+
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
+
+                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
+                    
 
                     if($product_details_data['download_status']['status'] == "pending"){
                         $dataInsert = array(
@@ -292,7 +295,7 @@ class MediaController extends Controller
                             'redownloded_date' => null,
                         );
                     }
-                    
+
 
                     UserProductDownload::insert($dataInsert);
 
@@ -483,7 +486,7 @@ class MediaController extends Controller
                     $imageDownloadData = $image->reDownloadMedia($data);
                 }
             }
-           
+
             $imageDataInsert = array(
                 'user_id' => $checkUserDownloads->user_id,
                 'package_id' => $checkUserDownloads->package_id,
@@ -508,14 +511,14 @@ class MediaController extends Controller
 
             $userProductDownload = new UserProductDownload();
             $condition = ['product_id' => $checkUserDownloads->product_id];
-            $userProductDownload->updateOrInsert($condition, $imageDataInsert);   
+            $userProductDownload->updateOrInsert($condition, $imageDataInsert);
 
             if($imageDownloadData['download_status']['status'] == "ready"){
                 return response()->json(['status'=> 'ready', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }else{
                 return response()->json(['status'=> 'Pending', 'message'=> 'Your Product will be downloaded soon.','data'=>$imageDataInsert]);
             }
-            
+
         }
     }
 

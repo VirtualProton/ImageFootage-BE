@@ -132,14 +132,14 @@ class Product extends Model
             $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
 
             foreach($data as $key => $value) {
-
-                $matchingData = ImageFilterValue::where('api_product_id',$value['api_product_id'])->first();
+                $stringValue = strval($value['api_product_id']);
+                $matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
                 $attributes = [];
                 $options = [];
                 $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
                 $options    = isset($matchingData->options) ? $matchingData->options : [];
 
-                $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
+                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
             }
 

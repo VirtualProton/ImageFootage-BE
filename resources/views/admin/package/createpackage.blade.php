@@ -140,6 +140,18 @@
               <div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
               @endif
 
+              <div class="form-group" id="imageTierDiv">
+                <label for="exampleInputEmail1">Image Licence Type</label>
+                <select type="text" class="form-control" name="footage_tier" id="image_tier">
+                  <option value="">Select</option>
+                  <option value="1">Standard</option>
+                  <option value="2">Extended</option>
+                </select>
+              </div>
+              @if ($errors->has('footage_tier'))
+              <div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
+              @endif
+
 
               <div class="form-group">
                 <label for="exampleInputPassword1">Package Expiry in Months</label>
@@ -225,6 +237,7 @@
 </script>
 <script>
   $(document).ready(function($) {
+    $('#imageTierDiv').show()
     if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
         $('#music_tier').find('option[value=\'3\']').css('display','block');
     }else {
@@ -369,16 +382,32 @@
     }
 
   });
+
+  $("#package_plan").change(function() {
+    var pack_plan = $(this).val();
+    var pack_type = $('#package_type').val()
+    if (pack_plan == '2' && pack_type == 'Image') {
+        $("#package_expiry").val("1");
+        $("#package_expiry").attr('readonly',true)
+    }else{
+      $("#package_expiry").val("")
+      $("#package_expiry").removeAttr('readonly')
+    }
+
+  });
   $("#package_type").change(function() {
     var pack_type = $(this).val();
     if (pack_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
+        $('#imageTierDiv').hide()
     } else if(pack_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
+        $('#imageTierDiv').hide()
     }
     else {
+        $('#imageTierDiv').show()
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
     }
