@@ -251,48 +251,41 @@ class SearchController extends Controller
 
             $data = $data->distinct()->get()->toArray();
             $attributes = [];
-            $options = [];
+            $verticalRecords = [];
+            $horizontalRecords = [];
             foreach($data as $key => $value) {
                 $stringValue = strval($value['api_product_id']);
                 $matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
                 $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
-
                 $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
-                $data[$key]['options'] = isset($options) ? $options : [];
-            }
+                if(isset($data[$key]['attributes'])){
+                    if (isset($data[$key]['attributes']['orientation']) && $data[$key]['attributes']['orientation'] === 'vertical' && count($verticalRecords) < 5) {
+                        $verticalRecords[] = $data[$key];
+                } elseif (isset($data[$key]['attributes']['orientation']) && $data[$key]['attributes']['orientation'] === 'horizontal' && count($horizontalRecords) < 14) {
+                        $horizontalRecords[] = $data[$key];
+                }
+                }
 
-            if (count($data) > 0) {
-                foreach($data as &$item) {
+                if (count($verticalRecords) == 4 && count($horizontalRecords) == 13) {
+                    break;
+                }
+
+        }
+	    
+	    $filteredRecords = array_merge(
+		 array_slice($verticalRecords, 0, 4),
+		 array_slice($horizontalRecords, 0, 13)
+	    );
+
+            if (count($filteredRecords) > 0) {
+                foreach($filteredRecords as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                 }
             }
-        }       
-        
-        $verticalRecords = [];
-        $horizontalRecords = [];
-
-        foreach ($data as $record) {
-            if ($record['attributes']['orientation'] === 'vertical' && count($verticalRecords) < 5) {
-                $verticalRecords[] = $record;
-            } elseif ($record['attributes']['orientation'] === 'horizontal' && count($horizontalRecords) < 14) {
-                $horizontalRecords[] = $record;
-            }
-
-            if (count($verticalRecords) == 4 && count($horizontalRecords) == 13) {
-                break;
-            }
-        }
-        $filteredRecords = array_merge(
-            array_slice($verticalRecords, 0, 4),
-            array_slice($horizontalRecords, 0, 13)
-        );
-
-        if (count($filteredRecords) > 0) {
             $total        = count($filteredRecords);
-            
         }
+        
         return array('imgfootage' => $filteredRecords, 'total'=> count($filteredRecords), 'perpage'=> 17, 'tp'=> 1);
     }
 
