@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
         //
         Commands\HourlyUpdate::class,
         Commands\CurrencyUpdate::class,
-        Commands\QuotationDeactive::class
+        Commands\QuotationDeactive::class,
+        Commands\CreateEntryForCarryForwardBalance::class
 
     ];
 
@@ -31,12 +32,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('hour:update')
-                ->hourly();
-        $schedule->command('currency:update')
-                ->hourly();
+        // $schedule->command('hour:update')
+        //         ->hourly();
+        // $schedule->command('currency:update')
+        //         ->hourly();
         $schedule->command('quotation:deactive')
                 ->daily();
+        // $schedule->command('package:to-credit-balance')
+        //         ->daily();
     }
 
     /**
