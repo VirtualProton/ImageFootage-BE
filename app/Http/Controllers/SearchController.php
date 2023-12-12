@@ -18,6 +18,8 @@ use App\Models\Editorial;
 use CORS;
 use App\Models\TrendingWord;
 use App\Http\Pond5\MusicApi;
+use App\Models\ImageFilterValue;
+
 
 class SearchController extends Controller
 {
@@ -202,16 +204,76 @@ class SearchController extends Controller
 
     public function getHomePageProducts($keyword = [], $getKeyword = [], $perpage = 30)
     {
-        $product      = new Product();
-        $all_products = $product->getProductsData($keyword, $getKeyword);
-        $total        = $totalPages = 0;
+        $type = 'Image';
+        $data         = [];
 
-        $jsonData = json_decode($all_products->getContent(), true);
+        $products = ImageFilterValue::query();        
+        // Filter Data from MongoDB
+        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
+        if ((!empty($apiProductIds))) {
+            $data = Product::select(
+                    'product_id',
+                    'api_product_id',
+                    'product_category',
+                    'product_title',
+                    'product_web',
+                    'product_main_type',
+                    'product_thumbnail',
+                    'product_main_image',
+                    'product_added_on',
+                    'product_keywords',
+                    'product_price_small',
+                    'product_size',
+                    'slug'
+                )
+                ->where(function ($query) use ($type) {
+                    $query->where('product_main_type', '=', $type);
+                });
 
+            if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+                $data->where('product_category',$keyword['category_id']);
+            }
 
+            if (!empty($keyword['search'])) {
+                $data->where(function ($query) use ($search) {
+                    $query->orWhere('product_id', '=', $search) //exact match
+                        ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
+                });
+            }
+            if (!empty($apiProductIds)) {
+                $data->whereIn('api_product_id', $apiProductIds);
+            }
+            
+            $totalRecords = count($data->get());
+            
+
+            $data = $data->distinct()->get()->toArray();
+            $attributes = [];
+            $options = [];
+            foreach($data as $key => $value) {
+                $stringValue = strval($value['api_product_id']);
+                $matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
+                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                $options    = isset($matchingData->options) ? $matchingData->options : [];
+
+                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
+                $data[$key]['options'] = isset($options) ? $options : [];
+            }
+
+            if (count($data) > 0) {
+                foreach($data as &$item) {
+                    $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
+                    $item['api_product_id'] =  encrypt($item['api_product_id'], true);
+                }
+            }
+        }       
+        
         $verticalRecords = [];
         $horizontalRecords = [];
-        foreach ($jsonData['data'] as $record) {
+
+        foreach ($data as $record) {
             if ($record['attributes']['orientation'] === 'vertical' && count($verticalRecords) < 5) {
                 $verticalRecords[] = $record;
             } elseif ($record['attributes']['orientation'] === 'horizontal' && count($horizontalRecords) < 14) {
