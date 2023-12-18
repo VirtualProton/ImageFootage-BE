@@ -35,6 +35,7 @@ class CronController extends Controller
         $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                         ->where('is_display_home', '=', '1')
                         ->where('category_status', '=', 'Active')
+                        ->where('type', '=', '1')
                         ->get()
                         ->toArray();
 
@@ -62,6 +63,7 @@ class CronController extends Controller
         $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                     ->where('is_display_home', '=', '0')
                     ->where('category_status', '=', 'Active')
+                    ->where('type', '=', '1')
                     ->get()
                     ->toArray();
 
@@ -117,6 +119,7 @@ class CronController extends Controller
         $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                         ->where('is_display_home', '=', '1')
                         ->where('category_status', '=', 'Active')
+                        ->where('type', '=', '2')
                         ->get()
                         ->toArray();
 
@@ -144,6 +147,7 @@ class CronController extends Controller
         $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                     ->where('is_display_home', '=', '0')
                     ->where('category_status', '=', 'Active')
+                    ->where('type', '=', '2')
                     ->get()
                     ->toArray();
 
@@ -171,6 +175,7 @@ class CronController extends Controller
         $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                         ->where('is_display_home', '=', '1')
                         ->where('category_status', '=', 'Active')
+                        ->where('type', '=', '3')
                         ->get()
                         ->toArray();
 
@@ -198,6 +203,7 @@ class CronController extends Controller
         $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                     ->where('is_display_home', '=', '0')
                     ->where('category_status', '=', 'Active')
+                    ->where('type', '=', '3')
                     ->get()
                     ->toArray();
 
@@ -221,6 +227,7 @@ class CronController extends Controller
         $home_categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                         ->where('is_display_home', '=', '1')
                         ->where('category_status', '=', 'Active')
+                        ->where('type', '=', '1')
                         ->get()
                         ->toArray();
 
@@ -243,6 +250,7 @@ class CronController extends Controller
         $categories = ProductCategory::select('category_id', 'category_name', 'is_display_home')
                     ->where('is_display_home', '=', '0')
                     ->where('category_status', '=', 'Active')
+                    ->where('type', '=', '1')
                     ->get()
                     ->toArray();
 
