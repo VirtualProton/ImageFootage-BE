@@ -106,6 +106,7 @@ class Product extends Model
                     'product_size',
                     'slug'
                 )
+                ->where('product_status','active')
                 ->where(function ($query) use ($type) {
                     // TODO: Need to check the use of product_web field
                     //$query->whereIn('product_web', [1, 2, 3])
@@ -218,8 +219,8 @@ class Product extends Model
                     'product_size',
                     'slug'
                 )
-                ->whereIn('product_main_type', ['Image', 'Footage']);
-
+                ->whereIn('product_main_type', ['Image', 'Footage'])
+                ->where('product_status','active');
 
             if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
                 $data->where('product_category',$keyword['category_id']);
@@ -354,6 +355,7 @@ class Product extends Model
                 'music_size',
                 'slug'
             )
+            ->where('product_status','active')
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
                 //$query->whereIn('product_web', [1, 2, 3])
@@ -455,6 +457,7 @@ class Product extends Model
                 'product_size',
                 'slug'
             )
+            ->where('product_status','active')
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
                 //$query->whereIn('product_web', [1, 2, 3])
@@ -546,6 +549,7 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
+            ->where('product_status','active')
             ->where(function ($query) use ($type){
                 // TODO: Need to check the use of product_web field
                 //$query->whereIn('product_web', [1, 2, 3])
@@ -1270,6 +1274,7 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
+            ->where('product_status','active')
             ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
@@ -1317,6 +1322,7 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
+                ->where('product_status','active')
                 ->where('product_category', '=', $product->product_category)
                 ->where('product_id', '!=', $product_id)
                 ->where('product_main_type', '=', 'Music');
