@@ -705,7 +705,6 @@ class Product extends Model
                     $productData  = [
                         'people_number'    => $eachmedia['people_number'],
                         'orientation'      => $eachmedia['orientation'],
-
                         'license'          => $eachmedia['license'],
                         'type'             => $eachmedia['type'],
                         'collection'       => $eachmedia['collection'],
@@ -808,13 +807,8 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'editorial'        => $eachmedia['editorial'],
-                        'people'           => ['2'],
-                        'resolutions'      => ['8K'],
-                        'subscription'     => '1',
-                        'news_archival'    => '1',
-                        'fps'              => [$eachmedia['videoFps']],
-                        'gender'           => ['1'],
+                        'editorial'        => $eachmedia['editorial'],                        
+                        'fps'              => [$eachmedia['videoFps']],                        
                         'artist'           => $eachmedia['authorName']
                     );
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -843,9 +837,8 @@ class Product extends Model
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'editorial'        => '1',
-                        'people'           => ['1'],
-                        'resolutions'      => ['4K'],
+                        'editorial'        => $eachmedia['editorial'],                        
+                        'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
 
@@ -984,9 +977,10 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
-                        'mood'              => ['action', 'chill'],
-                        'genre'             => ['ambient', 'jazz'],
+                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',                        
+                        'soundPro'          => $eachmedia['soundPro'],
+                        'soundCodec'        => $eachmedia['soundCodec'],
+                        'editorial'         => $eachmedia['editorial'],
                         'artist'            => $eachmedia['authorName'],
                     );
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -1016,10 +1010,11 @@ class Product extends Model
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'music_sound_bpm'  => $eachmedia['soundBpm'] ?? '',
-                        'mood'             => ['chill'],
-                        'genre'            => ['ambient'],
-                        'artist'           => $eachmedia['authorName']
+                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',                        
+                        'soundPro'          => $eachmedia['soundPro'],
+                        'soundCodec'        => $eachmedia['soundCodec'],
+                        'editorial'         => $eachmedia['editorial'],
+                        'artist'            => $eachmedia['authorName'],
                     );
 
                     // Find the existing document by api_product_id, or create a new one
@@ -1375,7 +1370,6 @@ class Product extends Model
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_image', 'api_flag');
-
         foreach ($data['items'] as $eachmedia) {
             $optionData = [];
             if (isset($eachmedia['id'])) {
@@ -1416,16 +1410,10 @@ class Product extends Model
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
 
-                    $productData = array(
-                        'people_ethnicity' => 'xd',
-                        'people_number'    => 'people_1',
-                        'orientation'      => 'horizontal',
-                        'people_age'       => 'babies',
-                        'people_gender'    => 'f',
-                        'license'          => ['commercial', 'editorial'],
-                        'type'             => ['photos'],
-                        'collection'       => ['standard', 'spx'],
-                        'artist'           =>  $eachmedia['authorName']
+                    $productData = array(                        
+                        'type'             => [$eachmedia['type']],
+                        'artist'           => $eachmedia['authorName'],
+                        'editorial'        => $eachmedia['editorial']
                     );
 
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -1455,10 +1443,9 @@ class Product extends Model
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'editorial'        => '1',
-                        'people'           => ['1'],
-                        'resolutions'      => ['4K'],
-                        'artist'           => $eachmedia['authorName']
+                        'type'             => [$eachmedia['type']],
+                        'artist'           => $eachmedia['authorName'],
+                        'editorial'        => $eachmedia['editorial']
                     );
 
                     // Find the existing document by api_product_id, or create a new one
