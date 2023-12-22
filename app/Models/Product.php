@@ -668,15 +668,16 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData = array(
-                        'people_ethnicity' => 'xd',
                         'people_number'    => $eachmedia['people_number'],
-                        'orientation'      => $eachmedia['orientation'],
-                        'people_age'       => 'babies',
-                        'people_gender'    => 'f',
+                        'orientation'      => $eachmedia['orientation'],                      
                         'license'          => $eachmedia['license'],
-                        'type'             => ['photos'],
+                        'type'             => $eachmedia['type'],
                         'collection'       => $eachmedia['collection'],
-                        'artist'           =>  $eachmedia['author-username']
+                        'artist'           => $eachmedia['author-username'],
+                        'spx'              => $eachmedia['spx'],
+                        'editorial'        => $eachmedia['editorial'],
+                        'isolated'         => $eachmedia['isolated'],
+                        'collection'       => $eachmedia['collection']
                     );
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
@@ -702,16 +703,17 @@ class Product extends Model
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = [
-                        'people_ethnicity' => 'u',
-                        'people_number'    => 'people_2',
-                        'orientation'      => 'horizontal',
-                        'people_age'       => 'babies',
-                        'people_gender'    => 'f',
-                        'license'          => ['commercial'],
-                        'type'             => ['photos'],
-                        'collection'       => ['standard'],
-                        'artist'           =>  $eachmedia['author-username']
+                        'people_number'    => $eachmedia['people_number'],
+                        'orientation'      => $eachmedia['orientation'],
 
+                        'license'          => $eachmedia['license'],
+                        'type'             => $eachmedia['type'],
+                        'collection'       => $eachmedia['collection'],
+                        'artist'           => $eachmedia['author-username'],
+                        'spx'              => $eachmedia['spx'],
+                        'editorial'        => $eachmedia['editorial'],
+                        'isolated'         => $eachmedia['isolated'],
+                        'collection'       => $eachmedia['collection']
                     ];
 
                     // Find the existing document by api_product_id, or create a new one
@@ -764,7 +766,6 @@ class Product extends Model
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_footage', 'api_flag');
-
         foreach ($data['items'] as $eachmedia) {
             $optionData = [];
             if (isset($eachmedia['id'])) {
@@ -807,7 +808,7 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'editorial'        => '0',
+                        'editorial'        => $eachmedia['editorial'],
                         'people'           => ['2'],
                         'resolutions'      => ['8K'],
                         'subscription'     => '1',
