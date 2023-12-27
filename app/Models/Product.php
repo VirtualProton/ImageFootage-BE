@@ -653,9 +653,8 @@ class Product extends Model
                         'collection'       => $eachmedia['collection'],
                         'artist'           => $eachmedia['author-username'],
                         'spx'              => $eachmedia['spx'],
-                        'editorial'        => $eachmedia['editorial'],
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'isolated'         => $eachmedia['isolated'],
-                        'collection'       => $eachmedia['collection']
                     );
                     $imageFilterValue = new ImageFilterValue([
                         'api_product_id'    => $eachmedia['id'],
@@ -688,9 +687,8 @@ class Product extends Model
                         'collection'       => $eachmedia['collection'],
                         'artist'           => $eachmedia['author-username'],
                         'spx'              => $eachmedia['spx'],
-                        'editorial'        => $eachmedia['editorial'],
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'isolated'         => $eachmedia['isolated'],
-                        'collection'       => $eachmedia['collection']
                     ];
 
                     // Find the existing document by api_product_id, or create a new one
@@ -782,7 +780,7 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'editorial'        => $eachmedia['editorial'],
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
@@ -812,7 +810,7 @@ class Product extends Model
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'editorial'        => $eachmedia['editorial'],
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
@@ -953,7 +951,7 @@ class Product extends Model
                         'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
                         'soundPro'          => $eachmedia['soundPro'] ?? '',
                         'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => $eachmedia['editorial'],
+                        'editorial'         => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'artist'            => $eachmedia['authorName'],
                     );
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -986,7 +984,7 @@ class Product extends Model
                         'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
                         'soundPro'          => $eachmedia['soundPro'] ?? '',
                         'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => $eachmedia['editorial'],
+                        'editorial'         => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
                         'artist'            => $eachmedia['authorName'],
                     );
 
@@ -1384,7 +1382,7 @@ class Product extends Model
                     $productData = array(
                         'type'             => [$eachmedia['type']],
                         'artist'           => $eachmedia['authorName'],
-                        'editorial'        => $eachmedia['editorial']
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1
                     );
 
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -1416,7 +1414,7 @@ class Product extends Model
                     $productData  = array(
                         'type'             => [$eachmedia['type']],
                         'artist'           => $eachmedia['authorName'],
-                        'editorial'        => $eachmedia['editorial']
+                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1
                     );
 
                     // Find the existing document by api_product_id, or create a new one
