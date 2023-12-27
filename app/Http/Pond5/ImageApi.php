@@ -38,7 +38,7 @@ class ImageApi
             $authorname = $keyword['authorname'];
         }
 
-        // TODO: change the frontend value for the sort, use slug
+        // IMPROVEMENT: change the frontend value for the sort, use slug
         if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
             $sort = 'newest';
         } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {

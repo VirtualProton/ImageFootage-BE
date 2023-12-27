@@ -370,6 +370,7 @@
     } else {
         optionToHide.css('display', 'none');
         secondOptionToHide.css('display', 'none');
+        dropdown.val('Image')
         $('#for_pro').css('display', 'block');
     }
 
@@ -379,9 +380,11 @@
     if (pack_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
+        $('#package_plan').val('1')
     }else if(pack_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
+        $('#package_plan').val('1')
     }
      else {
         $('#musicTierDiv').hide();

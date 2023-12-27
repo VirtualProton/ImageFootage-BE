@@ -78,34 +78,6 @@ class CronController extends Controller
         }
     }
 
-    public function pantherImageUpdate(){
-        // allow the script to run for an infinite amount of time
-        ini_set('max_execution_time', 0);
-        // TODO: Need to remove static IDs
-        $cat=[53,54,55,56,57,14,3,4,5,12,15,40,8,10,17,20,23,24,26,31,52,34,51,42,43];
-        $products = Product::where('product_web','=','2')
-                    ->select('api_product_id')
-                    ->whereIn('product_category',$cat)
-                    ->whereRaw("date(updated_at) < '2020-12-04'") // TODO: remove this static condition
-                    ->orderBy('id','desc')
-                    ->get()
-                    ->toArray();
-
-        foreach($products as $perproduct){
-            $keyword['search']  = $perproduct['api_product_id'];
-            $pantherMediaImages = new ImageApi();
-            $pantharmediaData   = $pantherMediaImages->get_media_infoNew($keyword['search']);
-
-            if (isset($pantharmediaData['stat'])) {
-                if ($pantharmediaData['stat'] != 'fail') {
-                    $this->product->updatePantherImage($pantharmediaData);
-                } else {
-                    Product::where('api_product_id', '=', $perproduct['api_product_id'])->update(['thumb_update_status' => 0]);
-                }
-            }
-        }
-    }
-
     /**
     * This function will be executed as a separate CRON for getting the pond5 footages
     * for all the categories which are active and set for home display
