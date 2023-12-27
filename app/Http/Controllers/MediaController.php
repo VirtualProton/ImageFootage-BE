@@ -161,13 +161,7 @@ class MediaController extends Controller
                     $download = 1;
                 }
 
-                #TODO : Need to discuss with client for pac
                 if ($allFields['product']['type'] == 3) {
-                    // if ($allFields['product']['selected_product']['size'] == '4K' && $perpack['pacage_size'] == '2') {
-                    //     $downoad_type = 1;
-                    // } else if ($allFields['product']['selected_product']['size'] == 'HD (1080)' && $perpack['pacage_size'] == '1') {
-                    //     $downoad_type = 1;
-                    // }
                     $downoad_type = 1;
                 }
 
@@ -248,7 +242,7 @@ class MediaController extends Controller
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
-                    
+
 
                     if($product_details_data['download_status']['status'] == "pending"){
                         $dataInsert = array(

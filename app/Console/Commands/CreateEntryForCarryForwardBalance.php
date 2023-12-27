@@ -49,11 +49,11 @@ class CreateEntryForCarryForwardBalance extends Command
                     if ($getCurrentSamePlan) {
                         $newCreditedPackage = new UserPackage();
                         $newCreditedPackage->user_id = $package->user_id;
-                        // TODO : need to update transaction_id
+
                         $newCreditedPackage->transaction_id = $package->package_id;
                         $newCreditedPackage->package_id = $package->package_id;
                         $newCreditedPackage->package_name = $package->package_name;
-                        // TODO : need to update package_price
+
                         $newCreditedPackage->package_price = $package->package_price;
                         $newCreditedPackage->package_description = $package->package_description;
                         $newCreditedPackage->package_products_count = $package->package_products_count - $package->downloaded_product;
@@ -64,7 +64,7 @@ class CreateEntryForCarryForwardBalance extends Command
                         $newCreditedPackage->package_plan = $package->package_plan;
                         $newCreditedPackage->package_pcarry_forward = "yes";
                         $newCreditedPackage->package_expiry_yearly = $package->package_expiry_yearly;
-                        // TODO : need to update
+
                         $newCreditedPackage->payment_gatway_provider = $package->payment_gatway_provider;
                         $newCreditedPackage->pacage_size = $package->pacage_size;
                         $newCreditedPackage->created_at = Carbon::today();

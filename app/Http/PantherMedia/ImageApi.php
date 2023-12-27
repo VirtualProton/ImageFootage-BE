@@ -209,24 +209,22 @@ class ImageApi
     public function download($data, $id)
     {
         $this->access_key = $this->getAccessKey();
-        
         if (count($data['product']['selected_product']) > 0) {
             if (isset($data['product']['product_info']['articles'])) {
                 $id = $data['product']['product_info']['articles']['subscription_list']['subscription']['article']['id'];
             } else {
                 $getIdArticle = $this->get_media_infoNew($data['product']['product_info']['media']['id']);
                 if(isset($getIdArticle['articles'])){
-                    #Currently we are taking highest size based record. 
+                    #Currently we are taking highest size based record.
                     #ToDO: Need to update size selection dynamically after confirmation.
                     $id = $getIdArticle['articles']['singlebuy_list']['singlebuy'][0]['sizes']['article'][0]['id'];
                 }else{
-                    return $getIdArticle;                    
-                }                
+                    return $getIdArticle;
+                }
             }
         } else {
             $id = $data['product']['product_info']['media']['id'];
         }
-        
         $client = new Client(); //GuzzleHttp\Client
         $response = $client->post($this->url . '/download-media', [
             'headers' => [
@@ -250,9 +248,8 @@ class ImageApi
             $contents = json_decode($response->getBody(), true);
             $redownload = $contents['download_status']['id_download'];
             $hostname = env('APP_URL');
-            
             if ($response->getBody()) {
-                $downloadcontents = json_decode($response->getBody(), true);         
+                $downloadcontents = json_decode($response->getBody(), true);
                 return $downloadcontents;
             }
         }

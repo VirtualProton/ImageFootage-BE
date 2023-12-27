@@ -46,7 +46,7 @@ Route::group([
 
     Route::get('home', 'SearchController@home');
 
-    Route::get('pantherImageUpdate', 'CronController@pantherImageUpdate');
+
 
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');

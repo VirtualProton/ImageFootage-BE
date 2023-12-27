@@ -513,11 +513,6 @@ class UserController extends Controller
      */
     public function getAvailablePackageList(Request $request)
     {
-        // TODO : set this values from angular side while calling this API
-        $request->downloadCount = 17;
-        $request->user_id = 208;
-        $request->imageIds = [26549795, 30882795, 30882790];
-
         $getUserPackages = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where(['status' => 1, 'user_id' => $request->user_id, 'package_type' => 'Image'])
             ->whereRaw('package_products_count > downloaded_product')
