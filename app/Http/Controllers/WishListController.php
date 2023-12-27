@@ -465,11 +465,11 @@ class WishListController extends Controller
                                 return jsonResponse(true, "Oops! Something went wrong while adding the product to your wishlist. Please try again.");
                             }
                         } else { // Only Create Wishlist
-                            return jsonResponse(false, "Congratulations! Your wishlist has been created successfully!");
+                            return jsonResponse(false, "Congratulations! Your wishlist collection has been created successfully!");
                         }
                     }
                 }
-                return jsonResponse(true, "Wishlist couldn't be created. Please try again later.");
+                return jsonResponse(true, "Wishlist collection couldn't be created. Please try again later.");
             }
         } else {
             if (!empty($validator->errors()->first())) {
