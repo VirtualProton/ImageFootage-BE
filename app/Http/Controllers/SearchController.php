@@ -207,7 +207,7 @@ class SearchController extends Controller
         $type = 'Image';
         $data         = [];
 
-        $products = ImageFilterValue::query();        
+        $products = ImageFilterValue::query();
         // Filter Data from MongoDB
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
@@ -245,9 +245,7 @@ class SearchController extends Controller
             if (!empty($apiProductIds)) {
                 $data->whereIn('api_product_id', $apiProductIds);
             }
-            
             $totalRecords = count($data->get());
-            
 
             $data = $data->distinct()->get()->toArray();
             $attributes = [];
@@ -271,7 +269,7 @@ class SearchController extends Controller
                 }
 
         }
-	    
+
 	    $filteredRecords = array_merge(
 		 array_slice($verticalRecords, 0, 4),
 		 array_slice($horizontalRecords, 0, 13)
@@ -285,7 +283,7 @@ class SearchController extends Controller
             }
             $total        = count($filteredRecords);
         }
-        
+
         return array('imgfootage' => $filteredRecords, 'total'=> count($filteredRecords), 'perpage'=> 17, 'tp'=> 1);
     }
 

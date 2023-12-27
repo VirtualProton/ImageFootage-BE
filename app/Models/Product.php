@@ -58,8 +58,6 @@ class Product extends Model
 
         //TODO :
         // 1. Need to check with support team and do required changes for adult_content filter
-        // 2. pricing and color filter pending
-        // 3. need to confirm from both API providers how the attributes will be returned in API response
 
         $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
         $applied_filters = [];
@@ -106,10 +104,8 @@ class Product extends Model
                     'product_size',
                     'slug'
                 )
-                ->where('product_status','active')
+                ->where('product_status','Active')
                 ->where(function ($query) use ($type) {
-                    // TODO: Need to check the use of product_web field
-                    //$query->whereIn('product_web', [1, 2, 3])
                     $query->where('product_main_type', '=', $type);
                 });
 
@@ -220,7 +216,7 @@ class Product extends Model
                     'slug'
                 )
                 ->whereIn('product_main_type', ['Image', 'Footage'])
-                ->where('product_status','active');
+                ->where('product_status','Active');
 
             if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
                 $data->where('product_category',$keyword['category_id']);
@@ -289,16 +285,9 @@ class Product extends Model
         $offset     = ($pageNumber - 1) * $limit;
 
         $filters    = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial','limit','sort', 'category_id']);
-        //TODO: need to confirm from both API providers how the attributes will be returned in API response
-        //TODO:  pricing and color filter pending
-        $applied_filters = [];
 
-        if(empty($filters['all_filters']) && $search!='') {
-            //TODO: quick fix, need to correct
-            // $filters = array(
-            //     'product_id' => array('value' => $search, 'standalone' => true)
-            // );
-        }
+
+        $applied_filters = [];
 
         foreach ($filters as $name => $value) {
             if(isset($value['value'])) {
@@ -327,12 +316,7 @@ class Product extends Model
 
         $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])->get()->toArray();
         $indexedFilteredProducts = [];
-        $apiProductIds           = [];
-
-        foreach ($filteredProducts as $product) {
-            $indexedFilteredProducts[$product['api_product_id']] = $product;
-            $apiProductIds[] = $product['api_product_id'];
-        }
+        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
 
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
             $data = Product::select(
@@ -355,10 +339,8 @@ class Product extends Model
                 'music_size',
                 'slug'
             )
-            ->where('product_status','active')
+            ->where('product_status','Active')
             ->where(function ($query) use ($type){
-                // TODO: Need to check the use of product_web field
-                //$query->whereIn('product_web', [1, 2, 3])
                 $query->where('product_main_type', '=', $type);
             });
 
@@ -369,6 +351,7 @@ class Product extends Model
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('slug', '=', $search)
+                        ->orWhere('product_id', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
@@ -457,10 +440,8 @@ class Product extends Model
                 'product_size',
                 'slug'
             )
-            ->where('product_status','active')
+            ->where('product_status','Active')
             ->where(function ($query) use ($type){
-                // TODO: Need to check the use of product_web field
-                //$query->whereIn('product_web', [1, 2, 3])
                 $query->where('product_main_type', '=', $type);
             });
 
@@ -549,10 +530,8 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
-            ->where('product_status','active')
+            ->where('product_status','Active')
             ->where(function ($query) use ($type){
-                // TODO: Need to check the use of product_web field
-                //$query->whereIn('product_web', [1, 2, 3])
                 $query->where('product_main_type', '=', $type);
             });
 
@@ -650,11 +629,10 @@ class Product extends Model
                     'product_sub_type' => "Photo",
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                     'product_web' => '2',
-                    'product_vertical' => 'Royalty Free', //TODO: why hard coded value
-                    'updated_at' => date("Y-m-d H:i:s"),
-                    'adult_content' => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
-                    'slug'           => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                    'updated_at'       => date("Y-m-d H:i:s"),
+                    'adult_content'    => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
+                    'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                    'is_premium'       => isset($eachmedia['premium']) ? $eachmedia['premium'] : 'no'
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -669,7 +647,7 @@ class Product extends Model
 
                     $productData = array(
                         'people_number'    => $eachmedia['people_number'],
-                        'orientation'      => $eachmedia['orientation'],                      
+                        'orientation'      => $eachmedia['orientation'],
                         'license'          => $eachmedia['license'],
                         'type'             => $eachmedia['type'],
                         'collection'       => $eachmedia['collection'],
@@ -698,7 +676,7 @@ class Product extends Model
                             'product_title'        => $eachmedia['title'],
                             'updated_at'           => date('Y-m-d H:i:s'),
                             'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                            'is_premium'           => $eachmedia['premium']
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -749,7 +727,7 @@ class Product extends Model
                         'width_thumb'         => $imgData[0],
                         'height_thumb'        => $imgData[1],
                         'thumb_update_status' =>  1,
-                        'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                        'is_premium'          => $data['metadata']['premium']
 
                     ]);
                 echo "Updated" . $data['media']['id'];
@@ -768,7 +746,7 @@ class Product extends Model
         foreach ($data['items'] as $eachmedia) {
             $optionData = [];
             if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
+                $pond_id_withprefix = $eachmedia['id'];
                 if (strlen($eachmedia['id']) < 9) {
                     $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
@@ -782,18 +760,15 @@ class Product extends Model
                     'product_thumbnail'   => $eachmedia['thumbnail'],
                     'product_main_image'  => $eachmedia['watermarkPreview'],
                     'product_description' => $eachmedia['description'],
-                    'product_size'        => '', //TODO: check for this value
-                    "product_keywords"    => implode(',', $eachmedia['keywords']),
+                    'product_keywords'    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
                     'product_main_type'   => "Footage",
                     'product_sub_type'    => "Footage",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
-
+                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -807,8 +782,8 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'editorial'        => $eachmedia['editorial'],                        
-                        'fps'              => [$eachmedia['videoFps']],                        
+                        'editorial'        => $eachmedia['editorial'],
+                        'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -832,12 +807,12 @@ class Product extends Model
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'editorial'        => $eachmedia['editorial'],                        
+                        'editorial'        => $eachmedia['editorial'],
                         'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
@@ -895,7 +870,7 @@ class Product extends Model
                 'product_vertical' => 'Royalty Free',
                 'updated_at' => date("Y-m-d H:i:s"),
                 'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
 
             );
             $data2 = DB::table('imagefootage_products')
@@ -931,7 +906,7 @@ class Product extends Model
         foreach ($data['items'] as $eachmedia) {
             $optionData = [];
             if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
+                $pond_id_withprefix = $eachmedia['id'];
                 if (strlen($eachmedia['id']) < 9) {
                     $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
@@ -946,17 +921,15 @@ class Product extends Model
                     'product_thumbnail'   => $eachmedia['thumbnail'],
                     'product_main_image'  => $eachmedia['watermarkPreview'],
                     'product_description' => $eachmedia['description'],
-                    'product_size'        => '', //TODO: check for this value
-                    "product_keywords"    => implode(',', $eachmedia['keywords']),
+                    'product_keywords'    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
                     'product_main_type'   => "Music",
                     'product_sub_type'    => "Music",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                 );
 
                 if (!empty($eachmedia['versions'])) {
@@ -977,9 +950,9 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',                        
-                        'soundPro'          => $eachmedia['soundPro'],
-                        'soundCodec'        => $eachmedia['soundCodec'],
+                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
+                        'soundPro'          => $eachmedia['soundPro'] ?? '',
+                        'soundCodec'        => $eachmedia['soundCodec'] ?? '',
                         'editorial'         => $eachmedia['editorial'],
                         'artist'            => $eachmedia['authorName'],
                     );
@@ -1005,14 +978,14 @@ class Product extends Model
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',                        
-                        'soundPro'          => $eachmedia['soundPro'],
-                        'soundCodec'        => $eachmedia['soundCodec'],
+                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
+                        'soundPro'          => $eachmedia['soundPro'] ?? '',
+                        'soundCodec'        => $eachmedia['soundCodec'] ?? '',
                         'editorial'         => $eachmedia['editorial'],
                         'artist'            => $eachmedia['authorName'],
                     );
@@ -1251,7 +1224,7 @@ class Product extends Model
         $type         = isset($request['type']) ? $request['type'] : 'Image';
         $limit        = isset($request['limit']) ? $request['limit'] : 9;
         $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
-        //TODO: Get category id in request
+
         $product = Product::select('product_category')->where('product_id', '=', $product_id)->first();
         if (!empty($product_id) && !empty($product)) {
             $data = Product::select(
@@ -1270,7 +1243,7 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
-            ->where('product_status','active')
+            ->where('product_status','Active')
             ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
@@ -1296,7 +1269,7 @@ class Product extends Model
         $data         = [];
         $limit        = isset($request['limit']) ? $request['limit'] : 9;
         $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
-        //TODO: Get category id in request
+
         $product = Product::select('*')->where('product_id', '=', $product_id)->first();
         if (!empty($product_id) && !empty($product)) {
             $data = Product::select(
@@ -1318,7 +1291,7 @@ class Product extends Model
                 'slug',
                 'is_premium'
             )
-                ->where('product_status','active')
+                ->where('product_status','Active')
                 ->where('product_category', '=', $product->product_category)
                 ->where('product_id', '!=', $product_id)
                 ->where('product_main_type', '=', 'Music');
@@ -1373,7 +1346,7 @@ class Product extends Model
         foreach ($data['items'] as $eachmedia) {
             $optionData = [];
             if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id']; // TODO: need to check use of it
+                $pond_id_withprefix = $eachmedia['id'];
                 if (strlen($eachmedia['id']) < 9) {
                     $add_zero = 9 - (strlen($eachmedia['id']));
                     for ($i = 0; $i < $add_zero; $i++) {
@@ -1387,17 +1360,15 @@ class Product extends Model
                     'product_thumbnail'   => $eachmedia['thumbnail'],
                     'product_main_image'  => $eachmedia['watermarkPreview'],
                     'product_description' => $eachmedia['description'],
-                    'product_size'        => '', //TODO: check for this value
-                    "product_keywords"    => implode(',', $eachmedia['keywords']),
+                    'product_keywords'    => implode(',', $eachmedia['keywords']),
                     'product_status'      => "Active",
                     'product_main_type'   => "Image",
                     'product_sub_type'    => "Photo",
                     'product_added_on'    => date("Y-m-d H:i:s"),
                     'product_web'         => '3',
-                    'product_vertical'    => 'Royalty Free', //TODO: why hard coded value
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -1410,7 +1381,7 @@ class Product extends Model
                     $media['product_id'] = $flag . $key;
                     DB::table('imagefootage_products')->insert($media);
 
-                    $productData = array(                        
+                    $productData = array(
                         'type'             => [$eachmedia['type']],
                         'artist'           => $eachmedia['authorName'],
                         'editorial'        => $eachmedia['editorial']
@@ -1438,7 +1409,7 @@ class Product extends Model
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_web'         => '3',
-                            'is_premium'          => 0 //TODO:need to check with dynamic column in API response
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
