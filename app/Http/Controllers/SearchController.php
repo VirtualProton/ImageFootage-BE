@@ -50,6 +50,7 @@ class SearchController extends Controller
         $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] : 1;
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
+        $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
 
         if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
             $getCategoryId = ProductCategory::where(['category_slug'=> $request->category_id,'type'=>$keyword['productType']['id']])->first();

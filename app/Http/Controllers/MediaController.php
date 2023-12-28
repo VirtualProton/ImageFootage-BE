@@ -181,7 +181,7 @@ class MediaController extends Controller
                 $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('product_size', $allFields['product']['selected_product']['size'])->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $allFields['product']['type'])->first();
                     $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
                     $dataInsert = array(
                         'user_id' => $id,
@@ -195,7 +195,7 @@ class MediaController extends Controller
                         'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
                         'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
                         'web_type' => $allFields['product']['type'],
-                        'product_size' => $allFields['product']['selected_product']['size'],
+                        'product_size' => '',
                         'product_price' => $allFields['product']['selected_product']['price'],
                         'product_poster' => $allFields['product']['product_info'][2],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
@@ -308,11 +308,11 @@ class MediaController extends Controller
                 // Download music from pond5
                 $footageMedia = new FootageApi();
                 //TODO Need to change for api_product_id
-                $download_id = decrypt($allFields['product']['product_info']['media']['id']);
+                $download_id = $allFields['product']['product_info']['media']['id'];
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
 
@@ -325,13 +325,13 @@ class MediaController extends Controller
                         'id_media' => $allFields['product']['product_info']['media']['id'],
                         'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $allFields['product']['product_info']['metadata']['title'],
-                        'product_desc' => $allFields['product']['product_info']['metadata']['description'],
-                        'product_thumb' => $allFields['product']['product_info']['media']['thumb_170_url'],
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'],
+                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
+                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'],
                         'web_type' => $allFields['product']['type'],
-                        'product_size' => $allFields['product']['selected_product']['width'],
+                        'product_size' => '',
                         'product_price' => $allFields['product']['selected_product']['price'],
-                        'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
+                        'product_poster' => $allFields['product']['product_info'][0]['flv_base'],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
