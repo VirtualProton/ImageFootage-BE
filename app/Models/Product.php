@@ -58,8 +58,7 @@ class Product extends Model
 
         //TODO :
         // 1. Need to check with support team and do required changes for adult_content filter
-
-        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit']);
+        $filters         = Arr::except($requestData, ['search', 'productType', 'pagenumber', 'product_editorial', 'limit','adult_content_filter']);
         $applied_filters = [];
 
         foreach ($filters as $name => $value) {
@@ -113,6 +112,10 @@ class Product extends Model
                 $data->where('product_category',$keyword['category_id']);
             }
 
+            if(isset($keyword['adult_content_filter']) && !empty($keyword['adult_content_filter'])){
+                $data->where('adult_content','no');
+            }
+
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search) //exact match
@@ -127,6 +130,7 @@ class Product extends Model
 
             $totalRecords = count($data->get());
             $data = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
+
 
             foreach($data as $key => $value) {
                 $stringValue = strval($value['api_product_id']);
@@ -630,9 +634,9 @@ class Product extends Model
                     'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
                     'product_web' => '2',
                     'updated_at'       => date("Y-m-d H:i:s"),
-                    'adult_content'    => isset($eachmedia['adult-content']) ? $eachmedia['adult-content'] : 'no',
+                    'adult_content'    => (isset($eachmedia['adult-content']) && $eachmedia['adult-content'] == 'yes' )? 1 : 0,
                     'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'       => isset($eachmedia['premium']) ? $eachmedia['premium'] : 'no'
+                    'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -653,7 +657,7 @@ class Product extends Model
                         'collection'       => $eachmedia['collection'],
                         'artist'           => $eachmedia['author-username'],
                         'spx'              => $eachmedia['spx'],
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                         'isolated'         => $eachmedia['isolated'],
                     );
                     $imageFilterValue = new ImageFilterValue([
@@ -675,7 +679,7 @@ class Product extends Model
                             'product_title'        => $eachmedia['title'],
                             'updated_at'           => date('Y-m-d H:i:s'),
                             'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'           => $eachmedia['premium']
+                            'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -687,7 +691,7 @@ class Product extends Model
                         'collection'       => $eachmedia['collection'],
                         'artist'           => $eachmedia['author-username'],
                         'spx'              => $eachmedia['spx'],
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                         'isolated'         => $eachmedia['isolated'],
                     ];
 
@@ -725,7 +729,7 @@ class Product extends Model
                         'width_thumb'         => $imgData[0],
                         'height_thumb'        => $imgData[1],
                         'thumb_update_status' =>  1,
-                        'is_premium'          => $data['metadata']['premium']
+                        'is_premium'          => (isset($data['metadata']['premium']) && $data['metadata']['premium'] == 'yes')  ? 1 : 0
 
                     ]);
                 echo "Updated" . $data['media']['id'];
@@ -766,7 +770,7 @@ class Product extends Model
                     'product_web'         => '3',
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                 );
 
                 $data2 = DB::table('imagefootage_products')
@@ -780,7 +784,7 @@ class Product extends Model
                     DB::table('imagefootage_products')->insert($media);
 
                     $productData  = array(
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
                         'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
@@ -805,12 +809,12 @@ class Product extends Model
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
                         'fps'              => [$eachmedia['videoFps']],
                         'artist'           => $eachmedia['authorName']
                     );
@@ -868,7 +872,7 @@ class Product extends Model
                 'product_vertical' => 'Royalty Free',
                 'updated_at' => date("Y-m-d H:i:s"),
                 'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
 
             );
             $data2 = DB::table('imagefootage_products')
@@ -927,7 +931,7 @@ class Product extends Model
                     'product_web'         => '3',
                     'updated_at'          => date("Y-m-d H:i:s"),
                     'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                 );
 
                 if (!empty($eachmedia['versions'])) {
@@ -951,7 +955,7 @@ class Product extends Model
                         'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
                         'soundPro'          => $eachmedia['soundPro'] ?? '',
                         'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
                         'artist'            => $eachmedia['authorName'],
                     );
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -976,7 +980,7 @@ class Product extends Model
                             'product_description' => $eachmedia['description'],
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
@@ -984,7 +988,7 @@ class Product extends Model
                         'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
                         'soundPro'          => $eachmedia['soundPro'] ?? '',
                         'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1,
+                        'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
                         'artist'            => $eachmedia['authorName'],
                     );
 
@@ -1382,7 +1386,7 @@ class Product extends Model
                     $productData = array(
                         'type'             => [$eachmedia['type']],
                         'artist'           => $eachmedia['authorName'],
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1
+                        'editorial'        => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                     );
 
                     foreach($eachmedia['versions'] as $key=>$value){
@@ -1407,14 +1411,14 @@ class Product extends Model
                             'updated_at'          => date('Y-m-d H:i:s'),
                             'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                             'product_web'         => '3',
-                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                         ]);
 
                     $apiProductId = $eachmedia['id'];
                     $productData  = array(
                         'type'             => [$eachmedia['type']],
                         'artist'           => $eachmedia['authorName'],
-                        'editorial'        => ($eachmedia['editorial'] == false || $eachmedia['editorial'] == 'no') ? 0 :1
+                        'editorial'        => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                     );
 
                     // Find the existing document by api_product_id, or create a new one
