@@ -102,6 +102,7 @@ Route::group([
     Route::post('relatedsearchImage', 'SearchController@relatedSimilarImageList');
     Route::get('/category-list', 'ProductController@categoryLists');
     Route::post('/category-details', 'ProductController@categoryDetails');
+    Route::get('/licence_details','MediaController@licenceDetails');
 });
 
 Route::group([
