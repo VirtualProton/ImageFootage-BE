@@ -172,7 +172,7 @@ class PaymentController extends Controller
             $transactionRequest->setCustomerAccount($allFields['tokenData']['Utype']);
             $transactionRequest->setReqHashKey($this->atomRequestKey);
 
-            
+
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
             return;
@@ -399,13 +399,14 @@ class PaymentController extends Controller
         $packge->package_pcarry_forward = $allFields['plan']['package_pcarry_forward'];
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
-        $packge->pacage_size = $allFields['plan']['pacage_size'];        
+        $packge->pacage_size = $allFields['plan']['pacage_size'];
         $packge->created_at = date('Y-m-d H:i:s');
         if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
         }else{
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry_yearly']." years"));
         }
+        $packge->footage_tier = isset($allFields['plan']['footage_tier']) && !empty($allFields['plan']['footage_tier'])? (int)$allFields['plan']['footage_tier'] : NULL;
         $packge->save();
         $packge_order_id = $packge->id;
 
@@ -827,7 +828,7 @@ class PaymentController extends Controller
          }else{
                 $pkgName = $OrderData['package_name']." ".$plan;
          }
-      
+
         $message = "Thanks for purchasing ".$pkgName.". Your plan with transaction ID ".$OrderData['transaction_id'] ." will be expire on ". date("F , d Y h:i:s a",strtotime($OrderData['package_expiry_date_from_purchage']))."  \n Thanks \n Imagefootage Team";
         $smsClass = new TnnraoSms;
         $smsClass->sendSms($message, $OrderData['user']['mobile']);

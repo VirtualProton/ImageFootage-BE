@@ -21,6 +21,7 @@ use App\Http\Pond5\MusicApi;
 use App\Models\ProductsDownload;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Models\LicenceType;
 
 class MediaController extends Controller
 {
@@ -39,8 +40,8 @@ class MediaController extends Controller
     public function getAlreadyDownloadedImage(Request $request)
     {
         // TODO : need to update the code (need to send all the downloaded image with different size)
-        $checkExists = UserProductDownload::where(['user_id' => $request->user_id, 'product_id_api' => $request->media_id])->exists();
-        return response()->json(["status" => $checkExists]);
+        $checkExists = UserProductDownload::where(['user_id' => $request->user_id, 'product_id_api' => $request->media_id])->get();
+        return response()->json(["status" => 'success','data'=>$checkExists]);
     }
 
     public function index(Request $request)
@@ -202,6 +203,7 @@ class MediaController extends Controller
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
                         'redownloded_date' => null,
+                        'licence_type' => $allFields['product']['extended']
                     );
                     UserProductDownload::insert($dataInsert);
                     if (!$dataCheck) {
@@ -264,6 +266,7 @@ class MediaController extends Controller
                             'selected_product' => json_encode($allFields['product']['selected_product']),
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
+                            'licence_type' => $allFields['product']['extended'],
                             'redownloded_date' => null,
                         );
                     }else{
@@ -286,6 +289,7 @@ class MediaController extends Controller
                             'selected_product' => json_encode($allFields['product']['selected_product']),
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
+                            'licence_type' => $allFields['product']['extended'],
                             'redownloded_date' => null,
                         );
                     }
@@ -335,6 +339,7 @@ class MediaController extends Controller
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
+                        'licence_type' => $allFields['product']['extended'],
                         'redownloded_date' => null,
                     );
 
@@ -584,5 +589,17 @@ class MediaController extends Controller
         $second = file_get_contents('php://input');
         $final = $first . '<>' . $second;
         Log::channel('panther_media')->debug('FINAL: ' . $final);
+    }
+
+    //Get Licence details
+
+    public function licenceDetails(Request $request){
+        if(isset($request->type) && !empty($request->type)){
+            $getDetails = LicenceType::where('product_type',$request->type)->get();
+        }else{
+            $getDetails = LicenceType::get();
+        }
+        return response()->json(['status'=>'success','data'=>$getDetails]);
+
     }
 }

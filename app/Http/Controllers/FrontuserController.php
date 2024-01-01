@@ -49,7 +49,7 @@ class FrontuserController extends Controller {
             $product_type = "Image";
             $tokens=json_decode($request['product']['token'],true);
             $product_addedby = $tokens['Utype'];
-            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
             if(empty($cart_list)){
                 $Usercart=new Usercart;
                 $Usercart->cart_product_id=$product_id;
@@ -86,7 +86,7 @@ class FrontuserController extends Controller {
 			$product_type =  $request['product']['product_type'];
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
-            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->get()->toArray();
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
 			// dd($request);
             if(empty($cart_list)){
                 $Usercart=new Usercart;
@@ -121,7 +121,7 @@ class FrontuserController extends Controller {
 
                 $tokens =  json_decode(stripslashes($request['product']['token']), true);
                 $product_addedby = $tokens['Utype'];
-                $cart_list= $Usercart->where('cart_product_id', $request['product']['product_info']['media']['id'])->where('cart_added_by',$product_addedby)->get()->toArray();
+                $cart_list= $Usercart->where('cart_product_id', $request['product']['product_info']['media']['id'])->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
                 if(empty($cart_list)){
                     $Usercart=new Usercart;
                     $Usercart->cart_product_id= $request['product']['product_info']['media']['id'];
@@ -163,7 +163,7 @@ class FrontuserController extends Controller {
 				foreach($request['data'] as $eachproduct){
 					$tokens =  json_decode(stripslashes($request['token']), true);
 					$product_addedby = $tokens['Utype'];
-					$cart_list= $Usercart->where('cart_product_id', $eachproduct['package_id'])->where('cart_added_by',$product_addedby)->get()->toArray();
+					$cart_list= $Usercart->where('cart_product_id', $eachproduct['package_id'])->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
             		if(empty($cart_list)){
 						$Usercart=new Usercart;
 						$Usercart->cart_product_id= $eachproduct['package_id'];
@@ -173,7 +173,7 @@ class FrontuserController extends Controller {
 						$Usercart->cart_added_on= date('Y-m-d H:i:s');
 						$Usercart->standard_size= $eachproduct['package_name'];
 						$Usercart->standard_price = $eachproduct['package_price'];
-						$Usercart->extended_name= '0';
+						$Usercart->extended_name= isset($eachproduct['extended']) ? $eachproduct['extended'] : '';
 						$Usercart->extended_price= '0';
 						$Usercart->total= $eachproduct['package_price'];
 						$Usercart->product_name= $eachproduct['package_description'];
@@ -238,7 +238,7 @@ class FrontuserController extends Controller {
 	public function userCartList(Request $request)
 	{
 		$Usercart = new Usercart;
-		$cart_list = $Usercart->where('cart_added_by', $request['Utype'])->with('product')->get()->toArray();
+		$cart_list = $Usercart->where('cart_added_by', $request['Utype'])->with('product')->with('licence')->get()->toArray();
 		foreach ($cart_list as $item => $eachmedia) {
 			$cart_list[$item]['product']['api_product_id'] = encrypt($eachmedia['product']['api_product_id'], true);
 		}
