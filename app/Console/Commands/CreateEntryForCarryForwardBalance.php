@@ -70,6 +70,7 @@ class CreateEntryForCarryForwardBalance extends Command
                         $newCreditedPackage->created_at = Carbon::today();
                         $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
                         $newCreditedPackage->order_type = 3;
+                        $newCreditedPackage->footage_tier = isset($package->footage_tier) && !empty($package->footage_tier)? (int)$package->footage_tier : NULL;
                         $newCreditedPackage->save();
                     }
                 }

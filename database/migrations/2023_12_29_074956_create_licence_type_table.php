@@ -19,6 +19,7 @@ class CreateLicenceTypeTable extends Migration
             $table->text('description')->nullable();
             $table->string('product_type')->comment('1=>Image,2=>Footage,3=>Music');
             $table->string('version')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }

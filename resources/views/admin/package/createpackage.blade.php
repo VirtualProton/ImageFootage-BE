@@ -115,12 +115,14 @@
 
               <div class="form-group" id="footageTierDiv">
                 <label for="exampleInputEmail1">Footage Licence Type</label>
-                <select type="text" class="form-control" name="footage_tier" id="footage_tier">
-                  <option value="">Select</option>
-                  <option value="1">Commercial</option>
-                  <option value="2">Media Non-commercial (Editorial)</option>
-                  <option value="3">Digital</option>
-                  <option value="4">Full RF Licence</option>
+                <select type="text" class="form-control" name="footage_tier" id="footage_tier" >
+                    <option value="">Select</option>
+                    @foreach ($licence as $detail )
+                    @if($detail->product_type == 2)
+                    <option value="{{$detail->id}}">{{$detail->licence_name}}</option>
+                    @endif
+                    @endforeach
+
                 </select>
               </div>
               @if ($errors->has('footage_tier'))
@@ -129,11 +131,13 @@
 
               <div class="form-group" id="musicTierDiv">
                 <label for="exampleInputEmail1">Music Licence Type</label>
-                <select type="text" class="form-control" name="footage_tier" id="music_tier">
+                <select type="text" class="form-control" name="music_tier" id="music_tier">
                   <option value="">Select</option>
-                  <option value="1">Standard</option>
-                  <option value="2">Extended</option>
-                  <option value="3">Digital</option>
+                  @foreach ($licence as $detail )
+                    @if($detail->product_type == 3)
+                    <option value="{{$detail->id}}">{{$detail->licence_name}}</option>
+                    @endif
+                    @endforeach
                 </select>
               </div>
               @if ($errors->has('footage_tier'))
@@ -142,10 +146,13 @@
 
               <div class="form-group" id="imageTierDiv">
                 <label for="exampleInputEmail1">Image Licence Type</label>
-                <select type="text" class="form-control" name="footage_tier" id="image_tier">
+                <select type="text" class="form-control" name="image_tier" id="image_tier">
                   <option value="">Select</option>
-                  <option value="1">Standard</option>
-                  <option value="2">Extended</option>
+                  @foreach ($licence as $detail )
+                    @if($detail->product_type == 1)
+                    <option value="{{$detail->id}}">{{$detail->licence_name}}</option>
+                    @endif
+                    @endforeach
                 </select>
               </div>
               @if ($errors->has('footage_tier'))
@@ -238,11 +245,20 @@
 <script>
   $(document).ready(function($) {
     $('#imageTierDiv').show()
+    var musicTierId = 'Digital';
     if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
-        $('#music_tier').find('option[value=\'3\']').css('display','block');
+        var optionToDisplay = $('#music_tier').find('option').filter(function() {
+            return $(this).text() === musicTierId;
+        });
+
+        optionToDisplay.css('display', 'block');
     }else {
-        $('#music_tier').val('1');
-        $('#music_tier').find('option[value=\'3\']').css('display','none');
+        $('#music_tier').val('7');
+        var optionToDisplay = $('#music_tier').find('option').filter(function() {
+            return $(this).text() === musicTierId;
+        });
+
+        optionToDisplay.css('display', 'none');
     }
     // Example Validataion Standard Mode
     // ---------------------------------
@@ -415,11 +431,21 @@
 
   $("#display_for").change(function() {
     var type = $(this).val();
+    var musicTierId = 'Digital';
     if(type == '2'){
-        $('#music_tier').find('option[value=\'3\']').css('display','block');
+        var optionToDisplay = $('#music_tier').find('option').filter(function() {
+            return $(this).text() === musicTierId;
+        });
+
+        optionToDisplay.css('display', 'block');
     }else{
-        $('#music_tier').val('1');
-        $('#music_tier').find('option[value=\'3\']').css('display','none');
+        $('#music_tier').val('7');
+
+        var optionToDisplay = $('#music_tier').find('option').filter(function() {
+            return $(this).text() === musicTierId;
+        });
+
+        optionToDisplay.css('display', 'none');
     }
   })
 
