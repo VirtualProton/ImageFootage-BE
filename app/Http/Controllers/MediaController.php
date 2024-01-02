@@ -235,9 +235,14 @@ class MediaController extends Controller
 
 
                 if (!empty($product_details_data)) {
-
+                    
                     //In the case when product is not avilable anymore.
                     if($product_details_data['stat'] == "fail"){
+                        if($product_details_data['product_id']){
+                            DB::table('imageFootage_product')
+                            ->where('product_id', '=', $product_details_data['product_id'])
+                            ->update(['product_server_activation' => 'inactive']);
+                        }                        
                         return $product_details_data;
                     }
 
