@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Package;
 use Auth;
+use App\Models\LicenceType;
 
 class PackageController extends Controller
 {
@@ -15,7 +16,8 @@ class PackageController extends Controller
 	}
 	public function createPackage()
 	{
-		return view('admin.package.createpackage');
+        $getDetails = LicenceType::get();
+		return view('admin.package.createpackage',['licence'=>$getDetails]);
 	}
 	public function addPackage(Request $request)
 	{
@@ -28,6 +30,14 @@ class PackageController extends Controller
 			'package_expiry' => 'required',
 			'display_for' => 'required'
 		]);
+        $tier = '';
+        if(isset($request->footage_tier) && !empty($request->footage_tier)){
+            $tier = $request->footage_tier;
+        } elseif(isset($request->music_tier) && !empty($request->music_tier)){
+            $tier  = $request->music_tier;
+        }else{
+            $request->image->tier;
+        }
 		$package = new Package;
 		$package->package_plan = $request->package_plan;
 		$package->package_name = $request->package_name;
@@ -42,7 +52,7 @@ class PackageController extends Controller
 		$package->package_pcarry_forward = $request->products_carry_forward;
 		$package->pacage_size = $request->pacage_size;
 		$package->package_addedby = Auth::guard('admins')->user()->id;
-		$package->footage_tier = $request->footage_tier;
+		$package->footage_tier = $tier;
 		$package->display_for = $request->display_for;
 		$package->package_status = $request->package_status;
 		$result = $package->save();

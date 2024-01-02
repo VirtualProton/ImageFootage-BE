@@ -415,7 +415,7 @@ class Common extends Model
         $data["email"]   = $dataForEmail[0]['email_id'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $dataForEmail[0]['first_name'];
-        
+
         Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
@@ -492,7 +492,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        
+
         $dataForEmail[0]['company_logo']                    = 'images/new-design-logo.png';
         $dataForEmail[0]['signature']                       = 'images/signature.png';
         $front_end_url_name                                 = config('app.front_end_url');
@@ -614,6 +614,7 @@ class Common extends Model
         $packge->status                    = 0;
         $packge->order_type                = 2;
         $packge->created_at                = date('Y-m-d H:i:s');
+        $packge->footage_tier              = isset($allFields['footage_tier']) && !empty($allFields['footage_tier']) ? (int)$allFields['footage_tier'] : NULL;
         if ($allFields['package_expiry'] != 0 && $allFields['package_expiry_yearly'] == 0) {
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s', strtotime("+" . $allFields['package_expiry'] . " months"));
         } else {
@@ -807,6 +808,7 @@ class Common extends Model
         $packge->status                    = 0;
         $packge->order_type                = 2;
         $packge->created_at                = date('Y-m-d H:i:s');
+        $packge->footage_tier              = isset($allFields['footage_tier']) && !empty($allFields['footage_tier']) ? (int)$allFields['footage_tier'] : NULL;
         if ($allFields['package_expiry'] != 0 && $allFields['package_expiry_yearly'] == 0) {
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s', strtotime("+" . $allFields['package_expiry'] . " months"));
         } else {
@@ -1065,7 +1067,7 @@ class Common extends Model
 
     public static function imagesaver($image_data)
     {
-        list($type, $data) = explode(';', $image_data); // exploding data for later checking and validating 
+        list($type, $data) = explode(';', $image_data); // exploding data for later checking and validating
 
         if (preg_match('/^data:image\/(\w+);base64,/', $image_data, $type)) {
             $data = substr($data, strpos($data, ',') + 1);
@@ -1107,7 +1109,7 @@ class Common extends Model
         } else {
             $result =  "error";
         }
-        /* it will return image name if image is saved successfully 
+        /* it will return image name if image is saved successfully
         or it will return error on failing to save image. */
         return $result;
     }

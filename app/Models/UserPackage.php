@@ -19,4 +19,9 @@ class UserPackage extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    public function licence()
+    {
+        return $this->hasOne(LicenceType::class, 'id', 'footage_tier');
+    }
+
 }

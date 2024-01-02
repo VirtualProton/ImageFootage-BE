@@ -294,6 +294,7 @@ class PaymentController extends Controller
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
         $packge->created_at = date('Y-m-d H:i:s');
+        $packge->footage_tier = isset($allFields['plan']['footage_tier']) && !empty($allFields['plan']['footage_tier'])? (int)$allFields['plan']['footage_tier'] : NULL;
         if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
         }else{
