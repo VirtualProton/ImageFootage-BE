@@ -243,7 +243,7 @@ class MediaController extends Controller
                             ->where('product_id', '=', $product_details_data['product_id'])
                             ->update([
                                 'product_server_activation' => 'inactive',
-                                'product_status' => 'inactive'
+                                'product_status' => 'Inactive'
                             ]);
                         }                        
                         return $product_details_data;
