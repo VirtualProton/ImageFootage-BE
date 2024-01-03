@@ -241,7 +241,10 @@ class MediaController extends Controller
                         if($product_details_data['product_id']){
                             DB::table('imageFootage_product')
                             ->where('product_id', '=', $product_details_data['product_id'])
-                            ->update(['product_server_activation' => 'inactive']);
+                            ->update([
+                                'product_server_activation' => 'inactive',
+                                'product_status' => 'inactive'
+                            ]);
                         }                        
                         return $product_details_data;
                     }
