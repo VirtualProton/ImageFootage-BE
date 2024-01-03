@@ -398,6 +398,7 @@ class UserController extends Controller
         if ($request->user_id) {
 
             $downloads = ProductsDownload::with(['product'])
+                ->with('licence')
                 ->where('user_id', '=', $userId)
                 ->whereDate('created_at', '>=', $startDate)
                 ->whereDate('created_at', '<=', $endDate)
