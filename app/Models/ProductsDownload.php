@@ -12,4 +12,8 @@ class ProductsDownload extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
+    public function licence()
+    {
+        return $this->hasOne(LicenceType::class, 'id', 'licence_type');
+    }
 }
