@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
         //
         Commands\HourlyUpdate::class,
         Commands\CurrencyUpdate::class,
-        Commands\QuotationDeactive::class
+        Commands\QuotationDeactive::class,
+        Commands\CreateEntryForCarryForwardBalance::class
 
     ];
 
