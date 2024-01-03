@@ -29,13 +29,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        $schedule->command('hour:update')
-                ->hourly();
-        $schedule->command('currency:update')
-                ->hourly();
+        //$schedule->command('hour:update')
+        //        ->hourly();
+        //$schedule->command('currency:update')
+        //        ->hourly();
         $schedule->command('quotation:deactive')
+                ->daily();
+        $schedule->command('package:to-credit-balance')
                 ->daily();
     }
 

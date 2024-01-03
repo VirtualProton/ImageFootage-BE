@@ -91,7 +91,7 @@ return [
         ],
 
         'quotationlog' => [
-            'driver' => 'single',
+            'driver' => 'daily',
             'path' => storage_path('logs/quotationlog.log'),
             'level' => 'info'
         ],
