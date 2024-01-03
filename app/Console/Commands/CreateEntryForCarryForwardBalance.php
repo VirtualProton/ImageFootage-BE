@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\UserPackage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class CreateEntryForCarryForwardBalance extends Command
 {
@@ -39,14 +40,20 @@ class CreateEntryForCarryForwardBalance extends Command
      */
     public function handle()
     {
-        $getUserPackages = UserPackage::where(['status' => 1, 'package_plan' => 2])->where('package_expiry_date_from_purchage', '<', Carbon::today())->get();
+        Log::channel('carry-forward')->info("====== Carry Forward cron : START ======");
+        $getUserPackages = UserPackage::where(['status' => 1, 'package_plan' => 1])->where('package_expiry_date_from_purchage', '<', Carbon::today())->get();
 
+        Log::channel('carry-forward')->info("====== Total expired UserPackage records found : " . count($getUserPackages) ." ======");
         if ($getUserPackages->isNotEmpty()) {
             foreach ($getUserPackages as $package) {
+                Log::channel('carry-forward')->info("====== Processing record with ID : " . $package->id ." ======");
+                Log::channel('carry-forward')->info("====== Downloaded Product: {$package->downloaded_product}, Package Products Count: {$package->package_products_count} ======");
                 if ($package->downloaded_product < $package->package_products_count) {
+                    Log::channel('carry-forward')->info("====== Less downloads than allowed in package, credit remaining ======");
                     $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('created_at','>', $getUserPackages->package_expiry_date_from_purchage)->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
 
                     if ($getCurrentSamePlan) {
+                        Log::channel('carry-forward')->info("====== Found that user has another same type of active plan ======");
                         $newCreditedPackage = new UserPackage();
                         $newCreditedPackage->user_id = $package->user_id;
 
@@ -72,10 +79,17 @@ class CreateEntryForCarryForwardBalance extends Command
                         $newCreditedPackage->order_type = 3;
                         $newCreditedPackage->footage_tier = isset($package->footage_tier) && !empty($package->footage_tier)? (int)$package->footage_tier : NULL;
                         $newCreditedPackage->save();
+
+                        $newCreditedPackageId = $newCreditedPackage->id;
+                        Log::channel('carry-forward')->info("====== Credited new plan: {$newCreditedPackageId} for user: {$package->user_id} with allowed download ======");
                     }
+                } else {
+                    Log::channel('carry-forward')->info("====== No remaining downloads than allowed in package, no credit remaining ======");
                 }
+                Log::channel('carry-forward')->info("====== Setting the status as 0 ======");
                 $package->update(['status' => 0]);
             }
         }
+        Log::channel('carry-forward')->info("====== Carry Forward cron : END =====");
     }
 }

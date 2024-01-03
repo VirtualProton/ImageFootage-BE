@@ -11,9 +11,9 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+$randomPath = env('RANDOM_PATH_FOR_LOGS', 'all-logs');
+Route::get($randomPath, [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
 Auth::routes();
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
@@ -283,7 +283,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/updatepromotion/{id}', 'PromotionController@updatePromotion');
     Route::post('/editpromotion', 'PromotionController@editPromotion');
 
-    //Route for Module 
+    //Route for Module
     Route::get('/add_module', 'ModuleController@index');
     Route::post('/createmodule', 'ModuleController@create');
     Route::get('/list_module', 'ModuleController@modulesList');
@@ -312,7 +312,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::resource('/editorials', 'EditorialController');
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
-    Route::post('/get-main-images', 'EditorialController@getMainImages');    
+    Route::post('/get-main-images', 'EditorialController@getMainImages');
     Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
 });
 
