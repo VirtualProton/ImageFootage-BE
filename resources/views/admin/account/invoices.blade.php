@@ -38,11 +38,16 @@
                       </a>
                     </li>
                     @endif
+                    <li class="@if($active_tab=="tab4") active @endif">
+                        <a href="#plans" role="tab" data-toggle="tab">
+                            <i class="fa fa-comment"></i> Assign Package
+                        </a>
+                      </li>
                     <!-- <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
                       </a>
-                      
+
                     </li> -->
 
                     <span style="float:right;">
@@ -232,8 +237,8 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method == 'chq' 
-                                        ? 'Terms Granted' : 
+                                      <td>{{$invioces->payment_method == 'chq'
+                                        ? 'Terms Granted' :
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                       <td>
@@ -260,7 +265,7 @@
                                         <?php } ?>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -378,8 +383,8 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method == 'chq' 
-                                        ? 'Terms Granted' : 
+                                      <td>{{$invioces->payment_method == 'chq'
+                                        ? 'Terms Granted' :
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                       <td>
@@ -404,7 +409,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -520,8 +525,8 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method == 'chq' 
-                                        ? 'Terms Granted' : 
+                                      <td>{{$invioces->payment_method == 'chq'
+                                        ? 'Terms Granted' :
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                       <td>
@@ -546,7 +551,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -662,8 +667,8 @@
                                       <td>{{$invioces->invoice_created}}</td>
                                       <td>{{$invioces->total}}</td>
                                       <td>{{$invioces->package_description}}</td>
-                                      <td>{{$invioces->payment_method == 'chq' 
-                                        ? 'Terms Granted' : 
+                                      <td>{{$invioces->payment_method == 'chq'
+                                        ? 'Terms Granted' :
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                       <td>
@@ -688,7 +693,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">  
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -802,7 +807,7 @@
 
                     <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
                       <div class="box-body">
-                        @include('admin.account.update-user') 
+                        @include('admin.account.update-user')
                         @include('admin.account.client-des')
                         <br />
                         <br />
@@ -812,17 +817,24 @@
                     </div>
                     {{--<div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="comment">
                       <div class="box-body">
-                      
+
                          @include('admin.account.add-comment')
                         @include('admin.account.comment')
                       </div>
                     </div> --}}
+
+                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="plans">
+                        <div class="box-body">
+                          @include('admin.account.add-plan')
+
+                        </div>
+                      </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal invoice-modal" id="modal-default" style="padding-right: 16px;"> 
+          <div class="modal invoice-modal" id="modal-default" style="padding-right: 16px;">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1260,7 +1272,7 @@
                             <td style="padding:5px;"><%item.total%></td>
                           </tr>
                         </table>
-                    </div>  
+                    </div>
                   </div>
 
                   <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
@@ -1308,7 +1320,7 @@
   //     });
   //  })
   $(function() {
-    
+
     var url = window.location.href;
     var activeTab = url.substring(url.indexOf("#!#") + 3);
     var nestedActiveTab = "{{$active_nested_tab}}";
@@ -1435,9 +1447,9 @@
   //     $.ajax({
   //         type: "POST",
   //         url: "{{ url('admin/request_for_contributorpass')}}",
-  //         data: { 
+  //         data: {
   //             id: $(this).val(), // < note use of 'this' here
-  //             access_token: $("#access_token").val() 
+  //             access_token: $("#access_token").val()
   //         },
   //         success: function(result) {
   //             alert('ok');
