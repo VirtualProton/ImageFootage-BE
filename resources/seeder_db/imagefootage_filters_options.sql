@@ -143,4 +143,13 @@ INSERT INTO `imagefootage_filters_options` (`id`, `filter_id`, `option_name`, `v
 (142, 36, 'Cleared For Sampling', '1', 3, 'sampling_cleared', 'active', NULL, NULL),
 (143, 36, 'Free', '1', 4, 'free', 'active', NULL, NULL),
 (144, 36, 'Public Domain', '1', 5, 'public_domain', 'active', NULL, NULL),
-(145, 8, 'All', '-1', 1, NULL, 'active', NULL, NULL);
+(145, 8, 'All', '-1', 1, NULL, 'active', NULL, NULL),
+(146, 37, '0', '0', 1, NULL, 'active', NULL, NULL),
+(147, 37, '1', '1', 2, NULL, 'active', NULL, NULL),
+(148, 37, '2', '2', 3, NULL, 'active', NULL, NULL),
+(149, 37, '3', '3', 4, NULL, 'active', NULL, NULL),
+(150, 37, '4', '4', 5, NULL, 'active', NULL, NULL),
+(151, 37, '5+', '5', 6, NULL, 'active', NULL, NULL),
+(153, 38, 'Female', '1', 1, NULL, 'active', NULL, NULL),
+(154, 38, 'Male', '2', 2, NULL, 'active', NULL, NULL),
+(155, 38, 'Female & Male', '4', 3, NULL, 'active', NULL, NULL);

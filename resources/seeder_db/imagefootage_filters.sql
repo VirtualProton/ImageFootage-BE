@@ -34,4 +34,6 @@ INSERT INTO `imagefootage_filters` (`id`, `name`, `value`, `type`, `filter_type`
 (33, 'Mood', 'mood', 'music', 2, 4, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 1),
 (34, 'Genre', 'genre', 'music', 2, 5, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 1),
 (35, 'Artist', 'artist', 'music', 2, 6, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 1),
-(36, 'Additional filters', 'collection', 'music', 2, 7, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 0);
+(36, 'Additional filters', 'collection', 'music', 2, 7, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 0),
+(37, 'Number Of People', 'no_of_people', 'editorial', 2, 1, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 0),
+(38, 'Gender', 'gender', 'editorial', 2, 2, 0, 'active', '2023-09-04 02:43:51', '2023-09-04 02:43:51', 1);
