@@ -228,9 +228,9 @@
     });
 
     function togglePackageSizeVisibility() {
-        var packageType = document.getElementById('package_type').value;
+       /*  var packageType = document.getElementById('package_type').value;
         var pacageSizeDiv = document.getElementById('pacage_size_div');
-        pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block';
+        pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block'; */
     }
 
     var pack_type = $("#package_plan").val();
