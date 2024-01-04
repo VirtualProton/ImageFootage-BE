@@ -184,6 +184,7 @@ return [
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*
