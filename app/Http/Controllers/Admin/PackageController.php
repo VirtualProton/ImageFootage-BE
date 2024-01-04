@@ -36,7 +36,7 @@ class PackageController extends Controller
         } elseif(isset($request->music_tier) && !empty($request->music_tier)){
             $tier  = $request->music_tier;
         }else{
-            $request->image->tier;
+            $tier = $request->image_tier;
         }
 		$package = new Package;
 		$package->package_plan = $request->package_plan;
