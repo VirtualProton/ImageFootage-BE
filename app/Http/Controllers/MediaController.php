@@ -235,21 +235,21 @@ class MediaController extends Controller
 
 
                 if (!empty($product_details_data)) {
-                    
+
                     //In the case when product is not avilable anymore.
                     if($product_details_data['stat'] == "fail"){
-                        if($product_details_data['product_id']){
+                        if($download_id){
                             DB::table('imagefootage_products')
-                            ->where('product_id', '=', $product_details_data['product_id'])
+                            ->where('api_product_id', '=', $download_id)
                             ->update([
                                 'product_server_activation' => 'inactive',
                                 'product_status' => 'Inactive'
                             ]);
-                        }                        
+                        }
                         return $product_details_data;
                     }
 
-                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('product_size', $allFields['product']['selected_product']['width'])->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
@@ -327,12 +327,11 @@ class MediaController extends Controller
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
-
                     /** TODO : set the array as per response */
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
-                        'product_id' => $product_id,
+                        'product_id' => isset($product_id['product_id']) ? $product_id['product_id'] : '',
                         'product_id_api' => $allFields['product']['product_info']['media']['id'],
                         'id_media' => $allFields['product']['product_info']['media']['id'],
                         'download_url' => $product_details_data['url'],

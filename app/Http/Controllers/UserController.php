@@ -26,6 +26,8 @@ use Carbon\Carbon;
 use App\Models\ProductsDownload;
 use App\Models\UserPackage;
 use App\Models\UserProductDownload;
+use App\Models\Usercart;
+use App\Models\ImageFootageWishlist;
 
 class UserController extends Controller
 {
@@ -500,7 +502,24 @@ class UserController extends Controller
             if ($user_id) {
                 $userToDelete = User::find($user_id);
                 if ($userToDelete) {
-                    $userToDelete->delete();
+                    DB::beginTransaction();
+                    try {
+                        UserPackage::where('user_id',$user_id)->delete();
+                        UserProductDownload::where('user_id',$user_id)->delete();
+                        Orders::where('user_id',$user_id)->delete();
+                        DB::table('imagefootage_performa_invoices')->where('user_id',$user_id)->delete();
+                        DB::table('imagefootage_performa_invoice_items')->where('user_id',$user_id)->delete();
+                        Usercart::where('cart_added_by',$user_id)->delete();
+                        DB::table('plan_subscriptions')->where('user_id',$user_id)->delete();
+                        DB::table('user_paid_payments')->where('user_id',$user_id)->delete();
+                        DB::table('imagefootage_users_wishlist')->where('user_id',$user_id)->delete();
+                        $userToDelete->delete();
+                        DB::commit();
+
+                    } catch (\Exception $e) {
+                        DB::rollBack();
+                        return response()->json(["success" => false, "message" => "User not found. Please try again later."], 200);
+                    }
                     return response()->json(["success" => true, "message" => "User deleted successfully."], 200);
                 } else {
                     throw new Exception("User not found. Please try again later.");
