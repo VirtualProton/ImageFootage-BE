@@ -35,9 +35,11 @@ class PackageController extends Controller
             $tier = $request->footage_tier;
         } elseif(isset($request->music_tier) && !empty($request->music_tier)){
             $tier  = $request->music_tier;
+			$request->pacage_size = null;
         }else{
             $tier = $request->image_tier;
         }
+
 		$package = new Package;
 		$package->package_plan = $request->package_plan;
 		$package->package_name = $request->package_name;
@@ -102,6 +104,9 @@ class PackageController extends Controller
 	}
 	public function editPackage(Request $request)
 	{
+		if(isset($request->package_type) && $request->package_type == 'Music'){
+			$request->pacage_size = null;
+        }
 		$this->validate($request, [
 			'package_name' => 'required',
 			'package_price' => 'required',
@@ -128,7 +133,7 @@ class PackageController extends Controller
 		);
 		$result = Package::where('package_id', $request->package_id)->update($update_array);
 		if ($result) {
-			return back()->with('success', 'Package updated successful');
+			return back()->with('success', 'Package updated successfully');
 		} else {
 			return back()->with('warning', 'Some problem occured.');
 		}

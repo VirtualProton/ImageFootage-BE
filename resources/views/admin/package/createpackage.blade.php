@@ -60,7 +60,7 @@
 
 
 
-              <div class="form-group">
+              <div class="form-group" id="hd4kDiv">
                 <label for="exampleInputEmail1">HD/4K </label>
                 <select class="form-control" name="pacage_size" id="pacage_size">
                   <option value="1">HD</option>
@@ -416,16 +416,18 @@
     if (pack_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
-        $('#imageTierDiv').hide()
+        $('#imageTierDiv').hide();
+        $('#hd4kDiv').show();
     } else if(pack_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
         $('#imageTierDiv').hide()
-    }
-    else {
+        $('#hd4kDiv').hide();
+    } else {
         $('#imageTierDiv').show()
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
+        $('#hd4kDiv').show();
     }
   });
 

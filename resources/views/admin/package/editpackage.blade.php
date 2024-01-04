@@ -48,26 +48,26 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleInputEmail1">Package Type</label>
-                <select type="text" class="form-control" name="package_type" id="package_type">
-                  <option value="Image" @if($package[0]['package_type']=='Image' ) selected="selected" @endif>Image</option>
-                  <option value="Footage" @if($package[0]['package_type']=='Footage' ) selected="selected" @endif>Footage</option>
-                  <option value="Music" @if($package[0]['package_type']=='Music' ) selected="selected" @endif>Music</option>
-                </select>
+                  <label for="exampleInputEmail1">Package Type</label>
+                  <select type="text" class="form-control" name="package_type" id="package_type">
+                      <option value="Image" @if($package[0]['package_type']=='Image' ) selected="selected" @endif>Image</option>
+                      <option value="Footage" @if($package[0]['package_type']=='Footage' ) selected="selected" @endif>Footage</option>
+                      <option value="Music" @if($package[0]['package_type']=='Music' ) selected="selected" @endif>Music</option>
+                  </select>
               </div>
               @if ($errors->has('package_type'))
-              <div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
+                  <div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
               @endif
 
-              <div class="form-group">
-                <label for="exampleInputEmail1">HD/4k </label>
-                <select class="form-control" name="pacage_size" id="pacage_size">
-                  <option value="1" @if($package[0]['pacage_size']=='1' ) selected="selected" @endif>HD</option>
-                  <option value="2" @if($package[0]['pacage_size']=='2' ) selected="selected" @endif>4K</option>
-                </select>
-                @if ($errors->has('pacage_size'))
-                <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
-                @endif
+              <div class="form-group" id="pacage_size_div">
+                  <label for="exampleInputEmail1">HD/4k </label>
+                  <select class="form-control" name="pacage_size" id="pacage_size">
+                      <option value="1" @if($package[0]['pacage_size']=='1' ) selected="selected" @endif>HD</option>
+                      <option value="2" @if($package[0]['pacage_size']=='2' ) selected="selected" @endif>4K</option>
+                  </select>
+                  @if ($errors->has('pacage_size'))
+                      <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
+                  @endif
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Package Name </label>
@@ -221,6 +221,17 @@
 </script>
 <script>
   $(document).ready(function($) {
+    togglePackageSizeVisibility();
+        document.getElementById('package_type').addEventListener('change', function () {
+        togglePackageSizeVisibility();
+    });
+
+    function togglePackageSizeVisibility() {
+        var packageType = document.getElementById('package_type').value;
+        var pacageSizeDiv = document.getElementById('pacage_size_div');
+        pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block';
+    }
+        
     var pack_type = $("#package_plan").val();
     var package_type = $("#package_type").val();
     if (package_type == 'Footage') {
