@@ -59,15 +59,15 @@
                   <div class="has_error" style="color:red;">{{ $errors->first('package_type') }}</div>
               @endif
 
-              <div class="form-group" id="pacage_size_div">
-                  <label for="exampleInputEmail1">HD/4k </label>
-                  <select class="form-control" name="pacage_size" id="pacage_size">
-                      <option value="1" @if($package[0]['pacage_size']=='1' ) selected="selected" @endif>HD</option>
-                      <option value="2" @if($package[0]['pacage_size']=='2' ) selected="selected" @endif>4K</option>
-                  </select>
-                  @if ($errors->has('pacage_size'))
-                      <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
-                  @endif
+              <div class="form-group" id="package_size">
+                <label for="exampleInputEmail1">HD/4k </label>
+                <select class="form-control" name="pacage_size" id="pacage_size">
+                  <option value="1" @if($package[0]['pacage_size']=='1' ) selected="selected" @endif>HD</option>
+                  <option value="2" @if($package[0]['pacage_size']=='2' ) selected="selected" @endif>4K</option>
+                </select>
+                @if ($errors->has('pacage_size'))
+                <div class="has_error" style="color:red;">{{ $errors->first('pacage_size') }}</div>
+                @endif
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Package Name </label>
@@ -157,6 +157,7 @@
                   <option value="3" @if($package[0]['display_for']=='3' ) selected="selected" @endif>All</option>
                   <option value="1" @if($package[0]['display_for']=='1' ) selected="selected" @endif>Frontend</option>
                   <option value="2" @if($package[0]['display_for']=='2' ) selected="selected" @endif>Backend</option>
+                  <option value="4" @if($package[0]['display_for']=='4' ) selected="selected" @endif>User Specific</option>
                 </select>
               </div>
               @if ($errors->has('display_for'))
@@ -227,23 +228,26 @@
     });
 
     function togglePackageSizeVisibility() {
-        var packageType = document.getElementById('package_type').value;
+       /*  var packageType = document.getElementById('package_type').value;
         var pacageSizeDiv = document.getElementById('pacage_size_div');
-        pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block';
+        pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block'; */
     }
-        
+
     var pack_type = $("#package_plan").val();
     var package_type = $("#package_type").val();
     if (package_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
+        $('#package_size').show();
     } else if(package_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
+        $('#package_size').hide();
     }
      else {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
+        $('#package_size').hide();
     }
     if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
         $('#music_tier').find('option[value=\'3\']').css('display','block');
@@ -392,14 +396,17 @@
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
         $('#package_plan').val('1')
+        $('#package_size').show()
     }else if(pack_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
         $('#package_plan').val('1')
+        $('#package_size').hide()
     }
      else {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
+        $('#package_size').hide()
     }
   });
   $("#display_for").change(function() {

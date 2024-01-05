@@ -119,7 +119,14 @@ class MediaController extends Controller
         } else {
             $flag = 'Music';
         }
+        $findSubscription = UserPackage::where('user_id','=',$id)->where('package_expiry_date_from_purchage', '>', Now())->where('package_type', '=', $flag)->where('package_plan','=',2)->pluck('id');
 
+        if(!$findSubscription->isEmpty()){
+            if(!in_array($package_id,$findSubscription->toArray())){
+
+                $package_id = $findSubscription->toArray()[0];
+            }
+        }
         $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)
@@ -133,7 +140,7 @@ class MediaController extends Controller
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
 
-                if ($perpack->package_plan == 1) { // For subscriprion type package
+                if ($perpack->package_plan == '2') { // For subscriprion type package
                     // Check subscription is monthly or not
 
                     if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
@@ -158,7 +165,7 @@ class MediaController extends Controller
                     } else if ($perpack->downloaded_product < $perpack->package_products_count) {
                         $download = 1;
                     }
-                } else if ($perpack->package_plan == 2 && $perpack->downloaded_product < $perpack->package_products_count) { // For download type package
+                } else if ($perpack->package_plan == '1' && $perpack->downloaded_product < $perpack->package_products_count) { // For download type package
                     $download = 1;
                 }
 
