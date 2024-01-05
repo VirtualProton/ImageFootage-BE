@@ -96,6 +96,12 @@ return [
             'level' => 'info'
         ],
 
+        'carry-forward' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/carry-forward.log'),
+            'level' => 'info'
+        ],
+
         'panther_media' => [
             'driver' => 'single',
             'path' => storage_path('logs/panther-media/panther_media.log'),
