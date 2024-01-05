@@ -246,14 +246,21 @@ class FrontuserController extends Controller {
 	}
 
 	public function deleteCartItem(Request $request){
-        $id = $request['product']['cart_id'];
-		$del_result=Usercart::find($id)->delete();
-		if($del_result){
-			echo '{"status":"1","message":"Cart item deleted successfully"}';
-		}else{
-			echo '{"status":"0","message":"Some problem occured."}';
+        $id       = $request['product']['cart_id'];
+		$cartItem = Usercart::find($id);
+
+		if ($cartItem) {
+			$del_result = $cartItem->delete();
+			if ($del_result) {
+				echo '{"status":"1","message":"Cart item deleted successfully"}';
+			} else {
+				echo '{"status":"0","message":"Some problem occured."}';
+			}
+		} else {
+			echo '{"status":"0","message":"Cart item not found."}';
 		}
 	}
+
 	public function addtoWishlist(Request $request){
 
 		$product_data = $request->all();
