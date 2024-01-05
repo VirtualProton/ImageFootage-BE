@@ -26,6 +26,7 @@ use Auth;
 use Mail;
 use App\Models\UserInfo;
 use App\Models\Description;
+use App\Models\Package;
 
 class UserController extends Controller
 {
@@ -211,6 +212,7 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
         $active_tab = "tab1";
         $active_nested_tab = "active_plans";
+        $plans = Package::where('package_status','Active')->get();
 
         $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
@@ -219,7 +221,7 @@ class UserController extends Controller
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
         })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
 
-        return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab'))
+        return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab','plans'))
             ->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)
             ->with('account_download_pack_quotations', $account_download_pack_quotations)
             ->with('account_download_pack_invoices', $account_download_pack_invoices)
@@ -517,5 +519,36 @@ class UserController extends Controller
         } else {
             return back()->with('error', 'Some problem occured.');
         }
+    }
+
+    public function providePlan(Request $request){
+        $package = Package::where('package_id',$request->plan_id)->first();
+        $newCreditedPackage = new UserPackage();
+        $newCreditedPackage->user_id = $request->user_id;
+
+        $newCreditedPackage->transaction_id = $package->package_id;
+        $newCreditedPackage->package_id = $package->package_id;
+        $newCreditedPackage->package_name = $package->package_name;
+
+        $newCreditedPackage->package_price = $package->package_price;
+        $newCreditedPackage->package_description = $package->package_description;
+        $newCreditedPackage->package_products_count = $package->package_products_count - $package->downloaded_product;
+        $newCreditedPackage->payment_status = "Completed";
+        $newCreditedPackage->package_type = $package->package_type;
+        $newCreditedPackage->package_permonth_download = $package->package_permonth_download;
+        $newCreditedPackage->package_expiry = $package->package_expiry;
+        $newCreditedPackage->package_plan = $package->package_plan;
+        $newCreditedPackage->package_pcarry_forward = "no";
+        $newCreditedPackage->package_expiry_yearly = $package->package_expiry_yearly;
+
+        $newCreditedPackage->payment_gatway_provider = $package->payment_gatway_provider;
+        $newCreditedPackage->pacage_size = $package->pacage_size;
+        $newCreditedPackage->created_at = Carbon::today();
+        $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
+        $newCreditedPackage->order_type = 2;
+        $newCreditedPackage->footage_tier = isset($package->footage_tier) && !empty($package->footage_tier)? (int)$package->footage_tier : NULL;
+        $newCreditedPackage->save();
+
+        return back()->with('success','Plan added successfully !!');
     }
 }

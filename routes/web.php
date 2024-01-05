@@ -235,6 +235,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/users/comments/', 'InvoiceController@comments');
 
     Route::post('/users/update_user/', 'UserController@updateUser');
+    Route::post('/users/plan/', 'UserController@providePlan');
 
     Route::get('/quotation/{id}', 'InvoiceController@quotation');
     Route::get('/quotation2/{id}', 'InvoiceController@quotation2');

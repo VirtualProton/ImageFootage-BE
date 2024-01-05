@@ -60,7 +60,7 @@
 
 
 
-              <div class="form-group" id="hd4kDiv">
+              <div class="form-group" id="package_size">
                 <label for="exampleInputEmail1">HD/4K </label>
                 <select class="form-control" name="pacage_size" id="pacage_size">
                   <option value="1">HD</option>
@@ -180,6 +180,7 @@
                   <option value="3">All</option>
                   <option value="1">Frontend</option>
                   <option value="2">Backend</option>
+                  <option value="4">User Specific</option>
                 </select>
               </div>
               @if ($errors->has('display_for'))
@@ -245,6 +246,7 @@
 <script>
   $(document).ready(function($) {
     $('#imageTierDiv').show()
+    $('#package_size').hide()
     var musicTierId = 'Digital';
     if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
         var optionToDisplay = $('#music_tier').find('option').filter(function() {
@@ -416,18 +418,19 @@
     if (pack_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
-        $('#imageTierDiv').hide();
-        $('#hd4kDiv').show();
+        $('#imageTierDiv').hide()
+        $('#package_size').show()
     } else if(pack_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
         $('#imageTierDiv').hide()
-        $('#hd4kDiv').hide();
-    } else {
+        $('#package_size').hide()
+    }
+    else {
         $('#imageTierDiv').show()
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
-        $('#hd4kDiv').show();
+        $('#package_size').hide()
     }
   });
 
