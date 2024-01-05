@@ -79,6 +79,7 @@ class UserController extends Controller
                 $send_data['country'] = $user['country'];
                 $send_data['address2'] = $user['address2'];
                 $send_data['company'] = $user['company'];
+                $send_data['gst']    = $user['gst'];
 
                 $image_download = 0;
                 $footage_download = 0;
@@ -196,7 +197,7 @@ class UserController extends Controller
     public function getUserAddress(Request $request)
     {
         $id = $request->Utype;
-        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code','company','gst')->where('id', $id)->with(['country','city','state'])->first();
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code','company','gst','mobile','email')->where('id', $id)->with(['country','city','state'])->first();
         return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
     }
     public function contributorProfile($id)
@@ -454,9 +455,10 @@ class UserController extends Controller
                 'state' => $data['profileData']['state'],
                 'city' => $data['profileData']['city'],
                 'postal_code' => $data['profileData']['pincode'],
-                'address2' => $data['profileData']['address2'] ?? '',
+                'address2' => $data['profileData']['address2'] ?? $userlist['address2'],
                 'company' => $data['profileData']['company'] ?? '',
-                'email' => $data['profileData']['email'] ?? ''
+                'email' => $data['profileData']['email'] ?? '',
+                'gst'  => $data['profileData']['gst'] ?? '',
             ];
             if (empty($userlist['country'])) {
                 $update_data['country'] = $data['profileData']['country'];
