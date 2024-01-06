@@ -11,7 +11,7 @@
                   <td width="40%" style="vertical-align: top; font-size: 12px;">
                      <div class="qutationtext">
                         <p>Dear ,<?php echo $orders['bill_firstname'] ?> <?php echo $orders['bill_lastname'] ?></p>
-                       <p> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. </p>
+                       <!-- <p> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. </p> -->
                         <br>
                         <p>Find your <a href="#"> local contact information </a></p>
                         <p> Email: <a href="mailto:rashmi.spright343@gmail.com">rashmi.spright343@gmail.com</a></p>
@@ -80,8 +80,12 @@
                       <?php 
                       $subtotalarray = 0;
                       foreach($orders['items'] as $value){
+                       if($value['product_web']=='4'){ 
+                        $subtotalarray = $subtotalarray+$value['total'];
+                       }else{
                         $subtotalarray = $subtotalarray+$value['standard_price'];
-							   $protype=$value['product']['product_main_type']; ?>
+                       }
+                       $protype=$value['product']['product_main_type']; ?>
 								<tr>
 									 <th colspan="4" style="background: #eff1e6; padding: 16px 12px; text-align: left; border-top: 2px solid grey;">
 										<p style="margin: 0px; font-weight: bold; font-size:16px;"><?php echo $value['product']['product_id']  ?></p>
@@ -106,13 +110,19 @@
                                         Your browser does not support the video tag.
                                     </video>
                                 </a>
-                                <?php } ?>
+                                <?php } if($value['product_web']=='4'){ ?>
+                                <a href="javascript:void(0)" >
+                                    <img src="<?php echo $value['product_thumb']; ?>" alt="product-img" width="200" height="150"/>
+                                </a>
+                                <?php
+                               }?>
 							</td>
 									 <td colspan="2" width="50%">
 										<table width="100%" style="font-size:12px;">
 										<tr>
+                                <?php if(isset($value['standard_size']) && !empty($value['standard_size'])){ ?>
 											  <td style="text-align: right; font-weight: bold;">Product size:</td>
-											  <td><?php echo $value['standard_size'] ?></td>
+                                   	<td><?php echo $value['standard_size']; }?></td>
 										   </tr>
 
 											<!-- if(!empty($value['usageType'])){
@@ -198,7 +208,12 @@
 									 </td>
 									 <td width="25%" style="vertical-align: top; text-align: right; font-size: 18px;">
 										<p style="margin: 0px; text-align: right; font-weight: bold; " ><strong>Price:</strong></p>
+                              <?php if($value['product_web']=='4'){ ?>
+                                 <p style="margin: 0px; text-align: right;  font-weight: bold;"><strong>Rs. <?php echo $value['total']  ?></strong></p>
+                              <?php } else{ ?>
 										<p style="margin: 0px; text-align: right;  font-weight: bold;"><strong>Rs. <?php echo $value['standard_price']  ?></strong></p>
+                              <?php }?>
+
 									 </td>
 								  </tr>
 							
