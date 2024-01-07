@@ -119,14 +119,6 @@ class MediaController extends Controller
         } else {
             $flag = 'Music';
         }
-        $findSubscription = UserPackage::where('user_id','=',$id)->where('package_expiry_date_from_purchage', '>', Now())->where('package_type', '=', $flag)->where('package_plan','=',2)->pluck('id');
-
-        if(!$findSubscription->isEmpty()){
-            if(!in_array($package_id,$findSubscription->toArray())){
-
-                $package_id = $findSubscription->toArray()[0];
-            }
-        }
         $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)
@@ -148,8 +140,8 @@ class MediaController extends Controller
                         $subscriptionStartDate = Carbon::parse($perpack->created_at);
 
                         $latestDates = $this->getDateGaps($subscriptionStartDate);
-                        $startDateOfSpecificMonth = $latestDates['startDate'];
-                        $endDateOfSpecificMonth = $latestDates['endDate'];
+                        $startDateOfSpecificMonth = isset($latestDates['startDate']) && !empty($latestDates['startDate']) ? $latestDates['startDate'] : $perpack->created_at;
+                        $endDateOfSpecificMonth = isset($latestDates['endDate']) && !empty($latestDates['endDate']) ? $latestDates['endDate'] : $perpack->package_expiry_date_from_purchage;
 
                         // Count the number of downloads for the current month
                         $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
