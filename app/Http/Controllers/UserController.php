@@ -130,69 +130,22 @@ class UserController extends Controller
                 $endDate = $request->input('end_date');
                 break;
         }
-        $userlist = User::where('id', $request->user_id)
-            ->with('country')
-            ->with('state')
-            ->with('city')
-            ->with([
-                'plans' => function ($query) use ($startDate, $endDate) {
-                    $query->whereIn('payment_status', ['Completed', 'Transction Success'])
-                        //->whereRaw('package_products_count > downloaded_product')
-                        ->whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate)
-                        ->where('order_type', '!=', 3)
-                        ->where('status', 1)
-                        ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice','status')
-                        ->with(['downloads' => function ($down_query) {
-                            $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
-                        }]);
-                }
-            ])
-            ->get()->toArray();
+        $userlist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->where('user_id', $request->user_id)
+            ->where('order_type', '!=', 3)
+            ->where('status', 1);
 
-        if (count($userlist) > 0) {
-            foreach ($userlist as $user) {
-                $send_data['id'] = $user['id'];
-                $send_data['first_name'] = $user['first_name'];
-                $send_data['last_name'] = $user['last_name'];
-                $send_data['title'] = $user['title'];
-                $send_data['email'] = $user['email'];
-                $send_data['user_name'] = $user['user_name'];
-                $send_data['contact_owner'] = $user['contact_owner'];
-                $send_data['mobile'] = $user['mobile'];
-                $send_data['phone'] = $user['phone'];
-                $send_data['address'] = $user['address'];
-                $send_data['status'] = $user['status'];
-                $send_data['type'] = $user['type'];
-                $send_data['postal_code'] = $user['postal_code'];
-                $send_data['plans'] = $user['plans'];
-                $send_data['city'] = $user['city'];
-                $send_data['state'] = $user['state'];
-                $send_data['country'] = $user['country'];
-                $send_data['address2'] = $user['address2'];
-                $send_data['company'] = $user['company'];
-
-                $image_download = 0;
-                $footage_download = 0;
-                $music_download = 0;
-                foreach ($user['plans'] as $plan) {
-                    if ($plan['package_type'] == 'Image') {
-                        $image_download = 1;
-                    } else if ($plan['package_type'] == 'Footage') {
-                        $footage_download = 1;
-                    } else if ($plan['package_type'] == 'Music') {
-                        $music_download = 1;
-                    }
-                }
-                $send_data['image_download'] = $image_download;
-                $send_data['footage_download'] = $footage_download;
-                $send_data['music_download'] = $music_download;
-            }
-            return '{"status":"1","message":"","data":' . json_encode($send_data) . '}';
-        } else {
-            return '{"status":"0","message":"Some problem occured.","data":"[]"}';
+        if ($range !== 'all') {
+            $userlist->whereDate('created_at', '>=', $startDate)
+                    ->whereDate('created_at', '<=', $endDate);
         }
+
+        $userlist = $userlist->orderBy('id', 'desc')
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier')
+            ->paginate(5)
+            ->toArray();
+            return ['status' => 1, 'message' => 'Plan details fetched successfully.', 'data' => $userlist];
+
     }
     public function getUserAddress(Request $request)
     {
@@ -347,6 +300,7 @@ class UserController extends Controller
 
         if ($request->user_id) {
             $orderData = Orders::with(['items.product'])
+                ->with(['items.licence'])
                 ->where('user_id', '=', $userId)
                 ->whereIn('order_status', ['Completed', 'Transction Success'])
                 ->whereDate('order_date', '>=', $startDate)
@@ -359,7 +313,13 @@ class UserController extends Controller
                         $productquery->where('license_type', $licenseType);
                     }
                 })
+                ->whereHas('items', function ($query) use ($licenseType) {
+                    if ($licenseType != 'All') {
+                        $query->where('footage_tier', $licenseType);
+                    }
+                })
                 ->orderBy('id', 'desc')
+
                 ->paginate(5)
                 ->toArray();
 
