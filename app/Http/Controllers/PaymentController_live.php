@@ -91,6 +91,7 @@ class PaymentController extends Controller
                 $orderItem->token = $eachCart['token'];
                 $orderItem->cart_added_by = $eachCart['cart_added_by'];
                 $orderItem->cart_added_on = $eachCart['cart_added_on'];
+                $orderItem->footage_tier  = (int)$eachCart['extended_name'];
                 $orderItem->save();
             }
         }

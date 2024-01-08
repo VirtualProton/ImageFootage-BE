@@ -86,7 +86,7 @@ class FrontuserController extends Controller {
 			$product_type =  $request['product']['product_type'];
 			$tokens =  json_decode(stripslashes($request['product']['token']), true);
             $product_addedby = $tokens['Utype'];
-            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
+            $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->where('standard_size',$request['product']['selected_product']['version'])->get()->toArray();
 			// dd($request);
             if(empty($cart_list)){
                 $Usercart=new Usercart;
@@ -95,7 +95,7 @@ class FrontuserController extends Controller {
                 $Usercart->cart_added_by= $product_addedby;
                 $Usercart->standard_type= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= isset($request['product']['selected_product']['size']) ?$request['product']['selected_product']['size']:'' ;
+                $Usercart->standard_size= isset($request['product']['selected_product']['version']) ?$request['product']['selected_product']['version']:'' ;
                 $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price'] : 0;
                 // $Usercart->total= $request['product']['total'];
 				$Usercart->total = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:0;
@@ -118,7 +118,6 @@ class FrontuserController extends Controller {
             }
         }else if(isset($request['product']['type']) && $request['product']['type'] =='4'){
 			//print_r($request['data']); die;
-
                 $tokens =  json_decode(stripslashes($request['product']['token']), true);
                 $product_addedby = $tokens['Utype'];
                 $cart_list= $Usercart->where('cart_product_id', $request['product']['product_info']['media']['id'])->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
@@ -129,8 +128,8 @@ class FrontuserController extends Controller {
                     $Usercart->cart_added_by= $product_addedby;
                     $Usercart->standard_type= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
                     $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                    $Usercart->standard_size= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
-                    $Usercart->standard_price = isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
+                    $Usercart->standard_size= isset($request['product']['selected_product']['version']) ? $request['product']['selected_product']['version']:'';
+                    $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:'';
                     $Usercart->extended_name= isset($request['product']['extended']) ? $request['product']['extended'] : '';;
                     $Usercart->extended_price= '0';
                     $Usercart->total= isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:0;;
