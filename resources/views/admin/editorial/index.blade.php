@@ -62,10 +62,11 @@
                                             <a href="{{ URL::to('admin/editorials/'.$editorial['id'].'/edit') }}"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                         </div>
                                         <div style="display: inline-block; margin-left: 10px;">
-                                            <form action="{{ route('editorials.destroy', $editorial['id']) }}" method="POST">
-                                                @method('DELETE')
+
+                                            <form action="{{ route('editorials.destroy', $editorial['id']) }}" method="POST" style="display: inline">
                                                 @csrf
-                                                <a onclick="return confirm('Do you want to remove editorial?')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                @method('DELETE')
+                                               <i class="fa fa-trash" aria-hidden="true" style="cursor: pointer; color:cadetblue" onclick="confirmDelete('{{ $editorial['title'] }}', this.parentElement)"></i>
                                             </form>
                                         </div>
                                     </td>
@@ -89,6 +90,12 @@
     $(function() {
         $('#editorial').DataTable();
     })
+
+    function confirmDelete(resourceName, form) {
+        if (confirm(`Are you sure you want to delete ${resourceName}?`)) {
+            form.submit();
+        }
+    }
 </script>
 
 @stop
