@@ -214,6 +214,7 @@ class MediaController extends Controller
                                 'updated_at' => date('Y-m-d H:i:s')
                             ]);
                     }
+                    return response()->json(['status' => 'success', 'message' => 'Footage downloaded successfully','data'=>$product_details_data]);
                 }
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
@@ -253,7 +254,7 @@ class MediaController extends Controller
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
 
-                    if($product_details_data['download_status']['status'] == "pending"){
+                    if(isset($product_details_data['download_status']['status']) && !empty($product_details_data['download_status']['status']) && $product_details_data['download_status']['status'] == "pending"){
                         $dataInsert = array(
                             'user_id' => $id,
                             'package_id' => $allFields['product']['package'],
@@ -313,8 +314,10 @@ class MediaController extends Controller
                                 'updated_at' => date('Y-m-d H:i:s')
                             ]);
                     }
+                }else{
+                    return response()->json(['status' => 'failed', 'message' => 'Image is not downloaded successfully','data'=>[]]);
                 }
-                return response()->json($product_details_data);
+                return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully','data'=>$product_details_data]);
             } else if ($allFields['product']['type'] == 4) {
                 // Download music from pond5
                 $footageMedia = new FootageApi();
@@ -360,6 +363,8 @@ class MediaController extends Controller
                                 'updated_at' => date('Y-m-d H:i:s')
                             ]);
                     }
+                    return response()->json(['status' => 'success', 'message' => 'Music downloaded successfully','data'=>$product_details_data]);
+
                 }
                 return response()->json($product_details_data);
             }
@@ -518,8 +523,12 @@ class MediaController extends Controller
             $condition = ['product_id' => $checkUserDownloads->product_id];
             $userProductDownload->updateOrInsert($condition, $imageDataInsert);
 
-            if($imageDownloadData['download_status']['status'] == "ready"){
-                return response()->json(['status'=> 'ready', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
+            if($request->type !== 2){
+                return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
+            }
+
+            if(isset($imageDownloadData['download_status']['status']) && !empty($imageDownloadData['download_status']['status']) && $imageDownloadData['download_status']['status'] == "ready"){
+                return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }else{
                 return response()->json(['status'=> 'Pending', 'message'=> 'Your Product will be downloaded soon.','data'=>$imageDataInsert]);
             }
