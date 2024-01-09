@@ -302,10 +302,12 @@ class UserController extends Controller
             $orderData = Orders::with(['items.product'])
                 ->with(['items.licence'])
                 ->where('user_id', '=', $userId)
-                ->whereIn('order_status', ['Completed', 'Transction Success'])
-                ->whereDate('order_date', '>=', $startDate)
-                ->whereDate('order_date', '<=', $endDate)
-                ->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
+                ->whereIn('order_status', ['Completed', 'Transction Success']);
+                if ($range !== 'all') {
+                    $orderData->whereDate('order_date', '>=', $startDate)
+                            ->whereDate('order_date', '<=', $endDate);
+                }
+                $orderData=  $orderData->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }
@@ -362,10 +364,12 @@ class UserController extends Controller
 
             $downloads = ProductsDownload::with(['product'])
                 ->with('licence')
-                ->where('user_id', '=', $userId)
-                ->whereDate('created_at', '>=', $startDate)
-                ->whereDate('created_at', '<=', $endDate)
-                ->whereHas('product', function ($productquery) use ($mediaType) {
+                ->where('user_id', '=', $userId);
+                if ($range !== 'all') {
+                    $downloads->whereDate('created_at', '>=', $startDate)
+                            ->whereDate('created_at', '<=', $endDate);
+                }
+               $downloads =  $downloads->whereHas('product', function ($productquery) use ($mediaType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
                     }

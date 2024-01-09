@@ -50,7 +50,7 @@ class CreateEntryForCarryForwardBalance extends Command
                 Log::channel('carry-forward')->info("====== Downloaded Product: {$package->downloaded_product}, Package Products Count: {$package->package_products_count} ======");
                 if ($package->downloaded_product < $package->package_products_count) {
                     Log::channel('carry-forward')->info("====== Less downloads than allowed in package, credit remaining ======");
-                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('created_at','>', $getUserPackages->package_expiry_date_from_purchage)->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
+                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('created_at','>', $package->package_expiry_date_from_purchage)->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
 
                     if ($getCurrentSamePlan) {
                         Log::channel('carry-forward')->info("====== Found that user has another same type of active plan ======");
