@@ -216,6 +216,7 @@ class UserController extends Controller
                 $sm = $request['mobile']['user_mobile'];
                 $user = User::where('mobile', $request['mobile']['user_mobile'])->first();
                 $user->otp = $randnum;
+                $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
                 // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
                 // $url = $hostname."/resetpassword/".$randnum."/".$user->email;
                 // $data = array('url'=>$url,'email'=>$user->email);
@@ -310,9 +311,6 @@ class UserController extends Controller
                 $orderData=  $orderData->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
-                    }
-                    if ($licenseType != 'All') {
-                        $productquery->where('license_type', $licenseType);
                     }
                 })
                 ->whereHas('items', function ($query) use ($licenseType) {
