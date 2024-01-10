@@ -517,7 +517,7 @@ class AuthController extends Controller
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'OTP is invalid.'], 200);
         }
-        if ($user->otp_valid_date < date('Y-m-d H:i:s')) {
+        if ($user->otp_valid_date !== null && $user->otp_valid_date < date('Y-m-d H:i:s')) {
             return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
         }
         $user->status         = 1;
@@ -526,7 +526,7 @@ class AuthController extends Controller
         $save = $user->save();
         if ($save) {
             $user_data = ['user_id' => $user->id];
-            return response()->json(['status' => true, 'message' => 'User activated successfully.', 'data' => $user_data], 200);
+            return response()->json(['status' => true, 'message' => 'User is verified successfully.', 'data' => $user_data], 200);
         }
         return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
     }
@@ -545,7 +545,7 @@ class AuthController extends Controller
         $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'User not found.'], 200);
-        }        
+        }
         $user->otp            = $otp;
         $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
         $update = $user->save();
@@ -553,7 +553,7 @@ class AuthController extends Controller
             $user_data = ['user_id' => $user->id];
             $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
             $smsClass = new TnnraoSms;
-            
+
             $smsClass->sendSms($message, $mobile);
             return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
         }
