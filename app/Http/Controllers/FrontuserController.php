@@ -538,4 +538,18 @@ class FrontuserController extends Controller {
 
 
 	}
+    public function editCartDetails(Request $request){
+       $cartData = $request->cartData;
+       if($cartData){
+        foreach($cartData as $key => $cart){
+            Usercart::where('cart_id',$cart['cart_id'])->update([
+                'extended_name' => $cart['extended_name'],
+                'standard_size' => $cart['standard_size'],
+                'standard_price' => $cart['standard_price'],
+                'total'   => $cart['standard_price']
+            ]);
+        }
+        return response()->json(['status'=>'success','message'=>'Cart list updated successfully']);
+       }
+    }
 }

@@ -110,6 +110,7 @@ Route::group([
 
 ], function () {
     Route::post('add_to_cart', 'FrontuserController@addtocart');
+    Route::post('edit_to_cart', 'FrontuserController@editCartDetails');
     Route::post('user_cart_list', 'FrontuserController@userCartList');
     Route::post('delete_cart_item', 'FrontuserController@deleteCartItem');
     Route::post('addto_wishlist', 'FrontuserController@addtoWishlist');
