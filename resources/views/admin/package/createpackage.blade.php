@@ -401,18 +401,6 @@
 
   });
 
-  $("#package_plan").change(function() {
-    var pack_plan = $(this).val();
-    var pack_type = $('#package_type').val()
-    if (pack_plan == '2' && pack_type == 'Image') {
-        $("#package_expiry").val("1");
-        $("#package_expiry").attr('readonly',true)
-    }else{
-      $("#package_expiry").val("")
-      $("#package_expiry").removeAttr('readonly')
-    }
-
-  });
   $("#package_type").change(function() {
     var pack_type = $(this).val();
     if (pack_type == 'Footage') {

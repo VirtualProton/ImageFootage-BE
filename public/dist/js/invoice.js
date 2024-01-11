@@ -339,6 +339,9 @@ app.controller(
             //  console.log(selectedPlanData);
             //  console.log(type);
             $scope.selected_plan = selectedPlanData;
+            $scope.GSTD = false;
+            $scope.taxdownload = 0;
+
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
                 $scope.total_download = selectedPlanData["package_price"];
