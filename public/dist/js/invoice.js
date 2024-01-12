@@ -275,6 +275,13 @@ app.controller(
             $scope.search = false; // Reset loaded data
             $scope.selected_sub_plan = ""; // Reset sub total
             $scope.downloadprice = ""; // Reset total
+            $scope.subsc_total = '';
+            $scope.subscriptionprice = '';
+            $scope.total_download = '';
+            $scope.GSTD = false;
+            $scope.GSTS = false;
+            $scope.taxdownload = 0;
+            $scope.subsc_tax="";
         };
         $scope.plan_type_select = function (type) {
             $scope.plan_type_var = type;
@@ -335,12 +342,17 @@ app.controller(
         };
 
         $scope.selectPlanfromlist = function (selectedPlanData, type) {
-            selectedPlanData = JSON.parse(selectedPlanData);
+            if(selectedPlanData){
+                selectedPlanData = JSON.parse(selectedPlanData);
+
+            }
             //  console.log(selectedPlanData);
             //  console.log(type);
             $scope.selected_plan = selectedPlanData;
-            $scope.GSTD = false;
+            $scope.GSTS = false;
             $scope.taxdownload = 0;
+            $scope.subsc_tax = "";
+            $scope.GSTD =  false;
 
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
@@ -1223,6 +1235,7 @@ app.controller(
                 $scope.selected_sub_plan = plan[0].package_id;
                 $scope.subsc_tax = ""; // Reset tax
                 $scope.GSTS = false; // Reset gst checkbox
+                $scope.taxdownload = 0;
                 if (type == "download") {
                     $scope.downloadprice = plan[0].package_price;
                     $scope.total_download = plan[0].package_price;
@@ -2282,6 +2295,7 @@ app.controller(
         $scope.taxdownload = 0;
 
         $scope.quotation_type_set = function (type) {
+
             $scope.search = false;
             $scope.quotation_type_var = type;
         };
@@ -2416,6 +2430,9 @@ app.controller(
             selectedPlanData = JSON.parse(selectedPlanData);
             // console.log(selectedPlanData);
             // console.log(type);
+            $scope.GSTD = false;
+            $scope.taxdownload = 0;
+            $scope.subsc_tax = ""; // Reset tax
             $scope.selected_plan = selectedPlanData;
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
