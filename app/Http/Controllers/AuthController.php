@@ -376,9 +376,14 @@ class AuthController extends Controller
 
     public function resendVerificationLink(Request $request, $email = null)
     {
-        $user_id = $request->user_id;
+        $user_id = isset($request->user_id) && !empty($request->user_id) ? $request->user_id: null;
         $email = isset($request->email) ? $request->email : $email;
-        $user = User::where('email', $email)->where('id', $user_id)->first();
+        if($user_id == null){
+            $user = User::where('email', $email)->first();
+        } else{
+            $user = User::where('email', $email)->where('id', $user_id)->first();
+        }
+
         if (empty($email) || empty($user)) {
             return response()->json(['status' => false, 'message' => 'Email address not found.'], 200);
         }
@@ -537,12 +542,16 @@ class AuthController extends Controller
     public function resendOtp(Request $request)
     {
         $mobile = $request->mobile;
-        $user_id = $request->user_id;
+        $user_id = isset($request->user_id) && !empty($request->user_id) ? $request->user_id: null;
         if (empty($mobile)) {
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
         $otp = rand(1000, 9999);
-        $user  = User::where('mobile', $mobile)->where('id', $user_id)->first();
+        if($user_id == null){
+            $user = User::where('mobile', $mobile)->first();
+        } else{
+            $user = User::where('mobile', $mobile)->where('id', $user_id)->first();
+        }
         if (empty($user)) {
             return response()->json(['status' => false, 'message' => 'User not found.'], 200);
         }
