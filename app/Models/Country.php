@@ -12,20 +12,18 @@ class Country extends Model
         return $this->hasMany(State::class,'country_id', 'id');
     }
     public function getCity($col=NULL,$value=NULL){
+        $cities = [];
         if(!empty($col) && !empty($value)){
             $cities = DB::table('cities')->where($col,'=',$value)->get()->toArray();
-        }else{
-            $cities = DB::table('cities')->get()->toArray();
         }
         return $cities;
     }
 
 
     public function getState($col=NULL,$value=NULL){
+        $states = [];
         if(!empty($col) && !empty($value)){
             $states = DB::table('states')->where($col,'=',$value)->get()->toArray();
-        }else{
-            $states = DB::table('states')->get()->toArray();
         }
         return $states;
     }
