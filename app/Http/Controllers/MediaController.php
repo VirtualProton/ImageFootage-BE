@@ -134,14 +134,12 @@ class MediaController extends Controller
 
                 if ($perpack->package_plan == '2') { // For subscriprion type package
                     // Check subscription is monthly or not
-
                     if ($perpack->package_expiry != 0 && $perpack->package_expiry_yearly == 0) {
 
-                        $subscriptionStartDate = Carbon::parse($perpack->created_at);
+                       $currentMonthDates= $this->calculateMonthlySubscriptionDates($perpack->created_at->format('Y-m-d'),$perpack->package_expiry,Carbon::now()->format('Y-m-d'));
 
-                        $latestDates = $this->getDateGaps($subscriptionStartDate);
-                        $startDateOfSpecificMonth = isset($latestDates['startDate']) && !empty($latestDates['startDate']) ? $latestDates['startDate'] : $perpack->created_at;
-                        $endDateOfSpecificMonth = isset($latestDates['endDate']) && !empty($latestDates['endDate']) ? $latestDates['endDate'] : $perpack->package_expiry_date_from_purchage;
+                        $startDateOfSpecificMonth = isset($currentMonthDates['startDate']) && !empty($currentMonthDates['startDate']) ? $currentMonthDates['startDate'] : $perpack->created_at;
+                        $endDateOfSpecificMonth = isset($currentMonthDates['endDate']) && !empty($currentMonthDates['endDate']) ? $currentMonthDates['endDate'] : $perpack->package_expiry_date_from_purchage;
 
                         // Count the number of downloads for the current month
                         $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
@@ -149,7 +147,7 @@ class MediaController extends Controller
                             ->distinct('id_media')
                             ->pluck('id_media')->count();
 
-                        if ($monthlyDownloads >= $perpack->package_products_count) {
+                        if ($monthlyDownloads >= $perpack->package_permonth_download) {
                             return response()->json(['status' => '0', 'message' => 'You have exceeded a monthly download limit.']);
                         } else {
                             $download = 1;
@@ -617,4 +615,36 @@ class MediaController extends Controller
         return response()->json(['status'=>'success','data'=>$getDetails]);
 
     }
+
+
+public function calculateMonthlySubscriptionDates($purchaseDate, $subscriptionDurationMonths, $currentDate)
+{
+
+    $currentDate = Carbon::parse($currentDate);
+
+    $subscriptionDates = [];
+    $dateRanges = [];
+
+    for ($i = 0; $i < $subscriptionDurationMonths; $i++) {
+        // Calculate the end of the current month
+        //$endDate = $startDate->addMonth();
+        $startDate = Carbon::parse($purchaseDate)->addMonths($i);
+        $endDate = Carbon::parse($purchaseDate)->addMonths($i + 1);
+
+
+        // Store the start and end dates for the current month
+        $subscriptionDates[] = [
+            'start_date' => $startDate->toDateString(), // Format as needed
+            'end_date' => $endDate->toDateString(),     // Format as needed
+        ];
+
+        if ($currentDate >= $startDate && $currentDate <= $endDate) {
+                $dateRanges = ['startDate' => $startDate, 'endDate' => $endDate];
+                break; // Exit the loop once a match is found
+            }
+
+    }
+    return $dateRanges;
+
+}
 }
