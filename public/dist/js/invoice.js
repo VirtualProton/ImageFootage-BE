@@ -650,7 +650,13 @@ app.controller(
         $scope.submitCustom = function () {
             //  console.log($scope.quotation);
             console.log($scope.licence_type);
-            $("#loading").show();
+            if (!$scope.price) {
+                alert("Please enter price");
+                return false;
+            }
+             else {
+                $("#loading").show();
+             }
 
             var sendData = {
                 uid: $("#uid").val(),
@@ -1806,33 +1812,17 @@ app.controller(
 );
 app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.quotationObj = {};
+    $scope.cusQuotationObj = {};
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.create_invoice = function (quotation, user_id) {
-        $scope.quotationObjCus = quotation;
+
+        $scope.cusQuotationObj = quotation;
         $scope.quotation_user_cus = user_id;
-        //  console.log($scope.quotationObjCus);
-        // if (confirm('Do you want to send invoice for this quotation ?')) {
-        //     $('#loading').show();
-        //     $http({
-        //         method: 'POST',
-        //         url: base_url + 'create_invoice',
-        //         data: { quotation_id: quotation_id, user_id: user_id }
-        //     }).then(function(result) {
-        //         $('#loading').hide();
-        //         if (result.data.resp.statuscode == '1') {
-        //             alert(result.data.resp.statusdesc);
-        //         } else {
-        //             alert(result.data.resp.statusdesc);
-        //         }
-        //     }, function(error) {
-        //         $('#loading').hide();
-        //     });
-        // }
+
     };
 
     $scope.create_invoice_subscription = function (quotation, user_id) {
-        // console.log(quotation);
         $scope.quotationObj = quotation;
         $scope.quotation_user = user_id;
     };

@@ -166,7 +166,7 @@
                                     <div>
                                        <div class="form-group">
                                           <label for="sub_total">Sub Total</label>
-                                          <input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
+                                          <input type="text" class="form-control" ng-model="product.price" name="price"  ng-keyup="getTheTotal();" ngMousedown="getTheTotal();" required>
                                        </div>
                                     </div>
                                  </div>
@@ -249,7 +249,7 @@
                                     </div>
                                     <div class="form-group">
                                        <label for="email_id">Email</label>
-                                       
+
                                     </div> */ ?>
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
