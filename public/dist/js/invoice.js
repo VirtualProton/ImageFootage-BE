@@ -650,13 +650,9 @@ app.controller(
         $scope.submitCustom = function () {
             //  console.log($scope.quotation);
             console.log($scope.licence_type);
-            if (!$scope.price) {
-                alert("Please enter price");
-                return false;
-            }
-             else {
+
                 $("#loading").show();
-             }
+
 
             var sendData = {
                 uid: $("#uid").val(),
