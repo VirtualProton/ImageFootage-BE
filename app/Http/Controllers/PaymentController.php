@@ -253,7 +253,7 @@ class PaymentController extends Controller
                             ->update(['payment_mode'=>$_POST['discriminator'],
                                 'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders= Orders::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','city','state','country');
+                        $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
                     }])->with(['items'=>function($query){
                         $query->with('product');
                     }]) ->where('txn_id','=',$_POST['mer_txn'])
@@ -263,7 +263,7 @@ class PaymentController extends Controller
                         ->get()->toArray();
                     $this->invoiceWithemail($orders,$_POST['mer_txn']);
                     Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-                    return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn']);
+                    return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn'] );
                  }else{
                     return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
                 }
@@ -311,7 +311,7 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders= Orders::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','city','state','country');
+                $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
              }])->with(['items'=>function($query){
                 $query->with('product');
             }]) ->where('txn_id','=',$params['txnid'])
@@ -342,7 +342,7 @@ class PaymentController extends Controller
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
         $orders= Orders::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','city','state','country');
+            $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
         }])->with(['items'=>function($query){
             $query->with('product');
         }]) ->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
@@ -505,7 +505,7 @@ class PaymentController extends Controller
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders = UserPackage::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','comapny')
                             ->with('country')
                             ->with('state')
                             ->with('city');
@@ -558,7 +558,7 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'payment_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders = UserPackage::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company')
                     ->with('country')
                     ->with('state')
                     ->with('city');
@@ -756,6 +756,8 @@ class PaymentController extends Controller
 
     public function invoiceWithemail($OrderData,$transaction){
         ini_set('max_execution_time',0);
+        $OrderData[0]['company_logo'] = 'images/new-design-logo.png';
+        $OrderData[0]['signature']     = 'images/signature.png';
         $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0]]));
         $fileName = $transaction."_web_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
