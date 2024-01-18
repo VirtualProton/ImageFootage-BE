@@ -315,6 +315,9 @@ class MediaController extends Controller
                 }else{
                     return response()->json(['status' => 'failed', 'message' => 'Image is not downloaded successfully','data'=>[]]);
                 }
+                if($allFields['product']['product_info']['productWeb'] == 2){
+                    return response()->json($product_details_data);
+                }
                 return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully','data'=>$product_details_data]);
             } else if ($allFields['product']['type'] == 4) {
                 // Download music from pond5

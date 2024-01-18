@@ -473,7 +473,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default-custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -615,7 +615,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default-custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -842,454 +842,447 @@
                     <span aria-hidden="true">×</span></button>
                   <h4 class="modal-title">Create Invoice</h4>
                 </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <div class="col-sm-6">
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Trasaction Id</label>
-                        <div class="col-md-6">
-                            <p>Q<%quotationObj.invoice_name%></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">User Name</label>
-                        <div class="col-md-6">
-                            <p>{{$user->user_name}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">GST No. :</label>
-                        <div class="col-md-6">
-                            <p><input type="text" name="gstNo" id="gstNo" value="{{$user->gst}}" class="form-control"></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Phone No. :</label>
-                        <div class="col-md-6">
-                            <p><input type="text" name="phone" id="phone" value="{{$user->phone}}" class="form-control"></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Package :</label>
-                        <div class="col-md-6">
-                            <p><%quotationObj.package_description%></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Purchase Date :</label>
-                        <div class="col-md-6">
-                            <p>{{date('Y-m-d H:i:s')}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Subtotal :</label>
-                        <div class="col-md-6">
-                            <p><%quotationObj.total - quotationObj.tax%></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Discount :</label>
-                        <div class="col-md-6">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Tax :</label>
-                        <div class="col-md-6">
-                            <p><%quotationObj.tax%></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Total :</label>
-                        <div class="col-md-6">
-                            <p><%quotationObj.total%></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Agent :</label>
-                        <div class="col-md-6">
-                            <p>{{Auth::guard('admins')->user()->name}}</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-6">
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Method :</label>
-                        <div class="col-md-6">
-                            <p><select class="form-control" name="payment_method" ng-model="payment_method">
-                          <option value="">Select Method</option>
-                          <option value="chq">Terms Granted</option>
-                          <option value="online">Online</option>
-                        </select></p>
-                        </div>
-                    </div>
-                    <div class="form-group row" ng-show="payment_method=='chq'">
-                          <label for="" class="col-md-6">How many days : </label>
-                          <div class="col-md-6">
-                              <p>
-                                <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
-                                  <option value="">Select Days</option>
-                                  <option value="7">7 Days</option>
-                                  <option value="15">15 Days</option>
-                                  <option value="30">30 Days</option>
-                                  <option value="45">45 Days</option>
-                                </select>
-                              </p>
+                <div class="modal-body" ng-if="cusQuotationObj.length == 0 && quotationObj.package_id !== null">
+                    <div class="form-group">
+                       <div class="col-sm-6">
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Trasaction Id</label>
+                             <div class="col-md-6">
+                                <p>Q<%quotationObj.invoice_name%></p>
+                             </div>
                           </div>
-                      </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Pan No. :</label>
-                        <div class="col-md-6">
-                            <p><input type="text" name="panNo" id="panNo" value="{{$user->pan}}" class="form-control"></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Job Ref/ PO # :</label>
-                        <div class="col-md-6">
-                            <p><input type="text" name="po" id="po" ng-model="po" class="form-control"></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Country :</label>
-                        <div class="col-md-6">
-                          @if(empty($country_name))
-                          <p>
-                            <select class="form-control" name="country_invoice" ng-model="country_invoice" id="country_invoice" onchange="getStateInvoice(this)">
-                              <option  value="">Please Select</option>
-                              @if(count($countries) > 0)
-                              @foreach($countries as $country)
-                              <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
-                              @endforeach
-                              @endif
-                            </select>
-                          </p>
-                          @else
-                            <p>{{$country_name}}</p>
-                          @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">State :</label>
-                        <div class="col-md-6">
-                          @if(empty($state_name))
-                          <p>
-                            <select class="form-control" name="state_invoice" ng-model="state_invoice" id="state_invoice" onchange="getCityInvoice(this)">
-                              <option value="">Please Select</option>
-                              @if(count($states) > 0)
-                              @foreach($states as $state)
-                              <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
-                              @endforeach
-                              @endif
-                            </select>
-                          </p>
-                          @else
-                            <p>{{$state_name}}</p>
-                          @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">City :</label>
-                        <div class="col-md-6">
-                          @if(empty($city_name))
-                            <p>
-                              <select class="form-control" name="city_invoice" ng-model="city_invoice" id="city_invoice">
-                                <option value="">Please Select</option>
-                                @if(count($cities) > 0)
-                                @foreach($cities as $country)
-                                <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
-                                @endforeach
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">User Name</label>
+                             <div class="col-md-6">
+                                <p>{{$user->user_name}}</p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">GST No. :</label>
+                             <div class="col-md-6">
+                                <p><input type="text" name="gstNo" id="gstNo" value="{{$user->gst}}" class="form-control"></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Phone No. :</label>
+                             <div class="col-md-6">
+                                <p><input type="text" name="phone" id="phone" value="{{$user->mobile}}" class="form-control"></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Package :</label>
+                             <div class="col-md-6">
+                                <p><%quotationObj.package_description%></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Purchase Date :</label>
+                             <div class="col-md-6">
+                                <p>{{date('Y-m-d H:i:s')}}</p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Subtotal :</label>
+                             <div class="col-md-6">
+                                <p><%quotationObj.total - quotationObj.tax%></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Discount :</label>
+                             <div class="col-md-6">
+                                <p></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Tax :</label>
+                             <div class="col-md-6">
+                                <p><%quotationObj.tax%></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Total :</label>
+                             <div class="col-md-6">
+                                <p><%quotationObj.total%></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Agent :</label>
+                             <div class="col-md-6">
+                                <p>{{Auth::guard('admins')->user()->name}}</p>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="col-sm-6">
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Method :</label>
+                             <div class="col-md-6">
+                                <p>
+                                   <select class="form-control" name="payment_method" ng-model="payment_method" id="payment_method">
+                                      <option value="">Select Method</option>
+                                      <option value="chq">Terms Granted</option>
+                                      <option value="online">Online</option>
+                                   </select>
+                                </p>
+                             </div>
+                          </div>
+                          <div class="form-group row" ng-show="payment_method=='chq'">
+                             <label for="" class="col-md-6">How many days : </label>
+                             <div class="col-md-6">
+                                <p>
+                                   <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                                      <option value="">Select Days</option>
+                                      <option value="7">7 Days</option>
+                                      <option value="15">15 Days</option>
+                                      <option value="30">30 Days</option>
+                                      <option value="45">45 Days</option>
+                                   </select>
+                                </p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Pan No. :</label>
+                             <div class="col-md-6">
+                                <p><input type="text" name="panNo" id="panNo" value="{{$user->pan}}" class="form-control"></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Job Ref/ PO # :</label>
+                             <div class="col-md-6">
+                                <p><input type="text" name="po" id="po" ng-model="po" class="form-control"></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Country :</label>
+                             <div class="col-md-6">
+                                @if(empty($country_name))
+                                <p>
+                                   <select class="form-control" name="country_invoice" ng-model="country_invoice" id="country_invoice" onchange="getStateInvoice(this)">
+                                      <option  value="">Please Select</option>
+                                      @if(count($countries) > 0)
+                                      @foreach($countries as $country)
+                                      <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                      @endforeach
+                                      @endif
+                                   </select>
+                                </p>
+                                @else
+                                <p>{{$country_name}}</p>
                                 @endif
-                              </select>
-                            </p>
-                          @else
-                            <p>{{$city_name}}</p>
-                          @endif
-                        </div>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">State :</label>
+                             <div class="col-md-6">
+                                @if(empty($state_name))
+                                <p>
+                                   <select class="form-control" name="state_invoice" ng-model="state_invoice" id="state_invoice" onchange="getCityInvoice(this)">
+                                      <option value="">Please Select</option>
+                                      @if(count($states) > 0)
+                                      @foreach($states as $state)
+                                      <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                                      @endforeach
+                                      @endif
+                                   </select>
+                                </p>
+                                @else
+                                <p>{{$state_name}}</p>
+                                @endif
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">City :</label>
+                             <div class="col-md-6">
+                                @if(empty($city_name))
+                                <p>
+                                   <select class="form-control" name="city_invoice" ng-model="city_invoice" id="city_invoice">
+                                      <option value="">Please Select</option>
+                                      @if(count($cities) > 0)
+                                      @foreach($cities as $country)
+                                      <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                      @endforeach
+                                      @endif
+                                   </select>
+                                </p>
+                                @else
+                                <p>{{$city_name}}</p>
+                                @endif
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Street :</label>
+                             <div class="col-md-6">
+                                @if(empty($user->address))
+                                <p><input type="text" name="address_invoice" id="address_invoice" ng-model="address_invoice" class="form-control"></p>
+                                @else
+                                <p>{{$user->address}}</p>
+                                @endif
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Street2 :</label>
+                             <div class="col-md-6">
+                                @if(empty($user->address2))
+                                <p><input type="text" name="address2_invoice" id="address2_invoice" ng-model="address2_invoice" class="form-control"></p>
+                                @else
+                                <p>{{$user->address2}}</p>
+                                @endif
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Zip Code :</label>
+                             <div class="col-md-6">
+                                @if(empty($user->postal_code))
+                                <p><input type="text" name="postal_code_invoice" id="postal_code_invoice" ng-model="postal_code_invoice" class="form-control"></p>
+                                @else
+                                <p>{{$user->postal_code}}</p>
+                                @endif
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="" class="col-md-6">Checkout via Online :</label>
+                             <div class="col-md-6">
+                                <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="col-sm-12">
+                          <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                       </div>
+                       <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        @if(isset($quotations) && !empty($quotations))
+                        <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, {{$user_id}})">Confirm Submission</button>
+                        @endif
+                      </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Street :</label>
-                        <div class="col-md-6">
-                          @if(empty($user->address))
-                            <p><input type="text" name="address_invoice" id="address_invoice" ng-model="address_invoice" class="form-control"></p>
-                          @else
-                            <p>{{$user->address}}</p>
-                          @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Street2 :</label>
-                        <div class="col-md-6">
-                          @if(empty($user->address2))
-                            <p><input type="text" name="address2_invoice" id="address2_invoice" ng-model="address2_invoice" class="form-control"></p>
-                          @else
-                            <p>{{$user->address2}}</p>
-                          @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Zip Code :</label>
-                        <div class="col-md-6">
-                            @if(empty($user->postal_code))
-                            <p><input type="text" name="postal_code_invoice" id="postal_code_invoice" ng-model="postal_code_invoice" class="form-control"></p>
-                          @else
-                            <p>{{$user->postal_code}}</p>
-                          @endif
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-md-6">Checkout via Online :</label>
-                        <div class="col-md-6">
-                            <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12">
-                      <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
-                    </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="send_invoice(quotationObj.id, quotation_user)">Confirm Submission</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                 </div>
 
 
-          <div class="modal invoice-modal" id="modal-default-custom" style="padding-right: 16px;" >
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                  <h4 class="modal-title">Create Invoice</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <div class="col-sm-6">
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Trasaction Id :</label>
-                          <div class="col-md-6">
-                            <p>Q<%cusQuotationObj.invoice_name%></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">User Name :</label>
-                          <div class="col-md-6">
-                              <p>{{$user->user_name}}</p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">GST No. :</label>
-                          <div class="col-md-6">
-                              <p><input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-control"></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Phone No. :</label>
-                          <div class="col-md-6">
-                              <p><input type="text" name="phonecus" id="phonecus" value="{{$user->phone}}" class="form-control"></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Purchase Date :</label>
-                          <div class="col-md-6">
-                              <p>{{date('Y-m-d H:i:s')}}</p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Subtotal :</label>
-                          <div class="col-md-6">
-                            <p><%cusQuotationObj.total - cusQuotationObj.tax%></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Discount :</label>
-                          <div class="col-md-6">
-                              <p></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Tax :</label>
-                          <div class="col-md-6">
-                            <p><%cusQuotationObj.tax%></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Total :</label>
-                          <div class="col-md-6">
-                            <p><%cusQuotationObj.total%></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Agent :</label>
-                          <div class="col-md-6">
-                              <p>{{Auth::guard('admins')->user()->name}}</p>
-                          </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                    <div class="form-group row">
-                          <label for="" class="col-md-6">Method :</label>
-                          <div class="col-md-6">
-                              <p><select class="form-control" name="payment_method" ng-model="payment_method">
-                                  <option value="">Select Method</option>
-                                  <option value="chq">Terms Granted</option>
-                                  <option value="online">Online</option>
-                                </select>
-                              </p>
-                          </div>
-                      </div>
-                      <div class="form-group row" ng-show="payment_method=='chq'">
-                          <label for="" class="col-md-6">How many days : </label>
-                          <div class="col-md-6">
-                              <p>
-                                <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
-                                  <option value="">Select Days</option>
-                                  <option value="7">7 Days</option>
-                                  <option value="15">15 Days</option>
-                                  <option value="30">30 Days</option>
-                                  <option value="45">45 Days</option>
-                                </select>
-                              </p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Pan No. :</label>
-                          <div class="col-md-6">
-                              <p><input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-control"></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Job Ref/ PO # :</label>
-                          <div class="col-md-6">
-                              <p><input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-control"></p>
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="" class="col-md-6">Country :</label>
-                        <div class="col-md-6">
-                          @if(empty($country_name))
-                          <p>
-                            <select class="form-control" name="country_invoice_cus" ng-model="country_invoice_cus" id="country_invoice_cus" onchange="getStateInvoiceCus(this)">
-                              <option  value="">Please Select</option>
-                              @if(count($countries) > 0)
-                              @foreach($countries as $city)
-                              <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
-                              @endforeach
-                              @endif
-                            </select>
-                          </p>
-                          @else
-                            <p>{{$country_name}}</p>
-                          @endif
+
+                <div class="modal-body" ng-if="quotationObj.length == 0 && cusQuotationObj.package_id == null">
+                    <div class="form-group">
+                      <div class="col-sm-6">
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Trasaction Id :</label>
+                            <div class="col-md-6">
+                              <p>Q<%cusQuotationObj.invoice_name%></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">User Name :</label>
+                            <div class="col-md-6">
+                                <p>{{$user->user_name}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">GST No. :</label>
+                            <div class="col-md-6">
+                                <p><input type="text" name="gstNocus" id="gstNocus" value="{{$user->gst}}" class="form-control"></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Phone No. :</label>
+                            <div class="col-md-6">
+                                <p><input type="text" name="phonecus" id="phonecus" value="{{$user->mobile}}" class="form-control"></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Purchase Date :</label>
+                            <div class="col-md-6">
+                                <p>{{date('Y-m-d H:i:s')}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Subtotal :</label>
+                            <div class="col-md-6">
+                              <p><%cusQuotationObj.total - cusQuotationObj.tax%></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Discount :</label>
+                            <div class="col-md-6">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Tax :</label>
+                            <div class="col-md-6">
+                              <p><%cusQuotationObj.tax%></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Total :</label>
+                            <div class="col-md-6">
+                              <p><%cusQuotationObj.total%></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Agent :</label>
+                            <div class="col-md-6">
+                                <p>{{Auth::guard('admins')->user()->name}}</p>
+                            </div>
                         </div>
                       </div>
+                      <div class="col-sm-6">
                       <div class="form-group row">
-                          <label for="" class="col-md-6">State :</label>
+                            <label for="" class="col-md-6">Method :</label>
+                            <div class="col-md-6">
+                                <p><select class="form-control" name="payment_method" ng-model="payment_method" id="payment_method">
+                                    <option value="">Select Method</option>
+                                    <option value="chq">Terms Granted</option>
+                                    <option value="online">Online</option>
+                                  </select>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-show="payment_method=='chq'">
+                            <label for="" class="col-md-6">How many days : </label>
+                            <div class="col-md-6">
+                                <p>
+                                  <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                                    <option value="">Select Days</option>
+                                    <option value="7">7 Days</option>
+                                    <option value="15">15 Days</option>
+                                    <option value="30">30 Days</option>
+                                    <option value="45">45 Days</option>
+                                  </select>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Pan No. :</label>
+                            <div class="col-md-6">
+                                <p><input type="text" name="panNocus" id="panNocus" value="{{$user->pan}}" class="form-control"></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Job Ref/ PO # :</label>
+                            <div class="col-md-6">
+                                <p><input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-control"></p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="" class="col-md-6">Country :</label>
                           <div class="col-md-6">
-                            @if(empty($state_name))
+                            @if(empty($country_name))
                             <p>
-                              <select class="form-control" name="state_invoice_cus" ng-model="state_invoice_cus" id="state_invoice_cus" onchange="getCityInvoiceCus(this)">
-                                <option value="">Please Select</option>
-                                @if(count($states) > 0)
-                                @foreach($states as $state)
-                                <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
+                              <select class="form-control" name="country_invoice_cus" ng-model="country_invoice_cus" id="country_invoice_cus" onchange="getStateInvoiceCus(this)">
+                                <option  value="">Please Select</option>
+                                @if(count($countries) > 0)
+                                @foreach($countries as $city)
+                                <option value={{$city->id}} <?php if($user_data['city']==$city->id){echo 'selected="selected"';}?>>{{$city->name}}</option>
                                 @endforeach
                                 @endif
                               </select>
                             </p>
                             @else
-                              <p>{{$state_name}}</p>
+                              <p>{{$country_name}}</p>
                             @endif
                           </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">City :</label>
-                          <div class="col-md-6">
-                            @if(empty($city_name))
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">State :</label>
+                            <div class="col-md-6">
+                              @if(empty($state_name))
                               <p>
-                                <select class="form-control" name="city_invoice_cus" ng-model="city_invoice_cus" id="city_invoice_cus">
+                                <select class="form-control" name="state_invoice_cus" ng-model="state_invoice_cus" id="state_invoice_cus" onchange="getCityInvoiceCus(this)">
                                   <option value="">Please Select</option>
-                                  @if(count($cities) > 0)
-                                  @foreach($cities as $country)
-                                  <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                  @if(count($states) > 0)
+                                  @foreach($states as $state)
+                                  <option value={{$state->id}} <?php if($user_data['state']==$state->id){echo 'selected="selected"';}?>>{{$state->state}}</option>
                                   @endforeach
                                   @endif
                                 </select>
                               </p>
-                            @else
-                              <p>{{$city_name}}</p>
-                            @endif
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Street :</label>
-                          <div class="col-md-6">
-                            @if(empty($user->address))
-                              <p><input type="text" name="address_invoice_cus" id="address_invoice_cus" ng-model="address_invoice_cus" class="form-control"></p>
-                            @else
-                              <p>{{$user->address}}</p>
-                            @endif
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Street2 :</label>
-                          <div class="col-md-6">
-                            @if(empty($user->address2))
-                              <p><input type="text" name="address2_invoice_cus" id="address2_invoice_cus" ng-model="address2_invoice_cus" class="form-control"></p>
-                            @else
-                              <p>{{$user->address2}}</p>
-                            @endif
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Zip Code :</label>
-                          <div class="col-md-6">
-                              @if(empty($user->postal_code))
-                              <p><input type="text" name="postal_code_invoice_cus" id="postal_code_invoice_cus" ng-model="postal_code_invoice_cus" class="form-control"></p>
-                            @else
-                              <p>{{$user->postal_code}}</p>
-                            @endif
-                          </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="" class="col-md-6">Checkout via Online :</label>
-                          <div class="col-md-6">
-                              <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
-                          </div>
+                              @else
+                                <p>{{$state_name}}</p>
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">City :</label>
+                            <div class="col-md-6">
+                              @if(empty($city_name))
+                                <p>
+                                  <select class="form-control" name="city_invoice_cus" ng-model="city_invoice_cus" id="city_invoice_cus">
+                                    <option value="">Please Select</option>
+                                    @if(count($cities) > 0)
+                                    @foreach($cities as $country)
+                                    <option value={{$country->id}} <?php if($user_data['country']==$country->id){echo 'selected="selected"';}?>>{{$country->name}}</option>
+                                    @endforeach
+                                    @endif
+                                  </select>
+                                </p>
+                              @else
+                                <p>{{$city_name}}</p>
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Street :</label>
+                            <div class="col-md-6">
+                              @if(empty($user->address))
+                                <p><input type="text" name="address_invoice_cus" id="address_invoice_cus" ng-model="address_invoice_cus" class="form-control"></p>
+                              @else
+                                <p>{{$user->address}}</p>
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Street2 :</label>
+                            <div class="col-md-6">
+                              @if(empty($user->address2))
+                                <p><input type="text" name="address2_invoice_cus" id="address2_invoice_cus" ng-model="address2_invoice_cus" class="form-control"></p>
+                              @else
+                                <p>{{$user->address2}}</p>
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Zip Code :</label>
+                            <div class="col-md-6">
+                                @if(empty($user->postal_code))
+                                <p><input type="text" name="postal_code_invoice_cus" id="postal_code_invoice_cus" ng-model="postal_code_invoice_cus" class="form-control"></p>
+                              @else
+                                <p>{{$user->postal_code}}</p>
+                              @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-md-6">Checkout via Online :</label>
+                            <div class="col-md-6">
+                                <p><span ng-show="payment_method=='chq'">No</span><span ng-show="payment_method=='online'">Yes</span></p>
+                            </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                        <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
-                          <tr ng-repeat="item in cusQuotationObj.items">
-                            <td style="padding:5px;"><%item.type%></td>
-                            <td style="padding:5px;"><img src="<%item.product_image%>" width="150px" /></td>
-                            <td style="padding:5px;"><%item.product_id%></td>
-                            <td style="padding:5px;"><%item.product_size%></td>
-                            <td style="padding:5px;"><%item.total%></td>
-                          </tr>
-                        </table>
+                    <div class="form-group">
+                      <div class="col-sm-12">
+                          <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
+                            <tr ng-repeat="item in cusQuotationObj.items">
+                              <td style="padding:5px;"><%item.type%></td>
+                              <td style="padding:5px;"><img src="<%item.product_image%>" width="150px" /></td>
+                              <td style="padding:5px;"><%item.product_id%></td>
+                              <td style="padding:5px;"><%item.product_size%></td>
+                              <td style="padding:5px;"><%item.total%></td>
+                            </tr>
+                          </table>
+                      </div>
                     </div>
+
+                    <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        @if(isset($quotations) && !empty($quotations))
+                        <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(cusQuotationObj.id, {{$user_id}})">Confirm Submission</button>
+                        @endif
+                      </div>
                   </div>
 
-                  <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  @if(isset($quotations) && !empty($quotations))
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(cusQuotationObj.id, {{$user_id}})">Confirm Submission</button>
-                  @endif
                 </div>
               </div>
-              <!-- /.modal-content -->
             </div>
-            </div>
-
+          </div>
 
 
           <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
