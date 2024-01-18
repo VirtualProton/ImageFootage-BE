@@ -473,7 +473,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default-custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -615,7 +615,7 @@
                                       <td>
                                         @if($quotations->status != 3)
                                         <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default_custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default-custom" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                         <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                         @endif
                                       </td>
@@ -1056,7 +1056,9 @@
               </div>
             </div>
           </div>
-          <div class="modal invoice-modal" id="modal-default_custom" style="padding-right: 16px;" ng-controller="invoiceController">
+
+
+          <div class="modal invoice-modal" id="modal-default-custom" style="padding-right: 16px;" >
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1070,7 +1072,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Trasaction Id :</label>
                           <div class="col-md-6">
-                            <p>Q{{isset($quotations) ? $quotations->invoice_name : ''}}</p>
+                            <p>Q<%cusQuotationObj.invoice_name%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1100,7 +1102,7 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Subtotal :</label>
                           <div class="col-md-6">
-                            <p>{{isset($quotations) ? ($quotations->total - $quotations->tax) : ''}}</p>
+                            <p><%cusQuotationObj.total - cusQuotationObj.tax%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1112,13 +1114,13 @@
                       <div class="form-group row">
                           <label for="" class="col-md-6">Tax :</label>
                           <div class="col-md-6">
-                            <p>{{isset($quotations) ? $quotations->tax : ''}}</p>
+                            <p><%cusQuotationObj.tax%></p>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="" class="col-md-6">Total :</label>
                           <div class="col-md-6">
-                            <p>{{isset($quotations) ? $quotations->total : ''}}</p>
+                            <p><%cusQuotationObj.total%></p>
                           </div>
                       </div>
                       <div class="form-group row">
@@ -1264,7 +1266,7 @@
                   <div class="form-group">
                     <div class="col-sm-12">
                         <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
-                          <tr ng-repeat="item in quotationObjCus.items">
+                          <tr ng-repeat="item in cusQuotationObj.items">
                             <td style="padding:5px;"><%item.type%></td>
                             <td style="padding:5px;"><img src="<%item.product_image%>" width="150px" /></td>
                             <td style="padding:5px;"><%item.product_id%></td>
@@ -1280,13 +1282,16 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                   @if(isset($quotations) && !empty($quotations))
-                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus({{$quotations->id}}, {{$user_id}})">Confirm Submission</button>
+                  <button type="button" class="btn btn-primary" ng-click="send_invoice_cus(cusQuotationObj.id, {{$user_id}})">Confirm Submission</button>
                   @endif
                 </div>
               </div>
               <!-- /.modal-content -->
             </div>
-          </div>
+            </div>
+
+
+
           <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
             <div class="modal-dialog">
               <div class="modal-content">
