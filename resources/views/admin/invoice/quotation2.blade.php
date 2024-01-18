@@ -186,7 +186,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST',{}, {{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
@@ -226,31 +226,8 @@
                                  <button class="btn btn-primary" id="btn-promocode">Apply Promo Code</button>
                               </div>
                               <div class="col-lg-6 col-md-6 col-xs-6">
-                                 <!-- <div class="form-group">
-                                    <label for="job_number">JOb Ref/Po #</label>
-                                    <select  class="form-control" required="" name="po" ng-model="po">
-                                       <option value="">--Select a Job PO--</option>
-                                       <!-- <option value="upload_po">Upload PO</option>
-                                          <option value="email_approval">Email Approval</option> -->
-                                 <!-- <option value="po_in_3days">PO Due In 3 Days</option>
-                                       <option value="po_in_7days">PO Due In 7 Days</option>
-                                       <option value="po_in_15days">PO Due In 15 Days</option>
-                                    </select>
-                                 </div> -->
-                                 <!-- <div class="">
-                                    <div class="row"> -->
-                                 <?php /* <div class="col-lg-6 col-md-6 col-xs-12">
-                                          <div class="form-group" >
-                                             <label for="po_no">PO No.</label>
-                                             <input type="text" class="form-control"  name="poDate" id="poDate" ng-model="poDate" autocomplete="false">
-                                          </div>
-                                       </div>
-                                       <div class="col-lg-6 col-md-6 col-xs-12"></div>
-                                    </div>
-                                    <div class="form-group">
-                                       <label for="email_id">Email</label>
 
-                                    </div> */ ?>
+
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
                                     <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value="2">
@@ -299,7 +276,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST',{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
@@ -401,7 +378,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
@@ -510,6 +487,7 @@
    var getMusicLicenceDetails = @json($getMusicLicenceDetails);
 
    $(document).ready(function() {
+    var countryId = @json($userDetail->country)
 
       $('#btn-promocode').hide();
 
@@ -520,7 +498,7 @@
             $('#btn-promocode').hide()
             let gsttax = angular.element($("#btn-promocode")).scope().tax;
             let isGST = gsttax > 0 ? true : false;
-            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST',{},countryId);
             angular.element('#btn-promocode').scope().$apply();
          }
       });
@@ -581,7 +559,7 @@
                   angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
                      'type': discountType,
                      'discount': discountValue
-                  });
+                  },countryId);
                   angular.element('#btn-promocode').scope().$apply();
 
                   // $('#total_amount').val(grossAmount);

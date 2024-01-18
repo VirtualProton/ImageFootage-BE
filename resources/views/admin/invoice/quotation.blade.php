@@ -185,7 +185,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST',{},{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
@@ -248,7 +248,7 @@
                                     </div>
                                     <div class="form-group">
                                        <label for="email_id">Email</label>
-                                       
+
                                     </div> */ ?>
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
@@ -298,7 +298,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST',{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
@@ -402,7 +402,7 @@
                                     <label for="tax">Tax Applicable</label>
                                     <div>
                                        <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
                                           <input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
@@ -512,7 +512,8 @@
    var getMusicLicenceDetails = @json($getMusicLicenceDetails);
 
    $(document).ready(function() {
-
+    var userId = @json($userDetail->country);
+    console.log(userId);
       $('#btn-promocode').hide();
       $('#btn-promocode-sub').hide();
       $('#btn-promocode-dis').hide();
@@ -524,7 +525,7 @@
             $('#btn-promocode').hide()
             let gsttax = angular.element($("#btn-promocode")).scope().tax;
             let isGST = gsttax > 0 ? true : false;
-            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+            angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST',{},userId);
             angular.element('#btn-promocode').scope().$apply();
          }
       });
@@ -544,6 +545,7 @@
       });
 
       $(document).on("click", "#btn-promocode", function(e) {
+        var userId = @json($userDetail->country);
 
          e.preventDefault();
 
@@ -583,7 +585,7 @@
                   angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
                      'type': discountType,
                      'discount': discountValue
-                  });
+                  },userId);
                   angular.element('#btn-promocode').scope().$apply();
                   $('#promo_code_id').val(result.data.id);
                }
@@ -592,7 +594,7 @@
       });
 
       $(document).on("click", "#btn-promocode-sub", function(e) {
-
+        var userId = @json($userDetail->country);
          e.preventDefault();
 
          let promoCode = $("#promo_code_sub").val();
@@ -627,7 +629,7 @@
                   angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {
                      'type': discountType,
                      'discount': discountValue
-                  });
+                  },userId);
                   angular.element('#btn-promocode-sub').scope().$apply();
                   $('#promo_code_id').val(result.data.id);
                }
@@ -671,7 +673,7 @@
                   angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {
                      'type': discountType,
                      'discount': discountValue
-                  });
+                  },userId);
                   angular.element('#btn-promocode-dis').scope().$apply();
                   $('#promo_code_id').val(result.data.id);
                }
