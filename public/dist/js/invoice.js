@@ -216,7 +216,7 @@ app.controller(
             $scope.total = (subtotal + total).toFixed(2);;
             $scope.tax = total;
         };
-        $scope.checkThetax = function (tax_percent, type, promo = {}) {
+        $scope.checkThetax = function (tax_percent, type, promo = {},countryId='') {
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
             var subtotalvalue = 0;
@@ -236,6 +236,9 @@ app.controller(
             // }
 
             if (tax_percent == true) {
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 //total = intialtotal + total;
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
@@ -363,7 +366,7 @@ app.controller(
             }
         };
 
-        $scope.checkDownloadtax = function (tax_percent, type) {
+        $scope.checkDownloadtax = function (tax_percent, type,countryId) {
             var subtotalvalue = $scope.downloadprice;
 
             // var intialtotal = $scope.taxdownload;
@@ -379,6 +382,9 @@ app.controller(
 
             if (tax_percent == true) {
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -396,7 +402,7 @@ app.controller(
             $scope.total_download = (total + subtotal).toFixed(2);
         };
 
-        $scope.checksubsctax = function (tax_percent, type) {
+        $scope.checksubsctax = function (tax_percent, type,countryId) {
             // console.log(type);
             //  console.log(tax_percent);
             var subtotalvalue = $scope.subscriptionprice;
@@ -415,6 +421,10 @@ app.controller(
 
             if (tax_percent == true) {
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
+
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -432,9 +442,10 @@ app.controller(
             $scope.subsc_total = total + subtotal;
         };
 
-        $scope.checkTheSubtax = function (tax_percent, type, promo = {}) {
+        $scope.checkTheSubtax = function (tax_percent, type, promo = {},countryId) {
             var subtotalvalue = $scope.subscriptionprice;
             if ($scope.subsc_tax > 0) {
+
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -463,10 +474,13 @@ app.controller(
             }
         };
 
-        $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
+        $scope.checkTheDistax = function (tax_percent, type, promo = {},countryId = 0) {
             var subtotalvalue = $scope.downloadprice;
             if ($scope.taxdownload > 0) {
                 if (type == "GST") {
+                    if(countryId !== 101){
+                        alert('This user is belongs to other country are you sure want to apply tax?')
+                    }
                     total = (subtotalvalue * gst_value) / 100;
                 }
             } else {
@@ -1408,7 +1422,7 @@ app.controller(
             $scope.total = (intialtotal + subtotal).toFixed(2);
         };
 
-        $scope.checkThetax = function (tax_percent, type, promo = {}) {
+        $scope.checkThetax = function (tax_percent, type, promo = {},countryId) {
             if ($scope.quotation.product.length > 0) {
                 // when multiple product (images) data available
                 var subtotal = $scope.quotation.product;
@@ -1436,6 +1450,9 @@ app.controller(
             if (tax_percent == true || $scope.is_gst_applied) {
                 // when gst applied
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -1469,9 +1486,12 @@ app.controller(
             }
         };
 
-        $scope.checksubsctax = function (tax_percent, type) {
+        $scope.checksubsctax = function (tax_percent, type,countryId) {
             var subtotalvalue = $scope.subscriptionprice;
             if (tax_percent == true) {
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -1484,10 +1504,13 @@ app.controller(
             $scope.subsc_total = total + subtotal;
         };
 
-        $scope.checkTheSubtax = function (tax_percent, type, promo = {}) {
+        $scope.checkTheSubtax = function (tax_percent, type, promo = {},countryId = 0) {
             var subtotalvalue = $scope.subscriptionprice;
             if ($scope.subsc_tax > 0) {
                 if (type == "GST") {
+                    if(countryId !== 101){
+                        alert('This user is belongs to other country are you sure want to apply tax?')
+                    }
                     total = (subtotalvalue * gst_value) / 100;
                 }
             } else {
@@ -1515,9 +1538,12 @@ app.controller(
             }
         };
 
-        $scope.checkDownloadtax = function (tax_percent, type) {
+        $scope.checkDownloadtax = function (tax_percent, type,countryId) {
             var subtotalvalue = $scope.downloadprice;
             if (tax_percent == true) {
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -1530,10 +1556,13 @@ app.controller(
             $scope.total_download = (total + subtotal).toFixed(2);
         };
 
-        $scope.checkTheDistax = function (tax_percent, type, promo = {}) {
+        $scope.checkTheDistax = function (tax_percent, type, promo = {},countryId = 0) {
             var subtotalvalue = $scope.downloadprice;
             if ($scope.taxdownload > 0) {
                 if (type == "GST") {
+                    if(countryId !== 101){
+                        alert('This user is belongs to other country are you sure want to apply tax?')
+                    }
                     total = (subtotalvalue * gst_value) / 100;
                 }
             } else {
@@ -2313,7 +2342,8 @@ app.controller(
             $scope.total = (subtotal + total).toFixed(2);
             $scope.tax = total;
         };
-        $scope.checkThetax = function (tax_percent, type, promo = {}) {
+        $scope.checkThetax = function (tax_percent, type, promo = {},countryId = '') {
+            console.log("2319",countryId);
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
             var subtotalvalue = 0;
@@ -2334,6 +2364,9 @@ app.controller(
 
             if (tax_percent == true) {
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * gst_value) / 100;
                 }
@@ -2443,7 +2476,7 @@ app.controller(
             }
         };
 
-        $scope.checkDownloadtax = function (tax_percent, type) {
+        $scope.checkDownloadtax = function (tax_percent, type,countryId) {
             var subtotalvalue = $scope.downloadprice;
 
             // var intialtotal = $scope.taxdownload;
@@ -2459,6 +2492,9 @@ app.controller(
 
             if (tax_percent == true) {
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * 12) / 100;
                 }
@@ -2476,7 +2512,7 @@ app.controller(
             $scope.total_download = (total + subtotal).toFixed(2);
         };
 
-        $scope.checksubsctax = function (tax_percent, type) {
+        $scope.checksubsctax = function (tax_percent, type,countryId) {
             //  console.log(type);
             // console.log(tax_percent);
             var subtotalvalue = $scope.subscriptionprice;
@@ -2495,6 +2531,9 @@ app.controller(
 
             if (tax_percent == true) {
                 //total = intialtotal + total;
+                if(countryId !== 101){
+                    alert('This user is belongs to other country are you sure want to apply tax?')
+                }
                 if (type == "GST") {
                     total = (subtotalvalue * 12) / 100;
                 }

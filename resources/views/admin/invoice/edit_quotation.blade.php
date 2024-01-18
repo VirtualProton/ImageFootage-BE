@@ -194,7 +194,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="is_gst_applied" ng-change="checkThetax(GST,'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="is_gst_applied" ng-change="checkThetax(GST,'GST',{},{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
@@ -280,7 +280,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST');" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST',{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
@@ -344,7 +344,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST');" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
@@ -404,6 +404,7 @@
 	var getMusicLicenceDetails = @json($getMusicLicenceDetails);
 
 	$(document).ready(function($) {
+        var countryId = @json($userDetail->country)
 
 		// Example Validataion Standard Mode
 		// ---------------------------------
@@ -419,7 +420,7 @@
 				$('#btn-promocode').hide()
 				let gsttax = angular.element($("#btn-promocode")).scope().tax;
 				let isGST = gsttax > 0 ? true : false;
-				angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST');
+				angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST',{},countryId);
 				angular.element('#btn-promocode').scope().$apply();
 			}
 		});
@@ -475,7 +476,7 @@
 						angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
 							'type': discountType,
 							'discount': discountValue
-						});
+						},countryId);
 						angular.element('#btn-promocode').scope().$apply();
 						$('#promo_code_id').val(result.data.id);
 					}
@@ -518,7 +519,7 @@
 						angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {
 							'type': discountType,
 							'discount': discountValue
-						});
+						},countryId);
 						angular.element('#btn-promocode-sub').scope().$apply();
 						$('#promo_code_id').val(result.data.id);
 					}
@@ -562,7 +563,7 @@
 						angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {
 							'type': discountType,
 							'discount': discountValue
-						});
+						},countryId);
 						angular.element('#btn-promocode-dis').scope().$apply();
 						$('#promo_code_id').val(result.data.id);
 					}
