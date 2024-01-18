@@ -63,11 +63,13 @@
                 <td>{{ date('Y-m-d',strtotime($packages['package_added_on'])) }} </td>
                 <td>
                   @if($packages['package_expiry']==1 && $packages['package_plan']==2)
-                  Expire in 1 month
+                  Expire in 1 month.
                   @elseif($packages['package_expiry_yearly']==1 && $packages['package_plan']==2)
                   Expire limit per month till 1 year.
                   @elseif($packages['package_plan']==1)
                   Expire in 1 year.
+                  @elseif($packages['package_expiry'] !== null)
+                  Expire in {{$packages['package_expiry']}} month.
                   @endif
                 </td>
                 <td>{{ $packages['package_permonth_download'] }}</td>

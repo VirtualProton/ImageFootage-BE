@@ -649,9 +649,15 @@ app.controller(
 
         $scope.submitCustom = function () {
             //  console.log($scope.quotation);
-            console.log($scope.licence_type);
 
-                $("#loading").show();
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+                if ($scope.quotation.product[i].price == undefined || $scope.quotation.product[i].price == "" || $scope.quotation.product[i].price == null) {
+                  alert('Sub total cannot be null');
+                  return false; // If you want to stop checking after the first null price is found
+
+                }
+            }
+            $("#loading").show();
 
 
             var sendData = {
@@ -1685,6 +1691,14 @@ app.controller(
                 alert("Please select expiry period");
                 return false;
             }
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+                if ($scope.quotation.product[i].price == undefined || $scope.quotation.product[i].price == "" || $scope.quotation.product[i].price == null) {
+                  alert('Sub total cannot be null');
+                  return false; // If you want to stop checking after the first null price is found
+
+                }
+            }
+
             $("#loading").show();
 
             var sendData = {
@@ -1844,7 +1858,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Please add phone no .");
         } else if (!regmob.test($("#phone").val())) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$scope.payment_method) {
+        } else if (!$("#payment_method").val()) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -1903,7 +1917,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Please add phone no .");
         } else if (!regmob.test($("#phonecus").val())) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$scope.payment_method) {
+        } else if (!$("#payment_method").val()) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -2631,6 +2645,7 @@ app.controller(
         };
 
         $scope.submitCustom = function () {
+
             $scope.quotation.product.map(function (editor, index) {
                 for (var i in CKEDITOR.instances) {
                     if (
@@ -2647,7 +2662,16 @@ app.controller(
                 }
                 return editor;
             });
-            $("#loading").show();
+
+
+            for (var i = 0; i < $scope.quotation.product.length; i++) {
+                if ($scope.quotation.product[i].price == undefined || $scope.quotation.product[i].price == "" || $scope.quotation.product[i].price == null) {
+                  alert('Sub total cannot be null');
+                  return false; // If you want to stop checking after the first null price is found
+
+                }
+            }
+              $("#loading").show();
 
             var sendData = {
                 uid: $("#uid").val(),
