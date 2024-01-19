@@ -1855,6 +1855,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.create_invoice = function (quotation, user_id) {
+        $scope.quotationObj = []
 
         $scope.cusQuotationObj = quotation;
         $scope.quotation_user_cus = user_id;
@@ -1862,6 +1863,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.create_invoice_subscription = function (quotation, user_id) {
+        $scope.cusQuotationObj = []
         $scope.quotationObj = quotation;
         $scope.quotation_user = user_id;
     };
