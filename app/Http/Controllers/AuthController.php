@@ -579,7 +579,7 @@ class AuthController extends Controller
             'password' => ['required']
         ];
         $messages = [
-            'email.regex' => 'Please enter a valid email address or mobile number.',
+            'email.regex' => config('messages.login_validation_email'),
         ];
         $validator = \Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
