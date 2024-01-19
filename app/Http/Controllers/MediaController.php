@@ -50,6 +50,12 @@ class MediaController extends Controller
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
         $product_details = Product::where(['slug' => $slug, 'product_main_type' => $origin])->first();
+
+
+        Product::where('id',$product_details->id)->update([
+            'view_count'=> $product_details->view_count + 1
+        ]);
+
         if ($product_details) {
             // Use the $product_details['id'] to query MongoDB
             $apiProductId = $product_details['api_product_id'];
@@ -119,6 +125,13 @@ class MediaController extends Controller
         } else {
             $flag = 'Music';
         }
+
+        $checkdownload = UserProductDownload::where('product_id_api', $$allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
+        if(!empty($checkdownload)){
+            return response()->json(['status' => 'failed', 'message' => 'This product is already downloaded.']);
+
+        }
+
         $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)

@@ -116,6 +116,12 @@ class Product extends Model
             if(isset($keyword['adult_content_filter']) && !empty($keyword['adult_content_filter'])){
                 $data->where('adult_content','no');
             }
+            if(isset($filters['sort']) && !empty($filters['sort']) && $filters['sort'] == 'Recent'){
+                $data->orderBy('created_at', 'desc');
+            }
+            if(isset($filters['sort']) && !empty($filters['sort']) && $filters['sort'] == 'Popular'){
+                $data->orderBy('view_count', 'desc');
+            }
 
             if (!empty($keyword['search'])) {
                 $data->where(function ($query) use ($search) {
