@@ -5,6 +5,6 @@
 </head>
 <body>
     <p>Hello {{$name ?? ''}},</p>
-    <p>Please find attachment of invoice.</p>
+    <p>Please find attachment of PDF.</p>
 </body>
 </html>
