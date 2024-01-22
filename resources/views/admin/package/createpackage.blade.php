@@ -317,54 +317,7 @@
               }
             }
           },
-          package_expiry: {
-            validators: {
-              notEmpty: {
-                message: 'Package expiry in months is required.'
-              },
-              numeric: {
-                message: 'The value must be an integer.'
-              },
-              callback: {
-                message: 'Invalid value.',
-                callback: function(value, validator, $field) {
-                  var packageExpiryYear = validator.getFieldValue('package_expiry_year');
-                  var packageExpiry = $field.val();
-                  if (packageExpiryYear != '' && parseInt(packageExpiryYear) === 0 && parseInt(packageExpiry) === 0) {
-                    return false;
-                  }
-                  if (packageExpiryYear != '' && parseInt(packageExpiryYear) > 0 && parseInt(packageExpiry) > 0) {
-                    return false;
-                  }
-                  return true;
-                }
-              }
-            }
-          },
-          package_expiry_year: {
-            validators: {
-              notEmpty: {
-                message: 'Package expiry per year is required.'
-              },
-              numeric: {
-                message: 'The value must be an integer.'
-              },
-              callback: {
-                message: 'Invalid value',
-                callback: function(value, validator, $field) {
-                  var packageExpiry = validator.getFieldValue('package_expiry');
-                  var packageExpiryYear = $field.val();
-                  if (packageExpiry != '' && parseInt(packageExpiry) === 0 && parseInt(packageExpiryYear) === 0) {
-                    return false;
-                  }
-                  if (packageExpiry != '' && parseInt(packageExpiry) > 0 && parseInt(packageExpiryYear) > 0) {
-                    return false;
-                  }
-                  return true;
-                }
-              }
-            }
-          },
+
           display_for: {
             validators: {
               stringLength: {

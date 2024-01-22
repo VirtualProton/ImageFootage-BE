@@ -27,8 +27,10 @@ class PackageController extends Controller
 			'package_description' => 'required',
 			'package_products_count' => 'required',
 			'package_type' => 'required',
-			'package_expiry' => 'required',
-			'display_for' => 'required'
+			'display_for' => 'required',
+            'package_expiry' => 'required_without_all:package_expiry_year',
+            'package_expiry_year' => 'required_without_all:package_expiry',
+
 		]);
         $tier = '';
         if(isset($request->footage_tier) && !empty($request->footage_tier)){

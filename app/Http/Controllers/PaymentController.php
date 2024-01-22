@@ -26,6 +26,7 @@ use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 use App\Http\TnnraoSms\TnnraoSms;
 use PDF;
+use Mail;
 
 
 
@@ -101,8 +102,13 @@ class PaymentController extends Controller
                  ->get()->toArray();
         //dd(DB::getQueryLog());
         //print_r($userData); die;
-        $tax = $allFields['cartval'][0]*12/100;
-        $final_tax=round($tax,2);
+        if(!empty($userData) && $userData[0]['country']['code'] == 'IN'){
+            $tax = $allFields['cartval'][0]*12/100;
+            $final_tax=round($tax,2);
+        } else {
+            $final_tax = 0;
+        }
+
         $orders = new Orders();
         $orders->user_id = $allFields['tokenData']['Utype'];
         $orders->txn_id = $transactionId;
@@ -783,7 +789,16 @@ class PaymentController extends Controller
                 ->update(['invoice'=>$pdf_path]);
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }
-        SendEmail::dispatch($OrderData);
+        $data["subject"] = 'Your Order ('.$OrderData[0]['txn_id'].') has been successfull!!';
+        $data["email"]   = $OrderData[0]['order_email'];
+        //$data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"]    = $OrderData[0]['bill_firstname'];
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+            $message->to($data["email"])
+                ->from('admin@imagefootage.com', 'Imagefootage')
+                ->subject($data['subject'])
+                ->attachData($pdf->output(), $fileName);
+        });
     }
 
     public function invoiceWithemailPlan($OrderData,$transaction){
