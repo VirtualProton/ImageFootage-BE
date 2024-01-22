@@ -335,6 +335,7 @@ class UserController extends Controller
     {
         $userId      = $request->user_id;
         $mediaType   = $request->media_type;
+        $licenseType = $request->license_type;
         $range       = $request->input('range', 'today');
         $startDate = null;
         $endDate   = null;
@@ -370,6 +371,11 @@ class UserController extends Controller
                $downloads =  $downloads->whereHas('product', function ($productquery) use ($mediaType) {
                     if ($mediaType != 'All') {
                         $productquery->where('product_main_type', $mediaType);
+                    }
+                })
+                ->whereHas('licence', function ($query) use ($licenseType) {
+                    if ($licenseType != 'All') {
+                        $query->where('id', $licenseType);
                     }
                 })
                 ->orderBy('id', 'desc')
