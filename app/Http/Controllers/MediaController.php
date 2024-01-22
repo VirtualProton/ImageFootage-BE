@@ -126,7 +126,7 @@ class MediaController extends Controller
             $flag = 'Music';
         }
 
-        $checkdownload = UserProductDownload::where('product_id_api', $$allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
+        $checkdownload = UserProductDownload::where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
         if(!empty($checkdownload)){
             return response()->json(['status' => 'failed', 'message' => 'This product is already downloaded.']);
 
@@ -544,7 +544,7 @@ class MediaController extends Controller
             if(isset($imageDownloadData['download_status']['status']) && !empty($imageDownloadData['download_status']['status']) && $imageDownloadData['download_status']['status'] == "ready"){
                 return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }else{
-                return response()->json(['status'=> 'Pending', 'message'=> 'Your Product will be downloaded soon.','data'=>$imageDataInsert]);
+                return response()->json(['status'=> 'pending', 'message'=> 'Your Product will be downloaded soon.','data'=>$imageDataInsert]);
             }
 
         }
