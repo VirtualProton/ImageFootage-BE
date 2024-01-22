@@ -226,6 +226,8 @@
         document.getElementById('package_type').addEventListener('change', function () {
         togglePackageSizeVisibility();
     });
+    checkPackageExpiryYear();
+    checkPackageExpiry();
 
     function togglePackageSizeVisibility() {
        /*  var packageType = document.getElementById('package_type').value;
@@ -418,5 +420,44 @@
         $('#music_tier').find('option[value=\'3\']').css('display','none');
     }
   })
+  $('#package_expiry').on('input', function() {
+    //checkPackageExpiry();
+    });
+
+    $('#package_expiry_year').on('input', function() {
+     // checkPackageExpiryYear();
+    });
+
+  function checkPackageExpiry() {
+      var packageExpiryValue = $('#package_expiry').val();
+      var packageExpiryYearInput = $('#package_expiry_year');
+
+      // Check if package_expiry is 1 or 2
+      if (packageExpiryValue != 0) {
+        // Disable and set value to 0 for package_expiry_year
+        packageExpiryYearInput.prop('disabled', true);
+        packageExpiryYearInput.val(0);
+      } else {
+        // Enable package_expiry_year
+        packageExpiryYearInput.val('');
+        packageExpiryYearInput.prop('disabled', false);
+      }
+    }
+
+    function checkPackageExpiryYear() {
+      var packageExpiryYearValue = $('#package_expiry_year').val();
+      var packageExpiryInput = $('#package_expiry');
+
+      // Check if package_expiry_year is filled
+      if (packageExpiryYearValue != 0) {
+        // Disable and set value to 0 for package_expiry
+        packageExpiryInput.prop('disabled', true);
+        packageExpiryInput.val(0);
+      } else {
+        // Enable package_expiry
+        packageExpiryInput.val('')
+        packageExpiryInput.prop('disabled', false);
+      }
+    }
 </script>
 @endsection
