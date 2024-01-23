@@ -115,7 +115,8 @@ class PackageController extends Controller
 			'package_description' => 'required',
 			'package_products_count' => 'required',
 			'package_type' => 'required',
-			'package_expiry' => 'required'
+            'package_expiry' => 'required_without_all:package_expiry_year',
+            'package_expiry_year' => 'required_without_all:package_expiry',
 		]);
 		$update_array = array(
 			'package_plan' => $request->package_plan, 'package_name' => $request->package_name,

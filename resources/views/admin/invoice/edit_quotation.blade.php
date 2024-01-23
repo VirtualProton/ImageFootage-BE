@@ -152,8 +152,6 @@
 												<label for="pro_type"><%product.type%> type</label>
 												<select class="form-control" ng-model="product.pro_type">
 													<option value="">--Select a Type--</option>
-													<option value="right_managed">Right Managed</option>
-													<option ng-if="flag == 2" value="right_managed">Right Managed</option>
 													<option value="royalty_free">Royalty Free</option>
 												</select>
 											</div>
@@ -404,7 +402,7 @@
 	var getMusicLicenceDetails = @json($getMusicLicenceDetails);
 
 	$(document).ready(function($) {
-        var countryId = @json($userDetail->country)
+        var countryId = @json($userDetail->country);
 
 		// Example Validataion Standard Mode
 		// ---------------------------------
