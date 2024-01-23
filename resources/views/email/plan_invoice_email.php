@@ -53,7 +53,7 @@
                                 <h1>hi <br/>Invoice</h1>
                             </td>
                             <td width="50%" style="border: none;">
-                                <p style="float:right;"><img src="{{ asset('new/assets/images/IF_Logo_Final.png') }}" width="200px" alt="Image">
+                                <p style="float:right;"><img src="<?php echo $orders['company_logo']; ?>" width="200px" alt="Image">
 </p>
                             </td>
                         </tr>
@@ -82,12 +82,12 @@
                <p><strong>Online</strong>&nbsp;</p>
                </td>
                <td>
-               <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong>
+               <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>
                <?php
                if($orders['package_plan']==1){
                   $plan = 'Download Pack For 1 year';
                }else{
-                  if ($orders['package_expiry_yearly'] == 0) {
+                  if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
                      $plan = 'Subscription Pack For 1 Month';
                   } else {
                      $plan = 'Subscription Pack For 1 Year';
