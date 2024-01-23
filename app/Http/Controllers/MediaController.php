@@ -192,7 +192,7 @@ class MediaController extends Controller
                 $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
                     $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
                     $dataInsert = array(
                         'user_id' => $id,
@@ -216,7 +216,7 @@ class MediaController extends Controller
                         'licence_type' => $allFields['product']['extended']
                     );
                     UserProductDownload::insert($dataInsert);
-                    if (!$dataCheck) {
+                    if (empty($dataCheck)) {
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
                             ->where('id', '=', $package_id)
@@ -260,7 +260,7 @@ class MediaController extends Controller
                         return $product_details_data;
                     }
 
-                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
 
@@ -316,7 +316,7 @@ class MediaController extends Controller
 
                     UserProductDownload::insert($dataInsert);
 
-                    if (!$dataCheck) {
+                    if (empty($dataCheck)) {
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
                             ->where('id', '=', $package_id)
@@ -340,7 +340,7 @@ class MediaController extends Controller
                 $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':0';
                 $product_details_data = $footageMedia->download($download_id ,$version);
                 if (!empty($product_details_data)) {
-                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->first();
+                    $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
 
                     $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
                     /** TODO : set the array as per response */
@@ -368,7 +368,7 @@ class MediaController extends Controller
 
                     UserProductDownload::insert($dataInsert);
 
-                    if (!$dataCheck) {
+                    if (empty($dataCheck)) {
                         UserPackage::where('user_id', '=', $id)
                             ->where('package_type', '=', $flag)
                             ->where('id', '=', $package_id)
