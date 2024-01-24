@@ -103,7 +103,7 @@ class PromotionController extends Controller
                 'status'               => $request->input('status'),
                 'page_type'            => $request->input('page_type'),
                 'media_type'           => $request->input('media_type'),
-                'product_name'         => 'image',
+                'product_name'         => null,
                 'media_url'            => $url,
                 'desktop_banner_image' => $fileupresult ?? '',
                 'mobile_banner_image'  => $fileupresult1 ?? ''
@@ -216,7 +216,7 @@ class PromotionController extends Controller
             'status'       => $request->status,
             'page_type'    => $request->page_type,
             'media_type'   => $request->input('media_type'),
-            'product_name' => 'image',
+            'product_name' => null,
             'media_url'    => $url,
 		 );
          if(!empty($fileupresult)) {
