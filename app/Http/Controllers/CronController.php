@@ -236,4 +236,37 @@ class CronController extends Controller
             }
         }
     }
+
+    public function searchKeywordPond5AndPanthermedia($term, $type){
+        $keyword = [];
+        if ($type == '1' || $type == '4') {
+            $keyword['search']  = $term;
+            $percategory['category_id'] = null;
+            $pantherMediaImages = new ImageApi();
+            $pantharmediaData   = $pantherMediaImages->search($keyword);
+    
+            if(count($pantharmediaData) > 0){
+                $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id']);
+            }
+        } else if ($type == '2' || $type == '4') {
+            $keyword['search']  = $term;
+            $percategory['category_id'] = null;
+            $footageMedia          = new FootageApi();
+            $pond5FootageMediaData = $footageMedia->search($keyword);
+
+            if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
+                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
+            }
+        } else if ($type == '3') {
+            $keyword['search']  = $term;
+            $percategory['category_id'] = null;
+            $musicMedia          = new MusicApi();
+            $pond5MusicMediaData = $musicMedia->search($keyword, []);
+
+            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
+                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
+            }
+        }
+        return true;
+    }
 }
