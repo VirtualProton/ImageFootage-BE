@@ -80,15 +80,6 @@
                         <div class="has_error" style="color:red;">{{ $errors->first('mobile_banner_image') }}</div>
                         @endif
                     </div>
-                <div class="form-group">
-                    <label for="eventBanner">Event Banner</label>
-                    <input type="hidden" class="form-control" ng-model="product.id">
-					<input type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" ng-blur="getproduct(product)" >
-
-                    @if ($errors->has('product_name'))
-                            <div class="has_error" style="color:red;">{{ $errors->first('product_name') }}</div>
-                     @endif
-                </div>
 
                 <div class="form-group" ng-show="product.type=='Image'">
                     <input type="hidden" class="form-control" id="image_url" name="image_url">
@@ -98,8 +89,8 @@
                  <div class="form-group" ng-show="product.type =='Footage'">
                     <input type="hidden" class="form-control" id="footage_url" name="footage_url">
                     <video style="display: none" id="product_footage" class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
-                       <source type="video/mp4" src="<%product.footage%>"> 
-                       Your browser does not support the video tag. 
+                       <source type="video/mp4" src="<%product.footage%>">
+                       Your browser does not support the video tag.
                     </video>
                  </span>
                  </div>

@@ -50,8 +50,8 @@ class PackageController extends Controller
 		$package->package_products_count = $request->package_products_count;
 		$package->package_type = $request->package_type;
 		$package->package_added_on = date('Y-m-d H:i:s');
-		$package->package_expiry = $request->package_expiry;
-		$package->package_expiry_yearly = $request->package_expiry_year;
+		$package->package_expiry = $request->package_expiry ?? 0;
+		$package->package_expiry_yearly = $request->package_expiry_year ?? 0;
 		$package->package_permonth_download = $request->package_month_count;
 		$package->package_pcarry_forward = $request->products_carry_forward;
 		$package->pacage_size = $request->pacage_size;
@@ -124,10 +124,10 @@ class PackageController extends Controller
 			'package_description' => $request->package_description,
 			'package_products_count' => $request->package_products_count,
 			'package_type' => $request->package_type,
-			'package_expiry' => $request->package_expiry,
+			'package_expiry' => $request->package_expiry ?? 0,
 			'package_permonth_download' => $request->package_month_count,
 			'package_pcarry_forward' => $request->products_carry_forward,
-			'package_expiry_yearly' => $request->package_expiry_year,
+			'package_expiry_yearly' => $request->package_expiry_year ?? 0,
 			'pacage_size' => $request->pacage_size,
 			'updated_at' => date('Y-m-d H:i:s'),
 			'footage_tier' => $request->footage_tier,

@@ -803,6 +803,8 @@ class PaymentController extends Controller
 
     public function invoiceWithemailPlan($OrderData,$transaction){
         ini_set('max_execution_time',0);
+        $OrderData['company_logo'] = 'images/new-design-logo.png';
+        $OrderData['signature']     = 'images/signature.png';
         $pdf = PDF::loadHTML(view('email.plan_invoice_email',['orders' => $OrderData]));
         $fileName = $transaction."_web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
@@ -850,7 +852,16 @@ class PaymentController extends Controller
         $message = "Thanks for purchasing ".$pkgName.". Your plan with transaction ID ".$OrderData['transaction_id'] ." will be expire on ". date("F , d Y h:i:s a",strtotime($OrderData['package_expiry_date_from_purchage']))."  \n Thanks \n Imagefootage Team";
         $smsClass = new TnnraoSms;
         $smsClass->sendSms($message, $OrderData['user']['mobile']);
-        SendPlanEmail::dispatch($OrderData);
+        $data["subject"] = 'Your Plan Order ('.$OrderData['transaction_id'].') has been successfull!!';
+        $data["email"]   = $OrderData['user']['email'];
+        //$data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"]    = $OrderData['user']['first_name'];
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+            $message->to($data["email"])
+                ->from('admin@imagefootage.com', 'Imagefootage')
+                ->subject($data['subject'])
+                ->attachData($pdf->output(), $fileName);
+        });
 
     }
 
