@@ -123,7 +123,13 @@
             <div class="container">
                 <div class="client-info-top">
                     <div class="client-info-leftside">
-                        <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></strong></p>
+                        <?php if ($quotation[0]['flag'] == 2) { ?>
+
+                        <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] :$quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
+                        <?php }?>
+                        <?php if ($quotation[0]['flag'] !== 2) { ?>
+                        <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
+                        <?php } ?>
                         <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
                             <span class="block-text"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
@@ -132,6 +138,10 @@
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
+                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p>Vendor Code : <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
@@ -139,6 +149,12 @@
                     <div class="client-info-leftside">
                         <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
+                    <?php if ($quotation[0]['flag'] == 2) { ?>
+                        <div class="client-info-rightside">
+                        <p>End Client: <span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                        </div>
+                    <?php } ?>
+
                     <div class="client-info-rightside">
                         <p>Product Description: <span class="block-text"><strong>Images/Footage- <?php echo count($quotation); ?></strong></span></p>
                     </div>

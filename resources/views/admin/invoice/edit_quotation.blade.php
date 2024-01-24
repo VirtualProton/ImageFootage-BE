@@ -132,12 +132,29 @@
 													<option value="4">All Media</option>
 												</select>
 											</div>
-											<div class="form-group" ng-if="product.type" ng-show="product.type!='Music'">
+											<div class="form-group" ng-if="product.type && flag !==2" ng-show="product.type!='Music'">
 												<label for="sub_total"><%product.type%> Size</label>
 												<select class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
 													<option value="">--Select a size--</option>
 													<option value="Small">Web</option>
 													<option value="Medium">Medium</option>
+													<option value="X-Large">XX-Large</option>
+													<option value="Custom">Custom</option>
+												</select>
+												<select class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
+													<option value="">--Select a size--</option>
+													@foreach ($getFootageSizeDetails as $getFootageSizeDetail)
+													<option value="{{ $getFootageSizeDetail['type'] }}">{{ $getFootageSizeDetail['type'] }}</option>
+													@endforeach
+												</select>
+											</div>
+                                            <div class="form-group" ng-if="product.type && flag == 2" ng-show="product.type!='Music'">
+												<label for="sub_total"><%product.type%> Size</label>
+												<select class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Image'">
+													<option value="">--Select a size--</option>
+													<option value="Small">Web</option>
+													<option value="Medium">Medium</option>
+                                                    <option value="Large">Large</option>
 													<option value="X-Large">XX-Large</option>
 													<option value="Custom">Custom</option>
 												</select>
@@ -157,7 +174,7 @@
 											</div>
 											<div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
 												<label for="licence_type"><%product.type%> Licence type</label>
-												<select class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)">
+												<select class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)"  id="licence_dropdown">
 													<option value="">--Select a Licence Type--</option>
 													@foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
 													<option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
@@ -168,6 +185,10 @@
 												<label for="licence_type"><%product.type%> Licence type</label>
 												<textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
 											</div>
+                                            <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='royalty_free' && product.licence_type !='' && flag ==2">
+                                                <label for="licence_type"></label>
+                                                <input type="text" class="form-control" ng-model="product.extra_details" id="extra_details"/>
+                                             </div>
 											<div ng-if="product.type">
 												<div>
 													<div class="form-group">
@@ -602,6 +623,14 @@
 		$('.licence_type').each(function() {
 			CKEDITOR.replace($(this).prop('id'));
 		});
+        $("#licence_dropdown").change(function() {
+        var type = $(this).val();
+        if(type == ''){
+            $('#extra_details').hide()
+        }else{
+            $('#extra_details').show()
+        }
+      })
 	});
 </script>
 

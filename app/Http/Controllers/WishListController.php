@@ -540,6 +540,11 @@ class WishListController extends Controller
         $collectionData = $request->all();
         if(!empty($collectionData)){
             if($collectionData['id']){
+
+                DB::table('imagefootage_shared_wishlists_logs')
+                ->where('new_wishlist_id', $collectionData['id'])
+                ->delete();
+
                 DB::table('imagefootage_wishlists')
                 ->where('id', $collectionData['id'])
                 ->delete();

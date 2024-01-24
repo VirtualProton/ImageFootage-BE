@@ -31,8 +31,7 @@ class PromotionController extends Controller
             'desktop_banner_image' => 'required_if:media_type,Image|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
             'mobile_banner_image'  => 'required_if:media_type,Image|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
             'footage_url'          => 'required_if:media_type,Footage',
-            'media_type'           => 'required',
-            'product_name'         => 'required'
+             'media_type'           => 'required',
         ], [
             'event_name.required'   => 'The Name field is required.',
             'event_des.required'    => 'The Description field is required.',
@@ -40,8 +39,7 @@ class PromotionController extends Controller
             'desktop_banner_image'  => 'Please upload valid desktop banner image.',
             'mobile_banner_image'   => 'Please upload valid mobile banner image.',
             'footage_url'           => 'Please upload valid video.',
-            'media_type.required'   => 'The Media Type field is required.',
-            'product_name.required' => 'The Event Banner field is required.'
+             'media_type.required'   => 'The Media Type field is required.',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
@@ -99,19 +97,17 @@ class PromotionController extends Controller
 					echo $e->getMessage() . "\n";
 				}
     		}
-            $desktop_banner_image = $request->input('media_type') == 'Footage' ? $url : $fileupresult;
-            $mobile_banner_image  = $request->input('media_type') == 'Footage' ? $url : $fileupresult1;
             $promotion = Promotion::create([
                 'event_name'           => strip_tags($request->input('event_name')),
                 'event_des'            => $request->input('event_des'),
                 'status'               => $request->input('status'),
                 'page_type'            => $request->input('page_type'),
                 'media_type'           => $request->input('media_type'),
-                'product_name'         => $request->input('product_name'),
+                'product_name'         => null,
                 'media_url'            => $url,
                 'desktop_banner_image' => $fileupresult ?? '',
                 'mobile_banner_image'  => $fileupresult1 ?? ''
-                
+
             ]);
             $promotion->save();
            return back()->with('success','Promotion Save Successfully.');
@@ -158,7 +154,6 @@ class PromotionController extends Controller
             'page_type'            => 'required',
             'desktop_banner_image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1920,height=554',
             'mobile_banner_image'  => 'nullable|mimes:jpeg,png,jpg|dimensions:width=575,height=380',
-            'product_name'         => 'required',
             'media_type'           => 'required',
         ], [
             'event_name.required'  => 'The Name field is required.',
@@ -166,7 +161,6 @@ class PromotionController extends Controller
             'page_type.required'   => 'The Page Type field is required.',
             'desktop_banner_image' => 'Please upload valid desktop banner image.',
             'mobile_banner_image'  => 'Please upload valid mobile banner image.',
-            'product_name.required'=> 'The Event Banner field is required.',
             'media_type.required'  => 'The Media Type field is required.',
         ]);
         if($request->status == 1 && Promotion::where('id','!=',$request->promotion_id)->where('page_type', $request->page_type)->where('status', '1')->count() > 0){
@@ -222,7 +216,7 @@ class PromotionController extends Controller
             'status'       => $request->status,
             'page_type'    => $request->page_type,
             'media_type'   => $request->input('media_type'),
-            'product_name' => $request->input('product_name'),
+            'product_name' => null,
             'media_url'    => $url,
 		 );
          if(!empty($fileupresult)) {
@@ -237,7 +231,7 @@ class PromotionController extends Controller
 		 }else{
 			    return redirect()->back()->with('error','Some problem occured.');
 		 }
-		       
+
     }
 
     public function getPromotion(Request $request, $page =  null)

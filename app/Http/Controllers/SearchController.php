@@ -60,22 +60,9 @@ class SearchController extends Controller
                 $keyword['category_id'] = '';
             }
         }
-        if ($keyword['productType']['id'] == '1') {
-           $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
-        } else if ($keyword['productType']['id'] == '2') {
-           $all_products = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
-        } else if ($keyword['productType']['id'] == '3') {
-           $all_products = $this->getMusicData($keyword, $getKeyword, $keyword['limit']);
-        } else if ($keyword['productType']['id'] == '4') {
-            $all_products = $this->getEditorialData($keyword, $getKeyword, $keyword['limit']);
-        } else {
-            $images  = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
-            $footage = $this->getProducts($keyword, $getKeyword, $keyword['limit']);
-            $music   = $this->getMusicData($keyword, $getKeyword, $keyword['limit']);
-            array_push($all_products, $images);
-            array_push($all_products, $footage);
-            array_push($all_products, $music);
-        }
+
+        $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
+        $countTotalRecords = count($all_products);
 
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
@@ -88,8 +75,18 @@ class SearchController extends Controller
                 $trending_word        = new TrendingWord();
                 $trending_word->name  = $search_keyword;
                 $trending_word->count = 1;
+                if($countTotalRecords == 0 || $countTotalRecords < 15){
+                    $trending_word->is_processing_keyword = 1;
+                }
                 $trending_word->save();
             }
+        }
+        
+        // If records not found check with respective third party api for the data
+        if($countTotalRecords == 0 || $countTotalRecords < 15){
+            $cronController  = new CronController();
+            $cronController->searchKeywordPond5AndPanthermedia($keyword['search'], $keyword['productType']['id']);
+            $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
         }
 
         return response()->json($all_products);
@@ -484,6 +481,27 @@ class SearchController extends Controller
         return response()->json([
             'imgfootage' => $data
         ]);
+    }
+
+    public function searchProductsInDatabase($keyword, $getKeyword, $limit){
+
+        if ($keyword['productType']['id'] == '1') {
+            $all_products = $this->getProducts($keyword, $getKeyword, $limit);
+         } else if ($keyword['productType']['id'] == '2') {
+            $all_products = $this->getProducts($keyword, $getKeyword, $limit);
+         } else if ($keyword['productType']['id'] == '3') {
+            $all_products = $this->getMusicData($keyword, $getKeyword, $limit);
+         } else if ($keyword['productType']['id'] == '4') {
+             $all_products = $this->getEditorialData($keyword, $getKeyword, $limit);
+         } else {
+             $images  = $this->getProducts($keyword, $getKeyword, $limit);
+             $footage = $this->getProducts($keyword, $getKeyword, $limit);
+             $music   = $this->getMusicData($keyword, $getKeyword, $limit);
+             array_push($all_products, $images);
+             array_push($all_products, $footage);
+             array_push($all_products, $music);
+         }
+         return $all_products;
     }
 
 }
