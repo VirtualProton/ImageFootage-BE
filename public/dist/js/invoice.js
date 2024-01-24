@@ -2689,23 +2689,24 @@ app.controller(
         };
 
         $scope.submitCustom = function () {
-
-            $scope.quotation.product.map(function (editor, index) {
-                for (var i in CKEDITOR.instances) {
-                    if (
-                        CKEDITOR.instances[i].element.$.classList.contains(
-                            "licence_type"
-                        )
-                    ) {
-                        let ci = i[i.length - 1] - 1;
-                        if (index == ci) {
-                            editor.licence_type =
-                                CKEDITOR.instances[i].getData();
+                $scope.quotation.product.map(function (editor, index) {
+                    if(editor.pro_type == 'right_managed'){
+                        for (var i in CKEDITOR.instances) {
+                            if (
+                                CKEDITOR.instances[i].element.$.classList.contains(
+                                    "licence_type"
+                                )
+                            ) {
+                                let ci = i[i.length - 1] - 1;
+                                if (index == ci) {
+                                    editor.licence_type =
+                                        CKEDITOR.instances[i].getData();
+                                }
+                            }
                         }
                     }
-                }
-                return editor;
-            });
+                    return editor;
+                });
 
 
             for (var i = 0; i < $scope.quotation.product.length; i++) {
