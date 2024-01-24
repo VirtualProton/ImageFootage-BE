@@ -902,7 +902,6 @@ app.controller(
         };
         $scope.prices = [];
         $scope.getproduct = function (product) {
-            console.log("====")
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.promotion.product.indexOf(product);
@@ -1164,6 +1163,7 @@ app.controller(
                         footage: "",
                         type: value.type,
                         licence_type: value.licence_type,
+                        extra_details:value.extra_details
                     };
                     $scope.quotation.product.push(obj);
                     if (value.product_type == 'right_managed') {
@@ -2197,7 +2197,7 @@ app.controller(
             $scope.quotation.product.splice(index, 1);
         };
         $scope.prices = [];
-        $scope.getproduct = function (product) {
+        $scope.getproduct = function (product,secondForm = '') {
             if (product.name != "") {
                 $("#loading").show();
                 var index = $scope.quotation.product.indexOf(product);
@@ -2265,8 +2265,10 @@ app.controller(
                     function (error) {
                         $scope.quotation.product[index].image = ''; // Refresh previous display image
                         $scope.quotation.product[index].value = null;
-                        $("#product_1").val("");
-                        alert("image not found");
+                        if(secondForm == ''){
+                            $("#product_1").val("");
+                            alert("image not found");
+                        }
                         $("#loading").hide();
                     }
                 );
@@ -2274,6 +2276,8 @@ app.controller(
         };
 
         $scope.getThetotalAmount = function (product) {
+            console.log("87997");
+            console.log(product);
             var index = $scope.quotation.product.indexOf(product);
             // console.log($scope.prices);
             if (product.type == "Image") {
@@ -2554,7 +2558,6 @@ app.controller(
         };
 
         $scope.submitQuotation = function () {
-            //  console.log($scope.quotation);
             // console.log($scope);
             if ($scope.quotation_type_var == "subscription") {
                 $scope.submitSubscription();

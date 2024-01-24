@@ -125,7 +125,13 @@
          <div class="container">
             <div class="client-info-top">
                <div class="client-info-leftside">
-                  <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></span></strong></p>
+               <?php if ($quotation[0]['flag'] == 2) { ?>
+
+                    <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] :$quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
+                    <?php }?>
+                    <?php if ($quotation[0]['flag'] !== 2) { ?>
+                    <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
+                    <?php } ?>
                   <p>Address: <span><strong><?php echo $quotation[0]['address'] ?><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></strong></span>
                   </p>
                   <p>Phone: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
@@ -138,6 +144,7 @@
                   <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
                   <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                   <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                  <p>Vendor Code : <span><strong><?php echo config('constants.VENDOR_CODE') ?></strong></span></p>
                   <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                   <p>Payment Due: <span><strong><?php echo ucfirst($payment_method) ?></strong></span></p>
                </div>

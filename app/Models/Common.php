@@ -185,13 +185,12 @@ class Common extends Model
                     $image = $eachproduct['image'];
                 } else {
                     $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';
-                    $eachproduct['name'] = '';
                 }
                 $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
                     'invoice_id'    => $id,
                     'user_id'       => $data['uid'],
-                    'product_id'    => $eachproduct['name'],
+                    'product_id'    => isset($eachproduct['name']) ? $eachproduct['name'] : '',
                     'product_type'  => $eachproduct['pro_type'],
                     'type'          => $eachproduct['type'],
                     'product_size'  => $eachproduct['pro_size'],
@@ -200,7 +199,8 @@ class Common extends Model
                     'subtotal'      => $eachproduct['price'],
                     'status'        => "1",
                     'product_web'   => 'imagefootage',
-                    'licence_type'  => $eachproduct['licence_type']
+                    'licence_type'  => $eachproduct['licence_type'],
+                    'extra_details' => isset($eachproduct['extra_details']) ? $eachproduct['extra_details'] : null
                 );
                 DB::table('imagefootage_performa_invoice_items')->insert($insert_product);
             }

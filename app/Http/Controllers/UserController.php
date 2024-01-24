@@ -415,6 +415,10 @@ class UserController extends Controller
             if (empty($userlist)) {
                 echo json_encode(['status' => "fail", 'message' => 'Profile not found', 'data' => '']);
             }
+            $panNumber = '';
+            if(isset($data['profileData']['gst']) && !empty($data['profileData']['gst'])){
+                $panNumber = $this->extractPanFromGst($data['profileData']['gst']);
+            }
             $update_data = [
                 'first_name' => $data['profileData']['first_name'],
                 'mobile' => $data['profileData']['mobile'],
@@ -427,6 +431,7 @@ class UserController extends Controller
                 'company' => $data['profileData']['company'] ?? '',
                 'email' => $data['profileData']['email'] ?? '',
                 'gst'  => $data['profileData']['gst'] ?? '',
+                'pan'  =>$panNumber
             ];
             if (empty($userlist['country'])) {
                 $update_data['country'] = $data['profileData']['country'];
@@ -611,5 +616,22 @@ class UserController extends Controller
             ->whereNull('city')
             ->whereNull('address')
             ->exists();
+    }
+
+    public function extractPanFromGst($gstNumber) {
+
+        // Define the regular expression pattern for extracting PAN from GST
+        $pattern = '/[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}/';
+
+        // Match the pattern in the GST number
+        preg_match($pattern, $gstNumber, $matches);
+
+        // Extracted PAN number is in the first match
+        if (!empty($matches)) {
+            return substr($matches[0], 2, 10); // Extract the PAN part (characters 3 to 12)
+        }
+
+        // If no match is found, return null or handle accordingly
+        return null;
     }
 }

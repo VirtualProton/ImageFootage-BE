@@ -102,6 +102,7 @@
                         <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
                         <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p>Vendor Code : <span><strong><?php echo config('constants.VENDOR_CODE') ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                         <p>Payment Due: <span><strong><?php echo ucfirst($payment_method) ?></strong></span></p>
                     </div>
