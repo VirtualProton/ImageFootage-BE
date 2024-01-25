@@ -623,93 +623,95 @@ class Product extends Model
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('panther_media_image', 'api_flag');
-        foreach ($data['items']['media'] as $eachmedia) {
-            $optionData = [];
-            if (isset($eachmedia['id'])) {
-                $media = array(
-                    'api_product_id' => $eachmedia['id'],
-                    'product_category' => $category_id,
-                    'product_title' => $eachmedia['title'],
-                    'product_thumbnail' => $eachmedia['preview_no_wm'],
-                    'product_main_image' => $eachmedia['preview_high'],
-                    'product_description' => $eachmedia['description'],
-                    'product_size' => $eachmedia['width'] . "X" . $eachmedia['height'],
-                    "product_keywords" => $eachmedia['keywords'],
-                    'product_status' => "Active",
-                    'product_main_type' => "Image",
-                    'product_sub_type' => "Photo",
-                    'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
-                    'product_web' => '2',
-                    'updated_at'       => date("Y-m-d H:i:s"),
-                    'adult_content'    => (isset($eachmedia['adult-content']) && $eachmedia['adult-content'] == 'yes' )? 1 : 0,
-                    'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
-                );
-
-                $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $eachmedia['id'])
-                    ->get()
-                    ->toArray();
-
-                if (count($data2) == 0) {
-                    $key  = $this->randomkey();
-                    $media['product_id'] = $flag . $key;
-                    DB::table('imagefootage_products')->insert($media);
-
-                    $productData = array(
-                        'people_number'    => $eachmedia['people_number'],
-                        'orientation'      => $eachmedia['orientation'],
-                        'license'          => $eachmedia['license'],
-                        'type'             => $eachmedia['type'],
-                        'collection'       => $eachmedia['collection'],
-                        'artist'           => $eachmedia['author-username'],
-                        'spx'              => $eachmedia['spx'],
-                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
-                        'isolated'         => $eachmedia['isolated'],
-                    );
-                    $imageFilterValue = new ImageFilterValue([
-                        'api_product_id'    => $eachmedia['id'],
-                        'product_id'        => $media['product_id'],
+        if(isset($data['items']['media'])){
+            foreach ($data['items']['media'] as $eachmedia) {
+                $optionData = [];
+                if (isset($eachmedia['id'])) {
+                    $media = array(
+                        'api_product_id' => $eachmedia['id'],
+                        'product_category' => $category_id,
+                        'product_title' => $eachmedia['title'],
+                        'product_thumbnail' => $eachmedia['preview_no_wm'],
+                        'product_main_image' => $eachmedia['preview_high'],
+                        'product_description' => $eachmedia['description'],
+                        'product_size' => $eachmedia['width'] . "X" . $eachmedia['height'],
+                        "product_keywords" => $eachmedia['keywords'],
+                        'product_status' => "Active",
                         'product_main_type' => "Image",
-                        'attributes'        => $productData,
-                        'options'           => $optionData
-                    ]);
-                    $imageFilterValue->save();
-                } else {
-
-                    DB::table('imagefootage_products')
-                        ->where('api_product_id', '=', $eachmedia['id'])
-                        ->update([
-                            'product_thumbnail'    => $eachmedia['preview_no_wm'],
-                            'product_main_image'   => $eachmedia['preview_high'],
-                            'product_description'  => $eachmedia['description'],
-                            'product_title'        => $eachmedia['title'],
-                            'updated_at'           => date('Y-m-d H:i:s'),
-                            'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
-                        ]);
-
-                    $apiProductId = $eachmedia['id'];
-                    $productData  = [
-                        'people_number'    => $eachmedia['people_number'],
-                        'orientation'      => $eachmedia['orientation'],
-                        'license'          => $eachmedia['license'],
-                        'type'             => $eachmedia['type'],
-                        'collection'       => $eachmedia['collection'],
-                        'artist'           => $eachmedia['author-username'],
-                        'spx'              => $eachmedia['spx'],
-                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
-                        'isolated'         => $eachmedia['isolated'],
-                    ];
-
-                    // Find the existing document by api_product_id, or create a new one
-                    $imageFilterValue = ImageFilterValue::updateOrCreate(
-                        ['api_product_id' => $apiProductId],
-                        [
-                            'attributes' => $productData,
-                            'options'    =>$optionData
-                        ]
+                        'product_sub_type' => "Photo",
+                        'product_added_on' => date("Y-m-d H:i:s", strtotime($eachmedia['date'])),
+                        'product_web' => '2',
+                        'updated_at'       => date("Y-m-d H:i:s"),
+                        'adult_content'    => (isset($eachmedia['adult-content']) && $eachmedia['adult-content'] == 'yes' )? 1 : 0,
+                        'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
                     );
+
+                    $data2 = DB::table('imagefootage_products')
+                        ->where('api_product_id', $eachmedia['id'])
+                        ->get()
+                        ->toArray();
+
+                    if (count($data2) == 0) {
+                        $key  = $this->randomkey();
+                        $media['product_id'] = $flag . $key;
+                        DB::table('imagefootage_products')->insert($media);
+
+                        $productData = array(
+                            'people_number'    => $eachmedia['people_number'],
+                            'orientation'      => $eachmedia['orientation'],
+                            'license'          => $eachmedia['license'],
+                            'type'             => $eachmedia['type'],
+                            'collection'       => $eachmedia['collection'],
+                            'artist'           => $eachmedia['author-username'],
+                            'spx'              => $eachmedia['spx'],
+                            'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
+                            'isolated'         => $eachmedia['isolated'],
+                        );
+                        $imageFilterValue = new ImageFilterValue([
+                            'api_product_id'    => $eachmedia['id'],
+                            'product_id'        => $media['product_id'],
+                            'product_main_type' => "Image",
+                            'attributes'        => $productData,
+                            'options'           => $optionData
+                        ]);
+                        $imageFilterValue->save();
+                    } else {
+
+                        DB::table('imagefootage_products')
+                            ->where('api_product_id', '=', $eachmedia['id'])
+                            ->update([
+                                'product_thumbnail'    => $eachmedia['preview_no_wm'],
+                                'product_main_image'   => $eachmedia['preview_high'],
+                                'product_description'  => $eachmedia['description'],
+                                'product_title'        => $eachmedia['title'],
+                                'updated_at'           => date('Y-m-d H:i:s'),
+                                'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                                'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
+                            ]);
+
+                        $apiProductId = $eachmedia['id'];
+                        $productData  = [
+                            'people_number'    => $eachmedia['people_number'],
+                            'orientation'      => $eachmedia['orientation'],
+                            'license'          => $eachmedia['license'],
+                            'type'             => $eachmedia['type'],
+                            'collection'       => $eachmedia['collection'],
+                            'artist'           => $eachmedia['author-username'],
+                            'spx'              => $eachmedia['spx'],
+                            'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
+                            'isolated'         => $eachmedia['isolated'],
+                        ];
+
+                        // Find the existing document by api_product_id, or create a new one
+                        $imageFilterValue = ImageFilterValue::updateOrCreate(
+                            ['api_product_id' => $apiProductId],
+                            [
+                                'attributes' => $productData,
+                                'options'    =>$optionData
+                            ]
+                        );
+                    }
                 }
             }
         }
