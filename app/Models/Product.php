@@ -116,7 +116,10 @@ class Product extends Model
             if(isset($keyword['adult_content_filter']) && !empty($keyword['adult_content_filter'])){
                 $data->where('adult_content','no');
             }
-            if(isset($filters['sort']) && !empty($filters['sort']) && $filters['sort'] == 'Recent'){
+            if (isset($filters['sort']) && !empty($filters['sort']) && $filters['sort'] == 'Recent'){
+                $data->orderBy('created_at', 'desc');
+            } else {
+                // default sorting will be latest first
                 $data->orderBy('created_at', 'desc');
             }
             if(isset($filters['sort']) && !empty($filters['sort']) && $filters['sort'] == 'Popular'){
@@ -240,6 +243,7 @@ class Product extends Model
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
             }
+            $data->orderBy('created_at', 'desc');
 
             if(!empty($selectedPrApiIds)){
                 $exceptSelectedRecords = clone $data;
@@ -371,6 +375,7 @@ class Product extends Model
             if (!empty($apiProductIds)) {
                 $data->whereIn('api_product_id', $apiProductIds);
             }
+            $data->orderBy('created_at', 'desc');
 
             $totalRecords = count($data->get());
             $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
@@ -459,6 +464,7 @@ class Product extends Model
             if (!empty($apiProductIds)) {
                 $data->whereIn('api_product_id', $apiProductIds);
             }
+            $data->orderBy('created_at', 'desc');
 
             $totalRecords = count($data->get());
             $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
@@ -549,6 +555,7 @@ class Product extends Model
             if (!empty($apiProductIds)) {
                 $data->whereIn('api_product_id', $apiProductIds);
             }
+            $data->orderBy('created_at', 'desc');
 
             $totalRecords = count($data->get());
             $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
@@ -1256,6 +1263,7 @@ class Product extends Model
             ->where('product_category', '=', $product->product_category)
             ->where('product_id', '!=', $product_id)
             ->where('product_main_type', '=', $type);
+            $data->orderBy('created_at', 'desc');
             $data = $data->distinct()->limit($limit)->get()->toArray();
             foreach($data as $key => $value) {
 
@@ -1304,6 +1312,7 @@ class Product extends Model
                 ->where('product_category', '=', $product->product_category)
                 ->where('product_id', '!=', $product_id)
                 ->where('product_main_type', '=', 'Music');
+            $data->orderBy('created_at', 'desc');
             $data = $data->distinct()->limit($limit)->get();
 
             if (count($data) > 0) {
