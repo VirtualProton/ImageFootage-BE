@@ -265,7 +265,7 @@
                                         <?php } ?>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -409,7 +409,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -551,7 +551,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach
@@ -693,7 +693,7 @@
                                         </select>
                                       </td>
                                       <td>
-                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ?? 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
+                                      <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
                                       </td>
                                       @endforeach

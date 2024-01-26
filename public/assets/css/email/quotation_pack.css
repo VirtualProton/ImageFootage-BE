@@ -84,6 +84,7 @@ header {
 .client-info-leftside {
     width: 49%;
     display: inline-block;
+    vertical-align: top;
 }
 
 .client-info-leftside p,
