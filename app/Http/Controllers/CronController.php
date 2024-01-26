@@ -237,31 +237,31 @@ class CronController extends Controller
         }
     }
 
-    public function searchKeywordPond5AndPanthermedia($term, $type){
+    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null){
         $keyword = [];
         if ($type == '1' || $type == '4') {
             $keyword['search']  = $term;
-            $percategory['category_id'] = null;
+            $percategory['category_id'] = $category;
             $pantherMediaImages = new ImageApi();
-            $pantharmediaData   = $pantherMediaImages->search($keyword);
+            $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
     
             if(count($pantharmediaData) > 0){
                 $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id']);
             }
         } else if ($type == '2' || $type == '4') {
             $keyword['search']  = $term;
-            $percategory['category_id'] = null;
+            $percategory['category_id'] = $category;
             $footageMedia          = new FootageApi();
-            $pond5FootageMediaData = $footageMedia->search($keyword);
+            $pond5FootageMediaData = $footageMedia->search($keyword, [], 120);
 
             if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
                 $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
             }
         } else if ($type == '3') {
             $keyword['search']  = $term;
-            $percategory['category_id'] = null;
+            $percategory['category_id'] = $category;
             $musicMedia          = new MusicApi();
-            $pond5MusicMediaData = $musicMedia->search($keyword, []);
+            $pond5MusicMediaData = $musicMedia->search($keyword, [], 120);
 
             if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
                 $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);

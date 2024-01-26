@@ -149,13 +149,10 @@
                     <div class="client-info-leftside">
                         <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
-                    <?php if ($quotation[0]['flag'] == 2) { ?>
-                        <div class="client-info-rightside">
-                        <p>End Client: <span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
-                        </div>
-                    <?php } ?>
-
                     <div class="client-info-rightside">
+                    <?php if ($quotation[0]['flag'] == 2) { ?>
+                        <p>End Client: <br/><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                        <?php } ?>
                         <p>Product Description: <span class="block-text"><strong>Images/Footage- <?php echo count($quotation); ?></strong></span></p>
                     </div>
                 </div>
@@ -175,7 +172,15 @@
                             $class = "col-lg-4 ";
                         } ?>
                             <div class="<?php echo $class; ?>">
-                                <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
+                                <div>
+                                <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                                    <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108">
+                                    <?php }else{ ?>
+                                    <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108">
+                                <?php }?>
+                                </div>
+
+
                                 <?php if (!empty($quotation[$i]['product_id'])) { ?>
                                     <p>Image ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
                                     <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
@@ -195,6 +200,9 @@
                     <div class="col-lg-12 amount-divs">
                         <div class="start">Amount (INR)</div>
                         <div class="end"><strong><?php echo number_format($amount/count($quotation), 2); ?></strong></div>
+                        <div class="col-lg-12 single-gray-block">
+                        <p>In words: <strong><?php echo $amount_in_words ?></strong></p>
+                    </div>
                     </div>
                 </div>
                 <div class="row">

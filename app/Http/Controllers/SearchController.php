@@ -52,7 +52,10 @@ class SearchController extends Controller
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
 
+        $searchKeyword = $keyword['search'];
+
         if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
+            $searchKeyword = $keyword['category_id'];
             $getCategoryId = ProductCategory::where(['category_slug'=> $request->category_id,'type'=>$keyword['productType']['id']])->first();
             if(!empty($getCategoryId)){
                 $keyword['category_id'] = $getCategoryId->category_id;
@@ -85,7 +88,7 @@ class SearchController extends Controller
         // If records not found check with respective third party api for the data
         if($countTotalRecords == 0 || $countTotalRecords < 15){
             $cronController  = new CronController();
-            $cronController->searchKeywordPond5AndPanthermedia($keyword['search'], $keyword['productType']['id']);
+            $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id']);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
         }
 
@@ -243,6 +246,7 @@ class SearchController extends Controller
             if (!empty($apiProductIds)) {
                 $data->whereIn('api_product_id', $apiProductIds);
             }
+            $data->orderBy('created_at', 'desc');
             $totalRecords = count($data->get());
 
             $data = $data->distinct()->get()->toArray();

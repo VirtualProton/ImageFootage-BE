@@ -187,7 +187,14 @@
                      $class = "col-lg-4 ";
                   } ?>
                      <div class="<?php echo $class; ?>">
-                        <div><img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108"></div>
+                        <div>
+                        <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                            <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108">
+                            <?php }else{ ?>
+                            <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108">
+                        <?php }?>
+
+                        </div>
                         <?php if (!empty($quotation[$i]['product_id'])) {
                            echo '<p>Image ID: ' . $quotation[$i]['product_id'] . '</p>';
                         } else {

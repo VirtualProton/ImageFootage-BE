@@ -121,6 +121,10 @@
                 <div class="price-div">
                     <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                 </div>
+                <div class="price-div">
+                    <p>In words: <strong><?php echo $amount_in_words ?></strong></p>
+                </div>
+
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
                     <div class="licensing-condition">
