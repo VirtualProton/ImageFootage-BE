@@ -761,97 +761,99 @@ class Product extends Model
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_footage', 'api_flag');
-        foreach ($data['items'] as $eachmedia) {
-            $optionData = [];
-            if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id'];
-                if (strlen($eachmedia['id']) < 9) {
-                    $add_zero = 9 - (strlen($eachmedia['id']));
-                    for ($i = 0; $i < $add_zero; $i++) {
-                        $pond_id_withprefix =  "0" . $pond_id_withprefix;
+        if(isset($data['items'])){
+            foreach ($data['items'] as $eachmedia) {
+                $optionData = [];
+                if (isset($eachmedia['id'])) {
+                    $pond_id_withprefix = $eachmedia['id'];
+                    if (strlen($eachmedia['id']) < 9) {
+                        $add_zero = 9 - (strlen($eachmedia['id']));
+                        for ($i = 0; $i < $add_zero; $i++) {
+                            $pond_id_withprefix =  "0" . $pond_id_withprefix;
+                        }
                     }
-                }
-                $media = array(
-                    'api_product_id'      => $eachmedia['id'],
-                    'product_category'    => $category_id,
-                    'product_title'       => $eachmedia['title'],
-                    'product_thumbnail'   => $eachmedia['thumbnail'],
-                    'product_main_image'  => $eachmedia['watermarkPreview'],
-                    'product_description' => $eachmedia['description'],
-                    'product_keywords'    => implode(',', $eachmedia['keywords']),
-                    'product_status'      => "Active",
-                    'product_main_type'   => "Footage",
-                    'product_sub_type'    => "Footage",
-                    'product_added_on'    => date("Y-m-d H:i:s"),
-                    'product_web'         => '3',
-                    'updated_at'          => date("Y-m-d H:i:s"),
-                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
-                );
-
-                $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $eachmedia['id'])
-                    ->get()
-                    ->toArray();
-
-                if (count($data2) == 0) {
-                    $key  = $this->randomkey();
-                    $media['product_id'] = $flag . $key;
-                    DB::table('imagefootage_products')->insert($media);
-
-                    $productData  = array(
-                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
-                        'fps'              => [$eachmedia['videoFps']],
-                        'artist'           => $eachmedia['authorName']
+                    $media = array(
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => $category_id,
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => "Footage",
+                        'product_sub_type'    => "Footage",
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '3',
+                        'updated_at'          => date("Y-m-d H:i:s"),
+                        'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                     );
-                    foreach($eachmedia['versions'] as $key=>$value){
-                        $optionData[] = $value;
-                    }
-                    $imageFilterValue = new ImageFilterValue([
-                        'api_product_id'    => $eachmedia['id'],
-                        'product_id'        => $media['product_id'],
-                        'product_main_type' => "Footage",
-                        'attributes'        => $productData,
-                        'options'           => $optionData
-                    ]);
-                    $imageFilterValue->save();
-                } else {
-                    DB::table('imagefootage_products')
-                        ->where('api_product_id', '=', $eachmedia['id'])
-                        ->update([
-                            'product_title'       => $eachmedia['title'],
-                            'product_thumbnail'   => $eachmedia['thumbnail'],
-                            'product_main_image'  => $eachmedia['watermarkPreview'],
-                            'product_description' => $eachmedia['description'],
-                            'updated_at'          => date('Y-m-d H:i:s'),
-                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+
+                    $data2 = DB::table('imagefootage_products')
+                        ->where('api_product_id', $eachmedia['id'])
+                        ->get()
+                        ->toArray();
+
+                    if (count($data2) == 0) {
+                        $key  = $this->randomkey();
+                        $media['product_id'] = $flag . $key;
+                        DB::table('imagefootage_products')->insert($media);
+
+                        $productData  = array(
+                            'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
+                            'fps'              => [$eachmedia['videoFps']],
+                            'artist'           => $eachmedia['authorName']
+                        );
+                        foreach($eachmedia['versions'] as $key=>$value){
+                            $optionData[] = $value;
+                        }
+                        $imageFilterValue = new ImageFilterValue([
+                            'api_product_id'    => $eachmedia['id'],
+                            'product_id'        => $media['product_id'],
+                            'product_main_type' => "Footage",
+                            'attributes'        => $productData,
+                            'options'           => $optionData
                         ]);
+                        $imageFilterValue->save();
+                    } else {
+                        DB::table('imagefootage_products')
+                            ->where('api_product_id', '=', $eachmedia['id'])
+                            ->update([
+                                'product_title'       => $eachmedia['title'],
+                                'product_thumbnail'   => $eachmedia['thumbnail'],
+                                'product_main_image'  => $eachmedia['watermarkPreview'],
+                                'product_description' => $eachmedia['description'],
+                                'updated_at'          => date('Y-m-d H:i:s'),
+                                'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                            ]);
 
-                    $apiProductId = $eachmedia['id'];
-                    $productData  = array(
-                        'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
-                        'fps'              => [$eachmedia['videoFps']],
-                        'artist'           => $eachmedia['authorName']
-                    );
+                        $apiProductId = $eachmedia['id'];
+                        $productData  = array(
+                            'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
+                            'fps'              => [$eachmedia['videoFps']],
+                            'artist'           => $eachmedia['authorName']
+                        );
 
-                    // Find the existing document by api_product_id, or create a new one
-                    $imageFilterValue = ImageFilterValue::updateOrCreate(
-                        ['api_product_id' => $apiProductId],
-                        [
-                            'attributes' => $productData,
-                        ]
-                    );
-                    foreach($eachmedia['versions'] as $key=>$value){
-                        $optionData[] = $value;
+                        // Find the existing document by api_product_id, or create a new one
                         $imageFilterValue = ImageFilterValue::updateOrCreate(
                             ['api_product_id' => $apiProductId],
                             [
-                                'options' => $optionData,
+                                'attributes' => $productData,
                             ]
                         );
-                    }
+                        foreach($eachmedia['versions'] as $key=>$value){
+                            $optionData[] = $value;
+                            $imageFilterValue = ImageFilterValue::updateOrCreate(
+                                ['api_product_id' => $apiProductId],
+                                [
+                                    'options' => $optionData,
+                                ]
+                            );
+                        }
 
+                    }
                 }
             }
         }
@@ -920,111 +922,112 @@ class Product extends Model
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_music', 'api_flag');
-
-        foreach ($data['items'] as $eachmedia) {
-            $optionData = [];
-            if (isset($eachmedia['id'])) {
-                $pond_id_withprefix = $eachmedia['id'];
-                if (strlen($eachmedia['id']) < 9) {
-                    $add_zero = 9 - (strlen($eachmedia['id']));
-                    for ($i = 0; $i < $add_zero; $i++) {
-                        $pond_id_withprefix =  "0" . $pond_id_withprefix;
+        if(isset($data['items'])){
+            foreach ($data['items'] as $eachmedia) {
+                $optionData = [];
+                if (isset($eachmedia['id'])) {
+                    $pond_id_withprefix = $eachmedia['id'];
+                    if (strlen($eachmedia['id']) < 9) {
+                        $add_zero = 9 - (strlen($eachmedia['id']));
+                        for ($i = 0; $i < $add_zero; $i++) {
+                            $pond_id_withprefix =  "0" . $pond_id_withprefix;
+                        }
                     }
-                }
 
-                $media = array(
-                    'api_product_id'      => $eachmedia['id'],
-                    'product_category'    => $category_id,
-                    'product_title'       => $eachmedia['title'],
-                    'product_thumbnail'   => $eachmedia['thumbnail'],
-                    'product_main_image'  => $eachmedia['watermarkPreview'],
-                    'product_description' => $eachmedia['description'],
-                    'product_keywords'    => implode(',', $eachmedia['keywords']),
-                    'product_status'      => "Active",
-                    'product_main_type'   => "Music",
-                    'product_sub_type'    => "Music",
-                    'product_added_on'    => date("Y-m-d H:i:s"),
-                    'product_web'         => '3',
-                    'updated_at'          => date("Y-m-d H:i:s"),
-                    'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                    'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
-                );
-
-                if (!empty($eachmedia['versions'])) {
-                    $media['music_duration'] = $eachmedia['versions'][0]['duration'] ?? null;
-                    $media['music_fileType'] = $eachmedia['versions'][0]['fileType'] ?? null;
-                    $media['music_price']    = $eachmedia['versions'][0]['price'] ?? null;
-                    $media['music_size']     = $eachmedia['versions'][0]['size'] ?? null;
-                }
-
-                $data2 = DB::table('imagefootage_products')
-                    ->where('api_product_id', $eachmedia['id'])
-                    ->get()
-                    ->toArray();
-
-                if (count($data2) == 0) {
-                    $key  = $this->randomkey();
-                    $media['product_id'] = $flag . $key;
-                    DB::table('imagefootage_products')->insert($media);
-
-                    $productData  = array(
-                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
-                        'soundPro'          => $eachmedia['soundPro'] ?? '',
-                        'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
-                        'artist'            => $eachmedia['authorName'],
+                    $media = array(
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => $category_id,
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => "Music",
+                        'product_sub_type'    => "Music",
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '3',
+                        'updated_at'          => date("Y-m-d H:i:s"),
+                        'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
                     );
-                    foreach($eachmedia['versions'] as $key=>$value){
-                        $optionData[] = $value;
+
+                    if (!empty($eachmedia['versions'])) {
+                        $media['music_duration'] = $eachmedia['versions'][0]['duration'] ?? null;
+                        $media['music_fileType'] = $eachmedia['versions'][0]['fileType'] ?? null;
+                        $media['music_price']    = $eachmedia['versions'][0]['price'] ?? null;
+                        $media['music_size']     = $eachmedia['versions'][0]['size'] ?? null;
                     }
 
-                    $imageFilterValue = new ImageFilterValue([
-                        'product_id'        => $media['product_id'],
-                        'api_product_id'    => $eachmedia['id'],
-                        'product_main_type' => 'Music',
-                        'attributes'        => $productData,
-                        'options'           => $optionData
-                    ]);
-                    $imageFilterValue->save();
-                } else {
-                    DB::table('imagefootage_products')
-                        ->where('api_product_id', '=', $eachmedia['id'])
-                        ->update([
-                            'product_title'       => $eachmedia['title'],
-                            'product_thumbnail'   => $eachmedia['thumbnail'],
-                            'product_main_image'  => $eachmedia['watermarkPreview'],
-                            'product_description' => $eachmedia['description'],
-                            'updated_at'          => date('Y-m-d H:i:s'),
-                            'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                            'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                    $data2 = DB::table('imagefootage_products')
+                        ->where('api_product_id', $eachmedia['id'])
+                        ->get()
+                        ->toArray();
+
+                    if (count($data2) == 0) {
+                        $key  = $this->randomkey();
+                        $media['product_id'] = $flag . $key;
+                        DB::table('imagefootage_products')->insert($media);
+
+                        $productData  = array(
+                            'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
+                            'soundPro'          => $eachmedia['soundPro'] ?? '',
+                            'soundCodec'        => $eachmedia['soundCodec'] ?? '',
+                            'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                            'artist'            => $eachmedia['authorName'],
+                        );
+                        foreach($eachmedia['versions'] as $key=>$value){
+                            $optionData[] = $value;
+                        }
+
+                        $imageFilterValue = new ImageFilterValue([
+                            'product_id'        => $media['product_id'],
+                            'api_product_id'    => $eachmedia['id'],
+                            'product_main_type' => 'Music',
+                            'attributes'        => $productData,
+                            'options'           => $optionData
                         ]);
+                        $imageFilterValue->save();
+                    } else {
+                        DB::table('imagefootage_products')
+                            ->where('api_product_id', '=', $eachmedia['id'])
+                            ->update([
+                                'product_title'       => $eachmedia['title'],
+                                'product_thumbnail'   => $eachmedia['thumbnail'],
+                                'product_main_image'  => $eachmedia['watermarkPreview'],
+                                'product_description' => $eachmedia['description'],
+                                'updated_at'          => date('Y-m-d H:i:s'),
+                                'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                            ]);
 
-                    $apiProductId = $eachmedia['id'];
-                    $productData  = array(
-                        'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
-                        'soundPro'          => $eachmedia['soundPro'] ?? '',
-                        'soundCodec'        => $eachmedia['soundCodec'] ?? '',
-                        'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
-                        'artist'            => $eachmedia['authorName'],
-                    );
+                        $apiProductId = $eachmedia['id'];
+                        $productData  = array(
+                            'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
+                            'soundPro'          => $eachmedia['soundPro'] ?? '',
+                            'soundCodec'        => $eachmedia['soundCodec'] ?? '',
+                            'editorial'         => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                            'artist'            => $eachmedia['authorName'],
+                        );
 
-                    // Find the existing document by api_product_id, or create a new one
-                    $imageFilterValue = ImageFilterValue::updateOrCreate(
-                        ['api_product_id' => $apiProductId],
-                        [
-                            'attributes' => $productData,
-                        ]
-                    );
-                    foreach($eachmedia['versions'] as $key=>$value){
-                        $optionData[] = $value;
+                        // Find the existing document by api_product_id, or create a new one
                         $imageFilterValue = ImageFilterValue::updateOrCreate(
                             ['api_product_id' => $apiProductId],
                             [
-                                'options' => $optionData,
+                                'attributes' => $productData,
                             ]
                         );
-                    }
+                        foreach($eachmedia['versions'] as $key=>$value){
+                            $optionData[] = $value;
+                            $imageFilterValue = ImageFilterValue::updateOrCreate(
+                                ['api_product_id' => $apiProductId],
+                                [
+                                    'options' => $optionData,
+                                ]
+                            );
+                        }
 
+                    }
                 }
             }
         }
