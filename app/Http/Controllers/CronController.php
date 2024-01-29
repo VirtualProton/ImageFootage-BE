@@ -237,7 +237,7 @@ class CronController extends Controller
         }
     }
 
-    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null){
+    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest){
         $keyword = [];
         if ($type == '1' || $type == '4') {
             $keyword['search']  = $term;
@@ -246,7 +246,7 @@ class CronController extends Controller
             $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
     
             if(count($pantharmediaData) > 0){
-                $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id']);
+                $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
             }
         } else if ($type == '2' || $type == '4') {
             $keyword['search']  = $term;
