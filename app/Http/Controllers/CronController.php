@@ -252,7 +252,7 @@ class CronController extends Controller
             $keyword['search']  = $term;
             $percategory['category_id'] = $category;
             $footageMedia          = new FootageApi();
-            $pond5FootageMediaData = $footageMedia->search($keyword, [], 120);
+            $pond5FootageMediaData = $footageMedia->search($keyword, [], 100);
 
             if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
                 $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
@@ -261,8 +261,8 @@ class CronController extends Controller
             $keyword['search']  = $term;
             $percategory['category_id'] = $category;
             $musicMedia          = new MusicApi();
-            $pond5MusicMediaData = $musicMedia->search($keyword, [], 120);
-
+            $pond5MusicMediaData = $musicMedia->search($keyword, [], 100);
+            
             if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
                 $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
             }
