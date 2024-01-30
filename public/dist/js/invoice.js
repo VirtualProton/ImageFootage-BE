@@ -1900,7 +1900,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     data: {
                         quotation_id: quotation_id,
                         user_id: user_id,
-                        po: $scope.po,
+                        po: $('#poCustom').val() ?? "",
                         po_date: $scope.poDate,
                         payment_method: $scope.payment_method,
                         gst: $("#gstNo").val(),
@@ -1959,7 +1959,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     data: {
                         quotation_id: quotation_id,
                         user_id: user_id,
-                        po: $scope.poCustom,
+                        po: $('#poCustom').val() ?? "",
                         po_date: $scope.poDateCustom,
                         payment_method: $scope.payment_method,
                         gst: $("#gstNocus").val(),
@@ -1972,6 +1972,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address: $("#address_invoice_cus").val() ?? "",
                         address2: $("#address2_invoice_cus").val() ?? "",
                         postal_code: $("#postal_code_invoice_cus").val() ?? "",
+
                     },
                 }).then(
                     function (result) {
