@@ -58,17 +58,17 @@ class MediaController extends Controller
 
         if ($product_details) {
             // Use the $product_details['id'] to query MongoDB
-            $apiProductId = $product_details['api_product_id'];
+            $apiProductId = strval($product_details['api_product_id']);
             // Retrieve data from MongoDB where api_product_id matches
-            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->get();
+            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->first();
             $attributes = [];
             $options = [];
 
-            foreach ($matchingData as $data) {
 
-                $attributes = isset($data->attributes) ? $data->attributes : [];
-                $options    = isset($data->options) ? $data->options : [];
-            }
+
+                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                $options    = isset($matchingData->options) ? $matchingData->options : [];
+
             $product_details['attributes'] = $attributes;
             $product_details['options'] = $options;
         }
