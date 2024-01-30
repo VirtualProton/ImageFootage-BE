@@ -247,14 +247,14 @@ class CronController extends Controller
                 $pantherMediaImages = new ImageApi();
                 $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
         
-                if(count($pantharmediaData) > 0){
+                if(!empty($pantharmediaData) && count($pantharmediaData) > 0){
                     $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
                 }
             } else {
                 $imagesMedia        = new \App\Http\Pond5\ImageApi();
                 $pond5ImagesData    = $imagesMedia->search($keyword);
     
-                if (count($pond5ImagesData) > 0) {
+                if (!empty($pond5ImagesData) && count($pond5ImagesData) > 0) {
                     $this->product->savePond5Image($pond5ImagesData, $percategory['category_id'], $allRequest);
                 }
             }
