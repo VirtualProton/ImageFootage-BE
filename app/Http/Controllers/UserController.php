@@ -395,7 +395,10 @@ class UserController extends Controller
         $validator = \Validator::make($request->profileData ?? [], [
             'email' => 'required|unique:imagefootage_users,email,' . $data['tokenData']['Utype'],
             'mobile' => 'required|unique:imagefootage_users,mobile,' . $data['tokenData']['Utype'],
-        ]);
+        ], [
+            'mobile.unique' => 'The mobile no has already been taken.',
+        ]
+    );
 
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first()], 200);

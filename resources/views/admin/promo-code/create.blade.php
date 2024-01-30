@@ -122,10 +122,9 @@
 
         <!-- /.box-body -->
         <div class="box-footer">
-        <a href="{{ URL::to('admin/promo-codes') }}">
-        <button type="button" class="btn btn-default">Cancel</button></a>
+        <a href="{{ url('admin/promo-codes') }}" class="btn btn-primary">Back</a>
         <!-- <button type="button" class="btn btn-default">Cancel</button> -->
-        {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
+        {!! Form::submit('Submit', array('class' => 'btn btn-primary', 'id' => 'validateButton2')) !!}
         </div>
         <!-- /.box-footer -->
         {!! Form::close() !!}

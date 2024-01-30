@@ -626,7 +626,7 @@ class Product extends Model
     * This is main function for storing the panther media data via CRON execution
     * It manages the data storage in Mysql and MongoDB both
     */
-    public function savePantherMediaImage($data, $category_id)
+    public function savePantherMediaImage($data, $category_id, $allRequest = [])
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('panther_media_image', 'api_flag');
@@ -660,7 +660,7 @@ class Product extends Model
                         ->toArray();
 
                     if (count($data2) == 0) {
-                        $key  = $this->randomkey();
+                        $key  = $this->reverseKey($eachmedia['id']);
                         $media['product_id'] = $flag . $key;
                         DB::table('imagefootage_products')->insert($media);
 
@@ -675,6 +675,15 @@ class Product extends Model
                             'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                             'isolated'         => $eachmedia['isolated'],
                         );
+                        if(isset($allRequest['people_ethnicity'])){
+                            $productData['people_ethnicity'] = $allRequest['people_ethnicity']['value'];
+                        }
+                        if(isset($allRequest['people_gender'])){
+                            $productData['people_gender'] = $allRequest['people_gender']['value'];
+                        }
+                        if(isset($allRequest['people_age'])){
+                            $productData['people_age'] = $allRequest['people_age']['value'];
+                        }
                         $imageFilterValue = new ImageFilterValue([
                             'api_product_id'    => $eachmedia['id'],
                             'product_id'        => $media['product_id'],
@@ -709,6 +718,15 @@ class Product extends Model
                             'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                             'isolated'         => $eachmedia['isolated'],
                         ];
+                        if(isset($allRequest['people_ethnicity'])){
+                            $productData['people_ethnicity'] = $allRequest['people_ethnicity']['value'];
+                        }
+                        if(isset($allRequest['people_gender'])){
+                            $productData['people_gender'] = $allRequest['people_gender']['value'];
+                        }
+                        if(isset($allRequest['people_age'])){
+                            $productData['people_age'] = $allRequest['people_age']['value'];
+                        }
 
                         // Find the existing document by api_product_id, or create a new one
                         $imageFilterValue = ImageFilterValue::updateOrCreate(
@@ -796,9 +814,10 @@ class Product extends Model
                         ->toArray();
 
                     if (count($data2) == 0) {
-                        $key  = $this->randomkey();
+                        $key  = $this->reverseKey($eachmedia['id']);
                         $media['product_id'] = $flag . $key;
                         DB::table('imagefootage_products')->insert($media);
+
 
                         $productData  = array(
                             'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == true ) ? 1 :0,
@@ -898,7 +917,7 @@ class Product extends Model
                 ->get()
                 ->toArray();
             if (count($data2) == 0) {
-                $key  = $this->randomkey();
+                $key  = $this->reverseKey($eachmedia['id']);
                 DB::table('imagefootage_products')->insert($media);
                 $id = DB::getPdo()->lastInsertId();
                 DB::table('imagefootage_products')
@@ -964,10 +983,12 @@ class Product extends Model
                         ->get()
                         ->toArray();
 
+
                     if (count($data2) == 0) {
-                        $key  = $this->randomkey();
+                        $key  = $this->reverseKey($eachmedia['id']);
                         $media['product_id'] = $flag . $key;
                         DB::table('imagefootage_products')->insert($media);
+
 
                         $productData  = array(
                             'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
@@ -1135,6 +1156,11 @@ class Product extends Model
         return random_int(10 ** ($digits - 1), (10 ** $digits) - 1);
     }
 
+    public function reverseKey($id){
+        $reversedId = (int)strrev((string)$id);
+        return $reversedId;
+    }
+
     public function saveProduct($productData)
     {
         if ($productData['product_web'] == 3) {
@@ -1157,7 +1183,7 @@ class Product extends Model
 
             );
             $flag = $this->get_api_flag('pond5_footage', 'api_flag');
-            $key  = $this->randomkey();
+            $key  = $this->reverseKey($productData['product_id']);
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);
         } else {
@@ -1179,7 +1205,7 @@ class Product extends Model
                 'product_vertical'    => 'Royalty Free'
             );
             $flag = $this->get_api_flag('panther_media_image', 'api_flag');
-            $key  = $this->randomkey();
+            $key  = $this->reverseKey($productData['product_id']);
             $media['product_id'] = $flag . $key;
             DB::table('imagefootage_products')->insert($media);
         }
@@ -1402,7 +1428,7 @@ class Product extends Model
                         ->toArray();
 
                     if (count($data2) == 0) {
-                        $key  = $this->randomkey();
+                        $key  = $this->reverseKey($eachmedia['id']);
                         $media['product_id'] = $flag . $key;
                         DB::table('imagefootage_products')->insert($media);
 
