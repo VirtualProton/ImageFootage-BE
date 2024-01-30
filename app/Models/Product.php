@@ -626,7 +626,7 @@ class Product extends Model
     * This is main function for storing the panther media data via CRON execution
     * It manages the data storage in Mysql and MongoDB both
     */
-    public function savePantherMediaImage($data, $category_id)
+    public function savePantherMediaImage($data, $category_id, $allRequest = [])
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('panther_media_image', 'api_flag');
@@ -675,6 +675,15 @@ class Product extends Model
                             'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                             'isolated'         => $eachmedia['isolated'],
                         );
+                        if(isset($allRequest['people_ethnicity'])){
+                            $productData['people_ethnicity'] = $allRequest['people_ethnicity']['value'];
+                        }
+                        if(isset($allRequest['people_gender'])){
+                            $productData['people_gender'] = $allRequest['people_gender']['value'];
+                        }
+                        if(isset($allRequest['people_age'])){
+                            $productData['people_age'] = $allRequest['people_age']['value'];
+                        }
                         $imageFilterValue = new ImageFilterValue([
                             'api_product_id'    => $eachmedia['id'],
                             'product_id'        => $media['product_id'],
@@ -709,6 +718,15 @@ class Product extends Model
                             'editorial'        => isset($eachmedia['editorial']) && ($eachmedia['editorial'] == 'yes' ) ? 1 :0,
                             'isolated'         => $eachmedia['isolated'],
                         ];
+                        if(isset($allRequest['people_ethnicity'])){
+                            $productData['people_ethnicity'] = $allRequest['people_ethnicity']['value'];
+                        }
+                        if(isset($allRequest['people_gender'])){
+                            $productData['people_gender'] = $allRequest['people_gender']['value'];
+                        }
+                        if(isset($allRequest['people_age'])){
+                            $productData['people_age'] = $allRequest['people_age']['value'];
+                        }
 
                         // Find the existing document by api_product_id, or create a new one
                         $imageFilterValue = ImageFilterValue::updateOrCreate(
