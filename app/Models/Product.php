@@ -130,6 +130,7 @@ class Product extends Model
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search) //exact match
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('search_terms', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
             }
@@ -240,6 +241,7 @@ class Product extends Model
                 $data->where(function ($query) use ($search) {
                     $query->orWhere('product_id', '=', $search) //exact match
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('search_terms', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
             }
@@ -368,6 +370,7 @@ class Product extends Model
                     $query->orWhere('slug', '=', $search)
                         ->orWhere('product_id', '=', $search)
                         ->orWhere('product_title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('search_terms', 'LIKE', '%' . $search . '%')
                         ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
                 });
             }
@@ -651,7 +654,8 @@ class Product extends Model
                         'updated_at'       => date("Y-m-d H:i:s"),
                         'adult_content'    => (isset($eachmedia['adult-content']) && $eachmedia['adult-content'] == 'yes' )? 1 : 0,
                         'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                        'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
+                        'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0,
+                        'search_terms' => isset($allRequest['search']) ?? null
                     );
 
                     $data2 = DB::table('imagefootage_products')
@@ -693,7 +697,10 @@ class Product extends Model
                         ]);
                         $imageFilterValue->save();
                     } else {
-
+                        $existingTerms = $data2[0]->search_terms;
+                        if(isset($allRequest['search'])){
+                            $existingTerms .= ','.$allRequest['search'];
+                        }
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -703,7 +710,8 @@ class Product extends Model
                                 'product_title'        => $eachmedia['title'],
                                 'updated_at'           => date('Y-m-d H:i:s'),
                                 'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                                'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0
+                                'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0,
+                                'search_terms' => $existingTerms
                             ]);
 
                         $apiProductId = $eachmedia['id'];
@@ -775,7 +783,7 @@ class Product extends Model
     * This is main function for storing the pond5 footage data via CRON execution
     * It manages the data storage and update in Mysql and MongoDB both
     */
-    public function savePond5Footage($data, $category_id)
+    public function savePond5Footage($data, $category_id, $allRequest = [])
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_footage', 'api_flag');
@@ -805,7 +813,8 @@ class Product extends Model
                         'product_web'         => '3',
                         'updated_at'          => date("Y-m-d H:i:s"),
                         'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                        'search_terms' => isset($allRequest['search']) ?? null
                     );
 
                     $data2 = DB::table('imagefootage_products')
@@ -836,6 +845,10 @@ class Product extends Model
                         ]);
                         $imageFilterValue->save();
                     } else {
+                        $existingTerms = $data2[0]->search_terms;
+                        if(isset($allRequest['search'])){
+                            $existingTerms .= ','.$allRequest['search'];
+                        }
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -845,7 +858,8 @@ class Product extends Model
                                 'product_description' => $eachmedia['description'],
                                 'updated_at'          => date('Y-m-d H:i:s'),
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                                'search_terms' => $existingTerms
                             ]);
 
                         $apiProductId = $eachmedia['id'];
@@ -937,7 +951,7 @@ class Product extends Model
     * This is main function for storing the pond5 music data via CRON execution
     * It manages the data storage and update in Mysql and MongoDB both
     */
-    public function savePond5Music($data, $category_id)
+    public function savePond5Music($data, $category_id, $allRequest = [])
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_music', 'api_flag');
@@ -968,7 +982,8 @@ class Product extends Model
                         'product_web'         => '3',
                         'updated_at'          => date("Y-m-d H:i:s"),
                         'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                        'search_terms' => isset($allRequest['search']) ?? null
                     );
 
                     if (!empty($eachmedia['versions'])) {
@@ -1010,6 +1025,10 @@ class Product extends Model
                         ]);
                         $imageFilterValue->save();
                     } else {
+                        $existingTerms = $data2[0]->search_terms;
+                        if(isset($allRequest['search'])){
+                            $existingTerms .= ','.$allRequest['search'];
+                        }
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -1019,7 +1038,8 @@ class Product extends Model
                                 'product_description' => $eachmedia['description'],
                                 'updated_at'          => date('Y-m-d H:i:s'),
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                                'search_terms' => $existingTerms
                             ]);
 
                         $apiProductId = $eachmedia['id'];
@@ -1390,7 +1410,7 @@ class Product extends Model
         return $data;
     }
 
-    public function savePond5Image($data, $category_id)
+    public function savePond5Image($data, $category_id, $allRequest = [])
     {
         // prefetch the api_flag value
         $flag = $this->get_api_flag('pond5_image', 'api_flag');
@@ -1421,7 +1441,8 @@ class Product extends Model
                         'product_web'         => '3',
                         'updated_at'          => date("Y-m-d H:i:s"),
                         'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0
+                        'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] === true) ? 1 : 0,
+                        'search_terms' => isset($allRequest['search']) ?? null
                     );
 
                     $data2 = DB::table('imagefootage_products')
@@ -1452,6 +1473,10 @@ class Product extends Model
                         ]);
                         $imageFilterValue->save();
                     } else {
+                        $existingTerms = $data2[0]->search_terms;
+                        if(isset($allRequest['search'])){
+                            $existingTerms .= ','.$allRequest['search'];
+                        }
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -1462,7 +1487,8 @@ class Product extends Model
                                 'updated_at'          => date('Y-m-d H:i:s'),
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                                 'product_web'         => '3',
-                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                                'search_terms' => $existingTerms
                             ]);
 
                         $apiProductId = $eachmedia['id'];

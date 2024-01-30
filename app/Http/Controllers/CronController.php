@@ -237,16 +237,26 @@ class CronController extends Controller
         }
     }
 
-    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest){
+    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest, $thirdparty = 'panthermedia'){
         $keyword = [];
         if ($type == '1' || $type == '4') {
             $keyword['search']  = $term;
             $percategory['category_id'] = $category;
-            $pantherMediaImages = new ImageApi();
-            $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
+            // conditional based search for panthermedia or pond5, as per new request by client
+            if($thirdparty == 'panthermedia'){
+                $pantherMediaImages = new ImageApi();
+                $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
+        
+                if(count($pantharmediaData) > 0){
+                    $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
+                }
+            } else {
+                $imagesMedia        = new \App\Http\Pond5\ImageApi();
+                $pond5ImagesData    = $imagesMedia->search($keyword);
     
-            if(count($pantharmediaData) > 0){
-                $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
+                if (count($pond5ImagesData) > 0) {
+                    $this->product->savePond5Image($pond5ImagesData, $percategory['category_id'], $allRequest);
+                }
             }
         } else if ($type == '2' || $type == '4') {
             $keyword['search']  = $term;
@@ -255,7 +265,7 @@ class CronController extends Controller
             $pond5FootageMediaData = $footageMedia->search($keyword, [], 100);
 
             if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
-                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id']);
+                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id'], $allRequest);
             }
         } else if ($type == '3') {
             $keyword['search']  = $term;
@@ -264,7 +274,7 @@ class CronController extends Controller
             $pond5MusicMediaData = $musicMedia->search($keyword, [], 100);
             
             if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
-                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id']);
+                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id'], $allRequest);
             }
         }
         return true;

@@ -53,6 +53,7 @@ class SearchController extends Controller
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
 
         $searchKeyword = $keyword['search'];
+        $thirdparty = 'panthermedia';
 
         if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
             $searchKeyword = $keyword['category_id'];
@@ -88,7 +89,7 @@ class SearchController extends Controller
         // If records not found check with respective third party api for the data
         if($countTotalRecords == 0 || $countTotalRecords < 15){
             $cronController  = new CronController();
-            $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword);
+            $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
         }
 
