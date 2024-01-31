@@ -226,8 +226,7 @@
         document.getElementById('package_type').addEventListener('change', function () {
         togglePackageSizeVisibility();
     });
-    checkPackageExpiryYear();
-    checkPackageExpiry();
+    setPackageExpiry();
 
     function togglePackageSizeVisibility() {
        /*  var packageType = document.getElementById('package_type').value;
@@ -382,6 +381,7 @@
 
   function checkPackageExpiry() {
       var packageExpiryValue = $('#package_expiry').val();
+      console.log(packageExpiryValue);
       var packageExpiryYearInput = $('#package_expiry_year');
 
       // Check if package_expiry is 1 or 2
@@ -409,6 +409,20 @@
         // Enable package_expiry
         packageExpiryInput.val('')
         packageExpiryInput.prop('disabled', false);
+      }
+    }
+    function setPackageExpiry(){
+        var packageExpiryValue = $('#package_expiry').val();
+        var packageExpiryYearValue = $('#package_expiry_year').val();
+        var packageExpiryYearInput = $('#package_expiry_year');
+        var packageExpiryInput = $('#package_expiry');
+        if (packageExpiryValue != 0) {
+        // Disable and set value to 0 for package_expiry_year
+        packageExpiryYearInput.prop('disabled', true);
+        packageExpiryYearInput.val(0);
+      } else{
+        packageExpiryInput.prop('disabled', true);
+        packageExpiryInput.val(0);
       }
     }
 </script>
