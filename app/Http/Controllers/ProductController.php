@@ -1671,7 +1671,7 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
 	$type  = $_REQUEST['type'] ;
 	if($type == 'Image') {
 			$products = DB::table('imagefootage_products')
-				->select('product_id','product_title','product_main_image','product_vertical','product_price_small','product_price_medium'
+				->select('product_id','product_title','product_thumbnail','product_vertical','product_price_small','product_price_medium'
 				,'product_price_large','product_price_extralarge','product_web','api_product_id')
 				->where('product_id',$product_id);
 

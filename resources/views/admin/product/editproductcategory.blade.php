@@ -158,6 +158,38 @@
             }
         });
     })();
+    var originalProductId = $('#product_id').val();
+    var originalImagePath = $('#image_path').val();
+    var displayImage = $('#display_image').attr('src');
+    var productTypeValue =  $('input[name="product_type"]').val();
+    console.log(originalProductId,originalImagePath,displayImage,productTypeValue);
+
+    $('input[name="product_type"]').on('change', function () {
+        var productInput = $('#product_id');
+        var imageInput = $('#image_path');
+        var displayInput = $('#display_image');
+
+        var selectedProductType = $('input[name="product_type"]:checked').val();
+        if(selectedProductType == productTypeValue){
+            productInput.val(originalProductId)
+            imageInput.val(originalImagePath)
+            displayInput.attr('src', displayImage);
+            angular.element(document.getElementById('product_id')).scope().$apply(function () {
+                angular.element(document.getElementById('product_id')).scope().is_display_product_image_edit_page = true;
+            });
+
+        }else {
+            $('#product_id').val('');
+            // Reset image_path field if needed
+            $('#image_path').val('');
+            $("#display_image").val('');
+            $('.form-group label[for="product_id"]').parent().removeClass('has-success');
+            angular.element(document.getElementById('product_id')).scope().$apply(function () {
+                angular.element(document.getElementById('product_id')).scope().is_display_product_image_edit_page = false;
+            });
+        }
+
+        });
 
 });
   </script>
