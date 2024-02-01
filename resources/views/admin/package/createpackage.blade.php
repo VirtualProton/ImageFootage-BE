@@ -32,6 +32,9 @@
             {{ session()->get('error') }}
           </div>
           @endif
+          @if ($errors->has('package_month_count'))
+          <div class="alert alert-danger">{{ $errors->first('package_month_count') }}</div>
+          @endif
           <form action="{{ url('admin/addpackage') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="box-body">

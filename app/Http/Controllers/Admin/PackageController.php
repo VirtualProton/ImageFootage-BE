@@ -30,6 +30,7 @@ class PackageController extends Controller
 			'display_for' => 'required',
             'package_expiry' => 'required_without_all:package_expiry_year',
             'package_expiry_year' => 'required_without_all:package_expiry',
+            'package_month_count' => $request->input('package_plan') == 2 ? 'required' : '',
 
 		]);
         $tier = '';
@@ -117,6 +118,7 @@ class PackageController extends Controller
 			'package_type' => 'required',
             'package_expiry' => 'required_without_all:package_expiry_year',
             'package_expiry_year' => 'required_without_all:package_expiry',
+            'package_month_count' => $request->input('package_plan') == 2 ? 'required' : '',
 		]);
 		$update_array = array(
 			'package_plan' => $request->package_plan, 'package_name' => $request->package_name,
