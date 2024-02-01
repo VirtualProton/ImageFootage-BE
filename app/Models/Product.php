@@ -12,12 +12,13 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class Product extends Model
 {
     protected $table = 'imagefootage_products';
     protected $primaryKey = 'id';
-    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug','is_premium'];
+    protected $fillable = ['product_id', 'product_category', 'product_subcategory', 'product_owner', 'product_title', 'product_vertical', 'product_keywords', 'product_thumbnail', 'product_main_image', 'product_release_details', 'product_price_small', 'product_price_medium', 'product_price_large', 'product_price_extralarge', 'product_status', 'product_main_type', 'product_sub_type', 'product_added_on', 'updated_at', 'product_added_by', 'product_size', 'product_verification', 'product_rejectod_reason', 'product_editedby', 'adult_content','slug','is_premium','expired_date','view_count'];
     const HomeLimit = '32';
 
     public function api()
@@ -637,6 +638,24 @@ class Product extends Model
             foreach ($data['items']['media'] as $eachmedia) {
                 $optionData = [];
                 if (isset($eachmedia['id'])) {
+                    $parsedUrl = parse_url($eachmedia['preview_high_no_wm']);
+                    if (isset($parsedUrl['query'])) {
+                        parse_str($parsedUrl['query'], $queryParams);
+
+                        if (isset($queryParams['expires'])) {
+                            $expiresValue = $queryParams['expires'];
+                            $expiryDate =  date('Y-m-d H:i:s', $expiresValue);
+
+                        } else {
+
+                            $currentDateTime = Carbon::now();  // Current date and time
+                            $expiryDate = $currentDateTime->addDays(28)->format('Y-m-d H:i:s');
+                        }
+                    } else {
+
+                        $currentDateTime = Carbon::now();  // Current date and time
+                        $expiryDate = $currentDateTime->addDays(28)->format('Y-m-d H:i:s');
+                    }
                     $media = array(
                         'api_product_id' => $eachmedia['id'],
                         'product_category' => $category_id,
@@ -655,7 +674,8 @@ class Product extends Model
                         'adult_content'    => (isset($eachmedia['adult-content']) && $eachmedia['adult-content'] == 'yes' )? 1 : 0,
                         'slug'             => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                         'is_premium'       => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0,
-                        'search_terms' => isset($allRequest['search']) ?? null
+                        'search_terms' => isset($allRequest['search']) ?? null,
+                        'expired_date' =>$expiryDate
                     );
 
                     $data2 = DB::table('imagefootage_products')
@@ -814,7 +834,8 @@ class Product extends Model
                         'updated_at'          => date("Y-m-d H:i:s"),
                         'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                         'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
-                        'search_terms' => isset($allRequest['search']) ?? null
+                        'search_terms' => isset($allRequest['search']) ?? null,
+                        'expired_date' =>  null
                     );
 
                     $data2 = DB::table('imagefootage_products')
@@ -923,7 +944,8 @@ class Product extends Model
                 'product_vertical' => 'Royalty Free',
                 'updated_at' => date("Y-m-d H:i:s"),
                 'slug'       => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
-                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0
+                'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
+                'expired_date' =>  null
 
             );
             $data2 = DB::table('imagefootage_products')
@@ -983,7 +1005,8 @@ class Product extends Model
                         'updated_at'          => date("Y-m-d H:i:s"),
                         'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                         'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
-                        'search_terms' => isset($allRequest['search']) ?? null
+                        'search_terms' => isset($allRequest['search']) ?? null,
+                        'expired_date' =>  null
                     );
 
                     if (!empty($eachmedia['versions'])) {
