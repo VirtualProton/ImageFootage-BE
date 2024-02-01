@@ -273,7 +273,7 @@ class CronController extends Controller
             $musicMedia          = new MusicApi();
             $pond5MusicMediaData = $musicMedia->search($keyword, [], 100);
             
-            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData['items']) > 0) {
+            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
                 $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id'], $allRequest);
             }
         }
