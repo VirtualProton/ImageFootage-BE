@@ -198,18 +198,25 @@
                 ?>
                 <div class="row mb-0 amount-divs-row">
                     <div class="col-lg-12 amount-divs">
-                        <div class="start">Amount (INR)</div>
-                        <div class="end"><strong><?php echo number_format($amount/count($quotation), 2); ?></strong></div>
+                        <div class="start">Total (INR)</div>
+                        <div class="end"><strong><?php echo $quotation[0]['total']; ?></strong></div>
                         <div class="col-lg-12 single-gray-block">
-                        <p>In words: <strong><?php echo $amount_in_words ?></strong></p>
+                        <p>In words: <strong><?php echo $amount_in_words.' Rupees only' ?></strong></p>
                     </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                <?php
+                if( $quotation[0]['tax'] != 0){
+                    ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                        </div>
                     </div>
-                </div>
+                    <?php
+                }
+                ?>
+
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
                     <div class="licensing-condition">

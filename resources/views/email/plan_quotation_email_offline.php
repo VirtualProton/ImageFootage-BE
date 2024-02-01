@@ -115,14 +115,21 @@
                         <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
                     </div>
                     <div class="client-info-rightside">
-                        <p><strong>INR <?php echo number_format($orders['total'], 2); ?></strong></p>
+                        <p><strong>(INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
                     </div>
                 </div>
+                <?php
+                if( isset($orders['tax']) && $orders['tax'] != 0){
+                    ?>
+                    <div class="price-div">
+                        <p>Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                    </div>
+                    <?php
+                }
+                ?>
+
                 <div class="price-div">
-                    <p>Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
-                </div>
-                <div class="price-div">
-                    <p>In words: <strong><?php echo $amount_in_words ?></strong></p>
+                    <p>In words: <strong><?php echo $amount_in_words.' Rupees only' ?></strong></p>
                 </div>
 
                 <div class="licensing-terms">
