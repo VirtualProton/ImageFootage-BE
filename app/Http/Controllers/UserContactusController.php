@@ -31,12 +31,12 @@ class UserContactusController extends Controller
         $validator = \Validator::make(request()->all(), [
             'user_name' => 'required|min:2',
             'mobile_number' => 'required|digits:10',
-            'user_email' => 'required|email', 
+            'user_email' => 'required|email',
             'user_subject' => 'required',
             'user_message' => 'required'
         ]);
 
-        if ($validator->fails()) {    
+        if ($validator->fails()) {
             return response()->json(['status' => false, 'message' => $validator->messages()], 200);
         }
         if(!Helper::disposableEmailCheck($request->input('user_email'))) {
@@ -45,7 +45,7 @@ class UserContactusController extends Controller
                 'message' => 'Disposable email addresses are not allowed.'
             ]);
         }
-        $name=$request->user_name; 
+        $name=$request->user_name;
         $mobile=$request->mobile_number;
         $user_email=$request->user_email;
         $user_message=$request->user_message;
@@ -273,46 +273,44 @@ class UserContactusController extends Controller
 	public function forResetPassword(Request $request){
 
         $validator = \Validator::make($request->all(), [
-            'email' => 'required|email',
-            'otp' => 'required',
+            'token'  =>'required',
             'password' => 'required|min:6|required_with:cpassword|same:cpassword',
             'cpassword' => 'required|min:6',
         ])->setAttributeNames(
             ['cpassword' => 'confirm password']
         );
 
-        if ($validator->fails()) {    
+        if ($validator->fails()) {
             return response()->json($validator->messages(), 200);
         }
-
-
-        $email=$request->email;
-        $otp=$request->otp;
         $password=$request->password;
-        $cpassword=$request->cpassword;
-		//  if(!isset($password) && empty($password)){
-		// 	 return response()->json(['status'=>'0','message' => 'Password is required.'], 200);
-		//  }
-		//  if(!isset($cpassword) && empty($cpassword)){
-		// 	 return response()->json(['status'=>'0','message' => 'Confirm Password is required.'], 200);
-		//  }
-		//  if($password!=$cpassword){
-		// 	  return response()->json(['status'=>'0','message' => 'Password and Confirm Password must match.'], 200);
-		//  }
-		$user=User::where('email',$email)->where('otp',$otp)->first();
+        $requestData = base64_decode($request->token);
 
-        if(isset($user) && !empty($user)){
-         $result=User::where('email',$email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
-            // $result=User::where('email',$email)->update(['password'=>Hash::make($password)]);
-            if($result){
-                $content = array('name' => $user->first_name, 'email' => $email);
-                Mail::to($content['email'])->send(new ChangePassword($content));
+        $tokenReq = json_decode($requestData)->token;
+
+        $token = \DB::table('password_resets')->where('token',$tokenReq)->first();
+        if ($token) {
+            $tokenDetails = \DB::table('password_resets')->where('token', $token->token)->first();
+
+            \DB::table('password_resets')->where(['token' => $token->token])->delete();
+
+            if (filter_var($tokenDetails->email, FILTER_VALIDATE_EMAIL)) {
+                $user = User::where('email',$tokenDetails->email)->first();
+                $result=User::where('email',$tokenDetails->email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
+            } else {
+                $user = User::where('mobile',$tokenDetails->email)->first();
+                $result=User::where('mobile',$tokenDetails->email)->update(['password'=>Hash::make($password),'otp'=>NULL]);
                 return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
-            }else{
-                return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);	
             }
+
+        }
+        if($result){
+            $content = array('name' => $user['first_name'], 'email' => $user['email']);
+            Mail::to($content['email'])->send(new ChangePassword($content));
+            return response()->json(['status'=>'1','message' => 'Password changed successfully !!!'], 200);
         }else{
-            return response()->json(['status'=>'0','message' => 'Wrong OTP'], 200);			 
-        }	
+            return response()->json(['status'=>'0','message' => 'Some problem occured'], 200);
+        }
+
 	}
 }

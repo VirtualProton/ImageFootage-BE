@@ -68,7 +68,7 @@
                <p>Customer Name:&nbsp;<strong><?php echo $orders['user']['first_name'] ?> <?php echo $orders['user']['last_name'] ?></strong>&nbsp;</p>
                <p>Address:&nbsp;<strong> <?php echo $orders['user']['address'] ?></strong></p>
                <p><strong><?php echo $orders['user']['city']['name'] ?>&nbsp;&nbsp;  <?php echo $orders['user']['state']['state'] ?>&nbsp;&nbsp;<?php echo $orders['user']['postal_code'] ?></strong></p>
-               <p>Phone:&nbsp;<strong><?php echo $orders['user']['phone'] ?></strong>&nbsp;</p>
+               <p>Phone:&nbsp;<strong><?php echo $orders['user']['mobile'] ?></strong>&nbsp;</p>
                </td>
                <td>
                <p>Transaction ID &nbsp;No.:&nbsp;<strong><?php echo $orders['transaction_id'] ?></strong>&nbsp;</p>

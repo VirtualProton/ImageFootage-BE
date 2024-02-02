@@ -57,7 +57,7 @@
                 @endif
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Product ID</label>
+                <label for="product_id">Product ID</label>
                 <input type="text" class="form-control" name="product_id" id="product_id" placeholder="Product ID" ng-blur="getProductImage()">
                 <input type="hidden" name="image_path" id="image_path" value="" />
                 @if ($errors->has('product_id'))
@@ -157,6 +157,18 @@
         }
       });
     })();
+
+    $('input[name="product_type"]').on('change', function () {
+            // Reset Product ID field
+            $('#product_id').val('');
+            // Reset image_path field if needed
+            $('#image_path').val('');
+            $("#display_image").val('');
+            $('.form-group label[for="product_id"]').parent().removeClass('has-success');
+            angular.element(document.getElementById('product_id')).scope().$apply(function () {
+                angular.element(document.getElementById('product_id')).scope().is_display_product_image = false;
+            });
+        });
 
   });
 </script>
