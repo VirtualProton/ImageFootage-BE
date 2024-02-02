@@ -335,8 +335,9 @@ class Common extends Model
     {
         if (!empty($invoice_id) && !empty($user_id)) {
             $all_datas = DB::table('imagefootage_performa_invoices')
-                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.address', 'usr.address2', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'ct.name as cityname', 'st.state as statename', 'cn.name as countryname', 'imagefootage_user_package.id as package_id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price')
+                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.address', 'usr.address2', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'ct.name as cityname', 'st.state as statename', 'cn.name as countryname', 'imagefootage_user_package.id as package_id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly','imagefootage_user_package.package_expiry', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price','licence_type.licence_name')
                 ->join('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
+                ->join('licence_type','licence_type.id','=','imagefootage_user_package.footage_tier')
                 ->join('imagefootage_users as usr', 'usr.id', '=', 'imagefootage_performa_invoices.user_id')
                 ->where('imagefootage_performa_invoices.id', '=', $invoice_id)
                 ->where('imagefootage_performa_invoices.user_id', '=', $user_id)
@@ -990,7 +991,7 @@ class Common extends Model
             60                  => 'Sixty',
             70                  => 'Seventy',
             80                  => 'Eighty',
-            90                  => 'Nnety',
+            90                  => 'Ninety',
             100                 => 'Hundred',
             1000                => 'Thousand',
             1000000             => 'Million',

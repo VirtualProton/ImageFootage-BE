@@ -63,9 +63,9 @@ class UserContactusController extends Controller
 			 $data = array('name'=>$name,'mobile'=>$mobile,'email'=>$user_email,'user_message'=>$user_message,'user_subject'=>$user_subject);
 				 Mail::send('contactusmailbody',$data,function($message) use($data,$sm) {
                  $email_to = config('constants.ADMIN_EMAIL');
-				 $message->to($email_to,'Image Footage')
+				 $message->to($email_to,'Imagefootage')
                      ->from($sm,'Admin Imagefootage')
-                     ->subject('Contact us request from Image Footage');
+                     ->subject('Contact us request from Imagefootage');
 			 });
             return response()->json([
                 'status' => true,
@@ -204,7 +204,7 @@ class UserContactusController extends Controller
                 $cont_url= url('emailVerification?key='.$hkey);
                 $data = array('cname'=>$contributor_data['contributor_fname']." ".$contributor_data['contributor_lname'],'cemail'=>$contributor_data['contributor_email'],'cont_url'=>$cont_url);
                 Mail::send('email.frontverifycontributor', $data, function($message) use($data) {
-                    $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage')->from('admin@imagefootage.com', 'Imagefootage');
+                    $message->to($data['cemail'],$data['cname'])->subject('Welcome to '.config('constants.company_name'))->from('admin@imagefootage.com', 'Imagefootage');
                 });
                 $message = "Thanks For register with us as contributor. To verify your mobile number otp is ".$otp." \n Thanks \n Imagefootage Team";
                 $smsClass = new TnnraoSms;

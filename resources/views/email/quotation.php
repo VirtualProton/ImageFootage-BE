@@ -87,7 +87,7 @@
         <?php if ($quotation[0]['flag'] == 0) { ?>
             <div class="container">
                 <div class="footer-left">
-                    <h2 class="h4"><strong>Image Footage</strong></h2>
+                    <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
                     <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                         500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                     </p>
@@ -181,7 +181,7 @@
                                 </div>
 
 
-                                <?php if (!empty($quotation[$i]['product_id'])) { ?>
+                                <?php if (!empty($quotation[$i]['product_id']) || !empty($quotation[$i]['product_image'])) { ?>
                                     <p>Image ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
                                     <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
                                     <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
@@ -201,7 +201,7 @@
                         <div class="start">Total (INR)</div>
                         <div class="end"><strong><?php echo $quotation[0]['total']; ?></strong></div>
                         <div class="col-lg-12 single-gray-block">
-                        <p>In words: <strong><?php echo $amount_in_words.' Rupees only' ?></strong></p>
+                        <p>In words: <strong>Rupees<?php echo $amount_in_words.' only' ?></strong></p>
                     </div>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
         <!-- Signature section start -->
         <section class="signature">
             <div class="container">
-                <p>For <span>Image Footage</span></p>
+                <p>For <span><?php config('constants.company_name')?></span></p>
                 <img src="<?php echo $quotation[0]['signature']; ?>" alt="signature" width="171" height="89">
                 <p>Authorized Signatory</p>
             </div>
