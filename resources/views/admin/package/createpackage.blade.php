@@ -32,6 +32,9 @@
             {{ session()->get('error') }}
           </div>
           @endif
+          @if ($errors->has('package_month_count'))
+          <div class="alert alert-danger">{{ $errors->first('package_month_count') }}</div>
+          @endif
           <form action="{{ url('admin/addpackage') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="box-body">
@@ -336,6 +339,7 @@
   $("#package_plan").change(function() {
     var pack_type = $(this).val();
     const dropdown = $('#package_type');
+    var expiryMonthInput = $('#package_expiry');
     const optionToHide = dropdown.find('option[value=\'Footage\']');
     const secondOptionToHide = dropdown.find('option[value=\'Music\']');
     if (pack_type == '1') {
@@ -343,6 +347,9 @@
         secondOptionToHide.css('display', 'block');
         $("#package_month_count").val("");
         $('#for_pro').css('display', 'none');
+
+        expiryMonthInput.prop('disabled', true);
+        expiryMonthInput.val(0);
     } else {
         $("#footageTierDiv").hide();
         $('#musicTierDiv').hide();
@@ -350,6 +357,8 @@
         secondOptionToHide.css('display', 'none');
         $('#for_pro').css('display', 'block');
         $('#package_type').val('Image');
+        expiryMonthInput.prop('disabled', false);
+        expiryMonthInput.val('');
     }
 
   });

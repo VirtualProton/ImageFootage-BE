@@ -7,6 +7,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -54,13 +55,14 @@
                                                         <td>{{$user['title']}}</td>
                                                         <td>{{$user['email']}}</td>
                                                         <td>{{$user['mobile']}}</td>
-                                                        <td><?php echo $user['city']['name'] . " " . $user['state']['state'] . " " . $user['country']['name'] ?></td>
+                                                        <td><?php echo isset($user['city']['name']) && isset($user['state']['state'] ) && isset($user['country']['name']) ? $user['city']['name']. " " . $user['state']['state'] . " " . $user['country']['name'] : '-'?></td>
                                                         <td>
                                                             <a href="{{ url('/admin/subscribers/details/'.$user['id']) }}" aria-expanded="false" class=""><i class="fa fa-plus" aria-hidden="true"></i></a> &nbsp; &nbsp;
                                                         </td>
                                                     </tr>
 
-                                             
+
+
                                            @endforeach
                                         @endif
                                     </table>

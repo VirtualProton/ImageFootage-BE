@@ -964,7 +964,7 @@ class ProductController extends Controller
 	public function html_email()
 	{
 		ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
-		ini_set('max_execution_time', '0'); // for infinite time of execution 
+		ini_set('max_execution_time', '0'); // for infinite time of execution
 		$data = array('name' => "srinivas");
 		Mail::send('mail', $data, function ($message) {
 			$message->to('aksrinivas49@gmail.com', 'aksrinivas')->subject('Laravel HTML Testing Mail');
@@ -1001,7 +1001,7 @@ class ProductController extends Controller
 				->select(
 					'product_id',
 					'product_title',
-					'product_main_image',
+					'product_thumbnail',
 					'product_vertical',
 					'product_price_small',
 					'product_price_medium',

@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\HourlyUpdate::class,
         Commands\CurrencyUpdate::class,
         Commands\QuotationDeactive::class,
-        Commands\CreateEntryForCarryForwardBalance::class
+        Commands\CreateEntryForCarryForwardBalance::class,
+        Commands\RegeneratePantherMediaImageUrl::class
 
     ];
 
@@ -38,6 +39,8 @@ class Kernel extends ConsoleKernel
                 ->daily();
         $schedule->command('package:to-credit-balance')
                 ->daily();
+        // $schedule->command('regenerate:image')
+        //         ->daily();
     }
 
     /**

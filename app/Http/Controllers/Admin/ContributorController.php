@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
-ini_set('max_execution_time', '0'); // for infinite time of execution 
+ini_set('max_execution_time', '0'); // for infinite time of execution
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -17,7 +17,7 @@ class ContributorController extends Controller
 	{
         $this->middleware('admin')->except('login','logout');
 	}
-	
+
 	public function index(){
 		return view('admin.contributor.addcontributor');
 	}
@@ -30,19 +30,19 @@ class ContributorController extends Controller
 			// 'contributor_confirm_password' => 'required|same:contributor_password',
 			'contributor_idproof'=>'required|file',
 			'contributor_type'=>'required'
-        ]); 
+        ]);
 		//echo 'here'; exit();
-			$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
-			srand((double)microtime()*1000000); 
-			$i = 0; 
-			$pass = '' ; 
-			while ($i <= 7) { 
-				$num = rand() % 33; 
-				$tmp = substr($chars, $num, 1); 
-				$pass = $pass . $tmp; 
-				$i++; 
-			} 
-			
+			$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+			srand((double)microtime()*1000000);
+			$i = 0;
+			$pass = '' ;
+			while ($i <= 7) {
+				$num = rand() % 33;
+				$tmp = substr($chars, $num, 1);
+				$pass = $pass . $tmp;
+				$i++;
+			}
+
 		 $contributor = new Contributor;
 		 $file = $request->file('contributor_idproof');
 		 $cemail='';
@@ -96,7 +96,7 @@ class ContributorController extends Controller
 			 //$body.="Thanks & Regards,<br>Image Footage Team.";
 			 $data = array('cname'=>$cname,'cemail'=>$cemail,'pass'=>$pass,'cont_url'=>$cont_url);
 				 Mail::send('createcontributor', $data, function($message) use($data) {
-				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to Image Footage');
+				 $message->to($data['cemail'],$data['cname'])->subject('Welcome to '.config('constants.company_name'));
 			 });
 			 // return back()->with('success','Contributor added successful');
 			return redirect('admin/updatecontributor/'.$last_id)->with('success','Contributor added successful');
@@ -118,9 +118,9 @@ class ContributorController extends Controller
 		  return back()->with('warning','Some problem occured.');
 		}
     }
-	
+
 	public function updateContributor($id)
-    {   
+    {
     	$user = Auth::guard('admins')->user();
         if($user->role['role'] !='Super Admin'){
           return back()->with('success','You dont have acess to edit.');
@@ -190,11 +190,11 @@ class ContributorController extends Controller
 		 }else{
 			    return back()->with('warning','Some problem occured.');
 		 }
-		       
+
 	}
 	public function destroy($id){
 		 $contributor_data=Contributor::find($id)->toArray();
-		
+
 		$del_result=Contributor::find($id)->delete();
 		if($del_result){
 			if(isset($contributor_data['contributor_idproof']) && !empty($contributor_data['contributor_idproof'])){
@@ -214,15 +214,15 @@ class ContributorController extends Controller
 		$name=$all_contributor_list[0]['contributor_name'];
 		$cemail=$all_contributor_list[0]['contributor_email'];
 		$cmobile=$all_contributor_list[0]['contributor_mobile'];
-		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
-			srand((double)microtime()*1000000); 
-			$i = 0; 
-			$pass = '' ; 
-			while ($i <= 7) { 
-				$num = rand() % 33; 
-				$tmp = substr($chars, $num, 1); 
-				$pass = $pass . $tmp; 
-				$i++; 
+		$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+			srand((double)microtime()*1000000);
+			$i = 0;
+			$pass = '' ;
+			while ($i <= 7) {
+				$num = rand() % 33;
+				$tmp = substr($chars, $num, 1);
+				$pass = $pass . $tmp;
+				$i++;
 			}
 		 $update_array=array('contributor_otp'=>$pass,
 							 'updated_at'=>date('Y-m-d H:i:s')
@@ -327,15 +327,15 @@ class ContributorController extends Controller
 		$name=$all_users_list[0]['user_name'];
 		$cemail=$all_users_list[0]['email'];
 		$cmobile=$all_users_list[0]['mobile'];
-		$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
-			srand((double)microtime()*1000000); 
-			$i = 0; 
-			$pass = '' ; 
-			while ($i <= 7) { 
-				$num = rand() % 33; 
-				$tmp = substr($chars, $num, 1); 
-				$pass = $pass . $tmp; 
-				$i++; 
+		$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+			srand((double)microtime()*1000000);
+			$i = 0;
+			$pass = '' ;
+			while ($i <= 7) {
+				$num = rand() % 33;
+				$tmp = substr($chars, $num, 1);
+				$pass = $pass . $tmp;
+				$i++;
 			}
 		 $update_array=array('otp'=>$pass,
 							 'updated_at'=>date('Y-m-d H:i:s')
@@ -353,7 +353,7 @@ class ContributorController extends Controller
 			$resp =array();
 			$resp['statusdesc'] = "Password Reset Successfully!!";
             $resp['statuscode'] = "1";
-		    
+
 		    return response()->json(compact('resp'));
 
 			//return back()->with('success','Password request rised successfully');
@@ -364,13 +364,13 @@ class ContributorController extends Controller
 		 	$resp['statusdesc']  =   "Error in Password Reset";
             $resp['statuscode']   =   "0";
 
-            
-		    
+
+
 		    return response()->json(compact('resp'));
 
 			 //return back()->with('warning','Some problem occured.');
 		 }
-		
+
 	}
 
 	public function ajaxRequestForUserDesc(Request $request){

@@ -758,6 +758,9 @@ app.controller(
 
         $scope.getProductImage = function () {
             productName = $("#product_id").val();
+            if(productName == ''){
+                return false;
+            }
             $("#loading").show();
             $scope.is_display_product_image = false;
             $("#display_image").val('');

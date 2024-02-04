@@ -36,7 +36,7 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td style="padding-left:32px;padding-bottom:24px;padding-top:24px">
-                                                                                        <a href="#" alt="Image Footage" style="font-family: 'Poppins', sans-serif;font-size:16px;color:#205081;text-decoration:none" target="_blank">
+                                                                                        <a href="#" alt="Imagefootage" style="font-family: 'Poppins', sans-serif;font-size:16px;color:#205081;text-decoration:none" target="_blank">
                                                                                             <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width:100%">
                                                                                                 <tbody>
                                                                                                     <tr>
@@ -82,7 +82,7 @@
                                                                                                                                         <td align="left" style="font-family: 'Poppins', sans-serif;font-size: 16px;line-height:26px;color: #000000;text-align:left;font-weight:500;padding-bottom: 8px;padding-right: 10px;">Thanks & Regards,</td>
                                                                                                                                     </tr>
                                                                                                                                     <tr>
-                                                                                                                                        <td align="left" style="font-family: 'Poppins', sans-serif;font-size: 16px;line-height:26px;color: #000000;text-align:left;font-weight:500;padding-bottom: 8px;padding-right: 10px;">Image Footage Team</td>
+                                                                                                                                        <td align="left" style="font-family: 'Poppins', sans-serif;font-size: 16px;line-height:26px;color: #000000;text-align:left;font-weight:500;padding-bottom: 8px;padding-right: 10px;">Imagefootage Team</td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
                                                                                                                             </table>

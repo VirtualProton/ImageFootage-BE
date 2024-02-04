@@ -209,11 +209,19 @@ class SearchController extends Controller
         $type = 'Image';
         $data         = [];
 
-        $products = ImageFilterValue::query();
+        $productsVertical = ImageFilterValue::query();
+        $productsVertical->where("attributes.orientation", 'vertical')->limit(1);
+        $filteredProducts = $productsVertical->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIdsVertical    = collect($filteredProducts)->pluck('api_product_id')->toArray();
+
+        $productsHorizontal = ImageFilterValue::query();
+        $productsHorizontal->where("attributes.orientation", 'horizontal')->limit(13);
+        $filteredProductsHorizontal = $productsHorizontal->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+        $apiProductIdsHorizontal    = collect($filteredProductsHorizontal)->pluck('api_product_id')->toArray();
+        $verticalAndHorizontalIds = array_merge($apiProductIdsVertical, $apiProductIdsHorizontal);
+    
         // Filter Data from MongoDB
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
-        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
-        if ((!empty($apiProductIds))) {
+        if ((!empty($verticalAndHorizontalIds))) {
             $data = Product::select(
                     'product_id',
                     'api_product_id',
@@ -233,61 +241,22 @@ class SearchController extends Controller
                     $query->where('product_main_type', '=', $type);
                 });
 
-            if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
-                $data->where('product_category',$keyword['category_id']);
-            }
-
-            if (!empty($keyword['search'])) {
-                $data->where(function ($query) use ($search) {
-                    $query->orWhere('product_id', '=', $search) //exact match
-                        ->orWhere('product_title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('product_keywords', 'LIKE', '%' . $search . '%');
-                });
-            }
-            if (!empty($apiProductIds)) {
-                $data->whereIn('api_product_id', $apiProductIds);
+            if (!empty($verticalAndHorizontalIds)) {
+                $data->whereIn('api_product_id', $verticalAndHorizontalIds);
             }
             $data->orderBy('created_at', 'desc');
-            $totalRecords = count($data->get());
-
             $data = $data->distinct()->get()->toArray();
-            $attributes = [];
-            $verticalRecords = [];
-            $horizontalRecords = [];
-            foreach($data as $key => $value) {
-                $stringValue = strval($value['api_product_id']);
-                $matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
-                if(isset($data[$key]['attributes'])){
-                    if (isset($data[$key]['attributes']['orientation']) && $data[$key]['attributes']['orientation'] === 'vertical' && count($verticalRecords) < 5) {
-                        $verticalRecords[] = $data[$key];
-                } elseif (isset($data[$key]['attributes']['orientation']) && $data[$key]['attributes']['orientation'] === 'horizontal' && count($horizontalRecords) < 14) {
-                        $horizontalRecords[] = $data[$key];
-                }
-                }
 
-                if (count($verticalRecords) == 4 && count($horizontalRecords) == 13) {
-                    break;
-                }
-
-        }
-
-	    $filteredRecords = array_merge(
-		 array_slice($verticalRecords, 0, 4),
-		 array_slice($horizontalRecords, 0, 13)
-	    );
-
-            if (count($filteredRecords) > 0) {
-                foreach($filteredRecords as &$item) {
+            if (count($data) > 0) {
+                foreach($data as &$item) {
                     $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                 }
             }
-            $total        = count($filteredRecords);
+            $total        = count($data);
         }
 
-        return array('imgfootage' => $filteredRecords, 'total'=> count($filteredRecords), 'perpage'=> 17, 'tp'=> 1);
+        return array('imgfootage' => $data, 'total'=> count($data), 'perpage'=> 17, 'tp'=> 1);
     }
 
     public function getEditorialData($keyword, $getKeyword, $perpage = 30)

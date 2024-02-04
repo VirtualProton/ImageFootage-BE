@@ -184,12 +184,27 @@ class UserController extends Controller
         if ($count > 0) {
             $randnum = rand(1000, 10000);
             $sm = $request['email']['user_email'];
-            $update_array = array('otp' => $randnum);
-            $result = User::where('email', $request['email']['user_email'])->update($update_array);
-            $url = config('app.front_end_url') . "resetpassword/" . $randnum . "/" . $request['email']['user_email'];
+
+            $token = str_random(60);
+            $findUser = DB::table('password_resets')->where('email', $request['email']['user_email'])->limit(1)->first();
+            if($findUser) {
+                DB::table('password_resets')->where('email', $request['email']['user_email'])->update([
+                    'token' => $token,
+                    'created_at' => date('Y-m-d h:i:s'),
+                ]);
+            }
+            else {
+                DB::table('password_resets')->insert([
+                    'email' => $request['email']['user_email'],
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                ]);
+            }
+            $urltoken = base64_encode(json_encode(['email'=>$request['email']['user_email'], 'token'=>$token]));
+            $url = config('app.front_end_url') . "resetpassword/" .$urltoken ;
             $data = array('url' => $url, 'email' => $request['email']['user_email']);
             Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
-                $message->to($data['email'], '')->subject('Image Footage Forget Password')
+                $message->to($data['email'], '')->subject('Imagefootage Forget Password')
                     ->from('admin@imagefootage.com', 'Imagefootage');
             });
             $user = User::where('email', $request['email']['user_email'])->first();
@@ -217,15 +232,25 @@ class UserController extends Controller
                 $user = User::where('mobile', $request['mobile']['user_mobile'])->first();
                 $user->otp = $randnum;
                 $user->otp_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"));
-                // $url = 'https://imagefootage.com/resetpassword/'.$randnum.'/'.$request['email']['user_email'];
-                // $url = $hostname."/resetpassword/".$randnum."/".$user->email;
-                // $data = array('url'=>$url,'email'=>$user->email);
-                // Mail::send('email.forgotpasswordadmin', $data, function($message) use($data) {
-                //         $message->to($data['email'], '')->subject('Image Footage Forget Password')
-                //             ->from('admin@imagefootage.com', 'Imagefootage');
-                //     });
-                // $maskEmail = Helper::obfuscate_email($user->email);
-                $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile];
+
+                $token = str_random(60);
+                $findUser = DB::table('password_resets')->where('email', $request['mobile']['user_mobile'])->limit(1)->first();
+                if($findUser) {
+                    DB::table('password_resets')->where('email', $request['mobile']['user_mobile'])->update([
+                        'token' => $token,
+                        'created_at' => date('Y-m-d h:i:s'),
+                    ]);
+                }
+                else {
+                    DB::table('password_resets')->insert([
+                        'email' => $request['mobile']['user_mobile'],
+                        'token' => $token,
+                        'created_at' => Carbon::now()
+                    ]);
+                }
+
+                $urltoken = base64_encode(json_encode(['email'=>$request['mobile']['user_mobile'], 'token'=>$token]));
+                $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile,'token'=>$urltoken];
                 $result = ['status' => 1, 'message' => "Your otp for forgot password is send on your registered mobile number. Please check.", 'data' => $user_data];
                 $user->save();
                 $message = "Your otp for forgot password is " . $otp . " \n Thanks \n Imagefootage Team";
