@@ -113,7 +113,7 @@ class AuthController extends Controller
 
                 $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
                 Mail::send('createusermail', $data, function ($message) use ($data) {
-                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
+                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to '.config('constants.company_name'));
                 });
                 return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
             } else {
@@ -398,7 +398,7 @@ class AuthController extends Controller
 
         $data = array('cname' => $user->first_name, 'cemail' => $user->email, 'cont_url' => $cont_url);
         Mail::send('createusermail', $data, function ($message) use ($data) {
-            $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
+            $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to '.config('constants.company_name'));
         });
         $user_data = ['user_id' => $user->id];
         return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
@@ -462,7 +462,7 @@ class AuthController extends Controller
                 $cont_url    = config('app.front_end_url') . 'account-verification/' . $match_token;
                 $data        = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
                 Mail::send('createusermail', $data, function ($message) use ($data) {
-                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to Image Footage');
+                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to '.config('constants.company_name'));
                 });
                 $user_data = ['user_id' => $save_data->id, 'is_email' => true, 'email' => $email];
                 return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);

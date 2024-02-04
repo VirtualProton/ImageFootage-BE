@@ -204,7 +204,7 @@ class UserController extends Controller
             $url = config('app.front_end_url') . "resetpassword/" .$urltoken ;
             $data = array('url' => $url, 'email' => $request['email']['user_email']);
             Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
-                $message->to($data['email'], '')->subject('Image Footage Forget Password')
+                $message->to($data['email'], '')->subject('Imagefootage Forget Password')
                     ->from('admin@imagefootage.com', 'Imagefootage');
             });
             $user = User::where('email', $request['email']['user_email'])->first();

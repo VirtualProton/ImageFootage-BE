@@ -63,7 +63,7 @@
     <footer>
         <div class="container">
             <div class="footer-left">
-                <h2 class="h4"><strong>Image Footage</strong></h2>
+                <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
                 <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
@@ -113,6 +113,31 @@
                     <div class="client-info-leftside">
                         <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
                         <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
+                        <p> <?php
+                        if ($orders['package_plan'] == 1) {
+                            $plan = 'Download Pack For '.$orders['package_expiry_yearly'].' year';
+                        } else {
+                            if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
+                                $plan = 'Subscription Pack For '.$orders['package_expiry'].' Month';
+                            } else {
+                                $plan = 'Subscription Pack For '.$orders['package_expiry_yearly'].' Year';
+                            }
+                        }
+                        if ($orders['package_type'] == 'Footage') {
+                                if ($orders['pacage_size'] == 1) {
+                                    echo $orders['package_name'] . " HD " . $plan;
+                                } else {
+                                    echo $orders['package_name'] . " 4K " . $plan;
+                                }
+                            }else if($orders['package_type'] == 'Image'){
+                                echo $orders['package_name'] ." XL";
+                            }
+                             else {
+                                echo $orders['package_name'] . " " . $plan;
+                            }
+                            ?>&nbsp;
+                            <?php echo $orders['licence_name']." Licence"; ?></p>
+
                     </div>
                     <div class="client-info-rightside">
                         <p><strong>(INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
@@ -129,7 +154,7 @@
                 ?>
 
                 <div class="price-div">
-                    <p>In words: <strong><?php echo $amount_in_words.' Rupees only' ?></strong></p>
+                    <p>In words: <strong>Rupees &nbsp; <?php echo $amount_in_words.' only' ?></strong></p>
                 </div>
 
                 <div class="licensing-terms">
@@ -174,7 +199,7 @@
         <!-- Signature section start -->
         <section class="signature">
             <div class="container">
-                <p>For <span>Image Footage</span></p>
+                <p>For <span><?php config('constants.company_name')?></span></p>
                 <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
                 <p>Authorized Signatory</p>
             </div>

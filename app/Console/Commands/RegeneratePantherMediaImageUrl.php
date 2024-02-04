@@ -45,7 +45,8 @@ class RegeneratePantherMediaImageUrl extends Command
         $today = date('Y-m-d');
         $tomorrow = Carbon::now()->addDay();
         $tomorrowDate = $tomorrow->toDateString();
-        $expirData = Product::whereDate('expired_date', $tomorrowDate)->get();
+        $expirData = Product::whereDate('expired_date', '<=',$tomorrowDate)->limit(20)->get();
+
         if(!$expirData->isEmpty()){
             foreach($expirData as $key=>$expire){
                 $imageApi = new ImageApi();
@@ -83,6 +84,8 @@ class RegeneratePantherMediaImageUrl extends Command
                     Log::channel('regenrateUrlLog')->info("====== Getting error in info API response" );
                 }
             }
+        }else{
+            Log::channel('regenrateUrlLog')->info("====== No Data found===========" );
         }
     }
 }

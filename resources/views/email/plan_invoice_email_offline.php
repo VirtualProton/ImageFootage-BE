@@ -67,7 +67,7 @@
     <footer>
         <div class="container">
             <div class="footer-left">
-                <h2 class="h4"><strong>Image Footage</strong></h2>
+                <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
                 <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Opp Pillar No. 2, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
@@ -133,21 +133,24 @@
                         <p>
                             <?php
                             if ($orders['package_plan'] == 1) {
-                                $plan = 'Download Pack For 1 year';
+                                $plan = 'Download Pack For '.$orders['package_expiry_yearly'].' year';
                             } else {
-                                if ($orders['package_expiry_yearly'] == 0) {
-                                    $plan = 'Subscription Pack For 1 Month';
+                                if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
+                                    $plan = 'Subscription Pack For '.$orders['package_expiry'].' Month';
                                 } else {
-                                    $plan = 'Subscription Pack For 1 Year';
+                                    $plan = 'Subscription Pack For '.$orders['package_expiry_yearly'].' Year';
                                 }
                             }
-                            if ($orders['package_type'] != 'Image') {
+                            if ($orders['package_type'] == 'Footage') {
                                 if ($orders['pacage_size'] == 1) {
                                     echo $orders['package_name'] . " HD " . $plan;
                                 } else {
                                     echo $orders['package_name'] . " 4K " . $plan;
                                 }
-                            } else {
+                            }else if($orders['package_type'] == 'Image'){
+                                echo $orders['package_name'] ." XL";
+                            }
+                             else {
                                 echo $orders['package_name'] . " " . $plan;
                             }
                             ?>&nbsp;
@@ -187,7 +190,7 @@
                         <p>In words:</p>
                     </div>
                     <div class="client-info-rightside">
-                        <p><span class="block-text"><strong>Rupees &nbsp; <?php echo $amount_in_words ?></strong></span></p>
+                        <p><span class="block-text"><strong>Rupees &nbsp; <?php echo $amount_in_words.' only' ?></strong></span></p>
                     </div>
                 </div>
                 <div class="licensing-terms">
@@ -197,7 +200,7 @@
                             <li>License Rights are only assigned on payment of this invoice.</li>
 
                             <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
-                                <span><strong>Image Footage,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
+                                <span><strong><?php config('constants.company_name')?>,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
                             </li>
                             <li>
                                 If not paid within credit period allowed, <span><strong>interest @ 24%</strong></span> will be charged.
@@ -224,7 +227,7 @@
         <!-- Signature section start -->
         <section class="signature">
             <div class="container">
-                <p>For <span>Image Footage</span></p>
+                <p>For <span><?php config('constants.company_name')?></span></p>
                 <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
                 <p>Authorized Signatory</p>
             </div>

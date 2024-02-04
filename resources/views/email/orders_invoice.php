@@ -380,7 +380,7 @@
       <footer>
          <div class="container">
             <div class="footer-left">
-               <h2 class="h4"><strong>Image Footage</strong></h2>
+               <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
                <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                   500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                </p>
@@ -535,6 +535,13 @@
                                           </td>
                                        </tr>
                                        <tr>
+                                       <td colspan="4" style="font-size: 16px;">
+                                        <p style="margin: 0px;"><span>In words:</span><strong><?php echo 'Rupees '.$amount_in_words.' only';?></strong>
+                                            </p>
+                                       </td>
+                                       </tr>
+                                       <br/>
+                                       <tr>
                                           <td colspan="4" style="font-size: 12px;">
                                              <p style="margin: 0px;"><span>Note:</span> Any Sales tax
                                                 included in this quote is an estimation and may change at
@@ -561,7 +568,7 @@
                         <li>License Rights are only assigned on payment of this invoice.</li>
                         <li>Payment should be made Immediate from the date of download of the image(s) and can be
                            sent to:
-                           <span><strong>Image Footage,</strong></span>
+                           <span><strong><?php config('constants.company_name')?>,</strong></span>
                            c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No.
                            2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
                         </li>
@@ -596,7 +603,7 @@
          <!-- Signature section start -->
          <section class="signature">
             <div class="container">
-               <p>For <span>Image Footage</span></p>
+               <p>For <span><?php config('constants.company_name')?></span></p>
                <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
                <p>Authorized Signatory</p>
             </div>
