@@ -85,7 +85,7 @@ class SearchController extends Controller
                 $trending_word->save();
             }
         }
-        
+
         // If records not found check with respective third party api for the data
         if($countTotalRecords == 0 || $countTotalRecords < 15){
             $cronController  = new CronController();
@@ -210,16 +210,16 @@ class SearchController extends Controller
         $data         = [];
 
         $productsVertical = ImageFilterValue::query();
-        $productsVertical->where("attributes.orientation", 'vertical')->limit(1);
+        $productsVertical->where(["attributes.orientation"=>'vertical',"product_main_type"=>$type])->orderByDesc('_id')->limit(4);
         $filteredProducts = $productsVertical->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIdsVertical    = collect($filteredProducts)->pluck('api_product_id')->toArray();
 
         $productsHorizontal = ImageFilterValue::query();
-        $productsHorizontal->where("attributes.orientation", 'horizontal')->limit(13);
+        $productsHorizontal->where(["attributes.orientation"=> 'horizontal',"product_main_type"=>$type])->orderByDesc('_id')->limit(13);
         $filteredProductsHorizontal = $productsHorizontal->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIdsHorizontal    = collect($filteredProductsHorizontal)->pluck('api_product_id')->toArray();
         $verticalAndHorizontalIds = array_merge($apiProductIdsVertical, $apiProductIdsHorizontal);
-    
+
         // Filter Data from MongoDB
         if ((!empty($verticalAndHorizontalIds))) {
             $data = Product::select(

@@ -101,7 +101,7 @@
               @if ($errors->has('package_products_count'))
               <div class="has_error" style="color:red;">{{ $errors->first('package_products_count') }}</div>
               @endif
-              <div id="for_pro" @if($package[0]['package_permonth_download']=='Pro' ) style="display:block" elseif style="display:none;" @endif>
+              <div id="for_pro">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Per Month Download</label>
                   <input type="text" class="form-control" name="package_month_count" id="package_month_count" placeholder="Products per month Count" value="{{ $package[0]['package_permonth_download'] }}">
@@ -117,11 +117,14 @@
 
               <div class="form-group" id="footageTierDiv">
                 <label for="exampleInputEmail1"> Footage Package Type</label>
-                <select type="text" class="form-control" name="footage_tier" id="footage_tier">
-                  <option value="1" @if($package[0]['footage_tier']=='1' ) selected="selected" @endif>Commercial</option>
-                  <option value="2" @if($package[0]['footage_tier']=='2' ) selected="selected" @endif>Media Non-commercial (Editorial)</option>
-                  <option value="3" @if($package[0]['footage_tier']=='3' ) selected="selected" @endif>Digital</option>
-                  <option value="4" @if($package[0]['footage_tier']=='4' ) selected="selected" @endif>Full RF Licence</option>
+                <select type="text" class="form-control" name="footage_tier" id="footage_tier" >
+                    <option value="">Select</option>
+                    @foreach ($licence as $detail )
+                    @if($detail->product_type == 2)
+                    <option value="{{$detail->id}}" @if($package[0]['footage_tier']==$detail->id ) selected="selected" @endif>{{$detail->licence_name}}</option>
+                    @endif
+                    @endforeach
+
                 </select>
               </div>
               @if ($errors->has('footage_tier'))
@@ -129,11 +132,30 @@
               @endif
 
               <div class="form-group" id="musicTierDiv">
-                <label for="exampleInputEmail1"> Music Package Type</label>
+                <label for="exampleInputEmail1"> Music Licence Type</label>
                 <select type="text" class="form-control" name="music_tier" id="music_tier">
-                  <option value="1" @if($package[0]['footage_tier']=='1' ) selected="selected" @endif>Standard</option>
-                  <option value="2" @if($package[0]['footage_tier']=='2' ) selected="selected" @endif>Extended</option>
-                  <option value="3" @if($package[0]['footage_tier']=='3' ) selected="selected" @endif>Digital</option>
+                    <option value="">Select</option>
+                    @foreach ($licence as $detail )
+                      @if($detail->product_type == 3)
+                      <option value="{{$detail->id}}" @if($package[0]['footage_tier']==$detail->id ) selected="selected" @endif>{{$detail->licence_name}}</option>
+                      @endif
+                      @endforeach
+                  </select>
+              </div>
+
+              @if ($errors->has('footage_tier'))
+              <div class="has_error" style="color:red;">{{ $errors->first('footage_tier') }}</div>
+              @endif
+
+              <div class="form-group" id="imageTierDiv">
+                <label for="exampleInputEmail1">Image Licence Type</label>
+                <select type="text" class="form-control" name="image_tier" id="image_tier">
+                  <option value="">Select</option>
+                  @foreach ($licence as $detail )
+                    @if($detail->product_type == 1)
+                    <option value="{{$detail->id}}" @if($package[0]['footage_tier']==$detail->id ) selected="selected" @endif>{{$detail->licence_name}}</option>
+                    @endif
+                    @endforeach
                 </select>
               </div>
               @if ($errors->has('footage_tier'))
@@ -236,22 +258,28 @@
         var pacageSizeDiv = document.getElementById('pacage_size_div');
         pacageSizeDiv.style.display = (packageType === 'Music') ? 'none' : 'block'; */
     }
-
+    var per_month_count = $('#package_month_count').val();
+    if(per_month_count.length == 0){
+        $('#for_pro').hide();
+    }
     var pack_type = $("#package_plan").val();
     var package_type = $("#package_type").val();
     if (package_type == 'Footage') {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").show();
         $('#package_size').show();
+        $('#imageTierDiv').hide();
     } else if(package_type == 'Music'){
         $("#footageTierDiv").hide();
         $('#musicTierDiv').show();
         $('#package_size').hide();
+        $('#imageTierDiv').hide();
     }
      else {
         $('#musicTierDiv').hide();
         $("#footageTierDiv").hide();
         $('#package_size').hide();
+        $('#imageTierDiv').show();
     }
     if($('#display_for').val() == 3 ||$('#display_for').val() == 2 ){
         $('#music_tier').find('option[value=\'3\']').css('display','block');

@@ -185,7 +185,7 @@
                         <p>In words:</p>
                     </div>
                     <div class="client-info-rightside">
-                        <p><span class="block-text"><strong>Rupees &nbsp; <?php echo $amount_in_words.' only' ?></strong></span></p>
+                        <p><span class="block-text"><strong>Rupees <?php echo $amount_in_words.' only' ?></strong></span></p>
                     </div>
                 </div>
                 <div class="licensing-terms">
