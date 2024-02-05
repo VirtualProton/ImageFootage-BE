@@ -39,7 +39,7 @@ class WishListController extends Controller
                 $keyword = trim($keyword);
                 if($keyword != "") {
                     $query->where("name", "like", "%$keyword%");
-                } 
+                }
             })->get()->toArray();
             return response()->json(["status"=> true, "data"=> $products]);
         } catch (\Throwable $th) {
@@ -336,15 +336,19 @@ class WishListController extends Controller
      */
     public function getUserWishlistData(Request $request) {
         $postData = $request->all();
-        $userId = $postData['Utype'];               
+        $results = [];
+        if(isset($postData['Utype']) && !empty($postData['Utype'])){
+            $userId = $postData['Utype'];
 
-        $results = DB::table('imagefootage_users_wishlist')
-        ->join('imagefootage_wishlist_products', 'imagefootage_users_wishlist.wishlist_id', '=', 'imagefootage_wishlist_products.wishlist_id')
-        ->join('imagefootage_products', 'imagefootage_wishlist_products.product_id', '=', 'imagefootage_products.id')
-        ->where('imagefootage_users_wishlist.user_id', '=', $userId)
-        ->select('imagefootage_wishlist_products.product_path_id','imagefootage_products.product_thumbnail')
-        ->get();            
-        return json_encode(["status"=>"success",'data'=>$results]);                
+            $results = DB::table('imagefootage_users_wishlist')
+            ->join('imagefootage_wishlist_products', 'imagefootage_users_wishlist.wishlist_id', '=', 'imagefootage_wishlist_products.wishlist_id')
+            ->join('imagefootage_products', 'imagefootage_wishlist_products.product_id', '=', 'imagefootage_products.id')
+            ->where('imagefootage_users_wishlist.user_id', '=', $userId)
+            ->select('imagefootage_wishlist_products.product_path_id','imagefootage_products.product_thumbnail')
+            ->get();
+        }
+
+        return json_encode(["status"=>"success",'data'=>$results]);
     }
 
     /**
@@ -535,7 +539,7 @@ class WishListController extends Controller
         }
     }
 
-    public function deleteWishlist(Request $request) {   
+    public function deleteWishlist(Request $request) {
 
         $collectionData = $request->all();
         if(!empty($collectionData)){
@@ -548,7 +552,7 @@ class WishListController extends Controller
                 DB::table('imagefootage_wishlists')
                 ->where('id', $collectionData['id'])
                 ->delete();
-            } 
+            }
             foreach($collectionData['products'] as $product){
                 $allSelectedValues[] = $product['id'];
             }
@@ -559,24 +563,24 @@ class WishListController extends Controller
                 ->delete();
             }
 
-            return response()->json([ 
-                'status' => "success",            
+            return response()->json([
+                'status' => "success",
                 'message' => "Collection Removed Succesfully.",
             ]);
         }else{
-            return response()->json([ 
-                'status' => "failed" ,               
+            return response()->json([
+                'status' => "failed" ,
                 'message' => "Collection not found.",
             ]);
         }
     }
 
-    public function getWishlistData(Request $request) {        
-        
+    public function getWishlistData(Request $request) {
+
 
         $title = $request->input('title');
         $productId = $request->input('product_id');
-        $url = $request->input('url');        
+        $url = $request->input('url');
 
         $query = Product::query();
 
@@ -590,11 +594,11 @@ class WishListController extends Controller
         }
 
         $product = $query->first();
-        
 
-        if (!empty($product)) {   
+
+        if (!empty($product)) {
             echo json_encode(["status"=>"success",'data'=>$product]);
-        } else {           
+        } else {
             echo json_encode(["status"=>"failed",'data'=>null]);
         }
     }

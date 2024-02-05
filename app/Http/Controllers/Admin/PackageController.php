@@ -103,7 +103,8 @@ class PackageController extends Controller
 
 		$package = new Package;
 		$package_data = $package->where('package_id', $id)->get()->toArray();
-		return view('admin.package.editpackage', ['package' => $package_data]);
+        $getDetails = LicenceType::get();
+		return view('admin.package.editpackage', ['package' => $package_data,'licence'=>$getDetails]);
 	}
 	public function editPackage(Request $request)
 	{

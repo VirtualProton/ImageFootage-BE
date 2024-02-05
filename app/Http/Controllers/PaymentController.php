@@ -596,9 +596,8 @@ class PaymentController extends Controller
             $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst')
                 ->with('country')
                 ->with('state')
-                ->with('city')
-                ->with('licence');
-        }])->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
+                ->with('city');
+        }])->with('licence')->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
         if($success===true){
             $this->invoiceWithemailPlan($orders,$orders['transaction_id']);
             $url = $this->baseurl.'/myplan';
