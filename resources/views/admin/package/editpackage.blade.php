@@ -109,10 +109,11 @@
                 @if ($errors->has('package_month_count'))
                 <div class="has_error" style="color:red;">{{ $errors->first('package_month_count') }}</div>
                 @endif
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" @if($package[0]['package_pcarry_forward']=='yes' ) checked="checked" @endif /> </label>
 
-                </div>
+              </div>
+              <div class="form-group" id="carry_forward_pack">
+                <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" @if($package[0]['package_pcarry_forward']=='yes' ) checked="checked" @endif /> </label>
+
               </div>
 
               <div class="form-group" id="footageTierDiv">
@@ -262,6 +263,12 @@
     if(per_month_count.length == 0){
         $('#for_pro').hide();
     }
+    var package_plan = $('#package_plan').val()
+    if(package_plan == '1'){
+        $('#carry_forward_pack').show()
+    }else{
+        $('#carry_forward_pack').hide()
+    }
     var pack_type = $("#package_plan").val();
     var package_type = $("#package_type").val();
     if (package_type == 'Footage') {
@@ -369,6 +376,7 @@
         $('#for_pro').css('display', 'none');
         expiryMonthInput.prop('disabled', true);
         expiryMonthInput.val(0);
+        $('#carry_forward_pack').show()
     } else {
         optionToHide.css('display', 'none');
         secondOptionToHide.css('display', 'none');
@@ -376,6 +384,7 @@
         $('#for_pro').css('display', 'block');
         expiryMonthInput.prop('disabled', false);
         expiryMonthInput.val('');
+        $('#carry_forward_pack').hide()
     }
 
   });
@@ -417,7 +426,6 @@
 
   function checkPackageExpiry() {
       var packageExpiryValue = $('#package_expiry').val();
-      console.log(packageExpiryValue);
       var packageExpiryYearInput = $('#package_expiry_year');
 
       // Check if package_expiry is 1 or 2

@@ -110,10 +110,11 @@
                 @if ($errors->has('package_month_count'))
                 <div class="has_error" style="color:red;">{{ $errors->first('package_month_count') }}</div>
                 @endif
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" /> </label>
 
-                </div>
+              </div>
+              <div class="form-group" id="carry_forward_pack">
+                <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" /> </label>
+
               </div>
 
               <div class="form-group" id="footageTierDiv">
@@ -334,6 +335,10 @@
 
     $("#footageTierDiv").hide();
     $("#musicTierDiv").hide();
+    $('#package_expiry').prop('disabled',true);
+    $('#package_expiry').val(0);
+    $('#carry_forward_pack').show();
+
 
   });
   $("#package_plan").change(function() {
@@ -350,6 +355,7 @@
 
         expiryMonthInput.prop('disabled', true);
         expiryMonthInput.val(0);
+        $('#carry_forward_pack').show();
     } else {
         $("#footageTierDiv").hide();
         $('#musicTierDiv').hide();
@@ -359,6 +365,7 @@
         $('#package_type').val('Image');
         expiryMonthInput.prop('disabled', false);
         expiryMonthInput.val('');
+        $('#carry_forward_pack').hide();
     }
 
   });
