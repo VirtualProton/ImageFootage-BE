@@ -131,9 +131,7 @@ class UserController extends Controller
                 break;
         }
         $userlist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
-            ->where('user_id', $request->user_id)
-            ->where('order_type', '!=', 3)
-            ->where('status', 1);
+            ->where('user_id', $request->user_id);
 
         if ($range !== 'all') {
             $userlist->whereDate('created_at', '>=', $startDate)
@@ -141,7 +139,7 @@ class UserController extends Controller
         }
 
         $userlist = $userlist->orderBy('id', 'desc')
-            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier')
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier','order_type')
             ->paginate(5)
             ->toArray();
             return ['status' => 1, 'message' => 'Plan details fetched successfully.', 'data' => $userlist];
