@@ -181,10 +181,10 @@ class Common extends Model
 
         if (count($data['products']) > 0) {
             foreach ($data['products']['product'] as $eachproduct) {
-                if (filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) {
+                if (isset($eachproduct['image']) && filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) {
                     $image = $eachproduct['image'];
                 } else {
-                    $image = !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';
+                    $image = isset($eachproduct['image']) &&!empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';
                 }
                 $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
