@@ -121,6 +121,16 @@ class PackageController extends Controller
             'package_expiry_year' => 'required_without_all:package_expiry',
             'package_month_count' => $request->input('package_plan') == 2 ? 'required' : '',
 		]);
+
+        $tier = '';
+        if(isset($request->footage_tier) && !empty($request->footage_tier)){
+            $tier = $request->footage_tier;
+        } elseif(isset($request->music_tier) && !empty($request->music_tier)){
+            $tier  = $request->music_tier;
+			$request->pacage_size = null;
+        }else{
+            $tier = $request->image_tier;
+        }
 		$update_array = array(
 			'package_plan' => $request->package_plan, 'package_name' => $request->package_name,
 			'package_price' => $request->package_price,
@@ -133,7 +143,7 @@ class PackageController extends Controller
 			'package_expiry_yearly' => $request->package_expiry_year ?? 0,
 			'pacage_size' => $request->pacage_size,
 			'updated_at' => date('Y-m-d H:i:s'),
-			'footage_tier' => $request->footage_tier,
+			'footage_tier' => $tier,
 			'display_for' => $request->display_for,
 			'package_status' => $request->package_status
 		);

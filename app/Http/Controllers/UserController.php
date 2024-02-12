@@ -140,6 +140,7 @@ class UserController extends Controller
 
         $userlist = $userlist->orderBy('id', 'desc')
             ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier','order_type')
+            ->with('licence')
             ->paginate(5)
             ->toArray();
             return ['status' => 1, 'message' => 'Plan details fetched successfully.', 'data' => $userlist];
