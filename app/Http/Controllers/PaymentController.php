@@ -837,7 +837,7 @@ class PaymentController extends Controller
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }
        if($OrderData['package_plan']==1){
-            $plan = 'Download Pack For 1 year';
+            $plan = 'Download Pack For '.$OrderData['package_expiry_yearly']. ' year';
          }else{
             if ($OrderData['package_expiry_yearly'] == 0) {
                $plan = 'Subscription Pack For 1 Month';
