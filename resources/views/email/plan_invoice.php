@@ -34,7 +34,7 @@
     <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong>
                <?php
                   if($orders['package_plan']==1){
-                     $plan = 'Download Pack For 1 year';
+                     $plan = 'Download Pack For '.$orders['package_expiry_yearly']. ' year';
                   }else{
                      if ($orders['package_expiry_yearly'] == 0) {
                         $plan = 'Subscription Pack For 1 Month';
