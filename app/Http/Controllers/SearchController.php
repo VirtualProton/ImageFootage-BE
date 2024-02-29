@@ -89,7 +89,7 @@ class SearchController extends Controller
         // If records not found check with respective third party api for the data
         if($countTotalRecords == 0 || $countTotalRecords < 15){
             $cronController  = new CronController();
-            $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
+            $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
         }
 

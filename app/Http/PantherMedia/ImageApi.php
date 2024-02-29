@@ -147,10 +147,10 @@ class ImageApi
                 return $contents;
             }
         } catch (BadResponseException $ex) {
-            $response = $ex->getResponse();
-            $jsonBody = (string) $response->getBody();
-            print_r($jsonBody);
-            die;
+            return [
+                'status'=>'failed',
+                'message'=>'Please try again'
+            ];
         }
     }
 
