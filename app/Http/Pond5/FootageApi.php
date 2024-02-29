@@ -73,28 +73,35 @@ class FootageApi
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }
+        try{
+            $apiUrl = $this->url . '/api/v3/search?' . http_build_query($url);
+            $curl   = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL            => $apiUrl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING       => '',
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => 'GET',
+                CURLOPT_HTTPHEADER     => array(
+                    'accept: application/json',
+                    'key: ' . $this->api_key,
+                    'secret: ' . $this->api_secret,
+                ),
+            ));
 
-        $apiUrl = $this->url . '/api/v3/search?' . http_build_query($url);
-        $curl   = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL            => $apiUrl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING       => '',
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_TIMEOUT        => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST  => 'GET',
-            CURLOPT_HTTPHEADER     => array(
-                'accept: application/json',
-                'key: ' . $this->api_key,
-                'secret: ' . $this->api_secret,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $contents = json_decode($response, true);
-        return $contents;
+            $response = curl_exec($curl);
+            $contents = json_decode($response, true);
+            return $contents;
+        }
+        catch (\Exception $ex) {
+            return [
+                'status'=>'failed',
+                'message'=>'Please try again'
+            ];
+        }
     }
 
 

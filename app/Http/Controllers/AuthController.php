@@ -603,7 +603,7 @@ class AuthController extends Controller
 
         $usercredentials = [];
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['status' => false, 'message' => 'Email or password doesn\'t exist'], 200);
+            return response()->json(['status' => false, 'message' => 'Credentials does not match with record'], 200);
         }
         $utype = $this->respondWithToken($token)->original['Utype'];
         $user = User::where('id', $utype)->first();

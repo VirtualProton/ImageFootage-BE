@@ -239,44 +239,81 @@ class CronController extends Controller
 
     public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest, $thirdparty = 'panthermedia'){
         $keyword = [];
-        if ($type == '1' || $type == '4') {
-            $keyword['search']  = $term;
-            $percategory['category_id'] = $category;
-            // conditional based search for panthermedia or pond5, as per new request by client
-            if($thirdparty == 'panthermedia'){
-                $pantherMediaImages = new ImageApi();
-                $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
-        
-                if(!empty($pantharmediaData) && count($pantharmediaData) > 0){
-                    $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
-                }
-            } else {
-                $imagesMedia        = new \App\Http\Pond5\ImageApi();
-                $pond5ImagesData    = $imagesMedia->search($keyword);
-    
-                if (!empty($pond5ImagesData) && count($pond5ImagesData) > 0) {
-                    $this->product->savePond5Image($pond5ImagesData, $percategory['category_id'], $allRequest);
-                }
-            }
-        } else if ($type == '2' || $type == '4') {
-            $keyword['search']  = $term;
-            $percategory['category_id'] = $category;
-            $footageMedia          = new FootageApi();
-            $pond5FootageMediaData = $footageMedia->search($keyword, [], 100);
+        try{
+            if ($type == '1' || $type == '4') {
 
-            if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
-                $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id'], $allRequest);
+                $keyword['search']  = $term;
+                $percategory['category_id'] = $category;
+                // conditional based search for panthermedia or pond5, as per new request by client
+                if($thirdparty == 'panthermedia'){
+                    $pantherMediaImages = new ImageApi();
+                    $pantharmediaData   = $pantherMediaImages->search($keyword, [], 80);
+
+                    if(isset($pantharmediaData['status']) && $pantharmediaData['status'] == 'failed'){
+                        return [
+                            'status'=>'failed',
+                            'message'=>'Please try again'
+                        ];
+                    }
+
+                    if(!empty($pantharmediaData) && count($pantharmediaData) > 0){
+                        $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
+                    }
+                } else {
+                    $imagesMedia        = new \App\Http\Pond5\ImageApi();
+                    $pond5ImagesData    = $imagesMedia->search($keyword);
+
+                    if(isset($pond5ImagesData['status']) && $pond5ImagesData['status'] == 'failed'){
+                        return [
+                            'status'=>'failed',
+                            'message'=>'Please try again'
+                        ];
+                    }
+
+                    if (!empty($pond5ImagesData) && count($pond5ImagesData) > 0) {
+                        $this->product->savePond5Image($pond5ImagesData, $percategory['category_id'], $allRequest);
+                    }
+                }
+            } else if ($type == '2' || $type == '4') {
+                $keyword['search']  = $term;
+                $percategory['category_id'] = $category;
+                $footageMedia          = new FootageApi();
+                $pond5FootageMediaData = $footageMedia->search($keyword, [], 100);
+
+                if(isset($pond5FootageMediaData['status']) && $pond5FootageMediaData['status'] == 'failed'){
+                    return [
+                        'status'=>'failed',
+                        'message'=>'Please try again'
+                    ];
+                }
+
+                if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
+                    $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id'], $allRequest);
+                }
+            } else if ($type == '3') {
+                $keyword['search']  = $term;
+                $percategory['category_id'] = $category;
+                $musicMedia          = new MusicApi();
+                $pond5MusicMediaData = $musicMedia->search($keyword, [], 100);
+
+                if(isset($pond5MusicMediaData['status']) && $pond5MusicMediaData['status'] == 'failed'){
+                    return [
+                        'status'=>'failed',
+                        'message'=>'Please try again'
+                    ];
+                }
+
+                if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
+                    $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id'], $allRequest);
+                }
             }
-        } else if ($type == '3') {
-            $keyword['search']  = $term;
-            $percategory['category_id'] = $category;
-            $musicMedia          = new MusicApi();
-            $pond5MusicMediaData = $musicMedia->search($keyword, [], 100);
-            
-            if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
-                $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id'], $allRequest);
-            }
+            return true;
         }
-        return true;
+        catch(\Exception $e){
+            return [
+                'status'=>'failed',
+                'message'=>'Please try again'
+            ];
+        }
     }
 }
