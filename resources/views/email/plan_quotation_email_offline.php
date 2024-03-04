@@ -89,7 +89,7 @@
                             <?php } ?>
                             <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
                         </p>
-                        <p>Phone: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
+                        <p>Mobile: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>

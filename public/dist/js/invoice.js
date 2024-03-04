@@ -2499,7 +2499,7 @@ app.controller(
             // } else if (type == 'IGSTT') {
             //     total = (subtotalvalue * (18) / 100);
             // }
-
+            
             if (tax_percent == true) {
                 //total = intialtotal + total;
                 if(countryId !== 101){

@@ -134,7 +134,7 @@
                     <?php } ?>
                   <p>Address: <span><strong><?php echo $quotation[0]['address'] ?><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></strong></span>
                   </p>
-                  <p>Phone: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
+                  <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                   <p>GSTIN: <span><strong><?php echo substr($quotation[0]['gst'], 0, 2) ?>XXX<?php echo substr($quotation[0]['gst'], 5, 10) ?></strong></span></p>
                   <p>PAN: <span><strong>XXX<?php echo substr($quotation[0]['pan'], 3, 7) ?></strong></span></p>
                </div>

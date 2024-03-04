@@ -402,7 +402,7 @@
                      <p>Customer Name: <span><strong><?php echo $orders['user']['first_name'] ?> <?php echo $orders['user']['last_name'] ?></span></strong></p>
                      <p>Address: <span><strong><?php echo $orders['bill_address1'] ?><?php echo $orders['city']['name'] ?>&nbsp;&nbsp; <?php echo $orders['state']['state'] ?>&nbsp;&nbsp; -<?php echo $orders['bill_zip'] ?></strong></span>
                   </p>
-                  <p>Phone: <span><strong><?php echo $orders['user']['mobile'] ?></strong></span></p>
+                  <p>Mobile: <span><strong><?php echo $orders['user']['mobile'] ?></strong></span></p>
                   <p>GSTIN: <span><strong><?php echo substr($orders['user']['gst'], 0, 2) ?>XXX<?php echo substr($orders['user']['gst'], 5, 10) ?></strong></span></p>
                   <p>PAN: <span><strong>XXX<?php echo substr($orders['user']['pan'], 3, 7) ?></strong></span></p>
                   </div>

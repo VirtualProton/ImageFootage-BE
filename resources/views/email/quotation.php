@@ -133,7 +133,7 @@
                         <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
                             <span class="block-text"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
-                        <p>Phone: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
+                        <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>

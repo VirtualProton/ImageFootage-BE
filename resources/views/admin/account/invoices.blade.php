@@ -15,8 +15,8 @@
             <div class="col-md-12">
               <div class="box" style="padding-left: 10px;padding-right: 10px;">
                 <div class="box-header">
-                  <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation/Proforma Invoice</strong></a><br>
-                  <a href="{{ url('admin/quotation2/'.$user_id) }}" style="float:right;"><strong>Custom Invoice</strong></a>
+                  <a href="{{ url('admin/quotation/'.$user_id) }}" style="float:right;"><strong>Create Quotation</strong></a><br>
+                  <a href="{{ url('admin/quotation2/'.$user_id) }}" style="float:right;"><strong>Create Custom Quotation</strong></a>
                 </div>
                 @include('admin.partials.message')
                 <div class="tabs">
@@ -864,7 +864,7 @@
                              </div>
                           </div>
                           <div class="form-group row">
-                             <label for="" class="col-md-6">Phone No. :</label>
+                             <label for="" class="col-md-6">Mobile No. :</label>
                              <div class="col-md-6">
                                 <p><input type="text" name="phone" id="phone" value="{{$user->mobile}}" class="form-control"></p>
                              </div>
@@ -1081,7 +1081,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-md-6">Phone No. :</label>
+                            <label for="" class="col-md-6">Mobile No. :</label>
                             <div class="col-md-6">
                                 <p><input type="text" name="phonecus" id="phonecus" value="{{$user->mobile}}" class="form-control"></p>
                             </div>

@@ -91,12 +91,13 @@
                 </div>
               </div>
             </div>
-            <div class="custom-width"><span class="custom-font">Postal Code :</span> {{$user->postal_code}}</div>
+            <div class="custom-width"><span class="custom-font">Postal Code :</span><input type="text" class="" name="user_postalcode" id="user_postalcode" value=" {{$user->postal_code}}" /></div>
             
         </div>  
 
         <div class="postal-code">
           <div class="custom-width"><span class="custom-font">Phone :</span> <input type="text" class="" name="user_phone" id="user_phone" value="{{$user->phone}}" /></div>
+          <div class="custom-width"><span class="custom-font">Mobile :</span> <input type="text" class="" name="user_mobile" id="user_mobile" value="{{$user->mobile}}" /></div>
           <div class="custom-width"><span class="custom-font">GST :</span> <input type="text" class="" name="user_gst" id="user_gst" value="{{$user->gst}}" /></div>
           <div class="custom-width"><span class="custom-font">PAN :</span> <input type="text" class="" name="user_pan" id="user_pan" value="{{$user->pan}}" /></div>
         </div>
