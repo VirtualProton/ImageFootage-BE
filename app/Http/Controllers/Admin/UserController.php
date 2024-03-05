@@ -482,12 +482,14 @@ class UserController extends Controller
                     'address' => $request->user_address,
                     'address2' => $request->user_address2,
                     'phone' => $request->user_phone,
+                    'mobile' => $request->user_mobile,
                     'gst' => $request->user_gst,
                     'pan' => $request->user_pan,
                     'description' => $request->user_client_des,
                     'country' => $request->country,
                     'state' => $request->state,
-                    'city' => $request->city
+                    'city' => $request->city,
+                    'postal_code' => $request->user_postalcode
                 );
                 $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
                 if ($userinfo === null) {

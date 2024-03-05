@@ -93,7 +93,7 @@
                             <?php } ?>
                             <span class="block-text"><strong><?php echo $orders['user']['city']['name'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['user']['state']['state'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['user']['postal_code'] ?? ''; ?></strong></span>
                         </p>
-                        <p>Phone: <span><strong><?php echo  $orders['user']['mobile'] ?? ''; ?></strong></span></p>
+                        <p>Mobile: <span><strong><?php echo  $orders['user']['mobile'] ?? ''; ?></strong></span></p>
                         <p>GSTIN: <span><strong><?php echo $orders['user']['gst']; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">

@@ -469,7 +469,8 @@ class Common extends Model
     {
         $dataForEmail = $this->getSubData($quotation_id, $user_id);
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
-        $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
+        $amount_in_words   = isset($dataForEmail[0]['total']) && !empty($dataForEmail[0]['total']) ? $this->convert_number_to_words($dataForEmail[0]['total']) : '';
+        $total = $dataForEmail[0]['total'] ?? 0;
 
         $transactionRequest = new TransactionRequest();
         //Setting all values here
@@ -477,9 +478,9 @@ class Common extends Model
         $transactionRequest->setLogin($this->login);
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
-        $transactionRequest->setAmount($dataForEmail[0]['total']);
+        $transactionRequest->setAmount($total);
         $transactionRequest->setTransactionCurrency("INR");
-        $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+        $transactionRequest->setTransactionAmount($total);
 
         $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
@@ -1120,7 +1121,7 @@ class Common extends Model
     public function update_po($invoice_id, $po_no)
     {
         $update = Invoice::where('id', '=', $invoice_id)
-            ->update(['job_number' => $po_no]);
+            ->update(['job_number' => $po_no, 'po_detail' => date('Y-m-d')]);
         $resp = array();
         if ($update) {
             $resp['statusdesc'] = "PO no. updated successfully.";
