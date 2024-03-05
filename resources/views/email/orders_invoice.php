@@ -403,14 +403,14 @@
                      <p>Address: <span><strong><?php echo $orders['bill_address1'] ?><?php echo $orders['city']['name'] ?>&nbsp;&nbsp; <?php echo $orders['state']['state'] ?>&nbsp;&nbsp; -<?php echo $orders['bill_zip'] ?></strong></span>
                   </p>
                   <p>Mobile: <span><strong><?php echo $orders['user']['mobile'] ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo substr($orders['user']['gst'], 0, 2) ?>XXX<?php echo substr($orders['user']['gst'], 5, 10) ?></strong></span></p>
-                  <p>PAN: <span><strong>XXX<?php echo substr($orders['user']['pan'], 3, 7) ?></strong></span></p>
+                  <p>GSTIN: <span><strong><?php echo $orders['user']['gst']?></strong></span></p>
+                  <p>PAN: <span><strong>XXX<?php echo $orders['user']['pan'] ?></strong></span></p>
                   </div>
                   <div class="client-info-rightside">
                   <p>Invoice No.: <span><strong><?php echo config('constants.INVOICE_PREFIX') ?></span></strong></p>
                   <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['created_at'])) ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                  <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                  <p>GSTIN: <span><strong><?php echo substr(config('constants.GSTIN_VALUE'), 0, 2) ?>XXX<?php echo substr(config('constants.GSTIN_VALUE'), 5, 10) ?></strong></span></p>
+                  <p>PAN No.: <span><strong>XXX<?php echo substr(config('constants.PAN_VALUE'), 0, 2) ?>XXX<?php echo substr(config('constants.PAN_VALUE'), 5, 10) ?></strong></span></p>
                   <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                   <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                   <p>Payment Due: <span><strong>Online</strong></span></p>
@@ -589,6 +589,9 @@
                         </li>
                      </ol>
                      <ul>
+                     <?php if(isset($orders['payment_url']) && !empty($orders['payment_url'])){?>
+                    <li>For Payment through Credit/Debit Card <a href="<?php echo $orders['payment_url']; ?>"><strong>click here</strong></a></li>
+                    <?php } ?>
                         <li>Goods once sold cannot be replaced or returned.</li>
                         <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless
                            we receive a written communication to the contrary within 7 days of the invoice date.

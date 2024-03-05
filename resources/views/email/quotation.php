@@ -138,8 +138,8 @@
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p>GSTIN: <span><strong><?php echo substr(config('constants.GSTIN_VALUE'), 0, 2) ?>XXX<?php echo substr(config('constants.GSTIN_VALUE'), 5, 10) ?></strong></span></p>
+                  <p>PAN No.: <span><strong>XXX<?php echo substr(config('constants.PAN_VALUE'), 0, 2) ?>XXX<?php echo substr(config('constants.PAN_VALUE'), 5, 10) ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                         <p>Vendor Code : <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
