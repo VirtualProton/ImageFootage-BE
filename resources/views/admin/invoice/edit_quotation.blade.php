@@ -363,7 +363,7 @@
 												<label for="tax">Tax Applicable</label>
 												<div>
 													<span style="float: left;">
-														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
+														<input type="checkbox" ng-model="GSTD" ng-checked="true" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country ?? 0}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
 													</span>
 													<span style="float: left;padding-left:20px;">
 														<input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">

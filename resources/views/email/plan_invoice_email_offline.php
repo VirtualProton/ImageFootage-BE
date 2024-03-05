@@ -93,7 +93,7 @@
                             <?php } ?>
                             <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
                         </p>
-                        <p>Phone: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
+                        <p>Mobile: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
                         <p>GSTIN: <span><strong><?php echo $orders['gst']; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
@@ -112,8 +112,8 @@
                         <p>Kind Attention: <span class="block-text"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
-                        <p>Purchase Order No.: <span class="block-text"><strong><?php echo "IN" . $orders['invoice_name']; ?></strong></span></p>
-                        <p>dated<span class="block-text"><strong><?php echo date("d.M.Y", strtotime($orders['invicecreted'])) ?></strong></span></p>
+                        <p>Purchase Order No.: <span class="block-text"><strong><?php $orders['job_number']; ?></strong></span></p>
+                        <p>dated<span class="block-text"><strong><?php echo date("d.M.Y", strtotime($orders['po_detail'])) ?></strong></span></p>
                     </div>
                 </div>
                 <div class="client-info-bottom">

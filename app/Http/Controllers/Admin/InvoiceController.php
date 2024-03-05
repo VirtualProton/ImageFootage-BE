@@ -335,7 +335,7 @@ class InvoiceController extends Controller
             'po_no.required' => 'The PO no field is required.',
             'po_no.unique' => 'The PO no must be unique.'
         ]);
-        $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no]);
+        $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no, 'po_detail' => date('Y-m-d')]);
         if ($update) {
             return redirect()->back()->with('success', 'PO no. updated successfully.');
         } else {
