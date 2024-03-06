@@ -87,6 +87,7 @@
                                 <h5>Phone : {{$user->phone}}</h5>
                                 <h5>GST : {{$user->gst}}</h5>
                                 <h5>PAN : {{$user->pan}}</h5>
+                                <h5>Mobile : {{$user->mobile}}
                               </div>
                             </div>
                             <div class="form-group col-sm-12">

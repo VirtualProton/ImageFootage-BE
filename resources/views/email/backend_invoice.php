@@ -135,13 +135,13 @@
                   <p>Address: <span><strong><?php echo $quotation[0]['address'] ?><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></strong></span>
                   </p>
                   <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo substr($quotation[0]['gst'], 0, 2) ?>XXX<?php echo substr($quotation[0]['gst'], 5, 10) ?></strong></span></p>
-                  <p>PAN: <span><strong>XXX<?php echo substr($quotation[0]['pan'], 3, 7) ?></strong></span></p>
+                  <p>GSTIN: <span><strong><?php echo $quotation[0]['gst'] ?></strong></span></p>
+                  <p>PAN: <span><strong><?php echo $quotation[0]['pan'] ?></strong></span></p>
                </div>
                <div class="client-info-rightside">
                   <p>Invoice No.: <span><strong><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name'] ?></span></strong></p>
                   <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE')?></strong></span></p>
                   <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                   <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                   <p>Vendor Code : <span><strong><?php echo config('constants.VENDOR_CODE') ?></strong></span></p>
@@ -155,7 +155,7 @@
                </div>
                <div class="client-info-rightside">
                   <p>Purchase Order No.: <span class="block-text"><strong><?php echo $po ?? ''; ?></strong></span></p>
-                  <p>dated <span><strong><?php echo date("d.M.Y", strtotime($quotation[0]['invicecreted'])); ?></strong></span></p>
+                  <p>dated <span><strong><?php echo date("d.M.Y", strtotime($quotation[0]['po_detail'])); ?></strong></span></p>
                </div>
             </div>
             <div class="client-info-bottom">

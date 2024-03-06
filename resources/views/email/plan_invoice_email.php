@@ -97,8 +97,8 @@
                         <p>GSTIN: <span><strong><?php echo $orders['user']['gst']; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                    <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                  <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                         <p>Vendor Code : <span><strong><?php echo config('constants.VENDOR_CODE') ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
@@ -210,6 +210,9 @@
                                 IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
                         </ol>
                         <ul>
+                        <?php if(isset($orders['payment_url']) && !empty($orders['payment_url'])){?>
+                    <li>For Payment through Credit/Debit Card <a href="<?php echo $orders['payment_url']; ?>"><strong>click here</strong></a></li>
+                    <?php } ?>
                             <li>Goods once sold cannot be replaced or returned.</li>
                             <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</li>
                             <li>All disputes are subject to Hyderabad Jurisdiction.</li>
