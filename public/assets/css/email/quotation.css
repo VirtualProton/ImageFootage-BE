@@ -66,11 +66,15 @@ header {
 
 /* Table paragraph section start */
 .table-paragraph {
-    padding: 0px 0 0 0;
+    /* padding: 0px 0 0 0; */
+    border: 1px solid black;
+    padding: 10px 0;
+    display: table;
 }
 
 .table-paragraph .container>div {
     margin-bottom: 20px;
+
 }
 
 .table-paragraph .container>div:last-child {
@@ -80,7 +84,7 @@ header {
 /* client-info start */
 
 .client-info-leftside {
-    width: 67%;
+    width: 49%;
     display: inline-block;
     vertical-align: top;
 }
@@ -103,10 +107,14 @@ header {
 }
 
 .client-info-rightside {
-    width: 32%;
+    width: 50%;
     display: inline-block;
     vertical-align: top;
 }
+
+.client-info-top{
+    white-space: nowrap;
+ }
 
 /* client-info end */
 

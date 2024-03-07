@@ -63,6 +63,11 @@
       .col-lg-4 div img {
          padding-top: 0 !important;
       }
+      .main{
+            border:1px solid black;
+            padding:10px
+        }
+
    </style>
    <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
@@ -119,7 +124,7 @@
    <?php } ?>
    <!-- Footer end -->
    <!-- Wrap the content of your PDF inside a main tag -->
-   <main>
+   <main class="main">
       <!-- Table paragraph section start -->
       <section class="table-paragraph">
          <div class="container">
@@ -154,13 +159,16 @@
                   <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                </div>
                <div class="client-info-rightside">
+               <?php if ($quotation[0]['flag'] == 2) { ?>
+                        <p>End Client: <br/><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                        <?php } ?>
                   <p>Purchase Order No.: <span class="block-text"><strong><?php echo $po ?? ''; ?></strong></span></p>
                   <p>dated <span><strong><?php echo date("d.M.Y", strtotime($quotation[0]['po_detail'])); ?></strong></span></p>
                </div>
             </div>
             <div class="client-info-bottom">
                <div class="client-info-leftside">
-                  <p>Total number of image(s)/footage(s): <span class="block-text"><strong><?php echo number_format($quotation[0]['total'], 2) . ' (' . $amount_in_words . ')'; ?></strong></span></p>
+                  <p>Total number of image(s)/footage(s): <span class="block-text"><strong><?php echo count($quotation); ?></strong></span></p>
                </div>
                <div class="client-info-rightside">
                   <p>IF Sales Representative: <span class="block-text"><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>
