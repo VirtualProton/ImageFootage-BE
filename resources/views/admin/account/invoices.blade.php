@@ -953,6 +953,12 @@
                              </div>
                           </div>
                           <div class="form-group row">
+                             <label for="" class="col-md-6">Job Ref/ PO Date :</label>
+                             <div class="col-md-6">
+                                <p><input type="date" name="po_date" id="po_date" ng-model="po_date" class="form-control"></p>
+                             </div>
+                          </div>
+                          <div class="form-group row">
                              <label for="" class="col-md-6">Country :</label>
                              <div class="col-md-6">
                                 @if(empty($country_name))
@@ -1162,6 +1168,12 @@
                                 <p><input type="text" name="poCustom" id="poCustom" ng-model="poCustom" class="form-control"></p>
                             </div>
                         </div>
+                        <div class="form-group row">
+                             <label for="" class="col-md-6">Job Ref/ PO Date :</label>
+                             <div class="col-md-6">
+                                <p><input type="date" name="po_date" id="po_date" ng-model="po_date" class="form-control"></p>
+                             </div>
+                          </div>
                         <div class="form-group row">
                           <label for="" class="col-md-6">Country :</label>
                           <div class="col-md-6">

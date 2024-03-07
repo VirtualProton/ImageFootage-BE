@@ -1693,6 +1693,7 @@ app.controller(
                     email: $("#download_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
                     flag: $("#flag").val(),
+                    old_quotation: path,
                 };
                 var fd = new FormData();
                 $http({
@@ -1903,8 +1904,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     data: {
                         quotation_id: quotation_id,
                         user_id: user_id,
-                        po: $('#poCustom').val() ?? "",
-                        po_date: $scope.poDate,
+                        po: $('#po').val() ?? "",
+                        po_date: $('#po_date').val(),
                         payment_method: $scope.payment_method,
                         gst: $("#gstNo").val(),
                         pan: $("#panNo").val(),

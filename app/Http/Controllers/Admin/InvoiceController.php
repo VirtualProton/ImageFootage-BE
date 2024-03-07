@@ -164,7 +164,8 @@ class InvoiceController extends Controller
         $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
-            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
+            $po_date = isset($data['po_date']) ? $data['po_date']: date('Y-m-d');
+            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
         }
     }
 
@@ -194,7 +195,8 @@ class InvoiceController extends Controller
         $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
-            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, '', $data['payment_method'], $data);
+            $po_date = isset($data['po_date']) ? $data['po_date']: date('Y-m-d');
+            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
         }
     }
 
