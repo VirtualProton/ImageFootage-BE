@@ -42,6 +42,16 @@
             left: 0px;
             height: 130px;
         }
+
+        .client-info-bottom.price-div .client-info-rightside{
+            text-align: right;
+        }
+
+        .main{
+            border:1px solid black;
+            padding:10px
+        }
+
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
@@ -76,7 +86,7 @@
     </footer>
 
     <!-- Wrap the content of your PDF inside a main tag -->
-    <main>
+    <main class="main">
         <!-- Table paragraph section start -->
         <section class="table-paragraph">
             <div class="container">
