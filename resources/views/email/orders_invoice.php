@@ -68,6 +68,11 @@
          margin-bottom: 140px;
          margin-top: 140px;
          }
+         .main{
+            border:1px solid black;
+            padding:10px
+        }
+
          .container {
          max-width: 1200px;
          width: 100%;
@@ -113,6 +118,9 @@
          /* Table paragraph section start */
          .table-paragraph {
          padding: 0px 0 0 0;
+         border: 1px solid black;
+    padding: 10px 0;
+    display: table;
          }
          .table-paragraph .container>div {
          margin-bottom: 20px;
@@ -122,7 +130,7 @@
          }
          /* client-info start */
          .client-info-leftside {
-         width: 67%;
+         width: 50%;
          display: inline-block;
          }
          .client-info-leftside p,
@@ -140,9 +148,12 @@
          display: block;
          }
          .client-info-rightside {
-         width: 32%;
+         width: 50%;
          display: inline-block;
          vertical-align: top;
+         }
+         .client-info-top{
+            white-space: nowrap;
          }
          /* client-info end */
          /* Photo gallery start */
@@ -393,7 +404,7 @@
       </footer>
       <!-- Footer end -->
       <!-- Wrap the content of your PDF inside a main tag -->
-      <main>
+      <main class="main">
          <!-- Table paragraph section start -->
          <section class="table-paragraph">
             <div class="container">
