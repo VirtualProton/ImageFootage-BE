@@ -410,6 +410,7 @@ class Common extends Model
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
+        $dataForEmail[0]['po_detail'] = $po_date;
 
         $pdf = PDF::loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date]));
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
@@ -507,6 +508,8 @@ class Common extends Model
         $dataForEmail[0]["GSTIN_VALUE"]                     = config('constants.GSTIN_VALUE') ?? '';
         $dataForEmail[0]["PAN_VALUE"]                       = config('constants.PAN_VALUE') ?? '';
         $dataForEmail[0]['package_products_count_in_words'] =  $this->convert_number_to_words($dataForEmail[0]['package_products_count']) ?? '';
+        $dataForEmail[0]['po_detail'] = $po_date;
+
         $pdf = PDF::loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
 
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
