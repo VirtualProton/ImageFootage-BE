@@ -145,7 +145,7 @@
                         <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
                         <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                        <p>Vendor Code : <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p>Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
 
 
                                 <?php if (!empty($quotation[$i]['product_id']) || !empty($quotation[$i]['product_image'])) { ?>
-                                    <p>Image ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
+                                    <p>Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
                                     <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
                                     <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                                 <?php  } ?>
@@ -214,7 +214,7 @@
                                   Total (INR)
                                </td>
                                <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                                <strong>7889</strong>
+                                <strong><?php echo $quotation[0]['total']; ?></strong>
                                </td>
                             </tr>
                          </table>

@@ -489,7 +489,8 @@ class UserController extends Controller
                     'country' => $request->country,
                     'state' => $request->state,
                     'city' => $request->city,
-                    'postal_code' => $request->user_postalcode
+                    'postal_code' => $request->user_postalcode,
+                    'vendor_code' => isset($request->user_code) ? $request->user_code : ''
                 );
                 $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
                 if ($userinfo === null) {
