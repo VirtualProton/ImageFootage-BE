@@ -107,7 +107,7 @@
                         <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE')?></strong></span></p>
                   <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                        <p>Vendor Code : <span><strong><?php echo config('constants.VENDOR_CODE') ?></strong></span></p>
+                        <p>Vendor Code : <span><strong><?php echo $orders['vendor_code'] ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
 
                     </div>
                     <div class="client-info-rightside">
-                        <p><strong>(INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
+                        <p><strong>Total (INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
                     </div>
                 </div>
                 <?php
