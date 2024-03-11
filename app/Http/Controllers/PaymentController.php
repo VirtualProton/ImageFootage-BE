@@ -317,7 +317,7 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders= Orders::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
+                $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company','vendor_code');
              }])->with(['items'=>function($query){
                 $query->with('product');
             }]) ->where('txn_id','=',$params['txnid'])
@@ -348,7 +348,7 @@ class PaymentController extends Controller
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
         $orders= Orders::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
+            $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company','vendor_code');
         }])->with(['items'=>function($query){
             $query->with('product');
         }]) ->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
@@ -511,7 +511,7 @@ class PaymentController extends Controller
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders = UserPackage::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','comapny')
+                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','comapny','vendor_code')
                             ->with('country')
                             ->with('state')
                             ->with('city');
@@ -564,7 +564,7 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'payment_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders = UserPackage::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst')
+                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst','vendor_code')
                     ->with('country')
                     ->with('state')
                     ->with('city');
@@ -593,7 +593,7 @@ class PaymentController extends Controller
                 ->update(['payment_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
         }
         $orders = UserPackage::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst')
+            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst','vendor_code')
                 ->with('country')
                 ->with('state')
                 ->with('city');
