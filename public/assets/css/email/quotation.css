@@ -66,9 +66,9 @@ header {
 
 /* Table paragraph section start */
 .table-paragraph {
-    /* padding: 0px 0 0 0; */
-    border: 1px solid black;
-    padding: 10px 0;
+    padding: 0px 0 0 0;
+    /* border: 1px solid black; */
+    /* padding: 10px 0; */
     display: table;
 }
 
@@ -152,7 +152,7 @@ header {
 }
 
 .amount-divs-row {
-    background-color: rgba(89, 89, 89, 0.29);
+    /* background-color: rgba(89, 89, 89, 0.29); */
     width: 100%;
     margin-bottom: 0 !important;
 }
@@ -161,13 +161,18 @@ header {
     font-weight: 900;
     font-size: 20px;
     display: inline-block;
-    width: 15%;
+    width:49.65%;
+    text-align: right;
+    background-color: rgba(89, 89, 89, 0.29);
+    padding: 10px;
 }
 
 .amount-divs .start {
-    width: 85%;
+    width: 50%;
     font-size: 20px;
     display: inline-block;
+background-color: rgba(89, 89, 89, 0.29);
+padding: 10px;
 }
 
 .photo-gallery {
@@ -372,10 +377,13 @@ footer {
 
 .single-gray-block {
     padding: 5px 10px;
-    font-size: 20px;
+    font-size: 16px;
     background-color: rgba(89, 89, 89, 0.29);
 }
 
 .page-break {
     page-break-before: always
+}
+.block-text.inline-text{
+    display: inline-block !important;
 }
