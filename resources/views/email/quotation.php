@@ -63,6 +63,10 @@
         .col-lg-4 div img {
             padding-top: 0 !important;
         }
+        .main{
+            border:1px solid black;
+            padding:10px
+        }
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
@@ -117,7 +121,7 @@
     </footer>
     <!-- Footer end -->
     <!-- Wrap the content of your PDF inside a main tag -->
-    <main>
+    <main class="main">
         <!-- Table paragraph section start -->
         <section class="table-paragraph">
             <div class="container">
@@ -130,8 +134,8 @@
                         <?php if ($quotation[0]['flag'] !== 2) { ?>
                         <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
-                        <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
-                            <span class="block-text"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
+                        <p>Address: <span ><strong><?php echo $quotation[0]['address'] ?></strong></span>
+                            <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
                         <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
@@ -147,13 +151,13 @@
                 </div>
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
+                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                     <?php if ($quotation[0]['flag'] == 2) { ?>
-                        <p>End Client: <br/><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                        <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
                         <?php } ?>
-                        <p>Product Description: <span class="block-text"><strong>Images/Footage- <?php echo count($quotation); ?></strong></span></p>
+                        <p>Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
                     </div>
                 </div>
                 <?php
@@ -197,25 +201,44 @@
                 }
                 ?>
                 <div class="row mb-0 amount-divs-row">
-                    <div class="col-lg-12 amount-divs">
-                        <div class="start">Total (INR)</div>
-                        <div class="end"><strong><?php echo $quotation[0]['total']; ?></strong></div>
-                        <div class="col-lg-12 single-gray-block">
-                        <p>In words: <strong>Rupees<?php echo $amount_in_words.' only' ?></strong></p>
+                    <div class="col-lg-12 amount-divs" style="padding: 0; width:100%; ">
+
+                        <div class="start-end" >
+                         <!-- <div class="start" >Total (INR)</div>
+                         <div class="end"><strong>987465</strong></div> -->
+
+                         <table width="100%" >
+                            <tr>
+                               <td width="50%"
+                                  style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                  Total (INR)
+                               </td>
+                               <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                <strong>7889</strong>
+                               </td>
+                            </tr>
+                         </table>
+                        </div>
+
+
+                        <?php
+                            if( $quotation[0]['tax'] != 0){
+                                ?>
+                                <div class="row" style="border:1px solid white;">
+                                    <div class="col-lg-12" style="padding: 0;width:100%">
+                                        <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+
+                        <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;">
+                        <p>In words: <strong>Rupees <?php echo $amount_in_words.' only' ?></strong></p>
                     </div>
                     </div>
                 </div>
-                <?php
-                if( $quotation[0]['tax'] != 0){
-                    ?>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p>Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
-                        </div>
-                    </div>
-                    <?php
-                }
-                ?>
+
 
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
