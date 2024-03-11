@@ -552,8 +552,7 @@
                 </div>
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text"
-                                style="white-space: break-spaces; display:inline;"><strong>
+                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong>
                                     <?php echo $orders['user']['first_name'] ?>
                                     <?php echo $orders['user']['last_name'] ?>
                                 </strong></span></p>
@@ -593,20 +592,18 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <th colspan="4"
-                                                        style="background: #F7FBFF; padding: 16px 12px; text-align: left; border-top: 1px solid #ddd;">
+                                                    <th colspan="4" style="background: #F7FBFF; padding: 16px 12px; text-align: left; border-top: 1px solid #ddd;">
 
                                                     </th>
                                                 </tr>
                                                 <?php
-
-                                                 $subtotalarray = 0;
+                                                $subtotalarray = 0;
 
                                                 for ($i = 0; $i < count($orders['items']); $i++) {
                                                     if ($i % 3 == 0) {
-                                                        ?>
+                                                ?>
                                                         <tr>
-                                                    <?php
+                                                        <?php
 
                                                     }
 
@@ -618,84 +615,85 @@
                                                         }
                                                         $protype = $orders['items'][$i]['product']['product_main_type'];  ?>
 
-                                                    <td width="32%"
-                                                        style="vertical-align: top; padding:10px 10px 10px 0; text-align: left; border-bottom: #ddd solid 1px; width:32%">
-                                                        <p style="margin: 0px; font-weight: bold; font-size:16px;">
-                                                        <?php echo $orders['items'][$i]['product']['product_id'] ?>
-                                                        </p>
-                                                        <p style="margin: 0px;font-weight: lighter;">
-                                                        <?php echo $protype; ?>
-                                                        </p>
-                                                        <a href="javascript:void(0)"
-                                                            style="padding-top: 12px; display: block;">
-                                                            <img src="<?php echo $orders['items'][$i]['product_thumb']; ?>" alt="product-img" width="200" height="150"
-                                                                style="object-fit: contain; width:100%" />
-                                                        </a>
-                                                        <table width="100%" style="font-size:12px;">
-                                                            <tr>
-                                                                <td style="text-align: left; padding-bottom: 2px;">
-                                                                    <strong>Product size</strong>: <span>
-                                                                    <?php echo $orders['items'][$i]['standard_size']; ?>
-                                                                    </span>
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="text-align: left; padding-bottom: 2px;">
-                                                                    <p style="margin: 0px; text-align: left; ">
-                                                                        <strong>Price:</strong> <span>Rs.
-                                                                        <?php echo $orders['items'][$i]['standard_price']  ?>
-                                                                        </span>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
+                                                            <td width="32%" style="vertical-align: top; padding:10px 10px 10px 0; text-align: left; border-bottom: #ddd solid 1px; width:32%">
+                                                                <p style="margin: 0px; font-weight: bold; font-size:16px;">
+                                                                    <?php echo $orders['items'][$i]['product']['product_id'] ?>
+                                                                </p>
+                                                                <p style="margin: 0px;font-weight: lighter;">
+                                                                    <?php echo $protype; ?>
+                                                                </p>
+                                                                <a href="javascript:void(0)" style="padding-top: 12px; display: block;">
+                                                                    <img src="<?php echo $orders['items'][$i]['product_thumb']; ?>" alt="product-img" width="200" height="150" style="object-fit: contain; width:100%" />
+                                                                </a>
+                                                                <table width="100%" style="font-size:12px;">
+                                                                    <tr>
+                                                                        <td style="text-align: left; padding-bottom: 2px;">
+                                                                            <strong>Product size</strong>: <span>
+                                                                                <?php echo $orders['items'][$i]['standard_size']; ?>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="text-align: left; padding-bottom: 2px;">
+                                                                            <p style="margin: 0px; text-align: left; ">
+                                                                                <strong>Price:</strong> <span>Rs.
+                                                                                    <?php echo $orders['items'][$i]['standard_price']  ?>
+                                                                                </span>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
 
-                                                    <?php }
+                                                        <?php }
 
                                                     if ($i % 3 == 2 || $i == count($orders['items']) - 1) {
-                                                    ?>
-                                                </tr>
+                                                        ?>
+                                                        </tr>
                                                 <?php }
-                                            } ?>
-
-
-
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table width="100%" class="table taxpdf" style="border-collapse: collapse;">
+                        <tbody>
+                            <tr class="rr2">
+                                <td colspan="2">
+                                    <div class="qoutedeail" style="text-align: left;">
+                                        <table width="100%" style="border-collapse: collapse;">
+                                            <tbody>
                                                 <tr style="width:100%">
                                                     <td colspan="4">
-
                                                         <table width="100%" style="margin-bottom: 20px;">
                                                             <tr>
-                                                                <td colspan="2" width="50%"
-                                                                    style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td colspan="2" width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     Amount (INR):
                                                                 </td>
-                                                                <td width="50%"
-                                                                    style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     Rs.
                                                                     <?php
                                                                     echo $subtotalarray ?>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="2" width="50%"
-                                                                    style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td colspan="2" width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     GST Tax:
                                                                 </td>
-                                                                <td width="50%"
-                                                                    style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     Rs.
                                                                     <?php echo $orders['tax'] ?>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="2" width="50%"
-                                                                    style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td colspan="2" width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     Total (INR):
                                                                 </td>
-                                                                <td width="50%"
-                                                                    style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     Rs.
                                                                     <?php echo $orders['order_total'] ?>
                                                                 </td>
