@@ -114,7 +114,7 @@
                 </div>
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
+                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <p>Purchase Order No.: <span class="block-text"><strong><?php $orders['job_number']; ?></strong></span></p>

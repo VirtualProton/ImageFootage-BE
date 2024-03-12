@@ -63,9 +63,10 @@
         .col-lg-4 div img {
             padding-top: 0 !important;
         }
-        .main{
-            border:1px solid black;
-            padding:10px
+
+        .main {
+            border: 1px solid black;
+            padding: 10px
         }
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation.css">
@@ -91,7 +92,7 @@
         <?php if ($quotation[0]['flag'] == 0) { ?>
             <div class="container">
                 <div class="footer-left">
-                    <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
+                    <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
                     <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                         500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                     </p>
@@ -129,12 +130,12 @@
                     <div class="client-info-leftside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
 
-                        <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] :$quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
-                        <?php }?>
-                        <?php if ($quotation[0]['flag'] !== 2) { ?>
-                        <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
+                            <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
-                        <p>Address: <span ><strong><?php echo $quotation[0]['address'] ?></strong></span>
+                        <?php if ($quotation[0]['flag'] !== 2) { ?>
+                            <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                        <?php } ?>
+                        <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
                             <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
                         <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
@@ -154,8 +155,8 @@
                         <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
-                    <?php if ($quotation[0]['flag'] == 2) { ?>
-                        <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                        <?php if ($quotation[0]['flag'] == 2) { ?>
+                            <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
                         <?php } ?>
                         <p>Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
                     </div>
@@ -176,12 +177,12 @@
                             $class = "col-lg-4 ";
                         } ?>
                             <div class="<?php echo $class; ?>">
-                                <div>
-                                <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                                    <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108">
-                                    <?php }else{ ?>
-                                    <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108">
-                                <?php }?>
+                                <div style="padding-top: 10px;">
+                                    <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                                        <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                                    <?php } else { ?>
+                                        <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                                    <?php } ?>
                                 </div>
 
 
@@ -203,39 +204,38 @@
                 <div class="row mb-0 amount-divs-row">
                     <div class="col-lg-12 amount-divs" style="padding: 0; width:100%; ">
 
-                        <div class="start-end" >
-                         <!-- <div class="start" >Total (INR)</div>
+                        <div class="start-end">
+                            <!-- <div class="start" >Total (INR)</div>
                          <div class="end"><strong>987465</strong></div> -->
 
-                         <table width="100%" >
-                            <tr>
-                               <td width="50%"
-                                  style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                                  Total (INR)
-                               </td>
-                               <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                                <strong><?php echo $quotation[0]['total']; ?></strong>
-                               </td>
-                            </tr>
-                         </table>
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                        Total (INR)
+                                    </td>
+                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                        <strong><?php echo $quotation[0]['total']; ?></strong>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
 
                         <?php
-                            if( $quotation[0]['tax'] != 0){
-                                ?>
-                                <div class="row" style="border:1px solid white;">
-                                    <div class="col-lg-12" style="padding: 0;width:100%">
-                                        <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
-                                    </div>
+                        if ($quotation[0]['tax'] != 0) {
+                        ?>
+                            <div class="row" style="border:1px solid white;">
+                                <div class="col-lg-12" style="padding: 0;width:100%">
+                                    <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                                 </div>
-                                <?php
-                            }
-                            ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
                         <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;">
-                        <p>In words: <strong>Rupees <?php echo $amount_in_words.' only' ?></strong></p>
-                    </div>
+                            <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
+                        </div>
                     </div>
                 </div>
 
@@ -312,7 +312,7 @@
         <!-- Signature section start -->
         <section class="signature">
             <div class="container">
-                <p>For <span><?php config('constants.company_name')?></span></p>
+                <p>For <span><?php config('constants.company_name') ?></span></p>
                 <img src="<?php echo $quotation[0]['signature']; ?>" alt="signature" width="171" height="89">
                 <p>Authorized Signatory</p>
             </div>

@@ -63,11 +63,11 @@
       .col-lg-4 div img {
          padding-top: 0 !important;
       }
-      .main{
-            border:1px solid black;
-            padding:10px
-        }
 
+      .main {
+         border: 1px solid black;
+         padding: 10px
+      }
    </style>
    <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
@@ -92,7 +92,7 @@
       <footer>
          <div class="container">
             <div class="footer-left">
-               <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
+               <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
                <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                   500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                </p>
@@ -130,13 +130,13 @@
          <div class="container">
             <div class="client-info-top">
                <div class="client-info-leftside">
-               <?php if ($quotation[0]['flag'] == 2) { ?>
+                  <?php if ($quotation[0]['flag'] == 2) { ?>
 
-                    <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] :$quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
-                    <?php }?>
-                    <?php if ($quotation[0]['flag'] !== 2) { ?>
-                    <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'].' '.$quotation[0]['last_name'] ?> </span></strong></p>
-                    <?php } ?>
+                     <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                  <?php } ?>
+                  <?php if ($quotation[0]['flag'] !== 2) { ?>
+                     <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                  <?php } ?>
                   <p>Address: <span><strong><?php echo $quotation[0]['address'] ?><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></strong></span>
                   </p>
                   <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
@@ -146,7 +146,7 @@
                <div class="client-info-rightside">
                   <p>Invoice No.: <span><strong><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name'] ?></span></strong></p>
                   <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE')?></strong></span></p>
+                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
                   <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                   <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                   <p>Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
@@ -156,12 +156,12 @@
             </div>
             <div class="client-info-bottom">
                <div class="client-info-leftside">
-                  <p>Kind Attention: <span class="block-text"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
+                  <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                </div>
                <div class="client-info-rightside">
-               <?php if ($quotation[0]['flag'] == 2) { ?>
-                        <p>End Client: <br/><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
-                        <?php } ?>
+                  <?php if ($quotation[0]['flag'] == 2) { ?>
+                     <p>End Client: <br /><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                  <?php } ?>
                   <p>Purchase Order No.: <span class="block-text"><strong><?php echo $po ?? ''; ?></strong></span></p>
                   <p>dated <span><strong><?php echo date("d.M.Y", strtotime($quotation[0]['po_detail'])); ?></strong></span></p>
                </div>
@@ -195,12 +195,12 @@
                      $class = "col-lg-4 ";
                   } ?>
                      <div class="<?php echo $class; ?>">
-                        <div>
-                        <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                            <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108">
-                            <?php }else{ ?>
-                            <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108">
-                        <?php }?>
+                        <div style="padding-top: 10px;">
+                           <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                              <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                           <?php } else { ?>
+                              <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                           <?php } ?>
 
                         </div>
                         <?php if (!empty($quotation[$i]['product_id'])) {
@@ -226,30 +226,66 @@
                $break_amount_div = 'page-break';
             } ?>
             <div class="<?php echo 'row mb-0 amount-divs-row ' . $break_amount_div; ?>">
-               <div class="col-lg-12 amount-divs">
-                  <div class="start">Amount (INR)</div>
-                  <div class="end"><strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong></div>
+               <div class="col-lg-12 amount-divs" style="padding: 0; width:100%; ">
+                  <!-- <div class="start">Amount (INR)</div>
+                  <div class="end"><strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong></div> -->
+                  <div class="start-end">
+                     <table width="100%" style="width: 100%;">
+                        <tr>
+                           <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                           Amount (INR)
+                           </td>
+                           <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                              <strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
                </div>
             </div>
             <?php if (!empty($quotation[0]['tax'])) {
             ?>
                <div class="row mb-0 amount-divs-row">
-                  <div class="col-lg-12 amount-divs">
-                     <div class="start">Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</div>
-                     <div class="end"><strong><?php echo $quotation[0]['tax']; ?></strong></div>
+                  <div class="col-lg-12 amount-divs" style="padding: 0; width:100%;">
+                     <!-- <div class="start">Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</div>
+                     <div class="end"><strong><?php echo $quotation[0]['tax']; ?></strong></div> -->
+                     <div class="start-end">
+                        <table width="100%" style="width: 100%;">
+                           <tr>
+                              <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                              Add: GST @ <?php echo config('constants.GST_VALUE') ?>%
+                              </td>
+                              <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                 <strong><?php echo $quotation[0]['tax']; ?></strong>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
                   </div>
                </div>
             <?php }
             ?>
             <div class="row mb-0 amount-divs-row">
-               <div class="col-lg-12 amount-divs">
-                  <div class="start">Total Invoice Amount (INR)</div>
-                  <div class="end"><strong><?php echo number_format($quotation[0]['total'], 2) ?></strong></div>
+               <div class="col-lg-12 amount-divs" style="padding: 0; width:100%;">
+                  <!-- <div class="start">Total Invoice Amount (INR)</div>
+                  <div class="end"><strong><?php echo number_format($quotation[0]['total'], 2) ?></strong></div> -->
+                  <div class="start-end">
+                     <table width="100%" style="width: 100%;">
+                        <tr>
+                           <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                           Total Invoice Amount (INR)
+                           </td>
+                           <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                              <strong><?php echo number_format($quotation[0]['total'], 2) ?></strong>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-12 single-gray-block">
-                  <p>In words: <strong>Rupees<?php echo $amount_in_words.' only' ?></strong></p>
+               <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:2px solid white; margin-top:1px;">
+                  <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
                </div>
             </div>
             <div class="licensing-terms">
@@ -258,7 +294,7 @@
                   <ul>
                      <li>License Rights are only assigned on payment of this invoice.</li>
                      <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
-                        <span><strong><?php config('constants.company_name')?>,</strong></span>
+                        <span><strong><?php config('constants.company_name') ?>,</strong></span>
                         c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
                      </li>
                      <li>
@@ -286,7 +322,7 @@
       <!-- Signature section start -->
       <section class="signature">
          <div class="container">
-            <p>For <span><?php config('constants.company_name')?></span></p>
+            <p>For <span><?php config('constants.company_name') ?></span></p>
             <img src="<?php echo $quotation[0]['signature']; ?>" alt="signature" width="171" height="89">
             <p>Authorized Signatory</p>
          </div>
