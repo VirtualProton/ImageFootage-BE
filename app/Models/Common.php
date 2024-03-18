@@ -470,6 +470,10 @@ class Common extends Model
     {
         $dataForEmail = $this->getSubData($quotation_id, $user_id);
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
+        if($request_data['payment_method'] =='chq'){
+            $this->findPackage($dataForEmail[0]['package_id']);
+        }
+
         $amount_in_words   = isset($dataForEmail[0]['total']) && !empty($dataForEmail[0]['total']) ? $this->convert_number_to_words($dataForEmail[0]['total']) : '';
         $total = $dataForEmail[0]['total'] ?? 0;
 
@@ -1147,5 +1151,15 @@ class Common extends Model
                 ->first();
             return !empty($user) ? true : false;
         }
+    }
+
+    public function findPackage($package_id){
+        if(!empty($package_id)){
+            UserPackage::where('id',$package_id)->update([
+                'status'=> 1,
+                'payment_status'=>'Transction Success'
+            ]);
+        }
+
     }
 }

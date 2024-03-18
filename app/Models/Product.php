@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Api;
 use App\Models\ImageFilterValue;
 use App\Models\ImageFootageFilter;
@@ -1544,5 +1544,20 @@ class Product extends Model
         } else {
             Log::channel('daily')->warning("The 'items' index is not present or is not an array.");
         }
+    }
+
+    // created this function because, from the third party there is a chance of getting similar title followed by similar slug, so to fix this issue
+    public function checkAndUpdateSimilarSlug(){
+        DB::statement("
+            UPDATE imagefootage_products p1
+            JOIN (
+                SELECT id, slug,
+                       ROW_NUMBER() OVER (PARTITION BY slug ORDER BY id) AS row_num
+                FROM imagefootage_products
+            ) p2 ON p1.id = p2.id
+            SET p1.slug = CONCAT(p2.slug, '-', p2.id)
+            WHERE p2.row_num > 1
+        ");
+        return true;
     }
 }
