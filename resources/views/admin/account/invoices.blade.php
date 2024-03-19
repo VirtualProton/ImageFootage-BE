@@ -107,8 +107,8 @@
                             </div>
                           </thead>
                         </table>
-                        {{-- @include('admin.account.add-comment')
-                        @include('admin.account.comment') --}}
+                        @include('admin.account.add-comment')
+                        @include('admin.account.comment')
                       </div>
                     </div>
                     <div class="tab-pane fade @if($active_tab=="tab2") in active @endif" id="posts">
@@ -132,12 +132,12 @@
                             </li>
                             <li class="@if($active_tab=="custom_tab") active @endif">
                               <a href="#custom_invoices" role="tab" data-toggle="tab">
-                                <i class="fa fa-user"></i> Custom
+                                <i class="fa fa-user"></i> Custom IF
                               </a>
                             </li>
                             <li class="@if($active_tab=="others_tab") active @endif">
                               <a href="#other_invoices" role="tab" data-toggle="tab">
-                                <i class="fa fa-user"></i> Others
+                                <i class="fa fa-user"></i> Custom
                               </a>
                             </li>
                           </ul>

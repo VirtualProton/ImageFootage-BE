@@ -258,6 +258,7 @@ class CronController extends Controller
 
                     if(!empty($pantharmediaData) && count($pantharmediaData) > 0){
                         $this->product->savePantherMediaImage($pantharmediaData, $percategory['category_id'], $allRequest);
+                        $this->product->checkAndUpdateSimilarSlug();
                     }
                 } else {
                     $imagesMedia        = new \App\Http\Pond5\ImageApi();
@@ -272,6 +273,7 @@ class CronController extends Controller
 
                     if (!empty($pond5ImagesData) && count($pond5ImagesData) > 0) {
                         $this->product->savePond5Image($pond5ImagesData, $percategory['category_id'], $allRequest);
+                        $this->product->checkAndUpdateSimilarSlug();
                     }
                 }
             } else if ($type == '2' || $type == '4') {
@@ -289,6 +291,7 @@ class CronController extends Controller
 
                 if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
                     $this->product->savePond5Footage($pond5FootageMediaData, $percategory['category_id'], $allRequest);
+                    $this->product->checkAndUpdateSimilarSlug();
                 }
             } else if ($type == '3') {
                 $keyword['search']  = $term;
@@ -305,6 +308,7 @@ class CronController extends Controller
 
                 if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
                     $this->product->savePond5Music($pond5MusicMediaData, $percategory['category_id'], $allRequest);
+                    $this->product->checkAndUpdateSimilarSlug();
                 }
             }
             return true;

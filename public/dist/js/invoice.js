@@ -1906,7 +1906,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         user_id: user_id,
                         po: $('#po').val() ?? "",
                         po_date: $('#po_date').val(),
-                        payment_method: $scope.payment_method,
+                        payment_method: $("#payment_method").val(),
                         gst: $("#gstNo").val(),
                         pan: $("#panNo").val(),
                         phone: $("#phone").val(),
@@ -1965,7 +1965,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         user_id: user_id,
                         po: $('#poCustom').val() ?? "",
                         po_date: $scope.poDateCustom,
-                        payment_method: $scope.payment_method,
+                        payment_method: $("#payment_method").val(),
                         gst: $("#gstNocus").val(),
                         pan: $("#panNocus").val(),
                         phone: $("#phonecus").val(),
@@ -2500,7 +2500,7 @@ app.controller(
             // } else if (type == 'IGSTT') {
             //     total = (subtotalvalue * (18) / 100);
             // }
-            
+
             if (tax_percent == true) {
                 //total = intialtotal + total;
                 if(countryId !== 101){
