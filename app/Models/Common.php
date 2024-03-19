@@ -555,7 +555,7 @@ class Common extends Model
                 ->update($update_data);
             DB::table('imagefootage_user_package')
                 ->where('id', '=', $dataForEmail[0]['package_id'])
-                ->update(['status' => 0, 'order_type' => '2']);
+                ->update(['order_type' => '2']);
             unlink(storage_path('app/public/pdf') . '/' . $fileName);
         }
         $resp = array();
