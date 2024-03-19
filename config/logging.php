@@ -102,6 +102,12 @@ return [
             'level' => 'info'
         ],
 
+        'similar-slug-update' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/similar-slug-update.log'),
+            'level' => 'info'
+        ],
+
         'panther_media' => [
             'driver' => 'single',
             'path' => storage_path('logs/panther-media/panther_media.log'),
