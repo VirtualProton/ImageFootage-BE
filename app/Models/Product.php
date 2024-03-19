@@ -1548,6 +1548,7 @@ class Product extends Model
 
     // created this function because, from the third party there is a chance of getting similar title followed by similar slug, so to fix this issue
     public function checkAndUpdateSimilarSlug(){
+        Log::channel('similar-slug-update')->info("Duplicate record found !! we have slug updated it with the unique ID ");
         DB::statement("
             UPDATE imagefootage_products p1
             JOIN (
