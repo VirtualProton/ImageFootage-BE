@@ -243,6 +243,8 @@ class CronController extends Controller
     public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest, $thirdparty = 'panthermedia'){
         $keyword = [];
         $trending_word  = TrendingWord::where('name', $term)->first();
+        $limitPond5 = config('thirdparty.pond5.current_per_page_limit');
+        $limitPanther = config('thirdparty.panthermedia.current_per_page_limit');
         
         try{
             if ($type == '1' || $type == '4') {
@@ -252,11 +254,12 @@ class CronController extends Controller
                 // conditional based search for panthermedia or pond5, as per new request by client
                 if($thirdparty == 'panthermedia'){
                     $pantherMediaImages = new ImageApi();
-                    $pantharmediaData   = $pantherMediaImages->search($keyword, [], config('thirdparty.panthermedia.current_per_page_limit'));
+                    
+                    $pantharmediaData   = $pantherMediaImages->search($keyword, [], $limitPanther);
                     
                     if(!empty($trending_word) && empty($trending_word->total_records)){
                         $trending_word->total_records = $pantharmediaData['items']['total'];
-                        $trending_word->total_fetched = 80;
+                        $trending_word->total_fetched = $limitPanther;
                         $trending_word->save();
 
                         $data = [
@@ -299,11 +302,12 @@ class CronController extends Controller
                 $keyword['search']  = $term;
                 $percategory['category_id'] = $category;
                 $footageMedia          = new FootageApi();
-                $pond5FootageMediaData = $footageMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'));
+                
+                $pond5FootageMediaData = $footageMedia->search($keyword, [], $limitPond5);
 
                 if(!empty($trending_word) && empty($trending_word->total_records)){
                     $trending_word->total_records = $pond5FootageMediaData['totalNumberOfItems'];
-                    $trending_word->total_fetched = 100;
+                    $trending_word->total_fetched = $limitPond5;
                     $trending_word->save();
 
                     $data = [
@@ -330,11 +334,11 @@ class CronController extends Controller
                 $keyword['search']  = $term;
                 $percategory['category_id'] = $category;
                 $musicMedia          = new MusicApi();
-                $pond5MusicMediaData = $musicMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'));
+                $pond5MusicMediaData = $musicMedia->search($keyword, [], $limitPond5);
 
                 if(!empty($trending_word) && empty($trending_word->total_records)){
                     $trending_word->total_records = $pond5MusicMediaData['totalNumberOfItems'];
-                    $trending_word->total_fetched = 100;
+                    $trending_word->total_fetched = $limitPond5;
                     $trending_word->save();
 
                     $data = [

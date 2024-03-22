@@ -38,33 +38,35 @@ class FetchThirdPartyData implements ShouldQueue
         $product = new Product();
         $keyword = [];
         $keyword['search']  = $this->details['trending_word']->name;
+        $limitPond5 = config('thirdparty.pond5.current_per_page_limit');
+        $limitPanther = config('thirdparty.panthermedia.current_per_page_limit');
 
         for ($i = 2; $i <= config('constants.page_limit_to_fetch_for_third_party'); $i++) {
 
             if ($this->details['type'] == 'Image') {
                 $pantherMediaImages = new ImageApi();
-                $pantharmediaData   = $pantherMediaImages->search($keyword, [], config('thirdparty.panthermedia.current_per_page_limit'), $i);
+                $pantharmediaData   = $pantherMediaImages->search($keyword, [], $limitPanther, $i);
                 if (!empty($pantharmediaData) && count($pantharmediaData) > 0) {
                     $product->savePantherMediaImage($pantharmediaData, null, $this->details['all_request']);
-                    $this->details['trending_word']->total_fetched += config('thirdparty.panthermedia.current_per_page_limit');
+                    $this->details['trending_word']->total_fetched += $limitPanther;
                 }
             }
 
             if ($this->details['type'] == 'Footage') {
                 $footageMedia          = new FootageApi();
-                $pond5FootageMediaData = $footageMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'), $i);
+                $pond5FootageMediaData = $footageMedia->search($keyword, [], $limitPond5, $i);
                 if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
                     $product->savePond5Footage($pond5FootageMediaData, null, $this->details['all_request']);
-                    $this->details['trending_word']->total_fetched += config('thirdparty.pond5.current_per_page_limit');
+                    $this->details['trending_word']->total_fetched += $limitPond5;
                 }
             }
 
             if ($this->details['type'] == 'Music') {
                 $musicMedia          = new MusicApi();
-                $pond5MusicMediaData = $musicMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'), $i);
+                $pond5MusicMediaData = $musicMedia->search($keyword, [], $limitPond5, $i);
                 if (!empty($pantharmediaData) && count($pantharmediaData) > 0) {
                     $product->savePond5Music($pond5MusicMediaData, null, $this->details['all_request']);
-                    $this->details['trending_word']->total_fetched += config('thirdparty.pond5.current_per_page_limit');
+                    $this->details['trending_word']->total_fetched += $limitPond5;
                 }
             }
 
