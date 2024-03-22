@@ -79,7 +79,7 @@ class SearchController extends Controller
                 $trending_word        = new TrendingWord();
                 $trending_word->name  = $search_keyword;
                 $trending_word->count = 1;
-                if($countTotalRecords == 0 || $countTotalRecords < 100){
+                if($countTotalRecords == 0 || $countTotalRecords < config('constants.products_in_database_limit')){
                     $trending_word->is_processing_keyword = 1;
                 }
                 $trending_word->save();
@@ -87,7 +87,7 @@ class SearchController extends Controller
         }
 
         // If records not found check with respective third party api for the data
-        if($countTotalRecords == 0 || $countTotalRecords < 100){
+        if($countTotalRecords == 0 || $countTotalRecords < config('constants.products_in_database_limit')){
             $cronController  = new CronController();
             $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
