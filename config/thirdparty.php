@@ -9,12 +9,14 @@ return [
         'algo' => env('PANTHERMEDIA_ALGO','sha1'),
         'access_key' => env('PANTHERMEDIA_ACCESS_KEY',null),
         'api_url' => env('PANTHERMEDIA_URL','https://rest.panthermedia.net'),
-        'home_categories' => ''
+        'home_categories' => '',
+        'current_per_page_limit' => 80
     ],
     'pond5' => [
         'api_key' => env('POND5_API_KEY', 'cJ70pBIk119'),
         'api_secret' => env('POND5_API_SECRET', 'j5weLX518rMP119'),
         'api_url' => env('POND5_URL','https://api-reseller.pond5.com'),
-        'home_categories' => ''
+        'home_categories' => '',
+        'current_per_page_limit' => 100
     ]
 ];

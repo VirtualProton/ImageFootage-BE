@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use App\Http\PantherMedia\ImageApi;
+use App\Models\Product;
+use App\Http\Pond5\FootageApi;
+use App\Http\Pond5\MusicApi;
+
+class FetchThirdPartyData implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $details;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct($details)
+    {
+        $this->details = $details;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $product = new Product();
+        $keyword = [];
+        $keyword['search']  = $this->details['trending_word']->name;
+
+        for ($i = 2; $i <= config('constants.page_limit_to_fetch_for_third_party'); $i++) {
+
+            if ($this->details['type'] == 'Image') {
+                $pantherMediaImages = new ImageApi();
+                $pantharmediaData   = $pantherMediaImages->search($keyword, [], config('thirdparty.panthermedia.current_per_page_limit'), $i);
+                if (!empty($pantharmediaData) && count($pantharmediaData) > 0) {
+                    $product->savePantherMediaImage($pantharmediaData, null, $this->details['all_request']);
+                    $this->details['trending_word']->total_fetched += config('thirdparty.panthermedia.current_per_page_limit');
+                }
+            }
+
+            if ($this->details['type'] == 'Footage') {
+                $footageMedia          = new FootageApi();
+                $pond5FootageMediaData = $footageMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'), $i);
+                if (!empty($pond5FootageMediaData) && count($pond5FootageMediaData) > 0) {
+                    $product->savePond5Footage($pond5FootageMediaData, null, $this->details['all_request']);
+                    $this->details['trending_word']->total_fetched += config('thirdparty.pond5.current_per_page_limit');
+                }
+            }
+
+            if ($this->details['type'] == 'Music') {
+                $musicMedia          = new MusicApi();
+                $pond5MusicMediaData = $musicMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'), $i);
+                if (!empty($pantharmediaData) && count($pantharmediaData) > 0) {
+                    $product->savePond5Music($pond5MusicMediaData, null, $this->details['all_request']);
+                    $this->details['trending_word']->total_fetched += config('thirdparty.pond5.current_per_page_limit');
+                }
+            }
+
+            $product->checkAndUpdateSimilarSlug();
+
+            if(!empty($keyword['search'])){
+                $this->details['trending_word']->total_run_remain += 1;
+                $this->details['trending_word']->save();
+            }
+        }
+    }
+}
