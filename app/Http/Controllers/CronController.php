@@ -265,7 +265,8 @@ class CronController extends Controller
                         $data = [
                             'trending_word' => $trending_word,
                             'all_request' => $allRequest,
-                            'type' => 'Image'
+                            'type' => 'Image',
+                            'category' => $percategory['category_id']
                         ];
                         
                         dispatch(new FetchThirdPartyData($data));
@@ -313,7 +314,8 @@ class CronController extends Controller
                     $data = [
                         'trending_word' => $trending_word,
                         'all_request' => $allRequest,
-                        'type' => 'Footage'
+                        'type' => 'Footage',
+                        'category' => $percategory['category_id']
                     ];
                     
                     dispatch(new FetchThirdPartyData($data));
@@ -344,7 +346,8 @@ class CronController extends Controller
                     $data = [
                         'trending_word' => $trending_word,
                         'all_request' => $allRequest,
-                        'type' => 'Music'
+                        'type' => 'Music',
+                        'category' => $percategory['category_id']
                     ];
                     
                     dispatch(new FetchThirdPartyData($data));

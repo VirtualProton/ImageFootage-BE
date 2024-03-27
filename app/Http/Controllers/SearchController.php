@@ -19,6 +19,7 @@ use CORS;
 use App\Models\TrendingWord;
 use App\Http\Pond5\MusicApi;
 use App\Models\ImageFilterValue;
+use App\Jobs\FetchThirdPartyData;
 
 
 class SearchController extends Controller
@@ -66,7 +67,27 @@ class SearchController extends Controller
         }
 
         $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
-        $countTotalRecords = count($all_products);
+
+        $pType = 'Image';
+        if ($keyword['productType'] == '1' || $keyword['productType'] == '4') {
+            $pType = 'Image';
+        }else if($keyword['productType'] == '2' || $keyword['productType'] == '4'){
+            $pType = 'Footage';
+        }else if($keyword['productType'] == '3'){
+            $pType = 'Music';
+        }
+        
+        $jobDispatch = ($all_products['total']/15) - 3;
+        if($jobDispatch < $keyword['pagenumber']){
+            $dataForJob = [
+                'trending_word' => '',
+                'all_request' => $getKeyword,
+                'type' => $pType,
+                'category' => $keyword['category_id']
+            ];
+    
+            dispatch(new FetchThirdPartyData($dataForJob));
+        }
 
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
@@ -79,7 +100,7 @@ class SearchController extends Controller
                 $trending_word        = new TrendingWord();
                 $trending_word->name  = $search_keyword;
                 $trending_word->count = 1;
-                if($countTotalRecords == 0 || $countTotalRecords < config('constants.products_in_database_limit')){
+                if($all_products['total'] == 0 || $all_products['total'] < config('constants.products_in_database_limit')){
                     $trending_word->is_processing_keyword = 1;
                 }
                 $trending_word->save();
@@ -87,7 +108,7 @@ class SearchController extends Controller
         }
 
         // If records not found check with respective third party api for the data
-        if($countTotalRecords == 0 || $countTotalRecords < config('constants.products_in_database_limit')){
+        if($all_products['total'] == 0 || $all_products['total'] < config('constants.products_in_database_limit')){
             $cronController  = new CronController();
             $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
