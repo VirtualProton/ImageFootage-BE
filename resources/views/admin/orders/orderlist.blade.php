@@ -15,7 +15,6 @@
         <li class="active">Orders List</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content" >
         <div class="row">
@@ -70,7 +69,7 @@
     <?php /*<td>{{$orders['state']['state']}}</td> 
     <td> @php if($orders['city']['name'] != null ) {{$orders['city']['name']}}</td>
 
-    <td>{{$orders['country']['name']}}</td> */ ?>
+     <!-- <td>{{$orders['country']['name']}}</td> -->
      <td>{{$orders['bill_zip']}}</td>
      <td><a target="_blank" href="<%orders['invoice']" ng-show="orders['invoice']">Download</a></td> 
      <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td> 

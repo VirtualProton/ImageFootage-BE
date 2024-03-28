@@ -45,7 +45,6 @@
 <!-- <th>Action</th>
  --></thead>
  <tbody>
-<?php    //dd($orderlists); ?>
 @foreach($orderlists as $orders)
 
  <!-- <tr ng-if="orderslist" ng-repeat="orders in orderslist"> -->

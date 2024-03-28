@@ -23,7 +23,7 @@ class AdminController extends Controller
 
     public function authenticate(Request $request)
     {
-       $this->validate($request, [
+      $this->validate($request, [
             'email'   => 'required|email',
             'password' => 'required|min:6'
         ]);

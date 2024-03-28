@@ -15,7 +15,6 @@ use File;
 use App\Http\TnnraoSms\TnnraoSms;
 use App\Models\Contributor;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Hash;
 use App;
 use App\Helpers\Helper;
