@@ -1,19 +1,19 @@
-on:
-  push:
-    branches:
-      - master
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.MAIN_HOST }}
-          username: ${{ secrets.MAIN_USERNAME }}
-          password: ${{ secrets.MAIN_SSH_PASSWORD }}
-          script: |
-            cd /var/www/html/backend
-            git pull origin master
-            php artisan optimize
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Deploy to server
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.MAIN_HOST }}
+#           username: ${{ secrets.MAIN_USERNAME }}
+#           password: ${{ secrets.MAIN_SSH_PASSWORD }}
+#           script: |
+#             cd /var/www/html/backend
+#             git pull origin master
+#             php artisan optimize
