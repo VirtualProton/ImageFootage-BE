@@ -3,8 +3,8 @@
     <button type="button" class="close" aria-label="Close" data-dismiss="alert">
         <span aria-hidden="true">×</span>
     </button>
-    <span class="help-block">{{ Session::get('success') }}</span>
-
+    <span class="">{{ Session::get('success') }}</span>
+    <!-- help-block -->
 </div>
 @endif
 @if(Session::has('error'))
@@ -12,8 +12,8 @@
     <button type="button" class="close" aria-label="Close" data-dismiss="alert">
         <span aria-hidden="true">×</span>
     </button>
-    <span class="help-block">{{ Session::get('error') }}</span>
-
+    <span class="">{{ Session::get('error') }}</span>
+    <!-- help-block -->
 </div>
 @endif
 

@@ -1,0 +1,1 @@
+INSERT INTO `imagefootage_product_sort_types` VALUES (1,'Relevance','1',NULL,'2022-12-07 13:51:14'),(2,'Fresh','1',NULL,'2022-12-07 13:51:14'),(3,'Popular','1',NULL,'2022-12-07 13:51:14'),(4,'Similar','1',NULL,'2022-12-07 13:51:14');

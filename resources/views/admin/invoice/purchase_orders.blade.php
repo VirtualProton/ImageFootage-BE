@@ -22,6 +22,19 @@
             <div class="box box-primary" style="overflow-x:auto;">
                 <div class="box-header with-border" style="overflow-x:auto;">
                   <h3 class="box-title"> Purchase Orders List</h3>
+                  {!! Form::open(array('url' => URL::to('admin/purchase_orders'), 'method' => 'get', 'class'=>"form-horizontal ps-wrap",'autocomplete'=>false)) !!}
+                    <div class="col-md-3">
+                        <label class="control-label">From Date</label>
+                        <input type="date" class="form-control w-100" name="from_date" placeholder="From Date" value="{{ request('from_date')?request('from_date'):'' }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label">End Date</label>
+                        <input type="date" class="form-control w-100" name="end_date" placeholder="End Date" value="{{ request('end_date')?request('end_date'):'' }}">
+                    </div>
+                    <div class="col-md-2">
+                        {!! Form::submit('Filter', array('class' => 'btn btn-info margin-top-2', 'id' => 'validateFilterBtn')) !!}
+                    </div>
+                  {!! Form::close() !!}
                 </div>
                 @include('admin.partials.message')
                 <!-- /.box-header -->
@@ -52,6 +65,8 @@
                   <td><a href="{{ url('admin/users/user_orders/'.$user['id'])}}" target="_blank">Online Sale</a></td>
                 </tr>
                 @endforeach
+                @else
+                <tr><td colspan="7" class="text-center">No Records Found</td></tr>
                 @endif
 
                 </table>
@@ -60,7 +75,7 @@
             </div>
             </div>
         </div>
-                {{ $userlist->links() }}
+                {{ $userlist->appends(request()->input())->links() }}
 
 {{--    </div>--}}
     </section>
@@ -85,14 +100,16 @@
   <script>
   $(function () {
 
-    $('#example2').DataTable(/*{
+    // $('#example2').DataTable(
+        /*{
       'paging'      : true,
       'lengthChange': false,
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    }*/);
+    }*/
+    // );
   });
   $('.reset_cont_pass').click(function(){
     var cont_id=$(this).attr('cont_id');

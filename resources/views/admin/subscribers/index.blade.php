@@ -7,6 +7,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -54,62 +55,14 @@
                                                         <td>{{$user['title']}}</td>
                                                         <td>{{$user['email']}}</td>
                                                         <td>{{$user['mobile']}}</td>
-                                                        <td><?php echo $user['city']['name'] . " " . $user['state']['state'] . " " . $user['country']['name'] ?></td>
+                                                        <td><?php echo isset($user['city']['name']) && isset($user['state']['state'] ) && isset($user['country']['name']) ? $user['city']['name']. " " . $user['state']['state'] . " " . $user['country']['name'] : '-'?></td>
                                                         <td>
-                                                            <a data-toggle="collapse" data-parent="#accordion"
-                                                               href="#collapse{{$user['id']}}" aria-expanded="false"
-                                                               class=""><i class="fa fa-plus"
-                                                                           aria-hidden="true"></i></a> &nbsp; &nbsp;
+                                                            <a href="{{ url('/admin/subscribers/details/'.$user['id']) }}" aria-expanded="false" class=""><i class="fa fa-plus" aria-hidden="true"></i></a> &nbsp; &nbsp;
                                                         </td>
                                                     </tr>
 
-                                               <tr id="collapse{{$user['id']}}" class="panel-collapse collapse" aria-expanded="false" >
-                                                   <td colspan="8">
-                                                        <table class="col-sm-12 table table-bordered table-striped dataTable">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>SN</th>
-                                                                <th>Plan Name</th>
-                                                                <th>Plan Price</th>
-                                                                <th>Plan Type</th>
-                                                                <th>Plan Download Count</th>
-                                                                <th>No of Download</th>
-                                                                <th>Transaction ID</th>
-                                                                <th>Start Date</th>
-                                                                <th>Expire Date</th>
-                                                                <th>Invoice</th>
-                                                                <th>Show Downloads</th>
-                                                            </tr>
-                                                            </thead>
-                                                            @if(count($user['plans']) > 0 )
-                                                                @foreach($user['plans'] as $key=>$eachPlan)
-                                                                    <tr role="row" class="odd">
-                                                                        <td>{{$key+1}}</td>
-                                                                        <td>
-                                                                            <a target="_blank">{{$eachPlan['package_name']}}
-                                                                        </td>
-                                                                        <td>{{$eachPlan['package_price']}}</td>
-                                                                        <td>{{$eachPlan['package_type']}}</td>
-                                                                        <td>{{$eachPlan['package_products_count']}}</td>
-                                                                        <td>{{$eachPlan['downloaded_product']}}</td>
-                                                                        <td>{{$eachPlan['transaction_id']}}</td>
-                                                                        <td>{{$eachPlan['created_at']}}</td>
-                                                                        <td>{{$eachPlan['package_expiry_date_from_purchage']}}</td>
-                                                                        <td><a href="{{$eachPlan['invoice']}}"
-                                                                               target="_blank">Download</a></td>
-                                                                        <td>
-                                                                            <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i
-                                                                                        class="fa fa-cloud-download"
-                                                                                        aria-hidden="true"></i></a>
-                                                                            &nbsp; &nbsp;
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
 
-                                                        </table>
-                                                    </td>
-                                               </tr>
+
                                            @endforeach
                                         @endif
                                     </table>
@@ -184,7 +137,7 @@
     <script>
 
         $(function () {
-            $('#subscriber').DataTable();
+            $('.datatable').DataTable();
         });
 
         function downloads(data) {

@@ -91,6 +91,7 @@ class PaymentController extends Controller
                 $orderItem->token = $eachCart['token'];
                 $orderItem->cart_added_by = $eachCart['cart_added_by'];
                 $orderItem->cart_added_on = $eachCart['cart_added_on'];
+                $orderItem->footage_tier  = (int)$eachCart['extended_name'];
                 $orderItem->save();
             }
         }
@@ -167,11 +168,10 @@ class PaymentController extends Controller
     }
 
     public function atomPayResponse(Request $request){
+        $hostname = env('FRONT_END_URL');
         $transactionResponse = new TransactionResponse();
         $transactionResponse->setRespHashKey("43af4ba2fbd68d327e");
         if($transactionResponse->validateResponse($_POST)){
-            //echo "Transaction Processed <br/>";
-           // print_r($_POST);die;
             if(count($_POST)>0){
                 if($_POST['f_code']=='Ok'){
 
@@ -180,15 +180,15 @@ class PaymentController extends Controller
                                 'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders = Orders::where('txn_id',$_POST['mer_txn'])->first();
                     Usercart::where('cart_added_by',$orders->user_id)->delete();
-                    return redirect('https://imagefootage.com/orderConfirmation/'.$_POST['mer_txn']);
+                    return redirect ($hostname.'/orderConfirmation/'.$_POST['mer_txn']);
                  }else{
-                    return redirect('https://imagefootage.com/orderFailed/'.$_POST['mer_txn']);
+                    return redirect($hostname.'/orderFailed/'.$_POST['mer_txn']);
                 }
               //echo json_encode(['status'=>"success",'data'=>$_POST['mer_txn']]);
 
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('https://imagefootage.com/orderFailed/'.$_POST['mer_txn']);
+                return redirect($hostname.'/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";
@@ -232,7 +232,7 @@ class PaymentController extends Controller
     }
 
     public function payUResponse(Request $request){
-
+        $hostname = env('FRONT_END_URL');
         $result = Payumoney::completePay($_POST);
         //echo "<pre>";
         //print_r($result); die;
@@ -248,9 +248,9 @@ class PaymentController extends Controller
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders = Orders::where('txn_id',$params['txnid'])->first();
             Usercart::where('cart_added_by',$orders->user_id)->delete();
-            return redirect('https://imagefootage.com/orderConfirmation/'.$params['txnid']);
+            return redirect($hostname.'/orderConfirmation/'.$params['txnid']);
         } else {
-            return redirect('https://imagefootage.com/orderFailed');
+            return redirect($hostname.'/orderFailed');
         }
 
     }
@@ -295,6 +295,7 @@ class PaymentController extends Controller
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
         $packge->created_at = date('Y-m-d H:i:s');
+        $packge->footage_tier = isset($allFields['plan']['footage_tier']) && !empty($allFields['plan']['footage_tier'])? (int)$allFields['plan']['footage_tier'] : NULL;
         if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
         }else{
@@ -385,7 +386,7 @@ class PaymentController extends Controller
                     UserPackage::where('transaction_id',$_POST['mer_txn'])
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
-                     return redirect('https:://imagefootage.com/user-profile');
+                     return redirect('https://imagefootage.com/user-profile');
                 }else{
                     return redirect('https:://imagefootage.com/orderFailed/'.$_POST['mer_txn']);
                 }
@@ -393,7 +394,7 @@ class PaymentController extends Controller
 
             }else{
                 //echo json_encode(['status'=>"fail",'data'=>$_POST['mer_txn']]);
-                return redirect('https:://imagefootage.com/orderFailed/'.$_POST['mer_txn']);
+                return redirect('https://imagefootage.com/orderFailed/'.$_POST['mer_txn']);
             }
         } else {
             echo "Invalid Signature";

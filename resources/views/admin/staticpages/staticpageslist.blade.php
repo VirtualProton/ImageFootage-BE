@@ -38,7 +38,7 @@
                         <th>URL </th>
                         <th>Description</th>
                         <th>Keywords</th>
-                        <th>Content</th>
+                        <th>Slug</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>
@@ -51,7 +51,7 @@
   <td>{{ $page['page_url'] }} </td>
   <td>{{ $page['page_meta_desc'] }} </td>
   <td>{{ $page['page_meta_keywords'] }} </td>
-  <td>{{ $page['page_content'] }} </td>
+  <td>{{ $page['page_slug'] ?? '' }} </td>
   <td>{{  date('Y-m-d',strtotime($page['page_added_on'])) }} </td>
   <td>  @if($page['image_status'] =='Active')
   			<a href="{{ url('admin/staticpages/Inactive/'.$page['page_id']) }}" title="Make Inactive"><i class="fa fa-star" aria-hidden="true" style="color:#090;"></i> </a>
@@ -64,7 +64,7 @@
  </tr>
 @endforeach
                     </tbody>
-                    <tfoot>
+                    {{-- <tfoot>
                        <th>Id</th>
                         <th>Title</th>
                         <th>URL </th>
@@ -73,7 +73,7 @@
                         <th>Content</th>
                         <th>Added On</th>
                         <th>Actions</th>
-                    </tfoot>
+                    </tfoot> --}}
                 </table>
               </div>
             </div>

@@ -89,6 +89,31 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        'quotationlog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/quotationlog.log'),
+            'level' => 'info'
+        ],
+
+        'carry-forward' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/carry-forward.log'),
+            'level' => 'info'
+        ],
+
+        'similar-slug-update' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/similar-slug-update.log'),
+            'level' => 'info'
+        ],
+
+        'panther_media' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/panther-media/panther_media.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
     ],
 
 ];

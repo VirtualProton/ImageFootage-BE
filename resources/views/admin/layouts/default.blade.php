@@ -30,7 +30,7 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <link rel="stylesheet" href="{{ asset('js/formvalidation/formValidation.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,6 +41,12 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- favicon icons -->
+  <link rel="shortcut icon" href="{{ asset('images/favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{ asset('images/favicon.ico')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-favicon.png')}}">
+  <!-- favicon icons -->
 
  @yield('styles')
 

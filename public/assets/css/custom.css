@@ -1,0 +1,487 @@
+.form-horizontal .form-group {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.custom-font {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+    display: block;
+}
+
+.content-wrapper .tab-content .form-group h4 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.account-title {
+    font-size: 30px !important;
+    margin-bottom: 0px !important;
+    padding-left: 0 !important;
+    font-weight: 600 !important;
+    text-align: left;
+}
+
+.content-wrapper .tab-content .form-group input,
+.content-wrapper .tab-content .form-group select,
+.content-wrapper .tab-content .form-group textarea,
+.comment-sec-wrap select,
+.comment-sec-wrap .custom-width input {
+    margin-top: 6px;
+    padding: 9px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    height: 45px;
+    width: 100%;
+}
+
+.content-wrapper .tab-content .form-group .form-control {
+    border: 1px solid #ddd !important;
+}
+
+.select-button-wrap .custom-width .form-group {
+    margin: 0 !important;
+}
+
+.select-button-wrap .custom-width .form-group select.form-control {
+    margin: 0;
+}
+
+.form-group .user-name-dec h5,
+.form-group .ps-wrap h5 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.ps-wrap {
+    margin-top: 20px;
+}
+
+.form-group .ps-wrap h5 input {
+    padding: 3px 60px;
+}
+
+.form-group .ps-wrap .reset-pass button {
+    padding: 6px 30px;
+    margin-left: 25px;
+    background: #00c0ef;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.form-group .ps-wrap .reset-pass button:hover {
+    background-color: #00acd6;
+}
+
+.form-group .ps-wrap .reset-pass input {
+    width: 24%;
+}
+
+.form-group .f-l-e-wrap {
+    display: flex;
+}
+
+.form-group .f-l-e-wrap h5,
+.reg-acc-wrap h5 {
+    font-size: 16px;
+    font-weight: 500;
+    display: grid;
+    margin-right: 15px;
+}
+
+.form-group .f-l-e-wrap {
+    margin-top: 20px;
+    display: flex;
+    gap: 25px;
+}
+
+.form-group .f-l-e-wrap input {
+    width: 100%;
+}
+
+.form-group .custom-width {
+    width: 23.9%;
+}
+
+.form-group .f-l-e-wrap .emails {
+    display: grid;
+}
+
+.user-name-dec,
+.reg-acc-wrap {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.user-name-dec h5:last-child,
+.reg-acc-wrap h5:last-child {
+    padding-left: 30px;
+}
+
+
+/*  */
+
+.user-com-wrap {
+    display: flex;
+    gap: 25px;
+}
+
+.user-com-wrap h5 {
+    margin: 0;
+}
+
+.user-com-wrap input,
+.user-com-wrap textarea {
+    margin-top: 10px;
+}
+
+.user-com-wrap input {
+    display: block;
+    width: 100%;
+}
+
+.user-com-wrap h5,
+.user-com-wrap textarea {
+    font-size: 16px;
+    font-weight: 500;
+    display: grid;
+    margin-right: 0px;
+}
+
+.select-button-wrap {
+    display: flex;
+    margin-top: 20px;
+    gap: 25px;
+}
+
+.select-button-wrap .form-group select {
+    margin-left: 15px;
+    border-color: #555 !important;
+    color: #333;
+}
+
+.form-horizontal .select-button-wrap .form-group label {
+    padding: 0;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.form-horizontal .postal-code {
+    display: flex;
+    gap: 25px;
+    align-items: baseline;
+    margin-left: 3px;
+    margin-top: 20px;
+}
+
+.form-horizontal .postal-code .custom-width:first-child {
+    padding-left: 0;
+}
+
+.form-horizontal .postal-code input {
+    width: 100%;
+}
+
+
+/*  */
+
+.form-horizontal .form-group .list-user,
+.form-horizontal .form-group .preferred {
+    display: flex;
+    gap: 25px;
+}
+
+.form-horizontal .form-group .list-user input {
+    width: 100%;
+}
+
+.form-horizontal .form-group .preferred {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-horizontal .form-group .preferred .custom-width {
+    display: block;
+}
+
+.form-horizontal .form-group .preferred textarea {
+    margin-top: 10px;
+    border-color: #555;
+}
+
+.form-horizontal .form-group .preferred input {
+    width: 100%;
+}
+
+
+/*  */
+
+.form-group .box-footer .btn-info {
+    padding: 11px 56px !important;
+}
+
+.box-body h4.box-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.box-footer.user-blade-sub input {
+    width: auto !important;
+}
+
+.box-footer.comme-button input#commentbtn {
+    width: auto;
+    margin-top: 20px;
+}
+
+.inner-mail-top-top {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 25px;
+}
+
+.inner-mail-left {
+    flex: auto;
+    width: 60%;
+}
+
+.inner-mail-right {
+    flex: auto;
+    width: 40%;
+}
+
+.inner-mail-right .comment-sec-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.inner-mail-right .comment-sec-wrap .custom-width {
+    width: 100%;
+}
+
+.inner-mail-left .form-group.comment-sub-wrap {
+    margin: 0px 0;
+}
+
+.inner-mail-left .row {
+    margin-bottom: 12px;
+}
+
+.inner-mail-left textarea.form-control {
+    height: 133px !important;
+    margin-bottom: 15px !important;
+}
+
+/* media query start here */
+
+@media (max-width: 991px) {
+    .form-group .f-l-e-wrap {
+        flex-wrap: wrap;
+    }
+    .form-horizontal .form-group {
+        margin-left: -18px;
+    }
+    .user-com-wrap,
+    .select-button-wrap {
+        flex-wrap: wrap;
+    }
+    .form-horizontal .postal-code {
+        padding-left: 0;
+        flex-wrap: wrap;
+    }
+    .form-horizontal .form-group .list-user,
+    .form-horizontal .form-group .preferred {
+        flex-wrap: wrap;
+    }
+    .form-group .custom-width {
+        width: 45%;
+    }
+}
+
+@media (max-width: 767px) {
+    .form-group .ps-wrap .reset-pass input {
+        width: 50%;
+    }
+    .form-group .custom-width {
+        width: 100%;
+    }
+    .user-name-dec,
+    .reg-acc-wrap {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+
+/*  */
+
+h4.box-title.add-new {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.content-wrapper.ng-scope .content-header .form-horizontal .form-group {
+    margin: 50px;
+}
+
+.comment-sec-wrap {
+    display: flex;
+    padding: 0 15px;
+    gap: 25px;
+    width: 100%;
+    align-items: baseline;
+}
+
+.comment-sec-wrap .custom-width {
+    width: 25%;
+}
+
+.comment-sec-wrap .custom-width select,
+.comment-sec-wrap .custom-width input {
+    width: 100%;
+    padding: 6px 12px;
+    color: #000;
+}
+
+
+/*  */
+
+.form-group.comment-sub-wrap {
+    margin: 50px 0;
+    padding: 0 15px;
+}
+
+.form-group.comme-desc {
+    width: 100%;
+    margin: 0;
+    padding: 0 15px;
+}
+
+.form-group.comment-sub-wrap input,
+.form-group.comme-desc textarea {
+    border-color: #333;
+}
+
+.form-group.comment-sub-wrap input::placeholder {
+    color: #000;
+}
+
+.box-footer.comme-button {
+    padding: 0;
+}
+
+h4.box-title.exist-comment {
+    padding-left: 7px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 20px;
+}
+
+.w-100{
+    width: 100%;
+}
+.margin-top-2{
+    margin-top: 2.5rem;
+}
+
+
+/* comment page media query start here */
+
+@media (max-width: 991px) {
+    .comment-sec-wrap .custom-width {
+        width: 45%;
+    }
+    .comment-sec-wrap {
+        flex-wrap: wrap;
+    }
+}
+
+
+/*  */
+
+@media (max-width: 767px) {
+    .comment-sec-wrap .custom-width {
+        width: 100%;
+    }
+}
+
+
+/* 16-01-2023 */
+
+
+/* forget password design start here */
+
+.login-page .login-form form .forget-pas-btn {
+    text-align: center;
+}
+
+.login-page .login-form form .forget-pas-btn .btn {
+    background-color: #FF8080;
+    border-color: transparent;
+}
+
+.login-page .login-form form .forget-pas-btn:focus-visible {
+    outline: 0;
+}
+
+.login-page .login-form form .forget-pas-btn button.btn.btn-primary:focus-visible {
+    outline: 0;
+}
+
+.login-box .login-box-body .login-box-msg.reset-pas {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.login-box .login-box-body .card .forget-aler {
+    padding: 8px 15px;
+}
+
+.login-page .login-form form .forget-pas-btn.link-blade-pas .btn {
+    width: 200px;
+}
+
+.login-page .login-form form .forget-pas-btn.link-blade-pas:focus-visible {
+    outline: 0;
+}
+
+.login-page .login-form form .forget-pas-btn button.btn.btn-primary:focus {
+    outline: 0;
+}
+
+
+/* start media query */
+
+@media (max-width:768px) {
+    .login-page.link-blade .login-box {}
+}
+
+@media (max-width:480px) {
+    .login-page .login-form form .forget-pas-btn.link-blade-pas .btn {
+        width: 130px;
+    }
+}
+.dataTable td,
+.dataTable th {
+    padding: 4px 8px;
+    margin: 0px;
+    font-size: 14px;
+}
+
+.table td,
+.table th{
+    padding: 4px 8px;
+    margin: 0px;
+    font-size: 14px;
+}

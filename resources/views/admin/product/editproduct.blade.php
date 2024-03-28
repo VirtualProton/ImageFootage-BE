@@ -1,5 +1,11 @@
 @extends('admin.layouts.default')
-
+@section('styles')
+<style>
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #000;
+  }
+</style>
+@endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -20,13 +26,18 @@
         	<div class="col-md-12">
          		<div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Edit Product</h3><a href="{{ URL::to('admin/add_product') }}" class="btn pull-right">Back</a>
+                  <h3 class="box-title">Edit Product</h3><a href="{{ url('admin/all_products') }}" class="btn pull-right">Back</a>
                 </div>
-               @if( Session::has( 'success' ))
-     			{{ Session::get( 'success' ) }}
-			   @elseif( Session::has( 'warning' ))
-                {{ Session::get( 'warning' ) }} <!-- here to 'withWarning()' -->
-			   @endif
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
+                @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session()->get('error') }}
+                </div>
+                @endif
                 <form action="{{ url('admin/editproduct') }}" role="form" method="post" enctype="multipart/form-data" id="productform">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                  <input type="hidden" name="product_id" value="{{ $product['id'] }}">
@@ -292,20 +303,21 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Small </label>
-                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_small'] }}">
+                      <input type="text" class="form-control" name="Price_small" id="owner_name" placeholder="Price For Small" value="{{ $product['product_price_small'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Medium </label>
-                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_medium'] }}">
+                      <input type="text" class="form-control" name="price_medium" id="price_medium" placeholder="Price For Medium" value="{{ $product['product_price_medium'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Large </label>
-                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_large'] }}">
+                      <input type="text" class="form-control" name="price_large" id="price_large" placeholder="Price For Large" value="{{ $product['product_price_large'] }}">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Price For Extra Large </label>
-                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Product Bank/Owner Name" value="{{ $product['product_price_extralarge'] }}">
+                      <input type="text" class="form-control" name="price_extra_large" id="price_extra_large" placeholder="Price For Extra Large" value="{{ $product['product_price_extralarge'] }}">
                     </div>
+                    <div class="dynamic_filters"></div>
                     <div class="form-group">
                       <label for="exampleInputFile">Product</label>
                       <input type="hidden"  name="product_url" value="{{ $product['product_main_image'] }}" />
@@ -372,10 +384,79 @@
 			}
 		});
  });
+ $('.product_type').on('change', function(){
+  var product_type=$(this).val();
+  loadFilters(product_type);
+  if(product_type == 'Image') {
+    $("input[name=price_extra_large]").val('{{ config("constants.image_licence_details.extra_large") }}');
+    $("input[name=price_extra_large]").prop('readonly', true);
+    $("input[name=price_large]").val('{{ config("constants.image_licence_details.large") }}');
+    $("input[name=price_large]").prop('readonly', true);
+    $("input[name=price_medium]").val('{{ config("constants.image_licence_details.medium") }}');
+    $("input[name=price_medium]").prop('readonly', true);
+    $("input[name=Price_small]").val('{{ config("constants.image_licence_details.small") }}');
+    $("input[name=Price_small]").prop('readonly', true);
+  } else {
+    $("input[name=price_extra_large]").val('');
+    $("input[name=price_extra_large]").prop('readonly', false);
+    $("input[name=price_large]").val('');
+    $("input[name=price_large]").prop('readonly', false);
+    $("input[name=price_medium]").val('');
+    $("input[name=price_medium]").prop('readonly', false);
+    $("input[name=Price_small]").val('');
+    $("input[name=Price_small]").prop('readonly', false);
+  }
+ });
+ function loadFilters(product_type) {
+  /* New filters apply */
+  var csrf = '{{ csrf_token() }}';
+  $.ajax({
+    url: '{{ url("admin/get-filters") }}',
+    type: 'POST',
+    data: { 'type' : product_type, '_token' : csrf},
+    success: function(res) {
+      if(res.status){
+        $(".dynamic_filters").html('');
+        $(".dynamic_filters").html(res.data);
+        $('.select2').select2();
+      }
+    }
+  });
+ }
+ function editFilters() {
+  /* Already applied filters display */
+  var product_id = '{{ $product["id"] }}';
+  var product_type = '{{ strtolower($product["product_main_type"]) }}';
+  var csrf = '{{ csrf_token() }}';
+  $.ajax({
+    url: '{{ url("admin/edit-filters") }}',
+    type: 'POST',
+    data: { 'id' : product_id, 'type' : product_type, '_token' : csrf},
+    success: function(res) {
+      if(res.status){
+        $(".dynamic_filters").html('');
+        $(".dynamic_filters").html(res.data);
+        $('.select2').select2();
+      }
+    }
+  });
+ }
+ function loadImagePrices(product_type) {
+  if(product_type == 'image') {
+    $("input[name=price_extra_large]").prop('readonly', true);
+    $("input[name=price_large]").prop('readonly', true);
+    $("input[name=price_medium]").prop('readonly', true);
+    $("input[name=Price_small]").prop('readonly', true);
+  }
+ }
   </script>
   <script>
 
 $(document).ready(function ($) {
+var load_product_type = '{{ strtolower($product["product_main_type"]) }}';
+loadImagePrices(load_product_type);
+loadFilters(load_product_type);
+editFilters();
 $('.select2').select2();
    // Example Validataion Standard Mode
     // ---------------------------------

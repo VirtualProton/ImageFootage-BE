@@ -35,6 +35,7 @@
                         <th>Product Category Alignment</th>
                         <th>Keywords</th>
                         <th>Want to Display on Home</th>
+                        <th>Type</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </thead>
@@ -51,6 +52,16 @@
   @else
       No
   @endif
+  </td>
+  <td>
+    @if($category['type'] =='1')
+                 Image
+    @elseif($category['type'] =='2')
+                    Footage
+    @elseif($category['type'] =='3')
+    Music
+
+    @endif
   </td>
   <td>{{ date('Y-m-d',strtotime($category['category_added_on'])) }} </td>
   <td>  @if($category['category_status'] =='Active')
@@ -71,6 +82,7 @@
                         <th>Product Category Order</th>
                         <th>Keywords</th>
                         <th>Want to Display on Home</th>
+                        <th>Type</th>
                         <th>Added On</th>
                         <th>Actions</th>
                     </tfoot>

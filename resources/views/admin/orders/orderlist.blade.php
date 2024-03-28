@@ -36,17 +36,19 @@
 <th>Payment Provider</th>
 <th>Bill Full Name</th>
 <th>Billing Address</th>
-<th>Bill city</th>
-<th>Bill State</th>
+{{-- <th>Bill city</th>
+<th>Bill State</th> --}}
 <!-- <th>Billing Country</th> -->
 <th>Billing Zip</th>
-<!-- <th>Invoice</th> -->
-<!-- <th>Action</th> -->
+ <th>Invoice</th> 
+ <th>Action</th> 
 </thead>
  <tbody>
-
+@php
+  //  dd($orderlists[29]);
+@endphp 
 @foreach($orderlists as $orders)
-
+@php //dd($orders['city']['name']);@endphp 
  <!-- <tr ng-if="orderslist" ng-repeat="orders in orderslist"> -->
  <tr>
      <td>
@@ -64,13 +66,13 @@
 
      <td>{{$orders['bill_firstname']}} {{$orders['bill_lastname']}}</td>
      <td>{{$orders['bill_address1']}}</td>
-     <td>{{$orders['city']['name']}}</td>
-     <td>{{$orders['state']['state']}}</td>
+    <?php /*<td>{{$orders['state']['state']}}</td> 
+    <td> @php if($orders['city']['name'] != null ) {{$orders['city']['name']}}</td>
 
      <!-- <td>{{$orders['country']['name']}}</td> -->
      <td>{{$orders['bill_zip']}}</td>
-     <!-- <td><a target="_blank" href="<%orders['invoice']" ng-show="orders['invoice']">Download</a></td> -->
-     <!-- <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td> -->
+     <td><a target="_blank" href="<%orders['invoice']" ng-show="orders['invoice']">Download</a></td> 
+     <td><a data-toggle="modal"  ng-click="showProduct(orders['items'])">Details</a></td> 
  </tr>
  <!-- <tr>
      <td colspan="15" ng-if="!orderslist" class="text-center">No Orders Found !!</td>

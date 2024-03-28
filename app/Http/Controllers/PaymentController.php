@@ -26,12 +26,23 @@ use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 use App\Http\TnnraoSms\TnnraoSms;
 use PDF;
+use Mail;
 
 
 
 
 class PaymentController extends Controller
 {
+    public $baseurl;
+    public $keyRazorId;
+    public $keyRazorSecret;
+    public $atomRequestKey;
+    public $atomResponseKey;
+    public $login;
+    public $mode;
+    public $password;
+    public $clientcode;
+    public $atomprodId;
     /**
      * Create a new AuthController instance.
      *
@@ -40,31 +51,33 @@ class PaymentController extends Controller
     public function __construct()
     {
         $environment = App::environment();
-        if (App::environment('local')) {
-            // The environment is local
-            $this->baseurl = 'http://localhost:4200';
-            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
-            $this->atomRequestKey ='KEY123657234';
-            $this->atomResponseKey ='KEYRESP123657234';
-            $this->login ='197';
-            $this->mode ='Test';
-            $this->password = 'Test@123';
-            $this->clientcode = '007';
-            $this->atomprodId = 'NSE';
-      }else{
-            $this->baseurl = 'https://imagefootage.com';
-            $this->keyRazorId = 'rzp_test_TcSjfuF7EzPHev';
-            $this->keyRazorSecret = 'ZzP8Z9Z1dYUYykBPkgYlpGS6';
-            $this->atomRequestKey ='3a1575abc728e8ccf9';
-            $this->atomResponseKey ='43af4ba2fbd68d327e';
-            $this->login ='106640';
-            $this->mode ='live';
-            $this->password = '33719eef';
-            $this->clientcode = '007';
-            $this->atomprodId = 'CONCEPTUAL';
+        $hostname = env('FRONT_END_URL');
+    //     if (App::environment('local')) {
+    //         // The environment is local
+    //         $this->baseurl = 'http://localhost:4200';
+    //         $this->keyRazorId = 'rzp_test_Dd2iWOI7kdIHEC';
+    //         $this->keyRazorSecret = 'BSVOJ3b77qVADz4qqiHdbsVQ';
+    //         $this->atomRequestKey ='KEY123657234';
+    //         $this->atomResponseKey ='KEYRESP123657234';
+    //         $this->login ='197';
+    //         $this->mode ='Test';
+    //         $this->password = 'Test@123';
+    //         $this->clientcode = '007';
+    //         $this->atomprodId = 'NSE';
+    //   }else{
+          //  $this->baseurl = 'https://imagefootage.com';
+          $this->baseurl = $hostname;
+          $this->keyRazorId = config('payments.keyRazorId');
+          $this->keyRazorSecret = config('payments.keyRazorSecret');
+          $this->atomRequestKey = config('payments.atomRequestKey');
+          $this->atomResponseKey = config('payments.atomResponseKey');
+          $this->login = config('payments.login');
+          $this->mode = config('payments.mode');
+          $this->password = config('payments.password');
+          $this->clientcode = config('payments.clientcode');
+          $this->atomprodId = config('payments.atomprodId');
 
-        }
+        //}
 
     }
 
@@ -89,8 +102,13 @@ class PaymentController extends Controller
                  ->get()->toArray();
         //dd(DB::getQueryLog());
         //print_r($userData); die;
-        $tax = $allFields['cartval'][0]*12/100;
-        $final_tax=round($tax,2);
+        if(!empty($userData) && $userData[0]['country']['code'] == 'IN'){
+            $tax = $allFields['cartval'][0]*12/100;
+            $final_tax=round($tax,2);
+        } else {
+            $final_tax = 0;
+        }
+
         $orders = new Orders();
         $orders->user_id = $allFields['tokenData']['Utype'];
         $orders->txn_id = $transactionId;
@@ -109,6 +127,7 @@ class PaymentController extends Controller
         $orders->created_at = date('Y-m-d H:i:s');
         $orders->save();
         $order_id = $orders->id;
+
         if(count($userData)>0){
             foreach($userData[0]['cart'] as $eachCart) {
                 $orderItem = new OrderItem();
@@ -130,6 +149,7 @@ class PaymentController extends Controller
                 $orderItem->token = $eachCart['token'];
                 $orderItem->cart_added_by = $eachCart['cart_added_by'];
                 $orderItem->cart_added_on = $eachCart['cart_added_on'];
+                $orderItem->footage_tier  = (int)$eachCart['extended_name'];
                 $orderItem->save();
             }
         }
@@ -162,6 +182,7 @@ class PaymentController extends Controller
 
             $url = $transactionRequest->getPGUrl();
             echo json_encode(['url'=>$url]);
+            return;
             //return Redirect::to($url);
             //header("Location: $url");
         }else if($allFields['type']=='payu'){
@@ -238,7 +259,7 @@ class PaymentController extends Controller
                             ->update(['payment_mode'=>$_POST['discriminator'],
                                 'order_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders= Orders::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','city','state','country');
+                        $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company');
                     }])->with(['items'=>function($query){
                         $query->with('product');
                     }]) ->where('txn_id','=',$_POST['mer_txn'])
@@ -248,7 +269,7 @@ class PaymentController extends Controller
                         ->get()->toArray();
                     $this->invoiceWithemail($orders,$_POST['mer_txn']);
                     Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-                    return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn']);
+                    return redirect($this->baseurl.'/orderConfirmation/'.$_POST['mer_txn'] );
                  }else{
                     return redirect($this->baseurl.'/orderFailed/'.$_POST['mer_txn']);
                 }
@@ -296,7 +317,7 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'order_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders= Orders::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','city','state','country');
+                $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company','vendor_code');
              }])->with(['items'=>function($query){
                 $query->with('product');
             }]) ->where('txn_id','=',$params['txnid'])
@@ -307,7 +328,7 @@ class PaymentController extends Controller
 
             $this->invoiceWithemail($orders,$params['txnid']);
             Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-            return redirect($this->baseurl.'/orderConfirmation/'.$params['txnid']);
+            return redirect($this->baseurl.'/profile');
         } else {
             return redirect($this->baseurl.'/orderFailed/'.$params['txnid']);
         }
@@ -327,7 +348,7 @@ class PaymentController extends Controller
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
         $orders= Orders::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','city','state','country');
+            $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company','vendor_code');
         }])->with(['items'=>function($query){
             $query->with('product');
         }]) ->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
@@ -340,7 +361,7 @@ class PaymentController extends Controller
            Orders::where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])
                   ->update(['order_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
                  Usercart::where('cart_added_by',$orders[0]['user_id'])->delete();
-            $url = $this->baseurl.'/orderConfirmation/'.$orders[0]['txn_id'];
+            $url = $this->baseurl.'/profile';
        }else{
             $url = $this->baseurl.'/orderFailed/'.$orders[0]['txn_id'];
         }
@@ -385,13 +406,14 @@ class PaymentController extends Controller
         $packge->package_pcarry_forward = $allFields['plan']['package_pcarry_forward'];
         $packge->package_expiry_yearly = $allFields['plan']['package_expiry_yearly'];
         $packge->payment_gatway_provider = $allFields['type'];
-        $packge->pacage_size = $allFields['plan']['pacage_size'];        
+        $packge->pacage_size = $allFields['plan']['pacage_size'];
         $packge->created_at = date('Y-m-d H:i:s');
         if($allFields['plan']['package_expiry'] !=0 && $allFields['plan']['package_expiry_yearly']==0){
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry']." months"));
         }else{
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s',strtotime("+".$allFields['plan']['package_expiry_yearly']." years"));
         }
+        $packge->footage_tier = isset($allFields['plan']['footage_tier']) && !empty($allFields['plan']['footage_tier'])? (int)$allFields['plan']['footage_tier'] : NULL;
         $packge->save();
         $packge_order_id = $packge->id;
 
@@ -428,7 +450,7 @@ class PaymentController extends Controller
             $displayCurrency = 'INR';
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
-                'receipt' => $transactionId,
+                'receipt' => 'IMGFTG'.$transactionId,
                 'amount' => ($allFields['plan']['package_price']) * 100, // 2000 rupees in paise
                 'currency' => 'INR',
                 'payment_capture' => 1 // auto capture
@@ -489,7 +511,7 @@ class PaymentController extends Controller
                         ->update(['payment_mode'=>$_POST['discriminator'],
                             'payment_status'=>'Transction Success','response_payment'=>json_encode($_POST)]);
                     $orders = UserPackage::with(['user'=>function($query1){
-                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                        $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','comapny','vendor_code')
                             ->with('country')
                             ->with('state')
                             ->with('city');
@@ -497,7 +519,7 @@ class PaymentController extends Controller
                        $this->invoiceWithemailPlan($orders,$_POST['mer_txn']);
                             //SendPlanEmail::dispatch($orders);
 
-                        return redirect($this->baseurl.'/user-profile');
+                        return redirect($this->baseurl.'/profile');
                 }else{
                     return redirect($this->baseurl.'/planFailed/'.$_POST['mer_txn']);
                 }
@@ -542,14 +564,14 @@ class PaymentController extends Controller
                 ->update(['payment_mode'=>$params['bankcode'],
                     'payment_status'=>$status,'response_payment'=>json_encode($params)]);
             $orders = UserPackage::with(['user'=>function($query1){
-                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+                $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst','vendor_code')
                     ->with('country')
                     ->with('state')
                     ->with('city');
             }])->where('transaction_id',$params['txnid'])->first()->toArray();
 
             $this->invoiceWithemailPlan($orders,$params['txnid']);
-            return redirect($this->baseurl.'/user-profile');
+            return redirect($this->baseurl.'/profile');
         }
 
     }
@@ -571,14 +593,14 @@ class PaymentController extends Controller
                 ->update(['payment_status'=>"Transction Success",'response_payment'=>json_encode($data['paymentRes'])]);
         }
         $orders = UserPackage::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
+            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country','company','gst','vendor_code')
                 ->with('country')
                 ->with('state')
                 ->with('city');
-        }])->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
+        }])->with('licence')->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
         if($success===true){
             $this->invoiceWithemailPlan($orders,$orders['transaction_id']);
-            $url = $this->baseurl.'/user-profile';
+            $url = $this->baseurl.'/myplan';
         }else{
             $url = $this->baseurl.'/planFailed/'.$orders['transaction_id'];
         }
@@ -740,7 +762,10 @@ class PaymentController extends Controller
 
     public function invoiceWithemail($OrderData,$transaction){
         ini_set('max_execution_time',0);
-        $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0]]));
+        $OrderData[0]['company_logo'] = 'images/new-design-logo.png';
+        $OrderData[0]['signature']     = 'images/signature.png';
+        $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
+        $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0],'amount_in_words'=>$amount_in_words]));
         $fileName = $transaction."_web_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $s3Client = new S3Client([
@@ -765,12 +790,28 @@ class PaymentController extends Controller
                 ->update(['invoice'=>$pdf_path]);
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }
-        SendEmail::dispatch($OrderData);
+        $data["subject"] = 'Your Order ('.$OrderData[0]['txn_id'].') has been successfull!!';
+        $data["email"]   = $OrderData[0]['order_email'];
+        //$data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"]    = $OrderData[0]['bill_firstname'];
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+            $message->to($data["email"])
+                ->from('admin@imagefootage.com', 'Imagefootage')
+                ->subject($data['subject'])
+                ->attachData($pdf->output(), $fileName);
+        });
     }
 
     public function invoiceWithemailPlan($OrderData,$transaction){
         ini_set('max_execution_time',0);
-        $pdf = PDF::loadHTML(view('email.plan_invoice_email',['orders' => $OrderData]));
+        $OrderData['frontend_url'] = config('app.front_end_url');
+        $OrderData['INVOICE_PREFIX'] = config('constants.INVOICE_PREFIX') ?? '';
+        $OrderData['company_logo'] = 'images/new-design-logo.png';
+        $OrderData['signature']     = 'images/signature.png';
+        $OrderData['package_products_count_in_words'] = $this->convert_number_to_words($OrderData['package_products_count']) ?? '';
+        $OrderData['tax'] = 0.00;
+        $amount_in_words  =  $this->convert_number_to_words($OrderData['package_price']);
+        $pdf = PDF::loadHTML(view('email.plan_invoice_email',['orders' => $OrderData,'amount_in_words'=>$amount_in_words]));
         $fileName = $transaction."_web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $s3Client = new S3Client([
@@ -796,7 +837,7 @@ class PaymentController extends Controller
             unlink(storage_path('app/public/pdf'). '/' . $fileName);
         }
        if($OrderData['package_plan']==1){
-            $plan = 'Download Pack For 1 year';
+            $plan = 'Download Pack For '.$OrderData['package_expiry_yearly']. ' year';
          }else{
             if ($OrderData['package_expiry_yearly'] == 0) {
                $plan = 'Subscription Pack For 1 Month';
@@ -813,11 +854,20 @@ class PaymentController extends Controller
          }else{
                 $pkgName = $OrderData['package_name']." ".$plan;
          }
-      
+
         $message = "Thanks for purchasing ".$pkgName.". Your plan with transaction ID ".$OrderData['transaction_id'] ." will be expire on ". date("F , d Y h:i:s a",strtotime($OrderData['package_expiry_date_from_purchage']))."  \n Thanks \n Imagefootage Team";
         $smsClass = new TnnraoSms;
         $smsClass->sendSms($message, $OrderData['user']['mobile']);
-        SendPlanEmail::dispatch($OrderData);
+        $data["subject"] = 'Your Plan Order ('.$OrderData['transaction_id'].') has been successfull!!';
+        $data["email"]   = $OrderData['user']['email'];
+        //$data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"]    = $OrderData['user']['first_name'];
+        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+            $message->to($data["email"])
+                ->from('admin@imagefootage.com', 'Imagefootage')
+                ->subject($data['subject'])
+                ->attachData($pdf->output(), $fileName);
+        });
 
     }
 
@@ -825,6 +875,119 @@ class PaymentController extends Controller
         $pdf = PDF::loadHTML(view('email.plan'));
         $fileName = "web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+    }
+
+    public function convert_number_to_words($number)
+    {
+
+        $hyphen      = '-';
+        $conjunction = ' and ';
+        $separator   = ', ';
+        $negative    = 'negative ';
+        $decimal     = ' point ';
+        $dictionary  = array(
+            0                   => 'Zero',
+            1                   => 'One',
+            2                   => 'Two',
+            3                   => 'Three',
+            4                   => 'Four',
+            5                   => 'Five',
+            6                   => 'Six',
+            7                   => 'Seven',
+            8                   => 'Eight',
+            9                   => 'Nine',
+            10                  => 'Ten',
+            11                  => 'Eleven',
+            12                  => 'Twelve',
+            13                  => 'Thirteen',
+            14                  => 'Fourteen',
+            15                  => 'Fifteen',
+            16                  => 'Sixteen',
+            17                  => 'Seventeen',
+            18                  => 'Eighteen',
+            19                  => 'Nineteen',
+            20                  => 'Twenty',
+            30                  => 'Thirty',
+            40                  => 'Fourty',
+            50                  => 'Fifty',
+            60                  => 'Sixty',
+            70                  => 'Seventy',
+            80                  => 'Eighty',
+            90                  => 'Ninety',
+            100                 => 'Hundred',
+            1000                => 'Thousand',
+            1000000             => 'Million',
+            1000000000          => 'Billion',
+            1000000000000       => 'Trillion',
+            1000000000000000    => 'Quadrillion',
+            1000000000000000000 => 'Quintillion'
+        );
+
+        if (!is_numeric($number)) {
+            return false;
+        }
+
+        if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
+            // overflow
+            trigger_error(
+                'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
+                E_USER_WARNING
+            );
+            return false;
+        }
+
+        if ($number < 0) {
+            return $negative . Self::convert_number_to_words(abs($number));
+        }
+
+        $string = $fraction = null;
+
+        if (strpos($number, '.') !== false) {
+            list($number, $fraction) = explode('.', $number);
+        }
+
+        switch (true) {
+            case $number < 21:
+                $string = $dictionary[$number];
+                break;
+            case $number < 100:
+                $tens   = ((int) ($number / 10)) * 10;
+                $units  = $number % 10;
+                $string = $dictionary[$tens];
+                if ($units) {
+                    $string .= $hyphen . $dictionary[$units];
+                }
+                break;
+            case $number < 1000:
+                $hundreds  = $number / 100;
+                $remainder = $number % 100;
+                $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+                if ($remainder) {
+                    $string .= $conjunction . Self::convert_number_to_words($remainder);
+                }
+                break;
+            default:
+                $baseUnit = pow(1000, floor(log($number, 1000)));
+                $numBaseUnits = (int) ($number / $baseUnit);
+                $remainder = $number % $baseUnit;
+                $string = Self::convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+                if ($remainder) {
+                    $string .= $remainder < 100 ? $conjunction : $separator;
+                    $string .= Self::convert_number_to_words($remainder);
+                }
+                break;
+        }
+
+        if (null !== $fraction && is_numeric($fraction)) {
+            $string .= $decimal;
+            $words = array();
+            foreach (str_split((string) $fraction) as $number) {
+                $words[] = $dictionary[$number];
+            }
+            $string .= implode(' ', $words);
+        }
+
+        return $string;
     }
 
 }

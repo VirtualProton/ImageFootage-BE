@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'front_end_url' => env('FRONT_END_URL', 'https://staging.imagefootage.com/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://staging-api.imagefootage.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -163,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 		Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Providers\ElasticsearchServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -181,6 +183,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*

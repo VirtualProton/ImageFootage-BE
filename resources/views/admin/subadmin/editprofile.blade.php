@@ -67,7 +67,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-4">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>">
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $agent_data['email']?>" readonly>
                 </div>
                   </div>
                 </div>
@@ -279,6 +279,33 @@ function getstate(data){
                      option = option+'<option value="'+val.id+'">'+val.state+'</option>';
                 });
                 $('#bill_state').html(option);
+               }
+
+            },
+            type: 'POST'
+            });
+}
+function getcity(data){
+    console.log(data.value);
+    $.ajax({
+            url: '{{ URL::to("admin/getCityByState") }}',
+            data: {
+            state_code: data.value,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function() {
+            //$('#info').html('<p>An error has occurred</p>');
+            },
+            success: function(data) {
+               console.log(data);
+               if(data.response=='success'){
+                  var option='<option value="">Please Select</option>';
+                $.each(data.data, function( i, val ) {
+                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
+                });
+                $('#bill_city').html(option);
                }
 
             },

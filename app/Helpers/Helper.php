@@ -1,6 +1,9 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
+
 class Helper
 {
     public static function imagesaver($image_data){ 
@@ -35,6 +38,40 @@ class Helper
         return $result; 
     }
 
+    public static function obfuscate_email($email)
+    {
+        $em   = explode("@",$email);
+        $name = implode('@', array_slice($em, 0, count($em)-1));
+        $len  = floor(strlen($name)/2);
+
+        return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+    }
+
+    public static function generateUserName() {
+        $length = 9;
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $name = '';
+        for ($i = 0; $i < $length; $i++) {
+            $name .= $characters[mt_rand(0, strlen($characters) - 1)];
+        }
+        return $name;
+    }
+
+    public static function disposableEmailCheck($email){
+        $email = $email;
+        $domain = explode('@', $email)[1] ?? '';
+        if(Schema::hasTable('settings')){
+            $settings = Setting::select('value')->where('key', 'disposable_emails')->first();
+            if(!empty($settings)){
+                $disposableDomains = $settings->toArray();
+                $invalid_emails = array_map('trim', explode(',', $disposableDomains['value']));
+                if (in_array($domain, $invalid_emails)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 

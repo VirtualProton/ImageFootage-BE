@@ -5,7 +5,7 @@
     <p><strong>hi</strong>&nbsp;<br /><strong>Plan Invoice</strong>&nbsp;</p>
     </td>
     <td data-celllook="273">
-    <p style="margin-left: 206px;"><img src="httpsapi://imagefootage.com/assets/images/IF_Logo_Final.png" width="200px"></p>
+    <p style="margin-left: 206px;"><img src="https://imagefootage.com/assets/images/IF_Logo_Final.png" width="200px"></p>
     </td>
     </tr>
     </tbody>
@@ -31,10 +31,10 @@
     <p><strong>Online</strong>&nbsp;</p>
     </td>
     <td data-celllook="4369">
-    <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong> 
-               <?php 
+    <p>Product&nbsp;Description:&nbsp;&nbsp;<br /><strong>Subscription Plan</strong><strong>
+               <?php
                   if($orders['package_plan']==1){
-                     $plan = 'Download Pack For 1 year';
+                     $plan = 'Download Pack For '.$orders['package_expiry_yearly']. ' year';
                   }else{
                      if ($orders['package_expiry_yearly'] == 0) {
                         $plan = 'Subscription Pack For 1 Month';
@@ -111,7 +111,7 @@
     <ul>
     <li>Reproduce the asset beyond the 500,000 copy/viewer restriction.</li>
     </ul>
-    
+
     <p><strong>With an Enhanced license, you may not:</strong></p>
     <ul>
     <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
@@ -126,18 +126,18 @@
     <ul>
     <li>All disputes are subject to Hyderabad Jurisdiction.&nbsp;</li>
     </ul>
-    
+
     </td>
     </tr>
     </tbody>
     </table>
-    <p width="600" align="center" style="margin-left: 474px;">For&nbsp;<strong>Image Footage</strong>&nbsp;</p>
+    <p width="600" align="center" style="margin-left: 474px;">For&nbsp;<strong><?php config('constants.company_name')?></strong>&nbsp;</p>
     <p width="600" align="center" style="margin-left: 474px;"> &nbsp;<br />&nbsp;<br /> Authorized Signatory&nbsp;</p>
     <table data-table data-tablelook="1184" width="600" align="center">
     <tbody>
     <tr>
     <td data-celllook="4369" >
-    <p>&nbsp;<br /><strong>Image Footage&nbsp;</strong>&nbsp;<br />3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar,&nbsp;Hyderabad - 500028,&nbsp;Telangana,&nbsp;Andhra&nbsp;Pradesh, India&nbsp;Phone: +91 40 6720 6720 Fax +91 40 6673 8077&nbsp;</p>
+    <p>&nbsp;<br /><strong><?php config('constants.company_name')?>&nbsp;</strong>&nbsp;<br />3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar,&nbsp;Hyderabad - 500028,&nbsp;Telangana,&nbsp;Andhra&nbsp;Pradesh, India&nbsp;Phone: +91 40 6720 6720 Fax +91 40 6673 8077&nbsp;</p>
     <p><a href="http://about:blank/">info@imagefootage.com</a> <a href="http://about:blank/">www.imagefootage.com</a>&nbsp;</p>
     </td>
     <td data-celllook="273">

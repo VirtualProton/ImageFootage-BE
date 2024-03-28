@@ -7,6 +7,7 @@
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);
+  var gst_value = '{{ config("constants.GST_VALUE") }}';
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -43,9 +44,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('dist/js/invoice.js') }}"></script>
-<!-- <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> -->
-<script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script>
-
+@php
+ /* <script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')?>"></script> 
+<script src="<?php echo url('/public/vendor/unisharp/laravel-ckeditor/ckeditor.js')?>"></script> */ 
+@endphp
 
 
 
