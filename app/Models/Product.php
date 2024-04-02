@@ -721,6 +721,12 @@ class Product extends Model
                         if(isset($allRequest['search'])){
                             $existingTerms .= ','.$allRequest['search'];
                         }
+                        if(!empty($existingTerms)){
+                            $array = explode(',', $existingTerms);
+                            $uniqueArray = array_unique($array);
+                            $existingTerms = implode(',', $uniqueArray);
+                        }
+
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -870,6 +876,12 @@ class Product extends Model
                         if(isset($allRequest['search'])){
                             $existingTerms .= ','.$allRequest['search'];
                         }
+                        if(!empty($existingTerms)){
+                            $array = explode(',', $existingTerms);
+                            $uniqueArray = array_unique($array);
+                            $existingTerms = implode(',', $uniqueArray);
+                        }
+
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -1052,6 +1064,12 @@ class Product extends Model
                         if(isset($allRequest['search'])){
                             $existingTerms .= ','.$allRequest['search'];
                         }
+                        if(!empty($existingTerms)){
+                            $array = explode(',', $existingTerms);
+                            $uniqueArray = array_unique($array);
+                            $existingTerms = implode(',', $uniqueArray);
+                        }
+                        
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([
@@ -1500,6 +1518,12 @@ class Product extends Model
                         if(isset($allRequest['search'])){
                             $existingTerms .= ','.$allRequest['search'];
                         }
+                        if(!empty($existingTerms)){
+                            $array = explode(',', $existingTerms);
+                            $uniqueArray = array_unique($array);
+                            $existingTerms = implode(',', $uniqueArray);
+                        }
+                        
                         DB::table('imagefootage_products')
                             ->where('api_product_id', '=', $eachmedia['id'])
                             ->update([

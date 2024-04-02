@@ -77,17 +77,21 @@ class SearchController extends Controller
             $pType = 'Music';
         }
         
-        $jobDispatch = ($all_products['total']/15) - 3;
+        $jobDispatch = ($all_products['total']/100) - 2;
         if($jobDispatch < $keyword['pagenumber']){
+            $trendingWord  = TrendingWord::where('name', $searchKeyword)->first();
             $dataForJob = [
-                'trending_word' => '',
+                'trending_word' => $trendingWord,
                 'all_request' => $getKeyword,
                 'type' => $pType,
-                'category' => $keyword['category_id']
+                'category' => $keyword['category_id'],
+                'page_number' => $keyword['pagenumber']
             ];
     
             dispatch(new FetchThirdPartyData($dataForJob));
         }
+
+        $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
 
         // Save search keyword to trending words table
         if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
