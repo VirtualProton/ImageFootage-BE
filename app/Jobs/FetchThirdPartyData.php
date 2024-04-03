@@ -42,10 +42,15 @@ class FetchThirdPartyData implements ShouldQueue
             $keyword['search']  = $this->details['trending_word']->name;
         }
         $category  = $this->details['category'];
+        $pageNumber = $this->details['page_number'];
         $limitPond5 = config('thirdparty.pond5.current_per_page_limit');
         $limitPanther = config('thirdparty.panthermedia.current_per_page_limit');
 
         for ($i = 2; $i <= config('constants.page_limit_to_fetch_for_third_party'); $i++) {
+
+            if(!empty($pageNumber)){
+                $i = $pageNumber;
+            }
 
             if ($this->details['type'] == 'Image') {
                 $pantherMediaImages = new ImageApi();
@@ -85,6 +90,10 @@ class FetchThirdPartyData implements ShouldQueue
             if (!empty($this->details['trending_word'])) {
                 $this->details['trending_word']->total_run_remain += 1;
                 $this->details['trending_word']->save();
+            }
+
+            if(!empty($pageNumber)){
+                break;
             }
         }
     }
