@@ -55,9 +55,11 @@ class SearchController extends Controller
 
         $searchKeyword = $keyword['search'];
         $thirdparty = 'panthermedia';
+        $isCategory = 0;
 
         if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
             $searchKeyword = $keyword['category_id'];
+            $isCategory = 1;
             $getCategoryId = ProductCategory::where(['category_slug'=> $request->category_id,'type'=>$keyword['productType']['id']])->first();
             if(!empty($getCategoryId)){
                 $keyword['category_id'] = $getCategoryId->category_id;
@@ -84,8 +86,10 @@ class SearchController extends Controller
                 'trending_word' => $trendingWord,
                 'all_request' => $getKeyword,
                 'type' => $pType,
-                'category' => $keyword['category_id'],
-                'page_number' => $keyword['pagenumber']
+                'category_id' => $keyword['category_id'],
+                'page_number' => $keyword['pagenumber'] + 10,
+                'is_category' => $isCategory,
+                'category' => $searchKeyword
             ];
     
             dispatch(new FetchThirdPartyData($dataForJob));
@@ -114,7 +118,7 @@ class SearchController extends Controller
         // If records not found check with respective third party api for the data
         if($all_products['total'] == 0 || $all_products['total'] < config('constants.products_in_database_limit')){
             $cronController  = new CronController();
-            $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty);
+            $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty, $isCategory);
             $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
         }
 
@@ -234,7 +238,7 @@ class SearchController extends Controller
         $type = 'Image';
         $data         = [];
 
-        $productsVertical = ImageFilterValue::query();
+        /*$productsVertical = ImageFilterValue::query();
         $productsVertical->where(["attributes.orientation"=>'vertical',"product_main_type"=>$type])->orderByDesc('_id')->limit(4);
         $filteredProducts = $productsVertical->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIdsVertical    = collect($filteredProducts)->pluck('api_product_id')->toArray();
@@ -243,10 +247,10 @@ class SearchController extends Controller
         $productsHorizontal->where(["attributes.orientation"=> 'horizontal',"product_main_type"=>$type])->orderByDesc('_id')->limit(13);
         $filteredProductsHorizontal = $productsHorizontal->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
         $apiProductIdsHorizontal    = collect($filteredProductsHorizontal)->pluck('api_product_id')->toArray();
-        $verticalAndHorizontalIds = array_merge($apiProductIdsVertical, $apiProductIdsHorizontal);
+        $verticalAndHorizontalIds = array_merge($apiProductIdsVertical, $apiProductIdsHorizontal);*/
 
         // Filter Data from MongoDB
-        if ((!empty($verticalAndHorizontalIds))) {
+        //if ((!empty($verticalAndHorizontalIds))) {
             $data = Product::select(
                     'product_id',
                     'api_product_id',
@@ -266,11 +270,11 @@ class SearchController extends Controller
                     $query->where('product_main_type', '=', $type);
                 });
 
-            if (!empty($verticalAndHorizontalIds)) {
+            /*if (!empty($verticalAndHorizontalIds)) {
                 $data->whereIn('api_product_id', $verticalAndHorizontalIds);
-            }
+            }*/
             $data->orderBy('created_at', 'desc');
-            $data = $data->distinct()->get()->toArray();
+            $data = $data->distinct()->limit(17)->get()->toArray();
 
             if (count($data) > 0) {
                 foreach($data as &$item) {
@@ -278,8 +282,7 @@ class SearchController extends Controller
                     $item['api_product_id'] =  encrypt($item['api_product_id'], true);
                 }
             }
-            $total        = count($data);
-        }
+        //}
 
         return array('imgfootage' => $data, 'total'=> count($data), 'perpage'=> 17, 'tp'=> 1);
     }
