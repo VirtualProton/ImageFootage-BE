@@ -225,7 +225,7 @@
                         var checkboxInput = document.createElement("input");
                         checkboxInput.type = "checkbox";
                         checkboxInput.name = "selectedImages[]";
-                        checkboxInput.value = image.product_main_image;
+                        checkboxInput.value = image.product_thumbnail;
                         checkboxInput.style.transform = "scale(1.5)";
                         checkboxInput.style.position = "absolute";
                         checkboxInput.style.position = "absolute";
@@ -239,7 +239,7 @@
                         }
 
                         var imgElement = document.createElement("img");
-                        imgElement.src = image.product_main_image;
+                        imgElement.src = image.product_thumbnail;
                         imgElement.alt = image.product_title;
                         imgElement.width = 100; // Set width
                         imgElement.height = 100; // Set height
@@ -309,7 +309,7 @@
                         var checkboxMainInput = document.createElement("input");
                         checkboxMainInput.type = "checkbox";
                         checkboxMainInput.name = "selectedMainImages[]";
-                        checkboxMainInput.value = image.product_main_image;
+                        checkboxMainInput.value = image.product_thumbnail;
                         checkboxMainInput.style.transform = "scale(1.5)";
                         checkboxMainInput.style.position = "absolute";
                         checkboxMainInput.style.position = "absolute";
@@ -318,7 +318,7 @@
 
 
                         var mainImgElement = document.createElement("img");
-                        mainImgElement.src = image.product_main_image;
+                        mainImgElement.src = image.product_thumbnail;
                         mainImgElement.alt = image.product_title;
                         mainImgElement.width = 100; // Set width
                         mainImgElement.height = 100; // Set height

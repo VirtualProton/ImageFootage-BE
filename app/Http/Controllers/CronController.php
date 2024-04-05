@@ -240,7 +240,7 @@ class CronController extends Controller
         }
     }
 
-    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest, $thirdparty = 'panthermedia'){
+    public function searchKeywordPond5AndPanthermedia($term, $type, $category = null, $allRequest, $thirdparty = 'panthermedia', $isCategory){
         $keyword = [];
         $trending_word  = TrendingWord::where('name', $term)->first();
         $limitPond5 = config('thirdparty.pond5.current_per_page_limit');
@@ -261,17 +261,19 @@ class CronController extends Controller
                         $trending_word->total_records = $pantharmediaData['items']['total'];
                         $trending_word->total_fetched = $limitPanther;
                         $trending_word->save();
-
-                        $data = [
-                            'trending_word' => $trending_word,
-                            'all_request' => $allRequest,
-                            'type' => 'Image',
-                            'category' => $percategory['category_id'],
-                            'page_number' => ''
-                        ];
-                        
-                        dispatch(new FetchThirdPartyData($data));
                     }
+
+                    $data = [
+                        'trending_word' => $trending_word,
+                        'all_request' => $allRequest,
+                        'type' => 'Image',
+                        'category_id' => $percategory['category_id'],
+                        'page_number' => '',
+                        'is_category' => $isCategory,
+                        'category' => $term
+                    ];
+                    
+                    dispatch(new FetchThirdPartyData($data));
 
                     if(isset($pantharmediaData['status']) && $pantharmediaData['status'] == 'failed'){
                         return [
@@ -311,17 +313,19 @@ class CronController extends Controller
                     $trending_word->total_records = $pond5FootageMediaData['totalNumberOfItems'];
                     $trending_word->total_fetched = $limitPond5;
                     $trending_word->save();
-
-                    $data = [
-                        'trending_word' => $trending_word,
-                        'all_request' => $allRequest,
-                        'type' => 'Footage',
-                        'category' => $percategory['category_id'],
-                        'page_number' => ''
-                    ];
-                    
-                    dispatch(new FetchThirdPartyData($data));
                 }
+
+                $data = [
+                    'trending_word' => $trending_word,
+                    'all_request' => $allRequest,
+                    'type' => 'Footage',
+                    'category_id' => $percategory['category_id'],
+                    'page_number' => '',
+                    'is_category' => $isCategory,
+                    'category' => $term
+                ];
+                
+                dispatch(new FetchThirdPartyData($data));
 
                 if(isset($pond5FootageMediaData['status']) && $pond5FootageMediaData['status'] == 'failed'){
                     return [
@@ -344,17 +348,19 @@ class CronController extends Controller
                     $trending_word->total_records = $pond5MusicMediaData['totalNumberOfItems'];
                     $trending_word->total_fetched = $limitPond5;
                     $trending_word->save();
-
-                    $data = [
-                        'trending_word' => $trending_word,
-                        'all_request' => $allRequest,
-                        'type' => 'Music',
-                        'category' => $percategory['category_id'],
-                        'page_number' => ''
-                    ];
-                    
-                    dispatch(new FetchThirdPartyData($data));
                 }
+
+                $data = [
+                    'trending_word' => $trending_word,
+                    'all_request' => $allRequest,
+                    'type' => 'Music',
+                    'category_id' => $percategory['category_id'],
+                    'page_number' => '',
+                    'is_category' => $isCategory,
+                    'category' => $term
+                ];
+                
+                dispatch(new FetchThirdPartyData($data));
 
                 if(isset($pond5MusicMediaData['status']) && $pond5MusicMediaData['status'] == 'failed'){
                     return [

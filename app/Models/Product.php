@@ -74,9 +74,11 @@ class Product extends Model
                 ];
             }
         }
-
-        $products = ImageFilterValue::query();
+    
+        $products = [];
+        $apiProductIds = [];
         if (!empty($applied_filters)) {
+            $products = ImageFilterValue::query();
             foreach ($applied_filters as $filter) {
                 $name  = $filter['name'];
                 $value = $filter['value'];
@@ -84,11 +86,10 @@ class Product extends Model
                     $products->whereIn("attributes.$name", $value);
                 }
             }
+            // Filter Data from MongoDB
+            $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+            $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         }
-
-        // Filter Data from MongoDB
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
-        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
             $data = Product::select(
                     'product_id',
@@ -146,11 +147,11 @@ class Product extends Model
 
             foreach($data as $key => $value) {
                 $stringValue = strval($value['api_product_id']);
-                $matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
+                //$matchingData = ImageFilterValue::where('api_product_id',$stringValue)->first();
                 $attributes = [];
                 $options = [];
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
+                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                 $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
@@ -200,8 +201,10 @@ class Product extends Model
                 ];
             }
         }
-        $products = ImageFilterValue::query();
+        $products = [];
+        $apiProductIds = [];
         if (!empty($applied_filters)) {
+            $products = ImageFilterValue::query();
             foreach ($applied_filters as $filter) {
                 $name  = $filter['name'];
                 $value = $filter['value'];
@@ -209,11 +212,10 @@ class Product extends Model
                     $products->whereIn("attributes.$name", $value);
                 }
             }
+            // Filter Data from MongoDB
+            $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
+            $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         }
-
-        // Filter Data from MongoDB
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1])->get()->toArray();
-        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
 
                 $data = Product::select(
@@ -265,11 +267,11 @@ class Product extends Model
             }
             foreach($data as $key => $value) {
 
-                $matchingData = ImageFilterValue::where('api_product_id',$value['api_product_id'])->first();
+                //$matchingData = ImageFilterValue::where('api_product_id',$value['api_product_id'])->first();
                 $attributes = [];
                 $options = [];
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
+                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                 $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
@@ -319,8 +321,10 @@ class Product extends Model
             }
         }
 
-        $products = ImageFilterValue::query();
+        $products = [];
+        $apiProductIds = [];
         if (!empty($applied_filters)) {
+            $products = ImageFilterValue::query();
             foreach ($applied_filters as $filter) {
                 $name  = $filter['name'];
                 $value = $filter['value'];
@@ -330,11 +334,12 @@ class Product extends Model
                     $products->whereIn('product_id', $value);
                 }
             }
-        }
 
-        $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])->get()->toArray();
+            $filteredProducts = $products->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])->get()->toArray();
+            $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
+        }
+        
         $indexedFilteredProducts = [];
-        $apiProductIds    = collect($filteredProducts)->pluck('api_product_id')->toArray();
 
         if ((!empty($applied_filters) && !empty($apiProductIds)) || empty($applied_filters)) {
             $data = Product::select(
@@ -431,6 +436,7 @@ class Product extends Model
 
         $products = ImageFilterValue::query();
         $products->where("attributes.artist", $search);
+        $products->limit(10);
 
         $filteredProducts = $products
                             ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.artist' => 1])
@@ -475,11 +481,11 @@ class Product extends Model
 
             foreach($data as $key => $value) {
 
-                $matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
+                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
                 $attributes = [];
                 $options = [];
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
+                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                 $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
@@ -516,6 +522,7 @@ class Product extends Model
 
         $products = ImageFilterValue::query();
         $products->where("attributes.artist", $search);
+        $products->limit(10);
 
         $filteredProducts = $products
                             ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])
@@ -567,11 +574,11 @@ class Product extends Model
 
             foreach($data as $key => $value) {
 
-                $matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
+                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
                 $attributes = [];
                 $options = [];
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
+                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                 $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
@@ -1360,12 +1367,12 @@ class Product extends Model
             foreach($data as $key => $value) {
 
 
-                $matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
+                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
 
                 $attributes = [];
                 $options = [];
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
+                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                 $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
                 $data[$key]['options'] = isset($options) ? $options : [];
@@ -1426,11 +1433,11 @@ class Product extends Model
                 $data = $data->toArray();
                 foreach($data as $key => $value) {
 
-                    $matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
+                    //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
                     $attributes = [];
                     $options = [];
-                    $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                    $options    = isset($matchingData->options) ? $matchingData->options : [];
+                    //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
+                    //$options    = isset($matchingData->options) ? $matchingData->options : [];
 
                     $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
                     $data[$key]['options'] = isset($options) ? $options : [];
