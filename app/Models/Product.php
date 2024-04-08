@@ -742,6 +742,7 @@ class Product extends Model
                                 'product_description'  => $eachmedia['description'],
                                 'product_title'        => $eachmedia['title'],
                                 'updated_at'           => date('Y-m-d H:i:s'),
+                                'product_category'     => $category_id,
                                 'slug'                 => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                                 'is_premium'           => (isset($eachmedia['premium']) && $eachmedia['premium'] == 'yes')  ? 1 : 0,
                                 'search_terms' => $existingTerms
@@ -896,6 +897,7 @@ class Product extends Model
                                 'product_thumbnail'   => $eachmedia['thumbnail'],
                                 'product_main_image'  => $eachmedia['watermarkPreview'],
                                 'product_description' => $eachmedia['description'],
+                                'product_category'    => $category_id,
                                 'updated_at'          => date('Y-m-d H:i:s'),
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                                 'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
@@ -1046,7 +1048,7 @@ class Product extends Model
                         $media['product_id'] = $flag . $key;
                         DB::table('imagefootage_products')->insert($media);
 
-
+                        
                         $productData  = array(
                             'music_sound_bpm'   => $eachmedia['soundBpm'] ?? '',
                             'soundPro'          => $eachmedia['soundPro'] ?? '',
@@ -1085,6 +1087,7 @@ class Product extends Model
                                 'product_main_image'  => $eachmedia['watermarkPreview'],
                                 'product_description' => $eachmedia['description'],
                                 'updated_at'          => date('Y-m-d H:i:s'),
+                                'product_category'    => $category_id,
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                                 'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
                                 'search_terms' => $existingTerms
@@ -1539,6 +1542,7 @@ class Product extends Model
                                 'product_main_image'  => $eachmedia['watermarkPreview'],
                                 'product_description' => $eachmedia['description'],
                                 'updated_at'          => date('Y-m-d H:i:s'),
+                                'product_category'    => $category_id,
                                 'slug'                => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
                                 'product_web'         => '3',
                                 'is_premium'          => (isset($eachmedia['editorial']) && $eachmedia['editorial'] == true) ? 1 : 0,
