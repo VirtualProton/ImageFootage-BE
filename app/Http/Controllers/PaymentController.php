@@ -381,7 +381,7 @@ class PaymentController extends Controller
         }else{
             $datenow = date('Y-m-d');
         }
-        $transactionId = rand(1,1000000);
+        $transactionId = rand(1,1000000).date("his");
         //echo "<pre>"; print_r($allFields); die;
         //DB::enableQueryLog();
         $userData = User::where('id','=',$allFields['tokenData']['Utype'])->get()->toArray();
