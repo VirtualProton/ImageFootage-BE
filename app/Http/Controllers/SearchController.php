@@ -71,11 +71,11 @@ class SearchController extends Controller
         $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
 
         $pType = 'Image';
-        if ($keyword['productType'] == '1' || $keyword['productType'] == '4') {
+        if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
             $pType = 'Image';
-        }else if($keyword['productType'] == '2' || $keyword['productType'] == '4'){
+        }else if($getKeyword['productType'] == '2' || $getKeyword['productType'] == '4'){
             $pType = 'Footage';
-        }else if($keyword['productType'] == '3'){
+        }else if($getKeyword['productType'] == '3'){
             $pType = 'Music';
         }
         
@@ -87,7 +87,7 @@ class SearchController extends Controller
                 'all_request' => $getKeyword,
                 'type' => $pType,
                 'category_id' => $keyword['category_id'],
-                'page_number' => $keyword['pagenumber'] + 10,
+                'page_number' => $keyword['pagenumber'] + 2,
                 'is_category' => $isCategory,
                 'category' => $searchKeyword
             ];

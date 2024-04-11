@@ -80,7 +80,7 @@ class FetchThirdPartyData implements ShouldQueue
             if ($this->details['type'] == 'Music') {
                 $musicMedia          = new MusicApi();
                 $pond5MusicMediaData = $musicMedia->search($keyword, [], $limitPond5, $i);
-                if (!empty($pantharmediaData) && count($pantharmediaData) > 0) {
+                if (!empty($pond5MusicMediaData) && count($pond5MusicMediaData) > 0) {
                     $product->savePond5Music($pond5MusicMediaData, $category_id, $this->details['all_request']);
                     if (!empty($this->details['trending_word'])) {
                         $this->details['trending_word']->total_fetched += $limitPond5;
