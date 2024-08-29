@@ -54,7 +54,7 @@ class SearchController extends Controller
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
 
         $searchKeyword = $keyword['search'];
-        $thirdparty = 'panthermedia';
+        $thirdparty = config('constants.third_party_for_image');
         $isCategory = 0;
 
         if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
@@ -72,7 +72,7 @@ class SearchController extends Controller
 
         $pType = 'Image';
         if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
-            $pType = 'Image';
+            $pType  = $thirdparty == 'panthermedia' ?  'Image' : 'Pond5Image';
         }else if($getKeyword['productType'] == '2' || $getKeyword['productType'] == '4'){
             $pType = 'Footage';
         }else if($getKeyword['productType'] == '3'){

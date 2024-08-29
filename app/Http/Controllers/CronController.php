@@ -290,6 +290,24 @@ class CronController extends Controller
                     $imagesMedia        = new \App\Http\Pond5\ImageApi();
                     $pond5ImagesData    = $imagesMedia->search($keyword, [], config('thirdparty.pond5.current_per_page_limit'));
 
+                    if(!empty($trending_word) && empty($trending_word->total_records)){
+                        $trending_word->total_records = $pond5ImagesData['totalNumberOfItems'];
+                        $trending_word->total_fetched = $limitPond5;
+                        $trending_word->save();
+                    }
+
+                    $data = [
+                        'trending_word' => $trending_word,
+                        'all_request' => $allRequest,
+                        'type' => 'Pond5Image',
+                        'category_id' => $percategory['category_id'],
+                        'page_number' => '',
+                        'is_category' => $isCategory,
+                        'category' => $term
+                    ];
+                    
+                    dispatch(new FetchThirdPartyData($data));
+
                     if(isset($pond5ImagesData['status']) && $pond5ImagesData['status'] == 'failed'){
                         return [
                             'status'=>'failed',
