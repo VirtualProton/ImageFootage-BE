@@ -88,6 +88,17 @@ class FetchThirdPartyData implements ShouldQueue
                 }
             }
 
+            if ($this->details['type'] == 'Pond5Image') {
+                $imagesMedia        = new \App\Http\Pond5\ImageApi();
+                $pond5ImagesData    = $imagesMedia->search($keyword, [], $limitPond5, $i);
+                if (!empty($pond5ImagesData) && count($pond5ImagesData) > 0) {
+                    $product->savePond5Image($pond5ImagesData, $category_id, $this->details['all_request']);
+                    if (!empty($this->details['trending_word'])) {
+                        $this->details['trending_word']->total_fetched += $limitPanther;
+                    }
+                }
+            }
+
             $product->checkAndUpdateSimilarSlug();
 
             if (!empty($this->details['trending_word'])) {
