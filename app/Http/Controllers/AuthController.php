@@ -439,6 +439,9 @@ class AuthController extends Controller
             $email  = $request->input('email');
         } else {
             $mobile = $request->input('email');
+            if(!config('constants.sms_enabled')){
+                return response()->json(['status' => false, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 200);
+            }
         }
         $save_data             = new User();
         $save_data->first_name = $request->input('name');

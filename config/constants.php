@@ -66,5 +66,8 @@ return [
     'company_name' => 'Imagefootage',
     'products_in_database_limit' => env('PRODUCT_IN_DATABASE_LIMIT', 100),
     'page_limit_to_fetch_for_third_party' => env('PAGE_LIMIT_THIRD_PARTY', 6),
-    'third_party_for_image' => env('THIRD_PARTY_FOR_IMAGE', 'panthermedia')
+    'third_party_for_image' => env('THIRD_PARTY_FOR_IMAGE', 'panthermedia'),
+    'sms_enabled' => env('SMS_ENABLED',true),
+    'google_signin_enabled' => env('GOOGLE_SIGNIN_ENABLED',true),
+    'facebook_signin_enabled' => env('FACEBOOK_SIGNIN_ENABLED',true)
 ];
