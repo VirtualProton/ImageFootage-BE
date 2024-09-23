@@ -20,6 +20,7 @@ Route::group([
 
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
+    Route::get('get-admin-settings', 'AuthController@getAdminSettings');
     Route::post('resend_verification_link/{email?}', 'AuthController@resendVerificationLink');
     Route::get('active_user_account/{token?}', "AuthController@activeUserAccount");
     Route::post('verify_mobile', "AuthController@verifyMobile");
@@ -45,8 +46,6 @@ Route::group([
     Route::post('get-already-downloaded-image', 'MediaController@getAlreadyDownloadedImage');
 
     Route::get('home', 'SearchController@home');
-
-
 
     Route::get('get_side_filtes', 'FiltersController@getAllFilters');
     Route::post('get-side-filters-v2', 'FiltersController@getAllFiltersV2');

@@ -32,7 +32,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'signup', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList', 'getAdminSettings']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -131,9 +131,11 @@ class AuthController extends Controller
 
             $client = new Google_Client();
             $client->setClientId(config('constants.google.client_id'));
-            $client->setClientSecret(config('constants.google.client_secret'));
+            $client->setClientSecret(config('constants.google.client_secret')); 
 
-            $payload = $client->verifyIdToken($request->token);
+            $payload = $client->verifyIdToken($request->idToken);
+
+            print_r($payload);die;
             $payload['login_type'] = 'google';
             if ($payload) {
                 $count = User::where('email', '=', $payload['email'])->count();
@@ -597,11 +599,16 @@ class AuthController extends Controller
 
         # Checked already authenticated by social account
         $userObj = User::where('email', $request->input('email'))->first();
-        if (!empty($userObj->gmail_idtoken)) {
+        if (!empty($userObj->gmail_idtoken) && config('constants.google_signin_enabled') && empty($userObj->password)) {
             return response()->json(['status' => false, 'message' => 'User has already authenticated by Google, Please try with google login'], 200);
+        }else if(!empty($userObj->gmail_idtoken) && !config('constants.google_signin_enabled') && empty($userObj->password)){
+            return response()->json(['status' => false, 'message' => 'Due to certain reasons, Google login is currently disabled. To continue accessing your account, please use the "Forgot Password" option to reset your password. You will receive an email with a link to set a new password.'], 200);
         }
-        if (!empty($userObj->fb_token)) {
+
+        if (!empty($userObj->fb_token) && config('constants.facebook_signin_enabled') && empty ($userObj->password)) {
             return response()->json(['status' => false, 'message' => 'User has already authenticated by Facebook, Please try with facebook login'], 200);
+        } else if (!empty($userObj->fb_token) && !config('constants.facebook_signin_enabled') && empty($userObj->password)) {
+            return response()->json(['status' => false, 'message' => 'Due to certain reasons, Facebook login is currently disabled. To continue accessing your account, please use the "Forgot Password" option to reset your password. You will receive an email with a link to set a new password.'], 200);
         }
 
         $usercredentials = [];
@@ -648,6 +655,19 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'data' => $cities
+        ]);
+    }
+
+    public function getAdminSettings(){
+        $response = [
+            'sms_enabled'               => config('constants.sms_enabled'),
+            'google_signin_enabled'     => config('constants.google_signin_enabled'),
+            'facebook_signin_enabled'   => config('constants.facebook_signin_enabled')
+        ];
+
+        return response()->json([
+            'status' => true,
+            'data' => $response
         ]);
     }
 }
