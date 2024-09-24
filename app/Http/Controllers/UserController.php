@@ -173,7 +173,7 @@ class UserController extends Controller
         }
         return response()->json($result);
     }*/
-    public function validUser(Request $request)
+    public static function validUser(Request $request)
     {
         if (empty($request['email']['user_email'])) {
             return response()->json(['status' => false, 'message' => 'Email is required.'], 200);
@@ -218,9 +218,38 @@ class UserController extends Controller
         if (empty($request['mobile']['user_mobile'])) {
             return response()->json(['status' => false, 'message' => 'Mobile number is required.'], 200);
         }
-        $hostname = \Request::server('HTTP_REFERER');
-        $count = User::where('mobile', '=', $request['mobile']['user_mobile'])->count();
-        if ($count > 0) {
+
+        $user = User::where('mobile', '=', $request['mobile']['user_mobile'])->first();
+        if ($user) {
+            if (!config('constants.sms_enabled')) {
+                if($user->email){
+                    // Assuming $user is an instance of your User model
+                    $request->merge([
+                        'email' => [
+                            'user_email' => $user->email,
+                        ],
+                    ]);
+
+                    $this->validUser($request);
+                    return response()->json(['status' => true, 'code' => 200, 'message' => "Check your email for reset password link."], 200);
+                }else if(isset($request['mobile']['email']) && !empty($request['mobile']['email'])){
+                    $checkEmailExist = User::where('email',$request['mobile']['email'])->exists();
+                    if($checkEmailExist){
+                        return response()->json(['status' => false, 'code' => 422, 'message' => "Email already exists. Please try with another email."], 200);
+                    }
+                    $user->email = $request['mobile']['email'];
+                    $user->save();
+                    $request->merge([
+                        'email' => [
+                            'user_email' => $user->email,
+                        ],
+                    ]);
+                    $this->validUser($request);
+                    return response()->json(['status' => true, 'code' => 200, 'message' => "Check your email for reset password link."], 200);
+                }else{
+                    return response()->json(['status' => false, 'code' => 422, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 200);
+                }
+            }
             $otp = rand(100000, 999999);
             $update = User::where('mobile', $request['mobile']['user_mobile'])->update(['otp' => $otp]);
             if ($update) {
