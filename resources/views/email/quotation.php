@@ -242,7 +242,7 @@
 
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition" style="font-size: 14px;">
+                    <div class="licensing-condition" style="font-size: 11px;">
                         <h3 class="h4"><strong>Standard licenses</strong></h3>
                         <p><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
@@ -269,7 +269,7 @@
                                 each.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition" style="font-size: 14px;">
+                    <div class="licensing-condition" style="font-size: 11px;">
                         <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
                         <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
                                 Premium Collection.</strong></p>

@@ -170,7 +170,7 @@
 
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition" style="font-size: 14px;">
+                    <div class="licensing-condition" style="font-size: 11px;">
                         <p><strong>With a Standard license, you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
@@ -183,7 +183,7 @@
                             <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition" style="font-size: 14px;">
+                    <div class="licensing-condition" style="font-size: 11px;">
                         <h4><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
                     </div>
                 </div>
