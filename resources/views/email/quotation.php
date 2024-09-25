@@ -165,17 +165,17 @@
                 $amount = 0;
                 for ($i = 0; $i < count($quotation); $i++) {
                     if ($i % 3 == 0) {
-                ?>
+                        ?>
                         <div class="row">
                         <?php
-                    }
-                    if (!empty($quotation[$i])) {
-                        $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
-                        if ($i % 3 == 1) {
-                            $class = "col-lg-4 second-div";
-                        } else {
-                            $class = "col-lg-4 ";
-                        } ?>
+                        }
+                        if (!empty($quotation[$i])) {
+                            $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
+                            if ($i % 3 == 1) {
+                                $class = "col-lg-4 second-div";
+                            } else {
+                                $class = "col-lg-4 ";
+                            } ?>
                             <div class="<?php echo $class; ?>">
                                 <div style="padding-top: 10px;">
                                     <?php if ($quotation[$i]['type'] == 'Music') { ?>
@@ -193,11 +193,11 @@
                                 <?php  } ?>
                             </div>
                         <?php
-                    }
-                    if ($i % 3 == 0) {
-                        ?>
+                        }
+                        if ($i % 3 == 0) {
+                            ?>
                         </div>
-                <?php
+                    <?php
                     }
                 }
                 ?>
@@ -223,7 +223,7 @@
 
                         <?php
                         if ($quotation[0]['tax'] != 0) {
-                        ?>
+                            ?>
                             <div class="row" style="border:1px solid white;">
                                 <div class="col-lg-12" style="padding: 0;width:100%">
                                     <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
@@ -242,7 +242,7 @@
 
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition">
+                    <div class="licensing-condition" style="font-size: 14px;">
                         <h3 class="h4"><strong>Standard licenses</strong></h3>
                         <p><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
@@ -269,7 +269,7 @@
                                 each.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition">
+                    <div class="licensing-condition" style="font-size: 14px;">
                         <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
                         <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
                                 Premium Collection.</strong></p>

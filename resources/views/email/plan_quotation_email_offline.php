@@ -26,32 +26,34 @@
             font-weight: normal;
             font-style: bold;
         }
+
         @page {
             margin-top: 200px;
             margin-bottom: 400px;
         }
-        header{
+
+        header {
             position: fixed;
             top: 0px;
             left: 0px;
             height: 100px;
         }
-        footer{
+
+        footer {
             position: fixed;
             bottom: 0px;
             left: 0px;
             height: 130px;
         }
 
-        .client-info-bottom.price-div .client-info-rightside{
+        .client-info-bottom.price-div .client-info-rightside {
             text-align: right;
         }
 
-        .main{
-            border:1px solid black;
-            padding:10px
+        .main {
+            border: 1px solid black;
+            padding: 10px
         }
-
     </style>
     <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
@@ -73,7 +75,7 @@
     <footer>
         <div class="container">
             <div class="footer-left">
-                <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
+                <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
                 <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
@@ -104,8 +106,8 @@
                     <div class="client-info-rightside">
                         <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE')?></strong></span></p>
-                  <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
                         <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
                         <p>Vendor Code : <span><strong><?php echo $orders['vendor_code'] ?></strong></span></p>
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
@@ -124,29 +126,28 @@
                         <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
                         <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
                         <p> <?php
-                        if ($orders['package_plan'] == 1) {
-                            $plan = 'Download Pack For '.$orders['package_expiry_yearly'].' year';
-                        } else {
-                            if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
-                                $plan = 'Subscription Pack For '.$orders['package_expiry'].' Month';
+                            if ($orders['package_plan'] == 1) {
+                                $plan = 'Download Pack For ' . $orders['package_expiry_yearly'] . ' year';
                             } else {
-                                $plan = 'Subscription Pack For '.$orders['package_expiry_yearly'].' Year';
+                                if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
+                                    $plan = 'Subscription Pack For ' . $orders['package_expiry'] . ' Month';
+                                } else {
+                                    $plan = 'Subscription Pack For ' . $orders['package_expiry_yearly'] . ' Year';
+                                }
                             }
-                        }
-                        if ($orders['package_type'] == 'Footage') {
+                            if ($orders['package_type'] == 'Footage') {
                                 if ($orders['pacage_size'] == 1) {
                                     echo $orders['package_name'] . " HD " . $plan;
                                 } else {
                                     echo $orders['package_name'] . " 4K " . $plan;
                                 }
-                            }else if($orders['package_type'] == 'Image'){
-                                echo $orders['package_name'] ." XL";
-                            }
-                             else {
+                            } else if ($orders['package_type'] == 'Image') {
+                                echo $orders['package_name'] . " XL";
+                            } else {
                                 echo $orders['package_name'] . " " . $plan;
                             }
                             ?>&nbsp;
-                            <?php echo $orders['licence_name']." Licence"; ?></p>
+                            <?php echo $orders['licence_name'] . " Licence"; ?></p>
 
                     </div>
                     <div class="client-info-rightside">
@@ -154,23 +155,23 @@
                     </div>
                 </div>
                 <?php
-                if( isset($orders['tax']) && $orders['tax'] != 0){
+                if (isset($orders['tax']) && $orders['tax'] != 0) {
                     ?>
                     <div class="price-div">
                         <p>Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                     </div>
-                    <?php
+                <?php
                 }
                 ?>
 
                 <div class="price-div">
-                    <p>In words: <strong>Rupees &nbsp; <?php echo $amount_in_words.' only' ?></strong></p>
+                    <p>In words: <strong>Rupees &nbsp; <?php echo $amount_in_words . ' only' ?></strong></p>
                 </div>
 
                 <div class="licensing-terms">
                     <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition">
-                        <h4><strong>With a Standard license, you may:</strong></h4>
+                    <div class="licensing-condition" style="font-size: 14px;">
+                        <p><strong>With a Standard license, you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
                             <li>Include the asset in email marketing, mobile advertising, or a broadcast program if the expected number of viewers is fewer than 500,000.</li>
@@ -182,7 +183,7 @@
                             <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition">
+                    <div class="licensing-condition" style="font-size: 14px;">
                         <h4><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
                     </div>
                 </div>
@@ -209,7 +210,7 @@
         <!-- Signature section start -->
         <section class="signature">
             <div class="container">
-                <p>For <span><?php config('constants.company_name')?></span></p>
+                <p>For <span><?php config('constants.company_name') ?></span></p>
                 <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
                 <p>Authorized Signatory</p>
             </div>
