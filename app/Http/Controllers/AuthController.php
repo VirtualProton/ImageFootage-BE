@@ -135,7 +135,6 @@ class AuthController extends Controller
 
             $payload = $client->verifyIdToken($request->idToken);
 
-            print_r($payload);die;
             $payload['login_type'] = 'google';
             if ($payload) {
                 $count = User::where('email', '=', $payload['email'])->count();
