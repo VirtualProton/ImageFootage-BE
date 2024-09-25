@@ -61,10 +61,13 @@ return [
         'client_id'     => env('FACEBOOK_CLIENT_ID', '311148397985250'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET', 'c9b8857a8d1ba7cc2f53bc59c127dbf1'),
         'app_access_token_endpoint' => "https://graph.facebook.com/oauth/access_token?client_id=:facebook_client_id&client_secret=:facebook_client_secret&grant_type=client_credentials",
-        'user_access_token_endpoint' => "https://graph.facebook.com/debug_token?input_token=:request_token&access_token=:data_access_token",
+        'user_access_token_endpoint' => "https://graph.facebook.com/debug_token?input_token=:request_token&access_token=:data_access_token", 
     ],
     'company_name' => 'Imagefootage',
     'products_in_database_limit' => env('PRODUCT_IN_DATABASE_LIMIT', 100),
     'page_limit_to_fetch_for_third_party' => env('PAGE_LIMIT_THIRD_PARTY', 6),
-    'third_party_for_image' => env('THIRD_PARTY_FOR_IMAGE', 'panthermedia')
+    'third_party_for_image' => env('THIRD_PARTY_FOR_IMAGE', 'panthermedia'),
+    'sms_enabled' => env('SMS_ENABLED',true),
+    'google_signin_enabled' => env('GOOGLE_SIGNIN_ENABLED',true),
+    'facebook_signin_enabled' => env('FACEBOOK_SIGNIN_ENABLED',true)
 ];

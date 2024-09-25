@@ -100,7 +100,6 @@ return [
             'password' => env('MONGO_DB_PASSWORD'),
             'options'  => []
         ],
-
     ],
 
     /*
