@@ -78,7 +78,7 @@
     <header>
         <div class="container">
             <div class="header-text">
-                <h1 class="h1"><strong>hi</strong></h1>
+                <h2 class="h2"><strong>hi</strong></h2>
                 <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
@@ -91,7 +91,7 @@
     <footer>
         <?php if ($quotation[0]['flag'] == 0) { ?>
             <div class="container">
-                <div class="footer-left">
+                <div class="footer-left" style="font-size: 11px;">
                     <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
                     <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                         500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
@@ -100,12 +100,12 @@
                     <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
                 </div>
                 <div class="footer-right">
-                    <h3 class="h2">looking forward</h3>
+                    <h3 class="h3">looking forward</h3>
                 </div>
             </div>
         <?php } else { ?>
             <div class="container">
-                <div class="footer-left">
+                <div class="footer-left" style="font-size: 11px;">
                     <h2 class="h4"><strong>Conceptual Pictures Worldwide Private Limited</strong></h2>
                     <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers,
                         Humayun Nagar, Hyderabad - 500028, Telangana,
@@ -115,7 +115,7 @@
                     <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
                 </div>
                 <div class="footer-right">
-                    <h3 class="h2">looking forward</h3>
+                    <h3 class="h3">looking forward</h3>
                 </div>
             </div>
         <?php } ?>
@@ -126,7 +126,7 @@
         <!-- Table paragraph section start -->
         <section class="table-paragraph">
             <div class="container">
-                <div class="client-info-top">
+                <div class="client-info-top" style="font-size: 11px;">
                     <div class="client-info-leftside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
 
@@ -150,7 +150,7 @@
                         <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
-                <div class="client-info-bottom">
+                <div class="client-info-bottom" style="font-size: 11px;">
                     <div class="client-info-leftside">
                         <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
@@ -176,7 +176,7 @@
                             } else {
                                 $class = "col-lg-4 ";
                             } ?>
-                            <div class="<?php echo $class; ?>">
+                            <div class="<?php echo $class; ?>" style="font-size: 11px;">
                                 <div style="padding-top: 10px;">
                                     <?php if ($quotation[$i]['type'] == 'Music') { ?>
                                         <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
@@ -210,10 +210,10 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                    <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         Total (INR)
                                     </td>
-                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29)font-size: 11px;;">
                                         <strong><?php echo $quotation[0]['total']; ?></strong>
                                     </td>
                                 </tr>
@@ -233,18 +233,18 @@
                         }
                         ?>
 
-                        <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;">
+                        <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;font-size: 11px;">
                             <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="licensing-terms">
-                    <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition" style="font-size: 11px;">
-                        <h3 class="h4"><strong>Standard licenses</strong></h3>
-                        <p><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
+                <div class="licensing-terms" style="font-size: 11px;">
+                    <h3 class="h3"><strong> Licensing Terms: </strong></h3>
+                    <div class="licensing-condition">
+                        <h4 class="h4"><strong>Standard licenses</strong></h4>
+                        <p style="font-size: 12px;"><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in all media, including product packaging,
                                 printed marketing materials, digital documents, or software.</li>
@@ -269,7 +269,7 @@
                                 each.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition" style="font-size: 11px;">
+                    <div class="licensing-condition">
                         <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
                         <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
                                 Premium Collection.</strong></p>
@@ -288,7 +288,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="terms-of-payment licensing-terms">
+                <div class="terms-of-payment licensing-terms" style="font-size: 11px;">
                     <h3 class="h4"><strong>Terms of Payment: </strong></h3>
                     <ul>
                         <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront
