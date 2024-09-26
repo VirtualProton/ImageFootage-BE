@@ -63,7 +63,7 @@
     <header>
         <div class="container">
             <div class="header-text">
-                <h1 class="h1"><strong>hi</strong></h1>
+                <h2 class="h2"><strong>hi</strong></h2>
                 <span class="upper-case"><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
@@ -74,7 +74,7 @@
 
     <footer>
         <div class="container">
-            <div class="footer-left">
+            <div class="footer-left" style="font-size: 11px;">
                 <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
                 <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
@@ -82,7 +82,7 @@
                 <a href="<?php echo $orders['frontend_url']; ?>"><?php echo $orders['frontend_url']; ?></a>
             </div>
             <div class="footer-right">
-                <h3 class="h2">looking forward</h3>
+                <h3 class="h3">looking forward</h3>
             </div>
         </div>
     </footer>
@@ -93,7 +93,7 @@
         <section class="table-paragraph">
             <div class="container">
                 <div class="client-info-top">
-                    <div class="client-info-leftside">
+                    <div class="client-info-leftside" style="font-size: 11px;">
                         <p>Customer Name: <span><strong><?php echo $orders['first_name'] ?? ''; ?> <?php echo $orders['last_name'] ?? ''; ?></span></strong></p>
                         <p>Address: <span><strong><?php echo $orders['address'] ?? ''; ?></strong></span>
                             <?php if (!empty($orders['address2'])) { ?>
@@ -103,7 +103,7 @@
                         </p>
                         <p>Mobile: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
                     </div>
-                    <div class="client-info-rightside">
+                    <div class="client-info-rightside" style="font-size: 11px;">
                         <p>Estimate No.: <span><strong><?php echo $orders['invoice_name'] ?? ''; ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
                         <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
@@ -114,15 +114,15 @@
                     </div>
                 </div>
                 <div class="client-info-bottom">
-                    <div class="client-info-leftside">
+                    <div class="client-info-leftside" style="font-size: 11px;">
                         <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
                     </div>
-                    <div class="client-info-rightside">
+                    <div class="client-info-rightside" style="font-size: 11px;">
                         <p>Product Description: <span class="block-text"><strong><?php echo $orders['description'] ?? ''; ?></strong></span></p>
                     </div>
                 </div>
                 <div class="client-info-bottom price-div" style="padding-top: 15px;padding-bottom:0px;">
-                    <div class="client-info-leftside">
+                    <div class="client-info-leftside" style="font-size: 11px;">
                         <p><strong><?php echo $orders['description'] ?? '' ?></strong></p>
                         <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
                         <p> <?php
@@ -150,27 +150,27 @@
                             <?php echo $orders['licence_name'] . " Licence"; ?></p>
 
                     </div>
-                    <div class="client-info-rightside">
+                    <div class="client-info-rightside" style="font-size: 11px;">
                         <p><strong>Total (INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
                     </div>
                 </div>
                 <?php
                 if (isset($orders['tax']) && $orders['tax'] != 0) {
                     ?>
-                    <div class="price-div">
+                    <div class="price-div" style="font-size: 11px;">
                         <p>Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                     </div>
                 <?php
                 }
                 ?>
 
-                <div class="price-div">
+                <div class="price-div" style="font-size: 11px;">
                     <p>In words: <strong>Rupees &nbsp; <?php echo $amount_in_words . ' only' ?></strong></p>
                 </div>
 
-                <div class="licensing-terms">
-                    <h2 class="h3"><strong> Licensing Terms: </strong></h2>
-                    <div class="licensing-condition" style="font-size: 11px;">
+                <div class="licensing-terms" style="font-size: 11px;">
+                    <h3 class="h3"><strong> Licensing Terms: </strong></h3>
+                    <div class="licensing-condition">
                         <p><strong>With a Standard license, you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in product packaging, printed marketing materials, digital documents, or software.</li>
@@ -183,7 +183,7 @@
                             <li>Create merchandise or products for resale or distribution where the main value of the product is associated with the asset itself. For example, you can't use the asset to create a poster, t-shirt, or coffee mug that someone would buy specifically because of the asset printed on it.</li>
                         </ul>
                     </div>
-                    <div class="licensing-condition" style="font-size: 11px;">
+                    <div class="licensing-condition">
                         <h4><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
                     </div>
                 </div>
