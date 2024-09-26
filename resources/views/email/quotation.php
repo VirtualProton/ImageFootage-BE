@@ -213,7 +213,7 @@
                                     <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         Total (INR)
                                     </td>
-                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29)font-size: 11px;;">
+                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         <strong><?php echo $quotation[0]['total']; ?></strong>
                                     </td>
                                 </tr>
