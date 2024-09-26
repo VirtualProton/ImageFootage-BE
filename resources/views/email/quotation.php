@@ -140,7 +140,7 @@
                         </p>
                         <p style="font-size: 11px;">Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
-                    <div class="client-info-rightside" style="font-size: 11px;">
+                    <div class="client-info-rightside">
                         <p style="font-size: 11px;">Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
                         <p style="font-size: 11px;">Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
                         <p style="font-size: 11px;">GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="client-info-rightside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
-                            <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                            <p style="font-size: 11px;">End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
                         <?php } ?>
                         <p style="font-size: 11px;">Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
                     </div>
@@ -226,7 +226,7 @@
                             ?>
                             <div class="row" style="border:1px solid white;">
                                 <div class="col-lg-12" style="padding: 0;width:100%">
-                                    <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                                    <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;font-size: 11px;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                                 </div>
                             </div>
                         <?php
