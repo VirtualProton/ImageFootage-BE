@@ -150,7 +150,7 @@
                         <p style="font-size: 11px;">Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
-                <div class="client-info-bottom" style="font-size: 11px;">
+                <div class="client-info-bottom">
                     <div class="client-info-leftside">
                         <p style="font-size: 11px;">Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
