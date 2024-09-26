@@ -336,7 +336,7 @@ footer {
     width: 32%;
     display: inline-block;
     /* vertical-align: to; */
-    padding-bottom: 25px;
+    padding-top: 25px;
 }
 
 .footer-right .h2 {
