@@ -78,7 +78,7 @@
     <header>
         <div class="container">
             <div class="header-text">
-                <h2 class="h2"><strong>hi</strong></h2>
+                <h1 class="h1"><strong>hi</strong></h1>
                 <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
@@ -91,16 +91,16 @@
     <footer>
         <?php if ($quotation[0]['flag'] == 0) { ?>
             <div class="container">
-                <div class="footer-left" style="font-size: 11px;">
+                <div class="footer-left">
                     <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
-                    <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
+                    <p style="font-size: 11px;">3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                         500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                     </p>
                     <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
                     <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
                 </div>
                 <div class="footer-right">
-                    <h3 class="h3">looking forward</h3>
+                    <h3 class="h2">looking forward</h3>
                 </div>
             </div>
         <?php } else { ?>
@@ -243,7 +243,7 @@
                 <div class="licensing-terms" style="font-size: 11px;">
                     <h3 class="h3"><strong> Licensing Terms: </strong></h3>
                     <div class="licensing-condition">
-                        <h4 class="h4"><strong>Standard licenses</strong></h4>
+                        <h4 class="h5"><strong>Standard licenses</strong></h4>
                         <p style="font-size: 12px;"><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in all media, including product packaging,
