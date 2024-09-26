@@ -84,7 +84,7 @@ header {
 /* client-info start */
 
 .client-info-leftside {
-    width: 49%;
+    width: 65%;
     display: inline-block;
     vertical-align: top;
 }
@@ -107,7 +107,7 @@ header {
 }
 
 .client-info-rightside {
-    width: 50%;
+    width: 35%;
     display: inline-block;
     vertical-align: top;
 }
