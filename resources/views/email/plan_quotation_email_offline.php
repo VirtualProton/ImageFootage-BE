@@ -67,7 +67,7 @@
                 <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
-                <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo" width="1920" height="351">
+                <img src="<?php echo $orders['company_logo']; ?>" alt="logo" width="1920" height="351">
             </div>
         </div>
     </header>
@@ -80,7 +80,7 @@
                     500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
+                <a href="<?php echo $orders['frontend_url']; ?>"><?php echo $orders['frontend_url']; ?></a>
             </div>
             <div class="footer-right">
                 <h3 class="h2">looking forward</h3>
