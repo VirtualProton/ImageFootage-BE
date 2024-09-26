@@ -127,38 +127,38 @@
         <section class="table-paragraph">
             <div class="container">
                 <div class="client-info-top">
-                    <div class="client-info-leftside" style="font-size: 11px;">
+                    <div class="client-info-leftside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
 
-                            <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                            <p style="font-size: 11px;">Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
                         <?php if ($quotation[0]['flag'] !== 2) { ?>
-                            <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                            <p style="font-size: 11px;">Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
-                        <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
+                        <p style="font-size: 11px;">Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
                             <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
-                        <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside" style="font-size: 11px;">
-                        <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
-                        <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
-                        <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                        <p>Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
-                        <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
+                        <p style="font-size: 11px;">Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
+                        <p style="font-size: 11px;">Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
+                        <p style="font-size: 11px;">GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                        <p style="font-size: 11px;">PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p style="font-size: 11px;">SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p style="font-size: 11px;">Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
                 <div class="client-info-bottom" style="font-size: 11px;">
                     <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
                             <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
                         <?php } ?>
-                        <p>Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
+                        <p style="font-size: 11px;">Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
                     </div>
                 </div>
                 <?php
@@ -187,9 +187,9 @@
 
 
                                 <?php if (!empty($quotation[$i]['product_id']) || !empty($quotation[$i]['product_image'])) { ?>
-                                    <p>Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
-                                    <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
-                                    <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                                    <p style="font-size: 11px;">Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
+                                    <p style="font-size: 11px;">Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
+                                    <p style="font-size: 11px;">Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                                 <?php  } ?>
                             </div>
                         <?php
