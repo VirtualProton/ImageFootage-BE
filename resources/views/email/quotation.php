@@ -126,8 +126,8 @@
         <!-- Table paragraph section start -->
         <section class="table-paragraph">
             <div class="container">
-                <div class="client-info-top" style="font-size: 11px;">
-                    <div class="client-info-leftside">
+                <div class="client-info-top">
+                    <div class="client-info-leftside" style="font-size: 11px;">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
 
                             <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
@@ -140,7 +140,7 @@
                         </p>
                         <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
-                    <div class="client-info-rightside">
+                    <div class="client-info-rightside" style="font-size: 11px;">
                         <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
                         <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
                         <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
@@ -243,8 +243,8 @@
                 <div class="licensing-terms" style="font-size: 11px;">
                     <h3 class="h3"><strong> Licensing Terms: </strong></h3>
                     <div class="licensing-condition">
-                        <h4 class="h5"><strong>Standard licenses</strong></h4>
-                        <p style="font-size: 12px;"><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
+                        <h3 class="h4"><strong>Standard licenses</strong></h3>
+                        <p style="font-size: 13px;"><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in all media, including product packaging,
                                 printed marketing materials, digital documents, or software.</li>
@@ -258,7 +258,7 @@
                                 to abide by the license terms.</li>
                             <li>Transfer the license to your client or employer.</li>
                         </ul>
-                        <p><strong>With a Standard license, you may not:</strong></p>
+                        <p style="font-size: 13px;"><strong>With a Standard license, you may not:</strong></p>
                         <ul>
                             <li>Distribute the stand-alone file.</li>
                             <li>Create merchandise, templates, or other products for resale or distribution where the
@@ -270,15 +270,15 @@
                         </ul>
                     </div>
                     <div class="licensing-condition">
-                        <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
-                        <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
+                        <h3 class="h3"><strong>Enhanced /Extended licenses</strong></h3>
+                        <p style="font-size: 13px;"><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
                                 Premium Collection.</strong></p>
-                        <p><strong>With an Enhanced license, you may:</strong></p>
+                        <p style="font-size: 13px;"><strong>With an Enhanced license, you may:</strong></p>
                         <ul>
                             <li>Use the asset with all the rights granted in the Standard license.</li>
                             <li>Reproduce the asset beyond the 500,000 copy/viewer restriction.</li>
                         </ul>
-                        <p><strong>With an Enhanced license, you may not:</strong></p>
+                        <p style="font-size: 13px;"><strong>With an Enhanced license, you may not:</strong></p>
                         <ul>
                             <li>Distribute the stand-alone file.</li>
                             <li>Create merchandise, templates, or other products for resale or distribution where the
