@@ -64,10 +64,10 @@
         <div class="container">
             <div class="header-text">
                 <h1 class="h1"><strong>hi</strong></h1>
-                <span class="upper-case"><strong>this is an estimate</strong></span>
+                <span><strong>this is an estimate</strong></span>
             </div>
             <div class="header-logo">
-                <img src="<?php echo $orders['company_logo']; ?>" alt="logo" width="1920" height="351">
+                <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo" width="1920" height="351">
             </div>
         </div>
     </header>
@@ -76,13 +76,14 @@
         <div class="container">
             <div class="footer-left">
                 <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
-                <p style="font-size: 11px;">3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
+                <p style="font-size: 11px;">3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
+                    500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                 </p>
                 <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="<?php echo $orders['frontend_url']; ?>"><?php echo $orders['frontend_url']; ?></a>
+                <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
             </div>
             <div class="footer-right">
-                <h3 class="h3">looking forward</h3>
+                <h3 class="h2">looking forward</h3>
             </div>
         </div>
     </footer>
