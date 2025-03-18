@@ -17,9 +17,13 @@ class ImageApi
 
     public function  __construct()
     {
-        $this->api_key    = config('thirdparty.pond5.api_key');
-        $this->api_secret = config('thirdparty.pond5.api_secret');
-        $this->url        = config('thirdparty.pond5.api_url');
+        $getPond5ApiVersion = get_pond5_api_version();
+        $this->api_key    = $getPond5ApiVersion['api_key'];
+        $this->api_secret = $getPond5ApiVersion['api_secret'];
+        $this->url        = $getPond5ApiVersion['url'];
+        // $this->api_key    = config('thirdparty.pond5.api_key');
+        // $this->api_secret = config('thirdparty.pond5.api_secret');
+        // $this->url        = config('thirdparty.pond5.api_url');
     }
 
     private function str_random($len = 8, $allowed_charset = null)
@@ -30,36 +34,41 @@ class ImageApi
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
 
-    public function search($keyword, $getKeyword = [], $limit = 30, $page = 1)
+    public function search($keyword, $getKeyword = [], $limit, $page = 1)
     {
         $search = $keyword['search'];
         $page   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : $page;
+        $type  = isset($keyword['productType']) ? $keyword['productType'] : 'photo';
 
         if(isset($keyword['authorname']) && !empty($keyword['authorname'])){
             $authorname = $keyword['authorname'];
         }
 
         // IMPROVEMENT: change the frontend value for the sort, use slug
-        if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
+        if (isset($keyword['sort']) && $keyword['sort'] == 'Recent') {
             $sort = 'newest';
-        } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
+        } else if (isset($keyword['sort']) && $keyword['sort'] == 'Popular') {
             $sort = 'popular';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: Low to High'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: Low to High'){
             $sort = 'price_low_high';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: High to Low'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: High to Low'){
             $sort = 'price_high_low';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Duration: Long to Short'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Long to Short'){
+            $sort = 'duration_long_short';
+        } else if (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Short to Long') {
             $sort = 'duration_short_long';
         } else {
             $sort = 'default';
         }
-
+        
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
 
         $url            = [];
-        $url['type']    = 'photo    ';
-        $url['perPage'] = $limit;
+        $url['type']    = $type;
+        if ($limit) {
+            $url['perPage'] = $limit;
+        }
         $url['page']    = $page;
 
         if (!empty($filter_mapping)) {
@@ -156,6 +165,33 @@ class ImageApi
             ),
         ));
         // Send the request & save response to $resp
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $contents = json_decode($response, true);
+        return $contents;
+    }
+
+    public function getDetail($slug)
+    {
+        $id = explode('-', $slug);
+        $id = $id[0];
+            
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->url . '/api/v3/items/' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'accept: application/json',
+                'key: ' . $this->api_key,
+                'secret: ' . $this->api_secret
+            ),
+        ));
         $response = curl_exec($curl);
         curl_close($curl);
         $contents = json_decode($response, true);
