@@ -231,7 +231,6 @@ class WishListController extends Controller
             'Utype.exists' => 'Oops, this user is no longer active in our system.',
             'products.required' => 'Please select at least one product to proceed.',
             'products.array' => 'There seems to be an issue with the selected products.',
-            'products.*.product_id.exists' => 'Some of the selected products are not available.',
             'products.*.type.required' => 'Please specify the type of product.',
             'products.*.type.in' => 'Invalid product type selected.',
         ];
@@ -240,7 +239,6 @@ class WishListController extends Controller
             'wishlist_id' => 'required|exists:imagefootage_wishlists,id',
             'Utype' => 'required|exists:imagefootage_users,id',
             'products' => 'required|array|min:1',
-            'products.*.product_id' => 'required|exists:imagefootage_products,product_id',
             'products.*.type' => 'required|in:image,footage,music',
         ];
 
@@ -253,36 +251,56 @@ class WishListController extends Controller
 
                 $productIds = Arr::pluck($products, 'product_id');
 
-                // Getting products primary keys based on passed product_id
-                $allProductPrimaryIds = $this->productModel
-                    ->whereIn('product_id', $productIds)
-                    ->pluck('id')->toArray();
-
                 // Getting products which are already added to wishlist but passed in payload
                 $productsAlreadyLinkedToWishlist = DB::table('imagefootage_wishlist_products')
                     ->where('wishlist_id', $wishlistId)
-                    ->whereIn('product_id', $allProductPrimaryIds)
+                    ->whereIn('product_id', $productIds)
                     ->pluck('product_id')->toArray();
 
                 // Filtering products_id of products which are not already added to wishlist
-                $addToWishListProductIds = array_values(array_diff($allProductPrimaryIds, $productsAlreadyLinkedToWishlist));
-
-                // Getting products based on products_id which are not already added to wishlist and need to add to wishlist
-                $addToWishListProducts = $this->productModel->select('id', 'product_id')
-                    ->whereIn('id', $addToWishListProductIds)
-                    ->get()->toArray();
+                $addToWishListProductIds = array_values(array_diff($productIds, $productsAlreadyLinkedToWishlist));
 
                 $wishListProductRelationData = [];
-                foreach ($addToWishListProducts as $product) {
+                foreach ($addToWishListProductIds as $productId) {
+                    if (!$productId) {
+                        continue;
+                    }
                     // Filtering data for getting product type based on product_id
-                    $filteredData = array_filter($products, function ($item) use($product) {
-                        return $item['product_id'] === $product['product_id'];
+                    $filteredData = array_filter($products, function ($item) use($productId) {
+                        return $item['product_id'] === $productId;
                     });
 
+                    $slug = $filteredData[0]['product_id'].'-'.$filteredData[0]['type'];
+                    $imagesMedia        = new \App\Http\Pond5\ImageApi();
+                    $pond5ImagesData    = $imagesMedia->getDetail($slug);
+                    $pond5ImagesData = [
+                        'id'                  => $pond5ImagesData['id'],
+                        'product_id'          => $pond5ImagesData['id'],
+                        'api_product_id'      => encrypt($pond5ImagesData['id']),
+                        'product_category'    => '',
+                        'product_title'       => $pond5ImagesData['title'],
+                        'product_thumbnail'   => $pond5ImagesData['thumbnail'],
+                        'product_main_image'  => $pond5ImagesData['type'] == 'Photos' ? $pond5ImagesData['thumbnail'] : $pond5ImagesData['watermarkPreview'],
+                        'product_description' => $pond5ImagesData['description'],
+                        'product_keywords'    => implode(',', $pond5ImagesData['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $pond5ImagesData['type'] == 'Photos' ? 'Image' : ($pond5ImagesData['type'] == 'Video' ? 'Video' : 'Music'),
+                        'product_sub_type'    => $pond5ImagesData['type'] == 'Photos' ? 'Photo' : ($pond5ImagesData['type'] == 'Video' ? 'Video' : 'Music'),
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '',
+                        'slug'                => $pond5ImagesData['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pond5ImagesData['title']))),
+                        'product_keywords'    => '',
+                        'product_price_small' => '',
+                        'is_premium'          => '',
+                        'music_duration'      => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['duration'] : null,
+                        'music_fileType'      => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['fileType'] : null,
+                        'music_price'         => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['price'] : null,
+                    ];
                     $wishListProductRelation = [];
+                    $wishListProductRelation['pond5_product_response'] = json_encode($pond5ImagesData);
                     $wishListProductRelation['wishlist_id'] = $wishlistId;
-                    $wishListProductRelation['product_id'] = $product['id'];
-                    $wishListProductRelation['product_path_id'] = $product['product_id'];
+                    $wishListProductRelation['product_id'] = $filteredData[0]['product_id'];
+                    $wishListProductRelation['product_path_id'] = $filteredData[0]['product_id'];
                     $wishListProductRelation['type'] = $filteredData[0]['type'];
                     $wishListProductRelation['created_at'] = Carbon::now();
                     $wishListProductRelation['updated_at'] = Carbon::now();
@@ -315,7 +333,7 @@ class WishListController extends Controller
                     return jsonResponse(true, $errorMessage);
                 }
             } catch (\Exception $e) {
-                return $e->getMessage();
+                dd($e);
                 return jsonResponse(true, "Oops, Something went wrong!");
             }
         } else {
@@ -501,14 +519,12 @@ class WishListController extends Controller
             'Utype.exists' => 'Oops, this user is no longer active in our system.',
             'product_id.required' => 'Please select at least one product to proceed.',
             'product_id.array' => 'There seems to be an issue with the selected products.',
-            'product_id.*.exists' => 'Some of the selected products are not available.',
         ];
 
         $rules = [
             'wishlist_id' => 'required|exists:imagefootage_wishlists,id',
             'Utype' => 'required|exists:imagefootage_users,id',
             'product_id' => 'required|array|min:1',
-            'product_id.*' => 'exists:imagefootage_products,product_id',
         ];
 
         $validator = Validator::make($postData, $rules, $customMessages);
@@ -517,14 +533,9 @@ class WishListController extends Controller
             $wishlistId = $postData['wishlist_id'];
             $productIds = $postData['product_id'];
 
-            // Get Primary Ids of products for deleting from wishlist
-            $allProductPrimaryIds = $this->productModel
-                ->whereIn('product_id', $productIds)
-                ->pluck('id')->toArray();
-
             DB::table('imagefootage_wishlist_products')
                 ->where('wishlist_id', $wishlistId)
-                ->whereIn('product_id', $allProductPrimaryIds)
+                ->whereIn('product_id', $productIds)
                 ->delete();
 
             $successMessage = "Product Removed from wishlist";
@@ -584,16 +595,33 @@ class WishListController extends Controller
 
         $query = Product::query();
 
-        if (!empty($productId)) {
-            $query->where('product_id', $productId);
-        } else {
-            $query->where(function ($query) use ($title, $url) {
-                $query->where('product_title', $title);
-                $query->where('product_thumbnail', $url);
-            });
-        }
-
-        $product = $query->first();
+        $slug = $productId.'-'.$request->type;
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->getDetail($slug);
+        
+        $product = [
+            'id'                  => $pond5ImagesData['id'],
+            'product_id'          => $pond5ImagesData['id'],
+            'api_product_id'      => encrypt($pond5ImagesData['id']),
+            'product_category'    => '',
+            'product_title'       => $pond5ImagesData['title'],
+            'product_thumbnail'   => $pond5ImagesData['thumbnail'],
+            'product_main_image'  => $pond5ImagesData['type'] == 'Photos' ? $pond5ImagesData['thumbnail'] : $pond5ImagesData['watermarkPreview'],
+            'product_description' => $pond5ImagesData['description'],
+            'product_keywords'    => implode(',', $pond5ImagesData['keywords']),
+            'product_status'      => "Active",
+            'product_main_type'   => $pond5ImagesData['type'] == 'Photos' ? 'Image' : ($pond5ImagesData['type'] == 'Video' ? 'Video' : 'Music'),
+            'product_sub_type'    => $pond5ImagesData['type'] == 'Photos' ? 'Photo' : ($pond5ImagesData['type'] == 'Video' ? 'Video' : 'Music'),
+            'product_added_on'    => date("Y-m-d H:i:s"),
+            'product_web'         => '',
+            'slug'                => $pond5ImagesData['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($pond5ImagesData['title']))),
+            'product_keywords'    => '',
+            'product_price_small' => '',
+            'is_premium'          => '',
+            'music_duration'      => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['duration'] : null,
+            'music_fileType'      => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['fileType'] : null,
+            'music_price'         => $pond5ImagesData['type'] == 'Music' ? $pond5ImagesData['versions'][0]['price'] : null,
+        ];
 
 
         if (!empty($product)) {

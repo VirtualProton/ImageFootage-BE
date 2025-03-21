@@ -17,9 +17,10 @@ class ImageApi
 
     public function  __construct()
     {
-        $this->api_key    = config('thirdparty.pond5.api_key');
-        $this->api_secret = config('thirdparty.pond5.api_secret');
-        $this->url        = config('thirdparty.pond5.api_url');
+        $getPond5ApiVersion = get_pond5_api_version();
+        $this->api_key    = $getPond5ApiVersion['api_key'];
+        $this->api_secret = $getPond5ApiVersion['api_secret'];
+        $this->url        = $getPond5ApiVersion['url'];
     }
 
     private function str_random($len = 8, $allowed_charset = null)
@@ -30,46 +31,127 @@ class ImageApi
         return substr(str_shuffle($allowed_charset), 0, $len);
     }
 
-    public function search($keyword, $getKeyword = [], $limit = 30, $page = 1)
+    public function search($keyword, $getKeyword = [], $limit, $page = 1)
     {
         $search = $keyword['search'];
         $page   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : $page;
+        $type  = isset($keyword['productType']) ? $keyword['productType'] : 'photo';
 
         if(isset($keyword['authorname']) && !empty($keyword['authorname'])){
             $authorname = $keyword['authorname'];
         }
 
         // IMPROVEMENT: change the frontend value for the sort, use slug
-        if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Recent') {
+        if (isset($keyword['sort']) && $keyword['sort'] == 'Recent') {
             $sort = 'newest';
-        } else if (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Popular') {
+        } else if (isset($keyword['sort']) && $keyword['sort'] == 'Popular') {
             $sort = 'popular';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: Low to High'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: Low to High'){
             $sort = 'price_low_high';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Price: High to Low'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: High to Low'){
             $sort = 'price_high_low';
-        } elseif (isset($getKeyword['sort']) && $getKeyword['sort'] == 'Duration: Long to Short'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Long to Short'){
+            $sort = 'duration_long_short';
+        } else if (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Short to Long') {
             $sort = 'duration_short_long';
         } else {
             $sort = 'default';
         }
-
+        
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
         $filter_mapping = "";
 
         $url            = [];
-        $url['type']    = 'photo    ';
-        $url['perPage'] = $limit;
+        $url['type']    = $type;
+        if ($limit) {
+            $url['perPage'] = $limit;
+        }
         $url['page']    = $page;
 
-        if (!empty($filter_mapping)) {
-            $url['query'] = $filter_mapping;
+        $queryParts = [];
+        if ($getFilters) {
+            if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
+                $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
+                $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
+                $queryParts[] = 'people:' . implode(':', $people);
+            }
+
+            if (!empty($getFilters['gender'])) {
+                $people_gender = explode(',', str_replace(' ', '', $getFilters['gender']['value']));
+                $queryParts[] = 'people:' . implode(':', $people_gender);
+            }
+
+            if (!empty($getFilters['pricerange']['value'])) {
+                $priceRange = str_replace(' ', '', $getFilters['pricerange']['value']);
+                [$minPrice, $maxPrice] = explode('|', $priceRange) + [null, null];
+
+                if (!empty($minPrice) && empty($maxPrice)) {
+                    $queryParts[] = 'pricegt:' . $minPrice;
+                } elseif (empty($minPrice) && !empty($maxPrice)) {
+                    $queryParts[] = 'pricelt:' . $maxPrice;
+                } elseif (!empty($minPrice) && !empty($maxPrice)) {
+                    $queryParts[] = 'pricegt:' . $minPrice . ' pricelt:' . $maxPrice;
+                }
+            }
+
+            if (!empty($getFilters['fps'])) {
+                $fpsValues = explode(',', str_replace(' ', '', $getFilters['fps']['value']));
+                $normalFps = array_filter($fpsValues, fn($fps) => $fps !== '60+');
+                $hasFpsGT60 = in_array('60+', $fpsValues);
+
+                if (!empty($normalFps)) {
+                    $queryParts[] = 'fps:' . implode(':', $normalFps);
+                }
+                if ($hasFpsGT60) {
+                    $queryParts[] = 'fpsgt:60';
+                }
+            }
+
+            foreach (['orientation', 'aerial', 'misc'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $queryParts[] = "{$filter}:" . $getFilters[$filter]['value'];
+                }
+            }
+
+            foreach (['mood', 'genre'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $values = explode(',', str_replace(' ', '', $getFilters[$filter]['value']));
+                    $queryParts[] = "{$filter}:" . implode(':', $values);
+                }
+            }
+
+            if (!empty($getFilters['bpmbetween'])) {
+                $bpmBetween = explode('|', str_replace(' ', '', $getFilters['bpmbetween']['value']));
+                $queryParts[] = 'bpmbetween:' . implode(':', $bpmBetween);
+            }
+            foreach (['bpmgt', 'bpmlt'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $queryParts[] = "{$filter}:" . $getFilters[$filter]['value'];
+                }
+            }
+
+            $checkboxFilters = [
+                'alpha_channel' => 'cb:KCT0200',
+                'alpha_matte' => 'cb:vidmatte',
+                'contains_audio' => 'misc:containsaudio',
+                'greenscreen' => 'greenscreen:1',
+                'loopable' => 'cb:KCA0700',
+                'camera' => 'camera:red',
+                'sampling_cleared' => 'cb:KSO0104'
+            ];
+
+            foreach ($checkboxFilters as $key => $queryValue) {
+                if (!empty($getFilters[$key])) {
+                    $queryParts[] = $queryValue;
+                }
+            }
         }
+        $query = implode(' ', $queryParts);
         if (!empty($search)) {
             $url['query'] = $search;
-        }
-        if (!empty($authorname)) {
-            $url['query'] = 'authorName:'.$authorname;
+            if ($query != '') {
+                $url['query'] = $search . ' ' . $query;
+            }
         }
         if (!empty($sort)) {
             $url['sort'] = $sort;
@@ -156,6 +238,33 @@ class ImageApi
             ),
         ));
         // Send the request & save response to $resp
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $contents = json_decode($response, true);
+        return $contents;
+    }
+
+    public function getDetail($slug)
+    {
+        $id = explode('-', $slug);
+        $id = $id[0];
+            
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->url . '/api/v3/items/' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'accept: application/json',
+                'key: ' . $this->api_key,
+                'secret: ' . $this->api_secret
+            ),
+        ));
         $response = curl_exec($curl);
         curl_close($curl);
         $contents = json_decode($response, true);
