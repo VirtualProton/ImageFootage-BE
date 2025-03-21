@@ -54,33 +54,6 @@ class SearchController extends Controller
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
 
-        // Now not use Get search result from database
-        /* $searchKeyword = $keyword['search'];
-        $thirdparty = config('constants.third_party_for_image');
-        $isCategory = 0;
-
-        if(isset($keyword['category_id']) && !empty($keyword['category_id'])){
-            $searchKeyword = $keyword['category_id'];
-            $isCategory = 1;
-            $getCategoryId = ProductCategory::where(['category_slug'=> $request->category_id,'type'=>$keyword['productType']['id']])->first();
-            if(!empty($getCategoryId)){
-                $keyword['category_id'] = $getCategoryId->category_id;
-            }else{
-                $keyword['category_id'] = '';
-            }
-        }
-
-        $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
-
-        $pType = 'Image';
-        if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
-            $pType  = $thirdparty == 'panthermedia' ?  'Image' : 'Pond5Image';
-        }else if($getKeyword['productType'] == '2' || $getKeyword['productType'] == '4'){
-            $pType = 'Footage';
-        }else if($getKeyword['productType'] == '3'){
-            $pType = 'Music';
-        } */
-
         $keyword['productType'] = 'photo';
         if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
             $keyword['productType']  = 'photo';
@@ -92,27 +65,9 @@ class SearchController extends Controller
             $keyword['productType'] = 'music';
             $type = 'Music';
         }
-        
-        /* $jobDispatch = ($all_products['total']/100) - 2;
-        if($jobDispatch < $keyword['pagenumber']){
-            $trendingWord  = TrendingWord::where('name', $searchKeyword)->first();
-            $dataForJob = [
-                'trending_word' => $trendingWord,
-                'all_request' => $getKeyword,
-                'type' => $pType,
-                'category_id' => $keyword['category_id'],
-                'page_number' => $keyword['pagenumber'] + 2,
-                'is_category' => $isCategory,
-                'category' => $searchKeyword
-            ];
-    
-            dispatch(new FetchThirdPartyData($dataForJob));
-        }
-
-        $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']); */
 
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
-        $pond5ImagesData    = $imagesMedia->search($keyword, [], null, $keyword['pagenumber']);
+        $pond5ImagesData    = $imagesMedia->search($keyword, $getKeyword, null, $keyword['pagenumber']);
         if ($pond5ImagesData) {
             $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
         } else {
@@ -142,65 +97,8 @@ class SearchController extends Controller
             }
         }
 
-        // If records not found check with respective third party api for the data
-        /* if($all_products['total'] == 0 || $all_products['total'] < config('constants.products_in_database_limit')){
-            $cronController  = new CronController();
-            $response = $cronController->searchKeywordPond5AndPanthermedia($searchKeyword, $keyword['productType']['id'], $keyword['category_id'], $getKeyword, $thirdparty, $isCategory);
-            $all_products = $this->searchProductsInDatabase($keyword, $getKeyword, $keyword['limit']);
-        } */
-
         return response()->json($all_products);
     }
-
-    // public function index(Request $request) {
-    //     $getKeyword                   = $request->all();
-    //     $all_products                 = array();
-    //     $keyword                      = array();
-    //     $keyword['search']            = isset($getKeyword['search']) ? $getKeyword['search'] : NULL;
-    //     $keyword['productType']['id'] = $getKeyword['productType'];
-    //     $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 18;
-    //     $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
-    //     $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
-    //     $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
-
-    //     $keyword['productType'] = 'photo';
-    //     if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
-    //         $keyword['productType']  = 'photo';
-    //         $type = 'Image';
-    //     }else if($getKeyword['productType'] == '2' || $getKeyword['productType'] == '4'){
-    //         $keyword['productType'] = 'video';
-    //         $type = 'Footage';
-    //     }else if($getKeyword['productType'] == '3'){
-    //         $keyword['productType'] = 'music';
-    //         $type = 'Music';
-    //     }
-
-    //     $limitPond5 = config('thirdparty.pond5.current_per_page_limit');
-    //     $imagesMedia        = new \App\Http\Pond5\ImageApi();
-    //     $pond5ImagesData    = $imagesMedia->search($keyword, [], $limitPond5, $keyword['pagenumber']);
-        
-    //     $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
-
-    //     // Save search keyword to trending words table
-    //     if(!empty($keyword['search']) && strlen($keyword['search']) > 1){
-    //         $search_keyword = Str::slug($keyword['search']);
-    //         $trending_word  = TrendingWord::where('name', $search_keyword)->first();
-    //         if(!empty($trending_word)){
-    //             $trending_word->count += 1;
-    //             $trending_word->save();
-    //         } else {
-    //             $trending_word        = new TrendingWord();
-    //             $trending_word->name  = $search_keyword;
-    //             $trending_word->count = 1;
-    //             if($all_products['total'] == 0 || $all_products['total'] < config('constants.products_in_database_limit')){
-    //                 $trending_word->is_processing_keyword = 1;
-    //             }
-    //             $trending_word->save();
-    //         }
-    //     }
-
-    //     return response()->json($all_products);
-    // }
 
     public function setResponseFromApi($getKeyword, $pond5ImagesData, $type) {
         $all_products = [];
@@ -549,10 +447,10 @@ class SearchController extends Controller
         $total        = $totalPages = 0;
 
         $jsonData = json_decode($all_products->getContent(), true);
-
+        $perpage      = $jsonData['per_page'];
         if ($jsonData['total_count'] > 0) {
             $total        = $jsonData['total_count'];
-            $totalPages   = ceil($total / $perpage);
+            $totalPages   = ceil($total / $jsonData['per_page']);
         }
         return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }
@@ -565,10 +463,10 @@ class SearchController extends Controller
         $total        = $totalPages = 0;
 
         $jsonData = json_decode($all_products->getContent(), true);
-
+        $perpage      = $jsonData['per_page'];
         if ($jsonData['total_count'] > 0) {
             $total        = $jsonData['total_count'];
-            $totalPages   = ceil($total / $perpage);
+            $totalPages   = ceil($total / $jsonData['per_page']);
         }
         return array('imgfootage' => $jsonData['data'], 'total'=> $total, 'perpage'=> $perpage, 'tp'=> $totalPages);
     }

@@ -50,31 +50,6 @@ class MediaController extends Controller
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
 
-        // Now we get the product details from POND5
-        /* $product_details = Product::where(['slug' => $slug, 'product_main_type' => $origin])->first();
-
-
-        Product::where('id',$product_details->id)->update([
-            'view_count'=> $product_details->view_count + 1
-        ]);
-
-        if ($product_details) {
-            // Use the $product_details['id'] to query MongoDB
-            $apiProductId = strval($product_details['api_product_id']);
-            // Retrieve data from MongoDB where api_product_id matches
-            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->first();
-            $attributes = [];
-            $options = [];
-
-
-
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
-
-            $product_details['attributes'] = $attributes;
-            $product_details['options'] = $options;
-        } */
-
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
         $pond5ImagesData    = $imagesMedia->getDetail($slug);
         
@@ -90,7 +65,7 @@ class MediaController extends Controller
             'product_keywords' => implode(',', $pond5ImagesData['keywords']),
             'product_description' => $pond5ImagesData['description'],
             'product_thumbnail' => $pond5ImagesData['thumbnail'],
-            'product_main_image' => ($origin == "Footage" || $origin == "Music") ? $pond5ImagesData['watermarkPreview'] : $pond5ImagesData['thumbnail'],
+            'product_main_image' => $pond5ImagesData['watermarkPreview'],
             'product_release_details' => null,
             'product_price_small' => null,
             'product_price_medium' => null,
@@ -124,7 +99,7 @@ class MediaController extends Controller
             'expired_date' => null,
             'slug' => $slug,
             'attributes' => [],
-            'options' => []
+            'options' => $pond5ImagesData['versions'],
         ];
 
 

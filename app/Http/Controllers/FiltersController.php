@@ -93,17 +93,18 @@ class FiltersController extends Controller {
 
    public function getAllFiltersV2(Request $request) {
 		$type = $request->type;
-		$filters = ImageFootageFilter::select('id', 'name', 'value','filter_type','default_filter_type','has_multiple_values')
-					->whereHas('options', function($options){
-						$options->where('status', 'active')->orderBy('sort_order', 'asc');
-					})
-					->with('options:id,filter_id,option_name,value,is_group_value')
-					->when(!empty($type), function($query) use ($type) {
-						return $query->where('type', $type);
-					})
-					->where('status', 'active')
-					->orderBy('sort_order', 'asc')
-					->get();
+		$filters = ImageFootageFilter::select('id', 'name', 'value', 'filter_type', 'default_filter_type', 'has_multiple_values')
+						->with(['options' => function($query) {
+							$query->select('id', 'filter_id', 'option_name', 'value', 'is_group_value')
+								->where('status', 'active')
+								->orderBy('sort_order', 'asc');
+						}])
+						->when(!empty($type), function($query) use ($type) {
+							return $query->where('type', $type);
+						})
+						->where('status', 'active')
+						->orderBy('sort_order', 'asc')
+						->get();
 		if(isset($filters) && !empty($filters)){
 			echo '{"status":"1","message":"","data":'.json_encode($filters,true).'}';
 		}else{

@@ -21,9 +21,6 @@ class ImageApi
         $this->api_key    = $getPond5ApiVersion['api_key'];
         $this->api_secret = $getPond5ApiVersion['api_secret'];
         $this->url        = $getPond5ApiVersion['url'];
-        // $this->api_key    = config('thirdparty.pond5.api_key');
-        // $this->api_secret = config('thirdparty.pond5.api_secret');
-        // $this->url        = config('thirdparty.pond5.api_url');
     }
 
     private function str_random($len = 8, $allowed_charset = null)
@@ -71,14 +68,90 @@ class ImageApi
         }
         $url['page']    = $page;
 
-        if (!empty($filter_mapping)) {
-            $url['query'] = $filter_mapping;
+        $queryParts = [];
+        if ($getFilters) {
+            if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
+                $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
+                $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
+                $queryParts[] = 'people:' . implode(':', $people);
+            }
+
+            if (!empty($getFilters['gender'])) {
+                $people_gender = explode(',', str_replace(' ', '', $getFilters['gender']['value']));
+                $queryParts[] = 'people:' . implode(':', $people_gender);
+            }
+
+            if (!empty($getFilters['pricerange']['value'])) {
+                $priceRange = str_replace(' ', '', $getFilters['pricerange']['value']);
+                [$minPrice, $maxPrice] = explode('|', $priceRange) + [null, null];
+
+                if (!empty($minPrice) && empty($maxPrice)) {
+                    $queryParts[] = 'pricegt:' . $minPrice;
+                } elseif (empty($minPrice) && !empty($maxPrice)) {
+                    $queryParts[] = 'pricelt:' . $maxPrice;
+                } elseif (!empty($minPrice) && !empty($maxPrice)) {
+                    $queryParts[] = 'pricegt:' . $minPrice . ' pricelt:' . $maxPrice;
+                }
+            }
+
+            if (!empty($getFilters['fps'])) {
+                $fpsValues = explode(',', str_replace(' ', '', $getFilters['fps']['value']));
+                $normalFps = array_filter($fpsValues, fn($fps) => $fps !== '60+');
+                $hasFpsGT60 = in_array('60+', $fpsValues);
+
+                if (!empty($normalFps)) {
+                    $queryParts[] = 'fps:' . implode(':', $normalFps);
+                }
+                if ($hasFpsGT60) {
+                    $queryParts[] = 'fpsgt:60';
+                }
+            }
+
+            foreach (['orientation', 'aerial', 'misc'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $queryParts[] = "{$filter}:" . $getFilters[$filter]['value'];
+                }
+            }
+
+            foreach (['mood', 'genre'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $values = explode(',', str_replace(' ', '', $getFilters[$filter]['value']));
+                    $queryParts[] = "{$filter}:" . implode(':', $values);
+                }
+            }
+
+            if (!empty($getFilters['bpmbetween'])) {
+                $bpmBetween = explode('|', str_replace(' ', '', $getFilters['bpmbetween']['value']));
+                $queryParts[] = 'bpmbetween:' . implode(':', $bpmBetween);
+            }
+            foreach (['bpmgt', 'bpmlt'] as $filter) {
+                if (!empty($getFilters[$filter])) {
+                    $queryParts[] = "{$filter}:" . $getFilters[$filter]['value'];
+                }
+            }
+
+            $checkboxFilters = [
+                'alpha_channel' => 'cb:KCT0200',
+                'alpha_matte' => 'cb:vidmatte',
+                'contains_audio' => 'misc:containsaudio',
+                'greenscreen' => 'greenscreen:1',
+                'loopable' => 'cb:KCA0700',
+                'camera' => 'camera:red',
+                'sampling_cleared' => 'cb:KSO0104'
+            ];
+
+            foreach ($checkboxFilters as $key => $queryValue) {
+                if (!empty($getFilters[$key])) {
+                    $queryParts[] = $queryValue;
+                }
+            }
         }
+        $query = implode(' ', $queryParts);
         if (!empty($search)) {
             $url['query'] = $search;
-        }
-        if (!empty($authorname)) {
-            $url['query'] = 'authorName:'.$authorname;
+            if ($query != '') {
+                $url['query'] = $search . ' ' . $query;
+            }
         }
         if (!empty($sort)) {
             $url['sort'] = $sort;
