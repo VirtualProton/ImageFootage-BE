@@ -49,29 +49,60 @@ class MediaController extends Controller
         $requestData = $request->json()->all();
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
-        $product_details = Product::where(['slug' => $slug, 'product_main_type' => $origin])->first();
+
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->getDetail($slug);
+        
+        $product_details = [
+            'id' => $pond5ImagesData['id'],
+            'product_id' => $pond5ImagesData['id'],
+            'api_product_id' => $pond5ImagesData['id'],
+            'product_category' => null,
+            'product_subcategory' => null,
+            'product_owner' => null,
+            'product_title' => $pond5ImagesData['title'],
+            'product_vertical' => null,
+            'product_keywords' => implode(',', $pond5ImagesData['keywords']),
+            'product_description' => $pond5ImagesData['description'],
+            'product_thumbnail' => $pond5ImagesData['thumbnail'],
+            'product_main_image' => $pond5ImagesData['watermarkPreview'],
+            'product_release_details' => null,
+            'product_price_small' => null,
+            'product_price_medium' => null,
+            'product_price_large' => null,
+            'product_price_extralarge' => null,
+            'product_size' => null,
+            'product_added_by' => null,
+            'product_main_type' => "Image",
+            'product_sub_type' => "Photo",
+            'product_added_on' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'product_verification' => null,
+            'product_rejectod_reason' => null,
+            'product_editedby' => null,
+            'product_web' => 3,
+            'license_type' => "standard",
+            'width_thumb' => null,
+            'height_thumb' => null,
+            'thumb_update_status' => 1,
+            'music_duration' => $pond5ImagesData['versions'][0]['duration'] ?? null,
+            'music_fileType' => $pond5ImagesData['versions'][0]['fileType'] ?? null,
+            'music_price' => $pond5ImagesData['versions'][0]['price'] ?? null,
+            'music_size' => null,
+            'auther_name' => $pond5ImagesData['authorName'],
+            'created_at' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'updated_at' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'adult_content' => "no",
+            'is_premium' => "",
+            'product_server_activation' => "active",
+            'view_count' => 0,
+            'search_terms' => "0",
+            'expired_date' => null,
+            'slug' => $slug,
+            'attributes' => [],
+            'options' => $pond5ImagesData['versions'],
+        ];
 
 
-        Product::where('id',$product_details->id)->update([
-            'view_count'=> $product_details->view_count + 1
-        ]);
-
-        if ($product_details) {
-            // Use the $product_details['id'] to query MongoDB
-            $apiProductId = strval($product_details['api_product_id']);
-            // Retrieve data from MongoDB where api_product_id matches
-            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->first();
-            $attributes = [];
-            $options = [];
-
-
-
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
-
-            $product_details['attributes'] = $attributes;
-            $product_details['options'] = $options;
-        }
         return response()->json(['data' => $product_details, 'status' => 'success']);
     }
 
@@ -606,7 +637,15 @@ class MediaController extends Controller
         ini_set('max_execution_time', 0);
         $allFields = $request->all();
         // $main_image = Product::where('product_id', '=', $allFields['productID'])->first()->product_main_image;
-        $main_image = Product::where('api_product_id', '=', $allFields['productID'])->first()->product_main_image;
+
+        //Now we get the product details from POND5
+        /* $main_image = Product::where('api_product_id', '=', $allFields['productID'])->first()->product_main_image;
+        $b64image = base64_encode(file_get_contents($main_image));
+        $downlaod_image = 'data:video/mp4;base64,' . $b64image; */
+
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->getDetail($allFields['productID']);
+        $main_image = $pond5ImagesData['watermarkPreview'];
         $b64image = base64_encode(file_get_contents($main_image));
         $downlaod_image = 'data:video/mp4;base64,' . $b64image;
         return response()->json($downlaod_image);

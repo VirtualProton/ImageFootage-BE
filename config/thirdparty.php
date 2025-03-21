@@ -17,6 +17,9 @@ return [
         'api_secret' => env('POND5_API_SECRET', 'j5weLX518rMP119'),
         'api_url' => env('POND5_URL','https://api-reseller.pond5.com'),
         'home_categories' => '',
-        'current_per_page_limit' => 100
+        'current_per_page_limit' => 100,
+        'use_similar_products_length' => env('USE_SIMILAR_PRODUCTS_LENGTH', true),
+        'similar_products_length' => env('SIMILAR_PRODUCTS_LENGTH', 9),
+        'similar_products_keyword_length' => env('SIMILAR_PRODUCTS_KEYWORD_LENGTH', 3),
     ]
 ];
