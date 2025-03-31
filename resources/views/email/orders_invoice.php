@@ -613,11 +613,11 @@
                                                         } else {
                                                             $subtotalarray = $subtotalarray + $orders['items'][$i]['standard_price'];
                                                         }
-                                                        $protype = $orders['items'][$i]['product']['product_main_type'];  ?>
+                                                        $protype = $orders['items'][$i]['product_type'];  ?>
 
                                                             <td width="32%" style="vertical-align: top; padding:10px 10px 10px 0; text-align: left; border-bottom: #ddd solid 1px; width:32%">
                                                                 <p style="margin: 0px; font-weight: bold; font-size:16px;">
-                                                                    <?php echo $orders['items'][$i]['product']['product_id'] ?>
+                                                                    <?php echo $orders['items'][$i]['product_id'] ?>
                                                                 </p>
                                                                 <p style="margin: 0px;font-weight: lighter;">
                                                                     <?php echo $protype; ?>

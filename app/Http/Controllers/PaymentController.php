@@ -133,7 +133,7 @@ class PaymentController extends Controller
                 $orderItem = new OrderItem();
                 $orderItem->order_id = $order_id;
                 $orderItem->product_id = $eachCart['cart_product_id'];
-                $orderItem->product_type = $eachCart['cart_product_id'];
+                $orderItem->product_type = $eachCart['cart_product_type'];
                 $orderItem->standard_type = $eachCart['standard_type'];
                 $orderItem->standard_size = $eachCart['standard_size'];
                 $orderItem->standard_price = $eachCart['standard_price'];
@@ -194,7 +194,7 @@ class PaymentController extends Controller
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
                 'receipt'         => $transactionId,
-                'amount'          => ($allFields['cartval'][0]+$final_tax) * 100, // 2000 rupees in paise
+                'amount'          => (int) ($allFields['cartval'][0]+$final_tax) * 100, // 2000 rupees in paise
                 'currency'        => 'INR',
                 'payment_capture' => 1 // auto capture
             ];
@@ -349,9 +349,7 @@ class PaymentController extends Controller
         }
         $orders= Orders::with(['user'=>function($query1){
             $query1->select('id','user_name','first_name','last_name','city','state','country','gst','mobile','address','postal_code','pan','company','vendor_code');
-        }])->with(['items'=>function($query){
-            $query->with('product');
-        }]) ->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
+        }])->with(['items'])->where('rozor_pay_id','=',$data['paymentRes']['razorpay_order_id'])
             ->with('country')
             ->with('state')
             ->with('city')
@@ -374,6 +372,17 @@ class PaymentController extends Controller
         ini_set('max_execution_time', 0);
         date_default_timezone_set('Asia/Calcutta');
         $allFields = $request->all();
+
+        $checkAlreadyPlan = UserPackage::where('user_id','=',$allFields['tokenData']['Utype'])
+            ->where('package_id','=',$allFields['plan']['package_id'])
+            ->whereColumn('package_products_count' ,'>','downloaded_product')
+            ->where('package_expiry_date_from_purchage','>=',date('Y-m-d H:i:s'))
+            ->get()->toArray();
+
+        if(count($checkAlreadyPlan)>0){
+            echo json_encode(['status'=>'fail','message'=>'You have already subscribed this plan']);
+            return;
+        }
         //print_r($allFields); die;
         if ($allFields['type'] == 'atom') {
             $datenow = date("d/m/Y h:m:s");
@@ -768,23 +777,27 @@ class PaymentController extends Controller
         $pdf = PDF::loadHTML(view('email.orders_invoice',['orders' => $OrderData[0],'amount_in_words'=>$amount_in_words]));
         $fileName = $transaction."_web_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
-        $s3Client = new S3Client([
-            /*'profile' => 'default',*/
-            'region' => 'us-east-2',
-            'version' => '2006-03-01'
-        ]);
-        $path ='invoice/'.$fileName;
-        $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
-        $uploader = new MultipartUploader($s3Client, $source, [
-            'bucket' => 'imgfootage',
-            'key' => $path,
-        ]);
         try {
-            $fileupresult = $uploader->upload();
-        } catch (MultipartUploadException $e) {
-            //echo $e->getMessage() . "\n";
+            $s3Client = new S3Client([
+                /*'profile' => 'default',*/
+                'region' => 'us-east-2',
+                'version' => '2006-03-01'
+            ]);
+            $path ='invoice/'.$fileName;
+            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+            $uploader = new MultipartUploader($s3Client, $source, [
+                'bucket' => 'imgfootage',
+                'key' => $path,
+            ]);
+            try {
+                $fileupresult = $uploader->upload();
+            } catch (MultipartUploadException $e) {
+                //echo $e->getMessage() . "\n";
+            }
+            $pdf_path = $fileupresult['ObjectURL'];
+        } catch (\Throwable $th) {
+            
         }
-        $pdf_path = $fileupresult['ObjectURL'];
         if(!empty($pdf_path)){
             Orders::where('txn_id','=',$transaction)
                 ->update(['invoice'=>$pdf_path]);
@@ -814,23 +827,28 @@ class PaymentController extends Controller
         $pdf = PDF::loadHTML(view('email.plan_invoice_email',['orders' => $OrderData,'amount_in_words'=>$amount_in_words]));
         $fileName = $transaction."_web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
-        $s3Client = new S3Client([
-            /*'profile' => 'default',*/
-            'region' => 'us-east-2',
-            'version' => '2006-03-01'
-        ]);
-        $path ='invoice/'.$fileName;
-        $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
-        $uploader = new MultipartUploader($s3Client, $source, [
-            'bucket' => 'imgfootage',
-            'key' => $path,
-        ]);
+        $pdf_path = '';
         try {
-            $fileupresult = $uploader->upload();
-        } catch (MultipartUploadException $e) {
-            //echo $e->getMessage() . "\n";
+            $s3Client = new S3Client([
+                /*'profile' => 'default',*/
+                'region' => 'us-east-2',
+                'version' => '2006-03-01'
+            ]);
+            $path ='invoice/'.$fileName;
+            $source = fopen(storage_path('app/public/pdf'). '/' . $fileName, 'rb');
+            $uploader = new MultipartUploader($s3Client, $source, [
+                'bucket' => 'imgfootage',
+                'key' => $path,
+            ]);
+            try {
+                $fileupresult = $uploader->upload();
+            } catch (MultipartUploadException $e) {
+                //echo $e->getMessage() . "\n";
+            }
+            $pdf_path = $fileupresult['ObjectURL'];
+        } catch (\Throwable $th) {
+                
         }
-        $pdf_path = $fileupresult['ObjectURL'];
         if(!empty($pdf_path)){
             UserPackage::where('transaction_id','=',$transaction)
                 ->update(['invoice'=>$pdf_path]);

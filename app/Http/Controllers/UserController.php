@@ -353,7 +353,7 @@ class UserController extends Controller
         }
 
         if ($request->user_id) {
-            $orderData = Orders::with(['items.product'])
+            $orderData = Orders::with(['items'])
                 ->with(['items.licence'])
                 ->where('user_id', '=', $userId)
                 ->whereIn('order_status', ['Completed', 'Transction Success']);
@@ -361,9 +361,9 @@ class UserController extends Controller
                     $orderData->whereDate('order_date', '>=', $startDate)
                             ->whereDate('order_date', '<=', $endDate);
                 }
-                $orderData=  $orderData->whereHas('items.product', function ($productquery) use ($mediaType,$licenseType) {
+                $orderData=  $orderData->whereHas('items', function ($productquery) use ($mediaType,$licenseType) {
                     if ($mediaType != 'All') {
-                        $productquery->where('product_main_type', $mediaType);
+                        $productquery->where('product_type', $mediaType);
                     }
                 })
                 ->whereHas('items', function ($query) use ($licenseType) {
@@ -421,20 +421,19 @@ class UserController extends Controller
                     $downloads->whereDate('created_at', '>=', $startDate)
                             ->whereDate('created_at', '<=', $endDate);
                 }
-               $downloads =  $downloads->whereHas('product', function ($productquery) use ($mediaType) {
-                    if ($mediaType != 'All') {
-                        $productquery->where('product_main_type', $mediaType);
-                    }
-                })
-                ->whereHas('licence', function ($query) use ($licenseType) {
+                if ($mediaType != 'All') {
+                    $downloads->where('product_type', $mediaType);
+                }
+                
+            $downloads = $downloads->whereHas('licence', function ($query) use ($licenseType) {
                     if ($licenseType != 'All') {
                         $query->where('id', $licenseType);
                     }
-                })
-                ->orderBy('id', 'desc')
+                });
+            $downloads = $downloads->orderBy('id', 'desc')
                 ->paginate(5)
                 ->toArray();
-
+                
             echo json_encode(['status' => "success", 'data' => $downloads]);
         } else {
             echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
