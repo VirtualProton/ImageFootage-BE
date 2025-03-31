@@ -11,7 +11,8 @@ use App\Models\{
     Product,
     Contributor,
     ImageFootageWishlist,
-    User
+    User,
+    UserProductDownload
 };
 use Illuminate\Support\Facades\Hash;
 use CORS;
@@ -44,10 +45,16 @@ class FrontuserController extends Controller {
 		$counterImage  = 0;
 		$already_footage = 0;
 		$counterFootage  = 0;
+		$tokens=json_decode($request['product']['token'],true);
+
+		$checkdownload = UserProductDownload::where('product_id_api', $request['product']['product_info']['media']['id'])->where('web_type', $request['product']['type'])->where('product_size', $request['product']['selected_product']['label'])->where('user_id',$tokens['Utype'])->first();
+        if(!empty($checkdownload)){
+            return response()->json(['status' => '0', 'message' => 'This product is already downloaded.']);
+        }
+
 		if(isset($request['product']['type']) && $request['product']['type'] =='2'){
             $product_id = $request['product']['product_info']['media']['id'];
             $product_type = "Image";
-            $tokens=json_decode($request['product']['token'],true);
             $product_addedby = $tokens['Utype'];
             $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
             if(empty($cart_list)){
@@ -141,6 +148,7 @@ class FrontuserController extends Controller {
                     $Usercart->product_web= '4';
                     $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                     $Usercart->selected_product = json_encode($request['product']['selected_product']);
+					$Usercart->version_data = json_encode($request['product']['version_data']);
                     //$Usercart->pricing_tier = $eachproduct['footage_tier'];
                     $result = $Usercart->save();
                     if($result){
@@ -559,7 +567,8 @@ class FrontuserController extends Controller {
                 'extended_name' => $cart['extended_name'],
                 'standard_size' => $cart['standard_size'],
                 'standard_price' => $cart['standard_price'],
-                'total'   => $cart['standard_price']
+                'total'   => $cart['standard_price'],
+				'selected_product' => json_encode($cart['selected_product']),
             ]);
         }
         return response()->json(['status'=>'success','message'=>'Cart list updated successfully']);
