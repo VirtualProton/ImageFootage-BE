@@ -174,7 +174,7 @@ class MediaController extends Controller
         $download = 0;
         $downoad_type = 0;
         $isPurchase = false;
-        if ($allFields['product']['is_purchase']) {
+        if (isset($allFields['product']['is_purchase']) && $allFields['product']['is_purchase']) {
             $isPurchase = true;
         }
         if ($pacakegalist->isNotEmpty()) {
