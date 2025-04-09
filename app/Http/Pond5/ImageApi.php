@@ -44,7 +44,7 @@ class ImageApi
         // IMPROVEMENT: change the frontend value for the sort, use slug
         if (isset($keyword['sort']) && $keyword['sort'] == 'Recent') {
             $sort = 'newest';
-        } else if (isset($keyword['sort']) && $keyword['sort'] == 'Popular') {
+        } else if (isset($keyword['sort']) && ($keyword['sort'] == 'Popular' || $keyword['sort'] == 'Newest')) {
             $sort = 'popular';
         } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: Low to High'){
             $sort = 'price_low_high';
