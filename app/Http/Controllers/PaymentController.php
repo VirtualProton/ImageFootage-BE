@@ -195,7 +195,7 @@ class PaymentController extends Controller
             $orderData = [
                 'receipt'         => $transactionId,
                 'amount'          => (int) ($allFields['cartval'][0]+$final_tax) * 100, // 2000 rupees in paise
-                'currency'        => 'INR',
+                'currency'        => 'USD',
                 'payment_capture' => 1 // auto capture
             ];
 
@@ -208,13 +208,13 @@ class PaymentController extends Controller
 
             $displayAmount = $amount = $orderData['amount'];
 
-            if ($displayCurrency !== 'INR')
-            {
-                $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
-                $exchange = json_decode(file_get_contents($url), true);
+            // if ($displayCurrency !== 'INR')
+            // {
+            //     $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+            //     $exchange = json_decode(file_get_contents($url), true);
 
-                $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
-            }
+            //     $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
+            // }
             $data = [
                 "key"               => $this->keyRazorId,
                 "amount"            => $amount,
