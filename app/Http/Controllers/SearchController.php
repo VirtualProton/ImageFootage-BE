@@ -317,7 +317,7 @@ class SearchController extends Controller
 
         $keyword                      = array();
         $keyword['search']            = NULL;
-        $keyword['sort']              = 'Popular';
+        $keyword['sort']              = 'Recent';
         $keyword['limit']             = 17;
         $keyword['pagenumber']        = 0;
 
