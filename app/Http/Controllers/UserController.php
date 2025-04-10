@@ -51,7 +51,7 @@ class UserController extends Controller
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }])
                         ->with(['licence' => function ($down_query) {
-                            $down_query->select('id', 'licence_name', 'description', 'product_type', 'slug');
+                            $down_query->select('id', 'licence_name', 'description', 'product_type', 'slug', 'version');
                         }]);
 
                 }

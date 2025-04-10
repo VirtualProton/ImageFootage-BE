@@ -374,13 +374,13 @@ class PaymentController extends Controller
         $allFields = $request->all();
 
         $checkAlreadyPlan = UserPackage::where('user_id','=',$allFields['tokenData']['Utype'])
-            ->where('package_id','=',$allFields['plan']['package_id'])
+            ->where('package_type','=',$allFields['plan']['package_type'])
             ->whereColumn('package_products_count' ,'>','downloaded_product')
             ->where('package_expiry_date_from_purchage','>=',date('Y-m-d H:i:s'))
             ->get()->toArray();
 
         if(count($checkAlreadyPlan)>0){
-            echo json_encode(['status'=>'fail','message'=>'You have already subscribed this plan']);
+            echo json_encode(['status'=>'fail','message'=>'You have already subscribed package for a ' . $allFields['plan']['package_type']]);
             return;
         }
         //print_r($allFields); die;
