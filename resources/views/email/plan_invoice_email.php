@@ -154,7 +154,7 @@
                                 echo $orders['package_name'] . " " . $plan;
                             }
                             ?>&nbsp;
-                            <?php echo $orders['licence']['licence_name'].' Licence'?>
+                            <p><?php echo $orders['licence']['licence_name'].' Licence'?></p>
                         </p>
                     </div>
                     <div class="client-info-rightside">
