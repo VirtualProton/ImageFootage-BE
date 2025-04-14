@@ -208,13 +208,13 @@ class PaymentController extends Controller
 
             $displayAmount = $amount = $orderData['amount'];
 
-            // if ($displayCurrency !== 'INR')
-            // {
-            //     $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
-            //     $exchange = json_decode(file_get_contents($url), true);
+            /* if ($displayCurrency !== 'INR')
+            {
+                $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+                $exchange = json_decode(file_get_contents($url), true);
 
-            //     $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
-            // }
+                $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
+            } */
             $data = [
                 "key"               => $this->keyRazorId,
                 "amount"            => $amount,
@@ -377,6 +377,7 @@ class PaymentController extends Controller
             ->where('package_type','=',$allFields['plan']['package_type'])
             ->whereColumn('package_products_count' ,'>','downloaded_product')
             ->where('package_expiry_date_from_purchage','>=',date('Y-m-d H:i:s'))
+            ->whereIn('payment_status', ['Completed', 'Transction Success'])
             ->get()->toArray();
 
         if(count($checkAlreadyPlan)>0){
@@ -461,7 +462,7 @@ class PaymentController extends Controller
             $orderData = [
                 'receipt' => 'IMGFTG'.$transactionId,
                 'amount' => ($allFields['plan']['package_price']) * 100, // 2000 rupees in paise
-                'currency' => 'INR',
+                'currency' => 'USD',
                 'payment_capture' => 1 // auto capture
             ];
 
@@ -474,12 +475,12 @@ class PaymentController extends Controller
 
             $displayAmount = $amount = $orderData['amount'];
 
-            if ($displayCurrency !== 'INR') {
+            /* if ($displayCurrency !== 'INR') {
                 $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
                 $exchange = json_decode(file_get_contents($url), true);
 
                 $displayAmount = $exchange ['rates'][$displayCurrency] * $amount / 100;
-            }
+            } */
             $data = [
                 "key" => $this->keyRazorId,
                 "amount" => $amount,
@@ -607,6 +608,7 @@ class PaymentController extends Controller
                 ->with('state')
                 ->with('city');
         }])->with('licence')->where('rozor_pay_id',$data['paymentRes']['razorpay_order_id'])->first()->toArray();
+        // dd($orders['licence']['licence_name']);
         if($success===true){
             $this->invoiceWithemailPlan($orders,$orders['transaction_id']);
             $url = $this->baseurl.'/myplan';
