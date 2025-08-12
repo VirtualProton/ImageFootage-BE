@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\PantherMedia\ImageApi;
 use App\Http\Pond5\FootageApi;
+use App\Http\Pond5\ImageApi as Pond5ImageApi;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Api;
@@ -49,29 +50,60 @@ class MediaController extends Controller
         $requestData = $request->json()->all();
         $origin = $requestData['type'];
         $slug = $requestData['slug'];
-        $product_details = Product::where(['slug' => $slug, 'product_main_type' => $origin])->first();
+
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->getDetail($slug);
+        
+        $product_details = [
+            'id' => $pond5ImagesData['id'],
+            'product_id' => $pond5ImagesData['id'],
+            'api_product_id' => $pond5ImagesData['id'],
+            'product_category' => null,
+            'product_subcategory' => null,
+            'product_owner' => null,
+            'product_title' => $pond5ImagesData['title'],
+            'product_vertical' => null,
+            'product_keywords' => implode(',', $pond5ImagesData['keywords']),
+            'product_description' => $pond5ImagesData['description'],
+            'product_thumbnail' => $pond5ImagesData['thumbnail'],
+            'product_main_image' => $pond5ImagesData['watermarkPreview'],
+            'product_release_details' => null,
+            'product_price_small' => null,
+            'product_price_medium' => null,
+            'product_price_large' => null,
+            'product_price_extralarge' => null,
+            'product_size' => null,
+            'product_added_by' => null,
+            'product_main_type' => $origin,
+            'product_sub_type' => $origin,
+            'product_added_on' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'product_verification' => null,
+            'product_rejectod_reason' => null,
+            'product_editedby' => null,
+            'product_web' => 3,
+            'license_type' => "standard",
+            'width_thumb' => null,
+            'height_thumb' => null,
+            'thumb_update_status' => 1,
+            'music_duration' => $pond5ImagesData['versions'][0]['duration'] ?? null,
+            'music_fileType' => $pond5ImagesData['versions'][0]['fileType'] ?? null,
+            'music_price' => $pond5ImagesData['versions'][0]['price'] ?? null,
+            'music_size' => null,
+            'auther_name' => $pond5ImagesData['authorName'],
+            'created_at' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'updated_at' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
+            'adult_content' => "no",
+            'is_premium' => "",
+            'product_server_activation' => "active",
+            'view_count' => 0,
+            'search_terms' => "0",
+            'expired_date' => null,
+            'slug' => $slug,
+            'attributes' => [],
+            'options' => $pond5ImagesData['versions'],
+        ];
 
 
-        Product::where('id',$product_details->id)->update([
-            'view_count'=> $product_details->view_count + 1
-        ]);
-
-        if ($product_details) {
-            // Use the $product_details['id'] to query MongoDB
-            $apiProductId = strval($product_details['api_product_id']);
-            // Retrieve data from MongoDB where api_product_id matches
-            $matchingData = ImageFilterValue::where('api_product_id', $apiProductId)->first();
-            $attributes = [];
-            $options = [];
-
-
-
-                $attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                $options    = isset($matchingData->options) ? $matchingData->options : [];
-
-            $product_details['attributes'] = $attributes;
-            $product_details['options'] = $options;
-        }
         return response()->json(['data' => $product_details, 'status' => 'success']);
     }
 
@@ -141,7 +173,10 @@ class MediaController extends Controller
 
         $download = 0;
         $downoad_type = 0;
-
+        $isPurchase = false;
+        if (isset($allFields['product']['is_purchase']) && $allFields['product']['is_purchase']) {
+            $isPurchase = true;
+        }
         if ($pacakegalist->isNotEmpty()) {
             foreach ($pacakegalist as $perpack) {
 
@@ -178,8 +213,14 @@ class MediaController extends Controller
 
             }
         } else {
-            return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
+            if ($isPurchase) {
+                $download = 1;
+                $downoad_type = 1;
+            } else {
+                return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
+            }
         }
+
 
         if ($download == 1) {
             if ($allFields['product']['type'] == 3) {
@@ -187,13 +228,13 @@ class MediaController extends Controller
                 if ($downoad_type == 0) {
                     return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
                 }
-                $footageMedia = new FootageApi();
+                $footageMedia = new Pond5ImageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-                $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
-                $product_details_data = $footageMedia->download($download_id ,$version);
+                $version =  isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':1';
+                $product_details_data = $footageMedia->download($allFields, $download_id ,$version);
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
-                    $product_id = Product::where('api_product_id', '=', $download_id)->first()->product_id;
+                    $product_id = $download_id;
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
@@ -202,18 +243,19 @@ class MediaController extends Controller
                         'id_media' => $download_id,
                         'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'],
-                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
-                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] . $allFields['product']['product_info'][1],
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'] ?? $allFields['product']['product_info']['clip_data']['n'],
+                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'] ?? $allFields['product']['product_info']['clip_data']['pic_description'],
+                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] ?? $allFields['product']['product_info']['flv_base'],
                         'web_type' => $allFields['product']['type'],
-                        'product_size' => isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : '',
+                        'product_size' => isset($allFields['product']['selected_product']['label']) ? $allFields['product']['selected_product']['label'] : '',
                         'product_price' => $allFields['product']['selected_product']['price'],
-                        'product_poster' => $allFields['product']['product_info'][2],
+                        'product_poster' => $allFields['product']['product_info'][0]['flv_base'] ?? $allFields['product']['product_info']['flv_base'],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
                         'redownloded_date' => null,
-                        'licence_type' => $allFields['product']['extended']
+                        'licence_type' => $allFields['product']['extended'],
+                        'product_type' => 'Footage'
                     );
                     UserProductDownload::insert($dataInsert);
                     if (empty($dataCheck)) {
@@ -230,40 +272,23 @@ class MediaController extends Controller
                 return response()->json($product_details_data);
             } else if ($allFields['product']['type'] == 2) {
                 // Download Images from Pond5
-                $footageMedia = new FootageApi();
+                $footageMedia = new Pond5ImageApi();
                 $download_id = $allFields['product']['product_info']['media']['id'];
-
-                $version =  isset($allFields['product']['version_data']['version']) ? $allFields['product']['version_data']['version'] : $download_id.':1';
-
+                $version =  isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id.':1';
                 if ($allFields['product']['product_info']['productWeb'] == 2) { // If image is from PantherMedia
-                    $imageMedia = new ImageApi();
-                    $product_details_data = $imageMedia->download($allFields, $download_id);
-
+                    $imageMedia = new Pond5ImageApi();
+                    $product_details_data = $imageMedia->download($allFields, $download_id, $version);
                 } elseif ($allFields['product']['product_info']['productWeb'] == 3) { // If image is from Pond5
-                    $footageMedia = new FootageApi();
-                    $product_details_data = $footageMedia->download($download_id, $version);
+                    $footageMedia = new Pond5ImageApi();
+                    $product_details_data = $footageMedia->download($allFields, $download_id, $version);
                 }
 
 
                 if (!empty($product_details_data)) {
-
-                    //In the case when product is not avilable anymore.
-                    if($product_details_data['stat'] == "fail"){
-                        if($download_id){
-                            DB::table('imagefootage_products')
-                            ->where('api_product_id', '=', $download_id)
-                            ->update([
-                                'product_server_activation' => 'inactive',
-                                'product_status' => 'Inactive'
-                            ]);
-                        }
-                        return $product_details_data;
-                    }
-
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
 
-                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
-
+                    // $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first()->product_id;
+                    $product_id = $allFields['product']['product_info']['media']['id'];
 
                     if(isset($product_details_data['download_status']['status']) && !empty($product_details_data['download_status']['status']) && $product_details_data['download_status']['status'] == "pending"){
                         $dataInsert = array(
@@ -279,7 +304,7 @@ class MediaController extends Controller
                             'product_desc' => $allFields['product']['product_info']['metadata']['description'],
                             'product_thumb' => $allFields['product']['product_info']['media']['thumb_170_url'],
                             'web_type' => $allFields['product']['type'],
-                            'product_size' => isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : '',
+                            'product_size' => isset($allFields['product']['selected_product']['label']) ? $allFields['product']['selected_product']['label'] : '',
                             'product_price' => $allFields['product']['selected_product']['price'],
                             'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
                             'selected_product' => json_encode($allFields['product']['selected_product']),
@@ -287,6 +312,7 @@ class MediaController extends Controller
                             'updated_at' => date('Y-m-d H:i:s'),
                             'licence_type' => $allFields['product']['extended'],
                             'redownloded_date' => null,
+                            'product_type' => 'Image'
                         );
                     }else{
                         $dataInsert = array(
@@ -302,7 +328,7 @@ class MediaController extends Controller
                             'product_desc' => $allFields['product']['product_info']['metadata']['description'],
                             'product_thumb' => $allFields['product']['product_info']['media']['thumb_170_url'],
                             'web_type' => $allFields['product']['type'],
-                            'product_size' => isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : '',
+                            'product_size' => isset($allFields['product']['selected_product']['label']) ? $allFields['product']['selected_product']['label'] : '',
                             'product_price' => $allFields['product']['selected_product']['price'],
                             'product_poster' => $allFields['product']['product_info']['media']['thumb_170_url'],
                             'selected_product' => json_encode($allFields['product']['selected_product']),
@@ -310,6 +336,7 @@ class MediaController extends Controller
                             'updated_at' => date('Y-m-d H:i:s'),
                             'licence_type' => $allFields['product']['extended'],
                             'redownloded_date' => null,
+                            'product_type' => 'Image'
                         );
                     }
 
@@ -328,9 +355,6 @@ class MediaController extends Controller
                 }else{
                     return response()->json(['status' => 'failed', 'message' => 'Image is not downloaded successfully','data'=>[]]);
                 }
-                if($allFields['product']['product_info']['productWeb'] == 2){
-                    return response()->json($product_details_data);
-                }
                 return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully','data'=>$product_details_data]);
             } else if ($allFields['product']['type'] == 4) {
                 // Download music from pond5
@@ -342,28 +366,29 @@ class MediaController extends Controller
                 if (!empty($product_details_data)) {
                     $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $allFields['product']['product_info']['media']['id'])->where('web_type', $allFields['product']['type'])->where('user_id',$id)->first();
 
-                    $product_id = Product::where('api_product_id', '=', $allFields['product']['product_info']['media']['id'])->first();
+                    $product_id = $allFields['product']['product_info']['media']['id'];
                     /** TODO : set the array as per response */
                     $dataInsert = array(
                         'user_id' => $id,
                         'package_id' => $allFields['product']['package'],
-                        'product_id' => isset($product_id['product_id']) ? $product_id['product_id'] : '',
+                        'product_id' => $product_id,
                         'product_id_api' => $allFields['product']['product_info']['media']['id'],
                         'id_media' => $allFields['product']['product_info']['media']['id'],
                         'download_url' => $product_details_data['url'],
                         'downloaded_date' => date('Y-m-d H:i:s'),
-                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'],
-                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'],
-                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'],
+                        'product_name' => $allFields['product']['product_info'][0]['clip_data']['n'] ?? $allFields['product']['product_info']['clip_data']['n'],
+                        'product_desc' => $allFields['product']['product_info'][0]['clip_data']['pic_description'] ?? $allFields['product']['product_info']['clip_data']['pic_description'],
+                        'product_thumb' => $allFields['product']['product_info'][0]['flv_base'] ?? $allFields['product']['product_info']['flv_base'],
                         'web_type' => $allFields['product']['type'],
-                        'product_size' => isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : '',
+                        'product_size' => isset($allFields['product']['selected_product']['label']) ? $allFields['product']['selected_product']['label'] : '',
                         'product_price' => $allFields['product']['selected_product']['price'],
-                        'product_poster' => $allFields['product']['product_info'][0]['flv_base'],
+                        'product_poster' => $allFields['product']['product_info'][0]['flv_base'] ?? $allFields['product']['product_info']['flv_base'],
                         'selected_product' => json_encode($allFields['product']['selected_product']),
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
                         'licence_type' => $allFields['product']['extended'],
                         'redownloded_date' => null,
+                        'product_type' => 'Music'
                     );
 
                     UserProductDownload::insert($dataInsert);
@@ -503,22 +528,22 @@ class MediaController extends Controller
         }else{
             $imageDownloadData = '';
             if($request->type == 2){
-                $getPantherMediaDetail =Product::where(['api_product_id'=>$request->id_media,'product_web'=>2])->first();
-                if(!empty($getPantherMediaDetail)) {
-                    $image = new ImageApi();
+                $selectedProduct = json_decode($checkUserDownloads->selected_product);
+                if(!empty($selectedProduct)) {
+                    $image = new Pond5ImageApi();
                     $data = ['id_media'=>$checkUserDownloads->id_media,'id_download'=>$checkUserDownloads->id_download,'queue_hash'=>$checkUserDownloads->queue_hash];
-                    $imageDownloadData = $image->reDownloadMedia($data);
+                    $imageDownloadData = $image->download($data, $request->id_media, $selectedProduct->version);
                 }
             }
 
             $imageDataInsert = array(
                 'user_id' => $checkUserDownloads->user_id,
                 'package_id' => $checkUserDownloads->package_id,
-                'product_id' => $checkUserDownloads->product_id,
+                'product_id' => $checkUserDownloads->product_id_api,
                 'id_download' => $checkUserDownloads->id_download,
                 'product_id_api' => $checkUserDownloads->product_id_api,
                 'id_media' => $checkUserDownloads->id_media,
-                'download_url' => isset($imageDownloadData) && !empty($imageDownloadData) ? $imageDownloadData['download_status']['download_url'] : $checkUserDownloads->download_url,
+                'download_url' => $imageDownloadData['url'] ?? $checkUserDownloads->download_url,
                 'downloaded_date'=>null,
                 'redownloded_date' => date('Y-m-d H:i:s'),
                 'product_name' => $checkUserDownloads->product_name,
@@ -534,14 +559,14 @@ class MediaController extends Controller
             );
 
             $userProductDownload = new UserProductDownload();
-            $condition = ['product_id' => $checkUserDownloads->product_id];
+            $condition = ['product_id' => $checkUserDownloads->product_id_api];
             $userProductDownload->updateOrInsert($condition, $imageDataInsert);
 
             if($request->type !== 2){
                 return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }
 
-            if(isset($imageDownloadData['download_status']['status']) && !empty($imageDownloadData['download_status']['status']) && $imageDownloadData['download_status']['status'] == "ready"){
+            if($imageDownloadData && isset($imageDownloadData['url'])){
                 return response()->json(['status'=> 'success', 'message'=> 'Download url get successfully','data'=>$imageDataInsert]);
             }else{
                 return response()->json(['status'=> 'pending', 'message'=> 'Your Product will be downloaded soon.','data'=>$imageDataInsert]);
@@ -605,8 +630,10 @@ class MediaController extends Controller
     {
         ini_set('max_execution_time', 0);
         $allFields = $request->all();
-        // $main_image = Product::where('product_id', '=', $allFields['productID'])->first()->product_main_image;
-        $main_image = Product::where('api_product_id', '=', $allFields['productID'])->first()->product_main_image;
+
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->getDetail($allFields['productID']);
+        $main_image = $pond5ImagesData['watermarkPreview'];
         $b64image = base64_encode(file_get_contents($main_image));
         $downlaod_image = 'data:video/mp4;base64,' . $b64image;
         return response()->json($downlaod_image);

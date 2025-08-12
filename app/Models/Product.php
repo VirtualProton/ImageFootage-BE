@@ -424,184 +424,142 @@ class Product extends Model
         return response()->json($response);
     }
 
-    public function getAuthorProductsData($keyword)
+    public function getAuthorProductsData($request)
     {
-        $data         = [];
+        $getKeyword = $request;
+        $keyword                      = array();
+        $keyword['search']            = NULL;
+        if (isset($getKeyword['search'])) {
+            $search = array_slice(explode(',', $getKeyword['search']), 0, config('thirdparty.pond5.similar_products_keyword_length'));
+            $keyword['search'] = implode(' ', $search);
+        }
+        $keyword['sort']              = isset($getKeyword['sort']) ? $getKeyword['sort'] : NULL;
+        $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 25;
+        $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
+        $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
+        $keyword['productType'] = 'photo';
+        if ($getKeyword['type'] == 'image') {
+            $keyword['productType']  = 'photo';
+            $type = 'Image';
+        }else if($getKeyword['type'] == 'footage'){
+            $keyword['productType'] = 'video';
+            $type = 'Footage';
+        }
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->search($keyword, [], null, 0);
+        
+        $data = [];
         $totalRecords = 0;
-        $type         = isset($keyword['type']) ? $keyword['type'] : 'Image';
-        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 10;
-        $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
-        $pageNumber   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
-        $offset       = ($pageNumber - 1) * $limit;
-
-        $products = ImageFilterValue::query();
-        $products->where("attributes.artist", $search);
-        $products->limit(10);
-
-        $filteredProducts = $products
-                            ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.artist' => 1])
-                            ->get()
-                            ->toArray();
-        $indexedFilteredProducts = [];
-        $apiProductIds           = [];
-
-        foreach ($filteredProducts as $product) {
-            $indexedFilteredProducts[$product['api_product_id']] = $product;
-            $apiProductIds[] = $product['api_product_id'];
-        }
-
-        if ($search!='' && !empty($apiProductIds)) {
-            $data = Product::select(
-                'product_id',
-                'api_product_id',
-                'product_category',
-                'product_title',
-                'product_web',
-                'product_main_type',
-                'product_thumbnail',
-                'product_main_image',
-                'product_added_on',
-                'product_keywords',
-                'product_price_small',
-                'product_size',
-                'slug'
-            )
-            ->where('product_status','Active')
-            ->where(function ($query) use ($type){
-                $query->where('product_main_type', '=', $type);
-            });
-
-            if (!empty($apiProductIds)) {
-                $data->whereIn('api_product_id', $apiProductIds);
-            }
-            $data->orderBy('created_at', 'desc');
-
-            $totalRecords = count($data->get());
-            $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
-
-            foreach($data as $key => $value) {
-
-                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
-                $attributes = [];
-                $options = [];
-                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                //$options    = isset($matchingData->options) ? $matchingData->options : [];
-
-                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
-                $data[$key]['options'] = isset($options) ? $options : [];
-            }
-            if (count($data)>0) {
-                foreach ($data as &$item) {
-                    // dont change below variables
-                    $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
-
-                    $item['url']            = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['api_product_id'] =  encrypt($item['api_product_id'], true);
-                    $item['auther_name']    = $auther_name;
+        $perpage = 25;
+        if (isset($pond5ImagesData['items']) && is_array($pond5ImagesData['items'])) {
+            foreach ($pond5ImagesData['items'] as $eachmedia) {
+                if (config('thirdparty.pond5.use_similar_products_length')) {
+                    if (count($data) >= config('thirdparty.pond5.similar_products_length')) {
+                        break;
+                    }
                 }
-            }
-        }
+                if (isset($eachmedia['id'])) {
+                    $media = array(
+                        'product_id'          => $eachmedia['id'],
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => '',
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $type,
+                        'product_sub_type'    => '',
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '',
+                        'slug'                => $eachmedia['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'product_keywords'    => '',
+                        'product_price_small' => '',
+                        'is_premium'          => '',
+                    );
 
+                    $media['attributes'] = [];
+                    $media['options'] = [];
+                }
+                $data[] = $media;
+            }
+            $totalRecords = $pond5ImagesData['totalNumberOfItems'];
+            $perpage = $pond5ImagesData['itemsPerPage'];
+        }
         $response = [
             'data' => $data,
             'total_count' => $totalRecords,
+            'per_page' => $perpage
         ];
-
         return response()->json($response);
     }
 
-    public function getAuthorMusicData($keyword)
+    public function getAuthorMusicData($request)
     {
-        $data         = [];
-        $totalRecords = 0;
-        $type         = isset($keyword['type']) ? $keyword['type'] : 'Music';
-        $limit        = isset($keyword['limit']) ? $keyword['limit'] : 10;
-        $search       = isset($keyword['search']) && trim($keyword['search']) !== '' ? trim($keyword['search']) : '';
-        $pageNumber   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : 1;
-        $offset       = ($pageNumber - 1) * $limit;
-
-        $products = ImageFilterValue::query();
-        $products->where("attributes.artist", $search);
-        $products->limit(10);
-
-        $filteredProducts = $products
-                            ->project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])
-                            ->get()
-                            ->toArray();
-        $indexedFilteredProducts = [];
-        $apiProductIds           = [];
-
-        foreach ($filteredProducts as $product) {
-            $indexedFilteredProducts[$product['api_product_id']] = $product;
-            $apiProductIds[] = $product['api_product_id'];
+        $getKeyword = $request;
+        $keyword                      = array();
+        $keyword['search']            = NULL;
+        if (isset($getKeyword['search'])) {
+            $search = array_slice(explode(',', $getKeyword['search']), 0, config('thirdparty.pond5.similar_products_keyword_length'));
+            $keyword['search'] = implode(' ', $search);
         }
-
-        if ($search!='' && !empty($apiProductIds)) {
-            $data = Product::select(
-                'product_id',
-                'api_product_id',
-                'product_category',
-                'product_title',
-                'product_web',
-                'product_main_type',
-                'product_thumbnail',
-                'product_main_image',
-                'product_added_on',
-                'product_keywords',
-                'product_description',
-                'music_duration',
-                'music_fileType',
-                'music_price',
-                'license_type',
-                'product_keywords',
-                'music_size',
-                'slug',
-                'is_premium'
-            )
-            ->where('product_status','Active')
-            ->where(function ($query) use ($type){
-                $query->where('product_main_type', '=', $type);
-            });
-
-            if (!empty($apiProductIds)) {
-                $data->whereIn('api_product_id', $apiProductIds);
-            }
-            $data->orderBy('created_at', 'desc');
-
-            $totalRecords = count($data->get());
-            $data         = $data->distinct()->offset($offset)->limit($limit)->get()->toArray();
-
-
-            foreach($data as $key => $value) {
-
-                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
-                $attributes = [];
-                $options = [];
-                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                //$options    = isset($matchingData->options) ? $matchingData->options : [];
-
-                $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
-                $data[$key]['options'] = isset($options) ? $options : [];
-            }
-
-            if (count($data)>0) {
-                foreach ($data as &$item) {
-                    // dont change below variables
-                    $auther_name     = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
-                    $music_sound_bpm = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
-
-                    $item['url']              = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['api_product_id']   = encrypt($item['api_product_id'], true);
-                    $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
-                    $item['music_sound_bpm']  = $music_sound_bpm;
-                    $item['auther_name']      = $auther_name;
+        $keyword['sort']              = isset($getKeyword['sort']) ? $getKeyword['sort'] : NULL;
+        $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 25;
+        $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
+        $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
+        $keyword['productType'] = 'music';
+        $type = 'Music';
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->search($keyword, [], null, 0);
+        
+        $data = [];
+        $totalRecords = 0;
+        $perpage = 25;
+        if (isset($pond5ImagesData['items']) && is_array($pond5ImagesData['items'])) {
+            foreach ($pond5ImagesData['items'] as $eachmedia) {
+                if (config('thirdparty.pond5.use_similar_products_length')) {
+                    if (count($data) >= config('thirdparty.pond5.similar_products_length')) {
+                        break;
+                    }
                 }
+                if (isset($eachmedia['id'])) {
+                    $media = array(
+                        'product_id'          => $eachmedia['id'],
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => '',
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $type,
+                        'product_sub_type'    => '',
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '',
+                        'slug'                => $eachmedia['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'random_three_keywords'    => $this->processMusicKeywords(implode(',', $eachmedia['keywords'])),
+                        'product_price_small' => '',
+                        'is_premium'          => '',
+                        'music_duration'      => $eachmedia['versions'][0]['duration'] ?? null,
+                        'music_fileType'      => $eachmedia['versions'][0]['fileType'] ?? null,
+                        'music_price'         => $eachmedia['versions'][0]['price'] ?? null,
+                    );
+
+                    $media['attributes'] = [];
+                    $media['options'] = [];
+                }
+                $data[] = $media;
             }
+            $totalRecords = $pond5ImagesData['totalNumberOfItems'];
+            $perpage = $pond5ImagesData['itemsPerPage'];
         }
 
         $response = [
             'data' => $data,
             'total_count' => $totalRecords,
+            'per_page' => $perpage
         ];
 
         return response()->json($response);
@@ -1339,125 +1297,123 @@ class Product extends Model
     public function getCategoryProductsData($request)
     {
         $data         = [];
-        $type         = isset($request['type']) ? $request['type'] : 'Image';
-        $limit        = isset($request['limit']) ? $request['limit'] : 9;
-        $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
+        $getKeyword = $request;
+        $keyword                      = array();
+        $keyword['search']            = NULL;
+        if (isset($getKeyword['search'])) {
+            $search = array_slice(explode(',', $getKeyword['search']), 0, config('thirdparty.pond5.similar_products_keyword_length'));
+            $keyword['search'] = implode(' ', $search);
+        }
+        $keyword['sort']              = isset($getKeyword['sort']) ? $getKeyword['sort'] : NULL;
+        $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 25;
+        $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
+        $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
+        $keyword['productType'] = 'photo';
+        if ($getKeyword['type'] == 'Image') {
+            $keyword['productType']  = 'photo';
+            $type = 'Image';
+        }else if($getKeyword['type'] == 'Footage'){
+            $keyword['productType'] = 'video';
+            $type = 'Footage';
+        }
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->search($keyword, [], null, 0);
+        
+        $data = [];
+        if (isset($pond5ImagesData['items']) && is_array($pond5ImagesData['items'])) {
+            foreach ($pond5ImagesData['items'] as $eachmedia) {
+                if (config('thirdparty.pond5.use_similar_products_length')) {
+                    if (count($data) >= config('thirdparty.pond5.similar_products_length')) {
+                        break;
+                    }
+                }
+                if (isset($eachmedia['id'])) {
+                    $media = array(
+                        'product_id'          => $eachmedia['id'],
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => '',
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $getKeyword['type'] == 'Footage' ? $eachmedia['watermarkPreview'] : $eachmedia['thumbnail'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $type,
+                        'product_sub_type'    => '',
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '',
+                        'slug'                => $eachmedia['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'product_price_small' => '',
+                        'is_premium'          => '',
+                    );
 
-        $product = Product::select('product_category')->where('product_id', '=', $product_id)->first();
-        if (!empty($product_id) && !empty($product)) {
-            $data = Product::select(
-                'product_id',
-                'api_product_id',
-                'product_category',
-                'product_title',
-                'product_web',
-                'product_main_type',
-                'product_thumbnail',
-                'product_main_image',
-                'product_added_on',
-                'product_keywords',
-                'product_price_small',
-                'product_size',
-                'slug',
-                'is_premium'
-            )
-            ->where('product_status','Active')
-            ->where('product_category', '=', $product->product_category)
-            ->where('product_id', '!=', $product_id)
-            ->where('product_main_type', '=', $type);
-            $data->orderBy('created_at', 'desc');
-            $data = $data->distinct()->limit($limit)->get()->toArray();
-            foreach($data as $key => $value) {
-
-
-                //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
-
-                $attributes = [];
-                $options = [];
-                //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                //$options    = isset($matchingData->options) ? $matchingData->options : [];
-
-                $data[$key]['attributes'] = isset($attributes) ? $attributes : [];
-                $data[$key]['options'] = isset($options) ? $options : [];
+                    $media['attributes'] = [];
+                    $media['options'] = [];
+                }
+                $data[] = $media;
             }
         }
-
+        
         return $data;
     }
 
     public function getCategoryMusicsData($request)
     {
         $data         = [];
-        $limit        = isset($request['limit']) ? $request['limit'] : 9;
-        $product_id   = isset($request['product_id']) ? $request['product_id'] : null;
-
-        $product = Product::select('*')->where('product_id', '=', $product_id)->first();
-        if (!empty($product_id) && !empty($product)) {
-            $data = Product::select(
-                'product_id',
-                'api_product_id',
-                'product_category',
-                'product_title',
-                'product_web',
-                'product_main_type',
-                'product_thumbnail',
-                'product_main_image',
-                'product_added_on',
-                'product_keywords',
-                'product_price_small',
-                'product_size',
-                'music_duration',
-                'music_fileType',
-                'music_price',
-                'slug',
-                'is_premium'
-            )
-                ->where('product_status','Active')
-                ->where('product_category', '=', $product->product_category)
-                ->where('product_id', '!=', $product_id)
-                ->where('product_main_type', '=', 'Music');
-            $data->orderBy('created_at', 'desc');
-            $data = $data->distinct()->limit($limit)->get();
-
-            if (count($data) > 0) {
-                $getAPIProductIds = $data->pluck('api_product_id');
-                $filteredProducts = ImageFilterValue::project(['_id' => 0, 'api_product_id' => 1, 'attributes.music_sound_bpm' => 1, 'attributes.artist' => 1])
-                    ->whereIn("api_product_id", $getAPIProductIds)
-                    ->get()
-                    ->toArray();
-
-                $indexedFilteredProducts = [];
-                if (!empty($filteredProducts)) {
-                    foreach ($filteredProducts as $product) {
-                        $indexedFilteredProducts[$product['api_product_id']] = $product;
+        $getKeyword = $request;
+        $keyword                      = array();
+        $keyword['search']            = NULL;
+        if (isset($getKeyword['search'])) {
+            $search = array_slice(explode(',', $getKeyword['search']), 0, config('thirdparty.pond5.similar_products_keyword_length'));
+            $keyword['search'] = implode(' ', $search);
+        }
+        $keyword['sort']              = isset($getKeyword['sort']) ? $getKeyword['sort'] : NULL;
+        $keyword['limit']             = isset($getKeyword['limit']) ? $getKeyword['limit'] : 25;
+        $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
+        $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
+        $keyword['productType'] = 'music';
+        $type = 'Music';
+        $imagesMedia        = new \App\Http\Pond5\ImageApi();
+        $pond5ImagesData    = $imagesMedia->search($keyword, [], null, 0);
+        
+        $data = [];
+        if (isset($pond5ImagesData['items']) && is_array($pond5ImagesData['items'])) {
+            foreach ($pond5ImagesData['items'] as $eachmedia) {
+                if (config('thirdparty.pond5.use_similar_products_length')) {
+                    if (count($data) >= config('thirdparty.pond5.similar_products_length')) {
+                        break;
                     }
                 }
+                if (isset($eachmedia['id'])) {
+                    $media = array(
+                        'product_id'          => $eachmedia['id'],
+                        'api_product_id'      => $eachmedia['id'],
+                        'product_category'    => '',
+                        'product_title'       => $eachmedia['title'],
+                        'product_thumbnail'   => $eachmedia['thumbnail'],
+                        'product_main_image'  => $eachmedia['watermarkPreview'],
+                        'product_description' => $eachmedia['description'],
+                        'product_keywords'    => implode(',', $eachmedia['keywords']),
+                        'product_status'      => "Active",
+                        'product_main_type'   => $type,
+                        'product_sub_type'    => '',
+                        'product_added_on'    => date("Y-m-d H:i:s"),
+                        'product_web'         => '',
+                        'slug'                => $eachmedia['id'] . '-' . preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['title']))),
+                        'random_three_keywords'    => $this->processMusicKeywords(implode(',', $eachmedia['keywords'])),
+                        'product_price_small' => '',
+                        'is_premium'          => '',
+                        'music_duration'      => $eachmedia['versions'][0]['duration'] ?? null,
+                        'music_fileType'      => $eachmedia['versions'][0]['fileType'] ?? null,
+                        'music_price'         => $eachmedia['versions'][0]['price'] ?? null,
+                    );
 
-                $data = $data->toArray();
-                foreach($data as $key => $value) {
-
-                    //$matchingData = ImageFilterValue::where('api_product_id',strval($value['api_product_id']))->first();
-                    $attributes = [];
-                    $options = [];
-                    //$attributes = isset($matchingData->attributes) ? $matchingData->attributes : [];
-                    //$options    = isset($matchingData->options) ? $matchingData->options : [];
-
-                    $data[$key]['attributes'] = isset($value->attributes) ? $attributes : [];
-                    $data[$key]['options'] = isset($options) ? $options : [];
+                    $media['attributes'] = [];
+                    $media['options'] = [];
                 }
-                foreach ($data as &$item) {
-                    $auther_name                   = $indexedFilteredProducts[$item['api_product_id']]['attributes']['artist'] ?? '';
-                    $music_sound_bpm               = $indexedFilteredProducts[$item['api_product_id']]['attributes']['music_sound_bpm'] ?? '';
-
-                    $item['url']                   = 'detail/' . $item['api_product_id'] . '/' . $item['product_web'] . "/" . $item['product_main_type'];
-                    $item['api_product_id']        = encrypt($item['api_product_id'], true);
-                    $item['random_three_keywords'] = $this->processMusicKeywords($item['product_keywords']);
-                    $item['music_sound_bpm']       = $music_sound_bpm;
-                    $item['auther_name']           = $auther_name;
-                }
+                $data[] = $media;
             }
         }
-
         return $data;
     }
 

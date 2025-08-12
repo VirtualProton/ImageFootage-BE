@@ -93,7 +93,7 @@
             <div class="container">
                 <div class="footer-left">
                     <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
-                    <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
+                    <p style="font-size: 11px;">3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
                         500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
                     </p>
                     <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
@@ -105,7 +105,7 @@
             </div>
         <?php } else { ?>
             <div class="container">
-                <div class="footer-left">
+                <div class="footer-left" style="font-size: 11px;">
                     <h2 class="h4"><strong>Conceptual Pictures Worldwide Private Limited</strong></h2>
                     <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers,
                         Humayun Nagar, Hyderabad - 500028, Telangana,
@@ -115,7 +115,7 @@
                     <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
                 </div>
                 <div class="footer-right">
-                    <h3 class="h2">looking forward</h3>
+                    <h3 class="h3">looking forward</h3>
                 </div>
             </div>
         <?php } ?>
@@ -130,53 +130,53 @@
                     <div class="client-info-leftside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
 
-                            <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                            <p style="font-size: 11px;">Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
                         <?php if ($quotation[0]['flag'] !== 2) { ?>
-                            <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
+                            <p style="font-size: 11px;">Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
                         <?php } ?>
-                        <p>Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
+                        <p style="font-size: 11px;">Address: <span><strong><?php echo $quotation[0]['address'] ?></strong></span>
                             <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp;<?php echo $quotation[0]['postal_code'] ?></strong></span>
                         </p>
-                        <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
-                        <p>Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
-                        <p>Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
-                        <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                        <p>Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
-                        <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
+                        <p style="font-size: 11px;">Estimate No.: <span><strong><?php echo "Q" . $quotation[0]['invoice_name'] ?></span></strong></p>
+                        <p style="font-size: 11px;">Estimate Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
+                        <p style="font-size: 11px;">GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
+                        <p style="font-size: 11px;">PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
+                        <p style="font-size: 11px;">SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
+                        <p style="font-size: 11px;">Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
                     </div>
                 </div>
                 <div class="client-info-bottom">
                     <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
+                        <p style="font-size: 11px;">Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
                     </div>
                     <div class="client-info-rightside">
                         <?php if ($quotation[0]['flag'] == 2) { ?>
-                            <p>End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
+                            <p style="font-size: 11px;">End Client: <span class="block-text" style="display:inline;"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
                         <?php } ?>
-                        <p>Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
+                        <p style="font-size: 11px;">Product Description: <span class="block-text"><strong>Images/Footage - <?php echo count($quotation); ?></strong></span></p>
                     </div>
                 </div>
                 <?php
                 $amount = 0;
                 for ($i = 0; $i < count($quotation); $i++) {
                     if ($i % 3 == 0) {
-                ?>
+                        ?>
                         <div class="row">
                         <?php
-                    }
-                    if (!empty($quotation[$i])) {
-                        $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
-                        if ($i % 3 == 1) {
-                            $class = "col-lg-4 second-div";
-                        } else {
-                            $class = "col-lg-4 ";
-                        } ?>
-                            <div class="<?php echo $class; ?>">
+                        }
+                        if (!empty($quotation[$i])) {
+                            $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
+                            if ($i % 3 == 1) {
+                                $class = "col-lg-4 second-div";
+                            } else {
+                                $class = "col-lg-4 ";
+                            } ?>
+                            <div class="<?php echo $class; ?>" style="font-size: 11px;">
                                 <div style="padding-top: 10px;">
                                     <?php if ($quotation[$i]['type'] == 'Music') { ?>
                                         <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
@@ -187,17 +187,17 @@
 
 
                                 <?php if (!empty($quotation[$i]['product_id']) || !empty($quotation[$i]['product_image'])) { ?>
-                                    <p>Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
-                                    <p>Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
-                                    <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                                    <p style="font-size: 11px;">Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
+                                    <p style="font-size: 11px;">Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
+                                    <p style="font-size: 11px;">Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                                 <?php  } ?>
                             </div>
                         <?php
-                    }
-                    if ($i % 3 == 0) {
-                        ?>
+                        }
+                        if ($i % 3 == 0) {
+                            ?>
                         </div>
-                <?php
+                    <?php
                     }
                 }
                 ?>
@@ -210,10 +210,10 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                    <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         Total (INR)
                                     </td>
-                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         <strong><?php echo $quotation[0]['total']; ?></strong>
                                     </td>
                                 </tr>
@@ -223,28 +223,28 @@
 
                         <?php
                         if ($quotation[0]['tax'] != 0) {
-                        ?>
+                            ?>
                             <div class="row" style="border:1px solid white;">
                                 <div class="col-lg-12" style="padding: 0;width:100%">
-                                    <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
+                                    <p style="padding: 10px;background-color: rgba(89, 89, 89, 0.29);margin: 4px 0;font-size: 11px;">Added: GST @ <?php echo config('constants.GST_VALUE') ?>%</p>
                                 </div>
                             </div>
                         <?php
                         }
                         ?>
 
-                        <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;">
+                        <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;font-size: 11px;">
                             <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="licensing-terms">
-                    <h2 class="h3"><strong> Licensing Terms: </strong></h2>
+                <div class="licensing-terms" style="font-size: 11px;">
+                    <h3 class="h3"><strong> Licensing Terms: </strong></h3>
                     <div class="licensing-condition">
                         <h3 class="h4"><strong>Standard licenses</strong></h3>
-                        <p><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
+                        <p style="font-size: 13px;"><strong>Most Stock photos, vectors, and illustrations come with a Standard license you may:</strong></p>
                         <ul>
                             <li>Reproduce up to 500,000 copies of the asset in all media, including product packaging,
                                 printed marketing materials, digital documents, or software.</li>
@@ -258,7 +258,7 @@
                                 to abide by the license terms.</li>
                             <li>Transfer the license to your client or employer.</li>
                         </ul>
-                        <p><strong>With a Standard license, you may not:</strong></p>
+                        <p style="font-size: 13px;"><strong>With a Standard license, you may not:</strong></p>
                         <ul>
                             <li>Distribute the stand-alone file.</li>
                             <li>Create merchandise, templates, or other products for resale or distribution where the
@@ -270,15 +270,15 @@
                         </ul>
                     </div>
                     <div class="licensing-condition">
-                        <h3 class="h4"><strong>Enhanced /Extended licenses</strong></h3>
-                        <p><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
+                        <h3 class="h3"><strong>Enhanced /Extended licenses</strong></h3>
+                        <p style="font-size: 13px;"><strong>Enhanced / Extended licenses are available for Images, Stock videos, templates, 3D assets, and
                                 Premium Collection.</strong></p>
-                        <p><strong>With an Enhanced license, you may:</strong></p>
+                        <p style="font-size: 13px;"><strong>With an Enhanced license, you may:</strong></p>
                         <ul>
                             <li>Use the asset with all the rights granted in the Standard license.</li>
                             <li>Reproduce the asset beyond the 500,000 copy/viewer restriction.</li>
                         </ul>
-                        <p><strong>With an Enhanced license, you may not:</strong></p>
+                        <p style="font-size: 13px;"><strong>With an Enhanced license, you may not:</strong></p>
                         <ul>
                             <li>Distribute the stand-alone file.</li>
                             <li>Create merchandise, templates, or other products for resale or distribution where the
@@ -288,7 +288,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="terms-of-payment licensing-terms">
+                <div class="terms-of-payment licensing-terms" style="font-size: 11px;">
                     <h3 class="h4"><strong>Terms of Payment: </strong></h3>
                     <ul>
                         <li>License Rights are only assigned on issuance of a <span><strong>Purchase Order</strong></span> and <span><strong>Upfront

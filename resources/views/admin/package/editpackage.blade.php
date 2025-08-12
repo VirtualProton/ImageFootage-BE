@@ -43,7 +43,7 @@
                 <label for="exampleInputEmail1">Package Plan </label>
                 <select class="form-control" name="package_plan" id="package_plan">
                   <option value="1" @if($package[0]['package_plan']=='1' ) selected="selected" @endif>Download Pack</option>
-                  <option value="2" @if($package[0]['package_plan']=='2' ) selected="selected" @endif>Subscription</option>
+                  {{-- <option value="2" @if($package[0]['package_plan']=='2' ) selected="selected" @endif>Subscription</option> --}}
                 </select>
                 @if ($errors->has('package_plan'))
                 <div class="has_error" style="color:red;">{{ $errors->first('package_plan') }}</div>
@@ -101,6 +101,19 @@
               @if ($errors->has('package_products_count'))
               <div class="has_error" style="color:red;">{{ $errors->first('package_products_count') }}</div>
               @endif
+              <div class="form-group">
+                <label for="exampleInputEmail1">API Version </label>
+                <select class="form-control" name="api_version" id="api_version" disabled>
+                  <option value="1">API 1</option>
+                  <option value="5_99">API 2</option>
+                  <option value="100_499">API 3</option>
+                  <option value="500_999">API 4</option>
+                  {{-- <option value="2">Subscription</option> --}}
+                </select>
+                @if ($errors->has('api_version'))
+                <div class="has_error" style="color:red;">{{ $errors->first('api_version') }}</div>
+                @endif
+              </div>
               <div id="for_pro">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Per Month Download</label>
@@ -423,6 +436,33 @@
     $('#package_expiry_year').on('input', function() {
       checkPackageExpiryYear();
     });
+
+  function updateApiVersion() {
+    var package_products_count = parseInt($('#package_products_count').val(), 10);
+    var selectedOption = 1;
+
+    if (package_products_count >= 5 && package_products_count <= 99) {
+        selectedOption = "5_99"; 
+    } else if (package_products_count >= 100 && package_products_count <= 499) {
+        selectedOption = "100_499";
+    } else if (package_products_count >= 500 && package_products_count <= 999) {
+        selectedOption = "500_999";
+    } else if (package_products_count >= 1000) {
+        selectedOption = "500_999";
+    }
+
+    $('#api_version').prop('disabled', false);
+    $('#api_version').val(selectedOption).trigger('change');
+    $('#api_version').prop('disabled', true);
+  }
+
+  $('#package_products_count').on('blur', function() {
+      updateApiVersion();
+  });
+
+  $(document).ready(function() {
+      updateApiVersion();
+  });
 
   function checkPackageExpiry() {
       var packageExpiryValue = $('#package_expiry').val();

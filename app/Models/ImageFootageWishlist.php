@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class ImageFootageWishlist extends Model
 {
@@ -14,6 +15,13 @@ class ImageFootageWishlist extends Model
 
     public function products() {
         return $this->belongsToMany(Product::class, 'imagefootage_wishlist_products', 'wishlist_id', 'product_id')->withPivot('type');
+    }
+    
+    public function getWishlistProducts() {
+        return DB::table('imagefootage_wishlist_products')
+        ->where('wishlist_id', $this->id)
+        ->get();
+
     }
 
     public function user()

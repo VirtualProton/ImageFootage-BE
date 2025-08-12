@@ -11,7 +11,8 @@ use App\Models\{
     Product,
     Contributor,
     ImageFootageWishlist,
-    User
+    User,
+    UserProductDownload
 };
 use Illuminate\Support\Facades\Hash;
 use CORS;
@@ -44,10 +45,16 @@ class FrontuserController extends Controller {
 		$counterImage  = 0;
 		$already_footage = 0;
 		$counterFootage  = 0;
+		$tokens=json_decode($request['product']['token'],true);
+
+		$checkdownload = UserProductDownload::where('product_id_api', $request['product']['product_info']['media']['id'])->where('web_type', $request['product']['type'])->where('product_size', $request['product']['selected_product']['label'])->where('user_id',$tokens['Utype'])->first();
+        if(!empty($checkdownload)){
+            return response()->json(['status' => '0', 'message' => 'This product is already downloaded.']);
+        }
+
 		if(isset($request['product']['type']) && $request['product']['type'] =='2'){
             $product_id = $request['product']['product_info']['media']['id'];
             $product_type = "Image";
-            $tokens=json_decode($request['product']['token'],true);
             $product_addedby = $tokens['Utype'];
             $cart_list= $Usercart->where('cart_product_id',$product_id)->where('cart_added_by',$product_addedby)->where('extended_name',$request['product']['extended'])->get()->toArray();
             if(empty($cart_list)){
@@ -57,7 +64,7 @@ class FrontuserController extends Controller {
                 $Usercart->cart_added_by= $product_addedby;
                 $Usercart->standard_type= isset($request['product']['selected_product']['name']) ?$request['product']['selected_product']['name'] : '';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= isset($request['product']['selected_product']['version'])  ?  $request['product']['selected_product']['version'] : '';
+                $Usercart->standard_size= isset($request['product']['selected_product']['label'])  ?  $request['product']['selected_product']['label'] : '';
                 $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']: 0;
 				# TODO: After dynamic licenece Type call this should address
                  $Usercart->extended_name= isset($request['product']['extended']) ? $request['product']['extended']:'';
@@ -69,6 +76,7 @@ class FrontuserController extends Controller {
                 $Usercart->product_web= $request['product']['type'];
                 $Usercart->product_json= json_encode($request['product']['product_info']);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
+				$Usercart->version_data = json_encode($request['product']['version_data']);
                 $result=$Usercart->save();
                 if($result){
                     echo '{"status":"1","message":"Product added to cart successfully"}';
@@ -95,7 +103,7 @@ class FrontuserController extends Controller {
                 $Usercart->cart_added_by= $product_addedby;
                 $Usercart->standard_type= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
                 $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                $Usercart->standard_size= isset($request['product']['selected_product']['version']) ?$request['product']['selected_product']['version']:'' ;
+                $Usercart->standard_size= isset($request['product']['selected_product']['label']) ?$request['product']['selected_product']['label']:'' ;
                 $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price'] : 0;
                 // $Usercart->total= $request['product']['total'];
 				$Usercart->total = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:0;
@@ -107,6 +115,7 @@ class FrontuserController extends Controller {
                 $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                 $Usercart->selected_product = json_encode($request['product']['selected_product']);
                 $Usercart->extended_name = isset($request['product']['extended']) ? $request['product']['extended'] : '';
+				$Usercart->version_data = json_encode($request['product']['version_data']);
                 $result=$Usercart->save();
                 if($result){
                     echo '{"status":"1","message":"Product added to cart successfully"}';
@@ -128,7 +137,7 @@ class FrontuserController extends Controller {
                     $Usercart->cart_added_by= $product_addedby;
                     $Usercart->standard_type= isset($request['product']['selected_product']['size']) ? $request['product']['selected_product']['size']:'';
                     $Usercart->cart_added_on= date('Y-m-d H:i:s');
-                    $Usercart->standard_size= isset($request['product']['selected_product']['version']) ? $request['product']['selected_product']['version']:'';
+                    $Usercart->standard_size= isset($request['product']['selected_product']['label']) ? $request['product']['selected_product']['label']:'';
                     $Usercart->standard_price = isset($request['product']['selected_product']['price']) ? $request['product']['selected_product']['price']:'';
                     $Usercart->extended_name= isset($request['product']['extended']) ? $request['product']['extended'] : '';;
                     $Usercart->extended_price= '0';
@@ -139,6 +148,7 @@ class FrontuserController extends Controller {
                     $Usercart->product_web= '4';
                     $Usercart->product_json= json_encode($request['product']['product_info'][0]);
                     $Usercart->selected_product = json_encode($request['product']['selected_product']);
+					$Usercart->version_data = json_encode($request['product']['version_data']);
                     //$Usercart->pricing_tier = $eachproduct['footage_tier'];
                     $result = $Usercart->save();
                     if($result){
@@ -237,9 +247,18 @@ class FrontuserController extends Controller {
 	public function userCartList(Request $request)
 	{
 		$Usercart = new Usercart;
-		$cart_list = $Usercart->where('cart_added_by', $request['Utype'])->with('product')->with('licence')->get()->toArray();
+		$cart_list = $Usercart->where('cart_added_by', $request['Utype'])->with('licence')->get()->toArray();
+
 		foreach ($cart_list as $item => $eachmedia) {
-			$cart_list[$item]['product']['api_product_id'] = encrypt($eachmedia['product']['api_product_id'], true);
+			$cart_list[$item]['product']['api_product_id'] = encrypt($eachmedia['cart_product_id'], true);
+			$cart_list[$item]['product']['is_premium'] = 0;
+			$cart_list[$item]['product']['slug'] = $eachmedia['cart_product_id'] .'-'. preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim($eachmedia['product_name'])));
+			$cart_list[$item]['product']['product_id'] = $eachmedia['cart_product_id'];
+			$cart_list[$item]['product']['product_title'] = $eachmedia['product_name'];
+			$cart_list[$item]['product']['product_description'] = $eachmedia['product_desc'];
+			$cart_list[$item]['product']['product_thumbnail'] = $eachmedia['product_thumb'];
+			$cart_list[$item]['product']['product_main_image'] = $eachmedia['product_thumb'];
+			$cart_list[$item]['product']['product_web'] = $eachmedia['product_web'];
 		}
 		echo json_encode($cart_list, true);
 	}
@@ -354,22 +373,24 @@ class FrontuserController extends Controller {
 		try {
 			if (!empty($request->Utype)) {
 				$userId = $request->Utype;
-				$userData = $this->userModel->with(['wishlists' => function($qry) {
-					$qry->with(['products'])->withCount('products');
-				}])
-				->withCount('wishlists')
-				->find($userId);
+				$userData = $this->userModel
+								->withCount('wishlists')
+								->find($userId);
 
 				if(!empty($userData->wishlists)) {
 					foreach($userData->wishlists as $wishlist) {
-						if(!empty($wishlist->products)) {
-							foreach($wishlist->products as $product) {
-								$product->api_product_id = encrypt($product->api_product_id, true);
+						$data = $wishlist->getWishlistProducts();
+						$wishlistData = [];
+						if(!empty($data)) {
+							foreach($data as $product) {
+								$wishlistData[] = json_decode($product->pond5_product_response);
 							}
 						}
+						$wishlist->products = $wishlistData;
+						$wishlist->products_count = count($wishlistData);
 					}
 				}
-
+				
 				echo '{"status":"1","data":'.json_encode($userData, true).',"message":""}';
 			} else {
 				echo '{"status":"0","data":{},"message":"No user id passed."}';
@@ -546,7 +567,8 @@ class FrontuserController extends Controller {
                 'extended_name' => $cart['extended_name'],
                 'standard_size' => $cart['standard_size'],
                 'standard_price' => $cart['standard_price'],
-                'total'   => $cart['standard_price']
+                'total'   => $cart['standard_price'],
+				'selected_product' => json_encode($cart['selected_product']),
             ]);
         }
         return response()->json(['status'=>'success','message'=>'Cart list updated successfully']);
