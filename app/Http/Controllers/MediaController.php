@@ -577,8 +577,8 @@ class MediaController extends Controller
 
     public function downloadProxy(Request $request)
     {
-        $url = $request->query('url');
-
+        $req = $request->all();
+        $url = isset($req['url']) ? $req['url'] : null;
         if (!$url) {
             return response("Missing url parameter", 400);
         }
