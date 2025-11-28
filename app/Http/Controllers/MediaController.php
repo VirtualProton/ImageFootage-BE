@@ -575,6 +575,49 @@ class MediaController extends Controller
         }
     }
 
+    public function downloadProxy(Request $request)
+    {
+        $url = $request->query('url');
+
+        if (!$url) {
+            return response("Missing url parameter", 400);
+        }
+
+        // Basic SSRF protection: allow only http/https
+        if (!preg_match('#^https?://#i', $url)) {
+            return response("Invalid URL", 400);
+        }
+
+        // Fetch file using curl
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+        ]);
+
+        $data = curl_exec($ch);
+
+        if ($data === false) {
+            return response("Failed to fetch remote file", 502);
+        }
+
+        // Get remote content type
+        $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+        // Extract filename from URL
+        $path = parse_url($url, PHP_URL_PATH);
+        $filename = basename($path) ?: 'downloaded_file';
+
+        curl_close($ch);
+
+        return response($data, 200)
+            ->header('Content-Type', $contentType ?: 'application/octet-stream')
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->header('Content-Length', strlen($data));
+    }
+
     public function getDateGaps($packageStartDate)
     {
 

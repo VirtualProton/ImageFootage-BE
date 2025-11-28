@@ -130,6 +130,7 @@ Route::group([
     Route::post('download', 'MediaController@download');
     Route::post('multi-download', 'MediaController@multipleDownload');
     Route::post('re-download', 'MediaController@reDownload');
+    Route::post('download-proxy', 'MediaController@downloadProxy');
     Route::post('downloadindi', 'MediaController@downloadindi');
     Route::post('getuseraddress', 'UserController@getUserAddress');
     Route::post('update_profile', 'UserController@update_profile');
