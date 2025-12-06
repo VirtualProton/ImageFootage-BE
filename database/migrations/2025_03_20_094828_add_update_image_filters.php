@@ -56,7 +56,7 @@ class AddUpdateImageFilters extends Migration
                             ->orderBy('sort_order', 'desc')
                             ->first();
 
-        $sortOrder = $getFilter->sort_order + 1;
+        $sortOrder = $getFilter ? $getFilter->sort_order + 1 : 1;
 
         // Insert the new 'Orientation' filter
         $filterId = DB::table('imagefootage_filters')->insertGetId([
