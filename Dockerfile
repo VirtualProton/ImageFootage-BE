@@ -20,7 +20,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install deps
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-audit
+
 
 # Cache optimize
 RUN php artisan config:clear && php artisan config:cache && \
