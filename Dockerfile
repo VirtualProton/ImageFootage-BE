@@ -4,20 +4,21 @@
 FROM php:7.4-fpm
 
 # -------------------------
-# 2) System Dependencies
+# 2) System Dependencies + Build Tools (IMPORTANT!)
 # -------------------------
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip nano libpng-dev libjpeg-dev libfreetype6-dev \
-    libonig-dev libxml2-dev libzip-dev ffmpeg \
-    && docker-php-ext-install pdo pdo_mysql mbstring tokenizer xml zip \
+    git curl zip unzip nano ffmpeg \
+    build-essential autoconf pkg-config \
+    libpng-dev libjpeg-dev libfreetype6-dev \
+    libonig-dev libxml2-dev libzip-dev \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install gd
+    && docker-php-ext-install pdo pdo_mysql gd mbstring tokenizer xml zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # -------------------------
-# 3) MongoDB Extension (Required)
+# 3) MongoDB Extension
 # -------------------------
-RUN pecl install mongodb \
-    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
+RUN pecl install mongodb && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 # -------------------------
 # 4) Install Composer
@@ -25,33 +26,19 @@ RUN pecl install mongodb \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # -------------------------
-# 5) Create Application Directory
+# 5) Application Setup
 # -------------------------
 WORKDIR /var/www/html
-
-# Copy project files
 COPY . .
 
-# -------------------------
-# 6) Install Dependencies
-# -------------------------
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Generate key if not exists
 RUN php artisan key:generate || true
 
 # -------------------------
-# 7) Permissions
+# 6) Permissions
 # -------------------------
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# -------------------------
-# 8) Expose port
-# -------------------------
 EXPOSE 9000
-
-# -------------------------
-# 9) Start PHP-FPM
-# -------------------------
 CMD ["php-fpm"]
