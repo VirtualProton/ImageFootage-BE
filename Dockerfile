@@ -20,7 +20,10 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install deps
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-audit
+RUN composer config --no-plugins allow-plugins true && \
+    composer config security.audit false && \
+    composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+
 
 
 # Cache optimize
