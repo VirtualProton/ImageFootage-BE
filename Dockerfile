@@ -1,41 +1,57 @@
-# ===============================
-# 🚀 Laravel 5.8 + PHP 7.1 + Apache
-# ===============================
+# -------------------------
+# 1) Base Image
+# -------------------------
+FROM php:7.4-fpm
 
-FROM php:7.1-apache
+# -------------------------
+# 2) System Dependencies
+# -------------------------
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip nano libpng-dev libjpeg-dev libfreetype6-dev \
+    libonig-dev libxml2-dev libzip-dev ffmpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring tokenizer xml zip \
+    && docker-php-ext-configure gd --with-jpeg --with-freetype \
+    && docker-php-ext-install gd
 
-# Set working directory
+# -------------------------
+# 3) MongoDB Extension (Required)
+# -------------------------
+RUN pecl install mongodb \
+    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
+
+# -------------------------
+# 4) Install Composer
+# -------------------------
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# -------------------------
+# 5) Create Application Directory
+# -------------------------
 WORKDIR /var/www/html
 
-# Enable Apache rewrite (Laravel needs this)
-RUN a2enmod rewrite
-
-# Install required dependencies & PHP extensions
-RUN apt-get update && apt-get install -y \
-    git unzip libpng-dev libjpeg-dev libfreetype6-dev libzip-dev libicu-dev libxml2-dev ffmpeg \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd zip intl mbstring pdo_mysql xml pcntl bcmath \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
-# (Composer v2 breaks on PHP7.1 — v1.10 is correct)
-
-# Copy project into container
+# Copy project files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# -------------------------
+# 6) Install Dependencies
+# -------------------------
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Generate optimized autoload
-RUN composer dump-autoload --optimize
+# Generate key if not exists
+RUN php artisan key:generate || true
 
-# Ensure storage & cache permissions
+# -------------------------
+# 7) Permissions
+# -------------------------
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expose Laravel application port
-EXPOSE 80
+# -------------------------
+# 8) Expose port
+# -------------------------
+EXPOSE 9000
 
-# Start Apache server
-CMD ["apache2-foreground"]
+# -------------------------
+# 9) Start PHP-FPM
+# -------------------------
+CMD ["php-fpm"]
