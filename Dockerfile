@@ -1,25 +1,41 @@
-FROM php:7.4-fpm
+# ===============================
+# 🚀 Laravel 5.8 + PHP 7.1 + Apache
+# ===============================
 
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip nginx libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
-    libonig-dev libzip-dev libxml2-dev ffmpeg supervisor && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install pdo pdo_mysql gd mbstring xml zip
+FROM php:7.1-apache
 
-# Use Composer 2.2 LTS (supports old Laravel)
-COPY --from=composer:2.2.25 /usr/bin/composer /usr/bin/composer
-
+# Set working directory
 WORKDIR /var/www/html
+
+# Enable Apache rewrite (Laravel needs this)
+RUN a2enmod rewrite
+
+# Install required dependencies & PHP extensions
+RUN apt-get update && apt-get install -y \
+    git unzip libpng-dev libjpeg-dev libfreetype6-dev libzip-dev libicu-dev libxml2-dev ffmpeg \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip intl mbstring pdo_mysql xml pcntl bcmath \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+# (Composer v2 breaks on PHP7.1 — v1.10 is correct)
+
+# Copy project into container
 COPY . .
 
-# Install dependencies ✨ (now secure-block bypass is inside composer.json)
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# Cache optimizations
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache || true
+# Generate optimized autoload
+RUN composer dump-autoload --optimize
 
-# Copy Nginx config
-COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+# Ensure storage & cache permissions
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
+# Expose Laravel application port
 EXPOSE 80
-CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
+
+# Start Apache server
+CMD ["apache2-foreground"]
