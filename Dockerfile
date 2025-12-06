@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install pdo pdo_mysql gd mbstring xml zip
 
 # Use Composer 2.2 LTS (supports old Laravel)
-COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.2.25 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 COPY . .
