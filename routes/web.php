@@ -14,7 +14,7 @@
 $randomPath = env('RANDOM_PATH_FOR_LOGS', 'all-logs');
 Route::get($randomPath, [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
-Auth::routes();
+// Auth::routes(); // Commented out - install laravel/ui if needed
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/login', 'AdminController@login');
