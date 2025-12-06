@@ -1,0 +1,39 @@
+// ...existing code...
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: imagefootage-app
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${APP_URL}
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST}           # external MySQL host/IP
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SESSION_DRIVER=file
+      - CACHE_DRIVER=file
+    volumes:
+      - .:/var/www/html
+      - ./storage:/var/www/html/storage
+    networks:
+      - imagefootage-network
+// ...existing code...
+
+networks:
+  imagefootage-network:
+    driver: bridge
+// ...existing code...
+
+volumes:
+  mongodb-data:
+    driver: local
