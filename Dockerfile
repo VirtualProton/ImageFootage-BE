@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install pdo pdo_mysql gd mbstring xml zip
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+
 
 # --------------------------------------
 # 2) Copy project into container
@@ -20,9 +21,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install deps
-RUN composer config --no-plugins allow-plugins true && \
-    composer config security.audit false && \
-    composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-suggest
+
 
 
 
