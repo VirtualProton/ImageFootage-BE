@@ -1,4 +1,3 @@
-// ...existing code...
 version: '3.8'
 
 services:
@@ -13,13 +12,13 @@ services:
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
-      - APP_URL=${APP_URL}
+      - APP_URL="w00884wscgkwwso4044sscow.18.218.166.222.sslip.io"
       - DB_CONNECTION=mysql
-      - DB_HOST=${DB_HOST}           # external MySQL host/IP
+      - DB_HOST="18.218.166.222"           # external MySQL host/IP
       - DB_PORT=${DB_PORT:-3306}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE="imagefootage"
+      - DB_USERNAME="mysql"
+      - DB_PASSWORD="Fp1TCqO9LkZHD66EEFCa4b9cmonxgbc580zfHBnMqM59FzNx4dy8yLes2n4gkl9c"
       - SESSION_DRIVER=file
       - CACHE_DRIVER=file
     volumes:
