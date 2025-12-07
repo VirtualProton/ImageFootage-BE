@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql zip gd
 
-# 🟢 Install correct Mongo Driver version
-RUN pecl install mongodb-1.22.1 \
+# 🟢 FIX: Install latest Mongo Driver (Compatible with PHP 8.4)
+RUN pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 RUN a2enmod rewrite
