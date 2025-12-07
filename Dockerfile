@@ -1,21 +1,14 @@
-# Use PHP 8.4
 FROM php:8.4-apache
 
-# Install GD
 RUN apt-get update && apt-get install -y \
     libzip-dev unzip git \
     libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql zip gd
 
-# 🔥 Install MongoDB driver v1.21.3 (manual source build)
-RUN apt-get update && apt-get install -y autoconf pkg-config libssl-dev libcurl4-openssl-dev
-RUN git clone --branch 1.21.3 https://github.com/mongodb/mongo-php-driver.git mongo-driver \
-    && cd mongo-driver \
-    && phpize && ./configure --with-mongodb-ssl \
-    && make -j$(nproc) && make install \
-    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
-    && cd .. && rm -rf mongo-driver
+# 🟢 Install correct Mongo Driver version
+RUN pecl install mongodb-1.22.1 \
+    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 RUN a2enmod rewrite
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
