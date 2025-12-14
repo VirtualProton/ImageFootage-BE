@@ -23,6 +23,7 @@ use App\Models\ProductsDownload;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Models\LicenceType;
+use App\Models\Price;
 
 class MediaController extends Controller
 {
@@ -81,13 +82,13 @@ class MediaController extends Controller
             'product_rejectod_reason' => null,
             'product_editedby' => null,
             'product_web' => 3,
-            'license_type' => "standard",
+            'license_type' => 'standard',
             'width_thumb' => null,
             'height_thumb' => null,
             'thumb_update_status' => 1,
             'music_duration' => $pond5ImagesData['versions'][0]['duration'] ?? null,
             'music_fileType' => $pond5ImagesData['versions'][0]['fileType'] ?? null,
-            'music_price' => $pond5ImagesData['versions'][0]['price'] ?? null,
+            'music_price' => null,
             'music_size' => null,
             'auther_name' => $pond5ImagesData['authorName'],
             'created_at' => date('Y-m-d H:i:s', strtotime($pond5ImagesData['createdDate'])),
@@ -99,10 +100,65 @@ class MediaController extends Controller
             'search_terms' => "0",
             'expired_date' => null,
             'slug' => $slug,
-            'attributes' => [],
-            'options' => $pond5ImagesData['versions'],
+            'attributes' => []
         ];
 
+        $licenseId = LicenceType::where('licence_name', $product_details['license_type'])->first();
+        // Set price for Music
+        if ($origin == 'Music') {
+            unset($pond5ImagesData['versions'][0]['price']);
+            $product_details['options'] = $pond5ImagesData['versions'];
+            $price = Price::getMusicProductPrice($licenseId->id, 'music');
+            if ($price) {
+                $product_details['music_price'] = $price->music_price;
+                $product_details['options'][0]['price'] = $price->music_price;
+            }
+        }
+
+        // Set price for Footage
+        if ($origin == 'Footage') {
+            foreach ($pond5ImagesData['versions'] as &$version) {
+                $price = Price::getFootageProductPrice($licenseId->id, 'footage', $version['label']);
+                if (!$price) {
+                    $version['price'] = null;
+                    continue;
+                }
+                if ($version['label'] == Price::FOUR_K_FOOTAGE) {
+                    $version['price'] = $price->{'4k_footage_price'};
+                } else {
+                    $version['price'] = $price->high_resolution_footage_price;
+                }
+            }
+            unset($version);
+            $product_details['options'] = $pond5ImagesData['versions'];
+        }
+
+        // Set price for Image
+        if ($origin == 'Image') {
+            foreach ($pond5ImagesData['versions'] as &$version) {
+                $price = Price::getImageProductPrice($licenseId->id, 'image', $version['label']);
+                if (!$price) {
+                    $version['price'] = null;
+                    continue;
+                }
+                switch ($version['label']) {
+                    case Price::SMALL_IMAGE:
+                        $version['price'] = $price->small_image_price;
+                        break;
+                    case Price::MEDIUM_IMAGE:
+                        $version['price'] = $price->medium_image_price;
+                        break;
+                    case Price::LARGE_IMAGE:
+                        $version['price'] = $price->large_image_price;
+                        break;
+                    case Price::EXTRA_LARGE_IMAGE:
+                        $version['price'] = $price->extra_large_image_price;
+                        break;
+                }
+            }
+            unset($version);
+            $product_details['options'] = $pond5ImagesData['versions'];
+        }
 
         return response()->json(['data' => $product_details, 'status' => 'success']);
     }

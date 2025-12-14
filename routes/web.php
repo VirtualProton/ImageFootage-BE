@@ -315,6 +315,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
     Route::post('/get-main-images', 'EditorialController@getMainImages');
     Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
+    Route::resource('/price', 'PriceController');
 });
 
 Route::get('emailVerification', 'UserContactusController@emailVerification');
