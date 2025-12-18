@@ -54,7 +54,7 @@ class MediaController extends Controller
 
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
         $pond5ImagesData    = $imagesMedia->getDetail($slug);
-        
+
         $product_details = [
             'id' => $pond5ImagesData['id'],
             'product_id' => $pond5ImagesData['id'],
@@ -102,62 +102,108 @@ class MediaController extends Controller
             'slug' => $slug,
             'attributes' => []
         ];
-
-        $licenseId = LicenceType::where('licence_name', $product_details['license_type'])->first();
+        $licenseTypes = ['media', 'commercial', 'digital', 'non_commercial'];
         // Set price for Music
         if ($origin == 'Music') {
-            unset($pond5ImagesData['versions'][0]['price']);
-            $product_details['options'] = $pond5ImagesData['versions'];
-            $price = Price::getMusicProductPrice($licenseId->id, 'music');
-            if ($price) {
-                $product_details['music_price'] = $price->music_price;
-                $product_details['options'][0]['price'] = $price->music_price;
+            foreach ($licenseTypes as $licenseType) {
+                $license = LicenceType::where('slug', $licenseType)->where('product_type', 3)->first();
+                if (!$license) {
+                    continue;
+                }
+                $priceModel = Price::getMusicProductPrice($license->id, 'music');
+                if (!$priceModel) {
+                    $price = null;
+                } else {
+                    $price = $priceModel->music_price;
+                }
+                foreach ($pond5ImagesData['versions'] as &$version) {
+                    $newOptions[] = [
+                        "licenseType" => $licenseType,
+                        "version" => $version['version'],
+                        "label" => $version['label'],
+                        "size" => $version['size'],
+                        "duration" => $version['duration'],
+                        "price" => $price,
+                        "fileType" => $version['fileType']
+                    ];
+                }
             }
+            $product_details['options'] = $newOptions;
         }
-
         // Set price for Footage
         if ($origin == 'Footage') {
-            foreach ($pond5ImagesData['versions'] as &$version) {
-                $price = Price::getFootageProductPrice($licenseId->id, 'footage', $version['label']);
-                if (!$price) {
-                    $version['price'] = null;
+            foreach ($licenseTypes as $licenseType) {
+                $license = LicenceType::where('slug', $licenseType)->where('product_type', 2)->first();
+                if (!$license) {
                     continue;
                 }
-                if ($version['label'] == Price::FOUR_K_FOOTAGE) {
-                    $version['price'] = $price->{'4k_footage_price'};
-                } else {
-                    $version['price'] = $price->high_resolution_footage_price;
+                foreach ($pond5ImagesData['versions'] as $version) {
+                    $priceModel = Price::getFootageProductPrice($license->id, 'footage', $version['label']);
+                    if (!$priceModel) {
+                        $price = null;
+                    } else {
+                        if ($version['label'] == '4K') {
+                            $price = $priceModel->{'4k_footage_price'};
+                        } else {
+                            $price = $priceModel->high_resolution_footage_price;
+                        }
+                    }
+                    $newOptions[] = [
+                        "licenseType" => $licenseType,
+                        "version" => $version['version'],
+                        "label" => $version['label'],
+                        "size" => $version['size'],
+                        "duration" => $version['duration'],
+                        "price" => $price,
+                        "fileType" => $version['fileType'],
+                        "height" => $version['height'],
+                        "width" => $version['width']
+                    ];
                 }
             }
-            unset($version);
-            $product_details['options'] = $pond5ImagesData['versions'];
+            $product_details['options'] = $newOptions;
         }
-
         // Set price for Image
         if ($origin == 'Image') {
-            foreach ($pond5ImagesData['versions'] as &$version) {
-                $price = Price::getImageProductPrice($licenseId->id, 'image', $version['label']);
-                if (!$price) {
-                    $version['price'] = null;
+            foreach ($licenseTypes as $licenseType) {
+                $license = LicenceType::where('slug', $licenseType)->where('product_type', 1)->first();
+                if (!$license) {
                     continue;
                 }
-                switch ($version['label']) {
-                    case Price::SMALL_IMAGE:
-                        $version['price'] = $price->small_image_price;
-                        break;
-                    case Price::MEDIUM_IMAGE:
-                        $version['price'] = $price->medium_image_price;
-                        break;
-                    case Price::LARGE_IMAGE:
-                        $version['price'] = $price->large_image_price;
-                        break;
-                    case Price::EXTRA_LARGE_IMAGE:
-                        $version['price'] = $price->extra_large_image_price;
-                        break;
+                foreach ($pond5ImagesData['versions'] as &$version) {
+                    $priceModel = Price::getImageProductPrice($license->id, 'image', $version['label']);
+
+                    if (!$priceModel) {
+                        $price = null;
+                    } else {
+                        switch ($version['label']) {
+                            case Price::SMALL_IMAGE:
+                                $price = $priceModel->small_image_price;
+                                break;
+                            case Price::MEDIUM_IMAGE:
+                                $price = $priceModel->medium_image_price;
+                                break;
+                            case Price::LARGE_IMAGE:
+                                $price = $price->large_image_price;
+                                break;
+                            case Price::EXTRA_LARGE_IMAGE:
+                                $price = $price->extra_large_image_price;
+                                break;
+                        }
+                    }
+                    $newOptions[] = [
+                        "licenseType" => $licenseType,
+                        "version" => $version['version'],
+                        "label" => $version['label'],
+                        "size" => $version['size'],
+                        "height" => $version['height'],
+                        "width" => $version['width'],
+                        "price" => $price,
+                        "fileType" => $version['fileType']
+                    ];
                 }
             }
-            unset($version);
-            $product_details['options'] = $pond5ImagesData['versions'];
+            $product_details['options'] = $newOptions;
         }
 
         return response()->json(['data' => $product_details, 'status' => 'success']);
@@ -716,34 +762,34 @@ class MediaController extends Controller
     }
 
 
-public function calculateMonthlySubscriptionDates($purchaseDate, $subscriptionDurationMonths, $currentDate)
-{
+    public function calculateMonthlySubscriptionDates($purchaseDate, $subscriptionDurationMonths, $currentDate)
+    {
 
-    $currentDate = Carbon::parse($currentDate);
+        $currentDate = Carbon::parse($currentDate);
 
-    $subscriptionDates = [];
-    $dateRanges = [];
+        $subscriptionDates = [];
+        $dateRanges = [];
 
-    for ($i = 0; $i < $subscriptionDurationMonths; $i++) {
-        // Calculate the end of the current month
-        //$endDate = $startDate->addMonth();
-        $startDate = Carbon::parse($purchaseDate)->addMonths($i);
-        $endDate = Carbon::parse($purchaseDate)->addMonths($i + 1);
+        for ($i = 0; $i < $subscriptionDurationMonths; $i++) {
+            // Calculate the end of the current month
+            //$endDate = $startDate->addMonth();
+            $startDate = Carbon::parse($purchaseDate)->addMonths($i);
+            $endDate = Carbon::parse($purchaseDate)->addMonths($i + 1);
 
 
-        // Store the start and end dates for the current month
-        $subscriptionDates[] = [
-            'start_date' => $startDate->toDateString(), // Format as needed
-            'end_date' => $endDate->toDateString(),     // Format as needed
-        ];
+            // Store the start and end dates for the current month
+            $subscriptionDates[] = [
+                'start_date' => $startDate->toDateString(), // Format as needed
+                'end_date' => $endDate->toDateString(),     // Format as needed
+            ];
 
-        if ($currentDate >= $startDate && $currentDate <= $endDate) {
+            if ($currentDate >= $startDate && $currentDate <= $endDate) {
                 $dateRanges = ['startDate' => $startDate, 'endDate' => $endDate];
                 break; // Exit the loop once a match is found
             }
 
-    }
-    return $dateRanges;
+        }
+        return $dateRanges;
 
-}
+    }
 }
