@@ -18,6 +18,19 @@
             <div class="box-body">
                 @include('admin.partials.message')
 
+                <!-- Product Type Filter -->
+                <div class="row" style="margin-bottom: 12px;">
+                    <div class="col-md-3">
+                        <label for="productTypeFilter">Product Type</label>
+                        <select id="productTypeFilter" class="form-control">
+                            <option value="">All</option>
+                            <option value="image">Image</option>
+                            <option value="footage">Footage</option>
+                            <option value="music">Music</option>
+                        </select>
+                    </div>
+                </div>
+
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -78,13 +91,21 @@
 @section('scripts')
 <script>
     $(function() {
-        $('#example1').DataTable({
+        var table = $('#example1').DataTable({
             'paging': true,
             'lengthChange': true,
             'searching': true,
             'ordering': true,
             'info': true,
             'autoWidth': false
+        });
+
+        // Product Type Filter
+        $('#productTypeFilter').on('change', function() {
+            var selectedType = this.value;
+
+            // Search in the Product Type column (index 2)
+            table.column(2).search(selectedType).draw();
         });
 
         // Auto-dismiss alerts

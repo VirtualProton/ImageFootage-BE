@@ -15,21 +15,6 @@
             @include('admin.partials.message')
 
             <div class="box-body">
-
-                <div class="form-group">
-                    <label for="licence_type" class="col-sm-2 control-label">License Type</label>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <select class="form-control" name="license_type" id="license_type">
-                                <option value="">-- Select License Type --</option>
-                                @foreach($licenceTypes as $licence)
-                                <option value="{{ $licence->id }}">{{ $licence->licence_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group" id="productTypeButton">
                     <label for="product_type" class="col-sm-2 control-label">Product Type</label>
                     <div class="col-sm-4">
@@ -39,6 +24,16 @@
                                 <option value="image">Image</option>
                                 <option value="footage">Footage</option>
                                 <option value="music">Music</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="licence_type" class="col-sm-2 control-label">License Type</label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" name="license_type" id="license_type">
+                                <option value="">-- Select Product Type First --</option>
                             </select>
                         </div>
                     </div>
@@ -141,6 +136,9 @@
 <script>
     $(document).ready(function() {
 
+        // License types data (passed from controller)
+        var licenseTypes = @json($licenceTypes);
+
         // Form validation
         var fv = $('#priceform').formValidation({
             framework: "bootstrap",
@@ -150,13 +148,6 @@
             },
             icon: null,
             fields: {
-                license_type: {
-                    validators: {
-                        notEmpty: {
-                            message: 'License type is required'
-                        }
-                    }
-                },
                 product_type: {
                     validators: {
                         notEmpty: {
@@ -164,10 +155,17 @@
                         }
                     }
                 },
+                license_type: {
+                    validators: {
+                        notEmpty: {
+                            message: 'License type is required'
+                        }
+                    }
+                },
                 small_image_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -175,7 +173,7 @@
                 medium_image_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -183,7 +181,7 @@
                 large_image_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -191,7 +189,7 @@
                 extra_large_image_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -199,7 +197,7 @@
                 high_resolution_footage_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -207,7 +205,7 @@
                 '4k_footage_price': {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -215,7 +213,7 @@
                 music_price: {
                     validators: {
                         greaterThan: {
-                            value: 0.1,
+                            value: 0.01,
                             message: 'Price must be greater than 0'
                         }
                     }
@@ -226,9 +224,34 @@
         // Handle product type change
         $('#product_type').on('change', function() {
             var selectedType = $(this).val();
+            var productTypeId = 0;
 
-            // Revalidate product type field
-            fv.revalidateField('product_type');
+            // Map product type to ID
+            if (selectedType === 'image') {
+                productTypeId = 1;
+            } else if (selectedType === 'footage') {
+                productTypeId = 2;
+            } else if (selectedType === 'music') {
+                productTypeId = 3;
+            }
+
+            // Reset and populate license type dropdown
+            $('#license_type').html('<option value="">-- Select License Type --</option>');
+
+            if (productTypeId > 0) {
+                var filteredLicenses = licenseTypes.filter(function(license) {
+                    return license.product_type == productTypeId;
+                });
+
+                filteredLicenses.forEach(function(license) {
+                    $('#license_type').append(
+                        '<option value="' + license.id + '">' + license.licence_name + '</option>'
+                    );
+                });
+            }
+
+            // Reset the license type field validation
+            fv.resetField('license_type');
 
             // Hide all price sections and disable inputs
             $('.price-section').hide();

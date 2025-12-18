@@ -17,21 +17,21 @@
             <div class="box-body">
 
                 <div class="form-group">
-                    <label for="licence_type" class="col-sm-2 control-label">License Type</label>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="{{ $price->licenceType->licence_name ?? 'N/A' }}" disabled>
-                            <input type="hidden" name="license_type" value="{{ $price->license_type }}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="product_type" class="col-sm-2 control-label">Product Type</label>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <input type="text" class="form-control" value="{{ ucfirst($price->product_type) }}" disabled>
                             <input type="hidden" name="product_type" value="{{ $price->product_type }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="licence_type" class="col-sm-2 control-label">License Type</label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{ $price->licenceType->licence_name ?? 'N/A' }}" disabled>
+                            <input type="hidden" name="license_type" value="{{ $price->license_type }}">
                         </div>
                     </div>
                 </div>
