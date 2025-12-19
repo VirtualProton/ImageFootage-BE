@@ -179,9 +179,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
-        Unisharp\Ckeditor\ServiceProvider::class,
+        // Unisharp\Ckeditor\ServiceProvider::class, // Removed - package not compatible
+        // Riazxrazor\Payumoney\PayumoneyServiceProvider::class, // Removed - package not installed
         Barryvdh\DomPDF\ServiceProvider::class,
-        Riazxrazor\Payumoney\PayumoneyServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
