@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # MongoDB
-RUN pecl install mongodb-1.9.2 && docker-php-ext-enable mongodb
+RUN pecl install mongodb-1.16.1 && docker-php-ext-enable mongodb
 
 # Redis
 RUN pecl install redis-5.3.7 && docker-php-ext-enable redis
