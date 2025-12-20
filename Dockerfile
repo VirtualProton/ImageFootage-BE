@@ -95,17 +95,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
     && rm -rf /var/lib/apt/lists/*
 
-# MongoDB & Redis
 RUN pecl install mongodb-1.16.1 redis-5.3.7 \
     && docker-php-ext-enable mongodb redis
 
-# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# App
 COPY . .
 
-# Frontend assets
 RUN rm -rf public/*
 COPY --from=frontend-builder /app/public public
 
@@ -114,9 +110,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN chown -R www-data:www-data /var/www/html \
  && chmod -R 775 storage bootstrap/cache
 
-# Nginx config
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD service php7.4-fpm start && nginx -g "daemon off;"
+CMD php-fpm -D && nginx -g "daemon off;"
