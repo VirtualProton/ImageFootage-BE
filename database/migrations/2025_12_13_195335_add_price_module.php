@@ -16,7 +16,7 @@ class AddPriceModule extends Migration
      */
     public function up()
     {
-        // Find editorial parent module or create new parent
+        // Find Settings parent module
         $parentModule = DB::table('imagefootage_modules')->where('module_name', 'Settings')->first();
         
         if (!$parentModule) {
