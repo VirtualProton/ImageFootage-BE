@@ -1,68 +1,122 @@
+# # -----------------------------
+# # 1️⃣ Frontend build
+# # -----------------------------
+# FROM node:14.21.3 AS frontend-builder
+
+# WORKDIR /app
+
+# COPY package.json package-lock.json* ./
+# RUN npm install
+
+# COPY . .
+# RUN npm run production
+
+
+# # -----------------------------
+# # 2️⃣ PHP-FPM
+# # -----------------------------
+# FROM php:7.4.33-fpm
+
+# WORKDIR /var/www/html
+
+# RUN apt-get update && apt-get install -y \
+#     git \
+#     curl \
+#     zip \
+#     unzip \
+#     libpng-dev \
+#     libjpeg62-turbo-dev \
+#     libfreetype6-dev \
+#     libonig-dev \
+#     libxml2-dev \
+#     libzip-dev \
+#     ffmpeg \
+#     && docker-php-ext-configure gd --with-freetype --with-jpeg \
+#     && docker-php-ext-install \
+#         pdo_mysql \
+#         mbstring \
+#         exif \
+#         pcntl \
+#         bcmath \
+#         gd \
+#         zip \
+#     && rm -rf /var/lib/apt/lists/*
+
+# # MongoDB
+# RUN pecl install mongodb-1.16.1 && docker-php-ext-enable mongodb
+
+# # Redis
+# RUN pecl install redis-5.3.7 && docker-php-ext-enable redis
+
+# # Composer
+# COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# # Copy backend
+# COPY . .
+
+# # Copy compiled assets
+# COPY --from=frontend-builder /app/public /var/www/html/public
+
+# # Install PHP deps
+# RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# # Permissions
+# RUN chown -R www-data:www-data /var/www/html \
+#     && chmod -R 775 storage bootstrap/cache
+
+# EXPOSE 9000
+# CMD ["php-fpm"]
+
+
 # -----------------------------
 # 1️⃣ Frontend build
 # -----------------------------
 FROM node:14.21.3 AS frontend-builder
-
 WORKDIR /app
-
 COPY package.json package-lock.json* ./
 RUN npm install
-
 COPY . .
 RUN npm run production
 
 
 # -----------------------------
-# 2️⃣ PHP-FPM
+# 2️⃣ PHP + Nginx
 # -----------------------------
 FROM php:7.4.33-fpm
 
 WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    zip \
-    unzip \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    ffmpeg \
+    nginx \
+    git curl zip unzip ffmpeg \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+    libonig-dev libxml2-dev libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-        pdo_mysql \
-        mbstring \
-        exif \
-        pcntl \
-        bcmath \
-        gd \
-        zip \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
     && rm -rf /var/lib/apt/lists/*
 
-# MongoDB
-RUN pecl install mongodb-1.16.1 && docker-php-ext-enable mongodb
-
-# Redis
-RUN pecl install redis-5.3.7 && docker-php-ext-enable redis
+# MongoDB & Redis
+RUN pecl install mongodb-1.16.1 redis-5.3.7 \
+    && docker-php-ext-enable mongodb redis
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy backend
+# App
 COPY . .
 
-# Copy compiled assets
-COPY --from=frontend-builder /app/public /var/www/html/public
+# Frontend assets
+RUN rm -rf public/*
+COPY --from=frontend-builder /app/public public
 
-# Install PHP deps
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+ && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 9000
-CMD ["php-fpm"]
+# Nginx config
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD service php7.4-fpm start && nginx -g "daemon off;"
