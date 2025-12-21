@@ -91,9 +91,11 @@ RUN apt-get update && apt-get install -y \
     git curl zip unzip ffmpeg \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     libonig-dev libxml2-dev libzip-dev \
+    && rm -f /etc/nginx/sites-enabled/default \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
     && rm -rf /var/lib/apt/lists/*
+
 
 RUN pecl install mongodb-1.16.1 redis-5.3.7 \
     && docker-php-ext-enable mongodb redis
