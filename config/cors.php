@@ -3,6 +3,6 @@
 return [
     'allowed_origins' => [
         'staging'    => ['https://staging.imagefootage.com'],
-        'local' => ['https://imagefootage.com'],
+        'production' => ['https://imagefootage.com'],
     ],
 ];
