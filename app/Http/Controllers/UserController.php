@@ -520,7 +520,7 @@ class UserController extends Controller
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
-                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
                                 Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                     $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                                 });
@@ -546,7 +546,7 @@ class UserController extends Controller
                     } else {
                         try {
                             $otp = rand(100000, 999999);
-                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
                             Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                 $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                             });

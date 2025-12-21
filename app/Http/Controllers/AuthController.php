@@ -172,7 +172,6 @@ class AuthController extends Controller
 
                 $user = User::where('email', $email)->first();
                 if ($user) {
-                    var_dump("here");
                     // Existing user - login
                     if ($user->status == 0) {
                         return response()->json(['status' => false, 'message' => 'Account not activated. Please verify your account.'], 400);
