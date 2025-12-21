@@ -8,27 +8,28 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4.*",
+        "php": "^7.4.33",
         "aws/aws-sdk-php-laravel": "~3.0",
         "barryvdh/laravel-dompdf": "^0.8.5",
-        "elasticsearch/elasticsearch": "^7.9",
         "doctrine/dbal": "^2.12.1",
+        "elasticsearch/elasticsearch": "^7.9",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.3.0",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.5",
-        "laravel/framework": "5.0.*",
+        "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.7",
         "maatwebsite/excel": "^3.1",
         "mongodb/laravel-mongodb": "3.5.x",
         "pbmedia/laravel-ffmpeg": "^4.1",
         "phpoffice/phpspreadsheet": "^1.9",
+        "predis/predis": "^3.3",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
         "razorpay/razorpay": "2.*",
         "riazxrazor/payumoney": "^1.0",
         "stevebauman/location": "^6.0",
-        "tymon/jwt-auth": "dev-develop",
+        "tymon/jwt-auth": "^1.0",
         "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
@@ -45,12 +46,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "*": true
-        },
-        "secure-http": false,
-        "security": {
-            "audit": false,
-            "block-insecure": false
+            "kylekatarnls/update-helper": true
         }
     },
     "extra": {
