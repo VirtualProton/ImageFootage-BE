@@ -165,12 +165,13 @@ class MediaController extends Controller
         }
         // Set price for Image
         if ($origin == 'Image') {
+            $newOptions = [];
             foreach ($licenseTypes as $licenseType) {
                 $license = LicenceType::where('slug', $licenseType)->where('product_type', 1)->first();
                 if (!$license) {
                     continue;
                 }
-                foreach ($pond5ImagesData['versions'] as &$version) {
+                foreach ($pond5ImagesData['versions'] as $version) {
                     $priceModel = Price::getImageProductPrice($license->id, 'image', $version['label']);
 
                     if (!$priceModel) {
@@ -184,10 +185,10 @@ class MediaController extends Controller
                                 $price = $priceModel->medium_image_price;
                                 break;
                             case Price::LARGE_IMAGE:
-                                $price = $price->large_image_price;
+                                $price = $priceModel->large_image_price;
                                 break;
                             case Price::EXTRA_LARGE_IMAGE:
-                                $price = $price->extra_large_image_price;
+                                $price = $priceModel->extra_large_image_price;
                                 break;
                         }
                     }
