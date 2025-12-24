@@ -199,4 +199,12 @@ Route::group([
     Route::get('pond5-other-categories-image-upload', 'CronController@pond5OtherCategoriesImageUpload');
 });
 
+// Promo Code Validation
+Route::group(['prefix' => 'v3'], function () {
+    Route::group([
+        'middleware' => ['api', 'CORS'],
+    ], function () {
+        Route::post('promocode/validate', 'PromoCodeController@validatePromoCode');
+    });
+});
 

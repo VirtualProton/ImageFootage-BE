@@ -25,6 +25,14 @@ use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Google Login Provider
+     * 
+     * @var string
+     */
+    CONST GOOGLE_LOGIN_PROVIDER = 'google';
+
     /**
      * Create a new AuthController instance.
      *
@@ -124,49 +132,103 @@ class AuthController extends Controller
         }
     }
 
-    # New socialLogin V2
+    /**
+     * Social Login
+     * 
+     * @param Request $request
+     */
     public function socialLoginv2(Request $request)
     {
-        if ($request->provider == 'google') {
+        if ($request->provider == self::GOOGLE_LOGIN_PROVIDER) {
 
-            $client = new Google_Client();
-            $client->setClientId(config('constants.google.client_id'));
-            $client->setClientSecret(config('constants.google.client_secret')); 
-
-            $payload = $client->verifyIdToken($request->idToken);
-
-            $payload['login_type'] = 'google';
-            if ($payload) {
-                $count = User::where('email', '=', $payload['email'])->count();
-                if ($count > 0) {
-                    return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
-                }
+            $validator = \Validator::make($request->all(), [
+                'idToken' => 'required'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['status' => false, 'message' => $validator->errors()->first()], 400);
             }
 
-            $googleUser = new User();
+            try {
+                $client = new Google_Client();
+                $client->setClientId(config('constants.google.client_id'));
+                $client->setClientSecret(config('constants.google.client_secret'));
+                $payload = $client->verifyIdToken($request->idToken);
+                if (!$payload) {
+                    return response()->json(['status' => false, 'message' => 'Invalid Google token. Please try again.'], 400);
+                }
+                // Check if Google signin is enabled
+                if (!config('constants.google_signin_enabled')) {
+                    return response()->json(['status' => false, 'message' => 'Google login is currently disabled by administrator.'], 400);
+                }
 
-            $googleUser->email         = $request->email;
-            $googleUser->first_name    = $request->name;
-            $googleUser->user_name     = $request->name;
-            $googleUser->gmail_idtoken = $request->idToken;
-            $googleUser->profile_photo = $request->image;
-            $googleUser->provider      = $request->provider;
-            $googleUser->type          = 'U';
-            $result = $googleUser->save();
-            if ($result) {
-                return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($request->token, $payload)->original], 200);
+                // Extract verified data from the token payload
+                $email = $payload['email'];
+                $name = $payload['name'];
+                $firstName = $payload['given_name'] ?? null;
+                $picture = $payload['picture'] ?? null;
+                if (!isset($payload['email_verified']) || !$payload['email_verified']) {
+                    return response()->json(['status' => false, 'message' => 'Email not verified by Google.'], 400);
+                }
+
+                $user = User::where('email', $email)->first();
+                if ($user) {
+                    // Existing user - login
+                    if ($user->status == 0) {
+                        return response()->json(['status' => false, 'message' => 'Account not activated. Please verify your account.'], 400);
+                    }
+
+                    // Generate JWT token
+                    $token = auth()->login($user);
+                    $tokenPayload['name'] = $user->first_name;
+                    $tokenPayload['email'] = $user->email;
+                    $tokenPayload['login_type'] = $request->provider;
+
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Successfully logged in.',
+                        'userdata' => $this->respondWithToken($token, $tokenPayload)->original
+                    ], 200);
+                } else {
+                    $googleUser = new User();
+
+                    $googleUser->email         = $email;
+                    $googleUser->first_name    = $firstName ?? $name;
+                    $googleUser->user_name     = $name;
+                    $googleUser->gmail_idtoken = $request->idToken;
+                    $googleUser->profile_photo = $picture;
+                    $googleUser->provider      = $request->provider;
+                    $googleUser->type          = 'U';
+                    $googleUser->status        = 1; // Auto-activate for social login
+                    $result = $googleUser->save();
+                    if ($result) {
+                        // Generate JWT token for new user
+                        $token = auth()->login($googleUser);
+                        $tokenPayload['name'] = $name;
+                        $tokenPayload['email'] = $email;
+                        $tokenPayload['login_type'] = $request->provider;
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Successfully registered and logged in.',
+                            'userdata' => $this->respondWithToken($token, $tokenPayload)->original
+                        ], 200);
+                    } else {
+                        return response()->json(['status' => false, 'message' => 'Failed to create user account.'], 500);
+                    }
+                }
+            } catch (\Exception $e) {
+                return response()->json(['status' => false, 'message' => 'Google authentication failed: ' . $e->getMessage()], 500);
             }
         }
         if ($request->provider == 'facebook') {
 
             $client = new Client();
             $getAppAccessTokenEndpoint = str_replace([
-                ':facebook_client_id',
-                ':facebook_client_secret'
+                    ':facebook_client_id',
+                    ':facebook_client_secret'
             ], [
-                config('constants.facebook.client_id'),
-                config('constants.facebook.client_secret')
-            ],
+                    config('constants.facebook.client_id'),
+                    config('constants.facebook.client_secret')
+                ],
                 config('constants.facebook.app_access_token_endpoint')
             );
             $response = $client->get($getAppAccessTokenEndpoint);
@@ -176,12 +238,12 @@ class AuthController extends Controller
 
             if ($data['access_token']) {
                 $userAccessTokenEndpoint = str_replace([
-                    ':request_token',
-                    ':data_access_token'
+                        ':request_token',
+                        ':data_access_token'
                 ], [
-                    $request->token,
-                    $data['access_token']
-                ],
+                        $request->token,
+                        $data['access_token']
+                    ],
                     config('constants.facebook.user_access_token_endpoint')
                 );
                 $tokenVerifyResponse = $client->get($userAccessTokenEndpoint);
@@ -292,9 +354,9 @@ class AuthController extends Controller
             } else {
                 $plans = UserPackage::where('user_id', '=', auth()->user()->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
                     ->get()->toArray();
-                    if (!$this->isProfileCompleted(auth()->user()->id)) {
-                        $profileCompleted = true;
-                    }
+                if (!$this->isProfileCompleted(auth()->user()->id)) {
+                    $profileCompleted = true;
+                }
             }
             if (count($plans) > 0) {
 

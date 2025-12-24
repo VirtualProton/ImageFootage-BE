@@ -69,5 +69,8 @@ return [
     'third_party_for_image' => env('THIRD_PARTY_FOR_IMAGE', 'panthermedia'),
     'sms_enabled' => env('SMS_ENABLED',true),
     'google_signin_enabled' => env('GOOGLE_SIGNIN_ENABLED',true),
-    'facebook_signin_enabled' => env('FACEBOOK_SIGNIN_ENABLED',true)
+    'facebook_signin_enabled' => env('FACEBOOK_SIGNIN_ENABLED',true),
+    'MAX_OTP_ATTEMPTS' => 5,
+    'MAX_FAILED_OTP_VERIFICATION_ATTEMPTS' => 5,
+    'OTP_EXPIRY' => 10, // in minutes
 ];
