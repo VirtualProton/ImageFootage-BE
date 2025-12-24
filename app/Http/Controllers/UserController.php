@@ -468,7 +468,7 @@ class UserController extends Controller
                 ->with('city')
                 ->first();
             if (empty($userlist)) {
-                echo json_encode(['status' => "fail", 'message' => 'Profile not found', 'data' => '']);
+                return response()->json(['status' => "fail", 'message' => 'Profile not found', 'data' => ''], 400);
             }
             $panNumber = '';
             if(isset($data['profileData']['gst']) && !empty($data['profileData']['gst'])){
