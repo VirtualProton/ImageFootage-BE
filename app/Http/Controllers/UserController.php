@@ -520,13 +520,18 @@ class UserController extends Controller
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
-                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
+                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                                \Log::info('Attempting to send OTP email', ['to' => $emaildata['cemail'], 'otp' => $otp]);
+                                
                                 Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                     $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                                 });
 
-                                if (count(Mail::failures()) > 0) {
-                                    \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
+                                $failures = Mail::failures();
+                                \Log::info('Mail send result', ['failures' => $failures, 'count' => count($failures)]);
+                                
+                                if (count($failures) > 0) {
+                                    \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
                                     return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
                                 }
                                 $earlierProfileUpdateData->max_otp_attempts += 1;
@@ -534,24 +539,31 @@ class UserController extends Controller
                                 $earlierProfileUpdateData->otp_token = $matchToken;
                                 $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                 $earlierProfileUpdateData->save();
+                                \Log::info('OTP stored in database', ['user_id' => $userlist->id, 'otp' => $otp]);
                                 $emailParts = explode('@', $userlist->email);
                                 $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                                 echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                                 return;
                             } catch (\Exception $e) {
-                                \Log::error('Failed to send update user email: ' . $e->getMessage());
-                                // Handle the exception (e.g., log the error, notify admin, etc.)
+                                \Log::error('Failed to send update user email', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+                                return response()->json(['status' => '0', 'message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                             }
                         }
                     } else {
                         try {
                             $otp = rand(100000, 999999);
-                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
+                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                            \Log::info('Attempting to send OTP email (new verification)', ['to' => $emaildata['cemail'], 'otp' => $otp]);
+                            
                             Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                 $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                             });
-                            if (count(Mail::failures()) > 0) {
-                                \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
+                            
+                            $failures = Mail::failures();
+                            \Log::info('Mail send result (new verification)', ['failures' => $failures, 'count' => count($failures)]);
+                            
+                            if (count($failures) > 0) {
+                                \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
                                 return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
                             }
                             $verification = new Verification();
@@ -562,13 +574,14 @@ class UserController extends Controller
                             $verification->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                             $verification->max_otp_attempts = 1;
                             $verification->save();
+                            \Log::info('OTP stored in database (new verification)', ['user_id' => $userlist->id, 'otp' => $otp]);
                             $emailParts = explode('@', $userlist->email);
                             $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                             echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                             return;
                         } catch (\Exception $e) {
-                            \Log::error('Failed to send update user email: ' . $e->getMessage());
-                            // Handle the exception (e.g., log the error, notify admin, etc.)
+                            \Log::error('Failed to send update user email (new verification)', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+                            return response()->json(['status' => '0', 'message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                         }
                     }
                 } else {
