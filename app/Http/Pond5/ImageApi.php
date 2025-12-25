@@ -71,6 +71,7 @@ class ImageApi
 
         $queryParts = [];
         if ($getFilters) {
+            $queryParts[] = 'editorial:1';
             if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
                 $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
                 $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
