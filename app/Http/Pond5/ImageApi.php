@@ -59,7 +59,7 @@ class ImageApi
         }
         
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber']);
-        var_dump($getFilters);
+        // var_dump($getFilters);
         $filter_mapping = "";
 
         $url            = [];
