@@ -198,7 +198,7 @@ class PaymentController extends Controller
             $orderData = [
                 'receipt'         => $transactionId,
                 'amount'          => (int) ($allFields['cartval'][0]+$final_tax) * 100, // 2000 rupees in paise
-                'currency'        => 'USD',
+                'currency'        => 'INR',
                 'payment_capture' => 1 // auto capture
             ];
 
@@ -472,7 +472,7 @@ class PaymentController extends Controller
             $orderData = [
                 'receipt' => 'IMGFTG'.$transactionId,
                 'amount' => ($allFields['plan']['package_price']) * 100, // 2000 rupees in paise
-                'currency' => 'USD',
+                'currency' => 'INR',
                 'payment_capture' => 1 // auto capture
             ];
 

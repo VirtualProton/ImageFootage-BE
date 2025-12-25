@@ -201,9 +201,35 @@
             }
         }).data('formValidation');
 
+        var currentPriceId = '{{ $price->id }}';
         // Custom validation on form submit
         $('#priceform').on('submit', function(e) {
             var productType = $('input[name="product_type"]').val();
+            var licenseType = $('input[name="license_type"]').val();
+            var isDuplicate = false;
+
+            $.ajax({
+                url: '{{ route("admin.price.check-duplicate") }}',
+                method: 'POST',
+                async: false, // Make synchronous to prevent form submission
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_type: productType,
+                    license_type: licenseType,
+                    exclude_id: currentPriceId
+                },
+                success: function(response) {
+                    if (response.exists) {
+                        isDuplicate = true;
+                    }
+                }
+            });
+
+            if (isDuplicate) {
+                e.preventDefault();
+                alert('A price already exists for this license type and product type combination!');
+                return false;
+            }
 
             if (productType === 'image') {
                 var hasImagePrice = $('#small_image_price').val() ||
