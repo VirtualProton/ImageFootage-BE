@@ -123,7 +123,7 @@ class PaymentController extends Controller
         $orders->bill_state = $allFields['usrData']['state'];
         $orders->bill_country = $allFields['usrData']['country'];
         $orders->bill_zip = $allFields['usrData']['pincode'];
-        $orders->paymentgatway = $allFields['type'];
+        $orders->paymentgatway = $allFields['type'] == 'atom' ? 'Atom' : ($allFields['type'] == 'payu' ? 'PayUMoney' : ($allFields['type'] == 'rozerpay' ? 'Razorpay' : ''));
         $orders->coupon_code = isset($allFields['promoCode']) ? $allFields['promoCode'] : null;
         $orders->coupon_value = isset($allFields['discountValue']) ? $allFields['discountValue'] : null;
         $orders->coupon_type = isset($allFields['discountType']) ? $allFields['discountType'] : null;
