@@ -70,8 +70,9 @@ class ImageApi
         $url['page']    = $page;
 
         $queryParts = [];
+        $queryParts[] = 'editorial:1';
         if ($getFilters) {
-            $queryParts[] = 'editorial:1';
+            
             if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
                 $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
                 $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
