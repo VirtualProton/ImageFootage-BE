@@ -195,6 +195,33 @@ class ImageApi
         }
     }
 
+    // Add this test method temporarily
+public function testEditorialImage($id = 234312717)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $this->url . '/api/v3/items/' . $id,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'accept: application/json',
+            'key: ' . $this->api_key,
+            'secret: ' . $this->api_secret,
+        ),
+    ));
+    $response = curl_exec($curl);
+    $contents = json_decode($response, true);
+    curl_close($curl);
+    
+    \Log::info('Direct fetch of editorial image 234312717:', $contents);
+    
+    return $contents;
+}
 
     public function download($data, $id, $version = "")
     {
