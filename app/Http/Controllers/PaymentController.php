@@ -26,7 +26,8 @@ use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 use App\Http\TnnraoSms\TnnraoSms;
 use PDF;
-use Mail;use App\Models\PromoCode;
+use Mail;
+use App\Models\PromoCode;
 
 
 

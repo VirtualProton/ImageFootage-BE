@@ -1,0 +1,49 @@
+# -----------------------------
+# 1️⃣ Frontend build
+# -----------------------------
+FROM node:14.21.3 AS frontend-builder
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm install
+COPY . .
+RUN npm run production
+
+
+# -----------------------------
+# 2️⃣ PHP + Nginx
+# -----------------------------
+FROM php:7.4.33-fpm
+
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install -y \
+nginx \
+git curl zip unzip ffmpeg \
+libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+libonig-dev libxml2-dev libzip-dev \
+&& rm -f /etc/nginx/sites-enabled/default \
+&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+&& docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+&& rm -rf /var/lib/apt/lists/*
+
+
+RUN pecl install mongodb-1.16.1 redis-5.3.7 \
+&& docker-php-ext-enable mongodb redis
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
+RUN rm -rf public/*
+COPY --from=frontend-builder /app/public public
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+RUN chown -R www-data:www-data /var/www/html \
+&& chmod -R 775 storage bootstrap/cache
+
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD php-fpm -D && nginx -g "daemon off;"
