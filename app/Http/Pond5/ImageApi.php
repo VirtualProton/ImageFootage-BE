@@ -156,6 +156,10 @@ class ImageApi
                 $url['query'] = $search . ' ' . $query;
             }
         }
+        else if (!empty($query)) {
+        // Important: Include query even when search is empty
+        $url['query'] = $query;
+    }
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }
