@@ -70,7 +70,7 @@ class ImageApi
         $url['page']    = $page;
 
         $queryParts = [];
-        $queryParts[] = 'editorial:1';
+        // $queryParts[] = 'editorial:1';
         if ($getFilters) {
             
             if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
@@ -156,10 +156,10 @@ class ImageApi
                 $url['query'] = $search . ' ' . $query;
             }
         }
-        else if (!empty($query)) {
-        // Important: Include query even when search is empty
-        $url['query'] = $query;
-    }
+    //     else if (!empty($query)) {
+    //     // Important: Include query even when search is empty
+    //     $url['query'] = $query;
+    // }
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }
