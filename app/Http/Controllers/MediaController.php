@@ -100,7 +100,8 @@ class MediaController extends Controller
             'search_terms' => "0",
             'expired_date' => null,
             'slug' => $slug,
-            'attributes' => []
+            'attributes' => [],
+            'editorial' => $pond5ImagesData['editorial'] ?? false,
         ];
         $licenseTypes = ['media', 'commercial', 'digital', 'non_commercial'];
         // Set price for Music
