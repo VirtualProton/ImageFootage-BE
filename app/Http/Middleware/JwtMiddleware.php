@@ -28,23 +28,31 @@ class JwtMiddleware extends BaseMiddleware
             // google
             if ($request->header('Login-Type') == 'google') {
                 $tokenString = $request->header('Authorization');
-                $token = null;
-                if (isset($tokenString) && !empty($tokenString)) {
-                    $tokenParts  = explode(" ", $tokenString);
-                    $token       = $tokenParts[1];
-                }
+                try {
+                    $user = JWTAuth::parseToken()->authenticate();
+                    // If JWT is valid, proceed
+                    return $next($request);
+                } catch (Exception $jwtException) {
+                    // If JWT fails, try Google token verification
+                    $tokenString = $request->header('Authorization');
+                    $token = null;
+                    if (isset($tokenString) && !empty($tokenString)) {
+                        $tokenParts  = explode(" ", $tokenString);
+                        $token       = $tokenParts[1];
+                    }
 
-                $client = new Google_Client();
-                $client->setClientId(config('constants.google.client_id'));
-                $client->setClientSecret(config('constants.google.client_secret'));
+                    $client = new Google_Client();
+                    $client->setClientId(config('constants.google.client_id'));
+                    $client->setClientSecret(config('constants.google.client_secret'));
 
-                if (empty($token) || is_null($token)) {
-                    return response()->json(['status' => 'Google Token not found'], 401);
-                }
+                    if (empty($token) || is_null($token)) {
+                        return response()->json(['status' => 'Token not found'], 401);
+                    }
 
-                $payload = $client->verifyIdToken($token);
-                if (!$payload) {
-                    return response()->json(['status' => 'Google token is Invalid'], 401);
+                    $payload = $client->verifyIdToken($token);
+                    if (!$payload) {
+                        return response()->json(['status' => 'Invalid token'], 401);
+                    }
                 }
             }
 
