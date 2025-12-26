@@ -58,7 +58,7 @@ class ImageApi
             $sort = 'default';
         }
         
-        $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber', 'product_editorial']);
+        $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber']);
         $filter_mapping = "";
 
         $url            = [];
