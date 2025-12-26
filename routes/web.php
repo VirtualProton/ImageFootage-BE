@@ -315,6 +315,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
     Route::post('/get-main-images', 'EditorialController@getMainImages');
     Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
+    Route::post('/price/check-duplicate', 'PriceController@checkDuplicate')->name('admin.price.check-duplicate');
     Route::resource('/price', 'PriceController');
 });
 
