@@ -28,6 +28,7 @@ class JwtMiddleware extends BaseMiddleware
             }
             // google
             if ($request->header('Login-Type') == 'google') {
+                $tokenString = $request->header('Authorization');
                 try {
                     $user = JWTAuth::parseToken()->authenticate();
                     // If JWT is valid, proceed

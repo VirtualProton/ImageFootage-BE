@@ -150,6 +150,7 @@ class SearchController extends Controller
                 "attributes" => array(),
                 "options" => array(),
                 "url" => null,
+                'editorial' => $pond5ImagesData['editorial'] ?? false,
             ];
         }, $pond5ImagesData['items']);
 
