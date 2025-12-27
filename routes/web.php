@@ -210,7 +210,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     # Promo Code
     Route::get('/promo-codes/status/{status}/{id}', 'PromoCodeController@status');
-    Route::post('/getPromoCode', 'PromoCodeController@getActivePromoCode'); 
+    Route::post('/getPromoCode', 'PromoCodeController@getActivePromoCode');
     Route::resource('/promo-codes', 'PromoCodeController');
 
     Route::get('/users/status/{status}/{id}', 'UserController@status');
