@@ -608,7 +608,7 @@ class UserController extends Controller
                                     $smsClass = new TnnraoSms;
                                     $message = "Your OTP for email change is " . $otp . "\n Thanks \n Imagefootage Team";
                                     try {
-                                        $smsResult = $smsClass->sendSms($message, $userlist['mobile']);
+                                        $smsResult = $smsClass->sendSms($message, $userlist->mobile);
                                         \Log::info('SMS sent successfully: ' . json_encode($smsResult));
                                     } catch (\Exception $smsException) {
                                         \Log::error('SMS sending failed: ' . $smsException->getMessage());
@@ -619,7 +619,7 @@ class UserController extends Controller
                                     $earlierProfileUpdateData->otp_token = $matchToken;
                                     $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                     $earlierProfileUpdateData->save();
-                                    $maskedMobile = substr_replace($userlist['mobile'], str_repeat('*', strlen($userlist['mobile']) - 2), 0, -2);
+                                    $maskedMobile = substr_replace($userlist->mobile, str_repeat('*', strlen($userlist->mobile) - 2), 0, -2);
                                     echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your mobile.', 'Mobile' => $maskedMobile, 'otpToken' => $matchToken]);
                                     return;
                                 } catch (\Exception $e) {
