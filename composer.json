@@ -8,11 +8,11 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.1.30",
+        "php": "^7.4.33",
         "aws/aws-sdk-php-laravel": "~3.0",
         "barryvdh/laravel-dompdf": "^0.8.5",
-        "elasticsearch/elasticsearch": "^7.9",
         "doctrine/dbal": "^2.12.1",
+        "elasticsearch/elasticsearch": "^7.9",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.3.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -24,11 +24,12 @@
         "mongodb/laravel-mongodb": "3.5.x",
         "pbmedia/laravel-ffmpeg": "^4.1",
         "phpoffice/phpspreadsheet": "^1.9",
+        "predis/predis": "^3.3",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
         "razorpay/razorpay": "2.*",
         "riazxrazor/payumoney": "^1.0",
         "stevebauman/location": "^6.0",
-        "tymon/jwt-auth": "dev-develop",
+        "tymon/jwt-auth": "^1.0",
         "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
@@ -43,7 +44,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     },
     "extra": {
         "laravel": {

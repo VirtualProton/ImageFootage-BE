@@ -149,6 +149,7 @@ class SearchController extends Controller
                 "attributes" => array(),
                 "options" => array(),
                 "url" => null,
+                "editorial" => isset($product['editorial']) ? $product['editorial'] : null,
             ];
         }, $pond5ImagesData['items']);
 

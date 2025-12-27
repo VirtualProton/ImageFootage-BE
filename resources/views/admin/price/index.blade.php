@@ -88,64 +88,6 @@
 <!-- /.content-wrapper -->
 @endsection
 
-@section('styles')
-<style>
-    .action-buttons {
-        display: flex;
-        gap: 5px;
-        justify-content: center;
-    }
-
-    .btn-action {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        padding: 0;
-        background: transparent;
-    }
-
-    .btn-action i {
-        font-size: 16px;
-    }
-
-    .btn-edit {
-        color: #28a745;
-    }
-
-    .btn-edit:hover {
-        color: #fff;
-        background-color: #28a745;
-    }
-
-    .btn-delete {
-        color: #dc3545;
-    }
-
-    .btn-delete:hover {
-        color: #fff;
-        background-color: #dc3545;
-    }
-
-    /* Remove default button styling */
-    .btn-action.btn-delete {
-        outline: none;
-        box-shadow: none;
-    }
-
-    .btn-action.btn-delete:focus {
-        outline: none;
-        box-shadow: none;
-    }
-</style>
-@endsection
-
 @section('scripts')
 <script>
     $(function() {
