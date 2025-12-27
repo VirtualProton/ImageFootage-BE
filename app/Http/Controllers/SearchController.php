@@ -68,7 +68,7 @@ class SearchController extends Controller
 
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
         $pond5ImagesData    = $imagesMedia->search($keyword, $getKeyword, null, $keyword['pagenumber']);
-        var_dump($pond5ImagesData);
+        // var_dump($pond5ImagesData);
         if ($pond5ImagesData) {
             $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
         } else {
