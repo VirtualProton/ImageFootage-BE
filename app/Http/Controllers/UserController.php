@@ -480,7 +480,7 @@ class UserController extends Controller
                 && $userlist['mobile'] != $data['profileData']['mobile']
                 && $userlist['email'] != $data['profileData']['email']
             ) {
-                return response()->json(['status' => '0', 'message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
+                return response()->json(['status' => false, 'message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
             }
 
             $update_data = [
@@ -505,7 +505,7 @@ class UserController extends Controller
             if (empty($data['profileData']['otp']) || empty($data['profileData']['otpToken'])) {
                 if (!empty($update_data['mobile']) && $userlist['mobile'] != $update_data['mobile']) {
                     if (empty($data['profileData']['otpType']) ||  $data['profileData']['otpType'] != 'profile_update_otp') {
-                        return response()->json(['status' => '0', 'message' => 'OTP type is required.'], 400);
+                        return response()->json(['status' => false, 'message' => 'OTP type is required.'], 400);
                     }
                     $matchToken = hash('sha512', time()) . random_int(100000, 999999);
                     $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
@@ -514,9 +514,9 @@ class UserController extends Controller
                             $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                             $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                         ) {
-                            return response()->json(['status' => '0', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                            return response()->json(['status' => false, 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
                         } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                            return response()->json(['status' => 'failed', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                            return response()->json(['status' => false, 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
@@ -527,7 +527,7 @@ class UserController extends Controller
 
                                 if (count(Mail::failures()) > 0) {
                                     \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
-                                    return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+                                    return response()->json(['status' => false, 'message' => 'Failed to send OTP email. Please try again.'], 500);
                                 }
                                 $earlierProfileUpdateData->max_otp_attempts += 1;
                                 $earlierProfileUpdateData->one_time_password = $otp;
@@ -552,7 +552,7 @@ class UserController extends Controller
                             });
                             if (count(Mail::failures()) > 0) {
                                 \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
-                                return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+                                return response()->json(['status' => false, 'message' => 'Failed to send OTP email. Please try again.'], 500);
                             }
                             $verification = new Verification();
                             $verification->user_id = $userlist->id;
@@ -574,7 +574,7 @@ class UserController extends Controller
                 } else {
                     if (!empty($update_data['email']) && $userlist['email'] != $update_data['email']) {
                         if (empty($data['profileData']['otpType']) || $data['profileData']['otpType'] != 'profile_update_otp') {
-                            return response()->json(['status' => '0', 'message' => 'OTP type is required.'], 400);
+                            return response()->json(['status' => false, 'message' => 'OTP type is required.'], 400);
                         }
                         if (!config('constants.sms_enabled')) {
                             return response()->json(['status' => false, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
@@ -586,9 +586,9 @@ class UserController extends Controller
                                 $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                                 $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                             ) {
-                                return response()->json(['status' => '0', 'message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
+                                return response()->json(['status' => false, 'message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
                             } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                                return response()->json(['status' => '0', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                                return response()->json(['status' => false, 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                             } else {
                                 try {
                                     $otp = rand(100000, 999999);
@@ -599,7 +599,7 @@ class UserController extends Controller
                                         \Log::info('SMS sent successfully: ' . json_encode($smsResult));
                                     } catch (\Exception $smsException) {
                                         \Log::error('SMS sending failed: ' . $smsException->getMessage());
-                                        return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                        return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 500);
                                     }
                                     $earlierProfileUpdateData->max_otp_attempts += 1;
                                     $earlierProfileUpdateData->one_time_password = $otp;
@@ -624,7 +624,7 @@ class UserController extends Controller
                                     \Log::info('SMS sent successfully: ' . json_encode($smsResult));
                                 } catch (\Exception $smsException) {
                                     \Log::error('SMS sending failed: ' . $smsException->getMessage());
-                                    return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                    return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 500);
                                 }
                                 $verification = new Verification();
                                 $verification->user_id = $userlist->id;
