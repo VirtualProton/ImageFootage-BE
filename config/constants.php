@@ -70,7 +70,7 @@ return [
     'sms_enabled' => env('SMS_ENABLED',true),
     'google_signin_enabled' => env('GOOGLE_SIGNIN_ENABLED',true),
     'facebook_signin_enabled' => env('FACEBOOK_SIGNIN_ENABLED',true),
-    'MAX_OTP_ATTEMPTS' => 5,
-    'MAX_FAILED_OTP_VERIFICATION_ATTEMPTS' => 5,
+    'MAX_OTP_ATTEMPTS' => 20,
+    'MAX_FAILED_OTP_VERIFICATION_ATTEMPTS' => 20,
     'OTP_EXPIRY' => 10, // in minutes
 ];

@@ -268,7 +268,7 @@
                 $('.music-prices').show();
                 $('.music-prices input').prop('disabled', false);
             }
-            checkDuplicateCombination();
+           checkDuplicateCombination(); 
         });
         // Function to check duplicate product type and license type combination
         // Check duplicate when license type changes
@@ -332,6 +332,34 @@
             }
         }
 
+        $('#license_type').on('change', function() {
+            checkDuplicateCombination();
+        });
+        // Function to check if combination already exists
+        function checkDuplicateCombination() {
+            var productType = $('#product_type').val();
+            var licenseType = $('#license_type').val();
+            if (productType && licenseType) {
+                $.ajax({
+                    url: '{{ route("admin.price.check-duplicate") }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        product_type: productType,
+                        license_type: licenseType
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            alert('A price already exists for this license type and product type combination!');
+                            $('#submitButton').prop('disabled', true);
+                        } else {
+                            $('#submitButton').prop('disabled', false);
+                        }
+                    }
+                });
+            }
+        }
+        
         // Custom validation on form submit
         $('#priceform').on('submit', function(e) {
             var productType = $('#product_type').val();

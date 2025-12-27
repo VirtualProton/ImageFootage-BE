@@ -68,6 +68,7 @@ class SearchController extends Controller
 
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
         $pond5ImagesData    = $imagesMedia->search($keyword, $getKeyword, null, $keyword['pagenumber']);
+        // var_dump($pond5ImagesData);
         if ($pond5ImagesData) {
             $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
         } else {
@@ -149,7 +150,7 @@ class SearchController extends Controller
                 "attributes" => array(),
                 "options" => array(),
                 "url" => null,
-                "editorial" => isset($product['editorial']) ? $product['editorial'] : null,
+                'editorial' => $pond5ImagesData['editorial'] ?? false,
             ];
         }, $pond5ImagesData['items']);
 

@@ -59,6 +59,7 @@ class ImageApi
         }
         
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber']);
+        // var_dump($getFilters);
         $filter_mapping = "";
 
         $url            = [];
@@ -69,7 +70,9 @@ class ImageApi
         $url['page']    = $page;
 
         $queryParts = [];
+        // $queryParts[] = 'editorial:1';
         if ($getFilters) {
+            
             if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
                 $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
                 $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
@@ -153,6 +156,10 @@ class ImageApi
                 $url['query'] = $search . ' ' . $query;
             }
         }
+    //     else if (!empty($query)) {
+    //     // Important: Include query even when search is empty
+    //     $url['query'] = $query;
+    // }
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }

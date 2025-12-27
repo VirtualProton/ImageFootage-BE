@@ -101,7 +101,7 @@ class MediaController extends Controller
             'expired_date' => null,
             'slug' => $slug,
             'attributes' => [],
-            'editorial' => $pond5ImagesData['editorial'] ?? false,
+            'editorial' => $pond5ImagesData['editorial'] ?? false
         ];
         $licenseTypes = ['media', 'commercial', 'digital', 'non_commercial'];
         // Set price for Music
@@ -185,10 +185,10 @@ class MediaController extends Controller
                                 $price = $priceModel->medium_image_price;
                                 break;
                             case Price::LARGE_IMAGE:
-                                $price = $price->large_image_price;
+                                $price = $priceModel->large_image_price;
                                 break;
                             case Price::EXTRA_LARGE_IMAGE:
-                                $price = $price->extra_large_image_price;
+                                $price = $priceModel->extra_large_image_price;
                                 break;
                         }
                     }

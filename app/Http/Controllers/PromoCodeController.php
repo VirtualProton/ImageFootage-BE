@@ -25,9 +25,11 @@ class PromoCodeController extends Controller
             ]);
 
             $promoCode = $request->input('promoCode');
+            // var_dump($promoCode); exit;
             $price = $request->input('price');
+            // var_dump($promoCode, $price); exit;
             $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->where('will_apply_by', '3')->first();
-
+            // var_dump($existsPromoCode); exit;
             $today = date('Y-m-d');
             
             if (!$existsPromoCode) {
@@ -61,7 +63,11 @@ class PromoCodeController extends Controller
                 ], 400);
             }
 
+<<<<<<< HEAD
             if ($existsPromoCode->type === 'fixed') {//
+=======
+            if ($existsPromoCode->type === 'flat') {//
+>>>>>>> ae29805c42095fad0736ba7d5dc31e367c950c5f
                 $discountValue = $existsPromoCode->discount ?? 0;
                 $calculatedPrice = $price - $discountValue;
             } elseif ($existsPromoCode->type === 'percentage') {
@@ -84,6 +90,10 @@ class PromoCodeController extends Controller
             ], 200);
 
         } catch (Exception $e) {
+<<<<<<< HEAD
+=======
+            // var_dump($e->getMessage()); exit;
+>>>>>>> ae29805c42095fad0736ba7d5dc31e367c950c5f
             return response()->json([
                 'status' => false,
                 'message' => 'An error occurred while validating promo code.'
