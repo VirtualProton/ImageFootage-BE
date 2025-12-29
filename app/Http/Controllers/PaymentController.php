@@ -103,7 +103,7 @@ class PaymentController extends Controller
         //dd(DB::getQueryLog());
         //print_r($userData); die;
         if(!empty($userData) && $userData[0]['country']['code'] == 'IN'){
-            $tax = $allFields['cartval'][0]*12/100;
+            $tax = $allFields['cartval'][0]*config('constants.GST_VALUE')/100;
             $final_tax=round($tax,2);
         } else {
             $final_tax = 0;
