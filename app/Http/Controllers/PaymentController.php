@@ -192,7 +192,10 @@ class PaymentController extends Controller
               $url = url('/payu/'.$transactionId);
               echo json_encode(['url'=>$url]);
        }else if($allFields['type']=='rozerpay'){
-
+            // Adjust amount if discount applied
+            if ($allFields['discountValue'] > 0) {
+                $allFields['cartval'][0] = $allFields['cartval'][0] - $allFields['discountValue'];
+            }
             $displayCurrency = 'INR';
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
