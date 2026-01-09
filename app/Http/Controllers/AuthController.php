@@ -679,7 +679,16 @@ class AuthController extends Controller
         $utype = $this->respondWithToken($token)->original['Utype'];
         $user = User::where('id', $utype)->first();
         if ($user->status == 0) {
-            return response()->json(['status' => false, 'message' => 'Account not activated. Please verify your account.'], 200);
+            $resendRequest = new Request([
+                'email' => $user->email,
+                'user_id' => $user->id
+            ]);
+            try {
+                return $this->resendVerificationLink($resendRequest);
+            } catch (\Exception $e) {
+                Mage::logException($e);
+                return response()->json(['status' => false, 'message' => 'Could not process your request. Please try again later.'], 500);
+            }
         }
         return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
     }
