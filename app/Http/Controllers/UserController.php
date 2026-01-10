@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $this->smsService = $smsService;
     }
-    
+
     // User Profile
     public function userProfile($id)
     {
@@ -628,7 +628,7 @@ class UserController extends Controller
                             return response()->json(['status' => false, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
                         }
                         $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
-                        $templateId = config('services.msg91.otp_template_id');
+                        $templateId = config('services.msg91.profile_update_otp_template_id');
                         if ($earlierProfileUpdateData) {
                             if (
                                 $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
