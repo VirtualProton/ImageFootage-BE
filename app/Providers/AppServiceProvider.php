@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Modules;
 use Illuminate\Support\Facades\URL;
+use App\Services\Sms\SmsService;
 use App;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Register SMS Service as singleton
+        $this->app->singleton(SmsService::class, function ($app) {
+            return new SmsService();
+        });
     }
 
     /**
