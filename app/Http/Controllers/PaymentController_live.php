@@ -16,6 +16,7 @@ use App\Models\Usercart;
 use App\Models\UserPackage;
 use CORS;
 use Payumoney;
+use App\Models\PromoCode;
 
 
 class PaymentController extends Controller
@@ -67,7 +68,10 @@ class PaymentController extends Controller
         $orders->bill_state = $allFields['usrData']['state'];
         $orders->bill_country = $allFields['usrData']['country'];
         $orders->bill_zip = $allFields['usrData']['pincode'];
-        $orders->paymentgatway = $allFields['type'];
+        $orders->paymentgatway = $allFields['type'] == 'atom' ? 'Atom' : ($allFields['type'] == 'payu' ? 'PayUMoney' : ($allFields['type'] == 'rozerpay' ? 'Razorpay' : ''));
+        $orders->coupon_code = isset($allFields['promoCode']) ? $allFields['promoCode'] : null;
+        $orders->coupon_value = isset($allFields['discountValue']) ? $allFields['discountValue'] : null;
+        $orders->coupon_type = isset($allFields['discountType']) ? $allFields['discountType'] : null;
         $orders->created_at = date('Y-m-d H:i:s');
         $orders->save();
         $order_id = $orders->id;
@@ -96,6 +100,10 @@ class PaymentController extends Controller
             }
         }
 
+        // Adjust amount if discount applied
+        if ($allFields['discountValue'] > 0) {
+            $allFields['cartval'][0] = $allFields['cartval'][0] - $allFields['discountValue'];
+        }
         //dd($userData);
         if($allFields['type']=='atom'){
             $transactionRequest = new TransactionRequest();
