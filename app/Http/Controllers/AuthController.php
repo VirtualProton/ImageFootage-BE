@@ -22,6 +22,8 @@ use App\Models\State;
 use App\Models\City;
 use Google_Client;
 use GuzzleHttp\Client;
+use App\Services\Sms\SmsService;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -31,15 +33,23 @@ class AuthController extends Controller
      * 
      * @var string
      */
-    CONST GOOGLE_LOGIN_PROVIDER = 'google';
+    const GOOGLE_LOGIN_PROVIDER = 'google';
+
+    /**
+     * SMS Service
+     * 
+     * @var SmsService
+     */
+    protected $smsService;
 
     /**
      * Create a new AuthController instance.
-     *
+     * @param SmsService $smsService
      * @return void
      */
-    public function __construct()
+    public function __construct(SmsService $smsService)
     {
+        $this->smsService = $smsService;
         $this->middleware('auth:api', ['except' => ['login', 'signup', 'resendVerificationLink', 'signupV2', 'activeUserAccount', 'verifyMobile', 'resendOtp', 'loginV2', 'socialLoginv2', 'getCountriesList', 'getStatesList', 'getCitiesList', 'getAdminSettings']]);
     }
     /**
@@ -121,7 +131,7 @@ class AuthController extends Controller
 
                 $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
                 Mail::send('createusermail', $data, function ($message) use ($data) {
-                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to '.config('constants.company_name'));
+                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));                
                 });
                 return response()->json(['status' => '1', 'message' => 'Email verification link has been sent to registered email address. Please check.'], 200);
             } else {
@@ -281,9 +291,8 @@ class AuthController extends Controller
         }
     }
 
-    public function contactUs(Request $request)
-    {
-    }
+    public function contactUs(Request $request) {}
+
 
     /**
      * Get the authenticated User.
@@ -461,7 +470,7 @@ class AuthController extends Controller
 
         $data = array('cname' => $user->first_name, 'cemail' => $user->email, 'cont_url' => $cont_url);
         Mail::send('createusermail', $data, function ($message) use ($data) {
-            $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to '.config('constants.company_name'));
+            $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
         });
         $user_data = ['user_id' => $user->id];
         return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
@@ -540,11 +549,21 @@ class AuthController extends Controller
                     'otp_valid_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.SMS_EXPIRY') . " hours"))
                 ]);
                 if ($update) {
-                    $message  = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
-                    $smsClass = new TnnraoSms;
-                    $smsClass->sendSms($message, $mobile);
-                    $user_data = ['user_id' => $save_data->id, 'is_email' => false, 'mobile' => $mobile];
-                    return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.', 'data' => $user_data], 200);
+                    try {
+                        //$message  = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+                        $templateId = config('services.msg91.mobile_verification_otp_template_id');
+                        $verifyMobileOtpResponse = $this->smsService->sendOtp($mobile, $templateId);
+                        if (!$verifyMobileOtpResponse['success']) {
+                            return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 400);
+                        }
+                        // $smsClass = new TnnraoSms;
+                        // $smsClass->sendSms($message, $mobile);
+                        $user_data = ['user_id' => $save_data->id, 'is_email' => false, 'mobile' => $mobile];
+                        return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.', 'data' => $user_data], 200);
+                    } catch (\Exception $e) {
+                        Log::error('SMS sending failed: ' . $e->getMessage());
+                        return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 400);
+                    }  
                 }
             }
         }
@@ -584,13 +603,16 @@ class AuthController extends Controller
         if (empty($otp)) {
             return response()->json(['status' => false, 'message' => 'OTP is required.'], 200);
         }
-        $user = User::where("otp", $otp)->where('id', $user_id)->first();
-        if (empty($user)) {
-            return response()->json(['status' => false, 'message' => 'OTP is invalid.'], 200);
+        try {
+            $smsVerificationResult = $this->smsService->verifyOtp($request->mobile, $otp);
+            if (!$smsVerificationResult['success']) {
+                return response()->json(['status' => false, 'message' => 'OTP is either Invalid or expired.'], 200);
+            }
+        } catch (\Exception $e) {
+            \Log::error('SMS OTP verification failed: ' . $e->getMessage());
+            return ['success' => false, 'message' => 'OTP verification failed. Please try again later.'];
         }
-        if ($user->otp_valid_date !== null && $user->otp_valid_date < date('Y-m-d H:i:s')) {
-            return response()->json(['status' => false, 'message' => 'OTP is expired.'], 200);
-        }
+        $user = User::where('id', $user_id)->first();
         $user->status         = 1;
         $user->otp            = null;
         $user->otp_valid_date = null;
@@ -626,11 +648,20 @@ class AuthController extends Controller
         $update = $user->save();
         if ($update) {
             $user_data = ['user_id' => $user->id];
-            $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
-            $smsClass = new TnnraoSms;
-
-            $smsClass->sendSms($message, $mobile);
-            return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
+            try {
+                $templateId = config('services.msg91.mobile_verification_otp_template_id');
+                $verifyMobileOtpResponse = $this->smsService->sendOtp($mobile, $templateId);
+                if (!$verifyMobileOtpResponse['success']) {
+                    return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 400);
+                }
+                // $message = "Thanks For register with us. To verify your mobile number otp is " . $otp . " \n Thanks \n Imagefootage Team";
+                // $smsClass = new TnnraoSms;
+                // $smsClass->sendSms($message, $mobile);
+                return response()->json(['status' => true, 'message' => 'OTP again sent on your registered mobile number. Please verify.', 'data' => $user_data], 200);
+            } catch (\Exception $e) {
+                Log::error('SMS sending failed: ' . $e->getMessage());
+                return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 400);
+            }
         }
         return response()->json(['status' => false, 'message' => 'Some problem occured.'], 401);
     }
@@ -679,7 +710,16 @@ class AuthController extends Controller
         $utype = $this->respondWithToken($token)->original['Utype'];
         $user = User::where('id', $utype)->first();
         if ($user->status == 0) {
-            return response()->json(['status' => false, 'message' => 'Account not activated. Please verify your account.'], 200);
+            $resendRequest = new Request([
+                'email' => $user->email,
+                'user_id' => $user->id
+            ]);
+            try {
+                return $this->resendVerificationLink($resendRequest);
+            } catch (\Exception $e) {
+                Mage::logException($e);
+                return response()->json(['status' => false, 'message' => 'Could not process your request. Please try again later.'], 500);
+            }
         }
         return response()->json(['status' => true, 'message' => 'Successfully logged in.', 'userdata' => $this->respondWithToken($token)->original], 200);
     }
@@ -719,7 +759,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function getAdminSettings(){
+    public function getAdminSettings()
+    {
         $response = [
             'sms_enabled'               => config('constants.sms_enabled'),
             'google_signin_enabled'     => config('constants.google_signin_enabled'),
