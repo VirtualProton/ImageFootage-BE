@@ -5,43 +5,26 @@ FROM node:14.21.3 AS frontend-builder
 
 WORKDIR /app
 
-# Only copy package files first for better layer caching
+# Copy only package files first for better cache
 COPY package.json package-lock.json* ./
 
 RUN npm install
 
-# Now copy the rest of the app (for Mix/Vite to access resources)
+# Now copy the rest of the app so Mix/Vite can access resources
 COPY . .
 
-# Build frontend assets (adjust if you use "build" instead of "production")
+# Adjust if your build script is different
 RUN npm run production
 
 
 # -----------------------------
-# 2️⃣ Composer dependencies
-# -----------------------------
-FROM composer:2 AS vendor-builder
-
-WORKDIR /app
-
-COPY composer.json composer.lock ./
-
-# Install production dependencies only
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction \
-    --no-progress
-
-
-# -----------------------------
-# 3️⃣ PHP-FPM + Nginx (Runtime)
+# 2️⃣ PHP-FPM + Nginx (Runtime)
 # -----------------------------
 FROM php:7.4.33-fpm
 
 WORKDIR /var/www/html
 
-# System & PHP extensions
+# System packages & PHP extensions
 RUN apt-get update && apt-get install -y \
     nginx \
     git \
@@ -64,27 +47,30 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install mongodb-1.16.1 redis-5.3.7 \
  && docker-php-ext-enable mongodb redis
 
-# Copy composer from builder (optional now, but handy if you need it later)
+# Copy composer binary into this image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copy application code
 COPY . .
 
-# Overwrite public/ with built frontend from Node stage
+# Replace public/ with built frontend from Node stage
 RUN rm -rf public/* \
- && mkdir -p public \
- && true
+ && mkdir -p public
 
 COPY --from=frontend-builder /app/public ./public
 
-# Copy vendor from composer stage
-COPY --from=vendor-builder /app/vendor ./vendor
+# Install PHP dependencies (now using PHP 7.4 + extensions)
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction \
+    --no-progress
 
 # Permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html \
  && chmod -R 775 storage bootstrap/cache
 
-# Nginx config
+# Nginx config (make sure this file exists in your repo)
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
