@@ -31,33 +31,48 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Force scheme based on environment + APP_URL host
         if (App::environment('local')) {
-            \URL::forceScheme('http');
+            URL::forceScheme('http');
         } else {
-            \URL::forceScheme('https');
-        }
-        Schema::defaultStringLength(191); //NEW: Increase StringLength
+            $appUrl = config('app.url');
 
-        view()->composer('admin.layouts.default', function($view)
-        {
+            if ($appUrl) {
+                $appHost     = parse_url($appUrl, PHP_URL_HOST);
+                $requestHost = request()->getHost();
+
+                // Only force HTTPS when the request host matches APP_URL host
+                if ($requestHost === $appHost) {
+                    URL::forceScheme('https');
+                }
+            }
+        }
+
+        Schema::defaultStringLength(191); // NEW: Increase StringLength
+
+        view()->composer('admin.layouts.default', function ($view) {
             $modules = Modules::with('submodules')
-            ->where('status','=','A')
-            ->where('parent_module_id','=',0)
-            ->orderBy('sort_order','ASC')
-            ->get()->toArray();
-			$curl=URL::current();
-			$current_url=explode('/',$curl);
-			$endurl=end($current_url);
-			$modules1=new Modules;
-			$modules_list=$modules1->where('url', $endurl)->get()->toArray();
-			//echo '<pre>'; print_r($modules); exit();
-			if(isset($modules_list) && !empty($modules_list)){
-				$parent_id=$modules_list[0]['parent_module_id'];
-			}else{
-				$parent_id=0;
-			}
+                ->where('status', 'A')
+                ->where('parent_module_id', 0)
+                ->orderBy('sort_order', 'ASC')
+                ->get()
+                ->toArray();
+
+            $curl        = URL::current();
+            $current_url = explode('/', $curl);
+            $endurl      = end($current_url);
+
+            $modules1     = new Modules;
+            $modules_list = $modules1->where('url', $endurl)->get()->toArray();
+
+            if (isset($modules_list) && !empty($modules_list)) {
+                $parent_id = $modules_list[0]['parent_module_id'];
+            } else {
+                $parent_id = 0;
+            }
+
             $view->with('modules', $modules);
-			$view->with('parent_id',$parent_id);
+            $view->with('parent_id', $parent_id);
         });
     }
 }
