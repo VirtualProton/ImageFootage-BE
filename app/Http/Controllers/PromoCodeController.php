@@ -28,7 +28,7 @@ class PromoCodeController extends Controller
             // var_dump($promoCode); exit;
             $price = $request->input('price');
             // var_dump($promoCode, $price); exit;
-            $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->where('will_apply_by', '3')->first();
+            $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->whereIn('will_apply_by', ['1', '3'])->first();
             // var_dump($existsPromoCode); exit;
             $today = date('Y-m-d');
             
