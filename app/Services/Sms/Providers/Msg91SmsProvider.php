@@ -214,15 +214,6 @@ class Msg91SmsProvider implements SmsInterface
     public function verifyOtp(string $mobile, string $otp): array
     {
         try {
-            $responseData = [
-                'type' => 'success',
-                'message' => 'OTP verified successfully'
-            ];
-            return [
-                'success' => false,
-                'message' => $responseData['message'] ?? 'Invalid OTP',
-                'error' => 'could not process request'
-            ];
             $mobile = preg_replace('/^\+?91/', '', $mobile);
 
             $queryParams = [

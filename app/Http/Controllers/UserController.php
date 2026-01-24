@@ -555,7 +555,7 @@ class UserController extends Controller
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
-                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
                                 \Log::info('Attempting to send OTP email', ['to' => $emaildata['cemail'], 'otp' => $otp]);
 
                                 Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
@@ -575,7 +575,7 @@ class UserController extends Controller
                                 $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                 $earlierProfileUpdateData->save();
                                 \Log::info('OTP stored in database', ['user_id' => $userlist->id, 'otp' => $otp]);
-                                $emailParts = explode('@', $userlist->email);
+                                $emailParts = explode('@', $update_data['email']);
                                 $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                                 echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                                 return;
@@ -587,7 +587,7 @@ class UserController extends Controller
                     } else {
                         try {
                             $otp = rand(100000, 999999);
-                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist->email, 'otp' => $otp);
+                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
                             \Log::info('Attempting to send OTP email (new verification)', ['to' => $emaildata['cemail'], 'otp' => $otp]);
 
                             Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
@@ -610,7 +610,7 @@ class UserController extends Controller
                             $verification->max_otp_attempts = 1;
                             $verification->save();
                             \Log::info('OTP stored in database (new verification)', ['user_id' => $userlist->id, 'otp' => $otp]);
-                            $emailParts = explode('@', $userlist->email);
+                            $emailParts = explode('@', $update_data['email']);
                             $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                             echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                             return;
@@ -640,7 +640,7 @@ class UserController extends Controller
                             } else {
                                 try {
                                     try {
-                                        $smsResult = $this->smsService->sendOtp($userlist->mobile, $templateId);
+                                        $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
                                         Log::info('SMS send result', ['result' => $smsResult]);
                                         if (!$smsResult['success']) {
                                             return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 400);
@@ -651,7 +651,7 @@ class UserController extends Controller
                                     $earlierProfileUpdateData->max_otp_attempts += 1;
                                     $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                     $earlierProfileUpdateData->save();
-                                    $maskedMobile = substr_replace($userlist->mobile, str_repeat('*', strlen($userlist->mobile) - 2), 0, -2);
+                                    $maskedMobile = substr_replace($update_data['mobile'], str_repeat('*', strlen($update_data['mobile']) - 2), 0, -2);
                                     echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your registered mobile number.', 'Mobile' => $maskedMobile, 'otpToken' => $smsResult['response']['request_id']]);
                                     return;
                                 } catch (\Exception $e) {
@@ -661,14 +661,14 @@ class UserController extends Controller
                         } else {
                             try {
                                 try {
-                                    $smsResult = $this->smsService->sendOtp($userlist->mobile, $templateId);
+                                    $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
                                     if (!$smsResult['success']) {
                                         return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
                                     }
                                 } catch (\Exception $smsException) {
                                     \Log::error('Failed to send SMS OTP', [
                                         'error' => $smsException->getMessage(),
-                                        'mobile' => $userlist->mobile
+                                        'mobile' => $update_data['mobile']
                                     ]);
                                     return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
                                 }
@@ -678,7 +678,7 @@ class UserController extends Controller
                                 $verification->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                 $verification->max_otp_attempts = 1;
                                 $verification->save();
-                                $maskedMobile = substr_replace($userlist->mobile, str_repeat('*', strlen($userlist->mobile) - 2), 0, -2);
+                                $maskedMobile = substr_replace($update_data['mobile'], str_repeat('*', strlen($update_data['mobile']) - 2), 0, -2);
                                 echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your registered mobile number.', 'Mobile' => $maskedMobile, 'otpToken' => $smsResult['response']['request_id']]);
                                 return;
                             } catch (\Exception $e) {
