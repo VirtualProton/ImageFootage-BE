@@ -488,7 +488,7 @@ class AuthController extends Controller
                 // $smsClass->sendSms($message, $mobile);
                 $maskedMobile = substr_replace($mobile, str_repeat('*', strlen($mobile) - 2), 0, -2);
                 $user_data = ['user_id' => $user->id, 'is_email' => false, 'mobile' => $maskedMobile];
-                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.', 'data' => $user_data], 200);
+                return response()->json(['status' => true, 'message' => 'OTP sent to your registered mobile number. Please verify.',"isOTP" => true, 'data' => $user_data], 200);
             } catch (\Exception $e) {
                 Log::error('SMS sending failed: ' . $e->getMessage());
                 return response()->json(['status' => false, 'message' => 'Failed to send SMS. Please try again later.'], 400);
@@ -505,7 +505,7 @@ class AuthController extends Controller
                 $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
             });
             $user_data = ['user_id' => $user->id];
-            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.', 'data' => $user_data], 200);
+            return response()->json(['status' => true, 'message' => 'Email verification link has been sent to registered email address. Please check.',"isLink" => true, 'data' => $user_data], 200);
         }
     }
 
