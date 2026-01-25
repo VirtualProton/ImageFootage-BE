@@ -516,7 +516,7 @@ class UserController extends Controller
                 && $userlist['mobile'] != $data['profileData']['mobile']
                 && $userlist['email'] != $data['profileData']['email']
             ) {
-                return response()->json(['status' => '0', 'message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
+                return response()->json(['message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
             }
 
             $update_data = [
@@ -540,7 +540,7 @@ class UserController extends Controller
             if (empty($data['profileData']['otp']) || empty($data['profileData']['otpToken'])) {
                 if (!empty($update_data['email']) && $userlist['email'] != $update_data['email']) {
                     if (empty($data['profileData']['otpType']) ||  $data['profileData']['otpType'] != 'profile_update_otp') {
-                        return response()->json(['status' => '400', 'message' => 'OTP type is required.'], 400);
+                        return response()->json(['message' => 'OTP type is required.'], 400);
                     }
                     $matchToken = hash('sha512', time()) . random_int(100000, 999999);
                     $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
@@ -549,9 +549,9 @@ class UserController extends Controller
                             $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                             $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                         ) {
-                            return response()->json(['status' => '400', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                            return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
                         } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                            return response()->json(['status' => '400', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                            return response()->json(['message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
@@ -567,7 +567,7 @@ class UserController extends Controller
 
                                 if (count($failures) > 0) {
                                     \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
-                                    return response()->json(['status' => '500', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+                                    return response()->json(['message' => 'Failed to send OTP email. Please try again.'], 500);
                                 }
                                 $earlierProfileUpdateData->max_otp_attempts += 1;
                                 $earlierProfileUpdateData->one_time_password = $otp;
@@ -581,7 +581,7 @@ class UserController extends Controller
                                 return;
                             } catch (\Exception $e) {
                                 \Log::error('Failed to send update user email', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
-                                return response()->json(['status' => '500', 'message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
+                                return response()->json(['message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                             }
                         }
                     } else {
@@ -599,7 +599,7 @@ class UserController extends Controller
 
                             if (count($failures) > 0) {
                                 \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
-                                return response()->json(['status' => '500', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+                                return response()->json(['message' => 'Failed to send OTP email. Please try again.'], 500);
                             }
                             $verification = new Verification();
                             $verification->user_id = $userlist->id;
@@ -616,16 +616,16 @@ class UserController extends Controller
                             return;
                         } catch (\Exception $e) {
                             \Log::error('Failed to send update user email (new verification)', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
-                            return response()->json(['status' => '500', 'message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
+                            return response()->json(['message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                         }
                     }
                 } else {
                     if (!empty($update_data['mobile']) && $userlist['mobile'] != $update_data['mobile']) {
                         if (empty($data['profileData']['otpType']) || $data['profileData']['otpType'] != 'profile_update_otp') {
-                            return response()->json(['status' => '400', 'message' => 'OTP type is required.'], 400);
+                            return response()->json(['message' => 'OTP type is required.'], 400);
                         }
                         if (!config('constants.sms_enabled')) {
-                            return response()->json(['status' => '400', 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
+                            return response()->json(['message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
                         }
                         $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
                         $templateId = config('services.msg91.profile_update_otp_template_id');
@@ -634,19 +634,19 @@ class UserController extends Controller
                                 $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                                 $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                             ) {
-                                return response()->json(['status' => '400', 'message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
+                                return response()->json(['message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
                             } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                                return response()->json(['status' => '400', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                                return response()->json(['message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                             } else {
                                 try {
                                     try {
                                         $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
                                         Log::info('SMS send result', ['result' => $smsResult]);
                                         if (!$smsResult['success']) {
-                                            return response()->json(['status' => '400', 'message' => 'Failed to send SMS. Please try again later.'], 400);
+                                            return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 400);
                                         }
                                     } catch (\Exception $smsException) {
-                                        return response()->json(['status' => '500', 'message' => 'Could not process your request. Please try again later.'], 500);
+                                        return response()->json(['message' => 'Could not process your request. Please try again later.'], 500);
                                     }
                                     $earlierProfileUpdateData->max_otp_attempts += 1;
                                     $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
@@ -663,14 +663,14 @@ class UserController extends Controller
                                 try {
                                     $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
                                     if (!$smsResult['success']) {
-                                        return response()->json(['status' => '500', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                        return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 500);
                                     }
                                 } catch (\Exception $smsException) {
                                     \Log::error('Failed to send SMS OTP', [
                                         'error' => $smsException->getMessage(),
                                         'mobile' => $update_data['mobile']
                                     ]);
-                                    return response()->json(['status' => '500', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                    return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 500);
                                 }
                                 $verification = new Verification();
                                 $verification->user_id = $userlist->id;
@@ -702,16 +702,16 @@ class UserController extends Controller
                                     $verificationRecord->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                                     $verificationRecord->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($verificationRecord->last_failed_attempt_at)) < 30
                                 ) {
-                                    return response()->json(['status' => '400', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                                    return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
                                 }
 
                                 $verificationRecord->unsuccessful_verification_attempts += 1;
                                 $verificationRecord->last_failed_attempt_at = Carbon::now();
                                 $verificationRecord->save();
 
-                                return response()->json(['status' => '400', 'message' => 'Invalid OTP or OTP token.'], 400);
+                                return response()->json(['message' => 'Invalid OTP or OTP token.'], 400);
                             } else {
-                                return response()->json(['status' => '400', 'message' => 'The OTP has expired.'], 400);
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
                             }
                         }
                     } else {
@@ -722,7 +722,7 @@ class UserController extends Controller
                             ->first();
                         if ($verificationData) {
                             if (Carbon::now()->greaterThan(Carbon::parse($verificationData->token_valid_date))) {
-                                return response()->json(['status' => '400', 'message' => 'The OTP has expired.'], 400);
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
                             } else {
                                 $verificationData->delete();
                             }
@@ -736,16 +736,16 @@ class UserController extends Controller
                                     $verificationRecord->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                                     $verificationRecord->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($verificationRecord->last_failed_attempt_at)) < 30
                                 ) {
-                                    return response()->json(['status' => '400', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                                    return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
                                 }
 
                                 $verificationRecord->unsuccessful_verification_attempts += 1;
                                 $verificationRecord->last_failed_attempt_at = Carbon::now();
                                 $verificationRecord->save();
 
-                                return response()->json(['status' => '400', 'message' => 'Invalid OTP or OTP token.'], 400);
+                                return response()->json(['message' => 'Invalid OTP or OTP token.'], 400);
                             } else {
-                                return response()->json(['status' => '400', 'message' => 'The OTP has expired.'], 400);
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
                             }
                         }
                     }
