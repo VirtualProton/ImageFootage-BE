@@ -361,7 +361,7 @@ class PaymentController extends Controller
             $error = 'Razorpay Error : ' . $e->getMessage();
         }
         $orders = Orders::with(['user' => function ($query1) {
-            $query1->select('id', 'user_name', 'first_name', 'last_name', 'city', 'state', 'country', 'gst', 'mobile', 'address', 'postal_code', 'pan', 'company', 'vendor_code', 'coupon_code');
+            $query1->select('id', 'user_name', 'first_name', 'last_name', 'city', 'state', 'country', 'gst', 'mobile', 'address', 'postal_code', 'pan', 'company', 'vendor_code');
         }])->with(['items'])->where('rozor_pay_id', '=', $data['paymentRes']['razorpay_order_id'])
             ->with('country')
             ->with('state')
@@ -370,8 +370,8 @@ class PaymentController extends Controller
         $this->invoiceWithemail($orders, $orders[0]['txn_id']);
         if ($success === true) {
             // update total applied count for that couponcode
-            if (!empty($orders['coupon_code']) && $orders[0]['user']['coupon_code'] != null) {
-                $promoCode = PromoCode::find($orders[0]['user']['coupon_code']);
+            if (!empty($orders['coupon_code']) && $orders[0]['coupon_code'] != null) {
+                $promoCode = PromoCode::find($orders[0]['coupon_code']);
                 $currentUsed = $promoCode->total_applied_code;
                 $promoCode->total_applied_code = $currentUsed + 1;
                 $promoCode->save();
