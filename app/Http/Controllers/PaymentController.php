@@ -204,7 +204,7 @@ class PaymentController extends Controller
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
                 'receipt'         => $transactionId,
-                'amount'          => (int) ($allFields['cartval'][0] + $final_tax) * 100, // 2000 rupees in paise
+                'amount'          => ($allFields['cartval'][0] + $final_tax) * 100, // 2000 rupees in paise
                 'currency'        => 'INR',
                 'payment_capture' => 1 // auto capture
             ];
