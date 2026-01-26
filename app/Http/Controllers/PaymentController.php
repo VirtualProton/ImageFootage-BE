@@ -373,7 +373,7 @@ class PaymentController extends Controller
             // update total applied count for that couponcode
             if (!empty($orders['coupon_code']) && $orders[0]['coupon_code'] != null) {
                 $promoCode = PromoCode::find($orders[0]['coupon_code']);
-                $currentUsed = $promoCode->total_applied_code;
+                $currentUsed = $promoCode->total_applied_code ?? 0;
                 $promoCode->total_applied_code = $currentUsed + 1;
                 $promoCode->save();
             }
@@ -831,6 +831,10 @@ class PaymentController extends Controller
         $pdf->save($pdfPath . '/' . $fileName);
         try {
             $s3Client = new S3Client([
+                'credentials' => [
+                    'key'    => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
                 /*'profile' => 'default',*/
                 'region' => 'us-east-2',
                 'version' => '2006-03-01'
@@ -844,6 +848,7 @@ class PaymentController extends Controller
             try {
                 $fileupresult = $uploader->upload();
             } catch (MultipartUploadException $e) {
+                log::Exception($e);
                 //echo $e->getMessage() . "\n";
             }
             $pdf_path = $fileupresult['ObjectURL'];
@@ -878,16 +883,20 @@ class PaymentController extends Controller
         $amount_in_words  =  $this->convert_number_to_words($OrderData['package_price']);
         $pdf = PDF::loadHTML(view('email.plan_invoice_email', ['orders' => $OrderData, 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction . "_web_plan_invoice.pdf";
-                // Create directory if it doesn't exist
+        // Create directory if it doesn't exist
         $pdfPath = storage_path('app/public/pdf');
         if (!file_exists($pdfPath)) {
             mkdir($pdfPath, 0755, true);
         }
-        
+
         $pdf->save($pdfPath . '/' . $fileName);
         $pdf_path = '';
         try {
             $s3Client = new S3Client([
+                'credentials' => [
+                    'key'    => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
                 /*'profile' => 'default',*/
                 'region' => 'us-east-2',
                 'version' => '2006-03-01'
