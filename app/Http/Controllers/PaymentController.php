@@ -104,7 +104,7 @@ class PaymentController extends Controller
             ->get()->toArray();
         //dd(DB::getQueryLog());
         //print_r($userData); die;
-        if ($allFields['discountValue'] > 0) {
+        if (isset($allFields['discountValue']) && $allFields['discountValue'] > 0) {
             $allFields['cartval'][0] = $allFields['cartval'][0] - $allFields['discountValue'];
         }
         if (!empty($userData) && $userData[0]['country']['code'] == 'IN') {
