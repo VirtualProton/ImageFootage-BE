@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -825,6 +826,7 @@ class PaymentController extends Controller
         // $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         // Create directory if it doesn't exist
         $pdfPath = storage_path('app/public/pdf');
+        $pdf_path = "";
         if (!file_exists($pdfPath)) {
             mkdir($pdfPath, 0755, true);
         }
@@ -847,9 +849,11 @@ class PaymentController extends Controller
             ]);
             try {
                 $fileupresult = $uploader->upload();
+                // return $fileupresult;
             } catch (MultipartUploadException $e) {
-                log::Exception($e);
-                //echo $e->getMessage() . "\n";
+                Log::exception($e);
+                // return $e;
+                // echo $e->getMessage() . "\n";
             }
             $pdf_path = $fileupresult['ObjectURL'];
         } catch (\Throwable $th) {
