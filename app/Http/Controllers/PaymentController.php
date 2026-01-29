@@ -817,62 +817,94 @@ class PaymentController extends Controller
 
     public function invoiceWithemail($OrderData, $transaction)
     {
-        ini_set('max_execution_time', 0);
-        $OrderData[0]['company_logo'] = 'images/new-design-logo.png';
-        $OrderData[0]['signature']     = 'images/signature.png';
-        $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
-        $pdf = PDF::loadHTML(view('email.orders_invoice', ['orders' => $OrderData[0], 'amount_in_words' => $amount_in_words]));
-        $fileName = $transaction . "_web_invoice.pdf";
-        // $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
-        // Create directory if it doesn't exist
-        $pdfPath = storage_path('app/public/pdf');
-        $pdf_path = "";
-        if (!file_exists($pdfPath)) {
-            mkdir($pdfPath, 0755, true);
+            ini_set('max_execution_time', 0);
+
+    $OrderData[0]['company_logo'] = 'images/new-design-logo.png';
+    $OrderData[0]['signature']     = 'images/signature.png';
+    $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
+
+    // Generate PDF in local storage
+    $pdf = PDF::loadHTML(view('email.orders_invoice', [
+        'orders' => $OrderData[0],
+        'amount_in_words' => $amount_in_words
+    ]));
+
+    $fileName = $transaction . "_web_invoice.pdf";
+    $pdfPath  = storage_path('app/public/pdf');
+
+    if (!file_exists($pdfPath)) {
+        mkdir($pdfPath, 0755, true);
+    }
+
+    $fullLocalPath = $pdfPath . '/' . $fileName;
+    $pdf->save($fullLocalPath);
+
+    // ---- S3 upload ----
+    $pdf_path = null; // very important: initialize
+
+    try {
+        $s3Client = new S3Client([
+            'credentials' => [
+                'key'    => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            ],
+            'region'  => 'us-east-2',   // make sure this matches your bucket region
+            'version' => '2006-03-01',
+        ]);
+
+        $bucket = 'imgfootage';
+        $key    = 'invoice/' . $fileName;
+
+        // For PDFs, a simple putObject is enough; no need for MultipartUploader
+        $result = $s3Client->putObject([
+            'Bucket'      => $bucket,
+            'Key'         => $key,
+            'SourceFile'  => $fullLocalPath,
+            'ContentType' => 'application/pdf',
+            // 'ACL'      => 'public-read', // uncomment if you need public URL
+        ]);
+
+        // Prefer SDK URL if present, otherwise build it
+        if (!empty($result['ObjectURL'])) {
+            $pdf_path = $result['ObjectURL'];
+        } else {
+            $pdf_path = $s3Client->getObjectUrl($bucket, $key);
         }
-        $pdf->save($pdfPath . '/' . $fileName);
-        try {
-            $s3Client = new S3Client([
-                'credentials' => [
-                    'key'    => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                ],
-                /*'profile' => 'default',*/
-                'region' => 'us-east-2',
-                'version' => '2006-03-01'
-            ]);
-            $path = 'invoice/' . $fileName;
-            $source = fopen($pdfPath . '/' . $fileName, 'rb');
-            $uploader = new MultipartUploader($s3Client, $source, [
-                'bucket' => 'imgfootage',
-                'key' => $path,
-            ]);
-            try {
-                $fileupresult = $uploader->upload();
-                // return $fileupresult;
-            } catch (MultipartUploadException $e) {
-                Log::exception($e);
-                // return $e;
-                // echo $e->getMessage() . "\n";
-            }
-            $pdf_path = $fileupresult['ObjectURL'];
-        } catch (\Throwable $th) {
+
+        Log::info('Invoice PDF uploaded to S3', [
+            'txn_id'   => $transaction,
+            's3_path'  => $pdf_path,
+        ]);
+    } catch (\Throwable $e) {
+        // Now you’ll actually see why it failed
+        Log::error('Failed to upload invoice PDF to S3', [
+            'txn_id'    => $transaction,
+            'message'   => $e->getMessage(),
+            'trace'     => $e->getTraceAsString(),
+        ]);
+    }
+
+    // Only update DB & delete local file if upload succeeded
+    if (!empty($pdf_path)) {
+        Orders::where('txn_id', '=', $transaction)
+            ->update(['invoice' => $pdf_path]);
+
+        if (file_exists($fullLocalPath)) {
+            unlink($fullLocalPath);
         }
-        if (!empty($pdf_path)) {
-            Orders::where('txn_id', '=', $transaction)
-                ->update(['invoice' => $pdf_path]);
-            unlink(storage_path('app/public/pdf') . '/' . $fileName);
-        }
-        $data["subject"] = 'Your Order (' . $OrderData[0]['txn_id'] . ') has been successfull!!';
-        $data["email"]   = $OrderData[0]['order_email'];
-        //$data["invoice"] = $dataForEmail[0]['invoice_name'];
-        $data["name"]    = $OrderData[0]['bill_firstname'];
-        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
-            $message->to($data["email"])
-                ->from('admin@imagefootage.com', 'Imagefootage')
-                ->subject($data['subject'])
-                ->attachData($pdf->output(), $fileName);
-        });
+    }
+
+    // ---- Send email with attachment ----
+    $data["subject"] = 'Your Order (' . $OrderData[0]['txn_id'] . ') has been successfull!!';
+    $data["email"]   = $OrderData[0]['order_email'];
+    $data["name"]    = $OrderData[0]['bill_firstname'];
+
+    Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+        $message->to($data["email"])
+            ->from('admin@imagefootage.com', 'Imagefootage')
+            ->subject($data['subject'])
+            ->attachData($pdf->output(), $fileName);
+    });
     }
 
     public function invoiceWithemailPlan($OrderData, $transaction)
