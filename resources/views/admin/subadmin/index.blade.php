@@ -82,7 +82,11 @@
     @section('scripts')
     <script>
     $(function () {
-    $('#subadmin').DataTable();
+    $('#subadmin').DataTable(
+      {
+        "order": [[0, "desc"]]
+      }
+    );
  })
     </script>
 

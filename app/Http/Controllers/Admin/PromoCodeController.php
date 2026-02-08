@@ -51,6 +51,7 @@ class PromoCodeController extends Controller
         $this->validate($request, [
             'name'             => 'required|unique:promo_codes',
             'type'             => 'required',
+            'asset_type'       => 'required|in:image,footage,music',
             'discount'         => 'required|numeric|gt:0',
             'max_usage'        => 'required|numeric|gt:0',
             'valid_type'       => 'required',
@@ -63,6 +64,7 @@ class PromoCodeController extends Controller
         $insertableData = [
             'name'             => $request->name,
             'type'             => $request->type,
+            'asset_type'       => $request->asset_type,
             'max_usage'        => $request->max_usage,
             'discount'         => $request->discount,
             'valid_upto_type'  => $request->valid_type,
@@ -114,6 +116,7 @@ class PromoCodeController extends Controller
         $this->validate($request, [
             'name'             => 'required|unique:promo_codes,name,'.$id,
             'type'             => 'required',
+            'asset_type'       => 'required|in:image,footage,music',
             'discount'         => 'required|numeric|gt:0',
             'max_usage'        => 'required|numeric|gt:0',
             'valid_type'       => 'required',
@@ -126,6 +129,7 @@ class PromoCodeController extends Controller
         $promoCode                   = PromoCode::find($id);
         $promoCode->name             = $request->name;
         $promoCode->type             = $request->type;
+        $promoCode->asset_type       = $request->asset_type;
         if ($promoCode->total_applied_code == null ) {
             $promoCode->max_usage    = $request->max_usage;
         }

@@ -20,6 +20,10 @@ use App\Models\Invoice;
 use App\Models\Orders;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use DataTables;
+
+
 
 
 class InvoiceController extends Controller
@@ -36,6 +40,15 @@ class InvoiceController extends Controller
             ->where('type', '=', '2')
             ->get();
         return view('admin.invoice.index', compact('templates'));
+    }
+
+    /**
+     * 
+     * Order relation with payment
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'order_id', 'id');
     }
 
     public function get_email_template(Request $request)
@@ -122,7 +135,7 @@ class InvoiceController extends Controller
         }
     }
 
-    public function edit_quotation($user_id,$quotation_id)
+    public function edit_quotation($user_id, $quotation_id)
     {
         $getFootageSizeDetails = config('constants.footage_size_details');
         $getMusicLicenceDetails = config('constants.music_licence_details');
@@ -164,7 +177,7 @@ class InvoiceController extends Controller
         $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
-            $po_date = isset($data['po_date']) ? $data['po_date']: date('Y-m-d');
+            $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
             return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
         }
     }
@@ -195,7 +208,7 @@ class InvoiceController extends Controller
         $user->save();
         if (!empty($data['quotation_id'])) {
             $po = isset($data['po']) ? $data['po'] : '';
-            $po_date = isset($data['po_date']) ? $data['po_date']: date('Y-m-d');
+            $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
             return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
         }
     }
@@ -217,30 +230,30 @@ class InvoiceController extends Controller
 
     public function comments(Request $request)
     {
-        if (isset($_POST['commentbtn'])) { 
-        $this->validate($request, [
-            'subject' => 'required|max:100',
-            'user_id' => 'required',
-            'comment' => 'required|max:190',
-            'status' => 'required',
-            //'agent_id' => 'required',
-            //'expiry' => 'required',
+        if (isset($_POST['commentbtn'])) {
+            $this->validate($request, [
+                'subject' => 'required|max:100',
+                'user_id' => 'required',
+                'comment' => 'required|max:190',
+                'status' => 'required',
+                //'agent_id' => 'required',
+                //'expiry' => 'required',
 
-        ]);
+            ]);
 
-        $comment = new Comment();
+            $comment = new Comment();
 
-        $comment['user_id'] = $request->user_id;
-        $comment['subject'] = $request->subject;
-        $comment['comment'] = $request->comment;
-        $comment['status'] = $request->status;
-        $comment['agent_id'] = $request->agent_id;
-        $comment['created_by'] = $request->created_by;
-        $comment['expiry'] = !empty($request->expiry) ? date('Y-m-d', strtotime($request->expiry)) : '';
-        $comment->save();
-        return Redirect::back()->with('success', 'Comment Saved');
+            $comment['user_id'] = $request->user_id;
+            $comment['subject'] = $request->subject;
+            $comment['comment'] = $request->comment;
+            $comment['status'] = $request->status;
+            $comment['agent_id'] = $request->agent_id;
+            $comment['created_by'] = $request->created_by;
+            $comment['expiry'] = !empty($request->expiry) ? date('Y-m-d', strtotime($request->expiry)) : '';
+            $comment->save();
+            return Redirect::back()->with('success', 'Comment Saved');
+        }
     }
-}
 
     public function saveSubscriptionInvoice(Request $request)
     {
@@ -255,25 +268,27 @@ class InvoiceController extends Controller
     }
 
 
-    public function quotationReport(){
+    public function quotationReport()
+    {
         $user = Auth::guard('admins')->user();
         $userState = $user->state;
-        // $user_id = 1;
-        $quotations = Invoice::where('invoice_url', null)->where('status', '<>', 3)->get()->toArray();
 
-        // if($user->department['department'] == 'Sales'){
+        // Build the base query
+        $query = Invoice::where('invoice_url', null)->where('status', '<>', 3);
 
-        //     $quotations = Invoice::where('invoice_url', null)->where('status', '<>', 3)->where('state', $userState)->get()->toArray();
-        // }
-        // echo "<pre>"; print_r($quotations); die;
-            
+        // If not admin (role_id != 1), filter by logged-in user
+        if ($user->role_id != 1) {
+            $query->where('user_id', $user->id);
+        }
+
+        $quotations = $query->get()->toArray();
+
         return view('admin.invoice.quotationsReport', compact('quotations'));
-
-
     }
 
-    
-    public function quotationCancel($id){
+
+    public function quotationCancel($id)
+    {
         // $quotation = Invoice::where('id', $id)->get();
         // Invoice::where('id', $id)->update(array('status' => '3'));
         // return Redirect::back()->with('message', 'Quotation Cancelled');
@@ -284,44 +299,137 @@ class InvoiceController extends Controller
 
         // return view('admin.invoice.quotationsReport', compact('quotations'));
 
-        if(Invoice::where('id', $id)->update(array('status' => '3'))){
+        if (Invoice::where('id', $id)->update(array('status' => '3'))) {
             return redirect("admin/quotation_report")->with("success", "Quotation Cancelled !!!");
         } else {
             return redirect("admin/quotation_report")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
         }
     }
 
-
-    public function outstandingReport(){
-        $user = Auth::guard('admins')->user();
-        $all_orders_list= Orders::with(['items'=>function($query){
-                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-           }])->with('user')
-          ->with('country')
-          ->with('state')
-          ->with('city')
-          ->where('order_status', '<>', 'Transction Success')
-          ->orWhere('order_status', null)
-          ->orderBy('id','desc')
-          ->get()->toArray();
-         // echo "<pre>"; print_r($all_orders_list); die;
-
-          if($user->department['department'] == 'Sales'){
-
-            $all_orders_list= Orders::with(['items'=>function($query){
-                   $query->select('order_id','product_id','product_name','product_web','standard_size','standard_price','product_thumb');
-           }])->with('user')
-          ->with('country')
-          ->with('state')
-          ->with('city')
-          ->where('bill_state', $user->state)
-          ->orderBy('id','desc')
-          ->get()->toArray();
-        }
-
-         //echo "<pre>";print_r($all_orders_list); die;
-        return view('admin.invoice.orderlist', ['orderlists' => $all_orders_list]);
+    /**
+     * 
+     * Display outstanding report page
+     * @return \Illuminate\View\View
+     */
+    public function outstandingReport()
+    {
+        return view('admin.invoice.outstandingReport');
     }
+
+    /**
+     * 
+     * Get outstanding report data for DataTables with server-side processing
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOutstandingReportData(Request $request)
+    {
+        try {
+            \Log::info('Outstanding Report Data Request', [
+                'request' => $request->all()
+            ]);
+
+            $user = Auth::guard('admins')->user();
+
+            if (!$user) {
+                \Log::error('User not authenticated');
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+
+            // Get pagination parameters from DataTables
+            $start = $request->input('start', 0);
+            $length = $request->input('length', 10);
+            $searchValue = $request->input('search.value', '');
+
+            // Base query
+            $query = Invoice::query();
+
+            // Apply role-based filter
+            // If not admin (role_id != 1), show only user-specific records
+            if ($user->role_id != 1) {
+                $query->where('user_id', $user->id);
+            }
+
+            if ($request->filled('client_name') && !empty(trim($request->client_name))) {
+                $clientName = trim($request->client_name);
+                $query->where(function ($q) use ($clientName) {
+                    $q->where('user_id', 'eq', "{$clientName}")
+                        ->orWhere('email_id', 'eq', "{$clientName}")
+                        ->orWhere('invoice_name', 'eq', "{$clientName}");
+                });
+            }
+
+            // Apply start date filter from custom filter
+            if ($request->filled('start_date') && !empty(trim($request->start_date))) {
+                $startDate = trim($request->start_date);
+                $query->whereDate('invoice_created', '==', $startDate);
+            }
+
+            // Apply end date filter from custom filter
+            if ($request->filled('end_date') && !empty(trim($request->end_date))) {
+                $endDate = trim($request->end_date);
+                $query->whereDate('invoice_created', '==', $endDate);
+            }
+
+            // Apply search filter
+            if (!empty($searchValue)) {
+                $query->where(function ($q) use ($searchValue) {
+                    $q->where('invoice_name', 'like', "%{$searchValue}%")
+                        ->orWhere('user_id', 'like', "%{$searchValue}%")
+                        ->orWhere('id', 'like', "%{$searchValue}%");
+                });
+            }
+
+            // Get total records count
+            $totalRecords = $query->count();
+            $filteredRecords = $query->count();
+
+
+            $invoices = $query->orderBy('id', 'desc')
+                ->skip($start)
+                ->take($length)
+                ->get();
+            $data = [];
+
+            foreach ($invoices as $invoice) {
+                $data[] = [
+                    'id' => $invoice->id ?? null,
+                    'invoice_name' => $invoice->invoice_name ?? 'N/A',
+                    'user_id' => $invoice->user_id ?? 'N/A',
+                    'invoice_created' => !empty($invoice->invoice_created) ? date('Y-m-d H:i:s', strtotime($invoice->invoice_created)) : 'N/A',
+                    'payment_status' => $invoice->payment_status ? 'Completed' : 'Pending',
+                ];
+            }
+
+            \Log::info('Total Records Found', ['count' => $totalRecords]);
+
+            $response = [
+                'draw' => (int) $request->input('draw', 1),
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'data' => $data
+            ];
+            return response()->json($response);
+        } catch (\Exception $e) {
+            \Log::error('Outstanding Report Error', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'draw' => intval($request->input('draw', 1)),
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => [],
+                'error' => $e->getMessage()
+            ], 200); // Return 200 to prevent DataTables from showing generic error
+        }
+    }
+
+    // ...existing code...
+
 
     public function addPO()
     {
@@ -332,18 +440,20 @@ class InvoiceController extends Controller
     {
         $this->validate($request, [
             'invoice_no' => 'required',
-            'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_no
+            'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,' . $request->invoice_no,
+            'po_date'   => 'required'
         ], [
             'po_no.required' => 'The PO no field is required.',
-            'po_no.unique' => 'The PO no must be unique.'
+            'po_no.unique' => 'The PO no must be unique.',
+            'po_date.required' => 'The PO date field is required.'
         ]);
-        $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no, 'po_detail' => date('Y-m-d')]);
+        Log::info('Request Data: ', $request->all());
+        $update = Invoice::where('id', '=', $request->invoice_no)->update(['job_number' => $request->po_no, 'po_detail' => $request->po_date]);
         if ($update) {
             return redirect()->back()->with('success', 'PO no. updated successfully.');
         } else {
             return back()->with('warning', 'Some problem occured.');
         }
-
     }
 
     public function get_invoice(Request $request)
@@ -360,14 +470,13 @@ class InvoiceController extends Controller
     public function update_po(Request $request)
     {
         $validation = Validator::make($request->all(), [
-                'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,'.$request->invoice_id
+            'po_no'   => 'required|unique:imagefootage_performa_invoices,job_number,' . $request->invoice_id
         ]);
-        if ($validation->fails())
-        {
-            $resp =array();
+        if ($validation->fails()) {
+            $resp = array();
             $resp['statusdesc']  =   $validation->errors()->first();
             $resp['statuscode']   =   "0";
-            return response()->json(compact('resp')); 
+            return response()->json(compact('resp'));
         }
         $data = $request->all();
         if (!empty($data['invoice_id']) && isset($data['po_no'])) {
@@ -375,16 +484,60 @@ class InvoiceController extends Controller
         }
     }
 
-    public function invoiceCancel($id){
+    public function invoiceCancel($id)
+    {
         $update = Invoice::where('id', $id)->update([
             'status' => '3',
             'cancel_date' => date('Y-m-d H:i:s'),
             'cancelled_by' => Auth::guard('admins')->user()->id
         ]);
-        if($update){
+        if ($update) {
             return redirect()->back()->with("success", "Quotation Cancelled !!!");
         } else {
             return redirect()->back()->with("error", "Due to some error, Quotation is not updated yet. Please try again!");
         }
+    }
+
+    public function showDetail($userId, $invoiceId)
+    {
+        $invoice = Invoice::where('user_id', $userId)
+            ->where('id', $invoiceId)
+            ->firstOrFail();
+
+        return view('admin.invoice.invoice_details', compact('invoice'));
+    }
+
+    // ...existing code...
+
+    public function getData(Request $request)
+    {
+        $query = Invoice::select([
+            'id',
+            'invoice_name',
+            'user_id',
+            'email_id',
+            'invoice_created',
+            'payment_status'
+        ]);
+
+        // Apply client name/ID filter
+        if ($request->filled('client_name')) {
+            $clientName = $request->client_name;
+            $query->where(function ($q) use ($clientName) {
+                $q->where('user_id', 'like', "%{$clientName}%")
+                    ->orWhere('email_id', 'like', "%{$clientName}%");
+            });
+        }
+
+        // Apply date range filter
+        if ($request->filled('start_date')) {
+            $query->whereDate('invoice_created', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('modified', '<=', $request->end_date);
+        }
+
+        return DataTables::of($query)->make(true);
     }
 }

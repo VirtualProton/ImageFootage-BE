@@ -55,6 +55,15 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="po_date">PO DATE</label>
+                                    <input type="date" class="form-control" name="po_date" id="po_date">
+                                    @if ($errors->has('po_date'))
+                                    <div class="has_error" style="color:red;">{{ $errors->first('po_date') }}</div>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">

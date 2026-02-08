@@ -125,10 +125,6 @@
                 @endif
 
               </div>
-              <div class="form-group" id="carry_forward_pack">
-                <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" /> </label>
-
-              </div>
 
               <div class="form-group" id="footageTierDiv">
                 <label for="exampleInputEmail1">Footage Licence Type</label>
@@ -331,6 +327,29 @@
             validators: {
               stringLength: {
                 message: 'Package type is required.'
+              }
+            }
+          },
+
+          image_tier: {
+            validators: {
+              notEmpty: {
+                message: 'Image Licence Type is required.'
+              }
+            }
+          },
+            footage_tier: {
+            validators: {
+              notEmpty: {
+                message: 'Footage Licence Type is required.'
+              }
+            }
+          },
+
+ music_tier: {
+            validators: {
+              notEmpty: {
+                message: 'Music Licence Type is required.'
               }
             }
           },

@@ -26,6 +26,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
     Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+    Route::get('/outstanding-report-data', 'InvoiceController@getOutstandingReportData')->name('admin.outstanding.data');
+    // ...existing code...
+    Route::get('invoice/{user_id}/{id}', 'InvoiceController@showDetail')->name('admin.invoice.detail');
+// ...existing code...
 
 
     Route::get('/dashboard', 'DashboardController@dashboard');
@@ -217,11 +221,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/users/show/{id}', 'UserController@show');
 
 
-
     Route::resource('/users', 'UserController');
     Route::post('/getStatesByCounty', 'CommonController@getStatesByCounty');
     Route::post('/getCityByState', 'CommonController@getCityByState');
-
 
     Route::get('/send_invoice', 'InvoiceController@send_invoice');
     Route::post('/get_email_template', 'InvoiceController@get_email_template');
