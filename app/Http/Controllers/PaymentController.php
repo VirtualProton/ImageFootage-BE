@@ -822,25 +822,24 @@ class PaymentController extends Controller
         $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
         $pdf = PDF::loadHTML(view('email.orders_invoice', ['orders' => $OrderData[0], 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction . "_web_invoice.pdf";
-        // $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
-        // Create directory if it doesn't exist
-        $pdfPath = storage_path('app/public/pdf');
-        if (!file_exists($pdfPath)) {
-            mkdir($pdfPath, 0755, true);
-        }
-        $pdf->save($pdfPath . '/' . $fileName);
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $pdf_path = '';
+        // if (!file_exists($pdfPath)) {
+        //     mkdir($pdfPath, 0755, true);
+        // }
+        // $pdf->save($pdfPath . '/' . $fileName);
         try {
             $s3Client = new S3Client([
-                'credentials' => [
-                    'key'    => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                ],
+                // 'credentials' => [
+                //     'key'    => env('AWS_ACCESS_KEY_ID'),
+                //     'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                // ],
                 /*'profile' => 'default',*/
                 'region' => 'us-east-2',
                 'version' => '2006-03-01'
             ]);
             $path = 'invoice/' . $fileName;
-            $source = fopen($pdfPath . '/' . $fileName, 'rb');
+            $source = fopen(storage_path('app/public/pdf') . '/' . $fileName, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -848,7 +847,7 @@ class PaymentController extends Controller
             try {
                 $fileupresult = $uploader->upload();
             } catch (MultipartUploadException $e) {
-                log::Exception($e);
+                Log::Exception($e);
                 //echo $e->getMessage() . "\n";
             }
             $pdf_path = $fileupresult['ObjectURL'];
@@ -883,20 +882,14 @@ class PaymentController extends Controller
         $amount_in_words  =  $this->convert_number_to_words($OrderData['package_price']);
         $pdf = PDF::loadHTML(view('email.plan_invoice_email', ['orders' => $OrderData, 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction . "_web_plan_invoice.pdf";
-        // Create directory if it doesn't exist
-        $pdfPath = storage_path('app/public/pdf');
-        if (!file_exists($pdfPath)) {
-            mkdir($pdfPath, 0755, true);
-        }
-
-        $pdf->save($pdfPath . '/' . $fileName);
+        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
         $pdf_path = '';
         try {
             $s3Client = new S3Client([
-                'credentials' => [
-                    'key'    => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                ],
+                // 'credentials' => [
+                //     'key'    => env('AWS_ACCESS_KEY_ID'),
+                //     'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                // ],
                 /*'profile' => 'default',*/
                 'region' => 'us-east-2',
                 'version' => '2006-03-01'
