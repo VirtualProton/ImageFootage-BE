@@ -177,7 +177,14 @@ class UserController extends Controller
             })->get()->toArray();
 
         $agentlist = $this->Account->getAccountData();
-        $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        // Check if logged-in admin has role_id = 1
+if (Auth::guard('admins')->user()->role_id == 1) {
+    // Load all comments for role_id = 1
+    $comments = Comment::with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+} else {
+    // Load user-specific comments
+    $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+}
         $get_quotations = Invoice::with('items')
             ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name')
             ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')

@@ -9,8 +9,8 @@
           <div class="custom-width custom-font">Deactivated ? : {{$user->status=1?"No":"Yes"}}</div>
         </div>
         <div class="ps-wrap">
-          <div class="reset-pass"><span class="custom-font">Password :</span>
-            <input type="password" class="" name="" id="" value="{{$user->password}}"><button id="resetButton" onclick="resetPassword({{$user->id}})">Reset</button>
+          <div class="reset-pass"><span class="custom-font">
+            <button id="resetButton" onclick="resetPassword({{$user->id}})">Reset Password</button>
           </div>
         </div>
         <div class="f-l-e-wrap">

@@ -185,7 +185,9 @@
                     d.end_date = $('#end_date').val();
                 },
                 dataSrc: function(json) {
-                    console.log('Data received:', json);
+
+                    // Hide error message on successful load
+                    $('#error-message').hide();
 
                     // Hide custom spinner on first load
                     if (isFirstLoad) {
@@ -205,7 +207,7 @@
                         $('#error-message').html('Error: ' + json.error).show();
                         return [];
                     }
-                    return json.data;
+                    return json.data || [];
                 },
                 error: function(xhr, error, code) {
                     // Hide custom spinner on error
@@ -217,17 +219,21 @@
                         isFirstLoad = false;
                     }
 
-                    var errorMsg = 'Error loading data: ' + xhr.status;
-                    try {
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.error) {
-                            errorMsg += ' - ' + response.error;
+                    // Only show error for actual HTTP errors (status >= 400)
+                    if (xhr.status >= 400 || xhr.status === 0) {
+                        var errorMsg = 'Error loading data: ' + xhr.status;
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.error) {
+                                errorMsg += ' - ' + response.error;
+                            } else if (response.message) {
+                                errorMsg += ' - ' + response.message;
+                            }
+                        } catch (e) {
+                            errorMsg += ' - ' + xhr.statusText;
                         }
-                    } catch (e) {
-                        errorMsg += ' - ' + xhr.statusText;
+                        $('#error-message').html(errorMsg).show();
                     }
-
-                    $('#error-message').html(errorMsg).show();
                 }
             },
             columns: [{

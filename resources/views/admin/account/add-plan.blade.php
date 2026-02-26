@@ -1,4 +1,4 @@
-{!! Form::open(array('url' => URL::to('admin/users/plan'), 'method' => 'POST', 'class'=>"form-horizontal" , 'id' => 'addPlan', 'name' => 'planform')) !!}
+<!-- {!! Form::open(array('url' => URL::to('admin/users/plan'), 'method' => 'POST', 'class'=>"form-horizontal" , 'id' => 'addPlan', 'name' => 'planform')) !!}
 <h4 class="box-title add-new news_add-div">Add New Plan</h4>
 <div class="inner-mail-top-top">
 <div class="inner-mail-right">
@@ -22,4 +22,4 @@
     <div class="box-footer comme-button">
       {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'addPlan', 'name' => 'planbtn')) !!}
     </div>
-  </div>
+  </div> -->

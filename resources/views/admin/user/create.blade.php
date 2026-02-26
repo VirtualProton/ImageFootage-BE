@@ -83,6 +83,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <input type="text" class="form-control" name="contact_owner" value="{{ old('contact_owner') }}" id="contact_owner" placeholder="Company Name">
+              <small class="text-muted"><i class="fa fa-info-circle"></i> GST is mandatory when Company Name is provided</small>
               {!! $errors->first('contact_owner', '<p class="help-block">:message</p>') !!}
             </div>
           </div>
@@ -250,6 +251,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <input type="text" class="form-control" name="gst" value="{{ old('gst') }}" id="gst" placeholder="Gst No">
+              <small class="text-muted"><i class="fa fa-info-circle"></i> GST is mandatory when Company Name is provided</small>
             </div>
           </div>
         </div>

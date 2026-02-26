@@ -7,6 +7,8 @@ use App\Models\AdminUsers;
 use Redirect;
 use DB;
 use Auth;
+use App\Models\Comment;
+
 
 class DashboardController extends Controller
 {
@@ -32,6 +34,17 @@ class DashboardController extends Controller
         if ($subs) {
             $subspercentage = ($subs*100)/$users;
         }
+
+         // Fetch open and in-progress comments
+    $pendingComments = Comment::with('admin', 'agent')
+        ->whereIn('status', ['Open', 'In Progress'])
+        ->orderBy('created_at', 'desc')
+        ->limit(10)
+        ->get();
+    
+    $data['pending_comments'] = $pendingComments;
+    $data['pending_comments_count'] = $pendingComments->count();
+    
 
         $data['orders'] = $orders;
         $data['products'] = $products;

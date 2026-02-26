@@ -38,11 +38,11 @@
                       </a>
                     </li>
                     @endif
-                    <li class="@if($active_tab=="tab4") active @endif">
+                    <!-- <li class="@if($active_tab=="tab4") active @endif">
                         <a href="#plans" role="tab" data-toggle="tab">
                             <i class="fa fa-comment"></i> Assign Package
                         </a>
-                      </li>
+                      </li> -->
                     <!-- <li class="@if($active_tab=="tab4") active @endif">
                       <a href="#comment" role="tab" data-toggle="tab">
                         <i class="fa fa-comment"></i> Comment
@@ -824,12 +824,12 @@
                       </div>
                     </div> --}}
 
-                    <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="plans">
+                    <!-- <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="plans">
                         <div class="box-body">
                           @include('admin.account.add-plan')
 
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                 </div>
               </div>
