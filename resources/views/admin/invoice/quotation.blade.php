@@ -47,6 +47,10 @@
                                        <input type="radio" value="Footage" name="selection_type_prod" ng-click="prod_type('foot')">
                                        Footage
                                     </label>
+                                    <label class="margin-right">
+                                       <input type="radio" value="Images" name="selection_type_prod" ng-click="prod_type('music')">
+                                       Music
+                                    </label>
                                  </div>
                                  <div class="form-group" ng-if="quotation_type_var == 'subscription' && prod_type_var == 'img'">
                                     <label class="margin-right">
@@ -68,7 +72,7 @@
                                  </div>
                                  <div class="form-group" ng-show="quotation_type_var !='custom'">
                                     <label>
-                                       <button type="button" class="btn btn-danger" ng-click="getPlans()">Get Plan</button>
+                                       <button type="button" class="btn btn-danger" ng-click="getPlans()">Get Package</button>
                                     </label>
                                  </div>
                               </div>
@@ -269,17 +273,17 @@
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
                                  <div class="form-group" ng-if="plan_type_var != 'annual'">
-                                    <label for="sub_total">Plan Name</label>
+                                    <label for="sub_total">Package Name</label>
                                     <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-                                       <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%></option>
+                                       <option value="" selected="">--Select a package--</option>
+                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_name%> (<%plan.package_description%>)</option>
                                     </select>
                                  </div>
                                  <div class="form-group" ng-if="plan_type_var == 'annual'">
-                                    <label for="sub_total">Plan Name</label>
+                                    <label for="sub_total">Package Name</label>
                                     <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-                                       <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> For 1 Year</option>
+                                       <option value="" selected="">--Select a package--</option>
+                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_name%> (<%plan.package_description%>) For 1 Year</option>
                                     </select>
                                  </div>
                               </div>
@@ -380,10 +384,10 @@
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
                                  <div class="form-group">
-                                    <label for="sub_total">Plan Name</label>
+                                    <label for="sub_total">Package Name</label>
                                     <select id="myDropdown" required="" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'download')">
-                                       <option value="" selected="">--Select a plan--</option>
-                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_description%> Within 1 Year </option>
+                                       <option value="" selected="">--Select a package--</option>
+                                       <option value="<%plan%>" ng-repeat="plan in plansData"><%plan.package_name%> (<%plan.package_description%>) Within 1 Year </option>
                                     </select>
                                  </div>
                               </div>

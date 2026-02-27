@@ -179,6 +179,8 @@ class PackageController extends Controller
 				$package = Package::where('package_plan', '1');
 				if ($data['prod_type'] == 'foot') {
 					$package->where('package_type', '=', 'Footage');
+				} else if ($data['prod_type'] == 'music') {
+					$package->where('package_type', '=', 'Music');
 				} else {
 					$package->where('package_type', '=', 'Image');
 				}

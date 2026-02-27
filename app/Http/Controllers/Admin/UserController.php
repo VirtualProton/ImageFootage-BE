@@ -95,20 +95,20 @@ class UserController extends Controller
         $data['text'] = "You are added as a client.";
         $this->sendmail($data);
         if ($this->User->save_user($request)) {
-                $user = User::where('email', $request['email'])->get()->toArray();
-                $cname =$request->first_name.' '.$request->last_name;
-                $cemail =  $request->email;
-                $match_token = sha1(time()) . random_int(111, 999);
-                User::where('id', $user[0]['id'])->update([
-                    'email_verify_token' => $match_token,
-                    'token_valid_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " days")),
-                    'status' => '0'
-                ]);
-                $cont_url = url('/active_user_account') . '/' . $match_token;
-                $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
-                Mail::send('createusermail', $data, function ($message) use ($data) {
-                    $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
-                });            
+            $user = User::where('email', $request['email'])->get()->toArray();
+            $cname = $request->first_name . ' ' . $request->last_name;
+            $cemail =  $request->email;
+            $match_token = sha1(time()) . random_int(111, 999);
+            User::where('id', $user[0]['id'])->update([
+                'email_verify_token' => $match_token,
+                'token_valid_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " days")),
+                'status' => '0'
+            ]);
+            $cont_url = url('/active_user_account') . '/' . $match_token;
+            $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
+            Mail::send('createusermail', $data, function ($message) use ($data) {
+                $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
+            });
             return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully Please check your email for verification link !!!");
         } else {
             return redirect("admin/users/create")->with("error", "Due to some error, Laed/User/Contact is not registered yet. Please try again!");
@@ -178,13 +178,13 @@ class UserController extends Controller
 
         $agentlist = $this->Account->getAccountData();
         // Check if logged-in admin has role_id = 1
-if (Auth::guard('admins')->user()->role_id == 1) {
-    // Load all comments for role_id = 1
-    $comments = Comment::with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
-} else {
-    // Load user-specific comments
-    $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
-}
+        if (Auth::guard('admins')->user()->role_id == 1) {
+            // Load all comments for role_id = 1
+            $comments = Comment::with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        } else {
+            // Load user-specific comments
+            $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        }
         $get_quotations = Invoice::with('items')
             ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name')
             ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
