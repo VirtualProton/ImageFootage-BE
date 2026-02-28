@@ -540,4 +540,16 @@ class InvoiceController extends Controller
 
         return DataTables::of($query)->make(true);
     }
+
+    /**
+     * 
+     * Handle Razorpay payment response for invoice payments
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function razorpayInvoiceResponse(Request $request)
+    {
+        return $this->Common->razorpayInvoiceResponse($request->all());
+    }
 }

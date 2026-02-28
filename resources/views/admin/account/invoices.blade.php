@@ -565,7 +565,7 @@
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
                                   @if($invioces->proforma_type == 2)
-                                  Admin
+                                  Backend
                                   @else
                                   Frontend
                                   @endif

@@ -21,6 +21,11 @@ use App\Models\InvoiceItem;
 use App\Models\Package;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
+use Illuminate\Http\Request;
+
+
 
 class Common extends Model
 {
@@ -131,7 +136,7 @@ class Common extends Model
     public function save_proforma($data)
     {
         $res = $this->verifyUserDetailsExist($data['uid']);
-        if(!$res) {
+        if (!$res) {
             $this->statusdesc  =   "Please complete the user details.";
             $this->statuscode  =   "0";
             return response()->json(compact('this'));
@@ -184,7 +189,7 @@ class Common extends Model
                 if (isset($eachproduct['image']) && filter_var($eachproduct['image'], FILTER_VALIDATE_URL)) {
                     $image = $eachproduct['image'];
                 } else {
-                    $image = isset($eachproduct['image']) &&!empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';
+                    $image = isset($eachproduct['image']) && !empty($eachproduct['image']) ? $this->imagesaver($eachproduct['image']) : '';
                 }
                 $licence_type = $eachproduct['pro_type'] == 'right_managed' ? $eachproduct['licence_type'] : '';
                 $insert_product = array(
@@ -335,9 +340,9 @@ class Common extends Model
     {
         if (!empty($invoice_id) && !empty($user_id)) {
             $all_datas = DB::table('imagefootage_performa_invoices')
-                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.address', 'usr.address2', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'usr.vendor_code','ct.name as cityname', 'st.state as statename', 'cn.name as countryname', 'imagefootage_user_package.id as package_id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly','imagefootage_user_package.package_expiry', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price','licence_type.licence_name')
+                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.address', 'usr.address2', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'usr.vendor_code', 'ct.name as cityname', 'st.state as statename', 'cn.name as countryname', 'imagefootage_user_package.id as package_id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_plan', 'imagefootage_user_package.package_expiry_yearly', 'imagefootage_user_package.package_expiry', 'imagefootage_user_package.package_type', 'imagefootage_user_package.pacage_size', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_price', 'licence_type.licence_name')
                 ->join('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
-                ->join('licence_type','licence_type.id','=','imagefootage_user_package.footage_tier')
+                ->join('licence_type', 'licence_type.id', '=', 'imagefootage_user_package.footage_tier')
                 ->join('imagefootage_users as usr', 'usr.id', '=', 'imagefootage_performa_invoices.user_id')
                 ->where('imagefootage_performa_invoices.id', '=', $invoice_id)
                 ->where('imagefootage_performa_invoices.user_id', '=', $user_id)
@@ -384,7 +389,7 @@ class Common extends Model
         $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
         $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
-        $datenow = date("d/m/Y h:m:s", strtotime($dataForEmail[0]['invicecreted']));
+        $datenow = date("d/m/Y h:m:s", strtotime($dataForEmail[0]['invoice_created']));
         $transactionDate = str_replace(" ", "%20", $datenow);
         $transactionRequest->setTransactionDate($transactionDate);
         $transactionRequest->setCustomerName($dataForEmail[0]['first_name']);
@@ -419,7 +424,42 @@ class Common extends Model
         $data["email"]   = $dataForEmail[0]['email_id'];
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $dataForEmail[0]['first_name'];
+        if ($payment_method == 'online') {
+            // Prepare Razorpay payment link
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $paymentLinkData = [
+                'amount' => ($dataForEmail[0]['total'] + $dataForEmail[0]['tax']) * 100, // Amount in paise
+                'currency' => 'INR',
+                'description' => 'Invoice Payment for ' . $dataForEmail[0]['invoice_name'],
+                'reference_id' => $dataForEmail[0]['invoice_name'],
+                'customer' => [
+                    'name' => $dataForEmail[0]['first_name'],
+                    'email' => $data["email"],
+                    'contact' => $dataForEmail[0]['mobile']
+                ],
+                'notify' => [
+                    'sms' => true,
+                    'email' => true
+                ],
+                'callback_url' => config('app.front_end_url') . '/razorpayInvoiceResponse',
+                'callback_method' => 'get'
+            ];
 
+            $paymentLink = $api->paymentLink->create($paymentLinkData);
+
+            // Send payment link to customer via email
+            $mailData = [
+                'cname' => $dataForEmail[0]['first_name'],
+                'cemail' => $data["email"],
+                'payment_link' => $paymentLink['short_url']
+            ];
+
+            Mail::send('completepaymentmail', $mailData, function ($message) use ($mailData) {
+                $message->to($mailData['cemail'], $mailData['cname'])
+                    ->from('admin@imagefootage.com', 'Imagefootage')
+                    ->subject('Complete Your Payment - ' . config('constants.company_name'));
+            });
+        }
         Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
@@ -470,7 +510,7 @@ class Common extends Model
     {
         $dataForEmail = $this->getSubData($quotation_id, $user_id);
         $dataForEmail = json_decode(json_encode($dataForEmail), true);
-        if($request_data['payment_method'] =='chq'){
+        if ($request_data['payment_method'] == 'chq') {
             $this->findPackage($dataForEmail[0]['package_id']);
         }
 
@@ -589,7 +629,7 @@ class Common extends Model
     public function save_subscription_proforma($data)
     {
         $res = $this->verifyUserDetailsExist($data['uid']);
-        if(!$res) {
+        if (!$res) {
             $this->statusdesc  =   "Please complete the user details.";
             $this->statuscode  =   "0";
             return response()->json(compact('this'));
@@ -784,7 +824,7 @@ class Common extends Model
     public function save_download_proforma($data)
     {
         $res = $this->verifyUserDetailsExist($data['uid']);
-        if(!$res) {
+        if (!$res) {
             $this->statusdesc  =   "Please complete the user details.";
             $this->statuscode  =   "0";
             return response()->json(compact('this'));
@@ -1153,13 +1193,61 @@ class Common extends Model
         }
     }
 
-    public function findPackage($package_id){
-        if(!empty($package_id)){
-            UserPackage::where('id',$package_id)->update([
-                'status'=> 1,
-                'payment_status'=>'Transction Success'
+    public function findPackage($package_id)
+    {
+        if (!empty($package_id)) {
+            UserPackage::where('id', $package_id)->update([
+                'status' => 1,
+                'payment_status' => 'Transction Success'
             ]);
         }
+    }
 
+    /**
+     * @param array $request
+     * 
+     * Handle Razorpay payment response for invoice payments
+     * 
+     */
+    public function razorpayInvoiceResponse(array $request)
+    {
+        try {
+            $paymentLinkId = $request['payment_link_id'] ?? null;
+            if (empty($paymentLinkId)) {
+                return response()->json(['error' => 'Payment link ID is required'], 400);
+            }
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $paymentLink = $api->paymentLink->fetch($paymentLinkId);
+            if ($paymentLink['status'] === 'paid') {
+                // Update invoice/payment record as paid
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Transction Success',
+                        'status' => 1,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            } else if ($paymentLink['status'] === 'pending') {
+                // Update invoice/payment record as pending
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Pending',
+                        'status' => 0,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            } else {
+                // Update invoice/payment record as failed
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Failed',
+                        'status' => 3,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

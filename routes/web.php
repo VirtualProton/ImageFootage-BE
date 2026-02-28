@@ -301,6 +301,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/save_po', 'InvoiceController@savePO');
     Route::post('/get_invoice', 'InvoiceController@get_invoice');
     Route::post('/update_po', 'InvoiceController@update_po');
+    Route::post('/razorpayInvoiceResponse', 'InvoiceController@razorpayInvoiceResponse');
 
     // Route for discount module
     Route::get('/list_discount_message', 'DiscountMessageController@index');
