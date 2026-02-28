@@ -822,7 +822,7 @@ class PaymentController extends Controller
         $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
         $pdf = PDF::loadHTML(view('email.orders_invoice', ['orders' => $OrderData[0], 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction . "_web_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $pdf_path = '';
         // if (!file_exists($pdfPath)) {
         //     mkdir($pdfPath, 0755, true);
@@ -882,7 +882,7 @@ class PaymentController extends Controller
         $amount_in_words  =  $this->convert_number_to_words($OrderData['package_price']);
         $pdf = PDF::loadHTML(view('email.plan_invoice_email', ['orders' => $OrderData, 'amount_in_words' => $amount_in_words]));
         $fileName = $transaction . "_web_plan_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf'). '/' . $fileName);
+        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $pdf_path = '';
         try {
             $s3Client = new S3Client([
@@ -1065,5 +1065,73 @@ class PaymentController extends Controller
         }
 
         return $string;
+    }
+
+    /**
+     * 
+     * Handle Razorpay payment response for invoice payments
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     */
+    public function razorpayInvoiceResponse(Request $request)
+    {
+        try {
+            $paymentLinkId = $request->input('razorpay_payment_link_id');
+            if (empty($paymentLinkId)) {
+                return response()->json(['error' => 'Payment link ID is required'], 400);
+            }
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $attributes = [
+                'razorpay_payment_id' => $request->input('razorpay_payment_id') ?? null,
+                'razorpay_payment_link_id' => $request->input('razorpay_payment_link_id') ?? null,
+                'razorpay_payment_link_reference_id' => $request->input('razorpay_payment_link_reference_id') ?? null,
+                'razorpay_payment_link_status' => $request->input('razorpay_payment_link_status') ?? null,
+                'razorpay_signature' => $request->input('razorpay_signature') ?? null
+            ];
+            try {
+                $payload = $attributes['razorpay_payment_link_id'] . '|' . $attributes['razorpay_payment_id'];
+                $api->utility->verifySignature(
+                    $payload,
+                    $attributes['razorpay_signature'],
+                    'payment_link'
+                );
+            } catch (SignatureVerificationError $e) {
+                return response()->json(['error' => 'Invalid signature'], 400);
+            }
+
+            $paymentLink = $api->paymentLink->fetch($paymentLinkId);
+            if ($paymentLink['status'] === 'paid') {
+                // Update invoice/payment record as paid
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Transction Success',
+                        'status' => 1,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            } else if ($paymentLink['status'] === 'pending') {
+                // Update invoice/payment record as pending
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Pending',
+                        'status' => 0,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            } else {
+                // Update invoice/payment record as failed
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $paymentLink['reference_id'])
+                    ->update([
+                        'payment_status' => 'Failed',
+                        'status' => 3,
+                        'payment_response' => json_encode($paymentLink)
+                    ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

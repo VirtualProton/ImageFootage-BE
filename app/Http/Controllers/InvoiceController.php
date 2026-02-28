@@ -93,5 +93,4 @@ class InvoiceController extends Controller
         return view('admin.invoice.invoice',compact('user_id'));  
     }
   }
-
 }
