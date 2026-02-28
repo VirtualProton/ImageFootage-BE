@@ -138,8 +138,10 @@ class UserController extends Controller
         $user = User::find($id);
         $this->Account = new Account();
         $this->Admin = new Admin();
+        $agentlist = [];
         if (!empty($user->account_manager_id)) {
             $account_manager = $this->Admin->getAgentData($user->account_manager_id);
+            $agentlist[] = $account_manager;
             $account_manager_name = $account_manager['name'];
         } else {
             $account_manager_name = "";
@@ -176,7 +178,9 @@ class UserController extends Controller
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
 
-        $agentlist = $this->Account->getAccountData();
+            if (empty($agentlist)) {
+                $agentlist = $this->Admin->getAgentData('');
+            }
         // Check if logged-in admin has role_id = 1
         if (Auth::guard('admins')->user()->role_id == 1) {
             // Load all comments for role_id = 1
@@ -237,7 +241,7 @@ class UserController extends Controller
 
         $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->where('imagefootage_user_package.package_plan', 2)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
         $data['active_download_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
         })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');

@@ -18,7 +18,7 @@
       <select name="agent_id">
         <option value="">-Select-</option>
         @foreach($agentlist as $agent)
-        <option value="{{$agent['id']}}">{{$agent['account_name']}}</option>
+        <option value="{{$agent['id']}}">{{$agent['name']}}</option>
         @endforeach
       </select>
     </div>
