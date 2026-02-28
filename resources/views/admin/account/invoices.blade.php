@@ -21,18 +21,18 @@
           @include('admin.partials.message')
           <div class="tabs">
             <ul class="nav nav-tabs">
-              <li class="@if($active_tab==" tab1") active @endif">
+              <li class="@if($active_tab=="tab1") active @endif">
                 <a href="#users" role="tab" data-toggle="tab">
                   <icon class="fa fa-home"></icon> Client Information
                 </a>
               </li>
-              <li class="@if($active_tab==" tab2") active @endif">
+              <li class="@if($active_tab=="tab2") active @endif">
                 <a href="#posts" role="tab" data-toggle="tab" onclick="loadFirstTab()">
                   <i class="fa fa-user"></i> Sale
                 </a>
               </li>
               @if(in_array(Auth::guard('admins')->user()->role_id,config('constants.SUPER_ADMIN_ROLE_ID')))
-              <li class="@if($active_tab==" tab3") active @endif">
+              <li class="@if($active_tab=="tab3") active @endif">
                 <a href="#clientinfo" role="tab" data-toggle="tab">
                   <i class="fa fa-pencil-square-o"></i> Client Info Update
                 </a>
@@ -55,7 +55,7 @@
               </span>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane fade @if($active_tab==" tab1") in active @endif" id="users">
+              <div class="tab-pane fade @if($active_tab=="tab1") in active @endif" id="users">
                 <div class="box-body">
                   <table id="info" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                     <thead>
@@ -64,10 +64,6 @@
                         <div class="form-group col-sm-6">
                           <h5>User Name : {{$user->user_name}}</h5>
                           <h5>Deactivated ? : {{$user->status=1?"No":"Yes"}}</h5>
-                          <h5>Password :
-                            <input type="password" class="" name="" id="" value=""></br></br>
-                            <button class="btn btn-primary" id="resetButton" onclick="resetPassword({{$user->id}})">Reset</button>
-                          </h5>
                           <h5>First Name : {{$user->first_name}}</h5>
                           <h5>Last Name : {{$user->last_name}}</h5>
                           <h5>Email : {{$user->email}}
@@ -111,7 +107,7 @@
                   @include('admin.account.comment')
                 </div>
               </div>
-              <div class="tab-pane fade @if($active_tab==" tab2") in active @endif" id="posts">
+              <div class="tab-pane fade @if($active_tab=="tab2") in active @endif" id="posts">
                 <div class="box-body">
                   <div class="tabs">
                     <ul class="nav nav-tabs">
@@ -848,7 +844,7 @@
                 </div>
               </div>
 
-              <div class="tab-pane fade @if($active_tab==" tab3") in active @endif" id="clientinfo">
+              <div class="tab-pane fade @if($active_tab=="tab3") in active @endif" id="clientinfo">
                 <div class="box-body">
                   @include('admin.account.update-user')
                   @include('admin.account.client-des')
