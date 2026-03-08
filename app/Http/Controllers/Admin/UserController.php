@@ -511,6 +511,7 @@ class UserController extends Controller
                     'country' => $request->country,
                     'state' => $request->state,
                     'city' => $request->city,
+                    'status' => $request->status,
                     'postal_code' => $request->user_postalcode,
                     'vendor_code' => isset($request->user_code) ? $request->user_code : ''
                 );
