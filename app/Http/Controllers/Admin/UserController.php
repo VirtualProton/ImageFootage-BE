@@ -511,7 +511,7 @@ class UserController extends Controller
                     'country' => $request->country,
                     'state' => $request->state,
                     'city' => $request->city,
-                    'status' => $request->status,
+                    'status' => $request->user_status,
                     'postal_code' => $request->user_postalcode,
                     'vendor_code' => isset($request->user_code) ? $request->user_code : ''
                 );
@@ -522,7 +522,7 @@ class UserController extends Controller
                     $userinfo->whitelist = $request->user_whitelist;
                     $userinfo->blacklist = $request->user_blacklist;
                     $userinfo->frozen = $request->user_checkout_frozen;
-                    $userinfo->allow_certi = $request->user_allow_certi;
+                    $userinfo->allow_certi = $request->user_allow_certi; 
                     $userinfo->enable_subs_multi = $request->user_enable_subs_multi;
                     $userinfo->preferred_contact_method = $request->user_preferred_contact_method;
                     $userinfo->user_id = $request->user_id;
