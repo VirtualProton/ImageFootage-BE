@@ -159,7 +159,7 @@
                       </td>
                       <td>
                         @if($comment->user_id)
-                          <a href="{{url('admin/users/show/'.$comment->user_id).'#comment'}}" 
+                          <a href="{{url('admin/users/showComment/'.$comment->id)}}" 
                              class="btn btn-primary btn-xs" 
                              title="View Details">
                             <i class="fa fa-eye"></i>

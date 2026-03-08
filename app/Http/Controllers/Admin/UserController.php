@@ -141,7 +141,6 @@ class UserController extends Controller
         $agentlist = [];
         if (!empty($user->account_manager_id)) {
             $account_manager = $this->Admin->getAgentData($user->account_manager_id);
-            $agentlist[] = $account_manager;
             $account_manager_name = $account_manager['name'];
         } else {
             $account_manager_name = "";
@@ -178,9 +177,7 @@ class UserController extends Controller
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
 
-            if (empty($agentlist)) {
-                $agentlist = $this->Admin->getAgentData('');
-            }
+        $agentlist = $this->Admin->getAgentData('');
         // Check if logged-in admin has role_id = 1
         if (Auth::guard('admins')->user()->role_id == 1) {
             // Load all comments for role_id = 1
@@ -579,5 +576,22 @@ class UserController extends Controller
         $newCreditedPackage->save();
 
         return back()->with('success', 'Plan added successfully !!');
+    }
+
+    /**
+     * Show the comment details.
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showComment($id)
+    {
+        $comment = DB::table('imagefootage_comments')->find($id);
+
+        if (!$comment) {
+            return redirect()->back()->with('error', 'Comment not found');
+        }
+
+        return view('admin.comments.showComment', ['comment' => $comment]);
     }
 }

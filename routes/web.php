@@ -219,6 +219,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::get('/users/status/{status}/{id}', 'UserController@status');
     Route::get('/users/show/{id}', 'UserController@show');
+    Route::get('/users/showComment/{id}', 'UserController@showComment');
+
 
 
     Route::resource('/users', 'UserController');
