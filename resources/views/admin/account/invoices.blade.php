@@ -339,7 +339,7 @@
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <button type="button"
-                                    ng-click='open_download_on_behalf_modal(@json(["id" => $quotations->id, "total" => $quotations->total, "invoice_type" => $quotations->invoice_type, "quotation_source" => $quotations->quotation_source]), {{$user_id}})'
+                                    ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $quotations->id, "total" => $quotations->total, "invoice_type" => $quotations->invoice_type, "quotation_source" => $quotations->quotation_source]) }}, {{$user_id}})'
                                     title="Download on Behalf"
                                     data-target="#modal-download-behalf"
                                     data-toggle="modal"
