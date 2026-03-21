@@ -570,6 +570,12 @@ class InvoiceController extends Controller
             $productWeb = $request->input('product_web');
             $total = $request->input('total');
             $packageId = $request->input('package_id');
+            $user = User::find($userId);
+
+            if (empty($user)) {
+                return response()->json(['status' => '0', 'message' => 'User not found.']);
+            }
+
             $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
                 ->where('user_id', '=', $userId)
                 ->where('id', '=', $packageId)

@@ -38,7 +38,7 @@
           <option value="">-Select-</option>
           @foreach($agentlist as $agent)
           <option value="{{$agent['id']}}"
-            @if($user->account_manager == $agent['id']) selected="selected" @endif>
+            @if($user->account_manager == $agent['id'] || ($account_manager_name ?? null) == $agent['name']) selected="selected" @endif>
             {{$agent['name']}}
           </option>
           @endforeach
