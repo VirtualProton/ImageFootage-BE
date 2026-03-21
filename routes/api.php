@@ -102,6 +102,9 @@ Route::group([
     Route::get('/category-list', 'ProductController@categoryLists');
     Route::post('/category-details', 'ProductController@categoryDetails');
     Route::get('/licence_details','MediaController@licenceDetails');
+    
+    // Admin comment routes
+    Route::post('/admin/comments/{id}/updateCommentStatus', 'Admin\InvoiceController@updateCommentStatus');
 });
 
 Route::group([
