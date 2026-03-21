@@ -956,7 +956,11 @@ class Common extends Model
 
         $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"] . "download_quotation.pdf";
-        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
+        $pdfDirectory = storage_path('app/public/pdf');
+        if (!is_dir($pdfDirectory)) {
+            mkdir($pdfDirectory, 0777, true);
+        }
+        $pdf->save($pdfDirectory . '/' . $fileName);
         try {
             Mail::send('mail', $data, function ($message) use ($data, $pdf, $fileName) {
                 $message->to($data["email"])
@@ -971,7 +975,7 @@ class Common extends Model
             ]);
 
             $path = 'quotation/' . $fileName;
-            $source = fopen(storage_path('app/public/pdf') . '/' . $fileName, 'rb');
+            $source = fopen($pdfDirectory . '/' . $fileName, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -986,7 +990,7 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoices')
                     ->where('id', '=', $id)
                     ->update(['quotation_url' => $pdf_path]);
-                unlink(storage_path('app/public/pdf') . '/' . $fileName);
+                unlink($pdfDirectory . '/' . $fileName);
             }
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";
