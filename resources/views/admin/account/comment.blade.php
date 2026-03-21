@@ -30,7 +30,7 @@
             onclick="openViewModal(this)">
             <i class="fa fa-eye"></i> View
           </button>
-          @if($comment['status'] !== 'closed')
+          @if(strtolower($comment['status']) !== 'closed')
           <button type="button" class="btn btn-sm btn-warning update-comment"
             data-id="{{$comment['id']}}"
             data-status="{{$comment['status']}}"
@@ -113,9 +113,10 @@
             <label for="update_status"><strong>Status:</strong></label>
             <select class="form-control" id="update_status" name="status" required>
               <option value="">Select Status</option>
-              <option value="pending">Open</option>
-              <option value="in_progress">In Progress</option>
-              <option value="closed">Closed</option>
+              <option value="Open">Open</option>
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
             </select>
           </div>
         </div>
@@ -129,6 +130,31 @@
 </div>
 
 <script>
+  // Status mapper - converts database values to display values
+  const statusMapper = {
+    'open': 'Open',
+    'Open': 'Open',
+    'pending': 'Pending',
+    'Pending': 'Pending',
+    'in_progress': 'In Progress',
+    'In Progress': 'In Progress',
+    'In_Progress': 'In Progress',
+    'closed': 'Closed',
+    'Closed': 'Closed'
+  };
+
+  // Reverse mapper - converts display values to database values
+  const reverseStatusMapper = {
+    'Open': 'open',
+    'Pending': 'pending',
+    'In Progress': 'in_progress',
+    'Closed': 'closed'
+  };
+
+  function mapStatus(dbStatus) {
+    return statusMapper[dbStatus] || dbStatus;
+  }
+
   function openViewModal(button) {
 
     var id = button.getAttribute('data-id');
@@ -158,10 +184,11 @@
 
   function openUpdateModal(button) {
     var id = button.getAttribute('data-id');
-    var status = button.getAttribute('data-status');
+    var dbStatus = button.getAttribute('data-status');
+    var mappedStatus = mapStatus(dbStatus);
 
     document.getElementById('update_comment_id').textContent = id;
-    document.getElementById('update_status').value = status;
+    document.getElementById('update_status').value = mappedStatus;
 
     // Store the comment ID for form submission
     document.getElementById('updateCommentForm').dataset.commentId = id;
@@ -190,7 +217,6 @@
   }
 
   // Handle form submission
-  // Handle form submission
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('updateCommentForm');
     if (form) {
@@ -202,9 +228,10 @@
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         var commentId = this.dataset.commentId;
-        var status = document.getElementById('update_status').value;
+        var displayStatus = document.getElementById('update_status').value;
+        var dbStatus = reverseStatusMapper[displayStatus] || displayStatus;
 
-        if (!commentId || !status) {
+        if (!commentId || !displayStatus) {
           alert('Please fill all required fields');
           return;
         }
@@ -217,7 +244,7 @@
               'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
             },
             body: JSON.stringify({
-              status: status
+              status: dbStatus
             })
           })
           .then(response => response.json())
