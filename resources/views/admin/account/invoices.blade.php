@@ -910,7 +910,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id</label>
                   <div class="col-md-6">
-                    <p>Q@{{quotationObj.invoice_name}}</p>
+                      <p>Q<% quotationObj.invoice_name %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -940,7 +940,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Package :</label>
                   <div class="col-md-6">
-                    <p>@{{quotationObj.package_description}}</p>
+                    <p><% quotationObj.package_description %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -952,7 +952,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p>@{{quotationObj.total-quotationObj.tax}}</p>
+                    <p><% quotationObj.total - quotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -964,13 +964,13 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p>@{{quotationObj.tax}}</p>
+                    <p><% quotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p>@{{quotationObj.total}}</p>
+                    <p><% quotationObj.total %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1145,7 +1145,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id :</label>
                   <div class="col-md-6">
-                    <p>Q@{{cusQuotationObj.invoice_name}}</p>
+                    <p>Q<% cusQuotationObj.invoice_name %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1181,25 +1181,25 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p>@{{cusQuotationObj.total-cusQuotationObj.tax}}</p>
+                    <p><% cusQuotationObj.total - cusQuotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Discount :</label>
                   <div class="col-md-6">
-                    <p>@{{cusQuotationObj.discount}}</p>
+                    <p><% cusQuotationObj.discount %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p>@{{cusQuotationObj.tax}}</p>
+                    <p><% cusQuotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p>@{{cusQuotationObj.total}}</p>
+                    <p><% cusQuotationObj.total %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1358,11 +1358,11 @@
               <div class="col-sm-12">
                 <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
                   <tr ng-repeat="item in cusQuotationObj.items">
-                    <td style="padding:5px;">@{{ item.type }}</td>
-                    <td style="padding:5px;"><img src="@{{ item.product_image }}" width="150px" /></td>
-                    <td style="padding:5px;">@{{ item.product_id }}</td>
-                    <td style="padding:5px;">@{{ item.product_size }}</td>
-                    <td style="padding:5px;">@{{ item.total }}</td>
+                    <td style="padding:5px;"><% item.type %></td>
+                    <td style="padding:5px;"><img src="<% item.product_image %>" width="150px" /></td>
+                    <td style="padding:5px;"><% item.product_id %></td>
+                    <td style="padding:5px;"><% item.product_size %></td>
+                    <td style="padding:5px;"><% item.total %></td>
                   </tr>
                 </table>
               </div>
