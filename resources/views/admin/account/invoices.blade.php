@@ -910,7 +910,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id</label>
                   <div class="col-md-6">
-                    <p>Q@{{ quotationObj.invoice_name }}</p>
+                    <p>Q@{{quotationObj.invoice_name}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -940,7 +940,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Package :</label>
                   <div class="col-md-6">
-                    <p>@{{ quotationObj.package_description }}</p>
+                    <p>@{{quotationObj.package_description}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -952,7 +952,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p>@{{ quotationObj.total - quotationObj.tax }}</p>
+                    <p>@{{quotationObj.total-quotationObj.tax}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -964,13 +964,13 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p>@{{ quotationObj.tax }}</p>
+                    <p>@{{quotationObj.tax}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p>@{{ quotationObj.total }}</p>
+                    <p>@{{quotationObj.total}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1145,7 +1145,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id :</label>
                   <div class="col-md-6">
-                    <p>Q@{{ cusQuotationObj.invoice_name }}</p>
+                    <p>Q@{{cusQuotationObj.invoice_name}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1181,25 +1181,25 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p>@{{ cusQuotationObj.total - cusQuotationObj.tax }}</p>
+                    <p>@{{cusQuotationObj.total-cusQuotationObj.tax}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Discount :</label>
                   <div class="col-md-6">
-                    <p></p>
+                    <p>@{{cusQuotationObj.discount}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p>@{{ cusQuotationObj.tax }}</p>
+                    <p>@{{cusQuotationObj.tax}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p>@{{ cusQuotationObj.total }}</p>
+                    <p>@{{cusQuotationObj.total}}</p>
                   </div>
                 </div>
                 <div class="form-group row">
