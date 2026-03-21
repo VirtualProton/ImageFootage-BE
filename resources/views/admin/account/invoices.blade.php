@@ -1396,7 +1396,7 @@
       <div class="modal-body">
         <form ng-submit="downloadAndSendEmail()">
           <div class="form-group">
-            <label for="product_id">Product ID:</label>
+            <label for="product_id">Product ID: <span style="color: red;">*</span></label>
             <input type="text" 
                    class="form-control" 
                    id="product_id" 

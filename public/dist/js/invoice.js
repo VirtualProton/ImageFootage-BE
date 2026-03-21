@@ -2063,22 +2063,17 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             return;
         }
 
-        if (!$scope.invoice_type) {
-            alert('Please select invoice type (Image/Footage/Music)');
-            return;
-        }
-
         $("#loading").show();
         $http({
             method: "POST",
             url: "{{ url('admin/get-package-items') }}",
             data: {
                 product_id: $scope.download_product_id,
-                package_id: $scope.current_package_id,
+                package_id: $scope.quotation_data.id,
                 user_id: parseInt("{{ $user_id }}"),
-                invoice_type: parseInt($scope.invoice_type),
-                product_web: parseInt($scope.product_web) || 2,
-                total: $scope.download_total || 0
+                invoice_type: $scope.quotation_data.invoice_type,
+                product_web: $scope.quotation_data.quotation_source || 2,
+                total: $scope.quotation_data.total || 0
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2090,9 +2085,6 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     alert(result.data.message + ' - Email notification sent to the user');
                     $('#modal-download-behalf').modal('hide');
                     $scope.download_product_id = '';
-                    $scope.invoice_type = '';
-                    $scope.product_web = '';
-                    $scope.download_total = '';
                 } else {
                     alert('Error: ' + result.data.message);
                 }
