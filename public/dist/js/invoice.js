@@ -2051,8 +2051,9 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     // Open Download on Behalf Modal
-    $scope.open_download_on_behalf_modal = function(quotationData) {
+    $scope.open_download_on_behalf_modal = function(quotationData, userId) {
         $scope.quotation_data = quotationData;
+        $scope.quotation_data.user_id = userId;
         $scope.download_product_id = '';
     };
 
@@ -2063,14 +2064,19 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             return;
         }
 
+        if (!$scope.quotation_data || !$scope.quotation_data.user_id) {
+            alert('User ID not found. Please reload the page.');
+            return;
+        }
+
         $("#loading").show();
         $http({
             method: "POST",
-            url: "{{ url('admin/get-package-items') }}",
+            url: "/admin/get-package-items",
             data: {
                 product_id: $scope.download_product_id,
                 package_id: $scope.quotation_data.id,
-                user_id: parseInt("{{ $user_id }}"),
+                user_id: parseInt($scope.quotation_data.user_id),
                 invoice_type: $scope.quotation_data.invoice_type,
                 product_web: $scope.quotation_data.quotation_source || 2,
                 total: $scope.quotation_data.total || 0
