@@ -422,6 +422,16 @@
                                                         echo "Selected";
                                                       } ?>>Cancel</option>
                                   </select>
+
+                                  <br><br>
+                                  <a href="javascript:void(0);"
+                                    ng-click="open_download_on_behalf_modal({{$invioces->id}}, {{$user->id}}, {{$invioces->package_id ? $invioces->package_id : 0}})"
+                                    title="Download on Behalf"
+                                    data-target="#modal-download-behalf"
+                                    data-toggle="modal"
+                                    class="btn btn-xs btn-info">
+                                    <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
+                                  </a>
                                 </td>
                                 <td>
                                   <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
@@ -547,29 +557,29 @@
                                         }}</td>
                                 <td>
                                   @if($invioces->payment_method == 'online')
-                                    @if($invioces->status == '0')
-                                      <span class="label label-warning">Pending</span>
-                                    @elseif($invioces->status == '1')
-                                      <span class="label label-success">Paid</span>
-                                    @elseif($invioces->status == '2')
-                                      <span class="label label-info">Purchased</span>
-                                    @elseif($invioces->status == '3')
-                                      <span class="label label-danger">Cancelled</span>
-                                    @endif
+                                  @if($invioces->status == '0')
+                                  <span class="label label-warning">Pending</span>
+                                  @elseif($invioces->status == '1')
+                                  <span class="label label-success">Paid</span>
+                                  @elseif($invioces->status == '2')
+                                  <span class="label label-info">Purchased</span>
+                                  @elseif($invioces->status == '3')
+                                  <span class="label label-danger">Cancelled</span>
+                                  @endif
                                   @else
-                                    <select <?php if ($invioces->status == 3) {
-                                              echo "disabled";
-                                            } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
-                                      <option value="0" <?php if ($invioces->status == '0') {
-                                                          echo "Selected";
-                                                        } ?>>Pending</option>
-                                      <option value="1" <?php if ($invioces->status == '1') {
-                                                          echo "Selected";
-                                                        } ?>>Paid</option>
-                                      <option value="3" <?php if ($invioces->status == '3') {
-                                                          echo "Selected";
-                                                        } ?>>Cancel</option>
-                                    </select>
+                                  <select <?php if ($invioces->status == 3) {
+                                            echo "disabled";
+                                          } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
+                                    <option value="0" <?php if ($invioces->status == '0') {
+                                                        echo "Selected";
+                                                      } ?>>Pending</option>
+                                    <option value="1" <?php if ($invioces->status == '1') {
+                                                        echo "Selected";
+                                                      } ?>>Paid</option>
+                                    <option value="3" <?php if ($invioces->status == '3') {
+                                                        echo "Selected";
+                                                      } ?>>Cancel</option>
+                                  </select>
                                   @endif
                                 </td>
                                 <td>{{$invioces->po_detail}}</td>
@@ -1376,6 +1386,70 @@
 
 
 <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
+  <!-- Download on Behalf Modal -->
+  <div class="modal" id="modal-download-behalf" style="padding-right: 16px;" ng-controller="invoiceController">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title">Download on Behalf</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>User ID</label>
+            <input type="text" class="form-control" ng-model="download_behalf.user_id" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Package ID</label>
+            <input type="text" class="form-control" ng-model="download_behalf.package_id" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Select Items to Download</label>
+            <div style="overflow-y: auto; max-height: 400px; border: 1px solid #ddd; padding: 10px;">
+              <!-- Gallery View with Thumbnails -->
+              <div class="row">
+                <div ng-repeat="item in download_behalf.items" class="col-md-3" style="margin-bottom: 15px; text-align: center;">
+                  <div style="border: 1px solid #ccc; padding: 10px; cursor: pointer;">
+                    <input type="checkbox"
+                      ng-model="item.selected"
+                      ng-value="item.id">
+                    <br><br>
+                    <img ng-if="item.type === 'image'"
+                      ng-src="@{{ item.image_path }}"
+                      style="max-width: 100%; max-height: 150px;"
+                      ng-title="@{{ item.name }}">
+                    <video ng-if="item.type === 'footage'"
+                      style="max-width: 100%; max-height: 150px;">
+                      <source ng-src="@{{ item.media_path }}" type="video/mp4">
+                    </video>
+                    <div ng-if="item.type === 'music'" style="font-size: 48px; color: #999;">
+                      <i class="fa fa-music"></i>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 12px;">@{{ item.name }}</p>
+                    <small>@{{ item.type }}</small>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="download_behalf.items.length === 0" style="text-align: center; padding: 20px;">
+                <p>No items found for this package.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="confirm_download_behalf()">
+            Download Selected Items
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -1700,6 +1774,116 @@
       },
       type: 'POST'
     });
+  }
+
+  // Open Download on Behalf Modal
+  function open_download_on_behalf_modal_scope($scope, invoiceId, userId, packageId) {
+    return function() {
+      $scope.download_behalf = {
+        user_id: userId,
+        package_id: packageId,
+        invoice_id: invoiceId,
+        items: []
+      };
+
+      // Fetch items from backend
+      $.ajax({
+        type: "POST",
+        url: "{{ url('admin/get-package-items') }}",
+        data: {
+          package_id: packageId,
+          user_id: userId
+        },
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(result) {
+          if (result.resp.statuscode == '1') {
+            $scope.$apply(function() {
+              $scope.download_behalf.items = result.resp.data;
+            });
+          } else {
+            alert('Failed to fetch items: ' + result.resp.statusdesc);
+          }
+        },
+        error: function() {
+          alert('Error fetching items');
+        }
+      });
+    };
+  }
+
+  // In the Angular controller, add this method:
+  // $scope.open_download_on_behalf_modal = function(invoiceId, userId, packageId) {
+  //   $scope.download_behalf = {
+  //     user_id: userId,
+  //     package_id: packageId,
+  //     invoice_id: invoiceId,
+  //     items: []
+  //   };
+  //   
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "{{ url('admin/get-package-items') }}",
+  //     data: {
+  //       package_id: packageId
+  //     },
+  //     headers: {
+  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //     },
+  //     success: function(result) {
+  //       if (result.resp.statuscode == '1') {
+  //         $scope.$apply(function() {
+  //           $scope.download_behalf.items = result.resp.data;
+  //         });
+  //       }
+  //     }
+  //   });
+  // };
+
+  // Confirm and process download
+  function confirm_download_behalf_scope($scope) {
+    return function() {
+      var selected_items = [];
+
+      angular.forEach($scope.download_behalf.items, function(item) {
+        if (item.selected) {
+          selected_items.push(item.id);
+        }
+      });
+
+      if (selected_items.length === 0) {
+        alert('Please select at least one item');
+        return;
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "{{ url('admin/process-download-behalf') }}",
+        data: {
+          user_id: $scope.download_behalf.user_id,
+          package_id: $scope.download_behalf.package_id,
+          invoice_id: $scope.download_behalf.invoice_id,
+          selected_items: selected_items
+        },
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(result) {
+          if (result.resp.statuscode == '1') {
+            alert(result.resp.statusdesc);
+            $('#modal-download-behalf').modal('hide');
+            // Optionally reload the page
+            window.location.reload();
+          } else {
+            alert('Error: ' + result.resp.statusdesc);
+          }
+        },
+        error: function() {
+          alert('Error processing download');
+        }
+      });
+    };
   }
 </script>
 

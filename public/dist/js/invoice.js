@@ -2049,6 +2049,82 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             );
         }
     };
+
+    // Open Download on Behalf Modal
+    $scope.open_download_on_behalf_modal = function(invoiceId, userId, packageId) {
+        $scope.download_behalf = {
+            user_id: userId,
+            package_id: packageId,
+            invoice_id: invoiceId,
+            items: []
+        };
+
+        // Fetch items from backend
+        $http({
+            method: "POST",
+            url: api_path + "get-package-items",
+            data: {
+                package_id: packageId,
+                user_id: userId
+            }
+        }).then(
+            function(result) {
+                if (result.data.resp.statuscode == "1") {
+                    $scope.download_behalf.items = result.data.resp.data;
+                } else {
+                    alert('Failed to fetch items: ' + result.data.resp.statusdesc);
+                }
+            },
+            function(error) {
+                alert('Error fetching items');
+                console.log(error);
+            }
+        );
+    };
+
+    // Confirm and process download on behalf
+    $scope.confirm_download_behalf = function() {
+        var selected_items = [];
+
+        angular.forEach($scope.download_behalf.items, function(item) {
+            if (item.selected) {
+                selected_items.push(item.id);
+            }
+        });
+
+        if (selected_items.length === 0) {
+            alert('Please select at least one item');
+            return;
+        }
+
+        $("#loading").show();
+        $http({
+            method: "POST",
+            url: api_path + "process-download-behalf",
+            data: {
+                user_id: $scope.download_behalf.user_id,
+                package_id: $scope.download_behalf.package_id,
+                invoice_id: $scope.download_behalf.invoice_id,
+                selected_items: selected_items
+            }
+        }).then(
+            function(result) {
+                $("#loading").hide();
+                if (result.data.resp.statuscode == "1") {
+                    alert(result.data.resp.statusdesc);
+                    $('#modal-download-behalf').modal('hide');
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + result.data.resp.statusdesc);
+                }
+            },
+            function(error) {
+                $("#loading").hide();
+                alert('Error processing download');
+                console.log(error);
+            }
+        );
+    };
 });
 
 app.directive("ngFileSelect", function (fileReader, $timeout) {
