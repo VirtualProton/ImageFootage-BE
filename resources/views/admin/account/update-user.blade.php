@@ -35,10 +35,12 @@
       <!-- <div class="custom-width custom-font">Dedicated Account Manager1 : {{$account_manager_name}}</div> -->
       <div class="custom-width custom-font">Dedicated Account Manager :
         <select class="form-control" name="account_manager" id="account_manager">
-          <option value="">Select Account Manager</option>
           <option value="">-Select-</option>
           @foreach($agentlist as $agent)
-          <option value="{{$agent['id']}}">{{$agent['name']}}</option>
+          <option value="{{$agent['id']}}"
+            @if($user->account_manager == $agent['id']) selected="selected" @endif>
+            {{$agent['name']}}
+          </option>
           @endforeach
         </select>
       </div>
