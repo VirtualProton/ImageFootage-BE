@@ -1383,80 +1383,83 @@
 </div>
 
 
-<div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
-  <!-- Download on Behalf Modal -->
-  <div class="modal fade" id="modal-download-behalf">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-          <h4 class="modal-title">Download on Behalf</h4>
-        </div>
-        <div class="modal-body">
-          <form ng-submit="downloadAndSendEmail()">
-            <div class="form-group">
-              <label for="product_id">Product ID:</label>
-              <input type="text" 
-                     class="form-control" 
-                     id="product_id" 
-                     ng-model="download_product_id"
-                     placeholder="Enter Product ID"
-                     required>
-            </div>
+<!-- Download on Behalf Modal -->
+<div class="modal fade" id="modal-download-behalf" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" ng-controller="invoiceController">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Download on Behalf</h4>
+      </div>
+      <div class="modal-body">
+        <form ng-submit="downloadAndSendEmail()">
+          <div class="form-group">
+            <label for="product_id">Product ID:</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="product_id" 
+                   ng-model="download_product_id"
+                   placeholder="Enter Product ID"
+                   required>
+          </div>
 
-            <div class="form-group">
-              <label for="invoice_type">Type:</label>
-              <select class="form-control" 
-                      id="invoice_type" 
-                      ng-model="invoice_type"
-                      required>
-                <option value="">Select Type</option>
-                <option value="2">Image</option>
-                <option value="3">Footage</option>
-                <option value="4">Music</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="invoice_type">Type:</label>
+            <select class="form-control" 
+                    id="invoice_type" 
+                    ng-model="invoice_type"
+                    required>
+              <option value="">Select Type</option>
+              <option value="2">Image</option>
+              <option value="3">Footage</option>
+              <option value="4">Music</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="product_web">Source:</label>
-              <select class="form-control" 
-                      id="product_web" 
-                      ng-model="product_web">
-                <option value="2">PantherMedia</option>
-                <option value="3">Pond5</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="product_web">Source:</label>
+            <select class="form-control" 
+                    id="product_web" 
+                    ng-model="product_web">
+              <option value="2">PantherMedia</option>
+              <option value="3">Pond5</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="download_total">Total Amount (Optional):</label>
-              <input type="number" 
-                     class="form-control" 
-                     id="download_total" 
-                     ng-model="download_total"
-                     placeholder="0.00"
-                     step="0.01">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" 
-                  class="btn btn-primary" 
-                  ng-click="downloadAndSendEmail()"
-                  ng-disabled="!download_product_id || !invoice_type">
-            Download & Send Email
-          </button>
-        </div>
+          <div class="form-group">
+            <label for="download_total">Total Amount (Optional):</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="download_total" 
+                   ng-model="download_total"
+                   placeholder="0.00"
+                   step="0.01">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" 
+                class="btn btn-primary" 
+                ng-click="downloadAndSendEmail()"
+                ng-disabled="!download_product_id || !invoice_type">
+          Download & Send Email
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Update PO Modal -->
+<div class="modal fade" id="modal-update_po" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" ng-controller="invoiceController">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span></button>
+          <span aria-hidden="true">×</span>
+        </button>
         <h4 class="modal-title">Update PO #</h4>
       </div>
       <div class="modal-body">
