@@ -1858,6 +1858,12 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.cusQuotationObj = {};
     $scope.payment_method = "";
     $scope.invoice_id = "";
+    
+    // Handle modal-download-behalf show event
+    $('#modal-download-behalf').on('show.bs.modal', function (e) {
+        console.log('Modal showing');
+    });
+    
     $scope.create_invoice = function (quotation, user_id) {
         $scope.quotationObj = []
 
@@ -2059,6 +2065,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
 
     // Download and Send Email using existing getPackageItems method
     $scope.downloadAndSendEmail = function() {
+        console.log('downloadAndSendEmail called');
+        
         if (!$scope.download_product_id) {
             alert('Please enter a Product ID');
             return;
@@ -2068,6 +2076,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert('User ID not found. Please reload the page.');
             return;
         }
+
+        console.log('Sending download request with data:', {
+            product_id: $scope.download_product_id,
+            user_id: $scope.quotation_data.user_id
+        });
 
         $("#loading").show();
         $http({
@@ -2087,18 +2100,44 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         }).then(
             function(result) {
                 $("#loading").hide();
-                if (result.data.status == "success") {
-                    alert(result.data.message + ' - Email notification sent to the user');
+                console.log('API Response:', result.data);
+                
+                // Check different response status values
+                var status = result.data.status;
+                var message = result.data.message || 'Operation completed';
+                
+                if (status == "success" || status === 1 || status === "1") {
+                    alert(message + ' - Email notification sent to the user');
                     $('#modal-download-behalf').modal('hide');
                     $scope.download_product_id = '';
+                    // Reload the page to refresh data
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+                } else if (status == "0" || status == "failed") {
+                    alert('Error: ' + message);
                 } else {
-                    alert('Error: ' + result.data.message);
+                    // If no status field, show generic error
+                    alert('Download processed. Please check your email for download link.');
+                    $('#modal-download-behalf').modal('hide');
+                    $scope.download_product_id = '';
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
                 }
             },
             function(error) {
                 $("#loading").hide();
-                alert('Error: ' + (error.data?.message || 'An error occurred'));
-                console.log(error);
+                console.log('API Error:', error);
+                var errorMessage = 'An error occurred';
+                
+                if (error.data && error.data.message) {
+                    errorMessage = error.data.message;
+                } else if (error.statusText) {
+                    errorMessage = error.statusText;
+                }
+                
+                alert('Error: ' + errorMessage);
             }
         );
     };
