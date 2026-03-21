@@ -137,7 +137,7 @@
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
                                        @foreach ($getFootageSizeDetails as $getFootageSizeDetail)
-                                       <option value="{{ $getFootageSizeDetail['type'] }}">{{ $getFootageSizeDetail['type'] }}</option>
+                                       <option value="{{ $getFootageSizeDetail['type'] }}">{{$getFootageSizeDetail['type']}}</option>
                                        @endforeach
                                        <!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
                                     </select>
@@ -155,18 +155,12 @@
                                     <select required=""class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)"  id="licence_dropdown">
                                         <option value="">--Select a Licence Type--</option>
                                         @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
-                                        <option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
+                                        <option value="{{ $getMusicLicenceDetail['value'] }}">{{$getMusicLicenceDetail['licence_type']}}</option>
                                         @endforeach
                                     </select>
                                  </div>
-                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
-                                    <label for="licence_type"><%product.type%> Licence type</label>
-                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
-                                 </div>
-                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='royalty_free' && product.licence_type !=''">
-                                    <label for="licence_type"></label>
-                                    <input type="text" class="form-control" ng-model="product.extra_details" id="extra_details"/>
-                                 </div>
+
+
                                  <div>
                                     <div>
                                        <div class="form-group">
