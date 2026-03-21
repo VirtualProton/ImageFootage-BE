@@ -1034,7 +1034,7 @@
                         <option value="">Please Select</option>
                         @if(count($countries) > 0)
                         @foreach($countries as $country)
-                        <option value={{$country->id}} <?php if ($user_data['country'] == $country->id) {
+                        <option value="{{$country->id}}" <?php if ($user_data['country'] == $country->id) {
                                                           echo 'selected="selected"';
                                                         } ?>>{{$country->name}}</option>
                         @endforeach
@@ -1055,7 +1055,7 @@
                         <option value="">Please Select</option>
                         @if(count($states) > 0)
                         @foreach($states as $state)
-                        <option value={{$state->id}} <?php if ($user_data['state'] == $state->id) {
+                        <option value="{{$state->id}}" <?php if ($user_data['state'] == $state->id) {
                                                         echo 'selected="selected"';
                                                       } ?>>{{$state->state}}</option>
                         @endforeach
@@ -1076,7 +1076,7 @@
                         <option value="">Please Select</option>
                         @if(count($cities) > 0)
                         @foreach($cities as $country)
-                        <option value={{$country->id}} <?php if ($user_data['country'] == $country->id) {
+                        <option value="{{$country->id}}" <?php if ($user_data['country'] == $country->id) {
                                                           echo 'selected="selected"';
                                                         } ?>>{{$country->name}}</option>
                         @endforeach
@@ -1262,7 +1262,7 @@
                         <option value="">Please Select</option>
                         @if(count($countries) > 0)
                         @foreach($countries as $city)
-                        <option value={{$city->id}} <?php if ($user_data['city'] == $city->id) {
+                        <option value="{{$city->id}}" <?php if ($user_data['city'] == $city->id) {
                                                       echo 'selected="selected"';
                                                     } ?>>{{$city->name}}</option>
                         @endforeach
@@ -1283,7 +1283,7 @@
                         <option value="">Please Select</option>
                         @if(count($states) > 0)
                         @foreach($states as $state)
-                        <option value={{$state->id}} <?php if ($user_data['state'] == $state->id) {
+                        <option value="{{$state->id}}" <?php if ($user_data['state'] == $state->id) {
                                                         echo 'selected="selected"';
                                                       } ?>>{{$state->state}}</option>
                         @endforeach
@@ -1304,7 +1304,7 @@
                         <option value="">Please Select</option>
                         @if(count($cities) > 0)
                         @foreach($cities as $country)
-                        <option value={{$country->id}} <?php if ($user_data['country'] == $country->id) {
+                        <option value="{{$country->id}}" <?php if ($user_data['country'] == $country->id) {
                                                           echo 'selected="selected"';
                                                         } ?>>{{$country->name}}</option>
                         @endforeach
