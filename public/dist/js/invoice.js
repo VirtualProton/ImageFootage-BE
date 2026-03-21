@@ -2051,65 +2051,37 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     // Open Download on Behalf Modal
-    $scope.open_download_on_behalf_modal = function(invoiceId, userId, packageId) {
-        $scope.download_behalf = {
-            user_id: userId,
-            package_id: packageId,
-            invoice_id: invoiceId,
-            items: []
-        };
-
-        // Fetch items from backend
-        $http({
-            method: "POST",
-            url: "/admin/get-package-items",
-            data: {
-                invoice_id: invoiceId,
-                package_id: packageId,
-                user_id: userId
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }).then(
-            function(result) {
-                if (result.data.resp.statuscode == "1") {
-                    $scope.download_behalf.items = result.data.resp.data;
-                } else {
-                    alert('Failed to fetch items: ' + result.data.resp.statusdesc);
-                }
-            },
-            function(error) {
-                alert('Error fetching items');
-                console.log(error);
-            }
-        );
+    $scope.open_download_on_behalf_modal = function(packageId) {
+        $scope.current_package_id = packageId;
+        $scope.download_product_id = '';
+        $scope.invoice_type = ''; // Type of invoice (2=Image, 3=Footage, 4=Music)
+        $scope.product_web = ''; // Where product is from (2=PantherMedia, 3=Pond5)
+        $scope.download_total = ''; // Total amount
     };
 
-    // Confirm and process download on behalf
-    $scope.confirm_download_behalf = function() {
-        var selected_items = [];
+    // Download and Send Email using existing getPackageItems method
+    $scope.downloadAndSendEmail = function() {
+        if (!$scope.download_product_id) {
+            alert('Please enter a Product ID');
+            return;
+        }
 
-        angular.forEach($scope.download_behalf.items, function(item) {
-            if (item.selected) {
-                selected_items.push(item.id);
-            }
-        });
-
-        if (selected_items.length === 0) {
-            alert('Please select at least one item');
+        if (!$scope.invoice_type) {
+            alert('Please select invoice type (Image/Footage/Music)');
             return;
         }
 
         $("#loading").show();
         $http({
             method: "POST",
-            url: "/admin/process-download-behalf",
+            url: "{{ url('admin/get-package-items') }}",
             data: {
-                user_id: $scope.download_behalf.user_id,
-                package_id: $scope.download_behalf.package_id,
-                invoice_id: $scope.download_behalf.invoice_id,
-                selected_items: selected_items
+                product_id: $scope.download_product_id,
+                package_id: $scope.current_package_id,
+                user_id: parseInt("{{ $user_id }}"),
+                invoice_type: parseInt($scope.invoice_type),
+                product_web: parseInt($scope.product_web) || 2,
+                total: $scope.download_total || 0
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2117,17 +2089,20 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         }).then(
             function(result) {
                 $("#loading").hide();
-                if (result.data.resp.statuscode == "1") {
-                    alert(result.data.resp.statusdesc);
+                if (result.data.status == "success") {
+                    alert(result.data.message + ' - Email notification sent to the user');
                     $('#modal-download-behalf').modal('hide');
-                    window.location.reload();
+                    $scope.download_product_id = '';
+                    $scope.invoice_type = '';
+                    $scope.product_web = '';
+                    $scope.download_total = '';
                 } else {
-                    alert('Error: ' + result.data.resp.statusdesc);
+                    alert('Error: ' + result.data.message);
                 }
             },
             function(error) {
                 $("#loading").hide();
-                alert('Error processing download');
+                alert('Error: ' + (error.data?.message || 'An error occurred'));
                 console.log(error);
             }
         );

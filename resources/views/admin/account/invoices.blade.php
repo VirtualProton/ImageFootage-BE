@@ -339,7 +339,7 @@
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="javascript:void(0);"
-                                    ng-click="open_download_on_behalf_modal({{$quotations->id}}, {{$user->id}}, {{$quotations->package_id ? $quotations->package_id : 0}})"
+                                    ng-click="open_download_on_behalf_modal({{$quotations->package_id}})"
                                     title="Download on Behalf"
                                     data-target="#modal-download-behalf"
                                     data-toggle="modal"
@@ -430,16 +430,6 @@
                                                         echo "Selected";
                                                       } ?>>Cancel</option>
                                   </select>
-
-                                  <br><br>
-                                  <a href="javascript:void(0);"
-                                    ng-click="open_download_on_behalf_modal({{$invioces->id}}, {{$user->id}}, {{$invioces->package_id ? $invioces->package_id : 0}})"
-                                    title="Download on Behalf"
-                                    data-target="#modal-download-behalf"
-                                    data-toggle="modal"
-                                    class="btn btn-xs btn-info">
-                                    <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
-                                  </a>
                                 </td>
                                 <td>
                                   <a href="javascript:void(0);" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
@@ -1395,8 +1385,8 @@
 
 <div class="modal" id="modal-update_po" style="padding-right: 16px;" ng-controller="invoiceController">
   <!-- Download on Behalf Modal -->
-  <div class="modal" id="modal-download-behalf" style="padding-right: 16px;" ng-controller="invoiceController">
-    <div class="modal-dialog modal-lg">
+  <div class="modal fade" id="modal-download-behalf">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1405,54 +1395,58 @@
           <h4 class="modal-title">Download on Behalf</h4>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label>User ID</label>
-            <input type="text" class="form-control" ng-model="download_behalf.user_id" readonly>
-          </div>
-
-          <div class="form-group">
-            <label>Package ID</label>
-            <input type="text" class="form-control" ng-model="download_behalf.package_id" readonly>
-          </div>
-
-          <div class="form-group">
-            <label>Select Items to Download</label>
-            <div style="overflow-y: auto; max-height: 400px; border: 1px solid #ddd; padding: 10px;">
-              <!-- Gallery View with Thumbnails -->
-              <div class="row">
-                <div ng-repeat="item in download_behalf.items" class="col-md-3" style="margin-bottom: 15px; text-align: center;">
-                  <div style="border: 1px solid #ccc; padding: 10px; cursor: pointer;">
-                    <input type="checkbox"
-                      ng-model="item.selected"
-                      ng-value="item.id">
-                    <br><br>
-                    <img ng-if="item.type === 'image'"
-                      ng-src="@{{ item.image_path }}"
-                      style="max-width: 100%; max-height: 150px;"
-                      ng-title="@{{ item.name }}">
-                    <video ng-if="item.type === 'footage'"
-                      style="max-width: 100%; max-height: 150px;">
-                      <source ng-src="@{{ item.media_path }}" type="video/mp4">
-                    </video>
-                    <div ng-if="item.type === 'music'" style="font-size: 48px; color: #999;">
-                      <i class="fa fa-music"></i>
-                    </div>
-                    <p style="margin-top: 10px; font-size: 12px;">@{{ item.name }}</p>
-                    <small>@{{ item.type }}</small>
-                  </div>
-                </div>
-              </div>
-              <div ng-if="download_behalf.items.length === 0" style="text-align: center; padding: 20px;">
-                <p>No items found for this package.</p>
-              </div>
+          <form ng-submit="downloadAndSendEmail()">
+            <div class="form-group">
+              <label for="product_id">Product ID:</label>
+              <input type="text" 
+                     class="form-control" 
+                     id="product_id" 
+                     ng-model="download_product_id"
+                     placeholder="Enter Product ID"
+                     required>
             </div>
-          </div>
-        </div>
 
+            <div class="form-group">
+              <label for="invoice_type">Type:</label>
+              <select class="form-control" 
+                      id="invoice_type" 
+                      ng-model="invoice_type"
+                      required>
+                <option value="">Select Type</option>
+                <option value="2">Image</option>
+                <option value="3">Footage</option>
+                <option value="4">Music</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="product_web">Source:</label>
+              <select class="form-control" 
+                      id="product_web" 
+                      ng-model="product_web">
+                <option value="2">PantherMedia</option>
+                <option value="3">Pond5</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="download_total">Total Amount (Optional):</label>
+              <input type="number" 
+                     class="form-control" 
+                     id="download_total" 
+                     ng-model="download_total"
+                     placeholder="0.00"
+                     step="0.01">
+            </div>
+          </form>
+        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" ng-click="confirm_download_behalf()">
-            Download Selected Items
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" 
+                  class="btn btn-primary" 
+                  ng-click="downloadAndSendEmail()"
+                  ng-disabled="!download_product_id || !invoice_type">
+            Download & Send Email
           </button>
         </div>
       </div>
@@ -1784,115 +1778,7 @@
     });
   }
 
-  // Open Download on Behalf Modal
-  function open_download_on_behalf_modal_scope($scope, invoiceId, userId, packageId) {
-    return function() {
-      $scope.download_behalf = {
-        user_id: userId,
-        package_id: packageId,
-        invoice_id: invoiceId,
-        items: []
-      };
-
-      // Fetch items from backend
-      $.ajax({
-        type: "POST",
-        url: "{{ url('admin/get-package-items') }}",
-        data: {
-          package_id: packageId,
-          user_id: userId
-        },
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(result) {
-          if (result.resp.statuscode == '1') {
-            $scope.$apply(function() {
-              $scope.download_behalf.items = result.resp.data;
-            });
-          } else {
-            alert('Failed to fetch items: ' + result.resp.statusdesc);
-          }
-        },
-        error: function() {
-          alert('Error fetching items');
-        }
-      });
-    };
-  }
-
-  // In the Angular controller, add this method:
-  // $scope.open_download_on_behalf_modal = function(invoiceId, userId, packageId) {
-  //   $scope.download_behalf = {
-  //     user_id: userId,
-  //     package_id: packageId,
-  //     invoice_id: invoiceId,
-  //     items: []
-  //   };
-  //   
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "{{ url('admin/get-package-items') }}",
-  //     data: {
-  //       package_id: packageId
-  //     },
-  //     headers: {
-  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //     },
-  //     success: function(result) {
-  //       if (result.resp.statuscode == '1') {
-  //         $scope.$apply(function() {
-  //           $scope.download_behalf.items = result.resp.data;
-  //         });
-  //       }
-  //     }
-  //   });
-  // };
-
-  // Confirm and process download
-  function confirm_download_behalf_scope($scope) {
-    return function() {
-      var selected_items = [];
-
-      angular.forEach($scope.download_behalf.items, function(item) {
-        if (item.selected) {
-          selected_items.push(item.id);
-        }
-      });
-
-      if (selected_items.length === 0) {
-        alert('Please select at least one item');
-        return;
-      }
-
-      $.ajax({
-        type: "POST",
-        url: "{{ url('admin/process-download-behalf') }}",
-        data: {
-          user_id: $scope.download_behalf.user_id,
-          package_id: $scope.download_behalf.package_id,
-          invoice_id: $scope.download_behalf.invoice_id,
-          selected_items: selected_items
-        },
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(result) {
-          if (result.resp.statuscode == '1') {
-            alert(result.resp.statusdesc);
-            $('#modal-download-behalf').modal('hide');
-            // Optionally reload the page
-            window.location.reload();
-          } else {
-            alert('Error: ' + result.resp.statusdesc);
-          }
-        },
-        error: function() {
-          alert('Error processing download');
-        }
-      });
-    };
-  }
+  // AngularJS controller handles download on behalf modal functions
 </script>
 
 @stop

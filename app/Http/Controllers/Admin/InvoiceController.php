@@ -20,8 +20,13 @@ use App\Models\Invoice;
 use App\Models\Orders;
 use Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use DataTables;
+use App\Http\Pond5\FootageApi;
+use App\Http\Pond5\ImageApi as Pond5ImageApi;
+use App\Models\UserPackage;
+use App\Models\UserProductDownload;
+use App\Http\Pond5\MusicApi;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -560,40 +565,235 @@ class InvoiceController extends Controller
     public function getPackageItems(Request $request)
     {
         try {
-            $invoiceId = $request->input('invoice_id') ?? $request->input('package_id');
+            $productId = $request->input('product_id');
             $userId = $request->input('user_id');
+            $type = $request->input('invoice_type');
+            $productWeb = $request->input('product_web');
+            $total = $request->input('total');
+            if ($type == 2) {
+                $flag = 'Image';
+            } else if ($type == 3) {
+                $flag = 'Footage';
+            } else {
+                $flag = 'Music';
+            }
+            $packageId = $request->input('package_id');
 
             // Get invoice/order items
-            $items = DB::table('imagefootage_order_items')
-                ->join('imagefootage_products', 'imagefootage_order_items.product_id', '=', 'imagefootage_products.api_product_id')
-                ->where('imagefootage_order_items.order_id', $invoiceId)
-                ->select(
-                    'imagefootage_order_items.cart_id as id',
-                    'imagefootage_products.api_product_id as product_id',
-                    'imagefootage_products.title as product_name',
-                    'imagefootage_products.type as product_type',
-                    'imagefootage_order_items.footage_size as product_size',
-                    'imagefootage_products.medium_preview_image as product_thumb'
-                )
-                ->get();
 
-            if ($items->isEmpty()) {
-                return response()->json([
-                    'resp' => [
-                        'statuscode' => '0',
-                        'statusdesc' => 'No items found for this package',
-                        'data' => []
-                    ]
-                ]);
+            $checkdownload = UserProductDownload::where('product_id_api', $productId)->where('web_type', $flag)->where('user_id', $userId)->first();
+            if (!empty($checkdownload)) {
+                return response()->json(['status' => 'failed', 'message' => 'This product is already downloaded.']);
             }
 
-            return response()->json([
-                'resp' => [
-                    'statuscode' => '1',
-                    'statusdesc' => 'Items fetched successfully',
-                    'data' => $items
-                ]
-            ]);
+
+
+            $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
+                ->where('user_id', '=', $userId)
+                ->where('package_type', '=', $flag)
+                ->where('id', '=', $packageId)
+                ->where('package_expiry_date_from_purchage', '>', Now())
+                ->get();
+
+            $download = 0;
+            $downoad_type = 0;
+            if ($pacakegalist->isNotEmpty()) {
+                foreach ($pacakegalist as $perpack) {
+                    if ($perpack->package_plan == '1' && $perpack->downloaded_product < $perpack->package_products_count) { // For download type package
+                        $download = 1;
+                    }
+                    if ($type == 3) {
+                        $downoad_type = 1;
+                    }
+                }
+            } else {
+                return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
+            }
+
+            if ($download == 1) {
+                if ($type == 3) {
+
+                    if ($downoad_type == 0) {
+                        return response()->json(['status' => '0', 'message' => 'Please select correct package to download!!']);
+                    }
+                    $footageMedia = new Pond5ImageApi();
+                    $download_id = $productId;
+                    $version =  isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id . ':1';
+                    $product_details_data = $footageMedia->download($productId, $download_id, $version);
+                    if (!empty($product_details_data)) {
+                        $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->first();
+                        $product_id = $download_id;
+                        $dataInsert = array(
+                            'user_id' => $userId,
+                            'package_id' => $packageId,
+                            'product_id' => $product_id,
+                            'product_id_api' => $download_id,
+                            'id_media' => $download_id,
+                            'download_url' => $product_details_data['url'],
+                            'downloaded_date' => date('Y-m-d H:i:s'),
+                            'product_name' => '',
+                            'product_desc' => '',
+                            'product_thumb' => '',
+                            'web_type' => $type,
+                            'product_size' =>  '',
+                            'product_price' => $total,
+                            'product_poster' => '',
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'redownloded_date' => null,
+                            'licence_type' => '',
+                            'product_type' => 'Footage'
+                        );
+                        UserProductDownload::insert($dataInsert);
+                        if (empty($dataCheck)) {
+                            UserPackage::where('user_id', '=', $userId)
+                                ->where('package_type', '=', $flag)
+                                ->where('id', '=', $packageId)
+                                ->update([
+                                    'downloaded_product' => DB::raw('downloaded_product+1'),
+                                    'updated_at' => date('Y-m-d H:i:s')
+                                ]);
+                        }
+                        // Send email notification
+                        $this->sendDownloadNotificationEmail($user, $productId, 'Footage', $product_details_data);
+                        return response()->json(['status' => 'success', 'message' => 'Footage downloaded successfully', 'data' => $product_details_data]);
+                    }
+                    return response()->json($product_details_data);
+                } else if ($type == 2) {
+                    // Download Images from Pond5
+                    $footageMedia = new Pond5ImageApi();
+                    $download_id = $productId;;
+                    $version = $download_id . ':1';
+                    if ($productWeb == 2) { // If image is from PantherMedia
+                        $imageMedia = new Pond5ImageApi();
+                        $product_details_data = $imageMedia->download($productId, $download_id, $version);
+                    } elseif ($productWeb == 3) { // If image is from Pond5
+                        $footageMedia = new Pond5ImageApi();
+                        $product_details_data = $footageMedia->download($productId, $download_id, $version);
+                    }
+
+
+                    if (!empty($product_details_data)) {
+                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
+
+                        if (isset($product_details_data['download_status']['status']) && !empty($product_details_data['download_status']['status']) && $product_details_data['download_status']['status'] == "pending") {
+                            $dataInsert = array(
+                                'user_id' => $userId,
+                                'package_id' => $packageId,
+                                'product_id' => $productId,
+                                'id_download' => $product_details_data['download_status']['id_download'],
+                                'product_id_api' => $productId,
+                                'id_media' => $productId,
+                                'download_url' => $product_details_data['download_status']['queue_hash'],
+                                'downloaded_date' => date('Y-m-d H:i:s'),
+                                'product_name' => 'Download ON Behalf',
+                                'product_desc' => 'Download ON Behalf',
+                                'product_thumb' => '',
+                                'web_type' => $type,
+                                'product_size' => '',
+                                'product_price' => $total,
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                                'licence_type' => $allFields['product']['extended'],
+                                'redownloded_date' => null,
+                                'product_type' => 'Image'
+                            );
+                        } else {
+                            $dataInsert = array(
+                                'user_id' => $userId,
+                                'package_id' => $packageId,
+                                'product_id' => $productId,
+                                'id_download' => $product_details_data['transaction'],
+                                'product_id_api' => $productId,
+                                'id_media' => $productId,
+                                'download_url' => $product_details_data['url'],
+                                'downloaded_date' => date('Y-m-d H:i:s'),
+                                'product_name' => 'Download ON Behalf',
+                                'product_desc' => 'Download ON Behalf',
+                                'product_thumb' => '',
+                                'web_type' => $type,
+                                'product_size' => '',
+                                'product_price' => $total,
+                                'product_poster' => '',
+                                'selected_product' => '',
+                                'created_at' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                                'licence_type' => $allFields['product']['extended'],
+                                'redownloded_date' => null,
+                                'product_type' => 'Image'
+                            );
+                        }
+
+
+                        UserProductDownload::insert($dataInsert);
+
+                        if (empty($dataCheck)) {
+                            UserPackage::where('user_id', '=', $userId)
+                                ->where('package_type', '=', $flag)
+                                ->where('id', '=', $packageId)
+                                ->update([
+                                    'downloaded_product' => DB::raw('downloaded_product+1'),
+                                    'updated_at' => date('Y-m-d H:i:s')
+                                ]);
+                        }
+                    } else {
+                        return response()->json(['status' => 'failed', 'message' => 'Image is not downloaded successfully', 'data' => []]);
+                    }
+                    // Send email notification
+                    $this->sendDownloadNotificationEmail($user, $productId, 'Image', $product_details_data);
+                    return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully', 'data' => $product_details_data]);
+                } else if ($type == 4) {
+                    // Download music from pond5
+                    $footageMedia = new FootageApi();
+                    //TODO Need to change for api_product_id
+                    $download_id = $productId;
+                    $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id . ':0';
+                    $product_details_data = $footageMedia->download($download_id, $version);
+                    if (!empty($product_details_data)) {
+                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $id)->first();
+
+                        /** TODO : set the array as per response */
+                        $dataInsert = array(
+                            'user_id' => $userId,
+                            'package_id' => $packageId,
+                            'product_id' => $productId,
+                            'product_id_api' => $productId,
+                            'id_media' => $productId,
+                            'download_url' => $product_details_data['url'],
+                            'downloaded_date' => date('Y-m-d H:i:s'),
+                            'product_name' => 'Download ON Behalf',
+                            'product_desc' => 'Download ON Behalf',
+                            'product_thumb' => '',
+                            'web_type' => $type,
+                            'product_size' => '',
+                            'product_price' => $total,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'licence_type' => $allFields['product']['extended'],
+                            'redownloded_date' => null,
+                            'product_type' => 'Music'
+                        );
+
+                        UserProductDownload::insert($dataInsert);
+
+                        if (empty($dataCheck)) {
+                            UserPackage::where('user_id', '=', $userId)
+                                ->where('package_type', '=', $flag)
+                                ->where('id', '=', $packageId)
+                                ->update([
+                                    'downloaded_product' => DB::raw('downloaded_product+1'),
+                                    'updated_at' => date('Y-m-d H:i:s')
+                                ]);
+                        }
+                        // Send email notification
+                        $this->sendDownloadNotificationEmail($user, $productId, 'Music', $product_details_data);
+                        return response()->json(['status' => 'success', 'message' => 'Music downloaded successfully', 'data' => $product_details_data]);
+                    }
+                    return response()->json($product_details_data);
+                }
+            } else {
+                return response()->json(['status' => '0', 'message' => 'Download pack limit has been over already !!']);
+            }
         } catch (\Exception $e) {
             Log::error('Error fetching package items: ' . $e->getMessage());
             return response()->json([
@@ -690,6 +890,34 @@ class InvoiceController extends Controller
                     'statusdesc' => 'Error processing downloads: ' . $e->getMessage()
                 ]
             ], 500);
+        }
+    }
+
+    /**
+     * Helper method to send download notification email
+     */
+    private function sendDownloadNotificationEmail($user, $productId, $productType, $downloadData)
+    {
+        try {
+            $emailData = [
+                'user_name' => $user->first_name . ' ' . $user->last_name,
+                'email' => $user->email,
+                'product_id' => $productId,
+                'product_type' => $productType,
+                'download_url' => $downloadData['url'] ?? $downloadData['queue_hash'] ?? '',
+                'admin_name' => Auth::guard('admins')->user()->name ?? 'Admin'
+            ];
+
+            Mail::send('emails.download_on_behalf', $emailData, function ($message) use ($emailData) {
+                $message->to($emailData['email'])
+                    ->subject('Your Product has been Downloaded')
+                    ->from('admin@imagefootage.com', 'ImageFootage Admin');
+            });
+
+            Log::info('Download notification email sent to: ' . $emailData['email']);
+        } catch (\Exception $e) {
+            Log::error('Failed to send download notification email: ' . $e->getMessage());
+            // Don't fail the download if email fails
         }
     }
 }
