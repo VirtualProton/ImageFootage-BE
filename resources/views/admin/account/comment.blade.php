@@ -30,6 +30,12 @@
                   onclick="openViewModal(this)">
             <i class="fa fa-eye"></i> View
           </button>
+          <button type="button" class="btn btn-sm btn-warning update-comment" 
+                  data-id="{{$comment['id']}}" 
+                  data-status="{{$comment['status']}}"
+                  onclick="openUpdateModal(this)">
+            <i class="fa fa-edit"></i> Update Status
+          </button>
         </td>
       </tr>
       @endforeach
@@ -84,6 +90,43 @@
   </div>
 </div>
 
+<!-- Update Status Modal -->
+<div class="modal fade" id="updateCommentModal" tabindex="-1" role="dialog" aria-labelledby="updateCommentModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateCommentModalLabel">Update Comment Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="updateCommentForm" method="POST">
+        @csrf
+        <div class="modal-body">
+          <div class="form-group">
+            <label><strong>Case ID:</strong></label>
+            <p id="update_comment_id"></p>
+          </div>
+          <div class="form-group">
+            <label for="update_status"><strong>Status:</strong></label>
+            <select class="form-control" id="update_status" name="status" required>
+              <option value="">Select Status</option>
+              <option value="pending">Pending</option>
+              <option value="resolved">Resolved</option>
+              <option value="in_progress">In Progress</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
 function openViewModal(button) {
   
@@ -111,6 +154,70 @@ function openViewModal(button) {
     modal.show();
   }
 }
+
+function openUpdateModal(button) {
+  var id = button.getAttribute('data-id');
+  var status = button.getAttribute('data-status');
+  
+  document.getElementById('update_comment_id').textContent = id;
+  document.getElementById('update_status').value = status;
+  
+  // Store the comment ID for form submission
+  document.getElementById('updateCommentForm').dataset.commentId = id;
+  
+  // Try both jQuery and Bootstrap native
+  if (typeof $ !== 'undefined') {
+    $('#updateCommentModal').modal('show');
+  } else if (typeof bootstrap !== 'undefined') {
+    var modal = new bootstrap.Modal(document.getElementById('updateCommentModal'));
+    modal.show();
+  }
+}
+
+// Handle form submission
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('updateCommentForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var commentId = this.dataset.commentId;
+      var status = document.getElementById('update_status').value;
+      
+      // Send AJAX request to update status
+      fetch('/admin/comments/' + commentId + '/updateCommentStatus', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        },
+        body: JSON.stringify({
+          status: status
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Status updated successfully!');
+          // Close modal
+          if (typeof $ !== 'undefined') {
+            $('#updateCommentModal').modal('hide');
+          } else if (typeof bootstrap !== 'undefined') {
+            var modal = bootstrap.Modal.getInstance(document.getElementById('updateCommentModal'));
+            modal.hide();
+          }
+          // Reload page to see updated data
+          location.reload();
+        } else {
+          alert('Error: ' + (data.message || 'Failed to update status'));
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating the status');
+      });
+    });
+  }
+});
 </script>
 
 @else

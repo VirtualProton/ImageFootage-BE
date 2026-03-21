@@ -540,4 +540,17 @@ class InvoiceController extends Controller
 
         return DataTables::of($query)->make(true);
     }
+
+    public function updateCommentStatus(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+        if (!$comment) {
+            return response()->json(['error' => 'Comment not found'], 404);
+        }
+
+        $comment->status = $request->input('status');
+        $comment->save();
+
+        return response()->json(['success' => 'Comment status updated successfully']);
+    }
 }
