@@ -111,8 +111,7 @@
             <label for="update_status"><strong>Status:</strong></label>
             <select class="form-control" id="update_status" name="status" required>
               <option value="">Select Status</option>
-              <option value="pending">Pending</option>
-              <option value="resolved">Resolved</option>
+              <option value="pending">Open</option>
               <option value="in_progress">In Progress</option>
               <option value="closed">Closed</option>
             </select>
@@ -166,11 +165,25 @@ function openUpdateModal(button) {
   document.getElementById('updateCommentForm').dataset.commentId = id;
   
   // Try both jQuery and Bootstrap native
-  if (typeof $ !== 'undefined') {
-    $('#updateCommentModal').modal('show');
-  } else if (typeof bootstrap !== 'undefined') {
-    var modal = new bootstrap.Modal(document.getElementById('updateCommentModal'));
-    modal.show();
+  try {
+    if (typeof $ !== 'undefined') {
+      $('#updateCommentModal').modal('show');
+    } else if (typeof bootstrap !== 'undefined') {
+      var modal = new bootstrap.Modal(document.getElementById('updateCommentModal'), {
+        backdrop: 'static',
+        keyboard: true
+      });
+      modal.show();
+    } else {
+      // Fallback: manually show modal
+      var modalElement = document.getElementById('updateCommentModal');
+      modalElement.style.display = 'block';
+      modalElement.classList.add('show');
+      document.body.classList.add('modal-open');
+    }
+  } catch (error) {
+    console.error('Error opening modal:', error);
+    alert('Error opening modal. Please try again.');
   }
 }
 
@@ -182,6 +195,11 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var commentId = this.dataset.commentId;
       var status = document.getElementById('update_status').value;
+      
+      if (!commentId || !status) {
+        alert('Please fill all required fields');
+        return;
+      }
       
       // Send AJAX request to update status
       fetch('/admin/comments/' + commentId + '/updateCommentStatus', {
@@ -199,14 +217,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (data.success) {
           alert('Status updated successfully!');
           // Close modal
-          if (typeof $ !== 'undefined') {
-            $('#updateCommentModal').modal('hide');
-          } else if (typeof bootstrap !== 'undefined') {
-            var modal = bootstrap.Modal.getInstance(document.getElementById('updateCommentModal'));
-            modal.hide();
+          try {
+            if (typeof $ !== 'undefined') {
+              $('#updateCommentModal').modal('hide');
+            } else if (typeof bootstrap !== 'undefined') {
+              var modal = bootstrap.Modal.getInstance(document.getElementById('updateCommentModal'));
+              if (modal) {
+                modal.hide();
+              }
+            } else {
+              document.getElementById('updateCommentModal').style.display = 'none';
+              document.getElementById('updateCommentModal').classList.remove('show');
+              document.body.classList.remove('modal-open');
+            }
+          } catch (err) {
+            console.error('Error closing modal:', err);
           }
           // Reload page to see updated data
-          location.reload();
+          setTimeout(function() {
+            location.reload();
+          }, 500);
         } else {
           alert('Error: ' + (data.message || 'Failed to update status'));
         }
