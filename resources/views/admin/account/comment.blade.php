@@ -114,7 +114,6 @@
             <select class="form-control" id="update_status" name="status" required>
               <option value="">Select Status</option>
               <option value="Open">Open</option>
-              <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
               <option value="Closed">Closed</option>
             </select>
@@ -134,8 +133,6 @@
   const statusMapper = {
     'open': 'Open',
     'Open': 'Open',
-    'pending': 'Pending',
-    'Pending': 'Pending',
     'in_progress': 'In Progress',
     'In Progress': 'In Progress',
     'In_Progress': 'In Progress',
@@ -146,7 +143,6 @@
   // Reverse mapper - converts display values to database values
   const reverseStatusMapper = {
     'Open': 'open',
-    'Pending': 'pending',
     'In Progress': 'in_progress',
     'Closed': 'closed'
   };

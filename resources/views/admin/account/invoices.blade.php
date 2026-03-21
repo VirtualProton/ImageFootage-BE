@@ -1407,7 +1407,7 @@
 
           <div class="form-group">
             <label for="display_total">Total Amount:</label>
-            <p class="form-control-static">@{{ quotation_data.total || '0.00' }}</p>
+            <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
           </div>
         </form>
       </div>
