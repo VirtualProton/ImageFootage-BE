@@ -1386,7 +1386,7 @@
 <!-- Download on Behalf Modal -->
 <div class="modal fade" id="modal-download-behalf" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content" ng-controller="invoiceController">
+    <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
@@ -1394,22 +1394,20 @@
         <h4 class="modal-title">Download on Behalf</h4>
       </div>
       <div class="modal-body">
-        <form ng-submit="downloadAndSendEmail()">
-          <div class="form-group">
-            <label for="product_id">Product ID: <span style="color: red;">*</span></label>
-            <input type="text" 
-                   class="form-control" 
-                   id="product_id" 
-                   ng-model="download_product_id"
-                   placeholder="Enter Product ID"
-                   required>
-          </div>
+        <div class="form-group">
+          <label for="product_id">Product ID: <span style="color: red;">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 id="product_id" 
+                 ng-model="download_product_id"
+                 placeholder="Enter Product ID"
+                 required>
+        </div>
 
-          <div class="form-group">
-            <label for="display_total">Total Amount:</label>
-            <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="display_total">Total Amount:</label>
+          <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1427,7 +1425,7 @@
 <!-- Update PO Modal -->
 <div class="modal fade" id="modal-update_po" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content" ng-controller="invoiceController">
+    <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
