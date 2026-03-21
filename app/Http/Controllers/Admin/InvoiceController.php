@@ -567,17 +567,29 @@ class InvoiceController extends Controller
         try {
             $productId = $request->input('product_id');
             $userId = $request->input('user_id');
-            $type = $request->input('invoice_type');
             $productWeb = $request->input('product_web');
             $total = $request->input('total');
-            if ($type == 2) {
-                $flag = 'Image';
-            } else if ($type == 3) {
-                $flag = 'Footage';
-            } else {
-                $flag = 'Music';
-            }
             $packageId = $request->input('package_id');
+            $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
+                ->where('user_id', '=', $userId)
+                ->where('id', '=', $packageId)
+                ->where('package_expiry_date_from_purchage', '>', Now())
+                ->get();
+
+            if ($pacakegalist->isNotEmpty()) {
+                if ($pacakegalist[0]->package_type == 'Image') {
+                    $flag = 'Image';
+                    $type = 2;
+                } else if ($pacakegalist[0]->package_type == 'Footage') {
+                    $flag = 'Footage';
+                    $type = 3;
+                } else {
+                    $flag = 'Music';
+                    $type = 1;
+                }
+            } else {
+                return response()->json(['status' => '0', 'message' => 'No active package found for this product!!']);
+            }
 
             // Get invoice/order items
 
@@ -585,16 +597,6 @@ class InvoiceController extends Controller
             if (!empty($checkdownload)) {
                 return response()->json(['status' => 'failed', 'message' => 'This product is already downloaded.']);
             }
-
-
-
-            $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
-                ->where('user_id', '=', $userId)
-                ->where('package_type', '=', $flag)
-                ->where('id', '=', $packageId)
-                ->where('package_expiry_date_from_purchage', '>', Now())
-                ->get();
-
             $download = 0;
             $downoad_type = 0;
             if ($pacakegalist->isNotEmpty()) {
@@ -801,93 +803,6 @@ class InvoiceController extends Controller
                     'statuscode' => '0',
                     'statusdesc' => 'Error fetching items: ' . $e->getMessage(),
                     'data' => []
-                ]
-            ], 500);
-        }
-    }
-
-    /**
-     * Process download on behalf for selected items
-     */
-    public function processDownloadBehalf(Request $request)
-    {
-        try {
-            $userId = $request->input('user_id');
-            $invoiceId = $request->input('invoice_id');
-            $selectedItems = $request->input('selected_items', []);
-
-            if (empty($selectedItems)) {
-                return response()->json([
-                    'resp' => [
-                        'statuscode' => '0',
-                        'statusdesc' => 'No items selected for download'
-                    ]
-                ]);
-            }
-
-            // Get the user details
-            $user = User::find($userId);
-            if (!$user) {
-                return response()->json([
-                    'resp' => [
-                        'statuscode' => '0',
-                        'statusdesc' => 'User not found'
-                    ]
-                ]);
-            }
-
-            // Create download records for the selected items
-            $downloadedCount = 0;
-            $failedItems = [];
-
-            foreach ($selectedItems as $itemId) {
-                try {
-                    $orderItem = DB::table('imagefootage_order_items')
-                        ->where('cart_id', $itemId)
-                        ->where('order_id', $invoiceId)
-                        ->first();
-
-                    if ($orderItem) {
-                        // Record the download in history
-                        DB::table('imagefootage_download_history')->insertOrIgnore([
-                            'user_id' => $userId,
-                            'product_id' => $orderItem->product_id,
-                            'order_id' => $invoiceId,
-                            'download_date' => Carbon::now(),
-                            'download_type' => 'on_behalf',
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now()
-                        ]);
-
-                        $downloadedCount++;
-                    } else {
-                        $failedItems[] = $itemId;
-                    }
-                } catch (\Exception $itemException) {
-                    Log::error('Error processing item ' . $itemId . ': ' . $itemException->getMessage());
-                    $failedItems[] = $itemId;
-                }
-            }
-
-            $successMessage = $downloadedCount . ' item(s) marked for download';
-            if (!empty($failedItems)) {
-                $successMessage .= ' (' . count($failedItems) . ' failed)';
-            }
-
-            return response()->json([
-                'resp' => [
-                    'statuscode' => '1',
-                    'statusdesc' => $successMessage,
-                    'downloaded' => $downloadedCount,
-                    'failed' => count($failedItems)
-                ]
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Error processing download on behalf: ' . $e->getMessage());
-            return response()->json([
-                'resp' => [
-                    'statuscode' => '0',
-                    'statusdesc' => 'Error processing downloads: ' . $e->getMessage()
                 ]
             ], 500);
         }

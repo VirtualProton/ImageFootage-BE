@@ -339,7 +339,7 @@
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="javascript:void(0);"
-                                    ng-click="open_download_on_behalf_modal({{$quotations->package_id}})"
+                                    ng-click="open_download_on_behalf_modal({{json_encode($quotations)}},{{$user_id}})"
                                     title="Download on Behalf"
                                     data-target="#modal-download-behalf"
                                     data-toggle="modal"
@@ -1406,36 +1406,8 @@
           </div>
 
           <div class="form-group">
-            <label for="invoice_type">Type:</label>
-            <select class="form-control" 
-                    id="invoice_type" 
-                    ng-model="invoice_type"
-                    required>
-              <option value="">Select Type</option>
-              <option value="2">Image</option>
-              <option value="3">Footage</option>
-              <option value="4">Music</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="product_web">Source:</label>
-            <select class="form-control" 
-                    id="product_web" 
-                    ng-model="product_web">
-              <option value="2">PantherMedia</option>
-              <option value="3">Pond5</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="download_total">Total Amount (Optional):</label>
-            <input type="number" 
-                   class="form-control" 
-                   id="download_total" 
-                   ng-model="download_total"
-                   placeholder="0.00"
-                   step="0.01">
+            <label for="display_total">Total Amount:</label>
+            <p class="form-control-static">@{{ quotation_data.total || '0.00' }}</p>
           </div>
         </form>
       </div>
@@ -1444,7 +1416,7 @@
         <button type="button" 
                 class="btn btn-primary" 
                 ng-click="downloadAndSendEmail()"
-                ng-disabled="!download_product_id || !invoice_type">
+                ng-disabled="!download_product_id">
           Download & Send Email
         </button>
       </div>

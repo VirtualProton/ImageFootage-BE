@@ -2051,12 +2051,9 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     // Open Download on Behalf Modal
-    $scope.open_download_on_behalf_modal = function(packageId) {
-        $scope.current_package_id = packageId;
+    $scope.open_download_on_behalf_modal = function(quotationData) {
+        $scope.quotation_data = quotationData;
         $scope.download_product_id = '';
-        $scope.invoice_type = ''; // Type of invoice (2=Image, 3=Footage, 4=Music)
-        $scope.product_web = ''; // Where product is from (2=PantherMedia, 3=Pond5)
-        $scope.download_total = ''; // Total amount
     };
 
     // Download and Send Email using existing getPackageItems method
