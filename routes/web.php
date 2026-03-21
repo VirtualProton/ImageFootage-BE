@@ -240,7 +240,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::post('/users/update_user/', 'UserController@updateUser');
     Route::post('/users/plan/', 'UserController@providePlan');
-    Route::post('/admin/comments/{id}/updateCommentStatus', 'InvoiceController@updateCommentStatus');
+    Route::post('/comments/{id}/updateCommentStatus', 'InvoiceController@updateCommentStatus');
 
     Route::get('/quotation/{id}', 'InvoiceController@quotation');
     Route::get('/quotation2/{id}', 'InvoiceController@quotation2');
