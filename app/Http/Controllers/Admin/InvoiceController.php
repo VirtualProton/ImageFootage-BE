@@ -553,4 +553,143 @@ class InvoiceController extends Controller
 
         return response()->json(['success' => 'Comment status updated successfully']);
     }
+
+    /**
+     * Get package/invoice items for download on behalf
+     */
+    public function getPackageItems(Request $request)
+    {
+        try {
+            $invoiceId = $request->input('invoice_id') ?? $request->input('package_id');
+            $userId = $request->input('user_id');
+
+            // Get invoice/order items
+            $items = DB::table('imagefootage_order_items')
+                ->join('imagefootage_products', 'imagefootage_order_items.product_id', '=', 'imagefootage_products.api_product_id')
+                ->where('imagefootage_order_items.order_id', $invoiceId)
+                ->select(
+                    'imagefootage_order_items.cart_id as id',
+                    'imagefootage_products.api_product_id as product_id',
+                    'imagefootage_products.title as product_name',
+                    'imagefootage_products.type as product_type',
+                    'imagefootage_order_items.footage_size as product_size',
+                    'imagefootage_products.medium_preview_image as product_thumb'
+                )
+                ->get();
+
+            if ($items->isEmpty()) {
+                return response()->json([
+                    'resp' => [
+                        'statuscode' => '0',
+                        'statusdesc' => 'No items found for this package',
+                        'data' => []
+                    ]
+                ]);
+            }
+
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '1',
+                    'statusdesc' => 'Items fetched successfully',
+                    'data' => $items
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching package items: ' . $e->getMessage());
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Error fetching items: ' . $e->getMessage(),
+                    'data' => []
+                ]
+            ], 500);
+        }
+    }
+
+    /**
+     * Process download on behalf for selected items
+     */
+    public function processDownloadBehalf(Request $request)
+    {
+        try {
+            $userId = $request->input('user_id');
+            $invoiceId = $request->input('invoice_id');
+            $selectedItems = $request->input('selected_items', []);
+
+            if (empty($selectedItems)) {
+                return response()->json([
+                    'resp' => [
+                        'statuscode' => '0',
+                        'statusdesc' => 'No items selected for download'
+                    ]
+                ]);
+            }
+
+            // Get the user details
+            $user = User::find($userId);
+            if (!$user) {
+                return response()->json([
+                    'resp' => [
+                        'statuscode' => '0',
+                        'statusdesc' => 'User not found'
+                    ]
+                ]);
+            }
+
+            // Create download records for the selected items
+            $downloadedCount = 0;
+            $failedItems = [];
+
+            foreach ($selectedItems as $itemId) {
+                try {
+                    $orderItem = DB::table('imagefootage_order_items')
+                        ->where('cart_id', $itemId)
+                        ->where('order_id', $invoiceId)
+                        ->first();
+
+                    if ($orderItem) {
+                        // Record the download in history
+                        DB::table('imagefootage_download_history')->insertOrIgnore([
+                            'user_id' => $userId,
+                            'product_id' => $orderItem->product_id,
+                            'order_id' => $invoiceId,
+                            'download_date' => Carbon::now(),
+                            'download_type' => 'on_behalf',
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ]);
+
+                        $downloadedCount++;
+                    } else {
+                        $failedItems[] = $itemId;
+                    }
+                } catch (\Exception $itemException) {
+                    Log::error('Error processing item ' . $itemId . ': ' . $itemException->getMessage());
+                    $failedItems[] = $itemId;
+                }
+            }
+
+            $successMessage = $downloadedCount . ' item(s) marked for download';
+            if (!empty($failedItems)) {
+                $successMessage .= ' (' . count($failedItems) . ' failed)';
+            }
+
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '1',
+                    'statusdesc' => $successMessage,
+                    'downloaded' => $downloadedCount,
+                    'failed' => count($failedItems)
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error processing download on behalf: ' . $e->getMessage());
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Error processing downloads: ' . $e->getMessage()
+                ]
+            ], 500);
+        }
+    }
 }

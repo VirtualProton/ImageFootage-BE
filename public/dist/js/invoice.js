@@ -2062,10 +2062,14 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         // Fetch items from backend
         $http({
             method: "POST",
-            url: api_path + "get-package-items",
+            url: "/admin/get-package-items",
             data: {
+                invoice_id: invoiceId,
                 package_id: packageId,
                 user_id: userId
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }).then(
             function(result) {
@@ -2100,12 +2104,15 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         $("#loading").show();
         $http({
             method: "POST",
-            url: api_path + "process-download-behalf",
+            url: "/admin/process-download-behalf",
             data: {
                 user_id: $scope.download_behalf.user_id,
                 package_id: $scope.download_behalf.package_id,
                 invoice_id: $scope.download_behalf.invoice_id,
                 selected_items: selected_items
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         }).then(
             function(result) {

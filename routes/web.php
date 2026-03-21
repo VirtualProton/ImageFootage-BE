@@ -249,6 +249,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
     Route::post('/create_invoice', 'InvoiceController@create_invoice');
     Route::post('/change_invoice_status', 'InvoiceController@change_invoice_status');
+    Route::post('/get-package-items', 'InvoiceController@getPackageItems');
+    Route::post('/process-download-behalf', 'InvoiceController@processDownloadBehalf');
     Route::get('/subscribers', 'SubscribersController@index')->name('subscribers');
     Route::get('/subscribers/details/{id}', 'SubscribersController@subscribers_details');
 
