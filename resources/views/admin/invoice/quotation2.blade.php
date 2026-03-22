@@ -159,15 +159,6 @@
                                        @endforeach
                                     </select>
                                  </div>
-                                 <div class="form-group"
-                                    ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music') && product.licence_type != ''">
-                                    <label for="extra_details">Description</label>
-                                    <textarea class="form-control"
-                                       ng-model="product.extra_details"
-                                       rows="3"
-                                       placeholder="Enter description"></textarea>
-                                 </div>
-
                                  <div>
                                     <div>
                                        <div class="form-group">
