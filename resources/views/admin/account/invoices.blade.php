@@ -44,7 +44,7 @@
                         </a>
                       </li> -->
               <!-- <li class="@if($active_tab=="tab4") active @endif">
-                      <a href="#comment" role="tab" data-toggle="tab">
+                            <p ng-bind="(quotationObj.total || 0) - (quotationObj.tax || 0)"></p>
                         <i class="fa fa-comment"></i> Comment
                       </a>
 
@@ -239,6 +239,13 @@
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                 <td>
+
+                        <div class="form-group row">
+                          <label for="" class="col-md-6">Subtotal :</label>
+                          <div class="col-md-6">
+                            <p ng-bind="(cusQuotationObj.total || 0) - (cusQuotationObj.tax || 0)"></p>
+                          </div>
+                        </div>
                                   <?php if ($invioces->status == '0') {
                                     echo "Pending";
                                   } else if ($invioces->status == '1') {
@@ -952,7 +959,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p><% quotationObj.total - quotationObj.tax %></p>
+                      <p ng-bind="(quotationObj.total || 0) - (quotationObj.tax || 0)"></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1181,7 +1188,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                    <p><% cusQuotationObj.total - cusQuotationObj.tax %></p>
+                      <p ng-bind="(cusQuotationObj.total || 0) - (cusQuotationObj.tax || 0)"></p>
                   </div>
                 </div>
                 <div class="form-group row">
