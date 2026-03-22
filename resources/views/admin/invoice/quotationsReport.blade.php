@@ -21,6 +21,16 @@
 
           <div class="box-body">
             <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!}Quotation Report</h4>
+            <div class="row" style="margin-bottom: 15px; margin-top: 10px;">
+              <div class="col-sm-4">
+                <label for="agentFilter">Agent Name</label>
+                <input
+                  type="text"
+                  id="agentFilter"
+                  class="form-control"
+                  placeholder="Enter agent name">
+              </div>
+            </div>
             <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
               <thead>
                 <!-- <div class="form-group">
@@ -120,6 +130,15 @@
       paging: true
     });
   })
+
+  $(function() {
+    var quotationTable = $('.account').DataTable();
+
+    $('#agentFilter').on('keyup change', function() {
+      quotationTable.column(7).search(this.value).draw();
+    });
+  });
+
   $(function() {
     var url = window.location.href;
     var activeTab = url.substring(url.indexOf("#!#") + 3);
