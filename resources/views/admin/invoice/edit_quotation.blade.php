@@ -185,10 +185,14 @@
 												<label for="licence_type"><%product.type%> Licence type</label>
 												<textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
 											</div>
-                                            <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='royalty_free' && product.licence_type !='' && flag ==2">
+                                            <!-- <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='royalty_free' && product.licence_type !='' && flag ==2">
                                                 <label for="licence_type"></label>
                                                 <input type="text" class="form-control" ng-model="product.extra_details" id="extra_details"/>
-                                             </div>
+                                             </div> -->
+											 <div class="form-group">
+												<label for="extra_details">Description</label>
+												<textarea id="extra_details" class="form-control" ng-model="product.extra_details" rows="3" placeholder="Enter description"></textarea>
+											</div>
 											<div ng-if="product.type">
 												<div>
 													<div class="form-group">
