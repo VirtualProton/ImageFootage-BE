@@ -239,13 +239,6 @@
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                 <td>
-
-                        <div class="form-group row">
-                          <label for="" class="col-md-6">Subtotal :</label>
-                          <div class="col-md-6">
-                            <p ng-bind="(cusQuotationObj.total || 0) - (cusQuotationObj.tax || 0)"></p>
-                          </div>
-                        </div>
                                   <?php if ($invioces->status == '0') {
                                     echo "Pending";
                                   } else if ($invioces->status == '1') {
@@ -350,6 +343,11 @@
                                     title="Download on Behalf"
                                     data-target="#modal-download-behalf"
                                     data-toggle="modal"
+                                    data-quotation-id="{{$quotations->id}}"
+                                    data-total="{{$quotations->total}}"
+                                    data-invoice-type="{{$quotations->invoice_type}}"
+                                    data-quotation-source="{{$quotations->quotation_source}}"
+                                    data-user-id="{{$user_id}}"
                                     class="btn btn-xs btn-info">
                                     <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
                                   </button> &nbsp;&nbsp;&nbsp;
@@ -959,7 +957,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                      <p ng-bind="(quotationObj.total || 0) - (quotationObj.tax || 0)"></p>
+                      <p ng-bind="(+quotationObj.total || 0) - (+quotationObj.tax || 0)"></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1188,7 +1186,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Subtotal :</label>
                   <div class="col-md-6">
-                      <p ng-bind="(cusQuotationObj.total || 0) - (cusQuotationObj.tax || 0)"></p>
+                      <p ng-bind="(+cusQuotationObj.total || 0) - (+cusQuotationObj.tax || 0)"></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1416,8 +1414,9 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" 
-                id="download-on-behalf-submit"
-                class="btn btn-primary">
+          id="download-on-behalf-submit"
+          ng-click="downloadAndSendEmail()"
+          class="btn btn-primary">
           Download & Send Email
         </button>
       </div>

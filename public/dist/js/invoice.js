@@ -1859,31 +1859,70 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.quotation_data = {};
     $scope.payment_method = "";
     $scope.invoice_id = "";
+    $scope.download_product_id = "";
 
     function syncDownloadOnBehalfProductId(value) {
         $scope.download_product_id = value || "";
     }
 
+    function buildDownloadOnBehalfPayload(trigger) {
+        if (!trigger || !trigger.length) {
+            return null;
+        }
+
+        var quotationId = trigger.data("quotation-id");
+        var total = trigger.data("total");
+        var invoiceType = trigger.data("invoice-type");
+        var quotationSource = trigger.data("quotation-source");
+        var userId = trigger.data("user-id");
+
+        if (!quotationId || !userId) {
+            return null;
+        }
+
+        return {
+            quotationData: {
+                id: parseInt(quotationId, 10),
+                total: total || 0,
+                invoice_type: parseInt(invoiceType, 10) || 0,
+                quotation_source: parseInt(quotationSource, 10) || 0,
+            },
+            userId: parseInt(userId, 10),
+        };
+    }
+
     $(document)
         .off("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id")
         .on("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id", function () {
+            var inputValue = $(this).val();
             $scope.$applyAsync(function () {
-                syncDownloadOnBehalfProductId($(this).val());
-            }.bind(this));
-        });
-
-    $(document)
-        .off("click.invoiceDownloadOnBehalf", "#download-on-behalf-submit")
-        .on("click.invoiceDownloadOnBehalf", "#download-on-behalf-submit", function () {
-            $scope.$applyAsync(function () {
-                $scope.downloadAndSendEmail();
+                syncDownloadOnBehalfProductId(inputValue);
             });
         });
-    
-    // Handle modal-download-behalf show event
-    $('#modal-download-behalf').on('show.bs.modal', function (e) {
-        console.log('Modal showing');
-    });
+
+    $("#modal-download-behalf")
+        .off("show.bs.modal.invoiceDownloadOnBehalf")
+        .on("show.bs.modal.invoiceDownloadOnBehalf", function (e) {
+            var modalTrigger = $(e.relatedTarget);
+            var payload = buildDownloadOnBehalfPayload(modalTrigger);
+
+            $scope.$applyAsync(function () {
+                if (payload) {
+                    $scope.open_download_on_behalf_modal(
+                        payload.quotationData,
+                        payload.userId
+                    );
+                }
+            });
+        })
+        .off("hidden.bs.modal.invoiceDownloadOnBehalf")
+        .on("hidden.bs.modal.invoiceDownloadOnBehalf", function () {
+            $scope.$applyAsync(function () {
+                $scope.quotation_data = {};
+                syncDownloadOnBehalfProductId("");
+            });
+            $("#download-on-behalf-product-id").val("");
+        });
     
     $scope.create_invoice = function (quotation, user_id) {
         $scope.quotationObj = []
@@ -2084,15 +2123,15 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         syncDownloadOnBehalfProductId("");
         $("#download-on-behalf-product-id").val("");
     };
-
+    console.log('we at here');
     // Download and Send Email using existing getPackageItems method
     $scope.downloadAndSendEmail = function() {
-        console.log('downloadAndSendEmail called');
-
         if (!$scope.download_product_id) {
+                console.log('we at here1');
             syncDownloadOnBehalfProductId($.trim($("#download-on-behalf-product-id").val()));
         }
-        
+            console.log('we at here2');
+
         if (!$scope.download_product_id) {
             alert('Please enter a Product ID');
             return;
@@ -2102,12 +2141,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert('User ID not found. Please reload the page.');
             return;
         }
-
-        console.log('Sending download request with data:', {
-            product_id: $scope.download_product_id,
-            user_id: $scope.quotation_data.user_id
-        });
-
+    console.log('we at here3');
         $("#loading").show();
         $http({
             method: "POST",
@@ -2126,8 +2160,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         }).then(
             function(result) {
                 $("#loading").hide();
-                console.log('API Response:', result.data);
-                
+
                 // Check different response status values
                 var status = result.data.status;
                 var message = result.data.message || 'Operation completed';
@@ -2156,7 +2189,6 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             },
             function(error) {
                 $("#loading").hide();
-                console.log('API Error:', error);
                 var errorMessage = 'An error occurred';
                 
                 if (error.data && error.data.message) {
