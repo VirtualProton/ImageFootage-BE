@@ -61,11 +61,9 @@
                   <td>{{$quotation['user_name']}}</td>
                   <td>
 
-                    @if($quotation['quotation_url'])
-                    <a href="{{$quotation['quotation_url']}}" target="_blank">Q{{$quotation['invoice_name']}}</a>
-                    @else
-                    Q{{$quotation['invoice_name']}}
-                    @endif
+                    <a href="{{ url('admin/users/invoices/'.$quotation['user_id']) }}#!#download_invoices">
+                      Q{{$quotation['invoice_name']}}
+                    </a>
                   </td>
                   <td>{{$quotation['created']}}</td>
                   <td>{{$quotation['total']}}</td>
@@ -148,6 +146,9 @@
       $(".tab-pane").removeClass("active in");
       $("#" + activeTab).addClass("active in");
       $('a[href="#' + activeTab + '"]').tab('show');
+    } else if ($.trim(activeTab) == 'download_invoices') {
+      $('a[href="#posts"]').tab('show');
+      $('a[href="#download_invoices"]').tab('show');
     }
   });
 
