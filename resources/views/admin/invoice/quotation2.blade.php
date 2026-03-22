@@ -153,13 +153,20 @@
                                  <div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
                                     <label for="licence_type"><%product.type%> Licence type</label>
                                     <select required=""class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)"  id="licence_dropdown">
-                                        <option value="">--Select a Licence Type--</option>
-                                        @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
-                                        <option value="{{ $getMusicLicenceDetail['value'] }}">{{$getMusicLicenceDetail['licence_type']}}</option>
-                                        @endforeach
+                                       <option value="">--Select a Licence Type--</option>
+                                       @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
+                                       <option value="{{ $getMusicLicenceDetail['value'] }}">{{$getMusicLicenceDetail['licence_type']}}</option>
+                                       @endforeach
                                     </select>
                                  </div>
-
+                                 <div class="form-group"
+                                    ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music') && product.licence_type != ''">
+                                    <label for="extra_details">Description</label>
+                                    <textarea class="form-control"
+                                       ng-model="product.extra_details"
+                                       rows="3"
+                                       placeholder="Enter description"></textarea>
+                                 </div>
 
                                  <div>
                                     <div>
@@ -578,12 +585,12 @@
          CKEDITOR.replace($(this).prop('id'));
       });
       $("#licence_dropdown").change(function() {
-        var type = $(this).val();
+         var type = $(this).val();
         if(type == ''){
             $('#extra_details').hide()
         }else{
             $('#extra_details').show()
-        }
+         }
       })
 
    });
