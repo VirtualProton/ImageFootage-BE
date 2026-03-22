@@ -27,9 +27,8 @@ use App\Models\UserPackage;
 use App\Models\UserProductDownload;
 use App\Http\Pond5\MusicApi;
 use Illuminate\Support\Facades\Log;
-
-
-
+use App\Models\Account;
+use App\Models\Admin;
 
 class InvoiceController extends Controller
 {
@@ -276,6 +275,10 @@ class InvoiceController extends Controller
     public function quotationReport()
     {
         $user = Auth::guard('admins')->user();
+        $account = new Account();
+        $admin = new Admin();
+        $agentlist = [];
+        $account_manager_name = "";
         $userState = $user->state;
 
         // Build the base query
@@ -288,6 +291,20 @@ class InvoiceController extends Controller
 
         $quotations = $query->get()->toArray();
 
+        foreach ($quotations as &$quotation) {
+            $userDetails = User::find($quotation['user_id']);
+            if (!empty($userDetails)) {
+                if (!empty($userDetails->account_manager_id)) {
+                    $account_manager = $admin->getAgentData($userDetails->account_manager_id);
+                    $account_manager_name = !empty($account_manager) ? $account_manager['name'] : "";
+                }
+                $quotation['account_manager_name'] = $account_manager_name;
+                $quotation['user_name'] = $userDetails->first_name . ' ' . $userDetails->last_name;
+            } else {
+                $quotation['account_manager_name'] = "";
+                $quotation['user_name'] = "N/A";
+            }
+        }
         return view('admin.invoice.quotationsReport', compact('quotations'));
     }
 

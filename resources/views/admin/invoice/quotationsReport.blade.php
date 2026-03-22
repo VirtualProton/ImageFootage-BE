@@ -28,11 +28,13 @@
                             </div> -->
                 <tr>
                   <th>Client ID</th>
+                  <th>Client Name</th>
                   <th>Transaction Id</th>
                   <th>Quotation Date</th>
                   <th>Amount (In INR)</th>
                   <th>Plan</th>
                   <th>Region</th>
+                  <th>Account Manager</th>
                   <!-- <th>Payment Mode</th>
                                 <th>Transaction Type Custom</th> -->
                   <th>Action</th>
@@ -46,6 +48,7 @@
                 @foreach($quotations as $quotation)
                 <tr role="row" class="odd">
                   <td>{{$quotation['user_id']}}</td>
+                  <td>{{$quotation['user_name']}}</td>
                   <td>
 
                     @if($quotation['quotation_url'])
@@ -74,6 +77,7 @@
                     {{$quotation['country']}}
                     @endif
                   </td>
+                  <td>{{$quotation['account_manager_name']}}</td>
                   <td>
                     @if($quotation['status'] != 3)
                     <a href="{{ url('admin/edit_quotation/'.$quotation['id']) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
