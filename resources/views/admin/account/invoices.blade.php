@@ -1392,10 +1392,10 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="product_id">Product ID: <span style="color: red;">*</span></label>
+          <label for="download-on-behalf-product-id">Product ID: <span style="color: red;">*</span></label>
           <input type="text" 
                  class="form-control" 
-                 id="product_id" 
+                 id="download-on-behalf-product-id" 
                  ng-model="download_product_id"
                  placeholder="Enter Product ID"
                  required>
@@ -1409,9 +1409,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" 
-                class="btn btn-primary" 
-                ng-click="downloadAndSendEmail()"
-                ng-disabled="!download_product_id">
+                id="download-on-behalf-submit"
+                class="btn btn-primary">
           Download & Send Email
         </button>
       </div>

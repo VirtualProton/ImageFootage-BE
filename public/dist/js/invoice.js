@@ -1859,6 +1859,26 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.quotation_data = {};
     $scope.payment_method = "";
     $scope.invoice_id = "";
+
+    function syncDownloadOnBehalfProductId(value) {
+        $scope.download_product_id = value || "";
+    }
+
+    $(document)
+        .off("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id")
+        .on("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id", function () {
+            $scope.$applyAsync(function () {
+                syncDownloadOnBehalfProductId($(this).val());
+            }.bind(this));
+        });
+
+    $(document)
+        .off("click.invoiceDownloadOnBehalf", "#download-on-behalf-submit")
+        .on("click.invoiceDownloadOnBehalf", "#download-on-behalf-submit", function () {
+            $scope.$applyAsync(function () {
+                $scope.downloadAndSendEmail();
+            });
+        });
     
     // Handle modal-download-behalf show event
     $('#modal-download-behalf').on('show.bs.modal', function (e) {
@@ -2061,12 +2081,17 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.open_download_on_behalf_modal = function(quotationData, userId) {
         $scope.quotation_data = angular.copy(quotationData || {});
         $scope.quotation_data.user_id = parseInt(userId, 10);
-        $scope.download_product_id = '';
+        syncDownloadOnBehalfProductId("");
+        $("#download-on-behalf-product-id").val("");
     };
 
     // Download and Send Email using existing getPackageItems method
     $scope.downloadAndSendEmail = function() {
         console.log('downloadAndSendEmail called');
+
+        if (!$scope.download_product_id) {
+            syncDownloadOnBehalfProductId($.trim($("#download-on-behalf-product-id").val()));
+        }
         
         if (!$scope.download_product_id) {
             alert('Please enter a Product ID');
@@ -2086,7 +2111,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         $("#loading").show();
         $http({
             method: "POST",
-            url: "/admin/get-package-items",
+            url: api_path + "get-package-items",
             data: {
                 product_id: $scope.download_product_id,
                 package_id: $scope.quotation_data.id,
@@ -2110,7 +2135,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 if (status == "success" || status === 1 || status === "1") {
                     alert(message + ' - Email notification sent to the user');
                     $('#modal-download-behalf').modal('hide');
-                    $scope.download_product_id = '';
+                    syncDownloadOnBehalfProductId("");
+                    $("#download-on-behalf-product-id").val("");
                     // Reload the page to refresh data
                     setTimeout(function() {
                         window.location.reload();
@@ -2121,7 +2147,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     // If no status field, show generic error
                     alert('Download processed. Please check your email for download link.');
                     $('#modal-download-behalf').modal('hide');
-                    $scope.download_product_id = '';
+                    syncDownloadOnBehalfProductId("");
+                    $("#download-on-behalf-product-id").val("");
                     setTimeout(function() {
                         window.location.reload();
                     }, 1500);
