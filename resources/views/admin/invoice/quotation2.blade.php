@@ -159,6 +159,10 @@
                                        @endforeach
                                     </select>
                                  </div>
+                                 <div class="form-group">
+                                       <label for="extra_details">Description</label>
+                                    <textarea id="extra_details" class="form-control" ng-model="product.extra_details" rows="3" placeholder="Enter description"></textarea>
+                                 </div>
                                  <div>
                                     <div>
                                        <div class="form-group">
