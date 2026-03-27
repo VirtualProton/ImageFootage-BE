@@ -1,5 +1,4 @@
 <?php
-namespace App;
 namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -9,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Admin;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -29,6 +29,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function account(){
         return $this->hasOne(Account::class,'id', 'account_manager_id');
+    }
+
+    public function accountManager(){
+        return $this->hasOne(Admin::class,'id', 'account_manager_id');
     }
 
     public function country(){

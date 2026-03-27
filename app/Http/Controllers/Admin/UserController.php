@@ -50,7 +50,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userlist = $this->User->getUserData();
+        $userlist = User::with('account', 'accountManager')->get()->toArray();
         return view('admin.user.index', compact('userlist'));
     }
 
