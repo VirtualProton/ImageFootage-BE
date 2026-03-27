@@ -40,7 +40,7 @@
                     @if(count($agentlist) > 0)
                     @foreach($agentlist as $k=>$agent)
                 <tr role="row" class="odd">
-                  <td>{{$agent['id']}}</td>
+                  <td>{{$agent->id}}</td>
                   <td><a href="{{ URL::to('admin/subadmin/view/'.$agent['id']) }}">{{$agent['name']}}</a></td>
                   <td>{{$agent['email']}}</td>
                   <td>{{$agent['mobile']}}</td>
