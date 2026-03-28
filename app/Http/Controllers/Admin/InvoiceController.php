@@ -375,22 +375,22 @@ class InvoiceController extends Controller
             if ($request->filled('client_name') && !empty(trim($request->client_name))) {
                 $clientName = trim($request->client_name);
                 $query->where(function ($q) use ($clientName) {
-                    $q->where('user_id', 'eq', "{$clientName}")
-                        ->orWhere('email_id', 'eq', "{$clientName}")
-                        ->orWhere('invoice_name', 'eq', "{$clientName}");
+                    $q->where('user_id', '=', $clientName)
+                        ->orWhere('email_id', '=', $clientName)
+                        ->orWhere('invoice_name', '=', $clientName);
                 });
             }
 
             // Apply start date filter from custom filter
             if ($request->filled('start_date') && !empty(trim($request->start_date))) {
                 $startDate = trim($request->start_date);
-                $query->whereDate('invoice_created', '==', $startDate);
+                $query->whereDate('invoice_created', '>=', $startDate);
             }
 
             // Apply end date filter from custom filter
             if ($request->filled('end_date') && !empty(trim($request->end_date))) {
                 $endDate = trim($request->end_date);
-                $query->whereDate('invoice_created', '==', $endDate);
+                $query->whereDate('invoice_created', '<=', $endDate);
             }
 
             // Apply search filter

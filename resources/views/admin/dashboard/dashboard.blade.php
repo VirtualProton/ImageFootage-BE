@@ -23,14 +23,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{$data['orders']}}</h3>
+              <!-- <h3>{{$data['orders']}}</h3> -->
 
-              <p>New Orders</p>
+              <p>New Registrations</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="{{url('admin/orders')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('admin/new_registrants')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

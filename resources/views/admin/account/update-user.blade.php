@@ -18,12 +18,15 @@
         Deactivated ? : {{ $user->status == 1 ? "No" : "Yes" }}
         @endif
       </div>
+    <div class="reset-pass">
+        <button id="resetButton" onclick="resetPassword({{$user->id}})">Reset Password</button>
     </div>
-    <div class="ps-wrap">
-      <div class="reset-pass"><span class="custom-font">
-          <button id="resetButton" onclick="resetPassword({{$user->id}})">Reset Password</button>
-      </div>
     </div>
+<!-- <div class="ps-wrap">
+    <div class="reset-pass">
+        <button id="resetButton" onclick="resetPassword({{$user->id}})">Reset Password</button>
+    </div>
+</div> -->
     <div class="f-l-e-wrap">
       <div class="custom-width"><span class="custom-font">First Name :</span> <input type="text" id="user_name" name="user_name" value="{{$user->first_name}}" /></div>
       <div class="custom-width"><span class="custom-font">Last Name :</span> <input type="text" class="" name="user_last_name" id="user_last_name" value="{{$user->last_name}}" /></div>

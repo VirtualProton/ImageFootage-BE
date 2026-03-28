@@ -97,8 +97,8 @@
                             </h4>
                             <div class="filter-row">
                                 <div class="filter-group">
-                                    <label for="client_name">Client Name/ID</label>
-                                    <input type="text" id="client_name" class="form-control" placeholder="Enter client name or ID">
+                                    <label for="client_name">Client ID</label>
+                                    <input type="text" id="client_name" class="form-control" placeholder="Enter client ID">
                                 </div>
 
                                 <div class="filter-group">
