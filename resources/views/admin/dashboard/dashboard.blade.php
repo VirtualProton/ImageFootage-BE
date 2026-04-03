@@ -123,7 +123,7 @@
                       <td><span class="label label-info">#{{$comment->id}}</span></td>
                       <td>
                         @if($comment->user_id)
-                          <a href="{{url('admin/users/show/'.$comment->user_id)}}">
+                          <a href="{{url('admin/users/invoices/'.$comment->user_id)}}">
                             User #{{$comment->user_id}}
                           </a>
                         @else
