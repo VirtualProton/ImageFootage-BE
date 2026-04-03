@@ -127,7 +127,7 @@
 $(function() {
     $('.account').DataTable({
       paging: true,
-      order: [[3, 'asc']]
+      order: [[3, 'desc']]
     });
   })
 
