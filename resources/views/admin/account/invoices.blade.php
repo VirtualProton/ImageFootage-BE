@@ -945,7 +945,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Package :</label>
                   <div class="col-md-6">
-                    <p><% quotationObj.package_description %></p>
+                    <p><%quotationObj.package_description%></p>
                   </div>
                 </div>
                 <div class="form-group row">
