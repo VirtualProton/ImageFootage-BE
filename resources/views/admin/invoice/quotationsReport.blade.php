@@ -124,9 +124,10 @@
 @endsection
 @section('scripts')
 <script>
-  $(function() {
+$(function() {
     $('.account').DataTable({
-      paging: true
+      paging: true,
+      order: [[3, 'asc']]
     });
   })
 

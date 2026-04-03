@@ -53,6 +53,9 @@ class SearchController extends Controller
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
+        $keyword['duration'] = isset($getKeyword['duration']) ? $getKeyword['duration'] : '';
+        $keyword['resolution'] = isset($getKeyword['resolution']) ? $getKeyword['resolution'] : '';
+        $keyword['artist_name'] = isset($getKeyword['artist_name']) ? $getKeyword['artist_name'] : '';
 
         $keyword['productType'] = 'photo';
         if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
