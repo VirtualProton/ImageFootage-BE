@@ -824,6 +824,7 @@
                                 <th>Pack Description</th>
                                 <th>Price</th>
                                 <th>Downloaded</th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -836,6 +837,17 @@
                                 <td>{{$plan->package_description ?? ''}}</td>
                                 <td>{{$plan->package_price ?? ''}}</td>
                                 <td>{{$plan->downloaded_product ?? ''}}</td>
+                                <td>
+                                  <button type="button"
+                                    ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $plan->id, "total" => $plan->package_price, "package_name" => $plan->package_name]) }}, {{$user_id}})'
+                                    title="Download on Behalf"
+                                    data-target="#modal-download-behalf"
+                                    data-toggle="modal"
+                                    class="btn btn-xs btn-info">
+                                    <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
+                                  </button>
+                                  <!-- Add your action buttons here -->
+                                </td>
                               </tr>
                               @endforeach
                               <tr style="text-align: right;">
@@ -1372,6 +1384,44 @@
         </div>
       </div>
     </div>
+    <!-- Download on Behalf Modal -->
+<div class="modal fade" id="modal-download-behalf" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Download on Behalf</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="download-on-behalf-product-id">Product ID: <span style="color: red;">*</span></label>
+          <input type="text" 
+                 class="form-control" 
+                 id="download-on-behalf-product-id" 
+                 ng-model="download_product_id"
+                 placeholder="Enter Product ID"
+                 required>
+        </div>
+
+        <div class="form-group">
+          <label for="display_total">Total Amount:</label>
+          <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" 
+          id="download-on-behalf-submit"
+          ng-click="downloadAndSendEmail()"
+          class="btn btn-primary">
+          Download & Send Email
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Update PO Modal -->
 <div class="modal fade" id="modal-update_po" role="dialog">
   <div class="modal-dialog">
