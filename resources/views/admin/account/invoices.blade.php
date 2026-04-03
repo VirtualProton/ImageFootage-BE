@@ -338,19 +338,6 @@
                                   @if($quotations->status != 3)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
-                                  <button type="button"
-                                    ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $quotations->id, "total" => $quotations->total, "invoice_type" => $quotations->invoice_type, "quotation_source" => $quotations->quotation_source]) }}, {{$user_id}})'
-                                    title="Download on Behalf"
-                                    data-target="#modal-download-behalf"
-                                    data-toggle="modal"
-                                    data-quotation-id="{{$quotations->id}}"
-                                    data-total="{{$quotations->total}}"
-                                    data-invoice-type="{{$quotations->invoice_type}}"
-                                    data-quotation-source="{{$quotations->quotation_source}}"
-                                    data-user-id="{{$user_id}}"
-                                    class="btn btn-xs btn-info">
-                                    <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
-                                  </button> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                   @endif
                                 </td>
@@ -783,7 +770,7 @@
 
                       <div class="tab-pane fade @if($active_tab==" active_plans") in active @endif" id="active_plans_invoices">
                         <div class="box-body">
-                          <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Subscription Planss</h4>
+                          <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Subscription Plans</h4>
                           @if(!empty($data['active_subscription_plans']))
                           <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                             <thead>
@@ -1385,47 +1372,6 @@
         </div>
       </div>
     </div>
-<!-- Download on Behalf Modal -->
-<div class="modal fade" id="modal-download-behalf" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title">Download on Behalf</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="download-on-behalf-product-id">Product ID: <span style="color: red;">*</span></label>
-          <input type="text" 
-                 class="form-control" 
-                 id="download-on-behalf-product-id" 
-                 ng-model="download_product_id"
-                 placeholder="Enter Product ID"
-                 required>
-        </div>
-
-        <div class="form-group">
-          <label for="display_total">Total Amount:</label>
-          <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" 
-          id="download-on-behalf-submit"
-          ng-click="downloadAndSendEmail()"
-          class="btn btn-primary">
-          Download & Send Email
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-
 <!-- Update PO Modal -->
 <div class="modal fade" id="modal-update_po" role="dialog">
   <div class="modal-dialog">
@@ -1754,8 +1700,6 @@
       type: 'POST'
     });
   }
-
-  // AngularJS controller handles download on behalf modal functions
 </script>
 
 @stop
