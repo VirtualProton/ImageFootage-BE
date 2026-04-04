@@ -181,7 +181,7 @@
                                 <td>
                                   @if($quotations->status != 3)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                  <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" class="js-convert-invoice" data-kind="subscription" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                   @endif
                                 </td>
@@ -337,7 +337,7 @@
                                 <td>
                                   @if($quotations->status != 3)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                  <a href="javascript:void(0);" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" class="js-convert-invoice" data-kind="subscription" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                   @endif
                                 </td>
@@ -488,7 +488,7 @@
                                 <td>
                                   @if($quotations->status != 3)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                  <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" class="js-convert-invoice" data-kind="custom" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                   @endif
                                 </td>
@@ -661,7 +661,7 @@
                                 <td>
                                   @if($quotations->status != 3)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
-                                  <a href="javascript:void(0);" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" class="js-convert-invoice" data-kind="custom" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
                                   @endif
                                 </td>
@@ -908,13 +908,13 @@
               <span aria-hidden="true">×</span></button>
             <h4 class="modal-title">Create Invoice</h4>
           </div>
-          <div class="modal-body" ng-if="cusQuotationObj.length == 0 && quotationObj.package_id !== null">
+          <div class="modal-body" id="modal-body-subscription" ng-if="cusQuotationObj.length == 0 && quotationObj.package_id !== null">
             <div class="form-group">
               <div class="col-sm-6">
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id</label>
                   <div class="col-md-6">
-                      <p>Q<% quotationObj.invoice_name %></p>
+                      <p id="fallback-sub-transaction">Q<% quotationObj.invoice_name %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -944,7 +944,7 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Package :</label>
                   <div class="col-md-6">
-                    <p><%quotationObj.package_description%></p>
+                    <p id="fallback-sub-package"><%quotationObj.package_description%></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -968,13 +968,13 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p><% quotationObj.tax %></p>
+                    <p id="fallback-sub-tax"><% quotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p><% quotationObj.total %></p>
+                    <p id="fallback-sub-total"><% quotationObj.total %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1143,13 +1143,13 @@
 
 
 
-          <div class="modal-body" ng-if="quotationObj.length == 0 && cusQuotationObj.package_id == null">
+          <div class="modal-body" id="modal-body-custom" ng-if="quotationObj.length == 0 && cusQuotationObj.package_id == null">
             <div class="form-group">
               <div class="col-sm-6">
                 <div class="form-group row">
                   <label for="" class="col-md-6">Trasaction Id :</label>
                   <div class="col-md-6">
-                    <p>Q<% cusQuotationObj.invoice_name %></p>
+                    <p id="fallback-cus-transaction">Q<% cusQuotationObj.invoice_name %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1191,19 +1191,19 @@
                 <div class="form-group row">
                   <label for="" class="col-md-6">Discount :</label>
                   <div class="col-md-6">
-                    <p><% cusQuotationObj.discount %></p>
+                    <p id="fallback-cus-discount"><% cusQuotationObj.discount %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Tax :</label>
                   <div class="col-md-6">
-                    <p><% cusQuotationObj.tax %></p>
+                    <p id="fallback-cus-tax"><% cusQuotationObj.tax %></p>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
-                    <p><% cusQuotationObj.total %></p>
+                    <p id="fallback-cus-total"><% cusQuotationObj.total %></p>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -1360,8 +1360,8 @@
             </div>
             <div class="form-group">
               <div class="col-sm-12">
-                <table width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
-                  <tr ng-repeat="item in cusQuotationObj.items">
+                <table id="fallback-cus-items-table" width="100%" style="border-spacing: 1em .5em;padding: 0 2em 1em 0;border: 1px solid orange;">
+                  <tr ng-repeat="item in cusQuotationObj.items" id="fallback-cus-items-row-template">
                     <td style="padding:5px;"><% item.type %></td>
                     <td style="padding:5px;"><img src="<% item.product_image %>" width="150px" /></td>
                     <td style="padding:5px;"><% item.product_id %></td>
@@ -1750,6 +1750,84 @@
       type: 'POST'
     });
   }
+
+  // Fallback data population when Angular interpolation is not active.
+  (function() {
+    function parseQuotation(rawData) {
+      if (!rawData) {
+        return null;
+      }
+      try {
+        return JSON.parse(rawData);
+      } catch (e) {
+        try {
+          var decoded = $('<textarea/>').html(rawData).text();
+          return JSON.parse(decoded);
+        } catch (decodeError) {
+          return null;
+        }
+      }
+    }
+
+    function toMoney(value) {
+      var number = Number(value);
+      return Number.isFinite(number) ? number : 0;
+    }
+
+    function fillSubscription(quotation) {
+      $('#fallback-sub-transaction').text('Q' + (quotation.invoice_name || ''));
+      $('#fallback-sub-package').text(quotation.package_description || '');
+      $('#fallback-sub-tax').text(toMoney(quotation.tax));
+      $('#fallback-sub-total').text(toMoney(quotation.total));
+    }
+
+    function fillCustom(quotation) {
+      $('#fallback-cus-transaction').text('Q' + (quotation.invoice_name || ''));
+      $('#fallback-cus-discount').text(toMoney(quotation.discount));
+      $('#fallback-cus-tax').text(toMoney(quotation.tax));
+      $('#fallback-cus-total').text(toMoney(quotation.total));
+
+      var items = Array.isArray(quotation.items) ? quotation.items : [];
+      var tableRows = '';
+      items.forEach(function(item) {
+        tableRows += '<tr>' +
+          '<td style="padding:5px;">' + (item.type || '') + '</td>' +
+          '<td style="padding:5px;"><img src="' + (item.product_image || '') + '" width="150px" /></td>' +
+          '<td style="padding:5px;">' + (item.product_id || '') + '</td>' +
+          '<td style="padding:5px;">' + (item.product_size || '') + '</td>' +
+          '<td style="padding:5px;">' + toMoney(item.total) + '</td>' +
+          '</tr>';
+      });
+
+      if (tableRows) {
+        $('#fallback-cus-items-table').html(tableRows);
+      }
+    }
+
+    $(document).on('click', '.js-convert-invoice', function() {
+      var quotation = parseQuotation($(this).attr('data-quotation'));
+      if (!quotation) {
+        return;
+      }
+
+      var kind = $(this).attr('data-kind');
+      var isCustom = kind === 'custom';
+
+      if (isCustom) {
+        fillCustom(quotation);
+        $('#modal-body-subscription').hide();
+        $('#modal-body-custom').show();
+      } else {
+        fillSubscription(quotation);
+        $('#modal-body-custom').hide();
+        $('#modal-body-subscription').show();
+      }
+    });
+
+    $('#modal-default').on('hidden.bs.modal', function() {
+      $('#modal-body-subscription, #modal-body-custom').show();
+    });
+  })();
 </script>
 
 @stop

@@ -21,5 +21,8 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.7.16"
+    },
+    "dependencies": {
+        "angular": "^1.7.9"
     }
 }
