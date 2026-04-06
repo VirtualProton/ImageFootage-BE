@@ -228,7 +228,7 @@ class ImageApi
     public function download($data, $id, $version = "")
     {
         ini_set('max_execution_time', 0);
-        if (count($data) > 0) {
+        // if (count($data) > 0) {
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $this->url . '/api/v3/items/download/' . $version . '/' . $id,
@@ -249,7 +249,7 @@ class ImageApi
             curl_close($curl);
             $contents = json_decode($response, true);
             return $contents;
-        }
+        // }
     }
 
 
