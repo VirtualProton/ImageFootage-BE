@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      font-size: 11px;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    /* ── HEADER ── */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 28px 40px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo-circles {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-circles .row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .logo-circles .c {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #2a2a2a;
+    }
+
+    .logo-circles .c.sm {
+      width: 20px;
+      height: 20px;
+    }
+
+    .logo-text {
+      font-size: 7px;
+      letter-spacing: 0.06em;
+      color: #333;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .logo-text span {
+      color: #888;
+      font-size: 6px;
+    }
+
+    .hello-block {
+      text-align: right;
+    }
+
+    .this-is {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .hello-text {
+      font-size: 50px;
+      font-weight: 700;
+      color: #F7B403;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    /* ── META ── */
+    .info-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 16px 40px;
+      gap: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .info-row {
+      display: flex;
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+
+    .info-label {
+      color: #777;
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+
+    .info-value {
+      color: #111;
+      font-weight: 500;
+    }
+
+    /* ── CLIENT ── */
+    .client-title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #111;
+      padding: 12px 40px 0;
+    }
+
+    .client-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 8px 40px 14px;
+      border-bottom: 2px solid #222;
+      gap: 20px;
+    }
+
+    .client-address {
+      font-size: 11px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .pan-row {
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .pan-row .lbl {
+      color: #777;
+      margin-right: 6px;
+    }
+
+    .pan-row .val {
+      color: #111;
+      font-weight: 500;
+    }
+
+    /* ── TABLE HEADER ── */
+    .table-header {
+      display: grid;
+      grid-template-columns: 46px 1fr 120px;
+      background: #3a3a3a;
+      color: #fff;
+      padding: 9px 40px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .table-header .th-price {
+      text-align: right;
+    }
+
+    /* ── ITEMS ── */
+    .item-row {
+      display: grid;
+      grid-template-columns: 46px 1fr 120px;
+      padding: 14px 40px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item-row:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .item-sno {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      padding-top: 1px;
+    }
+
+    .item-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .item-body {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .item-thumb {
+      width: 110px;
+      min-width: 110px;
+      height: 76px;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      background: #eee;
+    }
+
+    .item-thumb svg {
+      display: block;
+      width: 110px;
+      height: 76px;
+    }
+
+    .item-details {
+      font-size: 10.5px;
+      color: #333;
+      line-height: 1.65;
+    }
+
+    .item-details .dl {
+      margin-bottom: 1px;
+    }
+
+    .item-details .dl strong {
+      color: #111;
+    }
+
+    .item-full {
+      font-size: 10.5px;
+      color: #444;
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    .item-full strong {
+      color: #111;
+    }
+
+    .item-price {
+      text-align: right;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+      padding-top: 1px;
+    }
+
+    /* ── PROMO CODE ── */
+    /* ── TOTALS ── */
+    .totals-wrap {
+      padding: 14px 40px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .assets-line {
+      font-weight: 700;
+      font-size: 11.5px;
+      padding-bottom: 8px;
+      color: #111;
+      width: 100%;
+    }
+
+    .totals-table {
+      width: 280px;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .totals-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .totals-table .tot-label {
+      color: #777;
+      font-weight: 400;
+      text-align: left;
+    }
+
+    .totals-table .tot-value {
+      text-align: right;
+      font-weight: 500;
+      color: #111;
+    }
+
+    .totals-table tr.due td {
+      background: #f0f0f0;
+      font-size: 12px;
+      font-weight: 700;
+      border-bottom: none;
+    }
+
+    .totals-table tr.due .tot-label {
+      color: #111;
+      font-weight: 700;
+    }
+
+    /* ── SYSTEM NOTE ── */
+    .sys-note {
+      padding: 10px 40px;
+      font-size: 10px;
+      color: #999;
+      font-style: italic;
+      border-top: 1px solid #eee;
+      line-height: 1.6;
+    }
+
+    /* ── PAYMENT ── */
+    .payment-wrap {
+      border-top: 2px solid #222;
+    }
+
+    .payment-grid {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      padding: 16px 40px;
+      background: #f9f9f9;
+    }
+
+    .payment-grid>div {
+      display: table-cell;
+      width: 50%;
+      vertical-align: top;
+    }
+
+    .payment-grid>div:first-child {
+      padding-right: 12px;
+    }
+
+    .payment-grid>div:last-child {
+      padding-left: 12px;
+    }
+
+    .pay-title {
+      font-weight: 700;
+      font-size: 11.5px;
+      margin-bottom: 7px;
+      color: #111;
+    }
+
+    .pay-address {
+      font-size: 11px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .bank-row {
+      font-size: 11px;
+      line-height: 1.85;
+    }
+
+    .bank-row .bl {
+      color: #777;
+      display: inline-block;
+      min-width: 110px;
+    }
+
+    .bank-row .bv {
+      color: #111;
+      font-weight: 500;
+    }
+
+    /* ── PAY ONLINE ── */
+    .pay-online-row {
+      padding: 12px 40px 14px;
+      border-top: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+
+    .pay-online-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pay-online-label {
+      vertical-align: middle;
+      padding-right: 12px;
+    }
+
+    .pay-online-btn-cell {
+      vertical-align: middle;
+      width: 1%;
+      white-space: nowrap;
+    }
+
+    .pay-online-row span {
+      font-size: 11px;
+      color: #555;
+    }
+
+    .pay-btn {
+      display: inline-block;
+      background: #F7B403;
+      color: #fff;
+      font-weight: 600;
+      font-size: 11px;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 2px 6px rgba(247, 180, 3, 0.3);
+    }
+
+    .pay-btn:hover {
+      background: #d9a002;
+    }
+
+    /* ── TERMS ── */
+    .terms-wrap {
+      padding: 32px 40px 28px;
+    }
+
+    .terms-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #222;
+      color: #111;
+    }
+
+    .terms-list {
+      list-style: none;
+    }
+
+    .terms-list li {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    .t-num {
+      font-weight: 700;
+      color: #111;
+      flex-shrink: 0;
+      min-width: 16px;
+    }
+
+    .sub-list {
+      list-style: none;
+      margin-top: 5px;
+    }
+
+    .sub-list li {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .s-lbl {
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 14px 40px 18px;
+      border-top: 1px solid #ddd;
+      margin-top: 8px;
+    }
+
+    .footer-label {
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .looking-fwd {
+      font-size: 26px;
+      font-weight: 800;
+      color: #F7B403;
+      line-height: 1;
+      text-align: right;
+      letter-spacing: -0.5px;
+    }
+
+    .looking-fwd span {
+      display: block;
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: #aaa;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="top-header">
+      <div>
+        <img src="[CP_LOGO_CID]" alt="Company Logo"
+          style="height:60px; width:auto; display:block;"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div
+          style="display:none; width:120px; height:auto; border:1px dashed #ccc; align-items:center; justify-content:center; background:#f9f9f9; border-radius:4px;">
+          <span style="font-size:10px; color:#bbb;">Logo</span>
+        </div>
+      </div>
+      <div class="hello-block">
+        <div class="this-is">THIS IS YOUR<br>I N V O I C E</div>
+        <div class="hello-text">hello</div>
+      </div>
+    </div>
+
+    <!-- META -->
+    <div class="info-section">
+      <div>
+        <div class="info-row"><span class="info-label">Invoice No.</span><span class="info-value">[Invoice
+            Number]</span></div>
+        <div class="info-row"><span class="info-label">Invoice Date</span><span class="info-value">[Invoice
+            Date]</span></div>
+        <div class="info-row"><span class="info-label">Client Code</span><span class="info-value">[Client Code]</span>
+        </div>
+      </div>
+      <div>
+        <div class="info-row"><span class="info-label">Company Name</span><span class="info-value">Conceptual Pictures
+            Worldwide Pvt. Ltd</span></div>
+        <div class="info-row"><span class="info-label">Company Pan No</span><span class="info-value">AAFCC2629B</span>
+        </div>
+        <div class="info-row"><span class="info-label">GSTIN</span><span class="info-value">36AAFCC2629B1Z3</span></div>
+        <div class="info-row"><span class="info-label">CIN Number</span><span
+            class="info-value">U123456TG20254728</span></div>
+      </div>
+    </div>
+
+    <!-- CLIENT -->
+    <div class="client-title">Client Details</div>
+    <div class="client-section">
+      <div>
+        <div class="client-address">[Company Name]<br>[Address]<br>[City] - [Postal Code]<br>[Country]</div>
+        <div class="pan-row">
+          <div><span class="lbl">Pan No</span><span class="val">[Client PAN Number]</span></div>
+          <div><span class="lbl">GSTIN</span><span class="val">[Client GSTIN]</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="info-row"><span class="info-label">Ordered By</span><span class="info-value">[Client Name]</span>
+        </div>
+        <div class="info-row"><span class="info-label">Mail ID</span><span class="info-value">[Client Email]</span>
+        </div>
+        <div class="info-row"><span class="info-label">Contact No.</span><span class="info-value">[Client Contact
+            Number]</span></div>
+        <div class="info-row"><span class="info-label">Sales Person</span><span class="info-value">[Account
+            Manager]</span></div>
+      </div>
+    </div>
+
+    <!-- TABLE HEADER -->
+    <div class="table-header">
+      <div>S. No.</div>
+      <div>Description</div>
+      <div class="th-price">Unit Price</div>
+    </div>
+
+    <!-- ITEM 1 -->
+    <div class="item-row">
+      <div class="item-sno">1</div>
+      <div>
+        <div class="item-title">[File Code] : [File Name]</div>
+        <div class="item-body">
+          <div class="item-thumb">
+            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
+              style="width:110px;height:76px;object-fit:cover;display:block;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div
+              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
+                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
+                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span style="font-size:9px;color:#bbb;">No Image</span>
+            </div>
+          </div>
+          <div class="item-details">
+            <!--
+            If the file type is image - remove label and duration
+
+            if the file type is footage - no change
+
+            if the file type is music - remove label and resolution
+            -->
+            <div class="dl"><strong>File Type:</strong> [File Type]</div>
+            <div class="dl"><strong>License Type:</strong> [License Type]</div>
+            <div class="dl"><strong>Size:</strong> [Size]</div>
+            <div class="dl"><strong>Resolution Type:</strong> [Resolution Type]</div>
+            <div class="dl"><strong>Resolution:</strong> [Resolution]</div>
+            <div class="dl"><strong>File Format:</strong> [File Format]</div>
+            <div class="dl"><strong>Duration:</strong> [Duration]</div>
+          </div>
+        </div>
+      </div>
+      <div class="item-price">[Price]</div>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="item-row">
+      <div class="item-sno">2</div>
+      <div>
+        <div class="item-title">982734 Beautiful Sunset over the Mountains.</div>
+        <div class="item-body">
+          <div class="item-thumb">
+            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
+              style="width:110px;height:76px;object-fit:cover;display:block;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div
+              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
+                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
+                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span style="font-size:9px;color:#bbb;">No Image</span>
+            </div>
+          </div>
+          <div class="item-details">
+            <div class="dl"><strong>File Type:</strong> Image</div>
+            <div class="dl"><strong>License Type:</strong> Digital/Standard License</div>
+            <div class="dl"><strong>Size:</strong> 15 MB</div>
+            <div class="dl"><strong>Resolution:</strong> 4000x3000</div>
+            <div class="dl"><strong>File Format:</strong> JPG</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="item-price">61,187.00</div>
+    </div>
+
+    <!-- ITEM 3 -->
+    <div class="item-row">
+      <div class="item-sno">3</div>
+      <div>
+        <div class="item-title">543210 Aerial View of the City Skyline.</div>
+        <div class="item-body">
+          <div class="item-thumb">
+            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
+              style="width:110px;height:76px;object-fit:cover;display:block;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div
+              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
+                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
+                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span style="font-size:9px;color:#bbb;">No Image</span>
+            </div>
+          </div>
+          <div class="item-details">
+            <div class="dl"><strong>File Type:</strong> Footage</div>
+            <div class="dl"><strong>License Type:</strong> Commercial License</div>
+            <div class="dl"><strong>Size:</strong> 2.5 GB</div>
+            <div class="dl"><strong>Resolution Type :</strong> 4K</div>
+            <div class="dl"><strong>Resolution:</strong> 1920x1080</div>
+            <div class="dl"><strong>File Format:</strong> MP4</div>
+            <div class="dl"><strong>Duration:</strong> 00:02:30</div>
+          </div>
+        </div>
+      </div>
+      <div class="item-price">11,187.00</div>
+    </div>
+
+    <!-- ITEM 4 -->
+    <div class="item-row">
+      <div class="item-sno">4</div>
+      <div>
+        <div class="item-title">112233 Upbeat Corporate Background Track.</div>
+        <div class="item-body">
+          <div class="item-thumb">
+            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
+              style="width:110px;height:76px;object-fit:cover;display:block;"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div
+              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
+                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
+                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span style="font-size:9px;color:#bbb;">No Image</span>
+            </div>
+          </div>
+          <div class="item-details">
+            <div class="dl"><strong>File Type:</strong> Music</div>
+            <div class="dl"><strong>License Type:</strong> All Media License</div>
+            <div class="dl"><strong>Size:</strong> 10 MB</div>
+            <div class="dl"><strong>File Format:</strong> WAV</div>
+            <div class="dl"><strong>Duration:</strong> 00:03:45</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="item-price">61,187.00</div>
+    </div>
+
+    <!-- TOTALS -->
+    <div class="totals-wrap">
+      <div class="assets-line">Total Assets: [total number of items]</div>
+
+      <table class="totals-table">
+        <tbody>
+          <tr>
+            <td class="tot-label">Sub Total</td>
+            <td class="tot-value">&#8377;[sub total]</td>
+          </tr>
+          <tr>
+            <td class="tot-label">Discount</td>
+            <td class="tot-value" style="color:#2a9d4e;">- &#8377;[discount amount]</td>
+          </tr>
+          <tr>
+            <td class="tot-label">IGST [tax percentage]</td>
+            <td class="tot-value">&#8377;[tax amount]</td>
+          </tr>
+          <tr class="due">
+            <td class="tot-label">Total Due</td>
+            <td class="tot-value"><strong>&#8377;[total due]</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SYSTEM NOTE -->
+    <div class="sys-note">This is a system-generated invoice and does not require any official signature. It reflects
+      our records of the transaction with you. Please inform us immediately if you notice any discrepancies in the
+      details.</div>
+
+    <!-- PAYMENT -->
+    <div class="payment-wrap">
+      <div class="payment-grid">
+        <div>
+          <div class="pay-title">Remit To</div>
+          <div class="pay-address">
+            Conceptual Pictures Worldwide Pvt. Ltd.<br>
+            R5 Chambers, 3rd Floor,<br>
+            Opp. Pillar No. 02, Mehdipatnam,<br>
+            Hyderabad, Telangana 500028<br>
+            <span style="color:#666;">Finance: accounts@conceptualpictures.com</span>
+          </div>
+        </div>
+        <div>
+          <div class="pay-title">Bank Transfers To</div>
+          <div class="bank-row">
+            <div><span class="bl">Account Name:</span><span class="bv">Conceptual Pictures Worldwide Pvt. Ltd.</span>
+            </div>
+            <div><span class="bl">Account Type:</span><span class="bv">Current</span></div>
+            <div><span class="bl">Bank Name:</span><span class="bv">HDFC Bank Ltd</span></div>
+            <div><span class="bl">Bank Address:</span><span class="bv">Mallepally, Vijaynagar Colony, Hyderabad
+                500057</span></div>
+            <div><span class="bl">Bank Account:</span><span class="bv">50200000502220</span></div>
+            <div><span class="bl">Swift Code:</span><span class="bv">HDFCINBB</span></div>
+            <div><span class="bl">IFSC Code:</span><span class="bv">HDFC0001998</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pay-online-row">
+        <table class="pay-online-table" role="presentation" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td class="pay-online-label"><span>For Online Payment</span></td>
+            <td class="pay-online-btn-cell"><a href="[PAY_ONLINE_LINK]" class="pay-btn" target="_blank" rel="noopener noreferrer">Pay Online &rarr;</a></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- TERMS -->
+      <div class="terms-wrap">
+        <div class="terms-title">Invoice Terms &amp; License Conditions.</div>
+        <ol class="terms-list">
+          <li><span class="t-num">1.</span><span>This Invoice is valid for 30 days from the date of issue unless stated
+              otherwise. Prices are subject to change after the validity period.</span></li>
+          <li><span class="t-num">2.</span><span>All content is subject to availability at the time of licensing. The
+              Company reserves the right to replace unavailable assets with comparable alternatives.</span></li>
+          <li>
+            <span class="t-num">3.</span>
+            <span><strong>License Grant:</strong> Upon receipt of full payment, ImageFootage grants a non-exclusive,
+              non-transferable, royalty-free license to use the licensed content strictly in accordance with the License
+              Type specified on this invoice. Licenses usually include:
+              <ul class="sub-list" style="margin-top:6px;">
+                <li><span class="s-lbl">A.</span><span>Digital/Standard License – Online Commercial or Editorial use (no
+                    broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a
+                    brand, product or commercial service.</span></li>
+                <li><span class="s-lbl">B.</span><span>Commercial License – Indoor / outdoor TV / POP / Online (no
+                    broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a
+                    brand, product or commercial service.</span></li>
+                <li><span class="s-lbl">C.</span><span>Non Commercial License – All Media Non Commercial (Editorial)
+                    (including broadcast / theater / DVD / VOD). No promotion / marketing / merchandising / endorsement
+                    of
+                    a brand, product or commercial service.</span></li>
+                <li><span class="s-lbl">D.</span><span>All Media License – EXTENDED All Media (including TVC /
+                    Broadcast,
+                    Theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand,
+                    product or commercial service.</span></li>
+              </ul>
+            </span>
+          </li>
+          <li><span class="t-num">4.</span><span><strong>Usage Restrictions:</strong> Content may not be resold,
+              sublicensed, redistributed, or made available as standalone files. Use in unlawful, misleading,
+              defamatory,
+              or prohibited contexts is not permitted.</span></li>
+          <li><span class="t-num">5.</span><span><strong>Ownership:</strong> All intellectual property rights remain the
+              property of ImageFootage and/or its licensors. No ownership rights are transferred to the client.</span>
+          </li>
+          <li><span class="t-num">6.</s
