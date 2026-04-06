@@ -596,7 +596,7 @@ class InvoiceController extends Controller
             $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
                 ->where('user_id', '=', $userId)
                 ->where('id', '=', $packageId)
-                ->where('package_expiry_date_from_purchage', '>', Now())
+                ->where('package_expiry_date_from_purchage', '>', now())
                 ->get();
 
             if ($pacakegalist->isNotEmpty()) {
