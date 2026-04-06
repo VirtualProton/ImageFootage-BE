@@ -645,7 +645,9 @@ class InvoiceController extends Controller
                     $download_id = $productId;
                     $version =  $download_id . ':1';
                     $product_details_data = $footageMedia->download($productId, $download_id, $version);
-                    if (!empty($product_details_data)) {
+                    
+                    Log::info('Footage API Response Type: ' . gettype($product_details_data));
+                    if (is_array($product_details_data) && !empty($product_details_data)) {
                         $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->first();
                         $product_id = $download_id;
                         $dataInsert = array(
@@ -654,7 +656,7 @@ class InvoiceController extends Controller
                             'product_id' => $product_id,
                             'product_id_api' => $download_id,
                             'id_media' => $download_id,
-                            'download_url' => $product_details_data['url'],
+                            'download_url' => $product_details_data['url'] ?? '',
                             'downloaded_date' => date('Y-m-d H:i:s'),
                             'product_name' => '',
                             'product_desc' => '',
@@ -683,12 +685,15 @@ class InvoiceController extends Controller
                         $this->sendDownloadNotificationEmail($user, $productId, 'Footage', $product_details_data);
                         return response()->json(['status' => 'success', 'message' => 'Footage downloaded successfully', 'data' => $product_details_data]);
                     }
-                    return response()->json($product_details_data);
+                    
+                    Log::error('Footage API response not valid array', ['response' => $product_details_data, 'type' => gettype($product_details_data)]);
+                    return response()->json(['status' => 'failed', 'message' => 'Failed to download footage', 'data' => $product_details_data]);
                 } else if ($type == 2) {
                     // Download Images from Pond5
-                    $footageMedia = new Pond5ImageApi();
-                    $download_id = $productId;;
+                    $product_details_data = null;
+                    $download_id = $productId;
                     $version = $download_id . ':1';
+                    
                     if ($productWeb == 2) { // If image is from PantherMedia
                         $imageMedia = new Pond5ImageApi();
                         $product_details_data = $imageMedia->download($productId, $download_id, $version);
@@ -697,19 +702,25 @@ class InvoiceController extends Controller
                         $product_details_data = $footageMedia->download($productId, $download_id, $version);
                     }
 
-
-                    if (!empty($product_details_data)) {
+                    Log::info('Image API Response Type: ' . gettype($product_details_data));
+                    // Validate API response is an array before proceeding
+                    if (is_array($product_details_data) && !empty($product_details_data)) {
                         $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
 
-                        if (isset($product_details_data['download_status']['status']) && !empty($product_details_data['download_status']['status']) && $product_details_data['download_status']['status'] == "pending") {
+                        $isPending = isset($product_details_data['download_status']) && 
+                                   is_array($product_details_data['download_status']) &&
+                                   isset($product_details_data['download_status']['status']) && 
+                                   $product_details_data['download_status']['status'] == "pending";
+                        
+                        if ($isPending) {
                             $dataInsert = array(
                                 'user_id' => $userId,
                                 'package_id' => $packageId,
                                 'product_id' => $productId,
-                                'id_download' => $product_details_data['download_status']['id_download'],
+                                'id_download' => $product_details_data['download_status']['id_download'] ?? null,
                                 'product_id_api' => $productId,
                                 'id_media' => $productId,
-                                'download_url' => $product_details_data['download_status']['queue_hash'],
+                                'download_url' => $product_details_data['download_status']['queue_hash'] ?? '',
                                 'downloaded_date' => date('Y-m-d H:i:s'),
                                 'product_name' => 'Download ON Behalf',
                                 'product_desc' => 'Download ON Behalf',
@@ -728,10 +739,10 @@ class InvoiceController extends Controller
                                 'user_id' => $userId,
                                 'package_id' => $packageId,
                                 'product_id' => $productId,
-                                'id_download' => $product_details_data['transaction'],
+                                'id_download' => $product_details_data['transaction'] ?? null,
                                 'product_id_api' => $productId,
                                 'id_media' => $productId,
-                                'download_url' => $product_details_data['url'],
+                                'download_url' => $product_details_data['url'] ?? '',
                                 'downloaded_date' => date('Y-m-d H:i:s'),
                                 'product_name' => 'Download ON Behalf',
                                 'product_desc' => 'Download ON Behalf',
@@ -749,7 +760,6 @@ class InvoiceController extends Controller
                             );
                         }
 
-
                         UserProductDownload::insert($dataInsert);
 
                         if (empty($dataCheck)) {
@@ -761,12 +771,15 @@ class InvoiceController extends Controller
                                     'updated_at' => date('Y-m-d H:i:s')
                                 ]);
                         }
+                        
+                        // Send email notification
+                        $this->sendDownloadNotificationEmail($user, $productId, 'Image', $product_details_data);
+                        return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully', 'data' => $product_details_data]);
                     } else {
-                        return response()->json(['status' => 'failed', 'message' => 'Image is not downloaded successfully', 'data' => []]);
+                        Log::error('API response not valid array', ['response' => $product_details_data, 'type' => gettype($product_details_data)]);
+                        $errorMsg = is_string($product_details_data) ? $product_details_data : 'Image download failed';
+                        return response()->json(['status' => 'failed', 'message' => $errorMsg, 'data' => []]);
                     }
-                    // Send email notification
-                    $this->sendDownloadNotificationEmail($user, $productId, 'Image', $product_details_data);
-                    return response()->json(['status' => 'success', 'message' => 'Image downloaded successfully', 'data' => $product_details_data]);
                 } else if ($type == 4) {
                     // Download music from pond5
                     $footageMedia = new FootageApi();
@@ -774,7 +787,9 @@ class InvoiceController extends Controller
                     $download_id = $productId;
                     $version = $download_id . ':0';
                     $product_details_data = $footageMedia->download($download_id, $version);
-                    if (!empty($product_details_data)) {
+                    
+                    Log::info('Music API Response Type: ' . gettype($product_details_data));
+                    if (is_array($product_details_data) && !empty($product_details_data)) {
                         $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
 
                         /** TODO : set the array as per response */
@@ -784,7 +799,7 @@ class InvoiceController extends Controller
                             'product_id' => $productId,
                             'product_id_api' => $productId,
                             'id_media' => $productId,
-                            'download_url' => $product_details_data['url'],
+                            'download_url' => $product_details_data['url'] ?? '',
                             'downloaded_date' => date('Y-m-d H:i:s'),
                             'product_name' => 'Download ON Behalf',
                             'product_desc' => 'Download ON Behalf',
@@ -814,7 +829,10 @@ class InvoiceController extends Controller
                         $this->sendDownloadNotificationEmail($user, $productId, 'Music', $product_details_data);
                         return response()->json(['status' => 'success', 'message' => 'Music downloaded successfully', 'data' => $product_details_data]);
                     }
-                    return response()->json(['status' => 'failed', 'message' => 'Failed to download music', 'data' => $product_details_data]);
+                    
+                    Log::error('Music API response not valid array', ['response' => $product_details_data, 'type' => gettype($product_details_data)]);
+                    $errorMsg = is_string($product_details_data) ? $product_details_data : 'Failed to download music';
+                    return response()->json(['status' => 'failed', 'message' => $errorMsg, 'data' => $product_details_data]);
                 }
             } else {
                 return response()->json(['status' => '0', 'message' => 'Download pack limit has been over already !!']);
