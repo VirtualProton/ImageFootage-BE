@@ -1403,10 +1403,10 @@
                  required>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="display_total">Total Amount:</label>
           <p class="form-control-static" ng-bind="quotation_data.total || '0.00'"></p>
-        </div>
+        </div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
