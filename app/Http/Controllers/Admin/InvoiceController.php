@@ -643,7 +643,7 @@ class InvoiceController extends Controller
                     }
                     $footageMedia = new Pond5ImageApi();
                     $download_id = $productId;
-                    $version =  isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id . ':1';
+                    $version =  ':1';
                     $product_details_data = $footageMedia->download($productId, $download_id, $version);
                     if (!empty($product_details_data)) {
                         $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->first();
@@ -719,7 +719,7 @@ class InvoiceController extends Controller
                                 'product_price' => $total,
                                 'created_at' => date('Y-m-d H:i:s'),
                                 'updated_at' => date('Y-m-d H:i:s'),
-                                'licence_type' => $allFields['product']['extended'],
+                                'licence_type' => '',
                                 'redownloded_date' => null,
                                 'product_type' => 'Image'
                             );
@@ -743,7 +743,7 @@ class InvoiceController extends Controller
                                 'selected_product' => '',
                                 'created_at' => date('Y-m-d H:i:s'),
                                 'updated_at' => date('Y-m-d H:i:s'),
-                                'licence_type' => $allFields['product']['extended'],
+                                'licence_type' => '',
                                 'redownloded_date' => null,
                                 'product_type' => 'Image'
                             );
@@ -794,7 +794,7 @@ class InvoiceController extends Controller
                             'product_price' => $total,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
-                            'licence_type' => $allFields['product']['extended'],
+                            'licence_type' => '',
                             'redownloded_date' => null,
                             'product_type' => 'Music'
                         );

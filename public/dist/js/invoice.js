@@ -1862,14 +1862,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.download_product_id = "";
 
     function syncDownloadOnBehalfProductId(value) {
-        console.log('Syncing download on behalf product ID:', value); // ADD THIS
         $scope.download_product_id = value || "";
     }
 
     function buildDownloadOnBehalfPayload(trigger) {
-        console.log('Building payload for download on behalf'); // ADD THIS
         if (!trigger || !trigger.length) {
-            console.log('Building payload for download on behalf 2'); // ADD THIS
             return null;
         }
 
@@ -1878,14 +1875,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var invoiceType = trigger.data("invoice-type");
         var quotationSource = trigger.data("quotation-source");
         var userId = trigger.data("user-id");
-        console.log('we are ehre at line no 1879');
-        console.log("the quotationId is ", quotationId);
-        console.log("the total is ", total);
-        console.log("the invoiceType is ", invoiceType);
-        console.log("the quotationSource is ", quotationSource);
-        console.log("the userId is ", userId);
         if (!quotationId || !userId) {
-            console.log('Missing required data attributes for download on behalf'); // ADD THIS
             return null;
         }
 
@@ -2113,13 +2103,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.showModal = function() {
-    console.log('Opening modal');
     $('#modal-download-behalf').modal('show');
     };
 
     // Open Download on Behalf Modal
     $scope.open_download_on_behalf_modal = function(quotationData, userId) {
-            console.log('we at here');
         $scope.quotation_data = angular.copy(quotationData || {});
         $scope.quotation_data.user_id = parseInt(userId, 10);
         syncDownloadOnBehalfProductId("");
@@ -2127,12 +2115,9 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
     // Download and Send Email using existing getPackageItems method
     $scope.downloadAndSendEmail = function() {
-            console.log('we at here - email function called');
         if (!$scope.download_product_id) {
-                console.log('we at here1');
             syncDownloadOnBehalfProductId($.trim($("#download-on-behalf-product-id").val()));
         }
-            console.log('we at here2');
 
         if (!$scope.download_product_id) {
             alert('Please enter a Product ID');
@@ -2143,7 +2128,6 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert('User ID not found. Please reload the page.');
             return;
         }
-    console.log('we at here3');
         $("#loading").show();
         $http({
             method: "POST",
@@ -2203,13 +2187,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             }
         );
     };
-    $scope.downloadAndSendEmail = function() {/* Lines 2130-2205 omitted */};
 
     // Set up jQuery click handler with scope access (inside controller)
     setTimeout(function() {
         $('#download-on-behalf-submit').on('click', function(e) {
             e.preventDefault();
-            console.log('Button clicked via jQuery, calling downloadAndSendEmail');
             $scope.$apply(function() {
                 $scope.downloadAndSendEmail();
             });
@@ -2447,7 +2429,6 @@ app.controller(
         };
 
         $scope.getThetotalAmount = function (product) {
-            console.log("87997");
             console.log(product);
             var index = $scope.quotation.product.indexOf(product);
             // console.log($scope.prices);
