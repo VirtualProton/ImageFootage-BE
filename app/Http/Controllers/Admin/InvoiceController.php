@@ -643,7 +643,7 @@ class InvoiceController extends Controller
                     }
                     $footageMedia = new Pond5ImageApi();
                     $download_id = $productId;
-                    $version =  ':1';
+                    $version =  $download_id . ':1';
                     $product_details_data = $footageMedia->download($productId, $download_id, $version);
                     if (!empty($product_details_data)) {
                         $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->first();
@@ -772,10 +772,10 @@ class InvoiceController extends Controller
                     $footageMedia = new FootageApi();
                     //TODO Need to change for api_product_id
                     $download_id = $productId;
-                    $version = isset($allFields['product']['selected_product']['version']) ? $allFields['product']['selected_product']['version'] : $download_id . ':0';
+                    $version = $download_id . ':0';
                     $product_details_data = $footageMedia->download($download_id, $version);
                     if (!empty($product_details_data)) {
-                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $id)->first();
+                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
 
                         /** TODO : set the array as per response */
                         $dataInsert = array(
