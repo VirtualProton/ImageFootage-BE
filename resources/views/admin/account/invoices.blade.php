@@ -838,14 +838,12 @@
                                 <td>{{$plan->package_price ?? ''}}</td>
                                 <td>{{$plan->downloaded_product ?? ''}}</td>
                                 <td>
-                                  <button type="button"
-                                    ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $plan->id, "total" => $plan->package_price, "package_name" => $plan->package_name]) }}, {{$user_id}})'
-                                    title="Download on Behalf"
-                                    data-target="#modal-download-behalf"
-                                    data-toggle="modal"
-                                    class="btn btn-xs btn-info">
-                                    <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
-                                  </button>
+                            <button type="button"
+                            ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $plan->id, "total" => $plan->package_price, "package_name" => $plan->package_name]) }}, {{$user_id}}); showModal();'
+                            title="Download on Behalf"
+                            class="btn btn-xs btn-info">
+                            <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
+                            </button>
                                   <!-- Add your action buttons here -->
                                 </td>
                               </tr>
@@ -1412,12 +1410,12 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" 
-          id="download-on-behalf-submit"
-          ng-click="downloadAndSendEmail()"
-          class="btn btn-primary">
-          Download & Send Email
-        </button>
+<button type="button" 
+  id="download-on-behalf-submit"
+  ng-click="downloadAndSendEmail()"
+  class="btn btn-primary">
+  Download & Send Email
+</button>
       </div>
     </div>
   </div>
