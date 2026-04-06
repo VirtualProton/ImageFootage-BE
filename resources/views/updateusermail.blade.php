@@ -46,7 +46,7 @@
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td style="font-family: 'Poppins', sans-serif;font-size: 31px;line-height:40px;color:#000000;text-align:center;font-weight: 500;">
-                                                                                            Your Mobile Number Update Verification</td>
+                                                                                            Your Email Update Verification</td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -74,7 +74,7 @@
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td style="font-family: 'Poppins', sans-serif;font-size: 14px;line-height:29px;color:#3F4246;text-align:center;font-weight: 500;padding-bottom: 39px;">
-                                                                                            Please use the below OTP to verify your mobile number update request.
+                                                                                            Please use the below OTP to verify your email update request.
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>

@@ -40,6 +40,16 @@
             </div>
 
             <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Asset Type</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{ ucfirst($promoCode['asset_type'] ?? '') }}" readonly disabled>
+                        <input type="hidden" name="asset_type" value="{{ $promoCode['asset_type'] ?? '' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Discount value</label>
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -52,7 +62,8 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Max usage</label>
                 <div class="col-sm-4">
                     <div class="form-group">
-                    <input required="required" type="text" class="form-control" name="max_usage" id="max_usage" placeholder="Max usage" value="<?php echo $promoCode['max_usage']?>">
+                    <input type="text" class="form-control" value="<?php echo $promoCode['max_usage']?>" readonly disabled>
+                    <input type="hidden" name="max_usage" value="<?php echo $promoCode['max_usage']?>">
                     </div>
                 </div>
             </div>
@@ -179,16 +190,6 @@
                         message: 'Discount should be number only'
                     }
                     },
-                },
-                max_usage: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Max usage is required'
-                        }
-                    },
-                    integer: {
-                        message: 'Max usage should be number only'
-                    }
                 },
                 valid_type: {
                     validators: {

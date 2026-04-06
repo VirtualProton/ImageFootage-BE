@@ -38,6 +38,19 @@
                 </div>
                 </div>
             </div>
+             <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Asset Type</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select class="form-control" name="asset_type" id="asset_type">
+                            <option value="">Select</option>
+                            <option value="image" @if (old('asset_type') == "image") {{ 'selected' }} @endif>Image</option>
+                            <option value="footage" @if (old('asset_type') == "footage") {{ 'selected' }} @endif>Footage</option>
+                            <option value="music" @if (old('asset_type') == "music") {{ 'selected' }} @endif>Music</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Discount value</label>
@@ -207,6 +220,13 @@
                     validators: {
                         notEmpty: {
                             message: 'Will apply on is required'
+                        }
+                    }
+                },
+                 asset_type: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Asset type is required'
                         }
                     }
                 },

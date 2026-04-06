@@ -5,11 +5,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        New Registrants
+        Client with No Orders
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin/dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">New Registrants</li>
+        <li class="active">Client with No Orders</li>
       </ol>
     </section>
     <section class="content">
@@ -17,7 +17,7 @@
         	<div class="col-md-12">
          		<div class="box" style="overflow: auto;">
                 <div class="box-header">
-                  <h3 class="box-title">New Registrants</h3>
+                  <h3 class="box-title">Client with No Orders</h3>
                 </div>
                 @include('admin.partials.message')
              <!-- /.box-header -->
@@ -33,7 +33,7 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Registration Date</th>
-                <th>New Purchases</th>
+                <!-- <th>New Purchases</th> -->
                 <th>Status</th>
                 </tr>
                 </thead>
@@ -49,14 +49,14 @@
                   <td>{{$user['mobile']}}</td>
                   
                   <td><?php echo date('D, d M, Y',strtotime($user['created_at'])) ?></td>
-                  <td>
+                  <!-- <td>
                     @if(!($user['plans'])->isEmpty())
                     Yes
                     @else
                     No
 
                     @endif                    
-                  </td>
+                  </td> -->
                   <td><?php echo ($user['status']=='1'?"Active":"Inactive"); ?></td>
                   
                 </tr>

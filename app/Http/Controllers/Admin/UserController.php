@@ -50,7 +50,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userlist = $this->User->getUserData();
+        $userlist = User::with('account', 'accountManager')->get()->toArray();
         return view('admin.user.index', compact('userlist'));
     }
 
@@ -78,6 +78,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email|unique:imagefootage_users|max:255',
+            'user_name' => 'required|unique:imagefootage_users,user_name'
         ]);
 
         $title = "Add Lead/User/Account";
@@ -94,8 +95,21 @@ class UserController extends Controller
         $data['text'] = "You are added as a client.";
         $this->sendmail($data);
         if ($this->User->save_user($request)) {
-
-            return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully !!!");
+            $user = User::where('email', $request['email'])->get()->toArray();
+            $cname = $request->first_name . ' ' . $request->last_name;
+            $cemail =  $request->email;
+            $match_token = sha1(time()) . random_int(111, 999);
+            User::where('id', $user[0]['id'])->update([
+                'email_verify_token' => $match_token,
+                'token_valid_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.EMAIL_EXPIRY') . " days")),
+                'status' => '0'
+            ]);
+            $cont_url = url('/active_user_account') . '/' . $match_token;
+            $data = array('cname' => $cname, 'cemail' => $cemail, 'cont_url' => $cont_url);
+            Mail::send('createusermail', $data, function ($message) use ($data) {
+                $message->to($data['cemail'], $data['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
+            });
+            return redirect("admin/users")->with("success", "Laed/User/Contact has been created successfully Please check your email for verification link !!!");
         } else {
             return redirect("admin/users/create")->with("error", "Due to some error, Laed/User/Contact is not registered yet. Please try again!");
         }
@@ -124,6 +138,7 @@ class UserController extends Controller
         $user = User::find($id);
         $this->Account = new Account();
         $this->Admin = new Admin();
+        $agentlist = [];
         if (!empty($user->account_manager_id)) {
             $account_manager = $this->Admin->getAgentData($user->account_manager_id);
             $account_manager_name = $account_manager['name'];
@@ -162,8 +177,15 @@ class UserController extends Controller
                 $query->whereIn('payment_status', ['Completed', 'Transction Success']);
             })->get()->toArray();
 
-        $agentlist = $this->Account->getAccountData();
-        $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        $agentlist = $this->Admin->getAgentData('');
+        // Check if logged-in admin has role_id = 1
+        if (Auth::guard('admins')->user()->role_id == 1) {
+            // Load all comments for role_id = 1
+            $comments = Comment::with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        } else {
+            // Load user-specific comments
+            $comments = Comment::where('user_id', $user_id)->with('agent')->with('admin')->orderBy('id', 'desc')->limit(50)->get()->toArray();
+        }
         $get_quotations = Invoice::with('items')
             ->select('imagefootage_performa_invoices.*', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'calcelled_user.id as calcelled_user_id', 'calcelled_user.name as calcelled_user_name')
             ->leftJoin('imagefootage_user_package', 'imagefootage_user_package.id', '=', 'imagefootage_performa_invoices.package_id')
@@ -212,16 +234,16 @@ class UserController extends Controller
         $descriptions = Description::where('user_id', $user_id)->orderBy('id', 'desc')->limit(50)->get()->toArray();
         $active_tab = "tab1";
         $active_nested_tab = "active_plans";
-        $plans = Package::where('package_status','Active')->get();
+        $plans = Package::where('package_status', 'Active')->get();
 
         $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->where('imagefootage_user_package.package_plan', 2)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
         $data['active_download_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
         })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
 
-        return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab','plans'))
+        return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab', 'plans'))
             ->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)
             ->with('account_download_pack_quotations', $account_download_pack_quotations)
             ->with('account_download_pack_invoices', $account_download_pack_invoices)
@@ -489,6 +511,7 @@ class UserController extends Controller
                     'country' => $request->country,
                     'state' => $request->state,
                     'city' => $request->city,
+                    'status' => $request->user_status,
                     'postal_code' => $request->user_postalcode,
                     'vendor_code' => isset($request->user_code) ? $request->user_code : ''
                 );
@@ -499,7 +522,7 @@ class UserController extends Controller
                     $userinfo->whitelist = $request->user_whitelist;
                     $userinfo->blacklist = $request->user_blacklist;
                     $userinfo->frozen = $request->user_checkout_frozen;
-                    $userinfo->allow_certi = $request->user_allow_certi;
+                    $userinfo->allow_certi = $request->user_allow_certi; 
                     $userinfo->enable_subs_multi = $request->user_enable_subs_multi;
                     $userinfo->preferred_contact_method = $request->user_preferred_contact_method;
                     $userinfo->user_id = $request->user_id;
@@ -524,8 +547,9 @@ class UserController extends Controller
         }
     }
 
-    public function providePlan(Request $request){
-        $package = Package::where('package_id',$request->plan_id)->first();
+    public function providePlan(Request $request)
+    {
+        $package = Package::where('package_id', $request->plan_id)->first();
         $newCreditedPackage = new UserPackage();
         $newCreditedPackage->user_id = $request->user_id;
 
@@ -549,9 +573,26 @@ class UserController extends Controller
         $newCreditedPackage->created_at = Carbon::today();
         $newCreditedPackage->package_expiry_date_from_purchage = Carbon::parse($package->package_expiry_date_from_purchage)->addYear();
         $newCreditedPackage->order_type = 2;
-        $newCreditedPackage->footage_tier = isset($package->footage_tier) && !empty($package->footage_tier)? (int)$package->footage_tier : NULL;
+        $newCreditedPackage->footage_tier = isset($package->footage_tier) && !empty($package->footage_tier) ? (int)$package->footage_tier : NULL;
         $newCreditedPackage->save();
 
-        return back()->with('success','Plan added successfully !!');
+        return back()->with('success', 'Plan added successfully !!');
+    }
+
+    /**
+     * Show the comment details.
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showComment($id)
+    {
+        $comment = DB::table('imagefootage_comments')->find($id);
+
+        if (!$comment) {
+            return redirect()->back()->with('error', 'Comment not found');
+        }
+
+        return view('admin.comments.showComment', ['comment' => $comment]);
     }
 }

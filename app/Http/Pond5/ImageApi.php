@@ -37,7 +37,7 @@ class ImageApi
         $page   = isset($keyword['pagenumber']) ? $keyword['pagenumber'] : $page;
         $type  = isset($keyword['productType']) ? $keyword['productType'] : 'photo';
 
-        if(isset($keyword['authorname']) && !empty($keyword['authorname'])){
+        if (isset($keyword['authorname']) && !empty($keyword['authorname'])) {
             $authorname = $keyword['authorname'];
         }
 
@@ -46,19 +46,20 @@ class ImageApi
             $sort = 'newest';
         } else if (isset($keyword['sort']) && ($keyword['sort'] == 'Popular' || $keyword['sort'] == 'Newest')) {
             $sort = 'popular';
-        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: Low to High'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: Low to High') {
             $sort = 'price_low_high';
-        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: High to Low'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Price: High to Low') {
             $sort = 'price_high_low';
-        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Long to Short'){
+        } elseif (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Long to Short') {
             $sort = 'duration_long_short';
         } else if (isset($keyword['sort']) && $keyword['sort'] == 'Duration: Short to Long') {
             $sort = 'duration_short_long';
         } else {
             $sort = 'default';
         }
-        
+
         $getFilters     = Arr::except($getKeyword, ['search', 'productType', 'pagenumber']);
+        // var_dump($getFilters);
         $filter_mapping = "";
 
         $url            = [];
@@ -69,7 +70,9 @@ class ImageApi
         $url['page']    = $page;
 
         $queryParts = [];
+        // $queryParts[] = 'editorial:1';
         if ($getFilters) {
+
             if (!empty($getFilters['people_number']) || !empty($getFilters['people'])) {
                 $peopleKey = !empty($getFilters['people_number']) ? 'people_number' : 'people';
                 $people = explode(',', str_replace(' ', '', $getFilters[$peopleKey]['value']));
@@ -107,6 +110,37 @@ class ImageApi
                 }
             }
 
+            // ADD DURATION FILTER HERE
+            if (!empty($getFilters['duration'])) {
+                $durationRange = explode('-', str_replace(' ', '', $getFilters['duration']['value']));
+                [$minDuration, $maxDuration] = $durationRange + [null, null];
+
+                if (!empty($minDuration) && empty($maxDuration)) {
+                    $queryParts[] = 'durationgt:' . $minDuration;
+                } elseif (empty($minDuration) && !empty($maxDuration)) {
+                    $queryParts[] = 'durationlt:' . $maxDuration;
+                } elseif (!empty($minDuration) && !empty($maxDuration)) {
+                    $queryParts[] = 'durationgt:' . $minDuration . ' durationlt:' . $maxDuration;
+                }
+            }
+
+            if (!empty($getFilters['resolution'])) {
+                $resolutionValue = $getFilters['resolution']['value'];
+                // Map friendly names to Pond5 API resolution parameters
+                $resolutionMap = [
+                    '4k' => 'resolution:4k',
+                    'hd' => 'resolution:hd',
+                    '720p' => 'resolution:720p'
+                ];
+
+                if (isset($resolutionMap[$resolutionValue])) {
+                    $queryParts[] = $resolutionMap[$resolutionValue];
+                }
+            }
+            if (!empty($getFilters['artist_name'])) {
+                $artistValue = $getFilters['artist_name']['value'];
+                $queryParts[] = 'artist:' . $artistValue;
+            }
             foreach (['orientation', 'aerial', 'misc'] as $filter) {
                 if (!empty($getFilters[$filter])) {
                     $queryParts[] = "{$filter}:" . $getFilters[$filter]['value'];
@@ -153,11 +187,14 @@ class ImageApi
                 $url['query'] = $search . ' ' . $query;
             }
         }
+        //     else if (!empty($query)) {
+        //     // Important: Include query even when search is empty
+        //     $url['query'] = $query;
+        // }
         if (!empty($sort)) {
             $url['sort'] = $sort;
         }
-        try{
-
+        try {
             $apiUrl = $this->url . '/api/v3/search?' . http_build_query($url);
             $curl   = curl_init();
             curl_setopt_array($curl, array(
@@ -165,7 +202,8 @@ class ImageApi
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => '',
                 CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_TIMEOUT        => 0,
+                CURLOPT_CONNECTTIMEOUT => 8,
+                CURLOPT_TIMEOUT        => 20,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => 'GET',
@@ -179,11 +217,10 @@ class ImageApi
             $response = curl_exec($curl);
             $contents = json_decode($response, true);
             return $contents;
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
             return [
-                'status'=>'failed',
-                'message'=>'Please try again'
+                'status' => 'failed',
+                'message' => 'Please try again'
             ];
         }
     }
@@ -199,7 +236,8 @@ class ImageApi
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
+                CURLOPT_CONNECTTIMEOUT => 8,
+                CURLOPT_TIMEOUT => 20,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
@@ -227,7 +265,8 @@ class ImageApi
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_TIMEOUT => 20,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
@@ -248,14 +287,15 @@ class ImageApi
     {
         $id = explode('-', $slug);
         $id = $id[0];
-            
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . '/api/v3/items/' . $id,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
+            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_TIMEOUT => 20,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',

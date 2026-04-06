@@ -26,6 +26,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
     Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+    Route::get('/outstanding-report-data', 'InvoiceController@getOutstandingReportData')->name('admin.outstanding.data');
+    // ...existing code...
+    Route::get('invoice/{user_id}/{id}', 'InvoiceController@showDetail')->name('admin.invoice.detail');
+// ...existing code...
 
 
     Route::get('/dashboard', 'DashboardController@dashboard');
@@ -215,13 +219,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::get('/users/status/{status}/{id}', 'UserController@status');
     Route::get('/users/show/{id}', 'UserController@show');
+    Route::get('/users/showComment/{id}', 'UserController@showComment');
 
 
 
     Route::resource('/users', 'UserController');
     Route::post('/getStatesByCounty', 'CommonController@getStatesByCounty');
     Route::post('/getCityByState', 'CommonController@getCityByState');
-
 
     Route::get('/send_invoice', 'InvoiceController@send_invoice');
     Route::post('/get_email_template', 'InvoiceController@get_email_template');
@@ -236,6 +240,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::post('/users/update_user/', 'UserController@updateUser');
     Route::post('/users/plan/', 'UserController@providePlan');
+    Route::post('/comments/{id}/updateCommentStatus', 'InvoiceController@updateCommentStatus');
 
     Route::get('/quotation/{id}', 'InvoiceController@quotation');
     Route::get('/quotation2/{id}', 'InvoiceController@quotation2');
@@ -244,6 +249,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/saveInvoice', 'InvoiceController@saveInvoice');
     Route::post('/create_invoice', 'InvoiceController@create_invoice');
     Route::post('/change_invoice_status', 'InvoiceController@change_invoice_status');
+    Route::post('/get-package-items', 'InvoiceController@getPackageItems');
     Route::get('/subscribers', 'SubscribersController@index')->name('subscribers');
     Route::get('/subscribers/details/{id}', 'SubscribersController@subscribers_details');
 
@@ -299,7 +305,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/save_po', 'InvoiceController@savePO');
     Route::post('/get_invoice', 'InvoiceController@get_invoice');
     Route::post('/update_po', 'InvoiceController@update_po');
-
     // Route for discount module
     Route::get('/list_discount_message', 'DiscountMessageController@index');
     Route::get('/add_discount_message', 'DiscountMessageController@create');
@@ -315,7 +320,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/get-editorial-images', 'EditorialController@getEditorialImages');
     Route::post('/get-main-images', 'EditorialController@getMainImages');
     Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
-    Route::post('/price/check-duplicate', 'PriceController@checkDuplicate')->name('admin.price.check-duplicate');
+        Route::post('/price/check-duplicate', 'PriceController@checkDuplicate')->name('admin.price.check-duplicate');
     Route::resource('/price', 'PriceController');
 });
 

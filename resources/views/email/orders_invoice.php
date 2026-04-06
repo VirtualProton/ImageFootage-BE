@@ -680,6 +680,17 @@
                                                                     echo $subtotalarray ?>
                                                                 </td>
                                                             </tr>
+                                                             <?php if (!empty($orders['coupon_value']) && $orders['coupon_value'] > 0): ?>
+                                                                <tr>
+                                                                    <td colspan="2" width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                        Discount Amount:
+                                                                    </td>
+                                                                    <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
+                                                                        Rs.
+                                                                        <?php echo $orders['coupon_value'] ?>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endif; ?>
                                                             <tr>
                                                                 <td colspan="2" width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                                                                     GST Tax:

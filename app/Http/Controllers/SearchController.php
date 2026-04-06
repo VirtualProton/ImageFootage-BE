@@ -53,6 +53,9 @@ class SearchController extends Controller
         $keyword['pagenumber']        = isset($getKeyword['pagenumber']) ? $getKeyword['pagenumber'] - 1 : 0;
         $keyword['category_id']       = isset($getKeyword['category_id']) ? $getKeyword['category_id'] : '';
         $keyword['adult_content_filter']     = isset($getKeyword['adult_content_filter']) ? $getKeyword['adult_content_filter'] : '';
+        $keyword['duration'] = isset($getKeyword['duration']) ? $getKeyword['duration'] : '';
+        $keyword['resolution'] = isset($getKeyword['resolution']) ? $getKeyword['resolution'] : '';
+        $keyword['artist_name'] = isset($getKeyword['artist_name']) ? $getKeyword['artist_name'] : '';
 
         $keyword['productType'] = 'photo';
         if ($getKeyword['productType'] == '1' || $getKeyword['productType'] == '4') {
@@ -68,6 +71,7 @@ class SearchController extends Controller
 
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
         $pond5ImagesData    = $imagesMedia->search($keyword, $getKeyword, null, $keyword['pagenumber']);
+        // var_dump($pond5ImagesData);
         if ($pond5ImagesData) {
             $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
         } else {
@@ -149,7 +153,7 @@ class SearchController extends Controller
                 "attributes" => array(),
                 "options" => array(),
                 "url" => null,
-                "editorial" => isset($product['editorial']) ? $product['editorial'] : null,
+                'editorial' => $pond5ImagesData['editorial'] ?? false,
             ];
         }, $pond5ImagesData['items']);
 

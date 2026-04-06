@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://staging-api.imagefootage.com'),
+    'url' => env('APP_URL', 'https://api.imagefootage.com'),
 
     'asset_url' => env('ASSET_URL', null),
 

@@ -87,7 +87,6 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
-
 @section('styles')
 <style>
     .action-buttons {
@@ -136,9 +135,9 @@
         box-shadow: none;
     }
 </style>
-@endsection
 
 @section('scripts')
+
 <script>
     $(function() {
         var table = $('#example1').DataTable({

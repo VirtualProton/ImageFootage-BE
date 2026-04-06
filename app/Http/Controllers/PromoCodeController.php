@@ -22,12 +22,13 @@ class PromoCodeController extends Controller
             $this->validate($request, [
                 'promoCode' => 'required|string',
                 'price'     => 'required|numeric|gt:0',
+                'assetType' => 'required|string'
             ]);
 
             $promoCode = $request->input('promoCode');
             $price = $request->input('price');
-            $existsPromoCode = PromoCode::where('name', $promoCode)->where('status', '1')->where('will_apply_by', '3')->first();
-
+            $assetType = $request->input('assetType');
+            $existsPromoCode = PromoCode::where('name', $promoCode)->where('asset_type', $assetType)->where('status', '1')->whereIn('will_apply_by', ['1', '3'])->first();
             $today = date('Y-m-d');
             
             if (!$existsPromoCode) {
@@ -61,7 +62,7 @@ class PromoCodeController extends Controller
                 ], 400);
             }
 
-            if ($existsPromoCode->type === 'fixed') {//
+            if ($existsPromoCode->type === 'flat') {//
                 $discountValue = $existsPromoCode->discount ?? 0;
                 $calculatedPrice = $price - $discountValue;
             } elseif ($existsPromoCode->type === 'percentage') {
@@ -84,6 +85,7 @@ class PromoCodeController extends Controller
             ], 200);
 
         } catch (Exception $e) {
+            // var_dump($e->getMessage()); exit;
             return response()->json([
                 'status' => false,
                 'message' => 'An error occurred while validating promo code.'

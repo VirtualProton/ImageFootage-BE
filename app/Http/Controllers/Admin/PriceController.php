@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Price;
 use App\Models\LicenceType;
 use Illuminate\Validation\Rule;
-
 /**
  * 
  * Price Controller

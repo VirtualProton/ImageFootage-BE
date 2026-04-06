@@ -201,11 +201,12 @@
             }
         }).data('formValidation');
 
-         var currentPriceId = '{{ $price->id }}';
+        var currentPriceId = '{{ $price->id }}';
+
         // Custom validation on form submit
         $('#priceform').on('submit', function(e) {
             var productType = $('input[name="product_type"]').val();
-                        var licenseType = $('input[name="license_type"]').val();
+            var licenseType = $('input[name="license_type"]').val();
             var isDuplicate = false;
             $.ajax({
                 url: '{{ route("admin.price.check-duplicate") }}',
@@ -228,7 +229,7 @@
                 alert('A price already exists for this license type and product type combination!');
                 return false;
             }
-
+            
             if (productType === 'image') {
                 var hasImagePrice = $('#small_image_price').val() ||
                     $('#medium_image_price').val() ||

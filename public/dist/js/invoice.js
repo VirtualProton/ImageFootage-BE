@@ -1856,8 +1856,74 @@ app.controller(
 app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.quotationObj = {};
     $scope.cusQuotationObj = {};
+    $scope.quotation_data = {};
     $scope.payment_method = "";
     $scope.invoice_id = "";
+    $scope.download_product_id = "";
+
+    function syncDownloadOnBehalfProductId(value) {
+        $scope.download_product_id = value || "";
+    }
+
+    function buildDownloadOnBehalfPayload(trigger) {
+        if (!trigger || !trigger.length) {
+            return null;
+        }
+
+        var quotationId = trigger.data("quotation-id");
+        var total = trigger.data("total");
+        var invoiceType = trigger.data("invoice-type");
+        var quotationSource = trigger.data("quotation-source");
+        var userId = trigger.data("user-id");
+
+        if (!quotationId || !userId) {
+            return null;
+        }
+
+        return {
+            quotationData: {
+                id: parseInt(quotationId, 10),
+                total: total || 0,
+                invoice_type: parseInt(invoiceType, 10) || 0,
+                quotation_source: parseInt(quotationSource, 10) || 0,
+            },
+            userId: parseInt(userId, 10),
+        };
+    }
+
+    $(document)
+        .off("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id")
+        .on("input.invoiceDownloadOnBehalf", "#download-on-behalf-product-id", function () {
+            var inputValue = $(this).val();
+            $scope.$applyAsync(function () {
+                syncDownloadOnBehalfProductId(inputValue);
+            });
+        });
+
+    $("#modal-download-behalf")
+        .off("show.bs.modal.invoiceDownloadOnBehalf")
+        .on("show.bs.modal.invoiceDownloadOnBehalf", function (e) {
+            var modalTrigger = $(e.relatedTarget);
+            var payload = buildDownloadOnBehalfPayload(modalTrigger);
+
+            $scope.$applyAsync(function () {
+                if (payload) {
+                    $scope.open_download_on_behalf_modal(
+                        payload.quotationData,
+                        payload.userId
+                    );
+                }
+            });
+        })
+        .off("hidden.bs.modal.invoiceDownloadOnBehalf")
+        .on("hidden.bs.modal.invoiceDownloadOnBehalf", function () {
+            $scope.$applyAsync(function () {
+                $scope.quotation_data = {};
+                syncDownloadOnBehalfProductId("");
+            });
+            $("#download-on-behalf-product-id").val("");
+        });
+    
     $scope.create_invoice = function (quotation, user_id) {
         $scope.quotationObj = []
 
@@ -1873,27 +1939,30 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.send_invoice = function (quotation_id, user_id) {
+        if (!quotation_id) {
+            alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
+            return;
+        }
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNo").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
+        var gstNo = ($("#gstNo").val() || ($scope.quotationObj && $scope.quotationObj.gst) || "").toString().trim();
+        var panNo = ($("#panNo").val() || ($scope.quotationObj && $scope.quotationObj.pan) || "").toString().trim();
+        var phoneNo = ($("#phone").val() || ($scope.quotationObj && $scope.quotationObj.mobile) || "").toString().trim();
+        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
+        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
+        var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
 
-        if (!$("#gstNo").val()) {
-            alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNo").val())) {
+        if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNo").val()) {
-            alert("Please add pan no.");
-        } else if (!regex.test($("#panNo").val())) {
+        } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNo").val()) {
+        } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phone").val()) {
-            alert("Please add phone no .");
-        } else if (!regmob.test($("#phone").val())) {
+        } else if (phoneNo && !regmob.test(phoneNo)) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$("#payment_method").val()) {
+        } else if (!paymentMethod) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -1905,11 +1974,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         quotation_id: quotation_id,
                         user_id: user_id,
                         po: $('#po').val() ?? "",
-                        po_date: $('#po_date').val(),
-                        payment_method: $("#payment_method").val(),
-                        gst: $("#gstNo").val(),
-                        pan: $("#panNo").val(),
-                        phone: $("#phone").val(),
+                        po_date: poDate,
+                        payment_method: paymentMethod,
+                        gst: gstNo,
+                        pan: panNo,
+                        phone: phoneNo,
                         country: $("#country_invoice").val() ?? "",
                         state: $("#state_invoice").val() ?? "",
                         city: $("#city_invoice").val() ?? "",
@@ -1921,10 +1990,22 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        window.location = api_path + "users/invoices/" + user_id;
+                        var resp = result && result.data ? result.data.resp : null;
+                        var mailMeta = (resp && resp.mail_to) ? (" Recipient: " + resp.mail_to) : "";
+                        var traceMeta = (resp && resp.mail_message_id) ? (" Message ID: " + resp.mail_message_id) : "";
+                        if (resp && resp.statuscode === "1") {
+                            alert((resp.statusdesc || "Invoice sent successfully.") + mailMeta + traceMeta);
+                            window.location = api_path + "users/invoices/" + user_id;
+                        } else {
+                            alert(((resp && resp.statusdesc) || "Invoice submission completed but email was not sent.") + mailMeta + traceMeta);
+                        }
                     },
                     function (error) {
                         $("#loading").hide();
+                        var errorMessage = (error && error.data && (error.data.message || error.data.error))
+                            ? (error.data.message || error.data.error)
+                            : "Unable to submit invoice. Please check server logs and try again.";
+                        alert(errorMessage);
                     }
                 );
             }
@@ -1932,27 +2013,30 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.send_invoice_cus = function (quotation_id, user_id) {
+        if (!quotation_id) {
+            alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
+            return;
+        }
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNocus").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
+        var gstNo = ($("#gstNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.gst) || "").toString().trim();
+        var panNo = ($("#panNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.pan) || "").toString().trim();
+        var phoneNo = ($("#phonecus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.mobile) || "").toString().trim();
+        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
+        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
+        var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
 
-        if (!$("#gstNocus").val()) {
-            alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNocus").val())) {
+        if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNocus").val()) {
-            alert("Please add pan no.");
-        } else if (!regex.test($("#panNocus").val())) {
+        } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNocus").val()) {
+        } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phonecus").val()) {
-            alert("Please add phone no .");
-        } else if (!regmob.test($("#phonecus").val())) {
+        } else if (phoneNo && !regmob.test(phoneNo)) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$("#payment_method").val()) {
+        } else if (!paymentMethod) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -1964,11 +2048,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         quotation_id: quotation_id,
                         user_id: user_id,
                         po: $('#poCustom').val() ?? "",
-                        po_date: $scope.poDateCustom,
-                        payment_method: $("#payment_method").val(),
-                        gst: $("#gstNocus").val(),
-                        pan: $("#panNocus").val(),
-                        phone: $("#phonecus").val(),
+                        po_date: poDate,
+                        payment_method: paymentMethod,
+                        gst: gstNo,
+                        pan: panNo,
+                        phone: phoneNo,
                         expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
                         state: $("#state_invoice_cus").val() ?? "",
@@ -1981,10 +2065,22 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        window.location = api_path + "users/invoices/" + user_id;
+                        var resp = result && result.data ? result.data.resp : null;
+                        var mailMeta = (resp && resp.mail_to) ? (" Recipient: " + resp.mail_to) : "";
+                        var traceMeta = (resp && resp.mail_message_id) ? (" Message ID: " + resp.mail_message_id) : "";
+                        if (resp && resp.statuscode === "1") {
+                            alert((resp.statusdesc || "Invoice sent successfully.") + mailMeta + traceMeta);
+                            window.location = api_path + "users/invoices/" + user_id;
+                        } else {
+                            alert(((resp && resp.statusdesc) || "Invoice submission completed but email was not sent.") + mailMeta + traceMeta);
+                        }
                     },
                     function (error) {
                         $("#loading").hide();
+                        var errorMessage = (error && error.data && (error.data.message || error.data.error))
+                            ? (error.data.message || error.data.error)
+                            : "Unable to submit invoice. Please check server logs and try again.";
+                        alert(errorMessage);
                     }
                 );
             }
@@ -2048,6 +2144,88 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }
             );
         }
+    };
+
+    // Open Download on Behalf Modal
+    $scope.open_download_on_behalf_modal = function(quotationData, userId) {
+        $scope.quotation_data = angular.copy(quotationData || {});
+        $scope.quotation_data.user_id = parseInt(userId, 10);
+        syncDownloadOnBehalfProductId("");
+        $("#download-on-behalf-product-id").val("");
+    };
+    // Download and Send Email using existing getPackageItems method
+    $scope.downloadAndSendEmail = function() {
+        if (!$scope.download_product_id) {
+            syncDownloadOnBehalfProductId($.trim($("#download-on-behalf-product-id").val()));
+        }
+
+        if (!$scope.download_product_id) {
+            alert('Please enter a Product ID');
+            return;
+        }
+
+        if (!$scope.quotation_data || !$scope.quotation_data.user_id) {
+            alert('User ID not found. Please reload the page.');
+            return;
+        }
+        $("#loading").show();
+        $http({
+            method: "POST",
+            url: api_path + "get-package-items",
+            data: {
+                product_id: $scope.download_product_id,
+                package_id: $scope.quotation_data.id,
+                user_id: parseInt($scope.quotation_data.user_id, 10),
+                invoice_type: $scope.quotation_data.invoice_type,
+                product_web: $scope.quotation_data.quotation_source || 2,
+                total: $scope.quotation_data.total || 0
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).then(
+            function(result) {
+                $("#loading").hide();
+
+                // Check different response status values
+                var status = result.data.status;
+                var message = result.data.message || 'Operation completed';
+                
+                if (status == "success" || status === 1 || status === "1") {
+                    alert(message + ' - Email notification sent to the user');
+                    $('#modal-download-behalf').modal('hide');
+                    syncDownloadOnBehalfProductId("");
+                    $("#download-on-behalf-product-id").val("");
+                    // Reload the page to refresh data
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+                } else if (status == "0" || status == "failed") {
+                    alert('Error: ' + message);
+                } else {
+                    // If no status field, show generic error
+                    alert('Download processed. Please check your email for download link.');
+                    $('#modal-download-behalf').modal('hide');
+                    syncDownloadOnBehalfProductId("");
+                    $("#download-on-behalf-product-id").val("");
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+                }
+            },
+            function(error) {
+                $("#loading").hide();
+                var errorMessage = 'An error occurred';
+                
+                if (error.data && error.data.message) {
+                    errorMessage = error.data.message;
+                } else if (error.statusText) {
+                    errorMessage = error.statusText;
+                }
+                
+                alert('Error: ' + errorMessage);
+            }
+        );
     };
 });
 
@@ -2281,8 +2459,6 @@ app.controller(
         };
 
         $scope.getThetotalAmount = function (product) {
-            console.log("87997");
-            console.log(product);
             var index = $scope.quotation.product.indexOf(product);
             // console.log($scope.prices);
             if (product.type == "Image") {
@@ -2354,7 +2530,6 @@ app.controller(
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId = '') {
-            console.log("2319",countryId);
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
             var subtotalvalue = 0;

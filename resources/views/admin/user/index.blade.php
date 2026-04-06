@@ -52,8 +52,8 @@
                   <td>{{$user['title']}}</td>
                   <td>{{$user['email']}}</td>
                   <td>{{$user['mobile']}}</td>
-                  <td>@if(isset($user['account']['account_name']) && !empty($user['account']['account_name']))
-                          {{$user['account']['account_name']}}
+                  <td>@if(isset($user['account_manager']['name']) && !empty($user['account_manager']['name']))
+                          {{$user['account_manager']['name']}}
                       @endif
                   </td>
                   

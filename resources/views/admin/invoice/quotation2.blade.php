@@ -104,12 +104,12 @@
                                  <div class="form-group" >
                                     <label>OR Upload New Image</label>
                                     <span ng-show="!product.thumbnail_image"> <input  class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
-                                    <span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" style="margin-top: 6px;" /></span>
+                                    <span ng-show="product.image"><img ng-src="<%product.image%>" width="150" height="150" style="margin-top: 6px;" /></span>
                                  </div>
                                  {{-- <div class="form-group" ng-show="product.type =='Footage'">
                                     <span ng-show="product.image">
-                                       <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
-                                          <source type="video/mp4" src="<%product.footage%>">
+                                       <video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" ng-attr-poster="<%product.image%>">
+                                          <source type="video/mp4" ng-src="<%product.footage%>">
                                           Your browser does not support the video tag.
                                        </video>
                                     </span>
@@ -137,7 +137,7 @@
                                     <select required="" class="form-control" ng-model="product.pro_size" ng-change="getThetotalAmount(product)" ng-show="product.type=='Footage'">
                                        <option value="" selected="">--Select a size--</option>
                                        @foreach ($getFootageSizeDetails as $getFootageSizeDetail)
-                                       <option value="{{ $getFootageSizeDetail['type'] }}">{{ $getFootageSizeDetail['type'] }}</option>
+                                       <option value="{{ $getFootageSizeDetail['type'] }}">{{$getFootageSizeDetail['type']}}</option>
                                        @endforeach
                                        <!-- <option ng-repeat="price in prices[$index]" value="<%price.size%>"><%price.size%></option> -->
                                     </select>
@@ -153,19 +153,15 @@
                                  <div class="form-group" ng-show="((product.type=='Image' && product.pro_type=='royalty_free') || product.type=='Music')">
                                     <label for="licence_type"><%product.type%> Licence type</label>
                                     <select required=""class="form-control" ng-model="product.licence_type" ng-change="getThetotalAmount(product)"  id="licence_dropdown">
-                                        <option value="">--Select a Licence Type--</option>
-                                        @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
-                                        <option value="{{ $getMusicLicenceDetail['value'] }}">{{ $getMusicLicenceDetail['licence_type'] }}</option>
-                                        @endforeach
+                                       <option value="">--Select a Licence Type--</option>
+                                       @foreach ($getMusicLicenceDetails as $getMusicLicenceDetail)
+                                       <option value="{{ $getMusicLicenceDetail['value'] }}">{{$getMusicLicenceDetail['licence_type']}}</option>
+                                       @endforeach
                                     </select>
                                  </div>
-                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='right_managed'">
-                                    <label for="licence_type"><%product.type%> Licence type</label>
-                                    <textarea class="form-control licence_type" id="licence_type-<%$index+1%>" ng-model="product.licence_type"></textarea>
-                                 </div>
-                                 <div class="form-group" ng-show="(product.type=='Image' || product.type=='Music') && product.pro_type=='royalty_free' && product.licence_type !=''">
-                                    <label for="licence_type"></label>
-                                    <input type="text" class="form-control" ng-model="product.extra_details" id="extra_details"/>
+                                 <div class="form-group">
+                                       <label for="extra_details">Description</label>
+                                    <textarea id="extra_details" class="form-control" ng-model="product.extra_details" rows="3" placeholder="Enter description"></textarea>
                                  </div>
                                  <div>
                                     <div>
@@ -584,12 +580,12 @@
          CKEDITOR.replace($(this).prop('id'));
       });
       $("#licence_dropdown").change(function() {
-        var type = $(this).val();
+         var type = $(this).val();
         if(type == ''){
             $('#extra_details').hide()
         }else{
             $('#extra_details').show()
-        }
+         }
       })
 
    });

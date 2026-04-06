@@ -2,21 +2,21 @@
 
 @section('content')
 <div class="content-wrapper">
-<section class="content">
+  <section class="content">
 
-<div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Add Lead/User/Contact</h3><a href="{{ URL::to('admin/users') }}" class="btn pull-right">Back</a>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
-              @include('admin.partials.message')
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Add Lead/User/Contact</h3><a href="{{ URL::to('admin/users') }}" class="btn pull-right">Back</a>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      {!! Form::open(array('url' => URL::to('admin/users'), 'method' => 'post', 'class'=>"form-horizontal",'id'=>'adminform','files'=> true,'autocomplete'=>false)) !!}
+      @include('admin.partials.message')
 
-                
 
-              <div class="box-body">
-                  <!-- <div class="form-group">
+
+      <div class="box-body">
+        <!-- <div class="form-group">
                     <div class="col-sm-4">
                     <div class="form-group">
                   @if(isset($user))
@@ -25,179 +25,195 @@
                 </div>
               </div>
                 </div> -->
-              <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">First Name</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" value="{{ old('first_name') }}" name="first_name" id="first_name" placeholder="First Name">
-                  {!! $errors->first('first_name', '<p class="help-block">:message</p>') !!}
-                  {{ csrf_field() }}
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Last Name</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" id="last_name" placeholder="Last Name">
-                  {!! $errors->first('last_name', '<p class="help-block">:message</p>') !!}
-                </div>
-                  </div>
-                </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">First Name <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ old('first_name') }}" name="first_name" id="first_name" placeholder="First Name">
+              {!! $errors->first('first_name', '<p class="help-block">:message</p>') !!}
+              {{ csrf_field() }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Last Name <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" id="last_name" placeholder="Last Name">
+              {!! $errors->first('last_name', '<p class="help-block">:message</p>') !!}
+            </div>
+          </div>
+        </div>
 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="title" value="{{ old('title') }}" id="title" placeholder="Title">
-                  {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
-                </div>
-                  </div>
-                </div>
-                  <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">User Name</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="user_name" value="{{ old('user_name') }}" id="user_name" placeholder="User Name">
-                  {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
-                </div>
-                </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Company Name</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="contact_owner" value="{{ old('contact_owner') }}" id="contact_owner" placeholder="Company Name">
-                  {!! $errors->first('contact_owner', '<p class="help-block">:message</p>') !!}
-                </div>
-                </div>
-                </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <select class="form-control" name="title" id="title">
+                <option value="">Select Title</option>
+                <option value="Mr" {{ old('title') == 'Mr' ? 'selected' : '' }}>Mr</option>
+                <option value="Mrs" {{ old('title') == 'Mrs' ? 'selected' : '' }}>Mrs</option>
+                <option value="Ms" {{ old('title') == 'Ms' ? 'selected' : '' }}>Ms</option>
+                <option value="Others" {{ old('title') == 'Others' ? 'selected' : '' }}>Others</option>
+              </select>
+              {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">User Name</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="user_name" value="{{ old('user_name') }}" id="user_name" placeholder="User Name">
+              {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">User Name <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="user_name" value="{{ old('user_name') }}" id="user_name" placeholder="User Name">
+              {!! $errors->first('user_name', '<p class="help-block text-danger">:message</p>') !!}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Company Name</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="contact_owner" value="{{ old('contact_owner') }}" id="contact_owner" placeholder="Company Name">
+              <small class="text-muted"><i class="fa fa-info-circle"></i> GST is mandatory when Company Name is provided</small>
+              {!! $errors->first('contact_owner', '<p class="help-block">:message</p>') !!}
+            </div>
+          </div>
+        </div>
 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Account Manager</label>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Account Manager</label>
 
-                  <div class="col-sm-4">
-                  <div class="form-group">
+          <div class="col-sm-4">
+            <div class="form-group">
 
-                  <select class="form-control" name="account_manager_id" id="account_manager_id">
-                    <option value="">Select</option>
-                    @if(count($accountlist) > 0)
-                    @foreach($accountlist as $account)
+              <select class="form-control" name="account_manager_id" id="account_manager_id">
+                <option value="">Select</option>
+                @if(count($accountlist) > 0)
+                @foreach($accountlist as $account)
 
-                      @if (old('account_manager_id') == $account['id'])
-                        <option value="{{ $account['id'] }}" selected>{{$account['name']}}</option>
-                      @else
-                        <option value="{{ $account['id'] }}">{{$account['name']}}</option>
-                      @endif
+                @if (old('account_manager_id') == $account['id'])
+                <option value="{{ $account['id'] }}" selected>{{$account['name']}}</option>
+                @else
+                <option value="{{ $account['id'] }}">{{$account['name']}}</option>
+                @endif
 
-                    <!-- <option value={{ $account['id'] }}>{{$account['name']}}</option> -->
-                    @endforeach
-                    @endif
-                  </select>
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="phone" value="{{ old('phone') }}" name="phone" placeholder="Phone">
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="mobile" value="{{ old('mobile') }}" name="mobile" placeholder="Mobile">
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Extension</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="extension" value="{{ old('extension') }}" name="extension" placeholder="Extension">
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <!-- <input type="text" class="form-control" name="email" id="email" placeholder="Email"> -->
-                  <input type="text" name="email"  value="{{ old('email') }}" id="email"  class="form-control"/>
-                  {!! $errors->first('email', '<p class="alert-danger">:message</p>') !!}
+                <!-- <option value={{ $account['id'] }}>{{$account['name']}}</option> -->
+                @endforeach
+                @endif
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Phone <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="phone" value="{{ old('phone') }}" name="phone" placeholder="Phone">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Mobile</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="mobile" value="{{ old('mobile') }}" name="mobile" placeholder="Mobile">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Extension</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="extension" value="{{ old('extension') }}" name="extension" placeholder="Extension">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Email <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <!-- <input type="text" class="form-control" name="email" id="email" placeholder="Email"> -->
+              <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control" />
+              {!! $errors->first('email', '<p class="alert-danger">:message</p>') !!}
 
-                </div>
-                  </div>
-                </div>
+            </div>
+          </div>
+        </div>
 
-               <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
 
-                  <div class="col-sm-4">
-                <div class="form-group">
-                 <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
-                    <option  value="">Select</option>
-                    @if(count($countries) > 0)
-                    @foreach($countries as $country)
-                      @if (old('bill_country') == $country->id)
-                        <option value="{{ $country->id }}" selected>{{$country->name}}</option>
-                      @else
-                        <option value="{{ $country->id }}">{{$country->name}}</option>
-                      @endif
-                      <!-- <option value={{$country->id}}>{{$country->name}}</option> -->
-                    @endforeach
-                    @endif
-                  </select>
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">State</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <select class="form-control" name="bill_country" id="bill_country" onchange="getstate(this)">
+                <option value="">Select</option>
+                @if(count($countries) > 0)
+                @foreach($countries as $country)
+                @if (old('bill_country') == $country->id)
+                <option value="{{ $country->id }}" selected>{{$country->name}}</option>
+                @else
+                <option value="{{ $country->id }}">{{$country->name}}</option>
+                @endif
+                <!-- <option value={{$country->id}}>{{$country->name}}</option> -->
+                @endforeach
+                @endif
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">State</label>
 
-                  <div class="col-sm-4">
-                  <div class="form-group">
+          <div class="col-sm-4">
+            <div class="form-group">
 
-                  <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
-                    <option value="">Select</option>
+              <select class="form-control" name="bill_state" id="bill_state" onchange="getcity(this)">
+                <option value="">Select</option>
 
-                  </select>
-                </div>
-                  </div>
-                </div>
+              </select>
+            </div>
+          </div>
+        </div>
 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">City</label>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">City</label>
 
-                  <div class="col-sm-4">
-                  <div class="form-group">
+          <div class="col-sm-4">
+            <div class="form-group">
 
-                  <select class="form-control" name="bill_city" id="bill_city">
-                    <option value="">Select</option>
+              <select class="form-control" name="bill_city" id="bill_city">
+                <option value="">Select</option>
 
-                  </select>
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;">{{ old('bill_address') }}</textarea>
-                </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Postal</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" id="bill_postal" value="{{ old('bill_postal') }}" name="bill_postal" placeholder="Postal Code">
-                </div>
-                  </div>
-                </div>
-                <!-- <div class="form-group">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Address</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <textarea name="bill_address" id="bill_address" style="width:422px;height:74px;">{{ old('bill_address') }}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Postal</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="bill_postal" value="{{ old('bill_postal') }}" name="bill_postal" placeholder="Postal Code">
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Type</label>
 
                   <div class="col-sm-4">
@@ -211,7 +227,7 @@
                 </div>
                   </div>
                 </div> -->
-                <!-- <div class="form-group">
+        <!-- <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Notes</label>
 
                   <div class="col-sm-4">
@@ -230,285 +246,399 @@
                   </div>
                 </div> -->
 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">GST No</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="gst" value="{{ old('gst') }}" id="gst" placeholder="Gst No">
-                </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">PAN No</label>
-                  <div class="col-sm-4">
-                  <div class="form-group">
-                  <input type="text" class="form-control" name="pan" value="{{ old('pan') }}" id="pan" placeholder="Pan No">
-                </div>
-                  </div>
-                </div>
-
-</div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <a href="{{ URL::previous() }}"><button type="button" class="btn btn-default">Cancel</button></a>
-                {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
-              </div>
-              <!-- /.box-footer -->
-              {!! Form::close() !!}
+        <div class="form-group" id="gst_group" style="display: none;">
+          <label for="inputPassword3" class="col-sm-2 control-label">GST No <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="gst" value="{{ old('gst') }}" id="gst" placeholder="Gst No">
+              <small class="text-muted"><i class="fa fa-info-circle"></i> GST is mandatory when Company Name is provided</small>
+            </div>
           </div>
+        </div>
 
-    </section>
-      <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-    @endsection
-    @section('scripts')
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">PAN No <span class="text-danger">*</span></label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text" class="form-control" name="pan" value="{{ old('pan') }}" id="pan" placeholder="Pan No">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <a href="{{ URL::previous() }}"><button type="button" class="btn btn-default">Cancel</button></a>
+        {!! Form::submit('Submit', array('class' => 'btn btn-info', 'id' => 'validateButton2')) !!}
+      </div>
+      <!-- /.box-footer -->
+      {!! Form::close() !!}
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+@endsection
+@section('scripts')
 <script src="{{ asset('js/formvalidation/formValidation.min.js') }}"></script>
 <script src="{{ asset('js/formvalidation/framework/bootstrap.min.js') }}"></script>
 <script>
+    // Auto-hide error/success messages after 5 seconds
+  $(document).ready(function() {
+    setTimeout(function() {
+      $('.alert').fadeOut('slow');
+      $('.help-block').fadeOut('slow');
+      $('.alert-danger').fadeOut('slow');
+    }, 5000); // 5000ms = 5 seconds
+  });
+
+    // Show/hide GST field based on company name
+    function toggleGstField() {
+      var companyName = $('#contact_owner').val().trim();
+      if (companyName !== '') {
+        $('#gst_group').slideDown();
+        // Enable GST validation
+        $('#adminform').formValidation('addField', 'gst', {
+          validators: {
+            notEmpty: {
+              message: 'GST No is required when Company Name is provided'
+            }
+          }
+        });
+      } else {
+        $('#gst_group').slideUp();
+        $('#gst').val(''); // Clear GST value
+        // Remove GST validation
+        $('#adminform').formValidation('removeField', 'gst');
+      }
+    }
+
+    // Check on page load (for old values after validation error)
+    toggleGstField();
+
+    // Check on company name change
+    $('#contact_owner').on('input change', function() {
+      toggleGstField();
+    });
 
   $("#first_name").on('change keyup paste', function() {
-  $("#user_name").val($(this).val())
+    $("#user_name").val($(this).val())
     // alert('hi');
     // console.log('I am pretty sure the text box changed');
   });
-// $("#first_name").change(function () {
-//     var selectedValue = $(this).val();
-//     // $("#subtotal").val($(this).find("option:selected").attr("value"))
-//     $("input[type='text'][name='price']").removeClass( "ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required").addClass( "ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" );
-//     $("input[type='text'][name='user_name']").val($(this).attr("value"))
+  $(document).ready(function($) {
 
-// });
-$(document).ready(function ($) {
+    // Restore state and city on page load if old values exist
+    @if(old('bill_country'))
+    var countryId = "{{ old('bill_country') }}";
+    var stateId = "{{ old('bill_state') }}";
+    var cityId = "{{ old('bill_city') }}";
 
-   // Example Validataion Standard Mode
+    if (countryId) {
+      loadStates(countryId, stateId);
+    }
+    @endif
+
+    // ...existing code...
+
+  });
+
+  function loadStates(countryId, selectedState = null) {
+    $.ajax({
+      url: '{{ URL::to("admin/getStatesByCounty") }}',
+      data: {
+        country_code: countryId,
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+        if (data.response == 'success') {
+          var option = '<option value="">Please Select</option>';
+          $.each(data.data, function(i, val) {
+            var selected = (selectedState && selectedState == val.id) ? 'selected' : '';
+            option += '<option value="' + val.id + '" ' + selected + '>' + val.state + '</option>';
+          });
+          $('#bill_state').html(option);
+
+          // Load cities if state was selected
+          if (selectedState) {
+            loadCities(selectedState, '{{ old("bill_city") }}');
+          }
+        }
+      },
+      type: 'POST'
+    });
+  }
+
+  function loadCities(stateId, selectedCity = null) {
+    $.ajax({
+      url: '{{ URL::to("admin/getCityByState") }}',
+      data: {
+        state_code: stateId,
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+        if (data.response == 'success') {
+          var option = '<option value="">Please Select</option>';
+          $.each(data.data, function(i, val) {
+            var selected = (selectedCity && selectedCity == val.id) ? 'selected' : '';
+            option += '<option value="' + val.id + '" ' + selected + '>' + val.name + '</option>';
+          });
+          $('#bill_city').html(option);
+        }
+      },
+      type: 'POST'
+    });
+  }
+
+  function getstate(data) {
+    loadStates(data.value);
+  }
+
+  function getcity(data) {
+    loadCities(data.value);
+  }
+  // $("#first_name").change(function () {
+  //     var selectedValue = $(this).val();
+  //     // $("#subtotal").val($(this).find("option:selected").attr("value"))
+  //     $("input[type='text'][name='price']").removeClass( "ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required").addClass( "ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" );
+  //     $("input[type='text'][name='user_name']").val($(this).attr("value"))
+
+  // });
+  $(document).ready(function($) {
+
+    // Example Validataion Standard Mode
     // ---------------------------------
-    (function () {
+    (function() {
 
-        var i = 1;
+      var i = 1;
 
-        $('#adminform').formValidation({
-            framework: "bootstrap",
-            button: {
-                selector: '#validateButton2',
-                disabled: 'disabled'
-            },
-            icon: null,
-            fields: {
-                first_name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'First Name is required'
-                        }
-                    }
-                },
-                last_name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Last Name is required'
-                        }
-                    }
-                },
-                title: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Title is required'
-                        }
-                    }
-                },
-                user_name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'User Name is required'
-                        }
-                    }
-                },
-                account_manager_id: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please select account manager ID'
-                        }
-                    }
-                },
-            // phone: {
-            //   validators: {
-            //     notEmpty: {
-            //       message: 'The phone number is required and cannot be empty'
-            //     },
-            //     digits: {
-            //         message: 'Please enter only digits'
-            //     },
-            //   }
-            //  },
-             mobile: {
-              validators: {
-                notEmpty: {
-                  message: 'The mobile number is required and cannot be empty'
-                },
-                digits: {
-                    message: 'Please enter only digits'
-                },
-                stringLength:{
-                    min:10,
-                    max:10,
-                    message: 'Mobile number length should be 10 digits'
-                }
+      $('#adminform').formValidation({
+        framework: "bootstrap",
+        button: {
+          selector: '#validateButton2',
+          disabled: 'disabled'
+        },
+        icon: null,
+        fields: {
+          first_name: {
+            validators: {
+              notEmpty: {
+                message: 'First Name is required'
               }
-             },
-             // extension: {
-             //  validators: {
-             //    notEmpty: {
-             //      message: 'The Extention is required and cannot be empty'
-             //    },
-             //    digits: {
-             //        message: 'Please enter only digits'
-             //    }
-             //  }
-             // },
-            email: {
-                 validators: {
-                notEmpty: {
-                  message: 'The email address is required and cannot be empty'
-                },
-                emailAddress: {
-                  message: 'The email address is not valid'
-                }
-              }
-            },
-           bill_country: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Country is required'
-                        }
-                    }
-                },
-             bill_state: {
-                    validators: {
-                        notEmpty: {
-                            message: 'State is required'
-                        }
-                    }
-                },
-            bill_city: {
-                    validators: {
-                        notEmpty: {
-                            message: 'City is required'
-                        }
-                    }
-                },
-             bill_address: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Address is required'
-                        }
-                    }
-                },
-                bill_postal: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Postal is required'
-                        },
-                        digits: {
-                            message: 'Please enter only digits'
-                        },
-                    }
-                },
-                type: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Type is required'
-                        }
-                    }
-                },
-                // description: {
-                //     validators: {
-                //         notEmpty: {
-                //             message: 'Description is required'
-                //         }
-                //     }
-                // },
-                // notes: {
-                //     validators: {
-                //         notEmpty: {
-                //             message: 'Notes is required'
-                //         }
-                //     }
-                // },
-
-                // gst: {
-                //     validators: {
-                //         notEmpty: {
-                //             message: 'Gst is required'
-                //         }
-                //     }
-                // },
-                // pan: {
-                //     validators: {
-                //         notEmpty: {
-                //             message: 'Pan is required'
-                //         }
-                //     }
-                // },
-
             }
-        });
+          },
+          last_name: {
+            validators: {
+              notEmpty: {
+                message: 'Last Name is required'
+              }
+            }
+          },
+          title: {
+            validators: {
+              notEmpty: {
+                message: 'Title is required'
+              }
+            }
+          },
+          user_name: {
+            validators: {
+              notEmpty: {
+                message: 'User Name is required'
+              }
+            }
+          },
+          account_manager_id: {
+            validators: {
+              notEmpty: {
+                message: 'Please select account manager ID'
+              }
+            }
+          },
+          // phone: {
+          //   validators: {
+          //     notEmpty: {
+          //       message: 'The phone number is required and cannot be empty'
+          //     },
+          //     digits: {
+          //         message: 'Please enter only digits'
+          //     },
+          //   }
+          //  },
+          mobile: {
+            validators: {
+              notEmpty: {
+                message: 'The mobile number is required and cannot be empty'
+              },
+              digits: {
+                message: 'Please enter only digits'
+              },
+              stringLength: {
+                min: 10,
+                max: 10,
+                message: 'Mobile number length should be 10 digits'
+              }
+            }
+          },
+          // extension: {
+          //  validators: {
+          //    notEmpty: {
+          //      message: 'The Extention is required and cannot be empty'
+          //    },
+          //    digits: {
+          //        message: 'Please enter only digits'
+          //    }
+          //  }
+          // },
+          email: {
+            validators: {
+              notEmpty: {
+                message: 'The email address is required and cannot be empty'
+              },
+              emailAddress: {
+                message: 'The email address is not valid'
+              }
+            }
+          },
+          bill_country: {
+            validators: {
+              notEmpty: {
+                message: 'Country is required'
+              }
+            }
+          },
+          bill_state: {
+            validators: {
+              notEmpty: {
+                message: 'State is required'
+              }
+            }
+          },
+          bill_city: {
+            validators: {
+              notEmpty: {
+                message: 'City is required'
+              }
+            }
+          },
+          bill_address: {
+            validators: {
+              notEmpty: {
+                message: 'Address is required'
+              }
+            }
+          },
+          bill_postal: {
+            validators: {
+              notEmpty: {
+                message: 'Postal is required'
+              },
+              digits: {
+                message: 'Please enter only digits'
+              },
+            }
+          },
+          type: {
+            validators: {
+              notEmpty: {
+                message: 'Type is required'
+              }
+            }
+          },
+          // description: {
+          //     validators: {
+          //         notEmpty: {
+          //             message: 'Description is required'
+          //         }
+          //     }
+          // },
+          // notes: {
+          //     validators: {
+          //         notEmpty: {
+          //             message: 'Notes is required'
+          //         }
+          //     }
+          // },
+
+          // gst: {
+          //     validators: {
+          //         notEmpty: {
+          //             message: 'Gst is required'
+          //         }
+          //     }
+          // },
+          // pan: {
+          //     validators: {
+          //         notEmpty: {
+          //             message: 'Pan is required'
+          //         }
+          //     }
+          // },
+
+        }
+      });
     })();
 
-});
+  });
 
-function getstate(data){
-   $.ajax({
-            url: '{{ URL::to("admin/getStatesByCounty") }}',
-            data: {
-            country_code: data.value,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            error: function() {
-            //$('#info').html('<p>An error has occurred</p>');
-            },
-            success: function(data) {
-               console.log(data);
-               if(data.response=='success'){
-                  var option='<option value="">Please Select</option>';
-                $.each(data.data, function( i, val ) {
-                     option = option+'<option value="'+val.id+'">'+val.state+'</option>';
-                });
-                $('#bill_state').html(option);
-               }
+  function getstate(data) {
+    $.ajax({
+      url: '{{ URL::to("admin/getStatesByCounty") }}',
+      data: {
+        country_code: data.value,
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      error: function() {
+        //$('#info').html('<p>An error has occurred</p>');
+      },
+      success: function(data) {
+        console.log(data);
+        if (data.response == 'success') {
+          var option = '<option value="">Please Select</option>';
+          $.each(data.data, function(i, val) {
+            option = option + '<option value="' + val.id + '">' + val.state + '</option>';
+          });
+          $('#bill_state').html(option);
+        }
 
-            },
-            type: 'POST'
-            });
-}
-function getcity(data){
+      },
+      type: 'POST'
+    });
+  }
+
+  function getcity(data) {
     console.log(data.value);
     $.ajax({
-            url: '{{ URL::to("admin/getCityByState") }}',
-            data: {
-            state_code: data.value,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            error: function() {
-            //$('#info').html('<p>An error has occurred</p>');
-            },
-            success: function(data) {
-               console.log(data);
-               if(data.response=='success'){
-                  var option='<option value="">Please Select</option>';
-                $.each(data.data, function( i, val ) {
-                     option = option+'<option value="'+val.id+'">'+val.name+'</option>';
-                });
-                $('#bill_city').html(option);
-               }
+      url: '{{ URL::to("admin/getCityByState") }}',
+      data: {
+        state_code: data.value,
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      error: function() {
+        //$('#info').html('<p>An error has occurred</p>');
+      },
+      success: function(data) {
+        console.log(data);
+        if (data.response == 'success') {
+          var option = '<option value="">Please Select</option>';
+          $.each(data.data, function(i, val) {
+            option = option + '<option value="' + val.id + '">' + val.name + '</option>';
+          });
+          $('#bill_city').html(option);
+        }
 
-            },
-            type: 'POST'
-            });
-}
+      },
+      type: 'POST'
+    });
+  }
 </script>
 @stop

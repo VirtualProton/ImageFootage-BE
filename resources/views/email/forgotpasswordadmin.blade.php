@@ -78,7 +78,7 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" style="border-radius:23px;">
-                                                                                        <a href="{{ $url ?? '' }}" style="display:inline-block;background-color:#21E277;font-family: 'Poppins', sans-serif;font-size:16px;line-height:16px;color:#ffffff;font-weight: 500;text-decoration:none;border-radius:23px;padding-top:16px;  padding-right: 25px; padding-bottom: 16px; padding-left: 25px;" target="_blank">RESET PASSWORD</a>
+                                                                                        <a href="{{ $url}}" style="display:inline-block;background-color:#21E277;font-family: 'Poppins', sans-serif;font-size:16px;line-height:16px;color:#ffffff;font-weight: 500;text-decoration:none;border-radius:23px;padding-top:16px;  padding-right: 25px; padding-bottom: 16px; padding-left: 25px;" target="_blank">RESET PASSWORD</a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

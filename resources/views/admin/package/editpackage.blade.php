@@ -124,10 +124,6 @@
                 @endif
 
               </div>
-              <div class="form-group" id="carry_forward_pack">
-                <label for="exampleInputEmail1">Products Carry Forward <input type="checkbox" name="products_carry_forward" id="products_carry_forward" value="yes" @if($package[0]['package_pcarry_forward']=='yes' ) checked="checked" @endif /> </label>
-
-              </div>
 
               <div class="form-group" id="footageTierDiv">
                 <label for="exampleInputEmail1"> Footage Package Type</label>

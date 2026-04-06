@@ -23,14 +23,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{$data['orders']}}</h3>
+              <!-- <h3>{{$data['orders']}}</h3> -->
 
-              <p>New Orders</p>
+              <p>New Registrations</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="{{url('admin/orders')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('admin/new_registrants')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -79,10 +79,106 @@
           </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-          
-        No Comments Pending
+          <!-- small box -->
+          <div class="small-box bg-purple">
+            <div class="inner">
+              <h3>{{$data['pending_comments_count'] ?? 0}}</h3>
+              <p>Pending Comments</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-comments"></i>
+            </div>
+            <a href="#pending-comments-section" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
         </div>
         <!-- ./col -->
+      </div>
+      <!-- /.row -->
+      
+      <!-- Pending Comments Mailbox Section -->
+      @if(isset($data['pending_comments']) && $data['pending_comments']->count() > 0)
+      <div class="row" id="pending-comments-section">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"><i class="fa fa-comments"></i> Pending Comments</h3>
+            </div>
+            <div class="box-body no-padding">
+              <div class="mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Case ID</th>
+                      <th>User</th>
+                      <th>Subject</th>
+                      <th>Status</th>
+                      <th>Agent</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($data['pending_comments'] as $comment)
+                    <tr>
+                      <td><span class="label label-info">#{{$comment->id}}</span></td>
+                      <td>
+                        @if($comment->user_id)
+                          <a href="{{url('admin/users/invoices/'.$comment->user_id)}}">
+                            User #{{$comment->user_id}}
+                          </a>
+                        @else
+                          N/A
+                        @endif
+                      </td>
+                      <td>
+                        <strong>{{$comment->subject ?? 'No Subject'}}</strong>
+                        <br>
+                        <small>{{Str::limit($comment->comment, 50)}}</small>
+                      </td>
+                      <td>
+                        @if($comment->status == 'Open')
+                          <span class="label label-warning">Open</span>
+                        @elseif($comment->status == 'In Progress')
+                          <span class="label label-primary">In Progress</span>
+                        @else
+                          <span class="label label-default">{{$comment->status}}</span>
+                        @endif
+                      </td>
+                      <td>
+                        @if($comment->agent_id && $comment->agent)
+                          {{$comment->agent->account_name ?? 'N/A'}}
+                        @else
+                          <em>Unassigned</em>
+                        @endif
+                      </td>
+                      <td>
+                        <small>
+                          <i class="fa fa-clock-o"></i> 
+                          {{$comment->created_at->diffForHumans()}}
+                        </small>
+                      </td>
+                      <td>
+                        @if($comment->user_id)
+                          <a href="{{url('admin/users/showComment/'.$comment->id)}}" 
+                             class="btn btn-primary btn-xs" 
+                             title="View Details">
+                            <i class="fa fa-eye"></i>
+                          </a>
+                        @endif
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer text-center">
+              <a href="{{url('admin/users')}}" class="uppercase">View All Comments</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
       </div>
       <!-- /.row -->
       <!-- Main row -->

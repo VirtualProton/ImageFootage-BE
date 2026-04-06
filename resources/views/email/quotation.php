@@ -178,11 +178,7 @@
                             } ?>
                             <div class="<?php echo $class; ?>" style="font-size: 11px;">
                                 <div style="padding-top: 10px;">
-                                    <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                                        <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
-                                    <?php } else { ?>
-                                        <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
-                                    <?php } ?>
+                                    <img src="<?php echo !empty($quotation[0]['template_image']) ? $quotation[0]['template_image'] : $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
                                 </div>
 
 

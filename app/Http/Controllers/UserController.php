@@ -28,9 +28,30 @@ use App\Models\UserProductDownload;
 use App\Models\Usercart;
 use App\Models\ImageFootageWishlist;
 use App\Models\Verification;
+use App\Services\Sms\SmsService;
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
+    /**
+     * SMS Service instance
+     * 
+     * @var SmsService
+     */
+    protected $smsService;
+
+    /**
+     * Create a new controller instance.
+     * 
+     * @param SmsService $smsService
+     */
+    public function __construct(SmsService $smsService)
+    {
+        $this->smsService = $smsService;
+    }
+
+    // User Profile
     public function userProfile($id)
     {
 
@@ -46,14 +67,13 @@ class UserController extends Controller
                         ->whereRaw('package_products_count > downloaded_product')
                         ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type','package_plan','footage_tier','pacage_size')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type', 'package_plan', 'footage_tier', 'pacage_size')
                         ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }])
                         ->with(['licence' => function ($down_query) {
                             $down_query->select('id', 'licence_name', 'description', 'product_type', 'slug', 'version');
                         }]);
-
                 }
             ])
             ->get()->toArray();
@@ -139,17 +159,16 @@ class UserController extends Controller
         }
 
         $userlist = $userlist->orderBy('id', 'desc')
-            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier','order_type')
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier', 'order_type')
             ->with('licence')
             ->paginate(5)
             ->toArray();
         return ['status' => 1, 'message' => 'Plan details fetched successfully.', 'data' => $userlist];
-
     }
     public function getUserAddress(Request $request)
     {
         $id = $request->Utype;
-        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code','company','gst','mobile','email')->where('id', $id)->with(['country','city','state'])->first();
+        $userlist = User::select('first_name', 'last_name', 'address', 'city', 'state', 'country', 'postal_code', 'company', 'gst', 'mobile', 'email')->where('id', $id)->with(['country', 'city', 'state'])->first();
         return '{"status":"1","message":"","data":' . json_encode($userlist) . '}';
     }
     public function contributorProfile($id)
@@ -186,21 +205,20 @@ class UserController extends Controller
 
             $token = str_random(60);
             $findUser = DB::table('password_resets')->where('email', $request['email']['user_email'])->limit(1)->first();
-            if($findUser) {
+            if ($findUser) {
                 DB::table('password_resets')->where('email', $request['email']['user_email'])->update([
                     'token' => $token,
                     'created_at' => date('Y-m-d h:i:s'),
                 ]);
-            }
-            else {
+            } else {
                 DB::table('password_resets')->insert([
                     'email' => $request['email']['user_email'],
                     'token' => $token,
                     'created_at' => Carbon::now()
                 ]);
             }
-            $urltoken = base64_encode(json_encode(['email'=>$request['email']['user_email'], 'token'=>$token]));
-            $url = config('app.front_end_url') . "resetpassword/" .$urltoken ;
+            $urltoken = base64_encode(json_encode(['email' => $request['email']['user_email'], 'token' => $token]));
+            $url = config('app.front_end_url') . "resetpassword/" . $urltoken;
             $data = array('url' => $url, 'email' => $request['email']['user_email']);
             Mail::send('email.forgotpasswordadmin', $data, function ($message) use ($data) {
                 $message->to($data['email'], '')->subject('Imagefootage Forget Password')
@@ -223,7 +241,7 @@ class UserController extends Controller
         $user = User::where('mobile', '=', $request['mobile']['user_mobile'])->first();
         if ($user) {
             if (!config('constants.sms_enabled')) {
-                if($user->email){
+                if ($user->email) {
                     // Assuming $user is an instance of your User model
                     $request->merge([
                         'email' => [
@@ -233,9 +251,9 @@ class UserController extends Controller
 
                     $this->validUser($request);
                     return response()->json(['status' => true, 'code' => 200, 'message' => "Check your email for reset password link."], 200);
-                }else if(isset($request['mobile']['email']) && !empty($request['mobile']['email'])){
-                    $checkEmailExist = User::where('email',$request['mobile']['email'])->exists();
-                    if($checkEmailExist){
+                } else if (isset($request['mobile']['email']) && !empty($request['mobile']['email'])) {
+                    $checkEmailExist = User::where('email', $request['mobile']['email'])->exists();
+                    if ($checkEmailExist) {
                         return response()->json(['status' => false, 'code' => 422, 'message' => "Email already exists. Please try with another email."], 200);
                     }
                     $user->email = $request['mobile']['email'];
@@ -247,7 +265,7 @@ class UserController extends Controller
                     ]);
                     $this->validUser($request);
                     return response()->json(['status' => true, 'code' => 200, 'message' => "Check your email for reset password link."], 200);
-                }else{
+                } else {
                     return response()->json(['status' => false, 'code' => 422, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 200);
                 }
             }
@@ -263,13 +281,12 @@ class UserController extends Controller
 
                 $token = str_random(60);
                 $findUser = DB::table('password_resets')->where('email', $request['mobile']['user_mobile'])->limit(1)->first();
-                if($findUser) {
+                if ($findUser) {
                     DB::table('password_resets')->where('email', $request['mobile']['user_mobile'])->update([
                         'token' => $token,
                         'created_at' => date('Y-m-d h:i:s'),
                     ]);
-                }
-                else {
+                } else {
                     DB::table('password_resets')->insert([
                         'email' => $request['mobile']['user_mobile'],
                         'token' => $token,
@@ -277,14 +294,21 @@ class UserController extends Controller
                     ]);
                 }
 
-                $urltoken = base64_encode(json_encode(['email'=>$request['mobile']['user_mobile'], 'token'=>$token]));
-                $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile,'token'=>$urltoken];
-                $result = ['status' => 1, 'message' => "Your otp for forgot password is send on your registered mobile number. Please check.", 'data' => $user_data];
+                $urltoken = base64_encode(json_encode(['email' => $request['mobile']['user_mobile'], 'token' => $token]));
                 $user->save();
-                $message = "Your otp for forgot password is " . $otp . " \n Thanks \n Imagefootage Team";
-                $smsClass = new TnnraoSms;
-                $smsClass->sendSms($message, $request['mobile']['user_mobile']);
-                return response()->json($result, 200);
+                $templateId = config('services.msg91.reset_password_otp_template_id');
+                try {
+                    $resetPasswordResponse = $this->smsService->sendOtp($request['mobile']['user_mobile'], $templateId);
+                    if (!$resetPasswordResponse['success']) {
+                        return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 400);
+                    }
+                    $user_data = ['user_id' => $user->id, 'email' => $user->email, 'mobile' => $user->mobile, 'token' => $urltoken];
+                    $result = ['status' => 1, 'message' => "Your otp for forgot password is send on your registered mobile number. Please check.", 'data' => $user_data];
+                    return response()->json($result, 200);
+                } catch (\Exception $e) {
+                    Log::error('SMS sending failed: ' . $e->getMessage());
+                    return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                }
             } else {
                 return response()->json(['status' => '0', 'message' => 'Error in sending otp again !!!'], 200);
             }
@@ -294,17 +318,27 @@ class UserController extends Controller
     }
     public function requestChangePassword(Request $request)
     {
-        $count = User::where('mobile', '=', $request['mobile'])->where('otp', '=', $request['user_otp'])->count();
-        if ($count > 0) {
-            $update = User::where('mobile', $request['user_mobile'])->update(['password' => Hash::make($request['user_password'])]);
-            if ($update) {
-                return response()->json(['status' => '1', 'message' => ' Password Succesfully changed, Please Log In using new password'], 200);
-            } else {
-                return response()->json(['status' => '0', 'message' => 'Some problem occured !!!'], 200);
-            }
-        } else {
+        $verifyOtpResponse = $this->verifySmsOtp($request['mobile'], $request['user_otp']);
+        if (!$verifyOtpResponse['success']) {
             return response()->json(['status' => 0, 'message' => 'Enter correct otp.']);
         }
+        $update = User::where('mobile', $request['user_mobile'])->update(['password' => Hash::make($request['user_password'])]);
+        if ($update) {
+            return response()->json(['status' => '1', 'message' => ' Password Succesfully changed, Please Log In using new password'], 200);
+        } else {
+            return response()->json(['status' => '0', 'message' => 'Some problem occured !!!'], 200);
+        }
+        // $count = User::where('mobile', '=', $request['mobile'])->where('otp', '=', $request['user_otp'])->count();
+        // if ($count > 0) {
+        //     $update = User::where('mobile', $request['user_mobile'])->update(['password' => Hash::make($request['user_password'])]);
+        //     if ($update) {
+        //         return response()->json(['status' => '1', 'message' => ' Password Succesfully changed, Please Log In using new password'], 200);
+        //     } else {
+        //         return response()->json(['status' => '0', 'message' => 'Some problem occured !!!'], 200);
+        //     }
+        // } else {
+        //     return response()->json(['status' => 0, 'message' => 'Enter correct otp.']);
+        // }
     }
     public function userOrders($id)
     {
@@ -361,7 +395,7 @@ class UserController extends Controller
                 $orderData->whereDate('order_date', '>=', $startDate)
                     ->whereDate('order_date', '<=', $endDate);
             }
-                $orderData=  $orderData->whereHas('items', function ($productquery) use ($mediaType,$licenseType) {
+            $orderData =  $orderData->whereHas('items', function ($productquery) use ($mediaType, $licenseType) {
                 if ($mediaType != 'All') {
                     $productquery->where('product_type', $mediaType);
                 }
@@ -377,7 +411,6 @@ class UserController extends Controller
                 ->toArray();
 
             return json_encode(['status' => "success", 'data' => $orderData]);
-
         } else {
             return json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
         }
@@ -444,10 +477,13 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        $validator = \Validator::make($request->profileData ?? [], [
+        $validator = \Validator::make(
+            $request->profileData ?? [],
+            [
                 'email' => 'required|unique:imagefootage_users,email,' . $data['tokenData']['Utype'],
                 'mobile' => 'required|unique:imagefootage_users,mobile,' . $data['tokenData']['Utype'],
-        ], [
+            ],
+            [
                 'mobile.unique' => 'The mobile no has already been taken.',
             ]
         );
@@ -471,7 +507,7 @@ class UserController extends Controller
                 return response()->json(['status' => "fail", 'message' => 'Profile not found', 'data' => ''], 400);
             }
             $panNumber = '';
-            if(isset($data['profileData']['gst']) && !empty($data['profileData']['gst'])){
+            if (isset($data['profileData']['gst']) && !empty($data['profileData']['gst'])) {
                 $panNumber = $this->extractPanFromGst($data['profileData']['gst']);
             }
 
@@ -480,7 +516,7 @@ class UserController extends Controller
                 && $userlist['mobile'] != $data['profileData']['mobile']
                 && $userlist['email'] != $data['profileData']['email']
             ) {
-                return response()->json(['status' => '0', 'message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
+                return response()->json(['message' => 'Email and Mobile numvber can not be updated at the same time.'], 400);
             }
 
             $update_data = [
@@ -495,17 +531,16 @@ class UserController extends Controller
                 'company' => $data['profileData']['company'] ?? '',
                 'email' => $data['profileData']['email'] ?? '',
                 'gst'  => $data['profileData']['gst'] ?? '',
-                'pan'  =>$panNumber
+                'pan'  => $panNumber
             ];
             if (empty($userlist['country'])) {
                 $update_data['country'] = $data['profileData']['country'];
             }
-
             // Handle OTP generation and verification
             if (empty($data['profileData']['otp']) || empty($data['profileData']['otpToken'])) {
-                if (!empty($update_data['mobile']) && $userlist['mobile'] != $update_data['mobile']) {
+                if (!empty($update_data['email']) && $userlist['email'] != $update_data['email']) {
                     if (empty($data['profileData']['otpType']) ||  $data['profileData']['otpType'] != 'profile_update_otp') {
-                        return response()->json(['status' => '0', 'message' => 'OTP type is required.'], 400);
+                        return response()->json(['message' => 'OTP type is required.'], 400);
                     }
                     $matchToken = hash('sha512', time()) . random_int(100000, 999999);
                     $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
@@ -514,45 +549,57 @@ class UserController extends Controller
                             $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                             $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                         ) {
-                            return response()->json(['status' => '0', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                            return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
                         } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                            return response()->json(['status' => 'failed', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                            return response()->json(['message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                         } else {
                             try {
                                 $otp = rand(100000, 999999);
-                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist['email'], 'otp' => $otp);
+                                $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
+                                \Log::info('Attempting to send OTP email', ['to' => $emaildata['cemail'], 'otp' => $otp]);
+
                                 Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                     $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                                 });
 
-                                if (count(Mail::failures()) > 0) {
-                                    \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
-                                    return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+                                $failures = Mail::failures();
+                                \Log::info('Mail send result', ['failures' => $failures, 'count' => count($failures)]);
+
+                                if (count($failures) > 0) {
+                                    \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
+                                    return response()->json(['message' => 'Failed to send OTP email. Please try again.'], 500);
                                 }
                                 $earlierProfileUpdateData->max_otp_attempts += 1;
                                 $earlierProfileUpdateData->one_time_password = $otp;
                                 $earlierProfileUpdateData->otp_token = $matchToken;
                                 $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                 $earlierProfileUpdateData->save();
-                                $emailParts = explode('@', $userlist['email']);
+                                \Log::info('OTP stored in database', ['user_id' => $userlist->id, 'otp' => $otp]);
+                                $emailParts = explode('@', $update_data['email']);
                                 $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                                 echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                                 return;
                             } catch (\Exception $e) {
-                                \Log::error('Failed to send update user email: ' . $e->getMessage());
-                                // Handle the exception (e.g., log the error, notify admin, etc.)
+                                \Log::error('Failed to send update user email', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+                                return response()->json(['message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                             }
                         }
                     } else {
                         try {
                             $otp = rand(100000, 999999);
-                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $userlist['email'], 'otp' => $otp);
+                            $emaildata = array('cname' => $update_data['first_name'], 'cemail' => $update_data['email'], 'otp' => $otp);
+                            \Log::info('Attempting to send OTP email (new verification)', ['to' => $emaildata['cemail'], 'otp' => $otp]);
+
                             Mail::send('updateusermail', $emaildata, function ($message) use ($emaildata) {
                                 $message->to($emaildata['cemail'], $emaildata['cname'])->from('admin@imagefootage.com', 'Imagefootage')->subject('Welcome to ' . config('constants.company_name'));
                             });
-                            if (count(Mail::failures()) > 0) {
-                                \Log::error('Failed to send email to: ' . implode(', ', Mail::failures()));
-                                return response()->json(['status' => '0', 'message' => 'Failed to send OTP email. Please try again.'], 500);
+
+                            $failures = Mail::failures();
+                            \Log::info('Mail send result (new verification)', ['failures' => $failures, 'count' => count($failures)]);
+
+                            if (count($failures) > 0) {
+                                \Log::error('Failed to send email to: ' . implode(', ', $failures), ['otp' => $otp]);
+                                return response()->json(['message' => 'Failed to send OTP email. Please try again.'], 500);
                             }
                             $verification = new Verification();
                             $verification->user_id = $userlist->id;
@@ -562,84 +609,80 @@ class UserController extends Controller
                             $verification->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                             $verification->max_otp_attempts = 1;
                             $verification->save();
-                            $emailParts = explode('@', $userlist['email']);
+                            \Log::info('OTP stored in database (new verification)', ['user_id' => $userlist->id, 'otp' => $otp]);
+                            $emailParts = explode('@', $update_data['email']);
                             $maskedEmail = str_repeat('*', strlen($emailParts[0])) . '@' . $emailParts[1];
                             echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your email.', 'Email' => $maskedEmail, 'otpToken' => $matchToken]);
                             return;
                         } catch (\Exception $e) {
-                            \Log::error('Failed to send update user email: ' . $e->getMessage());
-                            // Handle the exception (e.g., log the error, notify admin, etc.)
+                            \Log::error('Failed to send update user email (new verification)', ['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+                            return response()->json(['message' => 'Failed to send OTP email: ' . $e->getMessage()], 500);
                         }
                     }
                 } else {
-                    if (!empty($update_data['email']) && $userlist['email'] != $update_data['email']) {
+                    if (!empty($update_data['mobile']) && $userlist['mobile'] != $update_data['mobile']) {
                         if (empty($data['profileData']['otpType']) || $data['profileData']['otpType'] != 'profile_update_otp') {
-                            return response()->json(['status' => '0', 'message' => 'OTP type is required.'], 400);
+                            return response()->json(['message' => 'OTP type is required.'], 400);
                         }
                         if (!config('constants.sms_enabled')) {
-                            return response()->json(['status' => false, 'message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
+                            return response()->json(['message' => "The administrator has disabled SMS functionality at this time, so please use your email address instead of your phone number."], 400);
                         }
-                        $matchToken = hash('sha512', time()) . random_int(100000, 999999);
                         $earlierProfileUpdateData = Verification::where('user_id', $userlist->id)->where('otp_type', $data['profileData']['otpType'])->first();
+                        $templateId = config('services.msg91.profile_update_otp_template_id');
                         if ($earlierProfileUpdateData) {
                             if (
                                 $earlierProfileUpdateData->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
                                 $earlierProfileUpdateData->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->last_failed_attempt_at)) < 30
                             ) {
-                                return response()->json(['status' => '0', 'message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
+                                return response()->json(['message' => 'You have exceeded the maximum number of OTP attempts. Please try again after 30 Minutes.'], 400);
                             } else if ($earlierProfileUpdateData->max_otp_attempts >= config('constants.MAX_OTP_ATTEMPTS') && Carbon::now()->diffInMinutes(Carbon::parse($earlierProfileUpdateData->updated_at)) < 30) {
-                                return response()->json(['status' => '0', 'message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
+                                return response()->json(['message' => 'You have triggered maximum no of OTP Allowed within 30 Minutes'], 400);
                             } else {
                                 try {
-                                    $otp = rand(100000, 999999);
-                                    $smsClass = new TnnraoSms;
-                                    $message = "Your OTP for email change is " . $otp . "\n Thanks \n Imagefootage Team";
                                     try {
-                                        $smsResult = $smsClass->sendSms($message, $userlist['mobile']);
-                                        \Log::info('SMS sent successfully: ' . json_encode($smsResult));
+                                        $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
+                                        Log::info('SMS send result', ['result' => $smsResult]);
+                                        if (!$smsResult['success']) {
+                                            return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 400);
+                                        }
                                     } catch (\Exception $smsException) {
-                                        \Log::error('SMS sending failed: ' . $smsException->getMessage());
-                                        return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                        return response()->json(['message' => 'Could not process your request. Please try again later.'], 500);
                                     }
                                     $earlierProfileUpdateData->max_otp_attempts += 1;
-                                    $earlierProfileUpdateData->one_time_password = $otp;
-                                    $earlierProfileUpdateData->otp_token = $matchToken;
                                     $earlierProfileUpdateData->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                     $earlierProfileUpdateData->save();
-                                    $maskedMobile = substr_replace($userlist['mobile'], str_repeat('*', strlen($userlist['mobile']) - 2), 0, -2);
-                                    echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your mobile.', 'Mobile' => $maskedMobile, 'otpToken' => $matchToken]);
+                                    $maskedMobile = substr_replace($update_data['mobile'], str_repeat('*', strlen($update_data['mobile']) - 2), 0, -2);
+                                    echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your registered mobile number.', 'Mobile' => $maskedMobile, 'otpToken' => $smsResult['response']['request_id']]);
                                     return;
                                 } catch (\Exception $e) {
                                     \Log::error('Failed to send OTP SMS: ' . $e->getMessage());
-                                    // Handle the exception (e.g., log the error, notify admin, etc.)
                                 }
                             }
                         } else {
                             try {
-                                $otp = rand(100000, 999999);
-                                $smsClass = new TnnraoSms;
-                                $message = "Your OTP for email change is " . $otp . "\n Thanks \n Imagefootage Team";
                                 try {
-                                    $smsResult = $smsClass->sendSms($message, $userlist['mobile']);
-                                    \Log::info('SMS sent successfully: ' . json_encode($smsResult));
+                                    $smsResult = $this->smsService->sendOtp($update_data['mobile'], $templateId);
+                                    if (!$smsResult['success']) {
+                                        return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 500);
+                                    }
                                 } catch (\Exception $smsException) {
-                                    \Log::error('SMS sending failed: ' . $smsException->getMessage());
-                                    return response()->json(['status' => '0', 'message' => 'Failed to send SMS. Please try again later.'], 500);
+                                    \Log::error('Failed to send SMS OTP', [
+                                        'error' => $smsException->getMessage(),
+                                        'mobile' => $update_data['mobile']
+                                    ]);
+                                    return response()->json(['message' => 'Failed to send SMS. Please try again later.'], 500);
                                 }
                                 $verification = new Verification();
                                 $verification->user_id = $userlist->id;
                                 $verification->otp_type = 'profile_update_otp';
-                                $verification->one_time_password = $otp;
-                                $verification->otp_token = $matchToken;
                                 $verification->token_valid_date = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . " +" . config('constants.OTP_EXPIRY') . " minutes"));
                                 $verification->max_otp_attempts = 1;
                                 $verification->save();
-                                $maskedMobile = substr_replace($userlist['mobile'], str_repeat('*', strlen($userlist['mobile']) - 2), 0, -2);
-                                echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your mobile.', 'Mobile' => $maskedMobile, 'otpToken' => $matchToken]);
+                                $maskedMobile = substr_replace($update_data['mobile'], str_repeat('*', strlen($update_data['mobile']) - 2), 0, -2);
+                                echo json_encode(['status' => "0", 'message' => 'Otp has been triggered Successfully to your registered mobile number.', 'Mobile' => $maskedMobile, 'otpToken' => $smsResult['response']['request_id']]);
                                 return;
                             } catch (\Exception $e) {
                                 \Log::error('Failed to send OTP SMS: ' . $e->getMessage());
-                                // Handle the exception (e.g., log the error, notify admin, etc.)
                             }
                         }
                     }
@@ -647,43 +690,67 @@ class UserController extends Controller
             } else {
                 // Verify the OTP
                 if (!empty($data['profileData']['otp']) && !empty($data['profileData']['otpToken'])) {
-                    $verificationData = Verification::where('user_id', $userlist->id)
-                        ->where('otp_type', 'profile_update_otp')
-                        ->where('one_time_password', $data['profileData']['otp'])
-                        ->where('otp_token', $data['profileData']['otpToken'])
-                        ->first();
-                    if ($verificationData) {
-                        if (Carbon::now()->greaterThan(Carbon::parse($verificationData->token_valid_date))) {
-                            return response()->json(['status' => '0', 'message' => 'The OTP has expired.'], 400);
-                        } else {
-                            $verificationData->delete();
-                        }
-                        // OTP is valid, proceed with profile update
-                    } else {
-                        // Get the verification record by user_id to update failed attempts
-                        $verificationRecord = Verification::where('user_id', $userlist->id)
-                            ->where('otp_type', $data['profileData']['otpType'])
-                            ->first();
-                        if ($verificationRecord) {
-                            if (
-                                $verificationRecord->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
-                                $verificationRecord->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($verificationRecord->last_failed_attempt_at)) < 30
-                            ) {
-                                return response()->json(['status' => '0', 'message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                    if ($data['profileData']['isSmsVerify']) {
+                        $verifyOtpResponse = $this->verifySmsOtp($data['profileData']['mobile'], $data['profileData']['otp']);
+                        if (!$verifyOtpResponse['success']) {
+                            // Get the verification record by user_id to update failed attempts
+                            $verificationRecord = Verification::where('user_id', $userlist->id)
+                                ->where('otp_type', $data['profileData']['otpType'])
+                                ->first();
+                            if ($verificationRecord) {
+                                if (
+                                    $verificationRecord->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
+                                    $verificationRecord->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($verificationRecord->last_failed_attempt_at)) < 30
+                                ) {
+                                    return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                                }
+
+                                $verificationRecord->unsuccessful_verification_attempts += 1;
+                                $verificationRecord->last_failed_attempt_at = Carbon::now();
+                                $verificationRecord->save();
+
+                                return response()->json(['message' => 'Invalid OTP or OTP token.'], 400);
+                            } else {
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
                             }
-
-                            $verificationRecord->unsuccessful_verification_attempts += 1;
-                            $verificationRecord->last_failed_attempt_at = Carbon::now();
-                            $verificationRecord->save();
-
-                            return response()->json(['status' => '0', 'message' => 'Invalid OTP or OTP token.'], 400);
+                        }
+                    } else {
+                        $verificationData = Verification::where('user_id', $userlist->id)
+                            ->where('otp_type', 'profile_update_otp')
+                            ->where('one_time_password', $data['profileData']['otp'])
+                            ->where('otp_token', $data['profileData']['otpToken'])
+                            ->first();
+                        if ($verificationData) {
+                            if (Carbon::now()->greaterThan(Carbon::parse($verificationData->token_valid_date))) {
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
+                            } else {
+                                $verificationData->delete();
+                            }
                         } else {
-                            return response()->json(['status' => '0', 'message' => 'The OTP has expired.'], 400);
+                            // Get the verification record by user_id to update failed attempts
+                            $verificationRecord = Verification::where('user_id', $userlist->id)
+                                ->where('otp_type', $data['profileData']['otpType'])
+                                ->first();
+                            if ($verificationRecord) {
+                                if (
+                                    $verificationRecord->unsuccessful_verification_attempts >= config('constants.MAX_FAILED_OTP_VERIFICATION_ATTEMPTS') &&
+                                    $verificationRecord->last_failed_attempt_at && Carbon::now()->diffInMinutes(Carbon::parse($verificationRecord->last_failed_attempt_at)) < 30
+                                ) {
+                                    return response()->json(['message' => 'You have exceeded the maximum number of Invalid OTP or OTP Token attempts. Please try again after 30 Minutes.'], 400);
+                                }
+
+                                $verificationRecord->unsuccessful_verification_attempts += 1;
+                                $verificationRecord->last_failed_attempt_at = Carbon::now();
+                                $verificationRecord->save();
+
+                                return response()->json(['message' => 'Invalid OTP or OTP token.'], 400);
+                            } else {
+                                return response()->json(['message' => 'The OTP has expired.'], 400);
+                            }
                         }
                     }
                 }
             }
-
             $update = User::where('id', '=', $data['tokenData']['Utype'])->update($update_data);
 
             if ($userlist['mobile'] != $data['profileData']['mobile']) {
@@ -727,18 +794,17 @@ class UserController extends Controller
                 if ($userToDelete) {
                     DB::beginTransaction();
                     try {
-                        UserPackage::where('user_id',$user_id)->delete();
-                        UserProductDownload::where('user_id',$user_id)->delete();
-                        Orders::where('user_id',$user_id)->delete();
-                        DB::table('imagefootage_performa_invoices')->where('user_id',$user_id)->delete();
-                        DB::table('imagefootage_performa_invoice_items')->where('user_id',$user_id)->delete();
-                        Usercart::where('cart_added_by',$user_id)->delete();
-                        DB::table('plan_subscriptions')->where('user_id',$user_id)->delete();
-                        DB::table('user_paid_payments')->where('user_id',$user_id)->delete();
-                        DB::table('imagefootage_users_wishlist')->where('user_id',$user_id)->delete();
+                        UserPackage::where('user_id', $user_id)->delete();
+                        UserProductDownload::where('user_id', $user_id)->delete();
+                        Orders::where('user_id', $user_id)->delete();
+                        DB::table('imagefootage_performa_invoices')->where('user_id', $user_id)->delete();
+                        DB::table('imagefootage_performa_invoice_items')->where('user_id', $user_id)->delete();
+                        Usercart::where('cart_added_by', $user_id)->delete();
+                        DB::table('plan_subscriptions')->where('user_id', $user_id)->delete();
+                        DB::table('user_paid_payments')->where('user_id', $user_id)->delete();
+                        DB::table('imagefootage_users_wishlist')->where('user_id', $user_id)->delete();
                         $userToDelete->delete();
                         DB::commit();
-
                     } catch (\Exception $e) {
                         DB::rollBack();
                         return response()->json(["success" => false, "message" => "User not found. Please try again later."], 200);
@@ -866,7 +932,8 @@ class UserController extends Controller
             ->exists();
     }
 
-    public function extractPanFromGst($gstNumber) {
+    public function extractPanFromGst($gstNumber)
+    {
 
         // Define the regular expression pattern for extracting PAN from GST
         $pattern = '/[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}/';
@@ -881,5 +948,23 @@ class UserController extends Controller
 
         // If no match is found, return null or handle accordingly
         return null;
+    }
+
+    /**
+     * Verify SMS OTP
+     * 
+     * @param string $mobile
+     * @param string $otp
+     * @return array
+     */
+    private function verifySmsOtp($mobile, $otp)
+    {
+        try {
+            $smsVerificationResult = $this->smsService->verifyOtp($mobile, $otp);
+            return $smsVerificationResult;
+        } catch (\Exception $e) {
+            \Log::error('SMS OTP verification failed: ' . $e->getMessage());
+            return ['success' => false, 'message' => 'OTP verification failed. Please try again later.'];
+        }
     }
 }

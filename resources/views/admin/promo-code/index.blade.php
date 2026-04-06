@@ -27,6 +27,7 @@
                         <th>SN</th>
                         <th>Name</th>
                         <th>Type</th>
+                        <th>Asset Type</th>
                         <th>Discount value</th>
                         <th>Max Usage</th>
                         <th>Total Applied Code</th>
@@ -45,6 +46,7 @@
                           <td>{{$k+1}}</td>
                           <td>{{$promocode['name']}}</td>
                           <td>{{$promocode['type']}}</td>
+                          <td>{{$promocode['asset_type'] ?? '-'}}</td>
                           <td>{{$promocode['discount']}}</td>
                           <td>{{$promocode['max_usage']}}</td>
                           <td>{{$promocode['total_applied_code']}}</td>

@@ -101,7 +101,7 @@ class MediaController extends Controller
             'expired_date' => null,
             'slug' => $slug,
             'attributes' => [],
-            'editorial' => $pond5ImagesData['editorial'] ?? false,
+            'editorial' => $pond5ImagesData['editorial'] ?? false
         ];
         $licenseTypes = ['media', 'commercial', 'digital', 'non_commercial'];
         // Set price for Music
@@ -115,7 +115,7 @@ class MediaController extends Controller
                 if (!$priceModel) {
                     $price = null;
                 } else {
-                    $price = $priceModel->music_price;
+                    $price = $priceModel->music_price !== null ? (int) $priceModel->music_price: null;
                 }
                 foreach ($pond5ImagesData['versions'] as &$version) {
                     $newOptions[] = [
@@ -144,10 +144,13 @@ class MediaController extends Controller
                         $price = null;
                     } else {
                         if ($version['label'] == '4K') {
-                            $price = $priceModel->{'4k_footage_price'};
+                            $rawPrice = $priceModel->{'4k_footage_price'};
                         } else {
-                            $price = $priceModel->high_resolution_footage_price;
+                            $rawPrice = $priceModel->high_resolution_footage_price;
                         }
+
+                        // cast to integer only if not null
+                        $price = $rawPrice !== null ? (int) $rawPrice : null;
                     }
                     $newOptions[] = [
                         "licenseType" => $licenseType,
@@ -179,18 +182,24 @@ class MediaController extends Controller
                     } else {
                         switch ($version['label']) {
                             case Price::SMALL_IMAGE:
-                                $price = $priceModel->small_image_price;
+                                $rawPrice = $priceModel->small_image_price;
                                 break;
                             case Price::MEDIUM_IMAGE:
-                                $price = $priceModel->medium_image_price;
+                                $rawPrice = $priceModel->medium_image_price;
                                 break;
                             case Price::LARGE_IMAGE:
-                                $price = $price->large_image_price;
+                                $rawPrice = $priceModel->large_image_price;
                                 break;
                             case Price::EXTRA_LARGE_IMAGE:
-                                $price = $price->extra_large_image_price;
+                                $rawPrice = $priceModel->extra_large_image_price;
+                                break;
+                            default:
+                                $rawPrice = null;
                                 break;
                         }
+
+                        // cast "3200.00" → 3200, but keep null
+                        $price = $rawPrice !== null ? (int) $rawPrice : null;
                     }
                     $newOptions[] = [
                         "licenseType" => $licenseType,

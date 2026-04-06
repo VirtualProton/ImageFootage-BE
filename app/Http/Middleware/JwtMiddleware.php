@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -59,13 +60,15 @@ class JwtMiddleware extends BaseMiddleware
             // facebook
             if ($request->header('Login-Type') == 'facebook') {
                 $client = new Client();
-                $getAppAccessTokenEndpoint = str_replace([
-                    ':facebook_client_id',
-                    ':facebook_client_secret'
-                ], [
-                    config('constants.facebook.client_id'),
-                    config('constants.facebook.client_secret')
-                ],
+                $getAppAccessTokenEndpoint = str_replace(
+                    [
+                        ':facebook_client_id',
+                        ':facebook_client_secret'
+                    ],
+                    [
+                        config('constants.facebook.client_id'),
+                        config('constants.facebook.client_secret')
+                    ],
                     config('constants.facebook.app_access_token_endpoint')
                 );
                 $response = $client->get($getAppAccessTokenEndpoint);
@@ -78,13 +81,15 @@ class JwtMiddleware extends BaseMiddleware
                     $tokenParts  = explode(" ", $tokenString);
                     $token       = $tokenParts[1];
 
-                    $userAccessTokenEndpoint = str_replace([
-                        ':request_token',
-                        ':data_access_token'
-                    ], [
-                        $token,
-                        $data['access_token']
-                    ],
+                    $userAccessTokenEndpoint = str_replace(
+                        [
+                            ':request_token',
+                            ':data_access_token'
+                        ],
+                        [
+                            $token,
+                            $data['access_token']
+                        ],
                         config('constants.facebook.user_access_token_endpoint')
                     );
                     $tokenVerifyResponse = $client->get($userAccessTokenEndpoint);
@@ -98,12 +103,12 @@ class JwtMiddleware extends BaseMiddleware
                 }
             }
         } catch (Exception $e) {
-            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-                return response()->json(['status' => 'Token is Invalid'],401);
-            }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                return response()->json(['status' => 'Token is Expired'],401);
-            }else{
-                return response()->json(['status' => 'Authorization Token not found'],401);
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                return response()->json(['status' => 'Token is Invalid'], 401);
+            } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json(['status' => 'Token is Expired'], 401);
+            } else {
+                return response()->json(['status' => 'Authorization Token not found'], 401);
             }
         }
         return $next($request);

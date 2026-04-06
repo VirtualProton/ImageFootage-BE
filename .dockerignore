@@ -1,0 +1,15 @@
+node_modules
+vendor
+storage/logs
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+.env
+.git
+.gitignore
+.idea
+.vscode
+npm-debug.log*
+yarn.lock
+Dockerfile
+docker-compose.yml

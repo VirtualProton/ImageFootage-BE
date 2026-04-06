@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../../bower_components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+             url('../../bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .form-horizontal .form-group {
     width: 100%;
     margin-bottom: 10px;
@@ -63,23 +72,28 @@
 .form-group .ps-wrap h5 input {
     padding: 3px 60px;
 }
+.user-name-dec .reset-pass {
+    display: flex;
+    align-items: center;
+}
 
-.form-group .ps-wrap .reset-pass button {
+.form-group .reset-pass button {
     padding: 6px 30px;
-    margin-left: 25px;
+    /* margin-left: 25px; */
     background: #00c0ef;
     height: 45px;
     border: none;
     border-radius: 5px;
     color: #fff;
     font-size: 16px;
+    white-space: nowrap;
 }
 
-.form-group .ps-wrap .reset-pass button:hover {
+.form-group .reset-pass button:hover {
     background-color: #00acd6;
 }
 
-.form-group .ps-wrap .reset-pass input {
+.form-group .reset-pass input {
     width: 24%;
 }
 
@@ -118,6 +132,7 @@
     display: flex;
     gap: 25px;
     margin-top: 20px;
+    align-items: center;
 }
 
 .user-name-dec h5:last-child,
