@@ -32,6 +32,11 @@ class UpdateFootageResolutionFilterValues extends Migration
                 ->where('filter_id', $resolutionFilter->id)
                 ->where('value', '720p')
                 ->update(['value' => '720']);
+
+            DB::table('imagefootage_filters_options')
+                ->where('filter_id', $resolutionFilter->id)
+                ->where('value', '4k')
+                ->update(['value' => '4K']);
         }
     }
 
@@ -60,6 +65,12 @@ class UpdateFootageResolutionFilterValues extends Migration
                 ->where('filter_id', $resolutionFilter->id)
                 ->where('value', '720')
                 ->update(['value' => '720p']);
+
+            // Revert 4K back to 4k
+            DB::table('imagefootage_filters_options')
+                ->where('filter_id', $resolutionFilter->id)
+                ->where('value', '4K')
+                ->update(['value' => '4k']);
         }
     }
 }
