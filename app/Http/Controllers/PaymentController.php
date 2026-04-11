@@ -135,6 +135,7 @@ class PaymentController extends Controller
         $orders->created_at = date('Y-m-d H:i:s');
         $orders->save();
         $order_id = $orders->id;
+        $currency = $request['currency'] ?? 'INR';
 
         if (count($userData) > 0) {
             foreach ($userData[0]['cart'] as $eachCart) {
@@ -201,12 +202,17 @@ class PaymentController extends Controller
             // Adjust amount if discount applied
             // $allFields['discountValue'] = $allFields['discountValue'] ?? 0;
             // Adjust amount if discount applied
-            $displayCurrency = 'INR';
+            $displayCurrency = $currency;
+            if ($currency == 'INR') {
+                $totalAmount = ($allFields['cartval'][0] + $final_tax) * 100; // Amount in paise
+            } else {
+                $totalAmount = ($allFields['cartval'][0] + $final_tax); // Amount in currency unit
+            }
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $orderData = [
                 'receipt'         => $transactionId,
-                'amount'          => ($allFields['cartval'][0] + $final_tax) * 100, // 2000 rupees in paise
-                'currency'        => 'INR',
+                'amount'          => $totalAmount, // 2000 rupees in paise
+                'currency'        => $currency,
                 'payment_capture' => 1 // auto capture
             ];
 

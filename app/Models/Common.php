@@ -400,6 +400,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+        $currency = $request_data['currency'] ?? 'INR';
 
         $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
         $dataForEmail[0]['music_image'] = 'images/music-img.png';
@@ -429,7 +430,7 @@ class Common extends Model
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $paymentLinkData = [
                 'amount' => ($dataForEmail[0]['total'] + $dataForEmail[0]['tax']) * 100, // Amount in paise
-                'currency' => 'INR',
+                'currency' => $currency,
                 'description' => 'Invoice Payment for ' . $dataForEmail[0]['invoice_name'],
                 'reference_id' => $dataForEmail[0]['invoice_name'],
                 'customer' => [
