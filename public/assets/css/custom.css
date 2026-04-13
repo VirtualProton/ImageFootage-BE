@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../../bower_components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+             url('../../bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .form-horizontal .form-group {
     width: 100%;
     margin-bottom: 10px;

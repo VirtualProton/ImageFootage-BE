@@ -158,8 +158,24 @@ class InvoiceController extends Controller
     public function create_invoice(Request $request)
     {
         $data = $request->all();
+        if (empty($data['quotation_id']) || empty($data['user_id']) || empty($data['payment_method'])) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Missing required fields: quotation_id, user_id or payment_method.'
+                ]
+            ], 422);
+        }
         // Update user address
         $user = User::where('id', $data['user_id'])->first();
+        if (!$user) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'User not found for invoice conversion.'
+                ]
+            ], 404);
+        }
         if (!empty($data['country'])) {
             $user->country = $data['country'] ?? $user->country;
         }
@@ -179,18 +195,50 @@ class InvoiceController extends Controller
             $user->postal_code = $data['postal_code'] ?? $user->postal_code;
         }
         $user->save();
-        if (!empty($data['quotation_id'])) {
-            $po = isset($data['po']) ? $data['po'] : '';
-            $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
-            return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
+        $po = isset($data['po']) ? $data['po'] : '';
+        $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
+
+        $invoiceRow = Invoice::select('invoice_type', 'package_id')->where('id', $data['quotation_id'])->first();
+        if (!$invoiceRow) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Quotation not found for invoice conversion.'
+                ]
+            ], 404);
         }
+
+        // Subscription/Download quotations do not have item rows in imagefootage_performa_invoice_items.
+        // They must be processed through the subscription invoice flow.
+        if (in_array((int) $invoiceRow->invoice_type, [1, 2], true) || !empty($invoiceRow->package_id)) {
+            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
+        }
+
+        return $this->Common->create_invoice($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
+    
     }
 
     public function create_invoice_subcription(Request $request)
     {
         $data = $request->all();
+        if (empty($data['quotation_id']) || empty($data['user_id']) || empty($data['payment_method'])) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Missing required fields: quotation_id, user_id or payment_method.'
+                ]
+            ], 422);
+        }
         // Update user address
         $user = User::where('id', $data['user_id'])->first();
+        if (!$user) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'User not found for invoice conversion.'
+                ]
+            ], 404);
+        }
         if (!empty($data['country'])) {
             $user->country = $data['country'] ?? $user->country;
         }
@@ -210,11 +258,9 @@ class InvoiceController extends Controller
             $user->postal_code = $data['postal_code'] ?? $user->postal_code;
         }
         $user->save();
-        if (!empty($data['quotation_id'])) {
-            $po = isset($data['po']) ? $data['po'] : '';
-            $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
-            return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
-        }
+        $po = isset($data['po']) ? $data['po'] : '';
+        $po_date = isset($data['po_date']) ? $data['po_date'] : date('Y-m-d');
+        return $this->Common->create_invoice_subscription($data['quotation_id'], $data['user_id'], $po, $po_date, $data['payment_method'], $data);
     }
 
     public function change_invoice_status(Request $request)

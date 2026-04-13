@@ -130,7 +130,7 @@
 
 <script>
   // Status mapper - converts database values to display values
-  const statusMapper = {
+  var statusMapper = {
     'open': 'Open',
     'Open': 'Open',
     'in_progress': 'In Progress',
@@ -141,7 +141,7 @@
   };
 
   // Reverse mapper - converts display values to database values
-  const reverseStatusMapper = {
+  var reverseStatusMapper = {
     'Open': 'open',
     'In Progress': 'in_progress',
     'Closed': 'closed'

@@ -64,6 +64,7 @@ $(function () {
     RU: 3000 // Russia
   };
   // World map by jvectormap
+    if ($('#world-map').length && $.fn.vectorMap) {
   $('#world-map').vectorMap({
     map              : 'world_mill_en',
     backgroundColor  : 'transparent',
@@ -86,10 +87,12 @@ $(function () {
       ]
     },
     onRegionLabelShow: function (e, el, code) {
-      if (typeof visitorsData[code] != 'undefined')
+      if (typeof visitorsData[code] != 'undefined') {
         el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
+      }
     }
   });
+}
 
   // Sparkline charts
   var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
@@ -127,6 +130,11 @@ $(function () {
 
   /* Morris.js Charts */
   // Sales chart
+  var area = null;
+  var line = null;
+  var donut = null;
+    if (typeof Morris !== 'undefined') {
+    if ($('#revenue-chart').length) {
   var area = new Morris.Area({
     element   : 'revenue-chart',
     resize    : true,
@@ -148,6 +156,9 @@ $(function () {
     lineColors: ['#a0d0e0', '#3c8dbc'],
     hideHover : 'auto'
   });
+  }
+
+  if ($('#line-chart').length) {
   var line = new Morris.Line({
     element          : 'line-chart',
     resize           : true,
@@ -177,7 +188,9 @@ $(function () {
     gridTextFamily   : 'Open Sans',
     gridTextSize     : 10
   });
+ }
 
+    if ($('#sales-chart').length) {
   // Donut Chart
   var donut = new Morris.Donut({
     element  : 'sales-chart',
@@ -190,12 +203,20 @@ $(function () {
     ],
     hideHover: 'auto'
   });
+      }
+  }
 
   // Fix for charts under tabs
   $('.box ul.nav a').on('shown.bs.tab', function () {
-    area.redraw();
-    donut.redraw();
-    line.redraw();
+    if (area && typeof area.redraw === 'function') {
+      area.redraw();
+    }
+    if (donut && typeof donut.redraw === 'function') {
+      donut.redraw();
+    }
+    if (line && typeof line.redraw === 'function') {
+      line.redraw();
+    }
   });
 
   /* The todo list plugin */

@@ -111,12 +111,12 @@
 												</div>
 											</div>
 											<div class="form-group" ng-show="product.type=='Image'">
-												<span ng-show="product.image"><img src="<%product.image%>" width="150" height="150" /></span>
+												<span ng-show="product.image"><img ng-src="<%product.image%>" width="150" height="150" /></span>
 												<span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
 											</div>
 											<div class="form-group" ng-show="product.type =='Footage'">
 												<span ng-show="product.image">
-													<video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" poster="<%product.image%>">
+													<video class="for_mobile" controls="" width="300px" controlslist="nodownload" onmouseout="this.load()" onmouseover="this.play()" ng-attr-poster="<%product.image%>">
 														<source type="video/mp4" src="<%product.footage%>">
 														Your browser does not support the video tag.
 													</video>

@@ -1925,27 +1925,30 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.send_invoice = function (quotation_id, user_id) {
+        if (!quotation_id) {
+            alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
+            return;
+        }
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNo").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
+         var gstNo = ($("#gstNo").val() || ($scope.quotationObj && $scope.quotationObj.gst) || "").toString().trim();
+        var panNo = ($("#panNo").val() || ($scope.quotationObj && $scope.quotationObj.pan) || "").toString().trim();
+        var phoneNo = ($("#phone").val() || ($scope.quotationObj && $scope.quotationObj.mobile) || "").toString().trim();
+        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
+        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
+        var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
 
-        if (!$("#gstNo").val()) {
-            alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNo").val())) {
+        if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNo").val()) {
-            alert("Please add pan no.");
-        } else if (!regex.test($("#panNo").val())) {
+        } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNo").val()) {
+        } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phone").val()) {
-            alert("Please add phone no .");
-        } else if (!regmob.test($("#phone").val())) {
+        } else if (phoneNo && !regmob.test(phoneNo)) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$("#payment_method").val()) {
+        } else if (!paymentMethod) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -1957,11 +1960,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         quotation_id: quotation_id,
                         user_id: user_id,
                         po: $('#po').val() ?? "",
-                        po_date: $('#po_date').val(),
-                        payment_method: $("#payment_method").val(),
-                        gst: $("#gstNo").val(),
-                        pan: $("#panNo").val(),
-                        phone: $("#phone").val(),
+                        po_date: poDate,
+                        payment_method: paymentMethod,
+                        gst: gstNo,
+                        pan: panNo,
+                        phone: phoneNo,
                         country: $("#country_invoice").val() ?? "",
                         state: $("#state_invoice").val() ?? "",
                         city: $("#city_invoice").val() ?? "",
@@ -1973,10 +1976,22 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        window.location = api_path + "users/invoices/" + user_id;
+                        var resp = result && result.data ? result.data.resp : null;
+                        var mailMeta = (resp && resp.mail_to) ? (" Recipient: " + resp.mail_to) : "";
+                        var traceMeta = (resp && resp.mail_message_id) ? (" Message ID: " + resp.mail_message_id) : "";
+                        if (resp && resp.statuscode === "1") {
+                            alert((resp.statusdesc || "Invoice sent successfully.") + mailMeta + traceMeta);
+                            window.location = api_path + "users/invoices/" + user_id;
+                        } else {
+                            alert(((resp && resp.statusdesc) || "Invoice submission completed but email was not sent.") + mailMeta + traceMeta);
+                        }
                     },
                     function (error) {
                         $("#loading").hide();
+                        var errorMessage = (error && error.data && (error.data.message || error.data.error))
+                            ? (error.data.message || error.data.error)
+                            : "Unable to submit invoice. Please check server logs and try again.";
+                        alert(errorMessage);
                     }
                 );
             }
@@ -1984,27 +1999,31 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     };
 
     $scope.send_invoice_cus = function (quotation_id, user_id) {
+         if (!quotation_id) {
+            alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
+            return;
+        }
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
-        var panno = $("#gstNocus").val().substr(2, 10);
         var regmob = /^[0-9]{1,10}$/;
 
-        if (!$("#gstNocus").val()) {
-            alert("Please add gst no.");
-        } else if (!reggst.test($("#gstNocus").val())) {
+        var gstNo = ($("#gstNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.gst) || "").toString().trim();
+        var panNo = ($("#panNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.pan) || "").toString().trim();
+        var phoneNo = ($("#phonecus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.mobile) || "").toString().trim();
+        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
+        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
+        var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
+
+        if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
-        } else if (!$("#panNocus").val()) {
-            alert("Please add pan no.");
-        } else if (!regex.test($("#panNocus").val())) {
+        } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
-        } else if (panno != $("#panNocus").val()) {
+        } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
-        } else if (!$("#phonecus").val()) {
-            alert("Please add phone no .");
-        } else if (!regmob.test($("#phonecus").val())) {
+        } else if (phoneNo && !regmob.test(phoneNo)) {
             alert("Please enter 10 digit mobile no .");
-        } else if (!$("#payment_method").val()) {
+        } else if (!paymentMethod) {
             alert("Please select payment method.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
@@ -2016,11 +2035,11 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         quotation_id: quotation_id,
                         user_id: user_id,
                         po: $('#poCustom').val() ?? "",
-                        po_date: $scope.poDateCustom,
-                        payment_method: $("#payment_method").val(),
-                        gst: $("#gstNocus").val(),
-                        pan: $("#panNocus").val(),
-                        phone: $("#phonecus").val(),
+                        po_date: poDate,
+                        payment_method: paymentMethod,
+                        gst: gstNo,
+                        pan: panNo,
+                        phone: phoneNo,
                         expiry_due_date: $scope.expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
                         state: $("#state_invoice_cus").val() ?? "",
@@ -2033,10 +2052,22 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                 }).then(
                     function (result) {
                         $("#loading").hide();
-                        window.location = api_path + "users/invoices/" + user_id;
+                        var resp = result && result.data ? result.data.resp : null;
+                        var mailMeta = (resp && resp.mail_to) ? (" Recipient: " + resp.mail_to) : "";
+                        var traceMeta = (resp && resp.mail_message_id) ? (" Message ID: " + resp.mail_message_id) : "";
+                        if (resp && resp.statuscode === "1") {
+                            alert((resp.statusdesc || "Invoice sent successfully.") + mailMeta + traceMeta);
+                            window.location = api_path + "users/invoices/" + user_id;
+                        } else {
+                            alert(((resp && resp.statusdesc) || "Invoice submission completed but email was not sent.") + mailMeta + traceMeta);
+                        }
                     },
                     function (error) {
                         $("#loading").hide();
+                         var errorMessage = (error && error.data && (error.data.message || error.data.error))
+                            ? (error.data.message || error.data.error)
+                            : "Unable to submit invoice. Please check server logs and try again.";
+                        alert(errorMessage);
                     }
                 );
             }
