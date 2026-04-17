@@ -34,6 +34,7 @@
               <th>Package-Plan Type</th>
               <th>Name</th>
               <th>Price </th>
+              <th>Currency</th>
               <th>Description</th>
               <th>Products Count</th>
               <th>Type</th>
@@ -55,6 +56,7 @@
                 </td>
                 <td>{{ $packages['package_name'] }} </td>
                 <td>{{ $packages['package_price'] }} </td>
+                <td>{{ $packages['currency'] }} </td>
                 <td>{{ $packages['package_description'] }} </td>
                 <td>{{ $packages['package_products_count'] }} </td>
                 <td>{{ $packages['package_type'] }} </td>

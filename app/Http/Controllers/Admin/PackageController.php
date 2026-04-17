@@ -60,6 +60,7 @@ class PackageController extends Controller
 		$package->footage_tier = $tier;
 		$package->display_for = $request->display_for;
 		$package->package_status = $request->package_status;
+		$package->currency = $request->currency;
 		$result = $package->save();
 		if ($result) {
 			return back()->with('success', 'Package created successful');
@@ -145,7 +146,8 @@ class PackageController extends Controller
 			'updated_at' => date('Y-m-d H:i:s'),
 			'footage_tier' => $tier,
 			'display_for' => $request->display_for,
-			'package_status' => $request->package_status
+			'package_status' => $request->package_status,
+			'currency' => $request->currency
 		);
 		$result = Package::where('package_id', $request->package_id)->update($update_array);
 		if ($result) {
@@ -198,7 +200,8 @@ class PackageController extends Controller
 				}
 			}
 		}
-		$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier')
+		if ($data['quotation_type'] == 'download') {
+					$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier', 'currency')
 			->where(function ($query) {
 				$query->where('display_for', 2)
 					->orWhere('display_for', 3);
@@ -206,6 +209,16 @@ class PackageController extends Controller
 			->where('package_status', '=', 'Active')
 			->get()
 			->toArray();
+		} else {
+			$all_package_list = $package->select('package_id', 'package_name', 'package_description', 'package_price', 'package_expiry', 'footage_tier')
+			->where(function ($query) {
+				$query->where('display_for', 2)
+					->orWhere('display_for', 3);
+			})
+			->where('package_status', '=', 'Active')
+			->get()
+			->toArray();
+		}
 		if (count($all_package_list) > 0) {
 			echo json_encode(["status" => "success", 'data' => $all_package_list]);
 		} else {

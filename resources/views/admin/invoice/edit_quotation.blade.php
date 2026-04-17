@@ -49,6 +49,10 @@
 													<input type="radio" name="prod_type" ng-model="prod_type" ng-value="'Footage'" ng-click="edit_prod_type_set('Footage')">
 													Footage
 												</label>
+												 <label class="margin-right" ng-if="quotation_type !='3'">
+                                      				 <input type="radio" name="prod_type" ng-model="prod_type" ng-value="'Music'" ng-click="edit_prod_type_set('Music')">
+                                       					Music
+                                    			</label>
 											</div>
 											<div class="form-group" ng-if="quotation_type == '1' && prod_type == 'Image'">
 												<label class="margin-right">
@@ -70,7 +74,7 @@
 											</div>
 											<div class="form-group" ng-show="quotation_type !='3'">
 												<label>
-													<button type="button" class="btn btn-danger" ng-click="getPlans()">Get Plan</button>
+													<button type="button" class="btn btn-danger" ng-click="getPlans()">Get Package</button>
 												</label>
 											</div>
 										</div>
@@ -201,6 +205,17 @@
 													</div>
 												</div>
 											</div>
+											<div ng-if="product.type">
+    											<div>
+        											<div class="form-group">
+            											<label class="">Currency</label>
+            											<select class="form-control" ng-model="product.currency" ng-change="getTheTotal();">
+                											<option value="INR">INR</option>
+                											<option value="USD">USD</option>
+            											</select>
+        											</div>
+    											</div>
+											</div>
 											<label>
 												<button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
 											</label>&nbsp;
@@ -260,30 +275,30 @@
 									<div class="col-lg-12 col-md-12 col-xs-12">
 										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
 											<div class="form-group" ng-if="plan_type == 'monthly'">
-												<label for="sub_total">Plan Name</label>
+												<label for="sub_total">Package Name</label>
 												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-													<option ng-value="">--Select a plan--</option>
+													<option ng-value="">--Select a package--</option>
 													<option ng-value="<%plan.package_id%>" ng-selected="selected_sub_plan == plan.package_id" ng-repeat="plan in plansData"><%plan.package_description%></option>
 												</select>
 											</div>
 											<div class="form-group" ng-if="plan_type == 'quarterly'">
-												<label for="sub_total">Plan Name</label>
+												<label for="sub_total">Package Name</label>
 												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-													<option ng-value="">--Select a plan--</option>
+													<option ng-value="">--Select a package--</option>
 													<option ng-value="<%plan.package_id%>" ng-selected="selected_sub_plan == plan.package_id" ng-repeat="plan in plansData"><%plan.package_description%></option>
 												</select>
 											</div>
 											<div class="form-group" ng-if="plan_type == 'half_yearly'">
-												<label for="sub_total">Plan Name</label>
+												<label for="sub_total">Package Name</label>
 												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-													<option ng-value="">--Select a plan--</option>
+													<option ng-value="">--Select a package--</option>
 													<option ng-value="<%plan.package_id%>" ng-selected="selected_sub_plan == plan.package_id" ng-repeat="plan in plansData"><%plan.package_description%></option>
 												</select>
 											</div>
 											<div class="form-group" ng-if="plan_type == 'annual'">
-												<label for="sub_total">Plan Name</label>
+												<label for="sub_total">Package Name</label>
 												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'subscription')">
-													<option ng-value="">--Select a plan--</option>
+													<option ng-value="">--Select a package--</option>
 													<option ng-value="<%plan.package_id%>" ng-selected="selected_sub_plan == plan.package_id" ng-repeat="plan in plansData"><%plan.package_description%> For 1 Year</option>
 												</select>
 											</div>
@@ -345,9 +360,9 @@
 									<div class="col-lg-12 col-md-12 col-xs-12">
 										<div class="col-lg-6 col-md-4 col-xs-4 repeated-dv">
 											<div class="form-group">
-												<label for="sub_total">Plan Name</label>
+												<label for="sub_total">Package Name</label>
 												<select id="myDropdown" class="form-control" ng-model="selected_sub_plan" ng-change="selectPlanfromlist(selected_sub_plan, 'download')">
-													<option ng-value="">--Select a plan--</option>
+													<option ng-value="">--Select a package--</option>
 													<option ng-value="<%plan.package_id%>" ng-selected="selected_sub_plan == plan.package_id" ng-repeat="plan in plansData"><%plan.package_description%> Within 1 Year </option>
 												</select>
 											</div>
@@ -393,6 +408,7 @@
 											</div>
 											<button class="btn btn-primary" type="button" id="btn-promocode-dis">Apply Promo Code</button>
 										</div>
+
 										<div class="col-lg-6 col-md-6 col-xs-6">
 											<div class="form-group">
 												<input type="hidden" class="form-control" id="download_email_id" name="download_email_id" value="{{$userDetail->email}}">
@@ -403,6 +419,17 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <div class="col-lg-6 col-md-6 col-xs-6">
+                                            <div class="form-group">
+                                                <label for="currency">Currency</label>
+                                                <input type="text" class="form-control" ng-model="selected_currency" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 							</div>
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-xs-12" align="center">

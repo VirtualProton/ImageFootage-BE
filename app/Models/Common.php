@@ -132,7 +132,7 @@ class Common extends Model
         return rand(pow(10, $digits - 1), pow(10, $digits) - 1);
     }
 
-    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact)
+    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR')
     {
         try {
             $amountInPaise = (int) round(((float) $amountInRupees) * 100);
@@ -143,7 +143,7 @@ class Common extends Model
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $payload = [
                 'amount' => $amountInPaise,
-                'currency' => 'INR',
+                'currency' => $currency,
                 'description' => $description,
                 'reference_id' => (string) $referenceId,
                 'customer' => [
@@ -209,6 +209,7 @@ class Common extends Model
             'created_by'      => Auth::guard('admins')->user()->id,
             'promo_code_id'   => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             'cancelled_on'    => $cancelled_on,
+            'currency'        => $data['products']['product'][0]['currency'] ?? 'INR',
         );
         DB::table('imagefootage_performa_invoices')->insert($insert);
         $id = DB::getPdo()->lastInsertId();
@@ -269,7 +270,7 @@ class Common extends Model
             $transactionRequest->setPassword($this->password);
             $transactionRequest->setProductId($this->atomprodId);
             $transactionRequest->setAmount($dataForEmail[0]['total']);
-            $transactionRequest->setTransactionCurrency("INR");
+            $transactionRequest->setTransactionCurrency($data['products']['product'][0]['currency'] ?? 'INR');
             $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
             $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
@@ -286,13 +287,18 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
+            $currency = 'INR'; // default value
+            if (isset($data['products']['product'][0]['currency']) && !empty($data['products']['product'][0]['currency'])) {
+                $currency = $data['products']['product'][0]['currency'];
+                }
             $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
                 $dataForEmail[0]['total'] ?? 0,
                 'Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
                 'QTN-' . ($dataForEmail[0]['invoice_name'] ?? ''),
                 trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-                $dataForEmail[0]['mobile'] ?? ''
+                $dataForEmail[0]['mobile'] ?? '',
+                $currency
             ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
             // dd($dataForEmail);
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -671,7 +677,7 @@ class Common extends Model
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
         $transactionRequest->setAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
-        $transactionRequest->setTransactionCurrency("INR");
+        $transactionRequest->setTransactionCurrency($request_data['currency'] ?? 'INR');
         $transactionRequest->setTransactionAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
 
         $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
@@ -723,13 +729,15 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $dataForEmail[0]['first_name'];
+        $currency = $request_data['currency'] ?? 'INR'; // default value
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
-            $dataForEmail[0]['mobile'] ?? ''
+            $dataForEmail[0]['mobile'] ?? '',
+            $currency
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
         if ($payment_method == 'online') {
 
@@ -1122,13 +1130,15 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data['name']    = $dataForEmail[0]['first_name'];
+        $currency = 'INR'; // default value
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
-            $dataForEmail[0]['mobile'] ?? ''
+            $dataForEmail[0]['mobile'] ?? '',
+            $currency
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
         $isDownloadInvoice = (int) ($dataForEmail[0]['invoice_type'] ?? 0) === 2;
         $customTemplateHtml = '';
@@ -1496,13 +1506,15 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+        $currency = 'INR'; // default value
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Subscription Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'QTN-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-            $dataForEmail[0]['mobile'] ?? ''
+            $dataForEmail[0]['mobile'] ?? '',
+            $currency
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
 
         $data["subject"]                  = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -1702,6 +1714,7 @@ class Common extends Model
             'created_by'      => Auth::guard('admins')->user()->id,
             'flag'            => $data['flag'] ?? '',
             'cancelled_on'    => $cancelled_on,
+            'currency'         => $data['plan_id']['currency'] ?? 'INR',
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);
@@ -1738,7 +1751,7 @@ class Common extends Model
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
         $transactionRequest->setAmount($dataForEmail[0]['total']);
-        $transactionRequest->setTransactionCurrency("INR");
+        $transactionRequest->setTransactionCurrency($data['plan_id']['currency'] ?? 'INR');
         $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
         $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
@@ -1755,13 +1768,15 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+        $currency = !empty($data['plan_id']['currency']) ? $data['plan_id']['currency'] : 'INR';
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Download Pack Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'QTN-DP-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-            $dataForEmail[0]['mobile'] ?? ''
+            $dataForEmail[0]['mobile'] ?? '',
+            $currency
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
 
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);

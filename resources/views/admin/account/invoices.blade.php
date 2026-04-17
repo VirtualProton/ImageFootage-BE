@@ -977,6 +977,12 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label for="" class="col-md-6">Currency :</label>
+                  <div class="col-md-6">
+                    <p id="fallback-sub-currency"><% quotationObj.currency %></p>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label for="" class="col-md-6">Agent :</label>
                   <div class="col-md-6">
                     <p>{{Auth::guard('admins')->user()->name}}</p>
@@ -1205,6 +1211,12 @@
                   <label for="" class="col-md-6">Total :</label>
                   <div class="col-md-6">
                     <p id="fallback-cus-total"><% cusQuotationObj.total %></p>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-md-6">Currency :</label>
+                  <div class="col-md-6">
+                    <p id="fallback-cus-currency"><% cusQuotationObj.currency %></p>
                   </div>
                 </div>
                 <div class="form-group row">

@@ -171,6 +171,13 @@
                                        </div>
                                     </div>
                                  </div>
+                                 <div class="form-group">
+                                    <label class="">Currency</label>
+                                    <select class="form-control" ng-model="product.currency" ng-init="product.currency='INR'">
+                                       <option value="INR" selected="">INR</option>
+                                       <option value="USD">USD</option>
+                                    </select>
+                                 </div>
                                  <label>
                                     <button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
                                  </label>&nbsp;

@@ -81,6 +81,17 @@
                 @endif
               </div>
               <div class="form-group">
+                <label for="currency">Currency</label>
+                <select class="form-control" name="currency" id="currency">
+                <option value="">Select Currency</option>
+                <option value="INR" {{ old('currency', 'INR') == 'INR' ? 'selected' : '' }}>INR</option>
+                <option value="USD" {{ old('currency', 'INR') == 'USD' ? 'selected' : '' }}>USD</option>
+                </select>
+                  @if ($errors->has('currency'))
+                  <div class="has_error" style="color:red;">{{ $errors->first('currency') }}</div>
+                  @endif
+              </div>
+              <div class="form-group">
                 <label for="exampleInputPassword1">Package Price</label>
                 <input type="text" class="form-control" name="package_price" id="package_price" placeholder="Package Price">
               </div>

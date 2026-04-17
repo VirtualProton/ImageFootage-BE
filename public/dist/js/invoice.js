@@ -360,6 +360,7 @@ app.controller(
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
                 $scope.total_download = selectedPlanData["package_price"];
+                $scope.selected_currency = selectedPlanData["currency"];
             } else {
                 $scope.subscriptionprice = selectedPlanData["package_price"];
                 $scope.subsc_total = selectedPlanData["package_price"];
@@ -1144,6 +1145,7 @@ app.controller(
                     $scope.taxdownload = response.tax;
                     $scope.total_download = response.total;
                     $scope.GSTS = $scope.taxdownload > 0;
+                    $scope.selected_currency = response.currency;  // Add this line
                 } else {
                     // custom
                     $scope.expiry_time = response.expiry_invoices;
@@ -1166,7 +1168,8 @@ app.controller(
                         footage: "",
                         type: value.type,
                         licence_type: value.licence_type,
-                        extra_details:value.extra_details
+                        extra_details:response.extra_details,
+                        currency: response.currency  // Add this line
                     };
                     $scope.quotation.product.push(obj);
                     if (value.product_type == 'right_managed') {
@@ -1264,6 +1267,7 @@ app.controller(
                 if (type == "download") {
                     $scope.downloadprice = plan[0].package_price;
                     $scope.total_download = plan[0].package_price;
+                    $scope.selected_currency = plan[0].currency;
                 } else {
                     $scope.subscriptionprice = plan[0].package_price;
                     $scope.subsc_total = plan[0].package_price;
@@ -2659,6 +2663,7 @@ app.controller(
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
                 $scope.total_download = selectedPlanData["package_price"];
+                $scope.selected_currency = selectedPlanData["currency"];
             } else {
                 $scope.subscriptionprice = selectedPlanData["package_price"];
                 $scope.subsc_total = selectedPlanData["package_price"];

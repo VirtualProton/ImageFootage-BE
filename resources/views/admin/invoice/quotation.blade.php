@@ -173,6 +173,13 @@
                                        </div>
                                     </div>
                                  </div>
+                                 <div class="form-group">
+                                    <label class="">Currency</label>
+                                    <select class="form-control" ng-model="product.currency" ng-init="product.currency='INR'">
+                                       <option value="INR" selected="">INR</option>
+                                       <option value="USD">USD</option>
+                                    </select>
+                                 </div>
                                  <label>
                                     <button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
                                  </label>&nbsp;
@@ -480,7 +487,17 @@
                                  </div>
                                  <div class="col-lg-4 col-md-6 col-xs-4"></div> -->
                               </div>
-                           </div>
+                                 <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                       <div class="col-lg-6 col-md-6 col-xs-6">
+                                          <div class="form-group">
+                                             <label for="currency">Currency</label>
+                                             <input type="text" class="form-control" ng-model="selected_currency" readonly="">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
                         </div>
                      </div>
                      <div class="">
