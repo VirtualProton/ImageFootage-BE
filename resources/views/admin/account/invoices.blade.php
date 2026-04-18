@@ -1794,6 +1794,7 @@
       $('#fallback-sub-package').text(quotation.package_description || '');
       $('#fallback-sub-tax').text(toMoney(quotation.tax));
       $('#fallback-sub-total').text(toMoney(quotation.total));
+      $('#fallback-sub-currency').text(quotation.currency || '');
     }
 
     function fillCustom(quotation) {
@@ -1801,7 +1802,7 @@
       $('#fallback-cus-discount').text(toMoney(quotation.discount));
       $('#fallback-cus-tax').text(toMoney(quotation.tax));
       $('#fallback-cus-total').text(toMoney(quotation.total));
-
+      $('#fallback-cus-currency').text(quotation.currency || '');
       var items = Array.isArray(quotation.items) ? quotation.items : [];
       var tableRows = '';
       items.forEach(function(item) {
