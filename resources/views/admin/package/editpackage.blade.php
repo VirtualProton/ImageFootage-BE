@@ -79,6 +79,17 @@
                 <div class="has_error" style="color:red;">{{ $errors->first('package_name') }}</div>
                 @endif
               </div>
+                <div class="form-group">
+                  <label for="currency">Currency</label>
+                  <select class="form-control" name="currency" id="currency">
+                  <option value="">Select Currency</option>
+                      <option value="INR" @if($package[0]['currency']=='INR' ) selected="selected" @endif>INR</option>
+                      <option value="USD" @if($package[0]['currency']=='USD' ) selected="selected" @endif>USD</option>
+                  </select>
+                  @if ($errors->has('currency'))
+                <div class="has_error" style="color:red;">{{ $errors->first('currency') }}</div>
+                  @endif
+              </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Package Price</label>
                 <input type="text" class="form-control" name="package_price" id="package_price" placeholder="Package Price" value="{{ $package[0]['package_price'] }}">
