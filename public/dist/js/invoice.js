@@ -1933,7 +1933,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
             return;
         }
-        var regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]$/;
+        var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
@@ -2008,7 +2008,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
             return;
         }
-        var regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]$/;
+        var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         var reggst =
             /^([0-9]{2}[a-zA-Z]{4}([a-zA-Z]{1}|[0-9]{1})[0-9]{4}[a-zA-Z]{1}([a-zA-Z]|[0-9]){3}){0,15}$/;
