@@ -210,7 +210,7 @@
                         }  ?>
                         <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
                         <!-- <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p> -->
-                        <p>Cost: <span><strong><?php echo $quotation[0]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                        <p>Cost: <span><strong><?php echo $quotation[$i]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                      </div>
                   <?php
                }

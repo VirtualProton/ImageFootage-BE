@@ -1944,6 +1944,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
+        var currency = ($scope.quotationObj && $scope.quotationObj.currency);
 
         if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
@@ -1977,6 +1978,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address2: $("#address2_invoice").val() ?? "",
                         postal_code: $("#postal_code_invoice").val() ?? "",
                         expiry_due_date: $scope.expiry_due_date ?? "",
+                        currency: currency,
                     },
                 }).then(
                     function (result) {
@@ -2020,6 +2022,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
+        var currency = ($scope.cusQuotationObj && $scope.cusQuotationObj.currency);
 
         if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
@@ -2053,7 +2056,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address: $("#address_invoice_cus").val() ?? "",
                         address2: $("#address2_invoice_cus").val() ?? "",
                         postal_code: $("#postal_code_invoice_cus").val() ?? "",
-
+                        currency: currency,
                     },
                 }).then(
                     function (result) {
