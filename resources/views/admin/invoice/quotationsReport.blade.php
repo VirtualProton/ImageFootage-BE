@@ -41,7 +41,8 @@
                   <th>Client Name</th>
                   <th>Transaction Id</th>
                   <th>Quotation Date</th>
-                  <th>Amount (In INR)</th>
+                  <th>Amount</th>
+                  <Th>Currency</Th>
                   <th>Plan</th>
                   <th>Region</th>
                   <th>Account Manager</th>
@@ -68,6 +69,7 @@
                   </td>
                   <td>{{$quotation['created']}}</td>
                   <td>{{$quotation['total']}}</td>
+                  <td>{{$quotation['currency']}}</td>
                   <td>
                     @if($quotation['invoice_type']==3)
                     Custom

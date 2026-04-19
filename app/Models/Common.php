@@ -337,6 +337,7 @@ class Common extends Model
             $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
             $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
             $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
+            $dataForEmail[0]["currency"]      = $currency;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
             $fileName = $data["invoice"] . "_quotation.pdf";
@@ -730,6 +731,8 @@ class Common extends Model
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
         $dataForEmail[0]['po_detail'] = $po_date;
+        $currency = $request_data['currency'] ?? 'INR'; // default value
+        $dataForEmail[0]['currency'] = $currency;
 
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
@@ -748,7 +751,6 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $dataForEmail[0]['first_name'];
-        $currency = $request_data['currency'] ?? 'INR'; // default value
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -1529,7 +1531,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $currency = 'INR'; // default value
+        $currency = $dataForEmail[0]['currency'] ?? 'INR'; // default value
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Subscription Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -1553,6 +1555,7 @@ class Common extends Model
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
+        $dataForEmail[0]['currency']      = $currency;
 
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
@@ -1819,6 +1822,9 @@ class Common extends Model
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
+        $currency = $data['plan_id']['currency'] ?? 'INR';
+        $dataForEmail[0]['currency'] = $currency;
+
 
         $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"] . "download_quotation.pdf";

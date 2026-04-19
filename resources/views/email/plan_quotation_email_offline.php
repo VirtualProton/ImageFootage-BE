@@ -152,7 +152,7 @@
 
                     </div>
                     <div class="client-info-rightside">
-                        <p style="font-size: 11px;"><strong>Total (INR) <?php echo number_format($orders['total'], 2); ?></strong></p>
+                        <p style="font-size: 11px;"><strong>Total (<?php echo $orders['currency']; ?>) <?php echo number_format($orders['total'], 2); ?></strong></p>
                     </div>
                 </div>
                 <?php
@@ -166,7 +166,7 @@
                 ?>
 
                 <div class="price-div">
-                    <p style="font-size: 11px;font-size: 11px;">In words: <strong>Rupees &nbsp; <?php echo $amount_in_words . ' only' ?></strong></p>
+                    <p style="font-size: 11px;font-size: 11px;">In words: <strong><?php echo $orders['currency'] == 'USD' ? 'Dollars' : 'Rupees'; ?> &nbsp; <?php echo $amount_in_words . ' only' ?></strong></p>
                 </div>
 
                 <div class="licensing-terms" style="font-size: 11px;">
