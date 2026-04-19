@@ -306,7 +306,8 @@
                                 <th>Sl No</th>
                                 <th>Trans ID</th>
                                 <th>Quotation Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Status</th>
                                 <th>Cancelled By</th>
@@ -329,6 +330,7 @@
                                 </td>
                                 <td>{{$quotations->created}}</td>
                                 <td>{{$quotations->total}}</td>
+                                <td>{{$quotations->currency}}</td>
                                 <td>
                                   Download
                                 </td>
@@ -364,7 +366,8 @@
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
                                 <th>Invoice Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Payment Method</th>
                                 <th>Payment Status</th>
@@ -389,6 +392,7 @@
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
+                                <td>{{$invioces->currency}}</td>
                                 <td>{{$invioces->package_description}}</td>
                                 <td>{{$invioces->payment_method == 'chq'
                                         ? 'Terms Granted' :
@@ -458,7 +462,8 @@
                                 <th>Sl No</th>
                                 <th>Trans ID</th>
                                 <th>Quotation Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Status</th>
                                 <th>Cancelled By</th>
@@ -480,6 +485,7 @@
                                 </td>
                                 <td>{{$quotations->created}}</td>
                                 <td>{{$quotations->total}}</td>
+                                <td>{{$quotations->currency}}</td>
                                 <td>
                                   Custom
                                 </td>
@@ -515,7 +521,8 @@
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
                                 <th>Invoice Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Payment Method</th>
                                 <th>Payment Status</th>
@@ -540,6 +547,7 @@
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
+                                <td>{{$invioces->currency}}</td>
                                 <td>{{$invioces->package_description}}</td>
                                 <td>{{$invioces->payment_method == 'chq'
                                         ? 'Terms Granted' :
@@ -631,7 +639,8 @@
                                 <th>Sl No</th>
                                 <th>Trans ID</th>
                                 <th>Quotation Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Status</th>
                                 <th>Cancelled By</th>
@@ -653,6 +662,7 @@
                                 </td>
                                 <td>{{$quotations->created}}</td>
                                 <td>{{$quotations->total}}</td>
+                                <td>{{$quotations->currency}}</td>
                                 <td>
                                   Custom
                                 </td>
@@ -688,7 +698,8 @@
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
                                 <th>Invoice Date</th>
-                                <th>Amount (In INR)</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
                                 <th>Plan</th>
                                 <th>Payment Method</th>
                                 <th>Payment Status</th>
@@ -712,6 +723,7 @@
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
+                                <td>{{$invioces->currency}}</td>
                                 <td>{{$invioces->package_description}}</td>
                                 <td>{{$invioces->payment_method == 'chq'
                                         ? 'Terms Granted' :

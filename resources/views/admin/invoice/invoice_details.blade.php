@@ -184,7 +184,7 @@
                                 <div class="info-row">
                                     <span class="info-label">Total:</span>
                                     <span class="info-value amount-display">
-                                        {{ number_format($invoice->total ?? 0, 2) }}
+                                        {{ number_format($invoice->total ?? 0, 2) }} {{ $invoice->currency ?? 'INR' }}
                                     </span>
                                 </div>
                                 
