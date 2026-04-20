@@ -187,6 +187,15 @@
                     <div class="licensing-condition">
                         <h3 class="h3"><strong>FOR OTHER THAN THE MENTIONED USAGES PLEASE BUY EXTENDED LICENSE</strong></h3>
                     </div>
+                    <?php if (!empty($orders['payment_url'])) { ?>
+                    <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 18px 0 10px;">
+                        <tr>
+                            <td style="text-align: center;">
+                                <a href="<?php echo $orders['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Confirm Selection with Razorpay</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <?php } ?>
                 </div>
                 <div class="terms-of-payment licensing-terms" style="font-size: 11px;">
                     <h3 class="h4"><strong>Terms of Payment: </strong></h3>

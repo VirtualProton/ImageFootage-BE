@@ -309,6 +309,15 @@
                         Hyderabad
                         IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
                   </ol>
+                           <?php if (!empty($quotation[0]['payment_url'])) { ?>
+                           <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 18px 0 10px;">
+                              <tr>
+                                 <td style="text-align: center;">
+                                    <a href="<?php echo $quotation[0]['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Pay Invoice with Razorpay</a>
+                                 </td>
+                              </tr>
+                           </table>
+                           <?php } ?>
                   <ul>
                      <li>Goods once sold cannot be replaced or returned.</li>
                      <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</li>

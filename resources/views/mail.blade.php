@@ -5,6 +5,6 @@
 </head>
 <body>
     <p>Hello {{$name ?? ''}},</p>
-    <p>Please find attachment of quotation.</p>
+    <p>Please check your quotation in the attached PDF.</p>
 </body>
 </html>
