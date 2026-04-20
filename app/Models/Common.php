@@ -315,7 +315,7 @@ class Common extends Model
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
                 $dataForEmail[0]['mobile'] ?? '',
                 $currency
-            ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+            );
             $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
             // dd($dataForEmail);
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -699,7 +699,7 @@ class Common extends Model
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? '',
             $currency
-        ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        );
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         if ($payment_method == 'online') {
 
@@ -1043,7 +1043,7 @@ class Common extends Model
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? '',
             $currency
-        ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        );
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         $isDownloadInvoice = (int) ($dataForEmail[0]['invoice_type'] ?? 0) === 2;
         $customTemplateHtml = '';
@@ -1397,7 +1397,7 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
             $currency
-        ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        );
         $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $data["subject"]                  = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -1639,7 +1639,7 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
             $currency
-        ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        );
         $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
