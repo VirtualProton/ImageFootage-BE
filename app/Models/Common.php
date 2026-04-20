@@ -170,6 +170,12 @@ class Common extends Model
         }
     }
 
+    private function pdfImagePath($relativePath)
+    {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, (string) $relativePath), DIRECTORY_SEPARATOR));
+        return 'file:///' . str_replace('\\', '/', $absolutePath);
+    }
+
     private function buildAtomReturnUrl($path)
     {
         $configuredBase = env('ATOM_CALLBACK_BASE_URL') ?: config('app.url');
@@ -307,6 +313,7 @@ class Common extends Model
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
                 $dataForEmail[0]['mobile'] ?? ''
             ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+            $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
             // dd($dataForEmail);
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
             $data["email"]   = $data['email'];
@@ -315,14 +322,14 @@ class Common extends Model
             $amount_in_words =  $this->convert_number_to_words($dataForEmail[0]['total']);
             if ($data['flag'] == 0) {
                 // For other quotations use image footage logo
-                $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
             } else {
                 // For form2 quotation use other logo
-                $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
             }
-            $dataForEmail[0]['template_image'] = 'images/music-img.png';
-            $dataForEmail[0]['music_image'] = 'images/music-img.png';
-            $dataForEmail[0]['signature']     = 'images/signature.png';
+            $dataForEmail[0]['template_image'] = $this->pdfImagePath('images/music-img.png');
+            $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
+            $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
             $front_end_url_name               = config('app.front_end_url');
             $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
             $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
@@ -647,16 +654,16 @@ class Common extends Model
         $dataForEmail[0]['payment_url'] = $url;
         $invoicePayOnlineLink = $dataForEmail[0]['payment_url'] ?? '#';
 
-        $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
-        $dataForEmail[0]['music_image'] = 'images/music-img.png';
+        $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
         if ($dataForEmail[0]['flag'] == 0) {
             // For other quotations use image footage logo
-            $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
         } else {
             // For form2 quotation use other logo
-            $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
         }
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
@@ -688,6 +695,7 @@ class Common extends Model
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         if ($payment_method == 'online') {
 
             // Send payment link to customer via email
@@ -995,8 +1003,8 @@ class Common extends Model
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
 //test commit
-        $dataForEmail[0]['company_logo']                    = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']                       = 'images/signature.png';
+        $dataForEmail[0]['company_logo']                    = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']                       = $this->pdfImagePath('images/signature.png');
         $front_end_url_name                                 = config('app.front_end_url');
         $frontend_name                                      = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"]                   = $frontend_name[1] ?? '';
@@ -1029,6 +1037,7 @@ class Common extends Model
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         $isDownloadInvoice = (int) ($dataForEmail[0]['invoice_type'] ?? 0) === 2;
         $customTemplateHtml = '';
         if ($isDownloadInvoice) {
@@ -1380,6 +1389,7 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $data["subject"]                  = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"]                    = $data['email'];
@@ -1387,8 +1397,8 @@ class Common extends Model
         $data["name"]                     = $dataForEmail[0]['first_name'];
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
-        $dataForEmail[0]['company_logo']  = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Subscription Plan – Images – ' . $package_name . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
@@ -1618,6 +1628,7 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
@@ -1626,8 +1637,8 @@ class Common extends Model
         $data["email"]                    = $data['email'];
         $data["invoice"]                  = $dataForEmail[0]['invoice_name'];
         $data["name"]                     = $dataForEmail[0]['first_name'];
-        $dataForEmail[0]['company_logo']  = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
