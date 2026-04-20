@@ -698,7 +698,7 @@ class Common extends Model
             mkdir($pdfDirectory, 0777, true);
         }
         $pdf = PDF::setOptions([
-            'isRemoteEnabled' => false,
+            'isRemoteEnabled' => true,
             'isHtml5ParserEnabled' => true,
             'dpi' => 96,
             'defaultFont' => 'sans-serif'
@@ -859,6 +859,23 @@ class Common extends Model
             $customTemplateHtml = preg_replace('/<div>\s*<span class="lbl">[^<]*<\/span>\s*<span class="val">\s*(?:\[[^\]]+\]|)\s*<\/span>\s*<\/div>/is', '', $customTemplateHtml);
             $customTemplateHtml = preg_replace('/\[(?!CP_(?:LOGO|IMAGE|VIDEO|MUSIC)_CID\])[^\]]+\]/', '', $customTemplateHtml);
             $customTemplateHtml = preg_replace('/<div class="pan-row">\s*<\/div>/is', '', $customTemplateHtml);
+              $companyLogoPdfPath = $dataForEmail[0]['company_logo'] ?? $this->pdfImagePath('images/new-design-logo.png');
+            $defaultThumbPdfPath = $this->pdfImagePath('images/music-img.png');
+            $customTemplateHtml = str_replace(
+                ['[CP_LOGO_CID]', '[CP_IMAGE_CID]', '[CP_VIDEO_CID]', '[CP_MUSIC_CID]'],
+                [$companyLogoPdfPath, $defaultThumbPdfPath, $defaultThumbPdfPath, $defaultThumbPdfPath],
+                $customTemplateHtml
+            );
+
+            if (trim($customTemplateHtml) !== '') {
+                $pdf = PDF::setOptions([
+                    'isRemoteEnabled' => true,
+                    'isHtml5ParserEnabled' => true,
+                    'dpi' => 96,
+                    'defaultFont' => 'sans-serif'
+                ])->loadHTML($customTemplateHtml);
+                $pdf->save($pdfDirectory . '/' . $fileName);
+            }
         }
 
         $invoiceMailFailures = [];
