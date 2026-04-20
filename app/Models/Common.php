@@ -705,22 +705,22 @@ class Common extends Model
         ])->loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date]));
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
         $pdf->save($pdfDirectory . '/' . $fileName);
-        if ($payment_method == 'online') {
+        // if ($payment_method == 'online') {
 
-            // Send payment link to customer via email
-            $mailData = [
-                'cname' => $dataForEmail[0]['first_name'],
-                'cemail' => $data["email"],
-                'payment_link' => $invoicePayOnlineLink
-            ];
+        //     // Send payment link to customer via email
+        //     $mailData = [
+        //         'cname' => $dataForEmail[0]['first_name'],
+        //         'cemail' => $data["email"],
+        //         'payment_link' => $invoicePayOnlineLink
+        //     ];
 
-            Mail::send('completepaymentmail', $mailData, function ($message) use ($mailData, $pdf, $fileName) {
-                $message->to($mailData['cemail'], $mailData['cname'])
-                    ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
-                    ->subject('Complete Your Payment - ' . config('constants.company_name'))
-                    ->attachData($pdf->output(), $fileName);
-            });
-        }
+        //     Mail::send('completepaymentmail', $mailData, function ($message) use ($mailData, $pdf, $fileName) {
+        //         $message->to($mailData['cemail'], $mailData['cname'])
+        //             ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
+        //             ->subject('Complete Your Payment - ' . config('constants.company_name'))
+        //             ->attachData($pdf->output(), $fileName);
+        //     });
+        // }
         $isCustomIfInvoice = (int) ($dataForEmail[0]['flag'] ?? 0) === 2;
         $customInvoiceTemplatePath = $isCustomIfInvoice
             ? base_path('email_task/Send Quotation/Custom/Invoice-IF.html')
