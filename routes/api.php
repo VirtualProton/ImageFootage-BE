@@ -78,7 +78,7 @@ Route::group([
     Route::get('paymentSuccess', 'PaymentController@paymentSuccess');
     Route::post('atomSubPayInvoiceResponse', 'PaymentController@atomSubPayInvoiceResponse');
     Route::get('/promotion/{page?}', 'Admin\PromotionController@getPromotion');
-
+    Route::get('/razorpayInvoiceResponse', 'PaymentController@razorpayInvoiceResponse');
     Route::get('/add_products_api', 'ProductApiController@getAddProduct');
     Route::post('/add_products_api', 'ProductApiController@postAddProduct');
     Route::get('/update_products_api/{id}', 'ProductApiController@getUpdateProduct');
@@ -135,7 +135,7 @@ Route::group([
     Route::post('getuseraddress', 'UserController@getUserAddress');
     Route::post('update_profile', 'UserController@update_profile');
     Route::post('callback_download', 'MediaController@callback_download');
-    Route::get('/razorpayInvoiceResponse', 'PaymentController@razorpayInvoiceResponse');
+    // Route::get('/razorpayInvoiceResponse', 'PaymentController@razorpayInvoiceResponse');
 
 
     Route::get('getIpAddress', 'FrontuserController@getIpAddress');

@@ -155,7 +155,7 @@ class Common extends Model
                     'sms' => false,
                     'email' => false,
                 ],
-                'callback_url' => $this->buildAtomReturnUrl('/api/razorpayInvoiceResponse'),
+                'callback_url' => rtrim(config('app.url'), '/') . '/razorpayInvoiceResponse',
                 'callback_method' => 'get',
             ];
 
