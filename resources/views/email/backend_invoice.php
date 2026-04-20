@@ -209,7 +209,7 @@
                            echo '<p><br></p>';
                         }  ?>
                         <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                        <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                        <p>Cost: <span><strong><?php echo $quotation[$i]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                      </div>
                   <?php
                }
@@ -233,7 +233,7 @@
                      <table width="100%" style="width: 100%;">
                         <tr>
                            <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Amount (INR)
+                           Amount (<?php echo $quotation[0]['currency']; ?>)
                            </td>
                            <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                               <strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong>
@@ -273,7 +273,7 @@
                      <table width="100%" style="width: 100%;">
                         <tr>
                            <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Total Invoice Amount (INR)
+                           Total Invoice Amount (<?php echo $quotation[0]['currency']; ?>)
                            </td>
                            <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                               <strong><?php echo number_format($quotation[0]['total'], 2) ?></strong>
@@ -285,7 +285,7 @@
             </div>
             <div class="row">
                <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:2px solid white; margin-top:1px;">
-                  <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
+                  <p>In words: <strong><?php echo $quotation[0]['currency'] == 'USD' ? 'Dollars' : 'Rupees'; ?> <?php echo $amount_in_words . ' only' ?></strong></p>
                </div>
             </div>
             <div class="licensing-terms">
