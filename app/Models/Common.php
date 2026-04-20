@@ -307,6 +307,8 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
+            
+            // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
             $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
                 $dataForEmail[0]['total'] ?? 0,
                 'Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -656,7 +658,6 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $invoicePayOnlineLink = $dataForEmail[0]['payment_url'] ?? '#';
 
         $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
         $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
@@ -674,6 +675,24 @@ class Common extends Model
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
         $dataForEmail[0]['po_detail'] = $po_date;
 
+        $data["subject"] = "Invoice (" . $dataForEmail[0]['invoice_name'] . ")";
+        $recipientEmail = trim((string) ($dataForEmail[0]['email_id'] ?? $dataForEmail[0]['email'] ?? ''));
+        $data["email"]   = $recipientEmail;
+        $data["invoice"] = $dataForEmail[0]['invoice_name'];
+        $data["name"]    = $dataForEmail[0]['first_name'];
+        
+        // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
+        $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
+            ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
+            'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
+            'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
+            $dataForEmail[0]['first_name'] ?? '',
+            $data["email"] ?? '',
+            $dataForEmail[0]['mobile'] ?? '',
+            $currency
+        );
+        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
+
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
             mkdir($pdfDirectory, 0777, true);
@@ -686,21 +705,6 @@ class Common extends Model
         ])->loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date]));
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
         $pdf->save($pdfDirectory . '/' . $fileName);
-        $data["subject"] = "Invoice (" . $dataForEmail[0]['invoice_name'] . ")";
-        $recipientEmail = trim((string) ($dataForEmail[0]['email_id'] ?? $dataForEmail[0]['email'] ?? ''));
-        $data["email"]   = $recipientEmail;
-        $data["invoice"] = $dataForEmail[0]['invoice_name'];
-        $data["name"]    = $dataForEmail[0]['first_name'];
-        $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
-            ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
-            'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
-            'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
-            $dataForEmail[0]['first_name'] ?? '',
-            $data["email"] ?? '',
-            $dataForEmail[0]['mobile'] ?? '',
-            $currency
-        );
-        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         if ($payment_method == 'online') {
 
             // Send payment link to customer via email
@@ -1021,20 +1025,13 @@ class Common extends Model
         $dataForEmail[0]['package_products_count_in_words'] =  $this->convert_number_to_words($dataForEmail[0]['package_products_count']) ?? '';
         $dataForEmail[0]['po_detail'] = $po_date;
 
-        $pdf = PDF::setOptions([
-            'isRemoteEnabled' => false,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif'
-        ])->loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
-
-        $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $data["subject"] = "Invoice (" . $dataForEmail[0]['invoice_name'] . ")";
         $recipientEmail = trim((string) ($dataForEmail[0]['email_id'] ?? $dataForEmail[0]['email'] ?? ''));
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data['name']    = $dataForEmail[0]['first_name'];
+        
+        // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -1045,6 +1042,16 @@ class Common extends Model
             $currency
         );
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
+
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif'
+        ])->loadHTML(view('email.plan_invoice_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method]));
+
+        $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
+        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $isDownloadInvoice = (int) ($dataForEmail[0]['invoice_type'] ?? 0) === 2;
         $customTemplateHtml = '';
         if ($isDownloadInvoice) {
@@ -1389,6 +1396,8 @@ class Common extends Model
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
         $currency = 'INR';
+        
+        // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Subscription Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -1631,6 +1640,8 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
+        
+        // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Download Pack Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
