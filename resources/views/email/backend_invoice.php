@@ -209,8 +209,7 @@
                            echo '<p><br></p>';
                         }  ?>
                         <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                        <!-- <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p> -->
-                        <p>Cost: <span><strong><?php echo $quotation[$i]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                        <p>Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                      </div>
                   <?php
                }
@@ -234,7 +233,7 @@
                      <table width="100%" style="width: 100%;">
                         <tr>
                            <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Amount (<?php echo $quotation[0]['currency']; ?>)
+                           Amount (INR)
                            </td>
                            <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                               <strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong>
@@ -274,7 +273,7 @@
                      <table width="100%" style="width: 100%;">
                         <tr>
                            <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Total Invoice Amount (<?php echo $quotation[0]['currency']; ?>)
+                           Total Invoice Amount (INR)
                            </td>
                            <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
                               <strong><?php echo number_format($quotation[0]['total'], 2) ?></strong>
@@ -286,7 +285,7 @@
             </div>
             <div class="row">
                <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:2px solid white; margin-top:1px;">
-                  <p>In words: <strong><?php echo $quotation[0]['currency'] == 'USD' ? 'Dollars' : 'Rupees'; ?> <?php echo $amount_in_words . ' only' ?></strong></p>
+                  <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
                </div>
             </div>
             <div class="licensing-terms">
@@ -310,6 +309,15 @@
                         Hyderabad
                         IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
                   </ol>
+                           <?php if (!empty($quotation[0]['payment_url'])) { ?>
+                           <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 18px 0 10px;">
+                              <tr>
+                                 <td style="text-align: center;">
+                                    <a href="<?php echo $quotation[0]['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Pay Invoice with Razorpay</a>
+                                 </td>
+                              </tr>
+                           </table>
+                           <?php } ?>
                   <ul>
                      <li>Goods once sold cannot be replaced or returned.</li>
                      <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</li>

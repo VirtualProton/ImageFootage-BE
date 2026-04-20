@@ -132,7 +132,7 @@ class Common extends Model
         return rand(pow(10, $digits - 1), pow(10, $digits) - 1);
     }
 
-    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR')
+    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact)
     {
         try {
             $amountInPaise = (int) round(((float) $amountInRupees) * 100);
@@ -143,7 +143,7 @@ class Common extends Model
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
             $payload = [
                 'amount' => $amountInPaise,
-                'currency' => $currency,
+                'currency' => 'INR',
                 'description' => $description,
                 'reference_id' => (string) $referenceId,
                 'customer' => [
@@ -170,11 +170,12 @@ class Common extends Model
         }
     }
 
-    /**
-     * Builds a return URL for AtomPay callbacks, ensuring that non-public callback hosts are not used in customer-facing payment URLs.
-     * @param string $path The path to append to the base URL for the callback.
-     * @return string The full URL for the AtomPay callback.
-     */
+    private function pdfImagePath($relativePath)
+    {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, (string) $relativePath), DIRECTORY_SEPARATOR));
+        return 'file:///' . str_replace('\\', '/', $absolutePath);
+    }
+
     private function buildAtomReturnUrl($path)
     {
         $configuredBase = env('ATOM_CALLBACK_BASE_URL') ?: config('app.url');
@@ -227,7 +228,6 @@ class Common extends Model
             'created_by'      => Auth::guard('admins')->user()->id,
             'promo_code_id'   => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             'cancelled_on'    => $cancelled_on,
-            'currency'        => $data['products']['product'][0]['currency'] ?? 'INR',
         );
         DB::table('imagefootage_performa_invoices')->insert($insert);
         $id = DB::getPdo()->lastInsertId();
@@ -288,8 +288,9 @@ class Common extends Model
             $transactionRequest->setPassword($this->password);
             $transactionRequest->setProductId($this->atomprodId);
             $transactionRequest->setAmount($dataForEmail[0]['total']);
-            $transactionRequest->setTransactionCurrency($data['products']['product'][0]['currency'] ?? 'INR');
+            $transactionRequest->setTransactionCurrency("INR");
             $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
+
             $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomPayInvoiceResponse'));
             $transactionRequest->setClientCode($this->clientcode);
             $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
@@ -304,19 +305,15 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
-            $currency = 'INR'; // default value
-            if (isset($data['products']['product'][0]['currency']) && !empty($data['products']['product'][0]['currency'])) {
-                $currency = $data['products']['product'][0]['currency'];
-                }
             $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
                 $dataForEmail[0]['total'] ?? 0,
                 'Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
                 'QTN-' . ($dataForEmail[0]['invoice_name'] ?? ''),
                 trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-                $dataForEmail[0]['mobile'] ?? '',
-                $currency
+                $dataForEmail[0]['mobile'] ?? ''
             ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+            $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
             // dd($dataForEmail);
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
             $data["email"]   = $data['email'];
@@ -325,19 +322,18 @@ class Common extends Model
             $amount_in_words =  $this->convert_number_to_words($dataForEmail[0]['total']);
             if ($data['flag'] == 0) {
                 // For other quotations use image footage logo
-                $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
             } else {
                 // For form2 quotation use other logo
-                $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
             }
-            $dataForEmail[0]['template_image'] = 'images/music-img.png';
-            $dataForEmail[0]['music_image'] = 'images/music-img.png';
-            $dataForEmail[0]['signature']     = 'images/signature.png';
+            $dataForEmail[0]['template_image'] = $this->pdfImagePath('images/music-img.png');
+            $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
+            $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
             $front_end_url_name               = config('app.front_end_url');
             $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
             $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
             $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
-            $dataForEmail[0]["currency"]      = $currency;
             //PDF genration and email
             $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
             $fileName = $data["invoice"] . "_quotation.pdf";
@@ -491,65 +487,8 @@ class Common extends Model
                         ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                         ->subject($data["subject"])
                         ->attachData($pdf->output(), $fileName);
-                        $message->setBody('Please check your quotation in the attached PDF.', 'text/plain');
 
-                    // if (!empty($customTemplateHtml)) {
-                    //     $emailHtml = $customTemplateHtml;
-
-                    //     $logoPath = base_path('email_task/Assets/CONCeptualLogo.svg');
-                    //     $logoFallbackPath = public_path('images/conceptual_logo.png');
-                    //     $imagePath = public_path('new/assets/img/email_img/pic.png');
-                    //     $videoPath = public_path('new/assets/img/email_img/video.png');
-                    //     $musicPath = public_path('new/assets/img/email_img/music.png');
-
-                    //     try {
-                    //         if (file_exists($logoPath)) {
-                    //             $logoSrc = $message->embedData(file_get_contents($logoPath), 'CONCeptualLogo.svg', 'image/svg+xml');
-                    //         } elseif (file_exists($logoFallbackPath)) {
-                    //             $logoSrc = $message->embed(\Swift_Image::fromPath($logoFallbackPath));
-                    //         } else {
-                    //             $logoSrc = url('images/conceptual_logo.png');
-                    //         }
-                    //     } catch (\Throwable $e) {
-                    //         $logoSrc = file_exists($logoFallbackPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($logoFallbackPath))
-                    //             : url('images/conceptual_logo.png');
-                    //     }
-
-                    //     try {
-                    //         $imageSrc = file_exists($imagePath)
-                    //             ? $message->embed(\Swift_Image::fromPath($imagePath))
-                    //             : url('new/assets/img/email_img/pic.png');
-                    //     } catch (\Throwable $e) {
-                    //         $imageSrc = url('new/assets/img/email_img/pic.png');
-                    //     }
-
-                    //     try {
-                    //         $videoSrc = file_exists($videoPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($videoPath))
-                    //             : url('new/assets/img/email_img/video.png');
-                    //     } catch (\Throwable $e) {
-                    //         $videoSrc = url('new/assets/img/email_img/video.png');
-                    //     }
-
-                    //     try {
-                    //         $musicSrc = file_exists($musicPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($musicPath))
-                    //             : url('new/assets/img/email_img/music.png');
-                    //     } catch (\Throwable $e) {
-                    //         $musicSrc = url('new/assets/img/email_img/music.png');
-                    //     }
-
-                    //     $emailHtml = str_replace(
-                    //         ['[CP_LOGO_CID]', '[CP_IMAGE_CID]', '[CP_VIDEO_CID]', '[CP_MUSIC_CID]'],
-                    //         [$logoSrc, $imageSrc, $videoSrc, $musicSrc],
-                    //         $emailHtml
-                    //     );
-
-                    //     $message->setBody($emailHtml, 'text/html');
-                    // } else {
-                    //     $message->setBody('Please find attachment of quotation.', 'text/plain');
-                    // }
+                    $message->setBody('Please check your quotation in the attached PDF.', 'text/plain');
                 });
 
                 \Log::info('Quotation mail attempt completed in save_proforma', [
@@ -696,11 +635,10 @@ class Common extends Model
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
         $transactionRequest->setAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
-        $transactionRequest->setTransactionCurrency($request_data['currency'] ?? 'INR');
+        $transactionRequest->setTransactionCurrency("INR");
         $transactionRequest->setTransactionAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
 
         $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomPayInvoiceResponse'));
-        // $transactionRequest->setReturnUrl(url('/api/atomPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
         $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
         $datenow = date("d/m/Y h:m:s", strtotime($dataForEmail[0]['invoice_created']));
@@ -716,23 +654,21 @@ class Common extends Model
         $dataForEmail[0]['payment_url'] = $url;
         $invoicePayOnlineLink = $dataForEmail[0]['payment_url'] ?? '#';
 
-        $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
-        $dataForEmail[0]['music_image'] = 'images/music-img.png';
+        $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
         if ($dataForEmail[0]['flag'] == 0) {
             // For other quotations use image footage logo
-            $dataForEmail[0]['company_logo'] = 'images/new-design-logo.png';
+            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
         } else {
             // For form2 quotation use other logo
-            $dataForEmail[0]['company_logo'] = 'images/conceptual_logo.png';
+            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
         }
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
         $dataForEmail[0]['po_detail'] = $po_date;
-        $currency = $request_data['currency'] ?? 'INR'; // default value
-        $dataForEmail[0]['currency'] = $currency;
 
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
@@ -757,9 +693,9 @@ class Common extends Model
             'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
-            $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         if ($payment_method == 'online') {
 
             // Send payment link to customer via email
@@ -772,7 +708,8 @@ class Common extends Model
             Mail::send('completepaymentmail', $mailData, function ($message) use ($mailData, $pdf, $fileName) {
                 $message->to($mailData['cemail'], $mailData['cname'])
                     ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
-                    ->subject('Complete Your Payment - ' . config('constants.company_name'))->attachData($pdf->output(), $fileName);
+                    ->subject('Complete Your Payment - ' . config('constants.company_name'))
+                    ->attachData($pdf->output(), $fileName);
             });
         }
         $isCustomIfInvoice = (int) ($dataForEmail[0]['flag'] ?? 0) === 2;
@@ -941,67 +878,8 @@ class Common extends Model
                         ->subject($data["subject"])
                         ->attachData($pdf->output(), $fileName);
                     $mailMessageId = $message->getId();
+
                     $message->setBody('Please check your invoice in the attached PDF.', 'text/plain');
-                    // if (!empty($customTemplateHtml)) {
-                    //     $emailHtml = $customTemplateHtml;
-
-                    //     $ifLogoPath = base_path('email_task/Assets/ifLogo.svg');
-                    //     $cpLogoPath = base_path('email_task/Assets/CONCeptualLogo.svg');
-                    //     $logoFallbackPath = public_path('images/conceptual_logo.png');
-                    //     $imagePath = public_path('new/assets/img/email_img/pic.png');
-                    //     $videoPath = public_path('new/assets/img/email_img/video.png');
-                    //     $musicPath = public_path('new/assets/img/email_img/music.png');
-
-                    //     try {
-                    //         if ($isCustomIfInvoice && file_exists($ifLogoPath)) {
-                    //             $logoSrc = $message->embedData(file_get_contents($ifLogoPath), 'ifLogo.svg', 'image/svg+xml');
-                    //         } elseif (file_exists($cpLogoPath)) {
-                    //             $logoSrc = $message->embedData(file_get_contents($cpLogoPath), 'CONCeptualLogo.svg', 'image/svg+xml');
-                    //         } elseif (file_exists($logoFallbackPath)) {
-                    //             $logoSrc = $message->embed(\Swift_Image::fromPath($logoFallbackPath));
-                    //         } else {
-                    //             $logoSrc = url('images/conceptual_logo.png');
-                    //         }
-                    //     } catch (\Throwable $e) {
-                    //         $logoSrc = file_exists($logoFallbackPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($logoFallbackPath))
-                    //             : url('images/conceptual_logo.png');
-                    //     }
-
-                    //     try {
-                    //         $imageSrc = file_exists($imagePath)
-                    //             ? $message->embed(\Swift_Image::fromPath($imagePath))
-                    //             : url('new/assets/img/email_img/pic.png');
-                    //     } catch (\Throwable $e) {
-                    //         $imageSrc = url('new/assets/img/email_img/pic.png');
-                    //     }
-
-                    //     try {
-                    //         $videoSrc = file_exists($videoPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($videoPath))
-                    //             : url('new/assets/img/email_img/video.png');
-                    //     } catch (\Throwable $e) {
-                    //         $videoSrc = url('new/assets/img/email_img/video.png');
-                    //     }
-
-                    //     try {
-                    //         $musicSrc = file_exists($musicPath)
-                    //             ? $message->embed(\Swift_Image::fromPath($musicPath))
-                    //             : url('new/assets/img/email_img/music.png');
-                    //     } catch (\Throwable $e) {
-                    //         $musicSrc = url('new/assets/img/email_img/music.png');
-                    //     }
-
-                    //     $emailHtml = str_replace(
-                    //         ['[CP_LOGO_CID]', '[CP_IMAGE_CID]', '[CP_VIDEO_CID]', '[CP_MUSIC_CID]'],
-                    //         [$logoSrc, $imageSrc, $videoSrc, $musicSrc],
-                    //         $emailHtml
-                    //     );
-
-                    //     $message->setBody($emailHtml, 'text/html');
-                    // } else {
-                    //     $message->setBody('Please find attached invoice.', 'text/plain');
-                    // }
                 });
                 $invoiceMailFailures = Mail::failures();
                 \Log::info('Invoice mail attempt completed in create_invoice', [
@@ -1110,7 +988,6 @@ class Common extends Model
         $transactionRequest->setTransactionCurrency("INR");
         $transactionRequest->setTransactionAmount($total);
 
-        // $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
         $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
@@ -1125,9 +1002,9 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-
-        $dataForEmail[0]['company_logo']                    = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']                       = 'images/signature.png';
+//test commit
+        $dataForEmail[0]['company_logo']                    = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']                       = $this->pdfImagePath('images/signature.png');
         $front_end_url_name                                 = config('app.front_end_url');
         $frontend_name                                      = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"]                   = $frontend_name[1] ?? '';
@@ -1152,16 +1029,15 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data['name']    = $dataForEmail[0]['first_name'];
-        $currency = 'INR'; // default value
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
-            $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
         $isDownloadInvoice = (int) ($dataForEmail[0]['invoice_type'] ?? 0) === 2;
         $customTemplateHtml = '';
         if ($isDownloadInvoice) {
@@ -1259,31 +1135,6 @@ class Common extends Model
                         $mailMessageId = $message->getId();
 
                         $message->setBody('Please check your invoice in the attached PDF.', 'text/plain');
-
-                        // if (!empty($customTemplateHtml)) {
-                        //     $emailHtml = $customTemplateHtml;
-                        //     $ifLogoPath = base_path('email_task/Assets/ifLogo.svg');
-                        //     $logoFallbackPath = public_path('images/conceptual_logo.png');
-
-                        //     try {
-                        //         if (file_exists($ifLogoPath)) {
-                        //             $logoSrc = $message->embedData(file_get_contents($ifLogoPath), 'ifLogo.svg', 'image/svg+xml');
-                        //         } elseif (file_exists($logoFallbackPath)) {
-                        //             $logoSrc = $message->embed(\Swift_Image::fromPath($logoFallbackPath));
-                        //         } else {
-                        //             $logoSrc = url('images/conceptual_logo.png');
-                        //         }
-                        //     } catch (\Throwable $e) {
-                        //         $logoSrc = file_exists($logoFallbackPath)
-                        //             ? $message->embed(\Swift_Image::fromPath($logoFallbackPath))
-                        //             : url('images/conceptual_logo.png');
-                        //     }
-
-                        //     $emailHtml = str_replace('[CP_LOGO_CID]', $logoSrc, $emailHtml);
-                        //     $message->setBody($emailHtml, 'text/html');
-                        // } else {
-                        //     $message->setBody('Please find attached invoice.', 'text/plain');
-                        // }
                     });
                 } else {
                     Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName, &$mailMessageId) {
@@ -1516,7 +1367,6 @@ class Common extends Model
         $transactionRequest->setTransactionCurrency("INR");
         $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
-        // $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
         $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
@@ -1531,16 +1381,15 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $currency = $dataForEmail[0]['currency'] ?? 'INR'; // default value
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Subscription Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'QTN-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-            $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $data["subject"]                  = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
         $data["email"]                    = $data['email'];
@@ -1548,14 +1397,13 @@ class Common extends Model
         $data["name"]                     = $dataForEmail[0]['first_name'];
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
-        $dataForEmail[0]['company_logo']  = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Subscription Plan – Images – ' . $package_name . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
-        $dataForEmail[0]['currency']      = $currency;
 
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
@@ -1609,30 +1457,7 @@ class Common extends Model
                             ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
                     ->attachData($pdf->output(), $fileName);
-                    $message->setBody('Please check your subscription quotation in the attached PDF.', 'text/plain');
-
-                // if (!empty($customTemplateHtml)) {
-                //     $emailHtml = $customTemplateHtml;
-                //     $logoPath = base_path('email_task/Assets/ifLogo.svg');
-                //     $logoFallbackPath = public_path('images/conceptual_logo.png');
-                //     try {
-                //         if (file_exists($logoPath)) {
-                //             $logoSrc = $message->embedData(file_get_contents($logoPath), 'ifLogo.svg', 'image/svg+xml');
-                //         } elseif (file_exists($logoFallbackPath)) {
-                //             $logoSrc = $message->embed(\Swift_Image::fromPath($logoFallbackPath));
-                //         } else {
-                //             $logoSrc = url('images/conceptual_logo.png');
-                //         }
-                //     } catch (\Throwable $e) {
-                //         $logoSrc = file_exists($logoFallbackPath)
-                //             ? $message->embed(\Swift_Image::fromPath($logoFallbackPath))
-                //             : url('images/conceptual_logo.png');
-                //     }
-                //     $emailHtml = str_replace('[CP_LOGO_CID]', $logoSrc, $emailHtml);
-                //     $message->setBody($emailHtml, 'text/html');
-                // } else {
-                //     $message->setBody('Please find attached subscription quotation.', 'text/plain');
-                // }
+                $message->setBody('Please check your subscription quotation in the attached PDF.', 'text/plain');
             });
 
             $s3Client = new S3Client([
@@ -1742,7 +1567,6 @@ class Common extends Model
             'created_by'      => Auth::guard('admins')->user()->id,
             'flag'            => $data['flag'] ?? '',
             'cancelled_on'    => $cancelled_on,
-            'currency'         => $data['plan_id']['currency'] ?? 'INR',
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);
@@ -1779,10 +1603,9 @@ class Common extends Model
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
         $transactionRequest->setAmount($dataForEmail[0]['total']);
-        $transactionRequest->setTransactionCurrency($data['plan_id']['currency'] ?? 'INR');
+        $transactionRequest->setTransactionCurrency("INR");
         $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
-        // $transactionRequest->setReturnUrl(url('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomSubPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
         $transactionRequest->setTransactionId($dataForEmail[0]['invoice_name']);
@@ -1797,16 +1620,15 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        $currency = !empty($data['plan_id']['currency']) ? $data['plan_id']['currency'] : 'INR';
         $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Download Pack Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'QTN-DP-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
-            $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $dataForEmail[0]['mobile'] ?? ''
         ) ?? ($dataForEmail[0]['payment_url'] ?? '#');
+        $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
@@ -1815,16 +1637,13 @@ class Common extends Model
         $data["email"]                    = $data['email'];
         $data["invoice"]                  = $dataForEmail[0]['invoice_name'];
         $data["name"]                     = $dataForEmail[0]['first_name'];
-        $dataForEmail[0]['company_logo']  = 'images/new-design-logo.png';
-        $dataForEmail[0]['signature']     = 'images/signature.png';
+        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
-        $currency = $data['plan_id']['currency'] ?? 'INR';
-        $dataForEmail[0]['currency'] = $currency;
-
 
         $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"] . "download_quotation.pdf";
@@ -1878,31 +1697,7 @@ class Common extends Model
                             ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
                     ->attachData($pdf->output(), $fileName);
-
-                    $message->setBody('Please check your download pack quotation in the attached PDF.', 'text/plain');
-
-                // if (!empty($customTemplateHtml)) {
-                //     $emailHtml = $customTemplateHtml;
-                //     $logoPath = base_path('email_task/Assets/ifLogo.svg');
-                //     $logoFallbackPath = public_path('images/conceptual_logo.png');
-                //     try {
-                //         if (file_exists($logoPath)) {
-                //             $logoSrc = $message->embedData(file_get_contents($logoPath), 'ifLogo.svg', 'image/svg+xml');
-                //         } elseif (file_exists($logoFallbackPath)) {
-                //             $logoSrc = $message->embed(\Swift_Image::fromPath($logoFallbackPath));
-                //         } else {
-                //             $logoSrc = url('images/conceptual_logo.png');
-                //         }
-                //     } catch (\Throwable $e) {
-                //         $logoSrc = file_exists($logoFallbackPath)
-                //             ? $message->embed(\Swift_Image::fromPath($logoFallbackPath))
-                //             : url('images/conceptual_logo.png');
-                //     }
-                //     $emailHtml = str_replace('[CP_LOGO_CID]', $logoSrc, $emailHtml);
-                //     $message->setBody($emailHtml, 'text/html');
-                // } else {
-                //     $message->setBody('Please find attached download pack quotation.', 'text/plain');
-                // }
+                $message->setBody('Please check your download pack quotation in the attached PDF.', 'text/plain');
             });
 
             $s3Client = new S3Client([
