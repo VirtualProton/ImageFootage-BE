@@ -178,15 +178,14 @@
                             } ?>
                             <div class="<?php echo $class; ?>" style="font-size: 11px;">
                                 <div style="padding-top: 10px;">
-                                <img src="<?php echo !empty($quotation[0]['template_image']) ? $quotation[0]['template_image'] : $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">   
+                                    <img src="<?php echo !empty($quotation[0]['template_image']) ? $quotation[0]['template_image'] : $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
                                 </div>
 
 
                                 <?php if (!empty($quotation[$i]['product_id']) || !empty($quotation[$i]['product_image'])) { ?>
                                     <p style="font-size: 11px;">Product ID: <span><strong><?php echo $quotation[$i]['product_id']; ?></strong></span></p>
                                     <p style="font-size: 11px;">Size: <span><strong><?php echo $quotation[$i]['product_size']; ?></strong></span></p>
-                                    <!-- <p style="font-size: 11px;">Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p> -->
-                                    <p style="font-size: 11px;">Cost: <span><strong><?php echo $quotation[0]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                                    <p style="font-size: 11px;">Cost: <span><strong>INR <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
                                 <?php  } ?>
                             </div>
                         <?php
@@ -208,7 +207,7 @@
                             <table width="100%">
                                 <tr>
                                     <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
-                                        Total (<?php echo $quotation[0]['currency'] ?>)
+                                        Total (INR)
                                     </td>
                                     <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);font-size: 11px;">
                                         <strong><?php echo $quotation[0]['total']; ?></strong>
@@ -229,12 +228,9 @@
                         <?php
                         }
                         ?>
-                        
+
                         <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:1px solid white;font-size: 11px;">
-                            <p>In words: <strong><?php 
-                                $currencyName = $quotation[0]['currency'] == 'USD' ? 'Dollars' : 'Rupees';
-                                echo $currencyName . ' ' . $amount_in_words . ' only' 
-                            ?></strong></p>
+                            <p>In words: <strong>Rupees <?php echo $amount_in_words . ' only' ?></strong></p>
                         </div>
                     </div>
                 </div>
@@ -302,7 +298,17 @@
                                     IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
                             </ol>
                         </li>
-                        <li>For Payment through Credit/Debit Card <a href="<?php echo $quotation[0]['payment_url']; ?>"><strong>click here</strong></a></li>
+                                <?php if (!empty($quotation[0]['payment_url'])) { ?>
+                                <li style="list-style: none; margin-top: 12px;">
+                                    <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td style="text-align: center;">
+                                                <a href="<?php echo $quotation[0]['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Pay Online with Razorpay</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                                <?php } ?>
                         <li>All disputes are subject to Hyderabad Jurisdiction.</li>
                     </ul>
                 </div>
