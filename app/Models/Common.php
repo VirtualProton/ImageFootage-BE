@@ -994,7 +994,7 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-
+//test commit
         $dataForEmail[0]['company_logo']                    = 'images/new-design-logo.png';
         $dataForEmail[0]['signature']                       = 'images/signature.png';
         $front_end_url_name                                 = config('app.front_end_url');
