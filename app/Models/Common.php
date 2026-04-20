@@ -155,7 +155,7 @@ class Common extends Model
                     'sms' => false,
                     'email' => false,
                 ],
-                'callback_url' => rtrim(config('app.front_end_url'), '/') . '/razorpayInvoiceResponse',
+                'callback_url' => $this->buildAtomReturnUrl('/api/razorpayInvoiceResponse'),
                 'callback_method' => 'get',
             ];
 
@@ -640,9 +640,9 @@ class Common extends Model
         $transactionRequest->setLogin($this->login);
         $transactionRequest->setPassword($this->password);
         $transactionRequest->setProductId($this->atomprodId);
-        $transactionRequest->setAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
+        $transactionRequest->setAmount($dataForEmail[0]['total']);
         $transactionRequest->setTransactionCurrency($currency);
-        $transactionRequest->setTransactionAmount($dataForEmail[0]['total'] + $dataForEmail[0]['tax']);
+        $transactionRequest->setTransactionAmount($dataForEmail[0]['total']);
 
         $transactionRequest->setReturnUrl($this->buildAtomReturnUrl('/api/atomPayInvoiceResponse'));
         $transactionRequest->setClientCode($this->clientcode);
@@ -683,7 +683,7 @@ class Common extends Model
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
-            ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
+            ($dataForEmail[0]['total'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
@@ -1033,7 +1033,7 @@ class Common extends Model
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
-            ($dataForEmail[0]['total'] ?? 0) + ($dataForEmail[0]['tax'] ?? 0),
+            ($dataForEmail[0]['total'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
             $dataForEmail[0]['first_name'] ?? '',
