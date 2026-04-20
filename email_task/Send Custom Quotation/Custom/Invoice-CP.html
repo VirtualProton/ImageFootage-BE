@@ -472,6 +472,88 @@
       font-weight: 500;
       margin-top: 3px;
     }
+
+    @page {
+      margin: 16px;
+    }
+
+    /* DOMPDF aligns table/table-cell layouts more reliably than grid/flex. */
+    @media print {
+      .page {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .top-header,
+      .info-section,
+      .client-section,
+      .table-header,
+      .item-row,
+      .payment-grid {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      .top-header>div,
+      .info-section>div,
+      .client-section>div,
+      .table-header>div,
+      .item-row>div,
+      .payment-grid>div {
+        display: table-cell;
+        vertical-align: top;
+      }
+
+      .top-header>div:first-child {
+        width: 45%;
+      }
+
+      .top-header>div:last-child {
+        width: 55%;
+      }
+
+      .table-header>div:nth-child(1),
+      .item-row>div:nth-child(1) {
+        width: 46px;
+      }
+
+      .table-header>div:nth-child(3),
+      .item-row>div:nth-child(3) {
+        width: 120px;
+      }
+
+      .item-body {
+        display: table;
+        width: 100%;
+      }
+
+      .item-thumb,
+      .item-details {
+        display: table-cell;
+        vertical-align: top;
+      }
+
+      .item-thumb {
+        width: 110px;
+      }
+
+      .totals-wrap {
+        display: block;
+      }
+
+      .totals-table {
+        margin-left: auto;
+      }
+
+      .pay-online-row {
+        display: block;
+      }
+
+      .pay-online-row .pay-btn {
+        margin-left: 12px;
+      }
+    }
   </style>
 </head>
 
@@ -593,108 +675,7 @@
       <div class="item-price">[Price]</div>
     </div>
 
-    <!-- ITEM 2 -->
-    <div class="item-row">
-      <div class="item-sno">2</div>
-      <div>
-        <div class="item-title">982734 Beautiful Sunset over the Mountains.</div>
-        <div class="item-body">
-          <div class="item-thumb">
-            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
-              style="width:110px;height:76px;object-fit:cover;display:block;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-            <div
-              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
-                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
-                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <span style="font-size:9px;color:#bbb;">No Image</span>
-            </div>
-          </div>
-          <div class="item-details">
-            <div class="dl"><strong>File Type:</strong> Image</div>
-            <div class="dl"><strong>License Type:</strong> Digital/Standard License</div>
-            <div class="dl"><strong>Size:</strong> 15 MB</div>
-            <div class="dl"><strong>Resolution:</strong> 4000x3000</div>
-            <div class="dl"><strong>File Format:</strong> JPG</div>
-          </div>
-        </div>
 
-      </div>
-      <div class="item-price">61,187.00</div>
-    </div>
-
-    <!-- ITEM 3 -->
-    <div class="item-row">
-      <div class="item-sno">3</div>
-      <div>
-        <div class="item-title">543210 Aerial View of the City Skyline.</div>
-        <div class="item-body">
-          <div class="item-thumb">
-            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
-              style="width:110px;height:76px;object-fit:cover;display:block;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-            <div
-              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
-                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
-                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <span style="font-size:9px;color:#bbb;">No Image</span>
-            </div>
-          </div>
-          <div class="item-details">
-            <div class="dl"><strong>File Type:</strong> Footage</div>
-            <div class="dl"><strong>License Type:</strong> Commercial License</div>
-            <div class="dl"><strong>Size:</strong> 2.5 GB</div>
-            <div class="dl"><strong>Resolution:</strong> 1920x1080</div>
-            <div class="dl"><strong>File Format:</strong> MP4</div>
-            <div class="dl"><strong>Label :</strong> Standard</div>
-            <div class="dl"><strong>Duration:</strong> 00:02:30</div>
-          </div>
-        </div>
-      </div>
-      <div class="item-price">11,187.00</div>
-    </div>
-
-    <!-- ITEM 4 -->
-    <div class="item-row">
-      <div class="item-sno">4</div>
-      <div>
-        <div class="item-title">112233 Upbeat Corporate Background Track.</div>
-        <div class="item-body">
-          <div class="item-thumb">
-            <img src="[CP_IMAGE_CID]" alt="Asset Thumbnail"
-              style="width:110px;height:76px;object-fit:cover;display:block;"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-            <div
-              style="display:none;width:110px;height:76px;align-items:center;justify-content:center;background:#f0f0f0;border:1px dashed #ccc;flex-direction:column;gap:4px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5" />
-                <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb" />
-                <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <span style="font-size:9px;color:#bbb;">No Image</span>
-            </div>
-          </div>
-          <div class="item-details">
-            <div class="dl"><strong>File Type:</strong> Music</div>
-            <div class="dl"><strong>License Type:</strong> All Media License</div>
-            <div class="dl"><strong>Size:</strong> 10 MB</div>
-            <div class="dl"><strong>File Format:</strong> WAV</div>
-            <div class="dl"><strong>Duration:</strong> 00:03:45</div>
-          </div>
-        </div>
-
-      </div>
-      <div class="item-price">61,187.00</div>
-    </div>
 
     <!-- TOTALS -->
     <div class="totals-wrap">
