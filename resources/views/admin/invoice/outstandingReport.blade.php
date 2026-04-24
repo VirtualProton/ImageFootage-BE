@@ -133,6 +133,7 @@
                                 <tr>
                                     <th>Invoice Number</th>
                                     <th>Client ID</th>
+                                    <th>Client Name</th>
                                     <th>Invoice Date</th>
                                     <th>Payment Status</th>
                                 </tr>
@@ -252,6 +253,17 @@
                     name: 'user_id',
                     width: '10%',
                     render: function(data, type, row) {
+                        return data ? data : 'N/A';
+                    }
+                },
+                {
+                    data: 'user_name',
+                    name: 'user_name',
+                    width: '25%',
+                    render: function(data, type, row) {
+                        if (data && row.user_id) {
+                            return '<a href="{{ url("admin/users/invoices") }}/' + row.user_id + '" style="color: #3c8dbc; text-decoration: underline;">' + data + '</a>';
+                        }
                         return data ? data : 'N/A';
                     }
                 },

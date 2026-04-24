@@ -1945,6 +1945,8 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.quotationObj && $scope.quotationObj.currency);
+         var expiry_due_date = $scope.expiry_due_date;  // ADD THIS LINE
+
 
         if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
