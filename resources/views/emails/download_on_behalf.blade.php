@@ -86,6 +86,12 @@
             <p>This is an automated email. Please do not reply to this email.</p>
             <p>© {{ date('Y') }} ImageFootage. All rights reserved.</p>
         </div>
+
+        <!-- DEBUG: Product Details Array -->
+        <div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border: 1px solid #ccc; border-radius: 5px; font-family: monospace; font-size: 11px; color: #333;">
+            <strong style="display: block; margin-bottom: 10px;">DEBUG - Product Details Array:</strong>
+            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">{{ print_r($product_details, true) }}</pre>
+        </div>
     </div>
 </body>
 </html>

@@ -961,9 +961,10 @@ class InvoiceController extends Controller
             $emailData = [
                 'user_name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
-                'product_id' => $downloadData,
+                'product_id' => $productId,
                 'product_type' => $productType,
                 'download_url' => $downloadData['url'] ?? $downloadData['queue_hash'] ?? '',
+                'product_details' => $downloadData,
                 'admin_name' => Auth::guard('admins')->user()->name ?? 'Admin'
             ];
 
