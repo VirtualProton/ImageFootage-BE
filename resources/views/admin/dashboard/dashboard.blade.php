@@ -148,7 +148,7 @@
                       </td>
                       <td>
                         @if($comment->agent_id && $comment->agent)
-                          {{$comment->agent->account_name ?? 'N/A'}}
+                          {{$comment->agent->name ?? 'N/A'}}
                         @else
                           <em>Unassigned</em>
                         @endif

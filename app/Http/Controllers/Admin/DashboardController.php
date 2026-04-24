@@ -45,6 +45,9 @@ class DashboardController extends Controller
         // Add user data to each comment
         foreach($pendingComments as $comment) {
             $comment->user = DB::table('imagefootage_users')->find($comment->user_id);
+            if ($comment->agent_id) {
+                $comment->agent = DB::table('imagefootage_admins')->find($comment->agent_id);
+            }
         }
     
     $data['pending_comments'] = $pendingComments;
