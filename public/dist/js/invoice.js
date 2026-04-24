@@ -1864,6 +1864,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.payment_method = "";
     $scope.invoice_id = "";
     $scope.download_product_id = "";
+    $scope.expiry_due_date = "";
 
     function syncDownloadOnBehalfProductId(value) {
         $scope.download_product_id = value || "";
@@ -1913,6 +1914,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         });
         $("#download-on-behalf-product-id").val("");
     });
+
     
     $scope.create_invoice = function (quotation, user_id) {
         $scope.quotationObj = []
@@ -1945,7 +1947,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.quotationObj && $scope.quotationObj.currency);
-         var expiry_due_date = $scope.expiry_due_date;  // ADD THIS LINE
+         var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $scope("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
 
 
         if (gstNo && !reggst.test(gstNo)) {
@@ -2025,6 +2027,9 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.cusQuotationObj && $scope.cusQuotationObj.currency);
+        var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $scope("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
+
+        //var expiry_due_date = ($scope.expiry_due_date || $("#modal-default .modal-body:visible #expiry_due_date").val() || "").toString().trim();
 
         if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
