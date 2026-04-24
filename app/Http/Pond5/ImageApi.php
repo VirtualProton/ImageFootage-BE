@@ -243,8 +243,8 @@ class ImageApi
                 CURLOPT_CUSTOMREQUEST => 'GET',
                 CURLOPT_HTTPHEADER => array(
                     'accept: application/json',
-                    'key: cJ70pBIk119',
-                    'secret: j5weLX518rMP119'
+                    'key:' . $this->api_key,
+                    'secret:' . $this->api_secret
                 ),
             ));
             $response = curl_exec($curl);
