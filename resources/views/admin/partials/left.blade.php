@@ -44,7 +44,9 @@
                   @if(count($eachmodule['submodules']) > 0)
                     <ul class="treeview-menu">
                       @foreach($eachmodule['submodules'] as $submodule)
-                        <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                        @if($submodule['module_name'] != 'Access Managment')
+                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                        @endif
                       @endforeach
                     </ul>
                   @endif
@@ -71,7 +73,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -99,7 +103,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -129,7 +135,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -156,7 +164,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -184,7 +194,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -213,7 +225,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif
@@ -268,7 +282,9 @@
                     @if(count($eachmodule['submodules']) > 0)
                       <ul class="treeview-menu">
                         @foreach($eachmodule['submodules'] as $submodule)
-                          <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @if($submodule['module_name'] != 'Access Managment')
+                            <li><a href="{{ url('admin/'.$submodule['url']) }}"><i class="fa fa-arrow-right"></i>{{$submodule['module_name']}}</a></li>
+                          @endif
                         @endforeach
                       </ul>
                     @endif

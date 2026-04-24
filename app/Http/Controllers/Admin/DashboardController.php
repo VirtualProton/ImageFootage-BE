@@ -42,6 +42,11 @@ class DashboardController extends Controller
         ->limit(10)
         ->get();
     
+        // Add user data to each comment
+        foreach($pendingComments as $comment) {
+            $comment->user = DB::table('imagefootage_users')->find($comment->user_id);
+        }
+    
     $data['pending_comments'] = $pendingComments;
     $data['pending_comments_count'] = $pendingComments->count();
     

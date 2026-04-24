@@ -23,7 +23,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <!-- <h3>{{$data['orders']}}</h3> -->
+              <h3>0</h3>
 
               <p>New Registrations</p>
             </div>
@@ -80,7 +80,7 @@
         </div>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-purple">
+          <!-- <div class="small-box bg-purple">
             <div class="inner">
               <h3>{{$data['pending_comments_count'] ?? 0}}</h3>
               <p>Pending Comments</p>
@@ -89,12 +89,12 @@
               <i class="fa fa-comments"></i>
             </div>
             <a href="#pending-comments-section" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+          </div> -->
         </div>
         <!-- ./col -->
       </div>
       <!-- /.row -->
-      
+      <br><br><br><br><br>
       <!-- Pending Comments Mailbox Section -->
       @if(isset($data['pending_comments']) && $data['pending_comments']->count() > 0)
       <div class="row" id="pending-comments-section">
@@ -110,6 +110,7 @@
                     <tr>
                       <th>Case ID</th>
                       <th>User</th>
+                      <th>Name</th>
                       <th>Subject</th>
                       <th>Status</th>
                       <th>Agent</th>
@@ -130,6 +131,7 @@
                           N/A
                         @endif
                       </td>
+                      <td>{{ $comment->user->first_name }} {{ $comment->user->last_name }}</td>
                       <td>
                         <strong>{{$comment->subject ?? 'No Subject'}}</strong>
                         <br>
