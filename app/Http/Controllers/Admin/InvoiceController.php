@@ -689,8 +689,22 @@ class InvoiceController extends Controller
                     }
                     $footageMedia = new Pond5ImageApi();
                     $download_id = $productId;
-                    $version =  $download_id . ':1';
-                    $product_details_data = $footageMedia->download($productId, $download_id, $version);
+                    
+                    // Get product details to find available versions
+                    $productDetails = $footageMedia->getclipdata($download_id);
+                    Log::info('Footage Product Details:', ['details' => $productDetails]);
+                    
+                    // Get all available versions and use first one
+                    $availableVersions = $productDetails['versions'] ?? [];
+                    if (empty($availableVersions)) {
+                        Log::error('No versions available for footage', ['product_id' => $download_id]);
+                        return response()->json(['status' => 'failed', 'message' => 'No download versions available for this footage']);
+                    }
+                    
+                    $selectedVersion = $availableVersions[0]['version'] ?? $download_id . ':1';
+                    Log::info('Selected Footage Version:', ['version' => $selectedVersion]);
+                    
+                    $product_details_data = $footageMedia->download($productId, $download_id, $selectedVersion);
                     
                     Log::info('Footage API Response Type: ' . gettype($product_details_data));
                     if (is_array($product_details_data) && !empty($product_details_data)) {
@@ -738,14 +752,43 @@ class InvoiceController extends Controller
                     // Download Images from Pond5
                     $product_details_data = null;
                     $download_id = $productId;
-                    $version = $download_id . ':1';
                     
                     if ($productWeb == 2) { // If image is from PantherMedia
                         $imageMedia = new Pond5ImageApi();
-                        $product_details_data = $imageMedia->download($productId, $download_id, $version);
+                        
+                        // Get product details to find available versions
+                        $productDetails = $imageMedia->getclipdata($download_id);
+                        Log::info('PantherMedia Product Details:', ['details' => $productDetails]);
+                        
+                        // Get all available versions and use first one
+                        $availableVersions = $productDetails['versions'] ?? [];
+                        if (empty($availableVersions)) {
+                            Log::error('No versions available for PantherMedia image', ['product_id' => $download_id]);
+                            return response()->json(['status' => 'failed', 'message' => 'No download versions available for this image']);
+                        }
+                        
+                        $selectedVersion = $availableVersions[0]['version'] ?? $download_id . ':1';
+                        Log::info('Selected PantherMedia Image Version:', ['version' => $selectedVersion]);
+                        
+                        $product_details_data = $imageMedia->download($productId, $download_id, $selectedVersion);
                     } elseif ($productWeb == 3) { // If image is from Pond5
                         $footageMedia = new Pond5ImageApi();
-                        $product_details_data = $footageMedia->download($productId, $download_id, $version);
+                        
+                        // Get product details to find available versions
+                        $productDetails = $footageMedia->getclipdata($download_id);
+                        Log::info('Pond5 Product Details:', ['details' => $productDetails]);
+                        
+                        // Get all available versions and use first one
+                        $availableVersions = $productDetails['versions'] ?? [];
+                        if (empty($availableVersions)) {
+                            Log::error('No versions available for Pond5 image', ['product_id' => $download_id]);
+                            return response()->json(['status' => 'failed', 'message' => 'No download versions available for this image']);
+                        }
+                        
+                        $selectedVersion = $availableVersions[0]['version'] ?? $download_id . ':1';
+                        Log::info('Selected Pond5 Image Version:', ['version' => $selectedVersion]);
+                        
+                        $product_details_data = $footageMedia->download($productId, $download_id, $selectedVersion);
                     }
 
                     Log::info('Image API Response Type: ' . gettype($product_details_data));
@@ -831,8 +874,22 @@ class InvoiceController extends Controller
                     $footageMedia = new FootageApi();
                     //TODO Need to change for api_product_id
                     $download_id = $productId;
-                    $version = $download_id . ':0';
-                    $product_details_data = $footageMedia->download($download_id, $version);
+                    
+                    // Get product details to find available versions
+                    $productDetails = $footageMedia->getclipdata($download_id);
+                    Log::info('Music Product Details:', ['details' => $productDetails]);
+                    
+                    // Get all available versions and use first one
+                    $availableVersions = $productDetails['versions'] ?? [];
+                    if (empty($availableVersions)) {
+                        Log::error('No versions available for music', ['product_id' => $download_id]);
+                        return response()->json(['status' => 'failed', 'message' => 'No download versions available for this music']);
+                    }
+                    
+                    $selectedVersion = $availableVersions[0]['version'] ?? $download_id . ':0';
+                    Log::info('Selected Music Version:', ['version' => $selectedVersion]);
+                    
+                    $product_details_data = $footageMedia->download($download_id, $selectedVersion);
                     
                     Log::info('Music API Response Type: ' . gettype($product_details_data));
                     if (is_array($product_details_data) && !empty($product_details_data)) {
@@ -904,7 +961,7 @@ class InvoiceController extends Controller
             $emailData = [
                 'user_name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
-                'product_id' => $productId,
+                'product_id' => $downloadData,
                 'product_type' => $productType,
                 'download_url' => $downloadData['url'] ?? $downloadData['queue_hash'] ?? '',
                 'admin_name' => Auth::guard('admins')->user()->name ?? 'Admin'
