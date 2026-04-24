@@ -1090,8 +1090,14 @@ class PaymentController extends Controller
             // Strip prefix (INV-, QTN-, INV-SUB-, QTN-SUB-) to get the invoice_name
             $invoiceName = preg_replace('/^(INV-SUB-|QTN-SUB-|INV-|QTN-)/', '', $referenceId);
 
+            // Build backend base URL (handles localhost fallback)
+            $backendBase = rtrim((string) config('app.url'), '/');
+            if ($backendBase === '' || preg_match('/localhost|127\.0\.0\.1|0\.0\.0\.0/i', $backendBase)) {
+                $backendBase = 'https://api.imagefootage.com';
+            }
+
             if (empty($paymentLinkId)) {
-                return redirect($this->baseurl . '/invoiceFailed/' . encrypt($invoiceName));
+                return redirect($backendBase . '/invoiceFailed/' . encrypt($invoiceName));
             }
 
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
@@ -1103,14 +1109,9 @@ class PaymentController extends Controller
                 'razorpay_signature' => $request->input('razorpay_signature') ?? null
             ];
             try {
-                $payload = $attributes['razorpay_payment_link_id'] . '|' . $attributes['razorpay_payment_id'];
-                $api->utility->verifySignature(
-                    $payload,
-                    $attributes['razorpay_signature'],
-                    'payment_link'
-                );
+                $api->utility->verifyPaymentSignature($attributes);
             } catch (SignatureVerificationError $e) {
-                return redirect($this->baseurl . '/invoiceFailed/' . encrypt($invoiceName));
+                return redirect($backendBase . '/invoiceFailed/' . encrypt($invoiceName));
             }
 
             $paymentLink = $api->paymentLink->fetch($paymentLinkId);
@@ -1122,7 +1123,7 @@ class PaymentController extends Controller
                         'status' => 1,
                         'payment_response' => json_encode($paymentLink)
                     ]);
-                return redirect($this->baseurl . '/invoiceConfirmation/' . encrypt($invoiceName));
+                return redirect($backendBase . '/invoiceConfirmation/' . encrypt($invoiceName));
             } else if ($paymentLink['status'] === 'pending') {
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
@@ -1131,7 +1132,7 @@ class PaymentController extends Controller
                         'status' => 0,
                         'payment_response' => json_encode($paymentLink)
                     ]);
-                return redirect($this->baseurl . '/invoiceFailed/' . encrypt($invoiceName));
+                return redirect($backendBase . '/invoiceFailed/' . encrypt($invoiceName));
             } else {
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
@@ -1140,11 +1141,11 @@ class PaymentController extends Controller
                         'status' => 3,
                         'payment_response' => json_encode($paymentLink)
                     ]);
-                return redirect($this->baseurl . '/invoiceFailed/' . encrypt($invoiceName));
+                return redirect($backendBase . '/invoiceFailed/' . encrypt($invoiceName));
             }
         } catch (\Exception $e) {
             \Log::error('razorpayInvoiceResponse error', ['error' => $e->getMessage()]);
-            return redirect($this->baseurl . '/invoiceFailed/' . encrypt($referenceId ?? ''));
+            return redirect(rtrim((string) config('app.url'), '/') . '/invoiceFailed/' . encrypt($referenceId ?? ''));
         }
     }
 }

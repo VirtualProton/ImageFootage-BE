@@ -328,6 +328,7 @@ Route::get('emailVerification', 'UserContactusController@emailVerification');
 Route::get('payu/{id}', 'PaymentController@payu');
 Route::get('payuplan/{id}', 'PaymentController@payuplan');
 Route::get('invoiceConfirmation/{id}', 'PaymentController@invoiceConfirmation');
+Route::get('invoiceFailed/{id}', 'PaymentController@invoiceFailed');
 
 // Route for active user account
 Route::get('active_user_account/{token?}', "UserController@activeUserAccount");
