@@ -77,6 +77,10 @@
           <p id="view_created_by"></p>
         </div>
         <div class="form-group">
+          <label><strong>Agent Name:</strong></label>
+          <p id="view_agent_name"></p>
+        </div>
+        <div class="form-group">
           <label><strong>Created At:</strong></label>
           <p id="view_created"></p>
         </div>
@@ -160,12 +164,14 @@
       var created = button.getAttribute('data-created');
       var updated = button.getAttribute('data-updated');
       var createdBy = button.getAttribute('data-createdby');
+      var agentName = button.getAttribute('data-agentname');
 
       document.getElementById('view_comment_id').textContent = id;
       document.getElementById('view_subject').textContent = subject;
       document.getElementById('view_comment').textContent = comment;
       document.getElementById('view_status').textContent = status;
       document.getElementById('view_created_by').textContent = createdBy;
+      document.getElementById('view_agent_name').textContent = agentName;
       document.getElementById('view_created').textContent = created;
       document.getElementById('view_updated').textContent = updated;
 
