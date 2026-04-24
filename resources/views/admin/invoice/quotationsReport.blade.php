@@ -59,7 +59,8 @@
                 @foreach($quotations as $quotation)
                 <tr role="row" class="odd">
                   <td>{{$quotation['user_id']}}</td>
-                  <td>{{$quotation['user_name']}}</td>
+                  <!-- <td>{{$quotation['user_name']}}</td> -->
+                  <td><a href="{{ url('admin/users/invoices/'.$quotation['user_id']) }}">{{$quotation['user_name']}}</a></td>
                   <td>
                      @if($quotation['quotation_url'])
                     <a href="{{$quotation['quotation_url']}}" target="_blank">Q{{$quotation['invoice_name']}}</a>
@@ -91,7 +92,8 @@
                   <td>{{$quotation['account_manager_name']}}</td>
                   <td>
                     @if($quotation['status'] != 3)
-                    <a href="{{ url('admin/users/invoices/'.$quotation['user_id']) }}#!#download_invoices" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <a href="{{ url('admin/edit_quotation/'.$quotation['user_id'].'/'.$quotation['id']) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <!-- <a href="{{ url('admin/users/invoices/'.$quotation['user_id']) }}#!#download_invoices" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> -->
 
                     <a href="{{ url('admin/quotation_cancel/'.$quotation['id']) }}" title="Cancel" onclick="return confirm('Do You want to remove ?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;
                     @endif
@@ -137,7 +139,7 @@ $(function() {
     var quotationTable = $('.account').DataTable();
 
     $('#agentFilter').on('keyup change', function() {
-      quotationTable.column(7).search(this.value).draw();
+      quotationTable.column(8).search(this.value).draw();
     });
   });
 
