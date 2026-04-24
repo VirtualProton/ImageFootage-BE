@@ -152,63 +152,71 @@
   }
 
   function openViewModal(button) {
-
-    var id = button.getAttribute('data-id');
-    var subject = button.getAttribute('data-subject');
-    var comment = button.getAttribute('data-comment');
-    var status = button.getAttribute('data-status');
-    var created = button.getAttribute('data-created');
-    var updated = button.getAttribute('data-updated');
-    var createdBy = button.getAttribute('data-createdby');
-
-    document.getElementById('view_comment_id').textContent = id;
-    document.getElementById('view_subject').textContent = subject;
-    document.getElementById('view_comment').textContent = comment;
-    document.getElementById('view_status').textContent = status;
-    document.getElementById('view_created_by').textContent = createdBy;
-    document.getElementById('view_created').textContent = created;
-    document.getElementById('view_updated').textContent = updated;
-
-    // Try both jQuery and Bootstrap native
-    if (typeof $ !== 'undefined') {
-      $('#viewCommentModal').modal('show');
-    } else if (typeof bootstrap !== 'undefined') {
-      var modal = new bootstrap.Modal(document.getElementById('viewCommentModal'));
-      modal.show();
-    }
-  }
-
-  function openUpdateModal(button) {
-    var id = button.getAttribute('data-id');
-    var dbStatus = button.getAttribute('data-status');
-    var mappedStatus = mapStatus(dbStatus);
-
-    document.getElementById('update_comment_id').textContent = id;
-    document.getElementById('update_status').value = mappedStatus;
-
-    // Store the comment ID for form submission
-    document.getElementById('updateCommentForm').dataset.commentId = id;
-
-    // Try both jQuery and Bootstrap native
     try {
-      if (typeof $ !== 'undefined') {
-        $('#updateCommentModal').modal('show');
-      } else if (typeof bootstrap !== 'undefined') {
-        var modal = new bootstrap.Modal(document.getElementById('updateCommentModal'), {
-          backdrop: 'static',
-          keyboard: true
-        });
+      var id = button.getAttribute('data-id');
+      var subject = button.getAttribute('data-subject');
+      var comment = button.getAttribute('data-comment');
+      var status = button.getAttribute('data-status');
+      var created = button.getAttribute('data-created');
+      var updated = button.getAttribute('data-updated');
+      var createdBy = button.getAttribute('data-createdby');
+
+      document.getElementById('view_comment_id').textContent = id;
+      document.getElementById('view_subject').textContent = subject;
+      document.getElementById('view_comment').textContent = comment;
+      document.getElementById('view_status').textContent = status;
+      document.getElementById('view_created_by').textContent = createdBy;
+      document.getElementById('view_created').textContent = created;
+      document.getElementById('view_updated').textContent = updated;
+
+      var modalElement = document.getElementById('viewCommentModal');
+      
+      if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        var modal = new bootstrap.Modal(modalElement);
         modal.show();
+      } else if (typeof $ !== 'undefined' && $.fn.modal) {
+        $(modalElement).modal('show');
       } else {
         // Fallback: manually show modal
-        var modalElement = document.getElementById('updateCommentModal');
         modalElement.style.display = 'block';
         modalElement.classList.add('show');
         document.body.classList.add('modal-open');
       }
     } catch (error) {
-      console.error('Error opening modal:', error);
-      alert('Error opening modal. Please try again.');
+      console.error('Error opening view modal:', error);
+    }
+  }
+
+  function openUpdateModal(button) {
+    try {
+      var id = button.getAttribute('data-id');
+      var dbStatus = button.getAttribute('data-status');
+      var mappedStatus = mapStatus(dbStatus);
+
+      document.getElementById('update_comment_id').textContent = id;
+      document.getElementById('update_status').value = mappedStatus;
+
+      // Store the comment ID for form submission
+      document.getElementById('updateCommentForm').dataset.commentId = id;
+
+      var modalElement = document.getElementById('updateCommentModal');
+      
+      if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        var modal = new bootstrap.Modal(modalElement, {
+          backdrop: 'static',
+          keyboard: true
+        });
+        modal.show();
+      } else if (typeof $ !== 'undefined' && $.fn.modal) {
+        $(modalElement).modal('show');
+      } else {
+        // Fallback: manually show modal
+        modalElement.style.display = 'block';
+        modalElement.classList.add('show');
+        document.body.classList.add('modal-open');
+      }
+    } catch (error) {
+      console.error('Error opening update modal:', error);
     }
   }
 
@@ -216,11 +224,6 @@
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('updateCommentForm');
     if (form) {
-      // Remove any existing listeners before adding
-      var newForm = form.cloneNode(true);
-      form.parentNode.replaceChild(newForm, form);
-      form = newForm;
-
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         var commentId = this.dataset.commentId;
@@ -249,16 +252,17 @@
               alert('Status updated successfully!');
               // Close modal
               try {
-                if (typeof $ !== 'undefined') {
-                  $('#updateCommentModal').modal('hide');
-                } else if (typeof bootstrap !== 'undefined') {
-                  var modal = bootstrap.Modal.getInstance(document.getElementById('updateCommentModal'));
+                var modalElement = document.getElementById('updateCommentModal');
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                  var modal = bootstrap.Modal.getInstance(modalElement);
                   if (modal) {
                     modal.hide();
                   }
+                } else if (typeof $ !== 'undefined') {
+                  $(modalElement).modal('hide');
                 } else {
-                  document.getElementById('updateCommentModal').style.display = 'none';
-                  document.getElementById('updateCommentModal').classList.remove('show');
+                  modalElement.style.display = 'none';
+                  modalElement.classList.remove('show');
                   document.body.classList.remove('modal-open');
                 }
               } catch (err) {
@@ -276,8 +280,6 @@
             console.error('Error:', error);
             alert('An error occurred while updating the status');
           });
-      }, {
-        once: false
       });
     }
   });
