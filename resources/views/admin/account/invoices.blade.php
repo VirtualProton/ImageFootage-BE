@@ -807,7 +807,7 @@
                                 <td>{{$plan->package_type ?? ''}}</td>
                                 <td>{{$plan->package_description ?? ''}}</td>
                                 <td>{{$plan->package_price ?? ''}}</td>
-                                <td>{{$plan->downloaded_product ?? ''}}/100</td>
+                                <td>{{$plan->downloaded_product ?? ''}}/{{$plan->package_products_count ?? ''}}</td>
                               </tr>
                               @endforeach
                               <tr style="text-align: right;">
