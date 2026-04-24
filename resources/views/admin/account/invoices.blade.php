@@ -1014,7 +1014,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="form-group row" ng-if="payment_method=='chq'">
+                <div class="form-group row" ng-show="payment_method=='chq'" style="display:none;">
                   <label for="" class="col-md-6">How many days : </label>
                   <div class="col-md-6">
                       <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
@@ -1248,7 +1248,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="form-group row" ng-if="payment_method=='chq'">
+                <div class="form-group row" ng-show="payment_method=='chq'" style="display:none;">
                   <label for="" class="col-md-6">How many days : </label>
                   <div class="col-md-6">
                       <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
