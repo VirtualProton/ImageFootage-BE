@@ -898,13 +898,6 @@
                         @include('admin.account.comment')
                       </div>
                     </div> --}}
-
-              <!-- <div class="tab-pane fade @if($active_tab=="tab4") in active @endif" id="plans">
-                        <div class="box-body">
-                          @include('admin.account.add-plan')
-
-                        </div>
-                      </div> -->
             </div>
           </div>
         </div>
@@ -1445,7 +1438,6 @@
     </div>
   </div>
 </div>
-<!-- Update PO Modal -->
 <div class="modal fade" id="modal-update_po" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
