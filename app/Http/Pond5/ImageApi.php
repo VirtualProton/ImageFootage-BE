@@ -125,16 +125,19 @@ class ImageApi
             }
 
             if (!empty($getFilters['resolution'])) {
-                $resolutionValue = $getFilters['resolution']['value'];
-                // Map friendly names to Pond5 API resolution parameters
-                $resolutionMap = [
-                    '4k' => 'resolution:4k',
-                    'hd' => 'resolution:hd',
-                    '720p' => 'resolution:720p'
+                $resolutionValue = strtolower($getFilters['resolution']['value']);
+                // Map friendly names to Pond5 API size parameter values
+                $sizeMap = [
+                    '4k'   => '4k',
+                    'hd'   => '1080',
+                    '1080p'=> '1080',
+                    '720p' => '720',
+                    '1080' => '1080',
+                    '720'  => '720',
                 ];
 
-                if (isset($resolutionMap[$resolutionValue])) {
-                    $queryParts[] = $resolutionMap[$resolutionValue];
+                if (isset($sizeMap[$resolutionValue])) {
+                    $url['size'] = $sizeMap[$resolutionValue];
                 }
             }
             if (!empty($getFilters['artist_name'])) {
