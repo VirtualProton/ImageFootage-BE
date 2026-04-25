@@ -682,6 +682,7 @@ class Common extends Model
         $data["name"]    = $dataForEmail[0]['first_name'];
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
+        $invoicePayOnlineLink = '';
         if ($payment_method == 'online') {
             $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0),
