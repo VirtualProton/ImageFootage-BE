@@ -1981,7 +1981,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         address: $("#address_invoice").val() ?? "",
                         address2: $("#address2_invoice").val() ?? "",
                         postal_code: $("#postal_code_invoice").val() ?? "",
-                        expiry_due_date: $scope.expiry_due_date ?? "",
+                        expiry_due_date: expiry_due_date ?? "",
                         currency: currency,
                     },
                 }).then(
@@ -2056,7 +2056,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                         gst: gstNo,
                         pan: panNo,
                         phone: phoneNo,
-                        expiry_due_date: $scope.expiry_due_date ?? "",
+                        expiry_due_date: expiry_due_date ?? "",
                         country: $("#country_invoice_cus").val() ?? "",
                         state: $("#state_invoice_cus").val() ?? "",
                         city: $("#city_invoice_cus").val() ?? "",
