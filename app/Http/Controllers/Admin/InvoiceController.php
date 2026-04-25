@@ -441,6 +441,11 @@ class InvoiceController extends Controller
                 $query->whereDate('invoice_created', '<=', $endDate);
             }
 
+            // Apply payment method filter
+            if ($request->filled('payment_method') && !empty(trim($request->payment_method))) {
+                $query->where('payment_method', '=', trim($request->payment_method));
+            }
+
             // Apply search filter
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
@@ -467,8 +472,10 @@ class InvoiceController extends Controller
                     'invoice_name' => $invoice->invoice_name ?? 'N/A',
                     'user_id' => $invoice->user_id ?? 'N/A',
                     'user_name' => $invoice->user_name ?? 'N/A',
+                    'invoice_url' => $invoice->invoice_url ?? '',
                     'invoice_created' => !empty($invoice->invoice_created) ? date('Y-m-d H:i:s', strtotime($invoice->invoice_created)) : 'N/A',
                     'expiry_due_date' => $invoice->expiry_due_date ?? 'N/A',
+                    'payment_method' => $invoice->payment_method == 'chq' ? 'Terms Granted' : ($invoice->payment_method == 'online' ? 'Online' : ($invoice->payment_method ?? 'N/A')),
                     'payment_status' => $invoice->payment_status ? 'Completed' : 'Pending',
                 ];
             }

@@ -111,6 +111,15 @@
                                     <input type="text" id="end_date" class="form-control datepicker" placeholder="Select end date" autocomplete="off">
                                 </div>
 
+                                <div class="filter-group">
+                                    <label for="payment_method">Payment Method</label>
+                                    <select id="payment_method" class="form-control">
+                                        <option value="">All</option>
+                                        <option value="chq">Terms Granted</option>
+                                        <option value="online">Online</option>
+                                    </select>
+                                </div>
+
 
                                 <div class="filter-group" style="flex: 0;">
                                     <label>&nbsp;</label>
@@ -136,6 +145,7 @@
                                     <th>Client Name</th>
                                     <th>Invoice Date</th>
                                     <th>Due Date</th>
+                                    <th>Payment Method</th>
                                     <th>Payment Status</th>
                                 </tr>
                             </thead>
@@ -185,6 +195,7 @@
                     d.client_name = $('#client_name').val();
                     d.start_date = $('#start_date').val();
                     d.end_date = $('#end_date').val();
+                    d.payment_method = $('#payment_method').val();
                 },
                 dataSrc: function(json) {
 
@@ -243,8 +254,8 @@
                     name: 'invoice_name',
                     width: '10%',
                     render: function(data, type, row) {
-                        if (data && data !== 'N/A' && row.user_id && row.id) {
-                            return '<a href="{{ url("admin/invoice") }}/' + row.user_id + '/' + row.id + '" target="_blank" style="color: #3c8dbc; text-decoration: underline;">' + data + '</a>';
+                        if (data && data !== 'N/A' && row.invoice_url) {
+                            return '<a href="' + row.invoice_url + '" target="_blank" style="color: #3c8dbc; text-decoration: underline;">' + data + '</a>';
                         }
                         return data ? data : 'N/A';
                     }
@@ -280,6 +291,14 @@
                     data: 'expiry_due_date',
                     name: 'expiry_due_date',
                     width: '15%',
+                    render: function(data, type, row) {
+                        return data ? data : 'N/A';
+                    }
+                },
+                {
+                    data: 'payment_method',
+                    name: 'payment_method',
+                    width: '12%',
                     render: function(data, type, row) {
                         return data ? data : 'N/A';
                     }
@@ -339,11 +358,12 @@
             $('#client_name').val('');
             $('#start_date').val('');
             $('#end_date').val('');
+            $('#payment_method').val('');
             table.ajax.reload();
         });
 
         // Allow Enter key to apply filter
-        $('#client_name, #start_date, #end_date').on('keypress', function(e) {
+        $('#client_name, #start_date, #end_date, #payment_method').on('keypress', function(e) {
             if (e.which === 13) { // Enter key
                 $('#apply-filter').click();
             }
