@@ -554,31 +554,16 @@
                                           ($invioces->payment_method == 'online' ? 'Online' : $invioces->payment_method)
                                         }}</td>
                                 <td>
-                                  @if($invioces->payment_method == 'online')
-                                  @if($invioces->status == '0')
-                                  <span class="label label-warning">Pending</span>
-                                  @elseif($invioces->status == '1')
-                                  <span class="label label-success">Paid</span>
-                                  @elseif($invioces->status == '2')
-                                  <span class="label label-info">Purchased</span>
-                                  @elseif($invioces->status == '3')
-                                  <span class="label label-danger">Cancelled</span>
-                                  @endif
-                                  @else
-                                  <select <?php if ($invioces->status == 3) {
-                                            echo "disabled";
-                                          } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
-                                    <option value="0" <?php if ($invioces->status == '0') {
-                                                        echo "Selected";
-                                                      } ?>>Pending</option>
-                                    <option value="1" <?php if ($invioces->status == '1') {
-                                                        echo "Selected";
-                                                      } ?>>Paid</option>
-                                    <option value="3" <?php if ($invioces->status == '3') {
-                                                        echo "Selected";
-                                                      } ?>>Cancel</option>
-                                  </select>
-                                  @endif
+                                  <?php if ($invioces->status == '0') {
+                                    echo "Pending";
+                                  } else if ($invioces->status == '1') {
+                                    echo "Paid";
+                                  } else if ($invioces->status == '2') {
+                                    echo "Purchased";
+                                  } else if ($invioces->status == '3') {
+                                    echo "Cancel";
+                                  }
+                                  ?>
                                 </td>
                                 <td>{{$invioces->po_detail}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>

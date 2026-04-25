@@ -135,6 +135,7 @@
                                     <th>Client ID</th>
                                     <th>Client Name</th>
                                     <th>Invoice Date</th>
+                                    <th>Due Date</th>
                                     <th>Payment Status</th>
                                 </tr>
                             </thead>
@@ -270,7 +271,15 @@
                 {
                     data: 'invoice_created',
                     name: 'invoice_created',
-                    width: '25%',
+                    width: '20%',
+                    render: function(data, type, row) {
+                        return data ? data : 'N/A';
+                    }
+                },
+                {
+                    data: 'expiry_due_date',
+                    name: 'expiry_due_date',
+                    width: '15%',
                     render: function(data, type, row) {
                         return data ? data : 'N/A';
                     }

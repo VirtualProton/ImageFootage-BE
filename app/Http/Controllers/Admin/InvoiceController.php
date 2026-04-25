@@ -410,7 +410,9 @@ class InvoiceController extends Controller
             $searchValue = $request->input('search.value', '');
 
             // Base query
-            $query = Invoice::query();
+            $query = Invoice::query()
+                ->select('imagefootage_performa_invoices.*', 'usr.user_name')
+                ->leftJoin('imagefootage_users as usr', 'usr.id', '=', 'imagefootage_performa_invoices.user_id');
 
             // Apply role-based filter
             // If not admin (role_id != 1), show only user-specific records
@@ -464,7 +466,9 @@ class InvoiceController extends Controller
                     'id' => $invoice->id ?? null,
                     'invoice_name' => $invoice->invoice_name ?? 'N/A',
                     'user_id' => $invoice->user_id ?? 'N/A',
+                    'user_name' => $invoice->user_name ?? 'N/A',
                     'invoice_created' => !empty($invoice->invoice_created) ? date('Y-m-d H:i:s', strtotime($invoice->invoice_created)) : 'N/A',
+                    'expiry_due_date' => $invoice->expiry_due_date ?? 'N/A',
                     'payment_status' => $invoice->payment_status ? 'Completed' : 'Pending',
                 ];
             }
