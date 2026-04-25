@@ -423,7 +423,7 @@ class InvoiceController extends Controller
             // Exclude paid/completed invoices - show only outstanding
             $query->where(function ($q) {
                 $q->whereNull('payment_status')
-                    ->orWhere('payment_status', '!=', 'Transaction Success');
+                    ->orWhere('payment_status', '!=', 'Transction Success');
             });
 
             if ($request->filled('client_name') && !empty(trim($request->client_name))) {

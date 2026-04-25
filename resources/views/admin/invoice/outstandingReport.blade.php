@@ -146,7 +146,6 @@
                                     <th>Invoice Date</th>
                                     <th>Due Date</th>
                                     <th>Payment Method</th>
-                                    <th>Payment Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -301,27 +300,6 @@
                     width: '12%',
                     render: function(data, type, row) {
                         return data ? data : 'N/A';
-                    }
-                },
-                {
-                    data: 'payment_status',
-                    name: 'payment_status',
-                    width: '15%',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        if (data) {
-                            var badgeClass = 'label-default';
-                            if (data.toLowerCase() === 'paid') {
-                                badgeClass = 'label-success';
-                            } else if (data.toLowerCase() === 'pending') {
-                                badgeClass = 'label-warning';
-                            } else if (data.toLowerCase() === 'failed') {
-                                badgeClass = 'label-danger';
-                            }
-                            return '<span class="label ' + badgeClass + '">' + data + '</span>';
-                        }
-                        return '<span class="label label-warning">Pending</span>';
                     }
                 }
             ],
