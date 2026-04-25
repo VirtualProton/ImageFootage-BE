@@ -1947,7 +1947,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.quotationObj && $scope.quotationObj.currency);
-         var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $scope("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
+         var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
 
 
         if (gstNo && !reggst.test(gstNo)) {
@@ -2027,7 +2027,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.cusQuotationObj && $scope.cusQuotationObj.currency);
-        var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $scope("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
+        var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
 
         //var expiry_due_date = ($scope.expiry_due_date || $("#modal-default .modal-body:visible #expiry_due_date").val() || "").toString().trim();
 
