@@ -934,7 +934,7 @@ class Common extends Model
         if (!empty($pdf_path)) {
             $update_data = ['invoice_url' => $pdf_path, 'proforma_type' => '2', 'job_number' => $po, 'po_detail' => $po_date, 'invoice_created' => date('Y-m-d H:i:s'), 'payment_method' => $request_data['payment_method']];
             if (!empty($request_data['payment_method'] == 'chq') && !empty($request_data['expiry_due_date'])) {
-                $update_data['expiry_due_date'] = $request_data['expiry_due_date'];
+                $update_data['expiry_due_date'] = Carbon::now()->addDays((int) $request_data['expiry_due_date'])->format('Y-m-d H:i:s');
             }
             DB::table('imagefootage_performa_invoices')
                 ->where('id', '=', $quotation_id)
@@ -1204,7 +1204,7 @@ class Common extends Model
         if (!empty($pdf_path)) {
             $update_data = ['invoice_url' => $pdf_path, 'proforma_type' => '2', 'invoice_created' => date('Y-m-d H:i:s'), 'job_number' => $po, 'po_detail' => $po_date, 'payment_method' => $payment_method];
             if (!empty($payment_method == 'chq') && !empty($request_data['expiry_due_date'])) {
-                $update_data['expiry_due_date'] = $request_data['expiry_due_date'];
+                $update_data['expiry_due_date'] = Carbon::now()->addDays((int) $request_data['expiry_due_date'])->format('Y-m-d H:i:s');
             }
             DB::table('imagefootage_performa_invoices')
                 ->where('id', '=', $quotation_id)

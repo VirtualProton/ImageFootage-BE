@@ -250,7 +250,7 @@
                                   }
                                   ?>
                                 </td>
-                                <td>{{$invioces->po_detail}}</td>
+                                <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
                                   <?php if ($invioces->status == '1' && $invioces->payment_by == '1') {
@@ -410,7 +410,7 @@
                                   }
                                   ?>
                                 </td>
-                                <td>{{$invioces->po_detail}}</td>
+                                <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
                                   <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
@@ -565,7 +565,7 @@
                                   }
                                   ?>
                                 </td>
-                                <td>{{$invioces->po_detail}}</td>
+                                <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
                                   @if($invioces->proforma_type == 2)
@@ -726,7 +726,7 @@
                                   }
                                   ?>
                                 </td>
-                                <td>{{$invioces->po_detail}}</td>
+                                <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
                                   <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
