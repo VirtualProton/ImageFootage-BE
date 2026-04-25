@@ -13,6 +13,10 @@ class Comment extends Model
         return $this->hasOne(Account::class,'id', 'agent_id');
     }
 
+    public function agentAdmin(){
+        return $this->hasOne(Admin::class,'id', 'agent_id');
+    }
+
     public function admin(){
         return $this->hasOne(Admin::class,'id', 'created_by');
     }

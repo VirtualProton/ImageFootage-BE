@@ -191,6 +191,7 @@ class UserController extends Controller
         $comments = Comment::where('user_id', $user_id)
             ->with('agent')
             ->with('admin')
+            ->with('agentAdmin')
             ->orderBy('id', 'desc')
             ->limit(50)
             ->get()

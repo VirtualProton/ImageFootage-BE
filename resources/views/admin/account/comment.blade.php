@@ -27,7 +27,7 @@
             data-created="{{$comment['created_at'] ?? 'N/A'}}"
             data-updated="{{$comment['updated_at'] ?? 'N/A'}}"
             data-createdby="{{(!empty($comment['admin']['name']))?$comment['admin']['name']:'N/A'}}"
-            data-agentname="{{(!empty($comment['agent']['name']))?$comment['agent']['name']:'N/A'}}"
+            data-agentname="{{(!empty($comment['agent_admin']['name']))?$comment['agent_admin']['name']:'N/A'}}"
             onclick="openViewModal(this)">
             <i class="fa fa-eye"></i> View
           </button>
