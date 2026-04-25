@@ -413,7 +413,7 @@
                                 <td>{{$invioces->po_detail}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
-                                  <select <?php if ($invioces->status == 3) {
+                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
                                             echo "disabled";
                                           } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
@@ -590,7 +590,7 @@
                                   @endif
                                 </td>
                                 <td>
-                                  <select <?php if ($invioces->status == 3) {
+                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
                                             echo "disabled";
                                           } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
@@ -744,7 +744,7 @@
                                 <td>{{$invioces->po_detail}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
                                 <td>
-                                  <select <?php if ($invioces->status == 3) {
+                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
                                             echo "disabled";
                                           } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
