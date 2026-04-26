@@ -41,6 +41,7 @@
       }
 
       body {
+         font-family: 'Inter', Arial, sans-serif;
          margin-top: 0.5cm;
          margin-left: 2cm;
          margin-right: 2cm;
@@ -70,8 +71,6 @@
       .invoice-logo img {
          max-width: 160px;
          height: auto;
-         border: 1px dashed #ccc;
-         padding: 8px 20px;
       }
 
       .invoice-title-cell {
@@ -100,12 +99,13 @@
       }
 
       .invoice-title-hello {
-         font-size: 62px;
+         font-size: 50px;
          font-weight: 700;
-         color: #f7b500;
+         color: #F7B403;
          /* #f7b500 */
          font-style: normal;
          line-height: 1;
+         letter-spacing: -1px;
          display: block;
       }
 
@@ -124,13 +124,13 @@
       }
 
       .invoice-info-table .label {
-         color: #888;
+         color: #777;
          width: 100px;
          white-space: nowrap;
       }
 
       .invoice-info-table .value {
-         color: #6c6c6c;
+         color: #111;
          font-weight: 700;
       }
 
@@ -154,13 +154,13 @@
       }
 
       .client-label {
-         color: #888;
+         color: #777;
          width: 110px;
          white-space: nowrap;
       }
 
       .client-value {
-         color: #6c6c6c;
+         color: #111;
          font-weight: 700;
       }
 
@@ -328,7 +328,7 @@
                <td class="invoice-title-cell">
                   <span class="invoice-title-line1">THIS IS YOUR</span>
                   <span class="invoice-title-line2">ESTIMATE</span>
-                  <span class="invoice-title-hello" style="color: <?php echo ($quotation[0]['flag'] == 0) ? '#1a7cbf' : '#f7b500'; ?>;">hello</span>
+                  <span class="invoice-title-hello" style="color: <?php echo ($quotation[0]['flag'] == 0) ? '#1a7cbf' : '#F7B403'; ?>;">hello</span>
                </td>
             </tr>
          </table>
@@ -527,7 +527,7 @@
                   </tr>
                   <tr>
                      <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">Discount</td>
-                     <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee;">- <?php echo $currencySymbol; ?><?php echo number_format($discountAmount, 2); ?></td>
+                     <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee; color: #2a9d4e;">- <?php echo $currencySymbol; ?><?php echo number_format($discountAmount, 2); ?></td>
                   </tr>
                   <?php if (!empty($taxAmount)) { ?>
                   <tr>
