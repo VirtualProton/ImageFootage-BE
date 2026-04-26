@@ -130,6 +130,7 @@
       }
 
       .invoice-info-table .value {
+         color: #6c6c6c;
          font-weight: 700;
       }
 
@@ -159,6 +160,7 @@
       }
 
       .client-value {
+         color: #6c6c6c;
          font-weight: 700;
       }
 
@@ -552,8 +554,9 @@
       <!-- Remit To / Bank Transfers Section -->
       <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; border-collapse: collapse; margin-bottom: 0;">
          <tr>
+            <hr style="border: none; border-top: 2px solid #0a0a0a; margin: 0 0 15px;">
             <td style="vertical-align: top; width: 45%; padding: 15px 20px; border-right: 1px solid #ddd;">
-               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px; text-decoration: underline;">Remit To</p>
+               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px;">Remit To</p>
                <p style="font-size: 13px; margin: 0 0 3px;">Conceptual Pictures Worldwide Pvt. Ltd.</p>
                <p style="font-size: 13px; margin: 0 0 3px;">R5 Chambers, 3rd Floor,</p>
                <p style="font-size: 13px; margin: 0 0 3px;">Opp. Pillar No. 02, Mehdipatnam,</p>
@@ -561,35 +564,35 @@
                <p style="font-size: 13px; margin: 0;">Finance: accounts@conceptualpictures.com</p>
             </td>
             <td style="vertical-align: top; width: 55%; padding: 15px 20px;">
-               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px; text-decoration: underline;">Bank Transfers To</p>
+               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px;">Bank Transfers To</p>
                <table cellpadding="0" cellspacing="0" style="width: 100%;">
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Account Name:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Conceptual Pictures Worldwide Pvt. Ltd.</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">Conceptual Pictures Worldwide Pvt. Ltd.</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Account Type:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Current</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">Current</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Name:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFC Bank Ltd</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">HDFC Bank Ltd</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Address:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Mallepally, Vijaynagar Colony, Hyderabad 500057</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">Mallepally, Vijaynagar Colony, Hyderabad 500057</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Account:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">50200000502220</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">50200000502220</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Swift Code:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFCINBB</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">HDFCINBB</td>
                   </tr>
                   <tr>
                      <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">IFSC Code:</td>
-                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFC0001998</td>
+                     <td style="font-size: 13px; font-weight: 700; color: #6c6c6c; padding: 2px 0;">HDFC0001998</td>
                   </tr>
                </table>
             </td>
@@ -613,29 +616,25 @@
       <!-- Invoice Terms & License Conditions -->
       <div style="margin-bottom: 20px;">
          <h2 style="font-size: 16px; font-weight: 700; margin: 0 0 8px;">Invoice Terms &amp; License Conditions.</h2>
-         <hr style="border: none; border-top: 2px solid #c8a415; margin: 0 0 15px;">
+         <hr style="border: none; border-top: 2px solid #0a0a0a; margin: 0 0 15px;">
          <ol style="margin-left: 20px; padding-left: 0; font-size: 13px; line-height: 22px;">
             <li style="margin-bottom: 10px;">This Invoice is valid for 30 days from the date of issue unless stated otherwise. Prices are subject to change after the validity period.</li>
             <li style="margin-bottom: 10px;">All content is subject to availability at the time of licensing. The Company reserves the right to replace unavailable assets with comparable alternatives.</li>
             <li style="margin-bottom: 10px;">
                <strong>License Grant:</strong> Upon receipt of full payment, ImageFootage grants a non-exclusive, non-transferable, royalty-free license to use the licensed content strictly in accordance with the License Type specified on this invoice. Licenses usually include:
                <ol style="list-style-type: upper-alpha; margin-left: 20px; margin-top: 8px;">
-                  <li style="margin-bottom: 6px;"><strong>Digital/Standard License</strong> – Online Commercial or Editorial use (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
-                  <li style="margin-bottom: 6px;"><strong>Commercial License</strong> – Indoor / outdoor TV / POP / Online (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
-                  <li style="margin-bottom: 6px;"><strong>Non Commercial License</strong> – All Media Non Commercial (Editorial) (including broadcast / theater / DVD / VOD). No promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
-                  <li style="margin-bottom: 6px;"><strong>All Media License</strong> – EXTENDED All Media (including TVC / Broadcast, Theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 5px;">Digital/Standard License – Online Commercial or Editorial use (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 5px;">Commercial License – Indoor / outdoor TV / POP / Online (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 5px;">Non Commercial License – All Media Non Commercial (Editorial) (including broadcast / theater / DVD / VOD). No promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 5px;">All Media License – EXTENDED All Media (including TVC / Broadcast, Theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
                </ol>
             </li>
             <li style="margin-bottom: 10px;">
                <strong>Usage Restrictions:</strong> Content may not be resold, sublicensed, redistributed, or made available as standalone files. Use in unlawful, misleading, defamatory, or pornographic content is strictly prohibited.
             </li>
             <li style="margin-bottom: 10px;">
-               <strong>Intellectual Property:</strong> All intellectual property rights in the content remain with ImageFootage or its licensors. The license granted does not transfer ownership.
+               <strong>Ownership:</strong> All intellectual property rights remain the property of ImageFootage and/or its licensors. No ownership rights are transferred to the client.
             </li>
-            <li style="margin-bottom: 10px;">
-               <strong>Liability:</strong> ImageFootage shall not be liable for any indirect, incidental, or consequential damages arising from the use of the licensed content.
-            </li>
-            <li style="margin-bottom: 10px;">All disputes are subject to the exclusive jurisdiction of courts in Hyderabad, Telangana, India.</li>
          </ol>
       </div>
 
