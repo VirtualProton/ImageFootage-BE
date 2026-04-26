@@ -155,7 +155,7 @@
 
       .client-label {
          color: #777;
-         width: 110px;
+         width: 90px;
          white-space: nowrap;
       }
 
@@ -341,10 +341,10 @@
       <!-- Invoice Info Section -->
       <table class="invoice-info-table" cellpadding="0" cellspacing="0">
          <tr>
-            <td class="label" width="12%">Estimate No.</td>
-            <td class="value" width="38%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
+            <td class="label" width="13%">Estimate No.</td>
+            <td class="value" width="27%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
             <td class="label" width="15%">Company Name</td>
-            <td class="value" width="35%">Conceptual Pictures Worldwide Pvt. Ltd</td>
+            <td class="value" width="45%">Conceptual Pictures Worldwide Pvt. Ltd</td>
          </tr>
          <tr>
             <td class="label">Estimate Date</td>
@@ -395,7 +395,7 @@
                   </tr>
                   <tr>
                      <td class="client-label">Mail ID</td>
-                     <td class="client-value"><?php echo $quotation[0]['email'] ?? ''; ?></td>
+                     <td class="client-value" style="word-break: break-all;"><?php echo $quotation[0]['email'] ?? ''; ?></td>
                   </tr>
                   <tr>
                      <td class="client-label">Contact No.</td>
