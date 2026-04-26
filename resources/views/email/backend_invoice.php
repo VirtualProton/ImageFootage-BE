@@ -322,7 +322,7 @@
       <div class="container" style="margin-left: 2cm; margin-right: 2cm;">
          <table class="invoice-header-table" cellpadding="0" cellspacing="0">
             <tr>
-               <td class="invoice-logo" style="width: 200px; vertical-align: bottom; text-align: right;">
+               <td class="invoice-logo" style="width: 200px; vertical-align: bottom; text-align: left;">
                   <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo">
                </td>
                <td class="invoice-title-cell">
@@ -339,12 +339,12 @@
    <main class="main">
 
       <!-- Invoice Info Section -->
-      <table class="invoice-info-table" cellpadding="0" cellspacing="0">
+      <table class="invoice-info-table" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
          <tr>
-            <td class="label" width="13%">Estimate No.</td>
-            <td class="value" width="27%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
-            <td class="label" width="15%">Company Name</td>
-            <td class="value" width="45%">Conceptual Pictures Worldwide Pvt. Ltd</td>
+            <td class="label" width="14%">Estimate No.</td>
+            <td class="value" width="22%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
+            <td class="label" width="16%">Company Name</td>
+            <td class="value" width="48%">Conceptual Pictures Worldwide Pvt. Ltd</td>
          </tr>
          <tr>
             <td class="label">Estimate Date</td>
@@ -369,7 +369,7 @@
       <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 15px;">
 
       <!-- Client Details Section -->
-      <table class="client-details-section" cellpadding="0" cellspacing="0">
+      <table class="client-details-section" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
          <tr>
             <td colspan="4" class="client-details-title">Client Details</td>
          </tr>
@@ -388,22 +388,22 @@
                <p style="margin: 0 0 3px;">GSTIN &nbsp; <strong><?php echo $quotation[0]['gst'] ?? ''; ?></strong></p>
             </td>
             <td colspan="2" style="padding: 8px 12px; vertical-align: top; width: 50%;">
-               <table cellpadding="0" cellspacing="0" style="width: 100%;">
+               <table cellpadding="0" cellspacing="0" style="width: 100%; table-layout: fixed;">
                   <tr>
-                     <td class="client-label">Ordered By</td>
-                     <td class="client-value"><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?></td>
+                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Ordered By</td>
+                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?></td>
                   </tr>
                   <tr>
-                     <td class="client-label">Mail ID</td>
-                     <td class="client-value" style="word-break: break-all;"><?php echo $quotation[0]['email'] ?? ''; ?></td>
+                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Mail ID</td>
+                     <td style="color: #111; font-weight: 700; font-size: 12px; padding: 2px 0; word-wrap: break-word; overflow: hidden;"><?php echo $quotation[0]['email'] ?? ''; ?></td>
                   </tr>
                   <tr>
-                     <td class="client-label">Contact No.</td>
-                     <td class="client-value"><?php echo $quotation[0]['mobile'] ?? ''; ?></td>
+                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Contact No.</td>
+                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['mobile'] ?? ''; ?></td>
                   </tr>
                   <tr>
-                     <td class="client-label">Sales Person</td>
-                     <td class="client-value"><?php echo $quotation[0]['contact_owner'] ?? (Auth::guard('admins')->user()->name ?? ''); ?></td>
+                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Sales Person</td>
+                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['contact_owner'] ?? (Auth::guard('admins')->user()->name ?? ''); ?></td>
                   </tr>
                </table>
             </td>
