@@ -322,7 +322,7 @@
       <div class="container" style="margin-left: 2cm; margin-right: 2cm;">
          <table class="invoice-header-table" cellpadding="0" cellspacing="0">
             <tr>
-               <td class="invoice-logo" style="width: 200px; vertical-align: bottom;">
+               <td class="invoice-logo" style="width: 200px; vertical-align: bottom; text-align: right;">
                   <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo">
                </td>
                <td class="invoice-title-cell">
@@ -439,35 +439,17 @@
                      <table cellpadding="0" cellspacing="0" style="width: 100%;">
                         <tr>
                            <td style="width: 130px; vertical-align: top; padding-right: 12px;">
-                              <?php if (!empty($quotation[$i]['product_image']) && $quotation[$i]['type'] != 'Music') { ?>
-                                 <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="thumbnail" style="width: 120px; height: 80px; object-fit: cover; background-color: #eee; display: block;">
-                              <?php } elseif ($quotation[$i]['type'] == 'Music') { ?>
-                                 <?php if (!empty($quotation[0]['music_image'])) { ?>
-                                    <img src="<?php echo $quotation[0]['music_image']; ?>" alt="thumbnail" style="width: 120px; height: 80px; object-fit: cover; background-color: #eee; display: block;">
-                                 <?php } else { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; text-align: center;">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                       <path d="M9 18V5l12-2v13" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                       <circle cx="6" cy="18" r="3" stroke="#bbb" stroke-width="1.5"></circle>
-                                       <circle cx="18" cy="16" r="3" stroke="#bbb" stroke-width="1.5"></circle>
-                                    </svg>
+                              <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
+                                    <span style="font-size: 36px; color: #bbb;">&#9835;</span>
                                  </div>
-                                 <?php } ?>
                               <?php } elseif ($quotation[$i]['type'] == 'Footage') { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; text-align: center;">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                       <rect x="2" y="4" width="20" height="16" rx="2" stroke="#bbb" stroke-width="1.5"></rect>
-                                       <path d="M2 8h20M2 16h20M7 4v16M17 4v16" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"></path>
-                                       <polygon points="10,9 10,15 15,12" fill="#bbb"></polygon>
-                                    </svg>
+                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
+                                    <span style="font-size: 36px; color: #bbb;">&#9654;</span>
                                  </div>
                               <?php } else { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; text-align: center;">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                       <rect x="3" y="3" width="18" height="18" rx="2" stroke="#bbb" stroke-width="1.5"></rect>
-                                       <circle cx="8.5" cy="8.5" r="1.5" fill="#bbb"></circle>
-                                       <path d="M3 16l5-5 4 4 3-3 6 6" stroke="#bbb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
+                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
+                                    <span style="font-size: 36px; color: #bbb;">&#9728;</span>
                                  </div>
                               <?php } ?>
                            </td>
