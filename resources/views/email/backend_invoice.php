@@ -411,6 +411,13 @@
       </table>
 
       <!-- Items Table -->
+      <?php
+      $placeholders = [
+         'Music'   => $quotation[0]['placeholder_music'] ?? '',
+         'Footage' => $quotation[0]['placeholder_video'] ?? '',
+         'Image'   => $quotation[0]['placeholder_image'] ?? '',
+      ];
+      ?>
       <table class="items-table" cellpadding="0" cellspacing="0">
          <thead>
             <tr>
@@ -439,19 +446,11 @@
                      <table cellpadding="0" cellspacing="0" style="width: 100%;">
                         <tr>
                            <td style="width: 130px; vertical-align: top; padding-right: 12px;">
-                              <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
-                                    <span style="font-size: 36px; color: #bbb;">&#9835;</span>
-                                 </div>
-                              <?php } elseif ($quotation[$i]['type'] == 'Footage') { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
-                                    <span style="font-size: 36px; color: #bbb;">&#9654;</span>
-                                 </div>
-                              <?php } else { ?>
-                                 <div style="width: 120px; height: 80px; background-color: #f5f5f5; text-align: center; line-height: 80px;">
-                                    <span style="font-size: 36px; color: #bbb;">&#9728;</span>
-                                 </div>
-                              <?php } ?>
+                              <?php
+                                 $pType = $quotation[$i]['type'] ?? 'Image';
+                                 $pKey = isset($placeholders[$pType]) ? $pType : 'Image';
+                              ?>
+                              <img src="<?php echo $placeholders[$pKey]; ?>" width="120" height="80" style="width: 120px; height: 80px; display: block;">
                            </td>
                            <td style="vertical-align: top; font-size: 13px; line-height: 22px;">
                               <?php if (!empty($quotation[$i]['type'])) { ?>

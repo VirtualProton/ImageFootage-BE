@@ -680,6 +680,9 @@ class Common extends Model
             $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/conceptual_logo.png');
         }
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+        $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
+        $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
+        $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
