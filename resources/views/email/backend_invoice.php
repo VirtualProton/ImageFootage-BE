@@ -494,7 +494,7 @@
          $totalAmount = (float) ($quotation[0]['total'] ?? 0);
          $subTotal = max($totalAmount - $taxAmount, 0);
          $discountAmount = 0;
-         $currencySymbol = ($quotation[0]['currency'] ?? 'INR') === 'USD' ? '$' : '₹';
+         $currencySymbol = ($quotation[0]['currency'] ?? 'INR') === 'USD' ? 'USD ' : 'INR ';
       ?>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px; margin-bottom: 10px;">
          <tr>
@@ -507,10 +507,12 @@
                      <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">Sub Total</td>
                      <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee;"><?php echo $currencySymbol; ?><?php echo number_format($subTotal, 2); ?></td>
                   </tr>
+                  <?php if ($discountAmount > 0) { ?>
                   <tr>
                      <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">Discount</td>
                      <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee; color: #2a9d4e;">- <?php echo $currencySymbol; ?><?php echo number_format($discountAmount, 2); ?></td>
                   </tr>
+                  <?php } ?>
                   <?php if (!empty($taxAmount)) { ?>
                   <tr>
                      <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">IGST <?php echo config('constants.GST_VALUE'); ?>%</td>
