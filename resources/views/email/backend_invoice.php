@@ -494,7 +494,7 @@
          $totalAmount = (float) ($quotation[0]['total'] ?? 0);
          $subTotal = max($totalAmount - $taxAmount, 0);
          $discountAmount = 0;
-         $currencySymbol = ($quotation[0]['currency'] ?? 'INR') === 'USD' ? 'USD ' : 'INR ';
+         $currencySymbol = ($quotation[0]['currency'] ?? 'INR') === 'USD' ? '$' : '₹';
       ?>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px; margin-bottom: 10px;">
          <tr>
