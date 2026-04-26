@@ -176,6 +176,17 @@ class Common extends Model
         return 'file:///' . str_replace('\\', '/', $absolutePath);
     }
 
+    private function pdfImageBase64($relativePath)
+    {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, (string) $relativePath), DIRECTORY_SEPARATOR));
+        if (file_exists($absolutePath)) {
+            $mime = mime_content_type($absolutePath);
+            $data = base64_encode(file_get_contents($absolutePath));
+            return 'data:' . $mime . ';base64,' . $data;
+        }
+        return $this->pdfImagePath($relativePath);
+    }
+
     private function buildAtomReturnUrl($path)
     {
         $configuredBase = env('ATOM_CALLBACK_BASE_URL') ?: config('app.url');
@@ -327,10 +338,10 @@ class Common extends Model
             $amount_in_words =  $this->convert_number_to_words($dataForEmail[0]['total']);
             if ($data['flag'] == 0) {
                 // For other quotations use image footage logo
-                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
+                $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/new-design-logo.png');
             } else {
                 // For form2 quotation use other logo
-                $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
+                $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/conceptual_logo.png');
             }
             $dataForEmail[0]['template_image'] = $this->pdfImagePath('images/music-img.png');
             $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
@@ -659,14 +670,14 @@ class Common extends Model
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
 
-        $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
         if ($dataForEmail[0]['flag'] == 0) {
             // For other quotations use image footage logo
-            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/new-design-logo.png');
+            $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/new-design-logo.png');
         } else {
             // For form2 quotation use other logo
-            $dataForEmail[0]['company_logo'] = $this->pdfImagePath('images/conceptual_logo.png');
+            $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/conceptual_logo.png');
         }
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $front_end_url_name               = config('app.front_end_url');
@@ -1016,7 +1027,7 @@ class Common extends Model
         $dataForEmail[0]['payment_url'] = $url;
         $currency = 'INR';
 //test commit
-        $dataForEmail[0]['company_logo']                    = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['company_logo']                    = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']                       = $this->pdfImagePath('images/signature.png');
         $front_end_url_name                                 = config('app.front_end_url');
         $frontend_name                                      = explode('//', rtrim($front_end_url_name, '/#/'));
@@ -1418,7 +1429,7 @@ class Common extends Model
         $data["name"]                     = $dataForEmail[0]['first_name'];
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
-        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Subscription Plan – Images – ' . $package_name . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
@@ -1663,7 +1674,7 @@ class Common extends Model
         $data["email"]                    = $data['email'];
         $data["invoice"]                  = $dataForEmail[0]['invoice_name'];
         $data["name"]                     = $dataForEmail[0]['first_name'];
-        $dataForEmail[0]['company_logo']  = $this->pdfImagePath('images/new-design-logo.png');
+        $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
         $dataForEmail[0]['description']   = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
