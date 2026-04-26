@@ -47,6 +47,7 @@ return [
     'SAC_CODE' => '997339',
     'VENDOR_CODE' => 'XXX6767',
     'QI_ADDRESS' => 'Hyderabad - Telangana',
+    'CIN_VALUE' => env('CIN_VALUE', 'U123456TG20254728'),
     'image_licence_details' => [
         'small' => '550',
         'medium' => '2500',

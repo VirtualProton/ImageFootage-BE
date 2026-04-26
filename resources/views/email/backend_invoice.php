@@ -29,24 +29,15 @@
 
       @page {
          margin-top: 200px;
-         margin-bottom: 400px;
+         margin-bottom: 50px;
       }
 
       header {
-         position: fixed;
-         top: 0px;
-         left: 0px;
-         height: 100px;
-         right: 0cm;
-         bottom: 5cm;
-      }
-
-      footer {
-         position: fixed;
-         bottom: 0px;
-         left: 0px;
-         right: 0cm;
-         height: 130px;
+         position: relative;
+         top: auto;
+         left: auto;
+         right: auto;
+         bottom: auto;
       }
 
       body {
@@ -56,287 +47,573 @@
          margin-bottom: 3cm;
       }
 
-      .col-lg-4 {
-         padding-top: 0 !important;
-      }
-
-      .col-lg-4 div img {
-         padding-top: 0 !important;
-      }
-
       .main {
-         border: 1px solid black;
-         padding: 10px
+         padding: 10px;
+      }
+
+      /* Invoice header */
+      .invoice-header-table {
+         width: 100%;
+         border-bottom: 1px solid #ddd;
+         margin-bottom: 0;
+         padding-bottom: 20px;
+      }
+
+      .invoice-header-table td {
+         vertical-align: bottom;
+      }
+
+      .invoice-logo {
+         width: 160px;
+      }
+
+      .invoice-logo img {
+         max-width: 160px;
+         height: auto;
+         border: 1px dashed #ccc;
+         padding: 8px 20px;
+      }
+
+      .invoice-title-cell {
+         text-align: right;
+         padding-bottom: 5px;
+      }
+
+      .invoice-title-line1 {
+         font-size: 11px;
+         letter-spacing: 6px;
+         color: #888888;
+         text-transform: uppercase;
+         display: block;
+         font-weight: 400;
+         margin-bottom: 0;
+      }
+
+      .invoice-title-line2 {
+         font-size: 11px;
+         letter-spacing: 8px;
+         color: #888888;
+         text-transform: uppercase;
+         display: block;
+         font-weight: 400;
+         margin-bottom: 2px;
+      }
+
+      .invoice-title-hello {
+         font-size: 62px;
+         font-weight: 700;
+         color: #f7b500;
+         /* #f7b500 */
+         font-style: normal;
+         line-height: 1;
+         display: block;
+      }
+
+      /* Invoice info section */
+      .invoice-info-table {
+         width: 100%;
+         margin-top: 10px;
+         margin-bottom: 15px;
+         border-collapse: collapse;
+      }
+
+      .invoice-info-table td {
+         padding: 4px 12px;
+         font-size: 13px;
+         vertical-align: top;
+      }
+
+      .invoice-info-table .label {
+         color: #888;
+         width: 100px;
+         white-space: nowrap;
+      }
+
+      .invoice-info-table .value {
+         font-weight: 700;
+      }
+
+      /* Client details section */
+      .client-details-section {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 15px;
+      }
+
+      .client-details-section td {
+         padding: 4px 12px;
+         font-size: 13px;
+         vertical-align: top;
+      }
+
+      .client-details-title {
+         font-size: 15px;
+         font-weight: 700;
+         padding: 8px 12px;
+      }
+
+      .client-label {
+         color: #888;
+         width: 110px;
+         white-space: nowrap;
+      }
+
+      .client-value {
+         font-weight: 700;
+      }
+
+      /* Items table */
+      .items-table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 10px;
+      }
+
+      .items-table thead th {
+         background-color: #444;
+         color: #fff;
+         padding: 10px 12px;
+         font-size: 13px;
+         text-align: left;
+      }
+
+      .items-table thead th:last-child {
+         text-align: right;
+      }
+
+      .items-table tbody td {
+         padding: 10px 12px;
+         font-size: 13px;
+         vertical-align: top;
+         border-bottom: 1px solid #eee;
+      }
+
+      .items-table .sno-col {
+         width: 50px;
+         text-align: center;
+      }
+
+      .items-table .price-col {
+         width: 120px;
+         text-align: right;
+         font-weight: 700;
+         white-space: nowrap;
+      }
+
+      .item-title {
+         font-weight: 700;
+         font-size: 14px;
+         margin-bottom: 8px;
+      }
+
+      .item-body {
+         display: table;
+         width: 100%;
+      }
+
+      .item-thumb {
+         display: table-cell;
+         width: 130px;
+         vertical-align: top;
+         padding-right: 12px;
+      }
+
+      .item-thumb img {
+         width: 120px;
+         height: 80px;
+         object-fit: cover;
+         background-color: #eee;
+         display: block;
+      }
+
+      .item-details {
+         display: table-cell;
+         vertical-align: top;
+         font-size: 12px;
+         line-height: 20px;
+      }
+
+      .item-details strong {
+         font-weight: 700;
+      }
+
+      /* Amount rows */
+      .amount-table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 2px;
+      }
+
+      .amount-table td {
+         padding: 10px 12px;
+         font-size: 14px;
+         background-color: rgba(89, 89, 89, 0.15);
+      }
+
+      .amount-table .amount-label {
+         text-align: left;
+      }
+
+      .amount-table .amount-value {
+         text-align: right;
+         font-weight: 700;
+      }
+
+      .single-gray-block {
+         padding: 8px 12px;
+         font-size: 14px;
+         background-color: rgba(89, 89, 89, 0.15);
+         margin-bottom: 15px;
+      }
+
+      /* Licensing / payment */
+      .licensing-terms .h3 {
+         font-size: 18px;
+         font-weight: 700;
+         color: #0563c1;
+         margin-bottom: 12px;
+         text-decoration: underline;
+      }
+
+      .licensing-terms ul,
+      .licensing-terms ol {
+         margin-left: 40px;
+         margin-bottom: 15px;
+      }
+
+      .licensing-terms li {
+         line-height: 24px;
+         font-size: 14px;
+      }
+
+      /* Signature */
+      .signature {
+         text-align: right;
+         padding: 50px 0 0 0;
+      }
+
+      .signature p {
+         font-size: 14px;
+      }
+
+      .signature p span {
+         font-size: 18px;
+         font-weight: 700;
+      }
+
+      .signature img {
+         width: 110px;
+         height: auto;
+         margin: 7px 0;
+      }
+
+      .page-break {
+         page-break-before: always;
       }
    </style>
    <link rel="stylesheet" href="assets/css/email/quotation.css">
 </head>
 
 <body>
-   <!-- Define header and footer blocks before your content -->
    <!-- Header start -->
    <header>
-      <div class="container">
-         <div class="header-text">
-            <h1 class="h1"><strong>hello</strong></h1>
-            <span><strong>THIS IS YOUR TAX INVOICE</strong></span>
-         </div>
-         <div class="header-logo">
-            <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo" width="1920" height="351">
-         </div>
+      <div class="container" style="margin-left: 2cm; margin-right: 2cm;">
+         <table class="invoice-header-table" cellpadding="0" cellspacing="0">
+            <tr>
+               <td class="invoice-logo">
+                  <img src="<?php echo $quotation[0]['company_logo']; ?>" alt="logo">
+               </td>
+               <td class="invoice-title-cell">
+                  <span class="invoice-title-line1">THIS IS YOUR</span>
+                  <span class="invoice-title-line2">ESTIMATE</span>
+                  <span class="invoice-title-hello">hello</span>
+               </td>
+            </tr>
+         </table>
       </div>
    </header>
    <!-- Header end -->
-   <!-- Footer start -->
-   <?php if ($quotation[0]['flag'] == 0) { ?>
-      <footer>
-         <div class="container">
-            <div class="footer-left">
-               <h2 class="h4"><strong><?php config('constants.company_name') ?></strong></h2>
-               <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Near Sarojini Devi Hospital, Humayun Nagar, Hyderabad -
-                  500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720 <span> Fax +91 40 6673 8077</span>
-               </p>
-               <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-               <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
-            </div>
-            <div class="footer-right">
-               <h3 class="h2">THANK YOU</h3>
-            </div>
-         </div>
-      </footer>
-   <?php } else { ?>
-      <footer>
-         <div class="container">
-            <div class="footer-left">
-               <h2 class="h4"><strong>Conceptual Pictures Worldwide Private Limited</strong></h2>
-               <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers,
-                  Humayun Nagar, Hyderabad - 500028, Telangana,
-                  Andhra Pradesh, India Phone: +91 40 6720 6720
-               </p>
-               <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-               <a href="<?php echo $quotation[0]['frontend_url']; ?>"><?php echo $quotation[0]['frontend_url']; ?></a>
-            </div>
-            <div class="footer-right">
-               <h3 class="h2">THANK YOU</h3>
-            </div>
-         </div>
-      </footer>
-   <?php } ?>
-   <!-- Footer end -->
-   <!-- Wrap the content of your PDF inside a main tag -->
-   <main class="main">
-      <!-- Table paragraph section start -->
-      <section class="table-paragraph">
-         <div class="container">
-            <div class="client-info-top">
-               <div class="client-info-leftside">
-                  <?php if ($quotation[0]['flag'] == 2) { ?>
 
-                     <p>Customer Name: <span><strong><?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
-                  <?php } ?>
-                  <?php if ($quotation[0]['flag'] !== 2) { ?>
-                     <p>Customer Name: <span><strong><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name'] ?> </span></strong></p>
-                  <?php } ?>
-                  <p>Address: <span><strong><?php echo $quotation[0]['address'] ?><?php echo $quotation[0]['cityname'] ?>&nbsp;&nbsp; <?php echo $quotation[0]['statename'] ?>&nbsp;&nbsp; - <?php echo $quotation[0]['postal_code'] ?></strong></span>
-                  </p>
-                  <p>Mobile: <span><strong><?php echo $quotation[0]['mobile'] ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo $quotation[0]['gst'] ?></strong></span></p>
-                  <p>PAN: <span><strong><?php echo $quotation[0]['pan'] ?></strong></span></p>
-               </div>
-               <div class="client-info-rightside">
-                  <p>Invoice No.: <span><strong><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name'] ?></span></strong></p>
-                  <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($quotation[0]['invicecreted'])) ?></strong></span></p>
-                  <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                  <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
-                  <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                  <p>Vendor Code : <span><strong><?php echo $quotation[0]['vendor_code'] ?></strong></span></p>
-                  <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
-                  <p>Payment Due: <span><strong><?php echo ucfirst($payment_method) ?></strong></span></p>
-               </div>
-            </div>
-            <div class="client-info-bottom">
-               <div class="client-info-leftside">
-                  <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $quotation[0]['first_name'] ?> <?php echo $quotation[0]['last_name'] ?></strong></span></p>
-               </div>
-               <div class="client-info-rightside">
-                  <?php if ($quotation[0]['flag'] == 2) { ?>
-                     <p>End Client: <br /><span class="block-text"><strong><?php echo $quotation[0]['end_client'] ?></strong></span></p>
-                  <?php } ?>
-                  <p>Purchase Order No.: <span class="block-text"><strong><?php echo $po ?? ''; ?></strong></span></p>
-                  <p>dated <span><strong><?php echo date("d.M.Y", strtotime($quotation[0]['po_detail'])); ?></strong></span></p>
-               </div>
-            </div>
-            <div class="client-info-bottom">
-               <div class="client-info-leftside">
-                  <p>Total number of image(s)/footage(s): <span class="block-text"><strong><?php echo count($quotation); ?></strong></span></p>
-               </div>
-               <div class="client-info-rightside">
-                  <p>IF Sales Representative: <span class="block-text"><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>
-                  <p>Client: <span><strong><?php echo $quotation[0]['company'] ?></strong></span></p>
-               </div>
-            </div>
+
+
+   <!-- Main content -->
+   <main class="main">
+
+      <!-- Invoice Info Section -->
+      <table class="invoice-info-table" cellpadding="0" cellspacing="0">
+         <tr>
+            <td class="label" width="12%">Estimate No.</td>
+            <td class="value" width="38%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
+            <td class="label" width="15%">Company Name</td>
+            <td class="value" width="35%">Conceptual Pictures Worldwide Pvt. Ltd</td>
+         </tr>
+         <tr>
+            <td class="label">Estimate Date</td>
+            <td class="value"><?php echo date("d.m.Y", strtotime($quotation[0]['invicecreted'])); ?></td>
+            <td class="label">Company Pan No</td>
+            <td class="value"><?php echo config('constants.PAN_VALUE'); ?></td>
+         </tr>
+         <tr>
+            <td class="label">Client Code</td>
+            <td class="value"><?php echo $quotation[0]['vendor_code']; ?></td>
+            <td class="label">GSTIN</td>
+            <td class="value"><?php echo config('constants.GSTIN_VALUE'); ?></td>
+         </tr>
+         <tr>
+            <td class="label"></td>
+            <td class="value"></td>
+            <td class="label">CIN Number</td>
+            <td class="value"><?php echo config('constants.CIN_VALUE') ?? ''; ?></td>
+         </tr>
+      </table>
+
+      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 15px;">
+
+      <!-- Client Details Section -->
+      <table class="client-details-section" cellpadding="0" cellspacing="0">
+         <tr>
+            <td colspan="4" class="client-details-title">Client Details</td>
+         </tr>
+         <tr>
+            <td colspan="2" style="padding: 8px 12px; vertical-align: top; width: 50%;">
+               <p style="margin: 0 0 3px; font-weight: 700;">
+                  <?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?>
+               </p>
+               <p style="margin: 0 0 3px;"><?php echo $quotation[0]['address'] ?? ''; ?></p>
+               <p style="margin: 0 0 3px;">
+                  <?php echo $quotation[0]['cityname'] ?? ''; ?>
+                  <?php if (!empty($quotation[0]['postal_code'])) { ?> - <?php echo $quotation[0]['postal_code']; ?><?php } ?>
+               </p>
+               <p style="margin: 0 0 8px;"><?php echo $quotation[0]['countryname'] ?? ''; ?></p>
+               <p style="margin: 0 0 3px;">Pan No &nbsp; <strong><?php echo $quotation[0]['pan'] ?? ''; ?></strong></p>
+               <p style="margin: 0 0 3px;">GSTIN &nbsp; <strong><?php echo $quotation[0]['gst'] ?? ''; ?></strong></p>
+            </td>
+            <td colspan="2" style="padding: 8px 12px; vertical-align: top; width: 50%;">
+               <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                  <tr>
+                     <td class="client-label">Ordered By</td>
+                     <td class="client-value"><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?></td>
+                  </tr>
+                  <tr>
+                     <td class="client-label">Mail ID</td>
+                     <td class="client-value"><?php echo $quotation[0]['email'] ?? ''; ?></td>
+                  </tr>
+                  <tr>
+                     <td class="client-label">Contact No.</td>
+                     <td class="client-value"><?php echo $quotation[0]['mobile'] ?? ''; ?></td>
+                  </tr>
+                  <tr>
+                     <td class="client-label">Sales Person</td>
+                     <td class="client-value"><?php echo $quotation[0]['contact_owner'] ?? (Auth::guard('admins')->user()->name ?? ''); ?></td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+
+      <!-- Items Table -->
+      <table class="items-table" cellpadding="0" cellspacing="0">
+         <thead>
+            <tr>
+               <th class="sno-col">S. No.</th>
+               <th>Description</th>
+               <th style="text-align: right;">Unit Price</th>
+            </tr>
+         </thead>
+         <tbody>
             <?php
             $amount = 0;
-            $page_break_class = '';
             for ($i = 0; $i < count($quotation); $i++) {
-               if ($i > 1 && $i % 6 == 0) {
-                  $page_break_class = ' page-break';
-               }
-               if ($i % 3 == 0) {
-            ?>
-                  <div class="<?php echo "row" . $page_break_class ?>">
-                  <?php
-               }
                if (!empty($quotation[$i])) {
                   $amount += $quotation[$i]['total'] - $quotation[$i]['tax'];
-                  if ($i % 3 == 1) {
-                     $class = "col-lg-4 second-div";
-                  } else {
-                     $class = "col-lg-4 ";
-                  } ?>
-                     <div class="<?php echo $class; ?>">
-                        <div style="padding-top: 10px;">
+                  $itemCode = trim($quotation[$i]['product_id'] ?? '');
+                  $itemName = trim($quotation[$i]['name'] ?? '');
+                  $itemTitle = $itemCode . (($itemCode !== '' && $itemName !== '') ? ' : ' : '') . $itemName;
+                  if ($itemTitle === '') {
+                     $itemTitle = 'Asset ' . ($i + 1);
+                  }
+            ?>
+               <tr<?php if ($i > 0 && $i % 5 == 0) { ?> class="page-break"<?php } ?>>
+                  <td class="sno-col"><?php echo $i + 1; ?></td>
+                  <td>
+                     <div class="item-title"><?php echo htmlspecialchars($itemTitle); ?></div>
+                     <div class="item-body">
+                        <div class="item-thumb">
                            <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                              <img src="<?php echo $quotation[0]['music_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                              <img src="<?php echo $quotation[0]['music_image']; ?>" alt="thumbnail">
                            <?php } else { ?>
-                              <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="photo-gallery" width="200" height="108" style="width:100%">
+                              <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="thumbnail">
                            <?php } ?>
-
                         </div>
-                        <?php if (!empty($quotation[$i]['product_id'])) {
-                           echo '<p>Image ID: ' . $quotation[$i]['product_id'] . '</p>';
-                        } else {
-                           echo '<p><br></p>';
-                        }  ?>
-                        <p>Size: <?php echo $quotation[$i]['product_size'] ?></p>
-                        <p>Cost: <span><strong><?php echo $quotation[$i]['currency'] ?> <?php echo number_format($quotation[$i]['subtotal'], 2) ?>/-</strong></span></p>
+                        <div class="item-details">
+                           <?php if (!empty($quotation[$i]['type'])) { ?>
+                              <div><strong>File Type:</strong> <?php echo htmlspecialchars($quotation[$i]['type']); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['licence_type'])) { ?>
+                              <div><strong>License Type:</strong> <?php echo htmlspecialchars(strip_tags($quotation[$i]['licence_type'])); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['product_size'])) { ?>
+                              <div><strong>Size:</strong> <?php echo htmlspecialchars($quotation[$i]['product_size']); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['size'])) { ?>
+                              <div><strong>Resolution Type:</strong> <?php echo htmlspecialchars($quotation[$i]['size']); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['resolution'])) { ?>
+                              <div><strong>Resolution:</strong> <?php echo htmlspecialchars($quotation[$i]['resolution']); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['format'])) { ?>
+                              <div><strong>File Format:</strong> <?php echo htmlspecialchars($quotation[$i]['format']); ?></div>
+                           <?php } ?>
+                           <?php if (!empty($quotation[$i]['duration'])) { ?>
+                              <div><strong>Duration:</strong> <?php echo htmlspecialchars($quotation[$i]['duration']); ?></div>
+                           <?php } ?>
+                        </div>
                      </div>
-                  <?php
-               }
-               if ($i % 3 == 0) {
-                  ?>
-                  </div>
+                  </td>
+                  <td class="price-col"><?php echo number_format($quotation[$i]['subtotal'], 2); ?></td>
+               </tr>
             <?php
                }
             }
             ?>
-            <?php
-            $break_amount_div = '';
-            if (count($quotation) > 3 && count($quotation) < 7) {
-               $break_amount_div = 'page-break';
-            } ?>
-            <div class="<?php echo 'row mb-0 amount-divs-row ' . $break_amount_div; ?>">
-               <div class="col-lg-12 amount-divs" style="padding: 0; width:100%; ">
-                  <!-- <div class="start">Amount (INR)</div>
-                  <div class="end"><strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong></div> -->
-                  <div class="start-end">
-                     <table width="100%" style="width: 100%;">
-                        <tr>
-                           <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Amount (<?php echo $quotation[0]['currency']; ?>)
-                           </td>
-                           <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                              <strong><?php echo number_format(($quotation[0]['total'] - $quotation[0]['tax']), 2) ?></strong>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-               </div>
-            </div>
-            <?php if (!empty($quotation[0]['tax'])) {
-            ?>
-               <div class="row mb-0 amount-divs-row">
-                  <div class="col-lg-12 amount-divs" style="padding: 0; width:100%;">
-                     <!-- <div class="start">Add: GST @ <?php echo config('constants.GST_VALUE') ?>%</div>
-                     <div class="end"><strong><?php echo $quotation[0]['tax']; ?></strong></div> -->
-                     <div class="start-end">
-                        <table width="100%" style="width: 100%;">
-                           <tr>
-                              <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                              Add: GST @ <?php echo config('constants.GST_VALUE') ?>%
-                              </td>
-                              <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                                 <strong><?php echo $quotation[0]['tax']; ?></strong>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-            <?php }
-            ?>
-            <div class="row mb-0 amount-divs-row">
-               <div class="col-lg-12 amount-divs" style="padding: 0; width:100%;">
-                  <!-- <div class="start">Total Invoice Amount (INR)</div>
-                  <div class="end"><strong><?php echo number_format($quotation[0]['total'], 2) ?></strong></div> -->
-                  <div class="start-end">
-                     <table width="100%" style="width: 100%;">
-                        <tr>
-                           <td width="50%" style="text-align: left; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                           Total Invoice Amount (<?php echo $quotation[0]['currency']; ?>)
-                           </td>
-                           <td width="50%" style="text-align: right; padding: 10px; background-color: rgba(89, 89, 89, 0.29);">
-                              <strong><?php echo number_format($quotation[0]['total'], 2) ?></strong>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-lg-12 single-gray-block" style="margin-bottom:20px;width:100%;border:2px solid white; margin-top:1px;">
-                  <p>In words: <strong><?php echo $quotation[0]['currency'] == 'USD' ? 'Dollars' : 'Rupees'; ?> <?php echo $amount_in_words . ' only' ?></strong></p>
-               </div>
-            </div>
-            <div class="licensing-terms">
-               <h2 class="h3"><strong>Payment Instructions:</strong></h2>
-               <div class="licensing-condition">
-                  <ul>
-                     <li>License Rights are only assigned on payment of this invoice.</li>
-                     <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
-                        <span><strong><?php config('constants.company_name') ?>,</strong></span>
-                        c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
-                     </li>
-                     <li>
-                        If not paid within credit period allowed, <span><strong>interest @ 24%</strong></span> will be charged.
-                     </li>
-                     <li>Payment can be made in favour of <span><strong>Conceptual Pictures Worldwide Pvt. Ltd..</strong></span>
-                     </li>
-                  </ul>
-                  <ol>
-                     <li>Through A/c. Payee Cheques/DD payable at Hyderabad</li>
-                     <li> RTGS/NEFT to <span><strong>A/c. No. 50200000502220, HDFC Bank Ltd</strong></span>, Vijay Nagar Branch,
-                        Hyderabad
-                        IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
-                  </ol>
-                           <?php if (!empty($quotation[0]['payment_url'])) { ?>
-                           <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 18px 0 10px;">
-                              <tr>
-                                 <td style="text-align: center;">
-                                    <a href="<?php echo $quotation[0]['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Pay Invoice with Razorpay</a>
-                                 </td>
-                              </tr>
-                           </table>
-                           <?php } ?>
-                  <ul>
-                     <li>Goods once sold cannot be replaced or returned.</li>
-                     <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</li>
-                     <li>All disputes are subject to Hyderabad Jurisdiction.</li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- Table paragraph section end -->
-      <!-- Signature section start -->
-      <section class="signature">
-         <div class="container">
-            <p>For <span><?php config('constants.company_name') ?></span></p>
-            <img src="<?php echo $quotation[0]['signature']; ?>" alt="signature" width="171" height="89">
-            <p>Authorized Signatory</p>
-         </div>
-      </section>
-      <!-- Signature section end -->
+         </tbody>
+      </table>
+
+      <!-- Total Assets & Summary Section -->
+      <?php
+         $taxAmount = (float) ($quotation[0]['tax'] ?? 0);
+         $totalAmount = (float) ($quotation[0]['total'] ?? 0);
+         $subTotal = max($totalAmount - $taxAmount, 0);
+         $discountAmount = 0;
+         $currencySymbol = ($quotation[0]['currency'] ?? 'INR') === 'USD' ? '$' : '₹';
+      ?>
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px; margin-bottom: 10px;">
+         <tr>
+            <td style="vertical-align: top; width: 50%; padding: 10px 0;">
+               <p style="font-size: 14px; font-weight: 700;">Total Assets: <?php echo count($quotation); ?></p>
+            </td>
+            <td style="vertical-align: top; width: 50%;">
+               <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                  <tr>
+                     <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">Sub Total</td>
+                     <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee;"><?php echo $currencySymbol; ?><?php echo number_format($subTotal, 2); ?></td>
+                  </tr>
+                  <tr>
+                     <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">Discount</td>
+                     <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee;">- <?php echo $currencySymbol; ?><?php echo number_format($discountAmount, 2); ?></td>
+                  </tr>
+                  <?php if (!empty($taxAmount)) { ?>
+                  <tr>
+                     <td style="padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #eee;">IGST <?php echo config('constants.GST_VALUE'); ?>%</td>
+                     <td style="padding: 8px 12px; font-size: 13px; text-align: right; border-bottom: 1px solid #eee;"><?php echo $currencySymbol; ?><?php echo number_format($taxAmount, 2); ?></td>
+                  </tr>
+                  <?php } ?>
+                  <tr>
+                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; background-color: #333; color: #fff;"><strong>Total Due</strong></td>
+                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; text-align: right; background-color: #333; color: #fff;"><strong><?php echo $currencySymbol; ?><?php echo number_format($totalAmount, 2); ?></strong></td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+
+      <!-- System-generated notice -->
+      <div style="border-top: 3px solid #c8a415; padding-top: 10px; margin-bottom: 20px;">
+         <p style="font-size: 12px; font-style: italic; color: #555; line-height: 18px;">
+            This is a system-generated invoice and does not require any official signature. It reflects our records of the transaction with you. Please inform us immediately if you notice any discrepancies in the details.
+         </p>
+      </div>
+
+      <!-- Remit To / Bank Transfers Section -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="border: 2px solid #4ca8a1; border-collapse: collapse; margin-bottom: 20px;">
+         <tr>
+            <td style="vertical-align: top; width: 45%; padding: 15px 20px; border-right: 1px solid #ddd;">
+               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px; text-decoration: underline;">Remit To</p>
+               <p style="font-size: 13px; margin: 0 0 3px;">Conceptual Pictures Worldwide Pvt. Ltd.</p>
+               <p style="font-size: 13px; margin: 0 0 3px;">R5 Chambers, 3rd Floor,</p>
+               <p style="font-size: 13px; margin: 0 0 3px;">Opp. Pillar No. 02, Mehdipatnam,</p>
+               <p style="font-size: 13px; margin: 0 0 8px;">Hyderabad, Telangana 500028</p>
+               <p style="font-size: 13px; margin: 0;">Finance: accounts@conceptualpictures.com</p>
+            </td>
+            <td style="vertical-align: top; width: 55%; padding: 15px 20px;">
+               <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px; text-decoration: underline;">Bank Transfers To</p>
+               <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Account Name:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Conceptual Pictures Worldwide Pvt. Ltd.</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Account Type:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Current</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Name:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFC Bank Ltd</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Address:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">Mallepally, Vijaynagar Colony, Hyderabad 500057</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Bank Account:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">50200000502220</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">Swift Code:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFCINBB</td>
+                  </tr>
+                  <tr>
+                     <td style="font-size: 13px; color: #888; padding: 2px 10px 2px 0; white-space: nowrap;">IFSC Code:</td>
+                     <td style="font-size: 13px; font-weight: 700; padding: 2px 0;">HDFC0001998</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+
+      <!-- Pay Online Button -->
+      <?php if (!empty($quotation[0]['payment_url'])) { ?>
+      <div style="margin-bottom: 25px; padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+         <table cellpadding="0" cellspacing="0">
+            <tr>
+               <td style="font-size: 14px; padding-right: 15px; vertical-align: middle;">For Online Payment</td>
+               <td style="vertical-align: middle;">
+                  <a href="<?php echo htmlspecialchars($quotation[0]['payment_url']); ?>" style="display: inline-block; background: #e6a817; color: #ffffff; text-decoration: none; padding: 10px 24px; border-radius: 4px; font-weight: 700; font-size: 14px;">Pay Online &rarr;</a>
+               </td>
+            </tr>
+         </table>
+      </div>
+      <?php } ?>
+
+      <!-- Invoice Terms & License Conditions -->
+      <div style="margin-bottom: 20px;">
+         <h2 style="font-size: 16px; font-weight: 700; margin: 0 0 8px;">Invoice Terms &amp; License Conditions.</h2>
+         <hr style="border: none; border-top: 2px solid #c8a415; margin: 0 0 15px;">
+         <ol style="margin-left: 20px; padding-left: 0; font-size: 13px; line-height: 22px;">
+            <li style="margin-bottom: 10px;">This Invoice is valid for 30 days from the date of issue unless stated otherwise. Prices are subject to change after the validity period.</li>
+            <li style="margin-bottom: 10px;">All content is subject to availability at the time of licensing. The Company reserves the right to replace unavailable assets with comparable alternatives.</li>
+            <li style="margin-bottom: 10px;">
+               <strong>License Grant:</strong> Upon receipt of full payment, ImageFootage grants a non-exclusive, non-transferable, royalty-free license to use the licensed content strictly in accordance with the License Type specified on this invoice. Licenses usually include:
+               <ol style="list-style-type: upper-alpha; margin-left: 20px; margin-top: 8px;">
+                  <li style="margin-bottom: 6px;"><strong>Digital/Standard License</strong> – Online Commercial or Editorial use (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 6px;"><strong>Commercial License</strong> – Indoor / outdoor TV / POP / Online (no broadcast / theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 6px;"><strong>Non Commercial License</strong> – All Media Non Commercial (Editorial) (including broadcast / theater / DVD / VOD). No promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+                  <li style="margin-bottom: 6px;"><strong>All Media License</strong> – EXTENDED All Media (including TVC / Broadcast, Theater / DVD / VOD). Including promotion / marketing / merchandising / endorsement of a brand, product or commercial service.</li>
+               </ol>
+            </li>
+            <li style="margin-bottom: 10px;">
+               <strong>Usage Restrictions:</strong> Content may not be resold, sublicensed, redistributed, or made available as standalone files. Use in unlawful, misleading, defamatory, or pornographic content is strictly prohibited.
+            </li>
+            <li style="margin-bottom: 10px;">
+               <strong>Intellectual Property:</strong> All intellectual property rights in the content remain with ImageFootage or its licensors. The license granted does not transfer ownership.
+            </li>
+            <li style="margin-bottom: 10px;">
+               <strong>Liability:</strong> ImageFootage shall not be liable for any indirect, incidental, or consequential damages arising from the use of the licensed content.
+            </li>
+            <li style="margin-bottom: 10px;">All disputes are subject to the exclusive jurisdiction of courts in Hyderabad, Telangana, India.</li>
+         </ol>
+      </div>
+
    </main>
 </body>
 
