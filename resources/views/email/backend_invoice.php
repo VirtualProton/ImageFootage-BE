@@ -28,7 +28,7 @@
       }
 
       @page {
-         margin-top: 200px;
+         margin-top: 30px;
          margin-bottom: 50px;
       }
 
@@ -41,10 +41,10 @@
       }
 
       body {
-         margin-top: 3cm;
+         margin-top: 0.5cm;
          margin-left: 2cm;
          margin-right: 2cm;
-         margin-bottom: 3cm;
+         margin-bottom: 2cm;
       }
 
       .main {
@@ -229,8 +229,8 @@
       .item-details {
          display: table-cell;
          vertical-align: top;
-         font-size: 12px;
-         line-height: 20px;
+         font-size: 13px;
+         line-height: 22px;
       }
 
       .item-details strong {
@@ -333,9 +333,6 @@
       </div>
    </header>
    <!-- Header end -->
-
-
-
    <!-- Main content -->
    <main class="main">
 
@@ -437,38 +434,40 @@
                   <td class="sno-col"><?php echo $i + 1; ?></td>
                   <td>
                      <div class="item-title"><?php echo htmlspecialchars($itemTitle); ?></div>
-                     <div class="item-body">
-                        <div class="item-thumb">
-                           <?php if ($quotation[$i]['type'] == 'Music') { ?>
-                              <img src="<?php echo $quotation[0]['music_image']; ?>" alt="thumbnail">
-                           <?php } else { ?>
-                              <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="thumbnail">
-                           <?php } ?>
-                        </div>
-                        <div class="item-details">
-                           <?php if (!empty($quotation[$i]['type'])) { ?>
-                              <div><strong>File Type:</strong> <?php echo htmlspecialchars($quotation[$i]['type']); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['licence_type'])) { ?>
-                              <div><strong>License Type:</strong> <?php echo htmlspecialchars(strip_tags($quotation[$i]['licence_type'])); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['product_size'])) { ?>
-                              <div><strong>Size:</strong> <?php echo htmlspecialchars($quotation[$i]['product_size']); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['size'])) { ?>
-                              <div><strong>Resolution Type:</strong> <?php echo htmlspecialchars($quotation[$i]['size']); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['resolution'])) { ?>
-                              <div><strong>Resolution:</strong> <?php echo htmlspecialchars($quotation[$i]['resolution']); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['format'])) { ?>
-                              <div><strong>File Format:</strong> <?php echo htmlspecialchars($quotation[$i]['format']); ?></div>
-                           <?php } ?>
-                           <?php if (!empty($quotation[$i]['duration'])) { ?>
-                              <div><strong>Duration:</strong> <?php echo htmlspecialchars($quotation[$i]['duration']); ?></div>
-                           <?php } ?>
-                        </div>
-                     </div>
+                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                        <tr>
+                           <td style="width: 130px; vertical-align: top; padding-right: 12px;">
+                              <?php if ($quotation[$i]['type'] == 'Music') { ?>
+                                 <img src="<?php echo $quotation[0]['music_image']; ?>" alt="thumbnail" style="width: 120px; height: 80px; object-fit: cover; background-color: #eee; display: block;">
+                              <?php } else { ?>
+                                 <img src="<?php echo $quotation[$i]['product_image']; ?>" alt="thumbnail" style="width: 120px; height: 80px; object-fit: cover; background-color: #eee; display: block;">
+                              <?php } ?>
+                           </td>
+                           <td style="vertical-align: top; font-size: 13px; line-height: 22px;">
+                              <?php if (!empty($quotation[$i]['type'])) { ?>
+                                 <div><strong>File Type:</strong> <?php echo htmlspecialchars($quotation[$i]['type']); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['licence_type'])) { ?>
+                                 <div><strong>License Type:</strong> <?php echo htmlspecialchars(strip_tags($quotation[$i]['licence_type'])); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['product_size'])) { ?>
+                                 <div><strong>Size:</strong> <?php echo htmlspecialchars($quotation[$i]['product_size']); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['size'])) { ?>
+                                 <div><strong>Resolution Type:</strong> <?php echo htmlspecialchars($quotation[$i]['size']); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['resolution'])) { ?>
+                                 <div><strong>Resolution:</strong> <?php echo htmlspecialchars($quotation[$i]['resolution']); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['format'])) { ?>
+                                 <div><strong>File Format:</strong> <?php echo htmlspecialchars($quotation[$i]['format']); ?></div>
+                              <?php } ?>
+                              <?php if (!empty($quotation[$i]['duration'])) { ?>
+                                 <div><strong>Duration:</strong> <?php echo htmlspecialchars($quotation[$i]['duration']); ?></div>
+                              <?php } ?>
+                           </td>
+                        </tr>
+                     </table>
                   </td>
                   <td class="price-col"><?php echo number_format($quotation[$i]['subtotal'], 2); ?></td>
                </tr>
@@ -509,8 +508,8 @@
                   </tr>
                   <?php } ?>
                   <tr>
-                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; background-color: #333; color: #fff;"><strong>Total Due</strong></td>
-                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; text-align: right; background-color: #333; color: #fff;"><strong><?php echo $currencySymbol; ?><?php echo number_format($totalAmount, 2); ?></strong></td>
+                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; background-color: #e8e8e8; color: #000;"><strong>Total Due</strong></td>
+                     <td style="padding: 10px 12px; font-size: 14px; font-weight: 700; text-align: right; background-color: #e8e8e8; color: #000;"><strong><?php echo $currencySymbol; ?><?php echo number_format($totalAmount, 2); ?></strong></td>
                   </tr>
                </table>
             </td>
@@ -525,7 +524,7 @@
       </div>
 
       <!-- Remit To / Bank Transfers Section -->
-      <table width="100%" cellpadding="0" cellspacing="0" style="border: 2px solid #4ca8a1; border-collapse: collapse; margin-bottom: 20px;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; border-collapse: collapse; margin-bottom: 0;">
          <tr>
             <td style="vertical-align: top; width: 45%; padding: 15px 20px; border-right: 1px solid #ddd;">
                <p style="font-size: 14px; font-weight: 700; margin: 0 0 10px; text-decoration: underline;">Remit To</p>
@@ -573,7 +572,7 @@
 
       <!-- Pay Online Button -->
       <?php if (!empty($quotation[0]['payment_url'])) { ?>
-      <div style="margin-bottom: 25px; padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+      <div style="margin-bottom: 25px; padding: 12px 20px; background-color: #f5f5f5; border-top: 1px solid #ddd;">
          <table cellpadding="0" cellspacing="0">
             <tr>
                <td style="font-size: 14px; padding-right: 15px; vertical-align: middle;">For Online Payment</td>
