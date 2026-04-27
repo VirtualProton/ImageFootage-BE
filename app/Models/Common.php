@@ -404,9 +404,10 @@ class Common extends Model
             if (!is_dir($pdfDirectory)) {
                 mkdir($pdfDirectory, 0777, true);
             }
+            $pdfPath = $pdfDirectory . '/' . $fileName;
 
             $quotationHtml = view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words])->render();
-            $this->savePdfFromHtml($quotationHtml, $pdfDirectory . '/' . $fileName);
+            $this->savePdfFromHtml($quotationHtml, $pdfPath);
 
             try {
                 $customTemplatePath = base_path('email_task/Send Custom Quotation/Custom/Quotation-CP.html');
@@ -546,11 +547,14 @@ class Common extends Model
                     'mail_driver' => config('mail.driver'),
                 ]);
 
-                Mail::send([], [], function ($message) use ($data, $pdf, $fileName, $customTemplateHtml) {
+                Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml) {
                     $message->to($data["email"])
                         ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                         ->subject($data["subject"])
-                        ->attachData($pdf->output(), $fileName);
+                        ->attach($pdfPath, [
+                            'as' => $fileName,
+                            'mime' => 'application/pdf',
+                        ]);
 
                     $message->setBody('Please check your quotation in the attached PDF.', 'text/plain');
                 });
@@ -569,7 +573,7 @@ class Common extends Model
                     'suppress_php_deprecation_warning' => true,
                 ]);
                 $path = 'quotation/' . $fileName;
-                $source = fopen($pdfDirectory . '/' . $fileName, 'rb');
+                $source = fopen($pdfPath, 'rb');
                 $uploader = new MultipartUploader($s3Client, $source, [
                     'bucket' => 'imgfootage',
                     'key' => $path,
@@ -588,7 +592,7 @@ class Common extends Model
                     DB::table('imagefootage_performa_invoices')
                         ->where('id', '=', $id)
                         ->update(['quotation_url' => $pdf_path]);
-                    unlink($pdfDirectory . '/' . $fileName);
+                    unlink($pdfPath);
                 }
             } catch (\Exception $exception) {
                 \Log::error('Quotation save/mail failed in save_proforma', [
@@ -763,6 +767,7 @@ class Common extends Model
             mkdir($pdfDirectory, 0777, true);
         }
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
+        $pdfPath = $pdfDirectory . '/' . $fileName;
         $invoiceHtml = view('email.backend_invoice', [
             'quotation' => $dataForEmail,
             'amount_in_words' => strtoupper($amount_in_words),
@@ -770,7 +775,7 @@ class Common extends Model
             'po' => $po,
             'po_date' => $po_date,
         ])->render();
-        $this->savePdfFromHtml($invoiceHtml, $pdfDirectory . '/' . $fileName);
+        $this->savePdfFromHtml($invoiceHtml, $pdfPath);
         // if ($payment_method == 'online') {
 
         //     // Send payment link to customer via email
@@ -947,11 +952,14 @@ class Common extends Model
                 'mail_driver' => config('mail.driver'),
             ]);
             try {
-                Mail::send([], [], function ($message) use ($data, $pdf, $fileName, $customTemplateHtml, $isCustomIfInvoice, &$mailMessageId) {
+                Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml, $isCustomIfInvoice, &$mailMessageId) {
                     $message->to($data["email"])
                         ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                         ->subject($data["subject"])
-                        ->attachData($pdf->output(), $fileName);
+                        ->attach($pdfPath, [
+                            'as' => $fileName,
+                            'mime' => 'application/pdf',
+                        ]);
                     $mailMessageId = $message->getId();
 
                     $message->setBody('Please check your invoice in the attached PDF.', 'text/plain');
@@ -982,7 +990,7 @@ class Common extends Model
             'version' => '2006-03-01'
         ]);
         $path = 'invoice/' . $fileName;
-        $source = fopen($pdfDirectory . '/' . $fileName, 'rb');
+        $source = fopen($pdfPath, 'rb');
         $uploader = new MultipartUploader($s3Client, $source, [
             'bucket' => 'imgfootage',
             'key' => $path,
@@ -1002,10 +1010,10 @@ class Common extends Model
             DB::table('imagefootage_performa_invoices')
                 ->where('id', '=', $quotation_id)
                 ->update($update_data);
-            unlink($pdfDirectory . '/' . $fileName);
+            unlink($pdfPath);
         } else {
             // Keep local fallback so the flow does not break if S3 is unavailable.
-            $localPdfPath = $pdfDirectory . '/' . $fileName;
+            $localPdfPath = $pdfPath;
             if (file_exists($localPdfPath)) {
                 DB::table('imagefootage_performa_invoices')
                     ->where('id', '=', $quotation_id)
