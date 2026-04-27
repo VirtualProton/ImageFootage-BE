@@ -49,6 +49,7 @@ class BrowserPdf
     public static function saveHtmlAsPdf(string $html, string $pdfPath): void
     {
         self::$lastRenderer = null;
+        $browserPath = self::browserPath();
 
         if (self::browserlessBaseUrl() !== null) {
             try {
@@ -57,13 +58,12 @@ class BrowserPdf
 
                 return;
             } catch (\Throwable $exception) {
-                if (self::browserPath() === null) {
+                if ($browserPath === null) {
                     throw $exception;
                 }
             }
         }
 
-        $browserPath = self::browserPath();
         if ($browserPath === null) {
             throw new RuntimeException('No supported browser binary found for browser-based PDF rendering.');
         }
@@ -172,6 +172,12 @@ class BrowserPdf
         $candidates = array_filter([
             env('PDF_BROWSER_PATH'),
             env('CHROME_PATH'),
+            'google-chrome',
+            'google-chrome-stable',
+            'chromium-browser',
+            'chromium',
+            'microsoft-edge',
+            'msedge',
             'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
             'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
@@ -187,8 +193,9 @@ class BrowserPdf
         ]);
 
         foreach ($candidates as $candidate) {
-            if (is_string($candidate) && $candidate !== '' && file_exists($candidate)) {
-                return $candidate;
+            $resolvedPath = self::resolveBrowserExecutable((string) $candidate);
+            if ($resolvedPath !== null) {
+                return $resolvedPath;
             }
         }
 
@@ -318,5 +325,43 @@ class BrowserPdf
         }
 
         return function_exists('posix_geteuid') && posix_geteuid() === 0;
+    }
+
+    /**
+     * @param string $candidate
+     * @return string|null
+     */
+    private static function resolveBrowserExecutable(string $candidate): ?string
+    {
+        $candidate = trim($candidate);
+        if ($candidate === '') {
+            return null;
+        }
+
+        if (file_exists($candidate)) {
+            return $candidate;
+        }
+
+        $resolverCommand = DIRECTORY_SEPARATOR === '\\'
+            ? ['where', $candidate]
+            : ['which', $candidate];
+
+        try {
+            $process = new Process($resolverCommand);
+            $process->setTimeout(5);
+            $process->mustRun();
+
+            $resolvedLines = preg_split('/\r\n|\r|\n/', trim($process->getOutput())) ?: [];
+            foreach ($resolvedLines as $resolvedLine) {
+                $resolvedLine = trim($resolvedLine);
+                if ($resolvedLine !== '' && file_exists($resolvedLine)) {
+                    return $resolvedLine;
+                }
+            }
+        } catch (\Throwable $exception) {
+            return null;
+        }
+
+        return null;
     }
 }

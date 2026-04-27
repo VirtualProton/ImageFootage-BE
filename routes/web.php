@@ -277,6 +277,7 @@ if (app()->environment('local') || config('app.debug')) {
 
     Route::get('/backend-invoice-preview', function (\Illuminate\Http\Request $request) use ($buildPreviewQuotationData, $streamPreviewPdf) {
         [$quotation, $paymentMethod] = $buildPreviewQuotationData($request);
+        $quotation[0]['document_label'] = 'Invoice';
 
         $viewData = [
             'quotation' => $quotation,
