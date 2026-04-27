@@ -16,6 +16,307 @@ Route::get($randomPath, [\Rap2hpoutre\LaravelLogViewer\LogViewerController::clas
 
 Auth::routes();
 
+if (app()->environment('local') || config('app.debug')) {
+    $pdfImageBase64 = function ($relativePath) {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, (string) $relativePath), DIRECTORY_SEPARATOR));
+
+        if (file_exists($absolutePath)) {
+            $mime = mime_content_type($absolutePath);
+            $data = base64_encode(file_get_contents($absolutePath));
+
+            return 'data:' . $mime . ';base64,' . $data;
+        }
+
+        return asset($relativePath);
+    };
+
+    $pdfImagePath = function ($relativePath) {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, (string) $relativePath), DIRECTORY_SEPARATOR));
+
+        if (file_exists($absolutePath)) {
+            return 'file:///' . str_replace('\\', '/', $absolutePath);
+        }
+
+        return asset($relativePath);
+    };
+
+    $buildPreviewQuotationData = function (\Illuminate\Http\Request $request) use ($pdfImageBase64, $pdfImagePath) {
+        $sampleFlag = (int) $request->query('flag', 0);
+        $sampleCount = max(5, min(10, (int) $request->query('count', 8)));
+        $documentLabel = trim((string) $request->query('label', 'Estimate'));
+        if ($documentLabel === '') {
+            $documentLabel = 'Estimate';
+        }
+        $paymentMethod = strtolower((string) $request->query('payment', 'offline')) === 'online' ? 'online' : 'offline';
+        $userId = $request->query('user_id');
+        $invoiceId = $request->query('invoice_id');
+        $quotation = [];
+
+        if (!empty($userId) && !empty($invoiceId)) {
+            $quotation = array_map(function ($row) {
+                return (array) $row;
+            }, app(\App\Models\Common::class)->getData($invoiceId, $userId) ?? []);
+        }
+
+        if (empty($quotation)) {
+            $sampleCatalog = [
+                [
+                    'product_id' => 'IF-VID-2048',
+                    'name' => 'City skyline drone footage',
+                    'type' => 'Footage',
+                    'licence_type' => 'Commercial License',
+                    'product_size' => '4K UHD',
+                    'size' => 'Landscape',
+                    'resolution' => '3840 x 2160',
+                    'format' => 'MP4',
+                    'duration' => '00:22',
+                    'subtotal' => 8500.00,
+                ],
+                [
+                    'product_id' => 'IF-MUS-0987',
+                    'name' => 'Ambient corporate underscore',
+                    'type' => 'Music',
+                    'licence_type' => 'Digital / Standard License',
+                    'product_size' => 'Stereo',
+                    'size' => 'Audio Track',
+                    'resolution' => '48 kHz / 24 bit',
+                    'format' => 'WAV',
+                    'duration' => '01:35',
+                    'subtotal' => 4200.00,
+                ],
+                [
+                    'product_id' => 'IF-IMG-5541',
+                    'name' => 'Modern office collaboration still',
+                    'type' => 'Image',
+                    'licence_type' => 'All Media License',
+                    'product_size' => '6000 px',
+                    'size' => 'Landscape',
+                    'resolution' => '6000 x 4000',
+                    'format' => 'JPG',
+                    'duration' => '',
+                    'subtotal' => 3500.00,
+                ],
+                [
+                    'product_id' => 'IF-VID-7310',
+                    'name' => 'Night traffic time-lapse sequence',
+                    'type' => 'Footage',
+                    'licence_type' => 'All Media License',
+                    'product_size' => 'HD',
+                    'size' => 'Landscape',
+                    'resolution' => '1920 x 1080',
+                    'format' => 'MOV',
+                    'duration' => '00:18',
+                    'subtotal' => 5600.00,
+                ],
+                [
+                    'product_id' => 'IF-MUS-4412',
+                    'name' => 'Cinematic piano ambience',
+                    'type' => 'Music',
+                    'licence_type' => 'Commercial License',
+                    'product_size' => 'Stereo',
+                    'size' => 'Audio Track',
+                    'resolution' => '48 kHz / 24 bit',
+                    'format' => 'MP3',
+                    'duration' => '02:12',
+                    'subtotal' => 3900.00,
+                ],
+                [
+                    'product_id' => 'IF-IMG-8823',
+                    'name' => 'Healthcare consultation portrait',
+                    'type' => 'Image',
+                    'licence_type' => 'Digital / Standard License',
+                    'product_size' => '5200 px',
+                    'size' => 'Portrait',
+                    'resolution' => '5200 x 7800',
+                    'format' => 'JPG',
+                    'duration' => '',
+                    'subtotal' => 2800.00,
+                ],
+                [
+                    'product_id' => 'IF-VID-6654',
+                    'name' => 'Factory assembly close-up reel',
+                    'type' => 'Footage',
+                    'licence_type' => 'Commercial License',
+                    'product_size' => '4K UHD',
+                    'size' => 'Landscape',
+                    'resolution' => '4096 x 2160',
+                    'format' => 'MP4',
+                    'duration' => '00:31',
+                    'subtotal' => 9100.00,
+                ],
+                [
+                    'product_id' => 'IF-MUS-3004',
+                    'name' => 'Upbeat launch campaign bed',
+                    'type' => 'Music',
+                    'licence_type' => 'All Media License',
+                    'product_size' => 'Stereo',
+                    'size' => 'Audio Track',
+                    'resolution' => '44.1 kHz / 16 bit',
+                    'format' => 'WAV',
+                    'duration' => '00:54',
+                    'subtotal' => 4700.00,
+                ],
+                [
+                    'product_id' => 'IF-IMG-9140',
+                    'name' => 'Executive workspace overhead still',
+                    'type' => 'Image',
+                    'licence_type' => 'Commercial License',
+                    'product_size' => '7000 px',
+                    'size' => 'Landscape',
+                    'resolution' => '7000 x 4667',
+                    'format' => 'PNG',
+                    'duration' => '',
+                    'subtotal' => 3200.00,
+                ],
+                [
+                    'product_id' => 'IF-VID-5521',
+                    'name' => 'Retail store walkthrough clip',
+                    'type' => 'Footage',
+                    'licence_type' => 'Digital / Standard License',
+                    'product_size' => 'Full HD',
+                    'size' => 'Landscape',
+                    'resolution' => '1920 x 1080',
+                    'format' => 'MP4',
+                    'duration' => '00:27',
+                    'subtotal' => 5100.00,
+                ],
+            ];
+
+            $items = array_slice($sampleCatalog, 0, $sampleCount);
+
+            $subTotal = array_sum(array_column($items, 'subtotal'));
+            $taxAmount = round($subTotal * ((float) config('constants.GST_VALUE', 18) / 100), 2);
+            $totalAmount = $subTotal + $taxAmount;
+            $baseInvoice = [
+                'invoice_name' => 'PREVIEW-1001',
+                'invicecreted' => now()->format('Y-m-d H:i:s'),
+                'vendor_code' => 'VND-2047',
+                'company' => 'Preview Client Pvt. Ltd.',
+                'first_name' => 'Ananya',
+                'last_name' => 'Rao',
+                'address' => '8-2-120/76/1, Road No. 2, Banjara Hills',
+                'cityname' => 'Hyderabad',
+                'statename' => 'Telangana',
+                'postal_code' => '500034',
+                'countryname' => 'India',
+                'pan' => 'ABCDE1234F',
+                'gst' => '36ABCDE1234F1Z5',
+                'email' => 'preview.client@example.com',
+                'mobile' => '+91 98765 43210',
+                'contact_owner' => 'Preview Sales Team',
+                'currency' => 'INR',
+                'flag' => $sampleFlag,
+                'tax' => $taxAmount,
+                'total' => $totalAmount,
+                'end_client' => 'Preview End Client LLP',
+            ];
+
+            $quotation = array_map(function ($item) use ($baseInvoice) {
+                return array_merge($baseInvoice, $item);
+            }, $items);
+        }
+
+        $activeFlag = isset($quotation[0]['flag']) ? (int) $quotation[0]['flag'] : $sampleFlag;
+        $quotation[0]['flag'] = $activeFlag;
+        $quotation[0]['company_logo'] = $activeFlag === 0
+            ? $pdfImageBase64('images/new-design-logo.png')
+            : $pdfImageBase64('images/conceptual_logo.png');
+        $quotation[0]['placeholder_music'] = $pdfImageBase64('images/placeholder-music.png');
+        $quotation[0]['placeholder_video'] = $pdfImageBase64('images/placeholder-video.png');
+        $quotation[0]['placeholder_image'] = $pdfImageBase64('images/placeholder-image.png');
+        $quotation[0]['template_image'] = $quotation[0]['template_image'] ?? $pdfImagePath('images/music-img.png');
+        $quotation[0]['music_image'] = $quotation[0]['music_image'] ?? $pdfImagePath('images/music-img.png');
+        $quotation[0]['signature'] = $quotation[0]['signature'] ?? $pdfImagePath('images/signature.png');
+        $quotation[0]['frontend_url'] = $quotation[0]['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
+        $quotation[0]['document_label'] = $quotation[0]['document_label'] ?? $documentLabel;
+        $quotation[0]['payment_url'] = $paymentMethod === 'online'
+            ? ($quotation[0]['payment_url'] ?? 'https://example.com/pay/backend-invoice-preview')
+            : '';
+        $quotation[0]['contact_owner'] = $quotation[0]['contact_owner'] ?? 'Preview Sales Team';
+
+        return [$quotation, $paymentMethod];
+    };
+
+    $streamPreviewPdf = function (string $html, string $fileName) {
+        if (\App\Support\BrowserPdf::isAvailable()) {
+            try {
+                $pdfBinary = \App\Support\BrowserPdf::render($html);
+                $renderer = \App\Support\BrowserPdf::lastRenderer() ?: 'browser';
+                \Log::info('Preview PDF rendered with browser engine.', [
+                    'file' => $fileName,
+                    'renderer' => $renderer,
+                ]);
+
+                return response($pdfBinary, 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+                    'X-PDF-Renderer' => $renderer,
+                ]);
+            } catch (\Throwable $exception) {
+                \Log::warning('Browser PDF preview rendering failed. Falling back to Dompdf.', [
+                    'file' => $fileName,
+                    'message' => $exception->getMessage(),
+                ]);
+            }
+        }
+
+        \Log::info('Preview PDF rendered with Dompdf fallback.', [
+            'file' => $fileName,
+            'renderer' => 'dompdf',
+        ]);
+
+        return \PDF::setOptions([
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ])->loadHTML($html)->stream($fileName, [
+            'Attachment' => false,
+        ])->header('X-PDF-Renderer', 'dompdf');
+    };
+
+    Route::get('/backend-invoice-preview', function (\Illuminate\Http\Request $request) use ($buildPreviewQuotationData, $streamPreviewPdf) {
+        [$quotation, $paymentMethod] = $buildPreviewQuotationData($request);
+
+        $viewData = [
+            'quotation' => $quotation,
+            'amount_in_words' => '',
+            'payment_method' => $paymentMethod,
+            'po' => '',
+            'po_date' => $quotation[0]['po_detail'] ?? '',
+        ];
+        $html = view('email.backend_invoice', $viewData)->render();
+
+        if (strtolower((string) $request->query('format')) === 'pdf') {
+            return $streamPreviewPdf($html, 'backend-invoice-preview.pdf');
+        }
+
+        return response($html);
+    })->name('backend.invoice.preview');
+
+    Route::get('/backend-quotation-preview', function (\Illuminate\Http\Request $request) use ($buildPreviewQuotationData, $streamPreviewPdf) {
+        [$quotation, $paymentMethod] = $buildPreviewQuotationData($request);
+        $amountInWords = '';
+
+        if (!empty($quotation[0]['total'])) {
+            $amountInWords = app(\App\Models\Common::class)->convert_number_to_words((int) round((float) $quotation[0]['total']));
+        }
+
+        $viewData = [
+            'quotation' => $quotation,
+            'amount_in_words' => $amountInWords,
+            'payment_method' => $paymentMethod,
+        ];
+        $html = view('email.quotation', $viewData)->render();
+
+        if (strtolower((string) $request->query('format')) === 'pdf') {
+            return $streamPreviewPdf($html, 'backend-quotation-preview.pdf');
+        }
+
+        return response($html);
+    })->name('backend.quotation.preview');
+}
+
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/login', 'AdminController@login');
     Route::post('/authenticate', 'AdminController@authenticate');

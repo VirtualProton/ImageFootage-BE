@@ -6,6 +6,10 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Image-Footage</title>
    <style>
+      * {
+         box-sizing: border-box;
+      }
+
       @font-face {
          font-family: 'Lato', sans-serif;
          src: url('fonts/Lato-Regular.ttf') format('truetype');
@@ -28,8 +32,7 @@
       }
 
       @page {
-         margin-top: 30px;
-         margin-bottom: 50px;
+         margin: 18px 22px 28px 22px;
       }
 
       header {
@@ -42,14 +45,21 @@
 
       body {
          font-family: 'Inter', Arial, sans-serif;
-         margin-top: 0.5cm;
-         margin-left: 2cm;
-         margin-right: 2cm;
-         margin-bottom: 2cm;
+         margin: 0;
+         color: #111;
       }
 
       .main {
-         padding: 10px;
+         padding: 0;
+      }
+
+      .invoice-page {
+         width: 100%;
+      }
+
+      .invoice-header-wrap {
+         width: 100%;
+         margin: 0 0 12px;
       }
 
       /* Invoice header */
@@ -57,7 +67,7 @@
          width: 100%;
          border-bottom: 1px solid #ddd;
          margin-bottom: 0;
-         padding-bottom: 20px;
+         padding-bottom: 14px;
       }
 
       .invoice-header-table td {
@@ -65,22 +75,23 @@
       }
 
       .invoice-logo {
-         width: 160px;
+         width: 42%;
       }
 
       .invoice-logo img {
-         max-width: 160px;
+         max-width: 180px;
          height: auto;
       }
 
       .invoice-title-cell {
+         width: 58%;
          text-align: right;
-         padding-bottom: 5px;
+         padding-bottom: 2px;
       }
 
       .invoice-title-line1 {
          font-size: 11px;
-         letter-spacing: 6px;
+         letter-spacing: 5px;
          color: #888888;
          text-transform: uppercase;
          display: block;
@@ -90,7 +101,7 @@
 
       .invoice-title-line2 {
          font-size: 11px;
-         letter-spacing: 8px;
+         letter-spacing: 6px;
          color: #888888;
          text-transform: uppercase;
          display: block;
@@ -115,23 +126,25 @@
          margin-top: 10px;
          margin-bottom: 15px;
          border-collapse: collapse;
+         table-layout: auto;
       }
 
       .invoice-info-table td {
-         padding: 4px 12px;
-         font-size: 13px;
+         padding: 4px 8px;
+         font-size: 12px;
+         line-height: 1.35;
          vertical-align: top;
       }
 
       .invoice-info-table .label {
          color: #777;
-         width: 100px;
          white-space: nowrap;
       }
 
       .invoice-info-table .value {
          color: #111;
          font-weight: 700;
+         word-break: break-word;
       }
 
       /* Client details section */
@@ -139,18 +152,45 @@
          width: 100%;
          border-collapse: collapse;
          margin-bottom: 15px;
+         table-layout: auto;
       }
 
       .client-details-section td {
-         padding: 4px 12px;
-         font-size: 13px;
+         padding: 4px 8px;
+         font-size: 12px;
+         line-height: 1.4;
          vertical-align: top;
       }
 
       .client-details-title {
          font-size: 15px;
          font-weight: 700;
-         padding: 8px 12px;
+         padding: 8px 8px;
+      }
+
+      .client-meta-table {
+         width: 100%;
+         table-layout: auto;
+      }
+
+      .client-meta-table td {
+         padding: 2px 0;
+         font-size: 12px;
+         line-height: 1.35;
+         vertical-align: top;
+      }
+
+      .client-meta-label {
+         color: #777;
+         width: 88px;
+         white-space: nowrap;
+         padding-right: 8px;
+      }
+
+      .client-meta-value {
+         color: #111;
+         font-weight: 700;
+         word-break: break-word;
       }
 
       .client-label {
@@ -169,13 +209,14 @@
          width: 100%;
          border-collapse: collapse;
          margin-bottom: 10px;
+         table-layout: fixed;
       }
 
       .items-table thead th {
          background-color: #444;
          color: #fff;
-         padding: 10px 12px;
-         font-size: 13px;
+         padding: 8px 10px;
+         font-size: 12px;
          text-align: left;
       }
 
@@ -184,14 +225,14 @@
       }
 
       .items-table tbody td {
-         padding: 10px 12px;
-         font-size: 13px;
+         padding: 8px 10px;
+         font-size: 12px;
          vertical-align: top;
          border-bottom: 1px solid #eee;
       }
 
       .items-table .sno-col {
-         width: 50px;
+         width: 42px;
          text-align: center;
       }
 
@@ -204,7 +245,8 @@
 
       .item-title {
          font-weight: 700;
-         font-size: 14px;
+         font-size: 13px;
+         line-height: 1.35;
          margin-bottom: 8px;
       }
 
@@ -218,6 +260,12 @@
          width: 130px;
          vertical-align: top;
          padding-right: 12px;
+      }
+
+      .item-meta {
+         font-size: 12px;
+         line-height: 20px;
+         word-break: break-word;
       }
 
       .item-thumb img {
@@ -317,9 +365,10 @@
 </head>
 
 <body>
+   <div class="invoice-page">
    <!-- Header start -->
    <header>
-      <div class="container" style="margin-left: 2cm; margin-right: 2cm;">
+      <div class="invoice-header-wrap">
          <table class="invoice-header-table" cellpadding="0" cellspacing="0">
             <tr>
                <td class="invoice-logo" style="width: 200px; vertical-align: bottom; text-align: left;">
@@ -339,12 +388,12 @@
    <main class="main">
 
       <!-- Invoice Info Section -->
-      <table class="invoice-info-table" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+      <table class="invoice-info-table" cellpadding="0" cellspacing="0">
          <tr>
-            <td class="label" width="14%">Estimate No.</td>
-            <td class="value" width="22%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
-            <td class="label" width="16%">Company Name</td>
-            <td class="value" width="48%">Conceptual Pictures Worldwide Pvt. Ltd</td>
+            <td class="label" width="13%">Estimate No.</td>
+            <td class="value" width="23%"><?php echo config('constants.INVOICE_PREFIX') . $quotation[0]['invoice_name']; ?></td>
+            <td class="label" width="15%">Company Name</td>
+            <td class="value" width="49%">Conceptual Pictures Worldwide Pvt. Ltd</td>
          </tr>
          <tr>
             <td class="label">Estimate Date</td>
@@ -369,12 +418,12 @@
       <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 15px;">
 
       <!-- Client Details Section -->
-      <table class="client-details-section" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+      <table class="client-details-section" cellpadding="0" cellspacing="0">
          <tr>
             <td colspan="4" class="client-details-title">Client Details</td>
          </tr>
          <tr>
-            <td colspan="2" style="padding: 8px 12px; vertical-align: top; width: 50%;">
+            <td colspan="2" style="padding: 8px 8px; vertical-align: top; width: 52%;">
                <p style="margin: 0 0 3px; font-weight: 700;">
                   <?php echo !empty($quotation[0]['company']) ? $quotation[0]['company'] : $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?>
                </p>
@@ -387,23 +436,23 @@
                <p style="margin: 0 0 3px;">Pan No &nbsp; <strong><?php echo $quotation[0]['pan'] ?? ''; ?></strong></p>
                <p style="margin: 0 0 3px;">GSTIN &nbsp; <strong><?php echo $quotation[0]['gst'] ?? ''; ?></strong></p>
             </td>
-            <td colspan="2" style="padding: 8px 12px; vertical-align: top; width: 50%;">
-               <table cellpadding="0" cellspacing="0" style="width: 100%; table-layout: fixed;">
+            <td colspan="2" style="padding: 8px 8px; vertical-align: top; width: 48%;">
+               <table class="client-meta-table" cellpadding="0" cellspacing="0">
                   <tr>
-                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Ordered By</td>
-                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?></td>
+                     <td class="client-meta-label">Ordered By</td>
+                     <td class="client-meta-value"><?php echo $quotation[0]['first_name'] . ' ' . $quotation[0]['last_name']; ?></td>
                   </tr>
                   <tr>
-                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Mail ID</td>
-                     <td style="color: #111; font-weight: 700; font-size: 12px; padding: 2px 0; word-wrap: break-word; overflow: hidden;"><?php echo $quotation[0]['email'] ?? ''; ?></td>
+                     <td class="client-meta-label">Mail ID</td>
+                     <td class="client-meta-value"><?php echo $quotation[0]['email'] ?? ''; ?></td>
                   </tr>
                   <tr>
-                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Contact No.</td>
-                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['mobile'] ?? ''; ?></td>
+                     <td class="client-meta-label">Contact No.</td>
+                     <td class="client-meta-value"><?php echo $quotation[0]['mobile'] ?? ''; ?></td>
                   </tr>
                   <tr>
-                     <td style="color: #777; width: 80px; white-space: nowrap; font-size: 13px; padding: 2px 0;">Sales Person</td>
-                     <td style="color: #111; font-weight: 700; font-size: 13px; padding: 2px 0;"><?php echo $quotation[0]['contact_owner'] ?? (Auth::guard('admins')->user()->name ?? ''); ?></td>
+                     <td class="client-meta-label">Sales Person</td>
+                     <td class="client-meta-value"><?php echo $quotation[0]['contact_owner'] ?? (Auth::guard('admins')->user()->name ?? ''); ?></td>
                   </tr>
                </table>
             </td>
@@ -443,7 +492,7 @@
                   <td class="sno-col"><?php echo $i + 1; ?></td>
                   <td>
                      <div class="item-title"><?php echo htmlspecialchars($itemTitle); ?></div>
-                     <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                     <table cellpadding="0" cellspacing="0" style="width: 100%; table-layout: fixed;">
                         <tr>
                            <td style="width: 130px; vertical-align: top; padding-right: 12px;">
                               <?php
@@ -452,7 +501,7 @@
                               ?>
                               <img src="<?php echo $placeholders[$pKey]; ?>" width="120" height="80" style="width: 120px; height: 80px; display: block;">
                            </td>
-                           <td style="vertical-align: top; font-size: 13px; line-height: 22px;">
+                           <td class="item-meta" style="vertical-align: top;">
                               <?php if (!empty($quotation[$i]['type'])) { ?>
                                  <div><strong>File Type:</strong> <?php echo htmlspecialchars($quotation[$i]['type']); ?></div>
                               <?php } ?>
@@ -622,6 +671,7 @@
       </div>
 
    </main>
+   </div>
 </body>
 
 </html>

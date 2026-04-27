@@ -18,6 +18,87 @@ Route::group([
 
 ], function () {
 
+    Route::get('debug/logs', function (Request $request) {
+        $configuredToken = trim((string) env('LOG_VIEW_API_TOKEN', ''));
+        $providedToken = trim((string) ($request->header('X-Log-Token') ?: $request->query('token', '')));
+        $isAllowed = app()->environment('local') || config('app.debug');
+
+        if (!$isAllowed) {
+            $isAllowed = $configuredToken !== '' && hash_equals($configuredToken, $providedToken);
+        }
+
+        if (!$isAllowed) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $logsDirectory = storage_path('logs');
+        if (!is_dir($logsDirectory)) {
+            return response()->json([
+                'message' => 'Logs directory not found',
+            ], 404);
+        }
+
+        $availableFiles = array_values(array_filter(scandir($logsDirectory) ?: [], function ($file) use ($logsDirectory) {
+            if (in_array($file, ['.', '..'], true)) {
+                return false;
+            }
+
+            $path = $logsDirectory . DIRECTORY_SEPARATOR . $file;
+
+            return is_file($path) && strtolower(pathinfo($file, PATHINFO_EXTENSION)) === 'log';
+        }));
+
+        rsort($availableFiles, SORT_NATURAL);
+
+        if (empty($availableFiles)) {
+            return response()->json([
+                'message' => 'No log files found',
+                'files' => [],
+                'entries' => [],
+            ]);
+        }
+
+        $selectedFile = trim((string) $request->query('file', $availableFiles[0]));
+        if (basename($selectedFile) !== $selectedFile) {
+            return response()->json([
+                'message' => 'Invalid log file',
+            ], 422);
+        }
+
+        $selectedPath = $logsDirectory . DIRECTORY_SEPARATOR . $selectedFile;
+        if (!is_file($selectedPath)) {
+            return response()->json([
+                'message' => 'Log file not found',
+                'files' => $availableFiles,
+            ], 404);
+        }
+
+        $lineLimit = max(1, min(500, (int) $request->query('lines', 100)));
+        $contains = trim((string) $request->query('contains', ''));
+        $fileLines = file($selectedPath, FILE_IGNORE_NEW_LINES) ?: [];
+
+        if ($contains !== '') {
+            $fileLines = array_values(array_filter($fileLines, function ($line) use ($contains) {
+                return stripos((string) $line, $contains) !== false;
+            }));
+        }
+
+        $entries = array_slice($fileLines, -1 * $lineLimit);
+
+        return response()->json([
+            'file' => $selectedFile,
+            'files' => $availableFiles,
+            'lines_requested' => $lineLimit,
+            'lines_returned' => count($entries),
+            'contains' => $contains !== '' ? $contains : null,
+            'entries' => array_values($entries),
+        ], 200, [
+            'X-Log-File' => $selectedFile,
+        ]);
+    });
+
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
     Route::get('get-admin-settings', 'AuthController@getAdminSettings');

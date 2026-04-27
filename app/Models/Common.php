@@ -12,9 +12,11 @@ use Auth;
 use Mail;
 use PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Helper;
 use App\Http\AtomPay\TransactionRequest;
 use App\Http\AtomPay\TransactionResponse;
+use App\Support\BrowserPdf;
 use App\Models\Invoice;
 use App\Models\PromoCode;
 use App\Models\InvoiceItem;
@@ -39,6 +41,50 @@ class Common extends Model
     public $password;
     public $clientcode;
     public $atomprodId;
+
+    /**
+     * Save an HTML string as PDF using a browser renderer first, then Dompdf.
+     *
+     * @param string $html
+     * @param string $targetPath
+     * @param array $dompdfOptions
+     * @return void
+     */
+    private function savePdfFromHtml(string $html, string $targetPath, array $dompdfOptions = []): void
+    {
+        if (BrowserPdf::isAvailable()) {
+            try {
+                BrowserPdf::saveHtmlAsPdf($html, $targetPath);
+                Log::info('PDF rendered with browser engine.', [
+                    'target' => $targetPath,
+                    'renderer' => BrowserPdf::lastRenderer() ?: 'browser',
+                ]);
+
+                return;
+            } catch (\Throwable $exception) {
+                Log::warning('Browser PDF rendering failed. Falling back to Dompdf.', [
+                    'target' => $targetPath,
+                    'message' => $exception->getMessage(),
+                ]);
+            }
+        }
+
+        $defaultOptions = [
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ];
+
+        PDF::setOptions(array_merge($defaultOptions, $dompdfOptions))
+            ->loadHTML($html)
+            ->save($targetPath);
+
+        Log::info('PDF rendered with Dompdf fallback.', [
+            'target' => $targetPath,
+            'renderer' => 'dompdf',
+        ]);
+    }
 
     public function __construct()
     {
@@ -346,19 +392,21 @@ class Common extends Model
             $dataForEmail[0]['template_image'] = $this->pdfImagePath('images/music-img.png');
             $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
             $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+            $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
+            $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
+            $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
             $front_end_url_name               = config('app.front_end_url');
             $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
             $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
             $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
-            //PDF genration and email
-            $pdf = PDF::loadHTML(view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words]));
             $fileName = $data["invoice"] . "_quotation.pdf";
             $pdfDirectory = storage_path('app/public/pdf');
             if (!is_dir($pdfDirectory)) {
                 mkdir($pdfDirectory, 0777, true);
             }
 
-            $pdf->save($pdfDirectory . '/' . $fileName);
+            $quotationHtml = view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words])->render();
+            $this->savePdfFromHtml($quotationHtml, $pdfDirectory . '/' . $fileName);
 
             try {
                 $customTemplatePath = base_path('email_task/Send Custom Quotation/Custom/Quotation-CP.html');
@@ -714,14 +762,15 @@ class Common extends Model
         if (!is_dir($pdfDirectory)) {
             mkdir($pdfDirectory, 0777, true);
         }
-        $pdf = PDF::setOptions([
-            'isRemoteEnabled' => false,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif'
-        ])->loadHTML(view('email.backend_invoice', ['quotation' => $dataForEmail, 'amount_in_words' => strtoupper($amount_in_words), 'payment_method' => $payment_method, 'po' => $po, 'po_date' => $po_date]));
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
-        $pdf->save($pdfDirectory . '/' . $fileName);
+        $invoiceHtml = view('email.backend_invoice', [
+            'quotation' => $dataForEmail,
+            'amount_in_words' => strtoupper($amount_in_words),
+            'payment_method' => $payment_method,
+            'po' => $po,
+            'po_date' => $po_date,
+        ])->render();
+        $this->savePdfFromHtml($invoiceHtml, $pdfDirectory . '/' . $fileName);
         // if ($payment_method == 'online') {
 
         //     // Send payment link to customer via email
