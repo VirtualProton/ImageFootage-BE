@@ -25,16 +25,15 @@ FROM php:7.4.33-fpm
 WORKDIR /var/www/html
 
 # System packages & PHP extensions
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     nginx \
     git \
     curl \
     ca-certificates \
-    gnupg \
-    wget \
     zip \
     unzip \
     ffmpeg \
+    chromium \
     fonts-liberation \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -42,18 +41,12 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
- && install -m 0755 -d /etc/apt/keyrings \
- && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg \
- && chmod a+r /etc/apt/keyrings/google-chrome.gpg \
- && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
- && apt-get update \
- && apt-get install -y --no-install-recommends google-chrome-stable \
  && rm -f /etc/nginx/sites-enabled/default \
  && docker-php-ext-configure gd --with-freetype --with-jpeg \
  && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
  && rm -rf /var/lib/apt/lists/*
 
-ENV CHROME_PATH=/usr/bin/google-chrome-stable
+ENV CHROME_PATH=/usr/bin/chromium
 
 # Extra PHP extensions (Redis, MongoDB)
 RUN pecl install mongodb-1.16.1 redis-5.3.7 \
