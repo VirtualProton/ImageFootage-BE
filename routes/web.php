@@ -237,6 +237,96 @@ if (app()->environment('local') || config('app.debug')) {
         return [$quotation, $paymentMethod];
     };
 
+    $buildPreviewPackageQuotationData = function (\Illuminate\Http\Request $request) use ($pdfImageBase64, $pdfImagePath) {
+        $sampleFlag = (int) $request->query('flag', 0);
+        $paymentMethod = strtolower((string) $request->query('payment', 'offline')) === 'online' ? 'online' : 'offline';
+        $userId = $request->query('user_id');
+        $invoiceId = $request->query('invoice_id');
+        $orders = [];
+
+        if (!empty($userId) && !empty($invoiceId)) {
+            $subscriptionRows = array_map(function ($row) {
+                return (array) $row;
+            }, app(\App\Models\Common::class)->getSubData($invoiceId, $userId) ?? []);
+
+            $orders = $subscriptionRows[0] ?? [];
+        }
+
+        if (empty($orders)) {
+            $kind = strtolower((string) $request->query('kind', 'download')) === 'subscription' ? 'subscription' : 'download';
+            $packageTypeInput = trim((string) $request->query('package_type', 'Image'));
+            $packageType = $packageTypeInput !== '' ? ucfirst(strtolower($packageTypeInput)) : 'Image';
+            $quantity = max(1, (int) $request->query('quantity', 25));
+            $discountLabel = trim((string) $request->query('discount_label', '35% Off'));
+            $currency = strtoupper(trim((string) $request->query('currency', 'INR')));
+            $subtotal = (float) $request->query('subtotal', 178750);
+            $taxRate = (float) config('constants.GST_VALUE', 18);
+            $taxAmount = round($subtotal * ($taxRate / 100), 2);
+            $totalAmount = (float) $request->query('total', $subtotal + $taxAmount);
+            $packageName = trim((string) $request->query('package_name', $quantity . ' ' . ($packageType === 'Image' ? 'Images' : $packageType) . ' (' . $discountLabel . ')'));
+            $description = trim((string) $request->query(
+                'description',
+                ucfirst($kind) . ' Plan - ' . $packageType . ' - ' . $packageName . ' Pack'
+            ));
+
+            $orders = [
+                'invoice_name' => 'PREVIEW-PACK-1001',
+                'invicecreted' => now()->format('Y-m-d H:i:s'),
+                'vendor_code' => 'VND-2047',
+                'company' => 'Preview Client Pvt. Ltd.',
+                'first_name' => 'Pritam',
+                'last_name' => 'Biswas',
+                'address' => '102, Ashiyana Residency',
+                'address2' => 'Neknampur Road, Alkapur Township',
+                'cityname' => 'Hyderabad',
+                'statename' => 'Telangana',
+                'postal_code' => '500089',
+                'countryname' => 'India',
+                'pan' => 'ABCDE1234F',
+                'gst' => '36ABCDE1234F1Z5',
+                'email' => 'preview.client@example.com',
+                'mobile' => '9652314406',
+                'contact_owner' => 'Preview Sales Team',
+                'currency' => $currency,
+                'flag' => $sampleFlag,
+                'tax' => $taxAmount,
+                'total' => $totalAmount,
+                'package_plan' => $kind === 'download' ? 1 : 0,
+                'package_expiry' => $kind === 'subscription' ? 1 : 0,
+                'package_expiry_yearly' => $kind === 'download' ? 1 : 0,
+                'pacage_size' => strtolower($packageType) === 'footage' ? 1 : 0,
+                'package_name' => $packageName,
+                'package_type' => $packageType,
+                'package_products_count' => $quantity,
+                'package_price' => $subtotal,
+                'description' => $description,
+                'licence_name' => trim((string) $request->query('licence_name', 'All Media')),
+                'invoice_type' => $kind === 'download' ? 2 : 1,
+                'job_number' => 'PO-2026-0428',
+                'po_detail' => now()->format('Y-m-d'),
+            ];
+        }
+
+        $orders['flag'] = isset($orders['flag']) ? (int) $orders['flag'] : $sampleFlag;
+        $orders['company_logo'] = $orders['flag'] === 0
+            ? $pdfImageBase64('images/new-design-logo.png')
+            : $pdfImageBase64('images/conceptual_logo.png');
+        $orders['signature'] = $orders['signature'] ?? $pdfImagePath('images/signature.png');
+        $orders['frontend_url'] = $orders['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
+        $orders['INVOICE_PREFIX'] = $orders['INVOICE_PREFIX'] ?? (config('constants.INVOICE_PREFIX') ?: '');
+
+        $frontendHost = parse_url((string) $orders['frontend_url'], PHP_URL_HOST);
+        $orders['frontend_name'] = $orders['frontend_name'] ?? ($frontendHost ?: 'imagefootage.com');
+        $orders['payment_url'] = $paymentMethod === 'online'
+            ? ($orders['payment_url'] ?? 'https://example.com/pay/backend-plan-quotation-preview')
+            : '';
+        $orders['payment_method'] = $paymentMethod;
+        $orders['description'] = $orders['description'] ?? ('Package Estimate - ' . ($orders['package_name'] ?? ''));
+        $orders['package_products_count_in_words'] = $orders['package_products_count_in_words'] ?? app(\App\Models\Common::class)->convert_number_to_words((int) ($orders['package_products_count'] ?? 0));
+
+        return [$orders, $paymentMethod];
+    };
+
     $streamPreviewPdf = function (string $html, string $fileName) {
         if (\App\Support\BrowserPdf::isAvailable()) {
             try {
@@ -316,6 +406,52 @@ if (app()->environment('local') || config('app.debug')) {
 
         return response($html);
     })->name('backend.quotation.preview');
+
+    Route::get('/backend-plan-quotation-preview', function (\Illuminate\Http\Request $request) use ($buildPreviewPackageQuotationData, $streamPreviewPdf) {
+        [$orders, $paymentMethod] = $buildPreviewPackageQuotationData($request);
+        $amountInWords = '';
+
+        if (!empty($orders['total'])) {
+            $amountInWords = app(\App\Models\Common::class)->convert_number_to_words((int) round((float) $orders['total']));
+        }
+
+        $viewData = [
+            'orders' => $orders,
+            'amount_in_words' => $amountInWords,
+            'package_price_in_words' => '',
+            'payment_method' => $paymentMethod,
+        ];
+        $html = view('email.plan_quotation_email_offline', $viewData)->render();
+
+        if (strtolower((string) $request->query('format')) === 'pdf') {
+            return $streamPreviewPdf($html, 'backend-plan-quotation-preview.pdf');
+        }
+
+        return response($html);
+    })->name('backend.plan.quotation.preview');
+
+    Route::get('/backend-plan-invoice-preview', function (\Illuminate\Http\Request $request) use ($buildPreviewPackageQuotationData, $streamPreviewPdf) {
+        [$orders, $paymentMethod] = $buildPreviewPackageQuotationData($request);
+        $amountInWords = '';
+        $invoiceTotal = (float) ($orders['total'] ?? ($orders['package_price'] ?? 0));
+
+        if ($invoiceTotal > 0) {
+            $amountInWords = app(\App\Models\Common::class)->convert_number_to_words((int) round($invoiceTotal));
+        }
+
+        $viewData = [
+            'orders' => $orders,
+            'amount_in_words' => strtoupper($amountInWords),
+            'payment_method' => $paymentMethod,
+        ];
+        $html = view('email.plan_invoice_email_offline', $viewData)->render();
+
+        if (strtolower((string) $request->query('format')) === 'pdf') {
+            return $streamPreviewPdf($html, 'backend-plan-invoice-preview.pdf');
+        }
+
+        return response($html);
+    })->name('backend.plan.invoice.preview');
 }
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {

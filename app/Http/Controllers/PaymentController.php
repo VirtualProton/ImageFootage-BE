@@ -667,6 +667,7 @@ class PaymentController extends Controller
                             'payment_status' => 'Transction Success',
                             'payment_response' => json_encode($_POST)
                         ]);
+                    $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
                     return redirect($this->baseurl . '/invoiceConfirmation/' . encrypt($_POST['mer_txn']));
                 } else {
                     return redirect($this->baseurl . '/invoiceFailed/' . encrypt($_POST['mer_txn']));
@@ -695,6 +696,7 @@ class PaymentController extends Controller
                             'payment_status' => 'Transction Success',
                             'payment_response' => json_encode($_POST)
                         ]);
+                    $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
                     return redirect($this->baseurl . '/invoiceConfirmation/' . encrypt($_POST['mer_txn']));
                 } else {
                     return redirect($this->baseurl . '/invoiceFailed/' . encrypt($_POST['mer_txn']));
@@ -757,6 +759,7 @@ class PaymentController extends Controller
                             'payment_status' => 'Transction Success',
                             'payment_response' => json_encode($_POST)
                         ]);
+                    $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
                     return redirect($this->baseurl . '/backend/api/paymentSuccess');
                 } else {
                     return redirect($this->baseurl . '/invoiceFailed/' . encrypt($_POST['mer_txn']));
@@ -774,6 +777,89 @@ class PaymentController extends Controller
     public function paymentSuccess()
     {
         return view('paymentsuccess', ['status' => 1, 'message' => 'Your Payment has been done Successfully !!!']);
+    }
+
+    private function finalizePaidQuotationOrInvoice(string $invoiceName, string $paymentMode, array $paymentResponse = []): void
+    {
+        $invoiceRow = DB::table('imagefootage_performa_invoices')
+            ->select('id', 'user_id', 'package_id', 'invoice_type', 'proforma_type', 'invoice_url', 'currency')
+            ->where('invoice_name', $invoiceName)
+            ->first();
+
+        if (!$invoiceRow) {
+            \Log::warning('Paid invoice/quotation finalization skipped because record was not found.', [
+                'invoice_name' => $invoiceName,
+                'payment_mode' => $paymentMode,
+            ]);
+            return;
+        }
+
+        if (!empty($invoiceRow->package_id)) {
+            DB::table('imagefootage_user_package')
+                ->where('id', $invoiceRow->package_id)
+                ->update([
+                    'status' => 1,
+                    'payment_status' => 'Transction Success',
+                    'payment_mode' => $paymentMode,
+                    'response_payment' => !empty($paymentResponse) ? json_encode($paymentResponse) : null,
+                ]);
+        }
+
+        $alreadyConvertedToInvoice = (string) ($invoiceRow->proforma_type ?? '') === '2' || !empty($invoiceRow->invoice_url);
+        if ($alreadyConvertedToInvoice) {
+            return;
+        }
+
+        $userRow = DB::table('imagefootage_users')
+            ->select('gst', 'pan', 'mobile', 'phone')
+            ->where('id', $invoiceRow->user_id)
+            ->first();
+
+        $requestData = [
+            'payment_method' => 'online',
+            'gst' => $userRow->gst ?? '',
+            'pan' => $userRow->pan ?? '',
+            'phone' => $userRow->phone ?? ($userRow->mobile ?? ''),
+            'currency' => $invoiceRow->currency ?? 'INR',
+        ];
+
+        try {
+            $common = app(\App\Models\Common::class);
+            if (in_array((int) ($invoiceRow->invoice_type ?? 0), [1, 2], true) || !empty($invoiceRow->package_id)) {
+                $common->create_invoice_subscription(
+                    $invoiceRow->id,
+                    $invoiceRow->user_id,
+                    '',
+                    date('Y-m-d'),
+                    'online',
+                    $requestData
+                );
+            } else {
+                $common->create_invoice(
+                    $invoiceRow->id,
+                    $invoiceRow->user_id,
+                    '',
+                    date('Y-m-d'),
+                    'online',
+                    $requestData
+                );
+            }
+
+            \Log::info('Paid quotation converted to invoice automatically.', [
+                'invoice_name' => $invoiceName,
+                'invoice_id' => $invoiceRow->id,
+                'user_id' => $invoiceRow->user_id,
+                'payment_mode' => $paymentMode,
+            ]);
+        } catch (\Throwable $exception) {
+            \Log::error('Automatic invoice generation failed after successful payment.', [
+                'invoice_name' => $invoiceName,
+                'invoice_id' => $invoiceRow->id,
+                'user_id' => $invoiceRow->user_id,
+                'payment_mode' => $paymentMode,
+                'error' => $exception->getMessage(),
+            ]);
+        }
     }
 
     public function getData($invoice_id)
@@ -1087,8 +1173,8 @@ class PaymentController extends Controller
             $paymentLinkId = $request->input('razorpay_payment_link_id');
             $referenceId = $request->input('razorpay_payment_link_reference_id') ?? '';
 
-            // Strip prefix (INV-, QTN-, INV-SUB-, QTN-SUB-) to get the invoice_name
-            $invoiceName = preg_replace('/^(INV-SUB-|QTN-SUB-|INV-|QTN-)/', '', $referenceId);
+            // Strip payment-link prefixes to get the underlying invoice_name.
+            $invoiceName = preg_replace('/^(INV-SUB-|INV-DP-|QTN-SUB-|QTN-DP-|INV-|QTN-)/', '', $referenceId);
 
             $frontendSignin = rtrim((string) config('app.front_end_url'), '/#') . '/#/signin';
 
@@ -1115,15 +1201,18 @@ class PaymentController extends Controller
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
                     ->update([
+                        'payment_mode' => 'Razorpay',
                         'payment_status' => 'Transction Success',
                         'status' => 1,
                         'payment_response' => json_encode($paymentLink)
                     ]);
+                $this->finalizePaidQuotationOrInvoice((string) $invoiceName, 'Razorpay', method_exists($paymentLink, 'toArray') ? $paymentLink->toArray() : (array) $paymentLink);
                 return redirect($frontendSignin);
             } else if ($paymentLink['status'] === 'pending') {
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
                     ->update([
+                        'payment_mode' => 'Razorpay',
                         'payment_status' => 'Pending',
                         'status' => 0,
                         'payment_response' => json_encode($paymentLink)
@@ -1133,6 +1222,7 @@ class PaymentController extends Controller
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
                     ->update([
+                        'payment_mode' => 'Razorpay',
                         'payment_status' => 'Failed',
                         'status' => 3,
                         'payment_response' => json_encode($paymentLink)

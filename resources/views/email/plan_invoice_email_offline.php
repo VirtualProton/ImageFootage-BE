@@ -4,251 +4,831 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image-Footage</title>
+    <title>Image-Footage Invoice</title>
+    <?php
+    $documentLabel = 'TAX INVOICE';
+    $helloColor = '#F59E0B';
+    $issuerCompanyName = config('constants.company_name') ?: 'Imagefootage';
+    $legalCompanyName = 'Conceptual Pictures Worldwide Pvt. Ltd.';
+
+    $contactName = trim((string) (($orders['first_name'] ?? '') . ' ' . ($orders['last_name'] ?? '')));
+    $clientCompanyName = trim((string) ($orders['company'] ?? ''));
+    if ($clientCompanyName === '') {
+        $clientCompanyName = $contactName !== '' ? $contactName : 'Client';
+    }
+
+    $invoiceNumber = trim((string) (($orders['INVOICE_PREFIX'] ?? '') . ($orders['invoice_name'] ?? '')));
+    $invoiceDate = !empty($orders['invicecreted']) ? date('d.m.Y', strtotime((string) $orders['invicecreted'])) : '';
+    $clientCode = trim((string) ($orders['vendor_code'] ?? ''));
+    $clientAddressParts = array_filter([
+        trim((string) ($orders['address'] ?? '')),
+        trim((string) ($orders['address2'] ?? '')),
+    ]);
+    $clientAddress = implode(', ', $clientAddressParts);
+    $clientLocationParts = array_filter([
+        trim((string) ($orders['cityname'] ?? '')),
+        trim((string) ($orders['statename'] ?? '')),
+        trim((string) ($orders['postal_code'] ?? '')),
+    ]);
+    $clientLocation = implode(', ', $clientLocationParts);
+    $clientCountry = trim((string) ($orders['countryname'] ?? ''));
+    $clientMobile = trim((string) ($orders['mobile'] ?? ''));
+    $clientEmail = trim((string) ($orders['email'] ?? ($orders['email_id'] ?? '')));
+    $clientPan = trim((string) ($orders['pan'] ?? ''));
+    $clientGstin = trim((string) ($orders['gst'] ?? ''));
+    $accountManager = trim((string) ($orders['contact_owner'] ?? ''));
+    if ($accountManager === '') {
+        $accountManager = 'Imagefootage Sales Team';
+    }
+
+    $currencyCode = strtoupper(trim((string) ($orders['currency'] ?? 'INR')));
+    $currencySymbolHtml = $currencyCode === 'USD' ? '$' : '&#8377;';
+    $totalAmount = (float) ($orders['total'] ?? ($orders['package_price'] ?? 0));
+    $taxAmount = (float) ($orders['tax'] ?? 0);
+    $subTotal = $totalAmount > 0 ? max($totalAmount - $taxAmount, 0) : (float) ($orders['package_price'] ?? 0);
+    if ($subTotal <= 0 && $totalAmount > 0 && $taxAmount <= 0) {
+        $subTotal = $totalAmount;
+    }
+    $discountAmount = 0.00;
+    $amountInWordsText = trim((string) ($amount_in_words ?? ''));
+    $amountPrefix = $currencyCode === 'USD' ? 'US Dollars ' : 'Rupees ';
+    $amountInWordsLine = $amountInWordsText !== '' ? $amountPrefix . $amountInWordsText . ' only' : '';
+    $paymentStatus = strtolower(trim((string) ($orders['payment_status'] ?? '')));
+    $showPaymentCta = !empty($orders['payment_url']) && !in_array($paymentStatus, ['transction success', 'completed'], true);
+
+    $paymentMethodRaw = trim((string) ($payment_method ?? ($orders['payment_method'] ?? '')));
+    $paymentMethodLabel = $paymentMethodRaw !== '' ? ucfirst($paymentMethodRaw) : 'Online';
+    $endClient = trim((string) ($orders['company'] ?? ''));
+    $poNumber = trim((string) ($orders['job_number'] ?? ''));
+    $poDate = !empty($orders['po_detail']) ? date('d.m.Y', strtotime((string) $orders['po_detail'])) : '';
+
+    $packageName = trim((string) ($orders['package_name'] ?? 'Package'));
+    $packageQuantity = trim((string) ($orders['package_products_count'] ?? ''));
+    $packageType = trim((string) ($orders['package_type'] ?? 'Package'));
+    $licenseName = trim((string) ($orders['licence_name'] ?? ''));
+    $invoiceMode = ((int) ($orders['invoice_type'] ?? 0) === 2 || (int) ($orders['package_plan'] ?? 0) === 1)
+        ? 'Download Pack'
+        : 'Subscription Pack';
+
+    $productDescription = trim((string) ($orders['description'] ?? ''));
+    if ($productDescription === '') {
+        $productDescription = trim($packageName . ' ' . $invoiceMode);
+    }
+
+    $packageValidity = '';
+    if ((int) ($orders['package_plan'] ?? 0) === 1) {
+        $validYears = (int) ($orders['package_expiry_yearly'] ?? 0);
+        $packageValidity = $validYears > 0 ? 'Download Pack for ' . $validYears . ' year' . ($validYears > 1 ? 's' : '') : 'Download Pack';
+    } else {
+        $validYears = (int) ($orders['package_expiry_yearly'] ?? 0);
+        $validMonths = (int) ($orders['package_expiry'] ?? 0);
+        if ($validYears > 0) {
+            $packageValidity = 'Subscription Pack for ' . $validYears . ' year' . ($validYears > 1 ? 's' : '');
+        } elseif ($validMonths > 0) {
+            $packageValidity = 'Subscription Pack for ' . $validMonths . ' month' . ($validMonths > 1 ? 's' : '');
+        } else {
+            $packageValidity = 'Subscription Pack';
+        }
+    }
+
+    $packageFormat = '';
+    if (strcasecmp($packageType, 'Footage') === 0) {
+        $packageFormat = ((int) ($orders['pacage_size'] ?? 0) === 1) ? 'HD' : '4K';
+    } elseif (strcasecmp($packageType, 'Image') === 0) {
+        $packageFormat = 'XL';
+    }
+
+    $packageDescriptorParts = array_filter([
+        $packageName,
+        $packageFormat,
+        $licenseName !== '' ? $licenseName . ' License' : '',
+        $packageValidity,
+    ]);
+    $packageDescriptor = implode('  |  ', $packageDescriptorParts);
+
+    $frontendUrl = trim((string) ($orders['frontend_url'] ?? 'https://imagefootage.com/#/'));
+    $remitAddress = '3rd Floor, R5 Chambers, Opp. Pillar No. 02, Mehdipatnam, Hyderabad, Telangana 500028';
+    $paymentTerms = [
+        'License rights are assigned only after payment of this invoice.',
+        'Payment is due immediately from the date of download or invoice issuance unless otherwise agreed in writing.',
+        'Please remit payment in favor of ' . $legalCompanyName . ' via account payee cheque, RTGS, or NEFT.',
+        'Bank transfer: A/c No. 50200000502220, HDFC Bank Ltd, Vijayanagar Colony Branch, Hyderabad, IFSC HDFC0001998.',
+        'If payment is not made within the approved credit period, interest @ 24% may be charged.',
+        'Goods once sold cannot be replaced or returned.',
+        'Acknowledgement of this invoice is deemed acceptance unless written communication to the contrary is received within 7 days.',
+        'All disputes are subject to Hyderabad jurisdiction.',
+    ];
+    ?>
     <style>
-        @font-face {
-            font-family: 'Lato', sans-serif;
-            src: url('fonts/Lato-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Lato', sans-serif;
-            src: url('fonts/Lato-Italic.ttf') format('truetype');
-            font-weight: normal;
-            font-style: italic;
-        }
-
-        @font-face {
-            font-family: 'Lato', sans-serif;
-            src: url('fonts/Lato-Bold.ttf') format('truetype');
-            font-weight: normal;
-            font-style: bold;
+        * {
+            box-sizing: border-box;
         }
 
         @page {
-            margin-top: 200px;
-            margin-bottom: 400px;
+            margin: 20px 24px 24px 24px;
         }
 
-        header {
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            height: 100px;
+        body {
+            margin: 0;
+            color: #111827;
+            font-family: "Noto Sans", "DejaVu Sans", Inter, Roboto, Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.45;
         }
 
-        footer {
-            position: fixed;
-            bottom: 0px;
-            left: 0px;
-            height: 100px;
-        }
-        .main{
-            border:1px solid black;
-            padding:10px
+        .sheet {
+            width: 100%;
         }
 
+        .section {
+            width: 100%;
+            margin: 0 0 24px;
+            padding: 0 0 24px;
+            border-bottom: 1px solid #E5E7EB;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            margin: 0 0 14px;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .header-table,
+        .info-grid,
+        .details-grid,
+        .summary-layout,
+        .bank-grid,
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .header-table td,
+        .info-grid td,
+        .details-grid td,
+        .summary-layout td,
+        .bank-grid td,
+        .meta-table td {
+            vertical-align: top;
+        }
+
+        .logo-cell {
+            width: 56%;
+            padding-right: 16px;
+            padding-top: 4px;
+        }
+
+        .logo-cell img {
+            max-width: 132px;
+            width: auto;
+            height: auto;
+            display: block;
+        }
+
+        .title-cell {
+            width: 44%;
+            text-align: right;
+        }
+
+        .eyebrow {
+            margin: 0 0 2px;
+            color: #9CA3AF;
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+        }
+
+        .document-label {
+            margin: 0;
+            color: #6B7280;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+        }
+
+        .hello-heading {
+            margin: 2px 0 0;
+            font-size: 54px;
+            line-height: 0.88;
+            font-weight: 700;
+        }
+
+        .info-grid {
+            margin-top: 20px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .info-grid > tbody > tr > td {
+            width: 50%;
+            padding-top: 18px;
+            padding-right: 22px;
+        }
+
+        .info-grid > tbody > tr > td:last-child {
+            padding-right: 0;
+            padding-left: 22px;
+        }
+
+        .details-grid > tbody > tr > td,
+        .bank-grid > tbody > tr > td {
+            width: 50%;
+            padding-right: 22px;
+        }
+
+        .details-grid > tbody > tr > td:last-child,
+        .bank-grid > tbody > tr > td:last-child {
+            padding-right: 0;
+            padding-left: 22px;
+        }
+
+        .detail-label,
+        .bank-label,
+        .meta-label {
+            width: 120px;
+            padding: 3px 12px 3px 0;
+            color: #6B7280;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .detail-value,
+        .bank-value,
+        .meta-value {
+            padding: 3px 0;
+            color: #111827;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .details-name {
+            margin: 0 0 8px;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .details-copy,
+        .bank-copy {
+            margin: 0 0 4px;
+            color: #374151;
+            font-size: 12px;
+        }
+
+        .package-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 12px;
+        }
+
+        .package-table th {
+            padding: 11px 12px;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: left;
+            background: #3F3F46;
+        }
+
+        .package-table th:first-child {
+            width: 52px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .package-table th:last-child {
+            width: 160px;
+            text-align: right;
+        }
+
+        .package-card {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .package-card > tbody > tr > td {
+            padding: 16px 0;
+            vertical-align: top;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .package-sr {
+            width: 52px;
+            padding-right: 0;
+            color: #111827;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .package-copy {
+            padding-right: 12px;
+        }
+
+        .package-title {
+            margin: 0 0 10px;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .package-subcopy {
+            margin: 0 0 10px;
+            color: #374151;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .package-price {
+            width: 160px;
+            text-align: right;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .summary-copy-cell {
+            width: 54%;
+            padding-right: 20px;
+        }
+
+        .summary-copy-label {
+            color: #6B7280;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .summary-copy-value {
+            margin: 4px 0 14px;
+            color: #111827;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .summary-copy-text {
+            color: #374151;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .summary-box-cell {
+            width: 46%;
+        }
+
+        .summary-box {
+            width: 320px;
+            margin-left: auto;
+            border-collapse: collapse;
+        }
+
+        .summary-box td {
+            padding: 9px 12px;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 12px;
+        }
+
+        .summary-box td:first-child {
+            color: #6B7280;
+        }
+
+        .summary-box td:last-child {
+            text-align: right;
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .summary-box .discount-value {
+            color: #059669;
+        }
+
+        .summary-box .total-row td {
+            padding-top: 14px;
+            padding-bottom: 14px;
+            color: #111827;
+            font-size: 15px;
+            font-weight: 700;
+            border-top: 2px solid #D1D5DB;
+            border-bottom: 2px solid #D1D5DB;
+        }
+
+        .terms-section {
+            color: #6B7280;
+        }
+
+        .terms-heading {
+            margin: 14px 0 8px;
+            color: #111827;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .terms-list {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .terms-list li {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+        .cta-link {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 18px;
+            background: #DC2626;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .signoff-grid {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .signoff-grid td {
+            width: 50%;
+            vertical-align: bottom;
+        }
+
+        .signoff-note {
+            color: #374151;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .signoff-meta {
+            margin-top: 12px;
+            color: #2563EB;
+            font-size: 12px;
+        }
+
+        .signature-block {
+            text-align: right;
+        }
+
+        .signature-block img {
+            max-width: 150px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .signature-copy {
+            margin: 6px 0 0;
+            color: #111827;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        @media screen {
+            body {
+                padding: 24px 0;
+            }
+
+            .sheet {
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 32px;
+                box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            }
+        }
+
+        @media print {
+            .sheet {
+                padding: 0;
+                box-shadow: none;
+            }
+        }
     </style>
-    <link rel="stylesheet" href="assets/css/email/quotation_pack.css">
 </head>
 
 <body>
-    <!-- Header start -->
-    <header>
-        <div class="container">
-            <div class="header-text">
-                <h1 class="h1"><strong>hello</strong></h1>
-                <span class="upper-case"><strong>THIS IS YOUR TAX INVOICE</strong></span>
-            </div>
-            <div class="header-logo">
-                <img src="<?php echo $orders['company_logo']; ?>" alt="logo" width="1920" height="351">
-            </div>
-        </div>
-    </header>
-    <!-- Header end -->
-    <!-- Footer start -->
-    <footer>
-        <div class="container">
-            <div class="footer-left">
-                <h2 class="h4"><strong><?php config('constants.company_name')?></strong></h2>
-                <p>3rd Floor, # 10-3-89/A/B, R-5 Chambers, Opp Pillar No. 2, Humayun Nagar, Hyderabad - 500028, Telangana, Andhra Pradesh, India Phone: +91 40 6720 6720
-                </p>
-                <a href="info@imagefootage.com" class="info">info@imagefootage.com </a>
-                <a href="<?php echo $orders['frontend_url']; ?>"><?php echo $orders['frontend_url']; ?></a>
-            </div>
-            <div class="footer-right">
-                <h3 class="h2">THANK YOU</h3>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer end -->
-    <!-- Wrap the content of your PDF inside a main tag -->
-    <main class="main">
-        <!-- Table paragraph section start -->
-        <section class="table-paragraph">
-            <div class="container pack_invoice">
-                <div class="client-info-top">
-                    <div class="client-info-leftside">
-                        <p>Customer Name: <span><strong><?php echo $orders['first_name'] ?? ''; ?> <?php echo $orders['last_name'] ?? ''; ?></span></strong></p>
-                        <p>Address: <span><strong><?php echo $orders['address'] ?? ''; ?></strong></span>
-                            <?php if (!empty($orders['address2'])) { ?>
-                                <span><strong><?php echo $orders['address2'] ?? ''; ?></strong></span>
-                            <?php } ?>
-                            <span class="block-text"><strong><?php echo $orders['cityname'] ?? ''; ?>&nbsp;&nbsp; <?php echo $orders['statename'] ?? ''; ?>&nbsp;&nbsp;<?php echo $orders['postal_code'] ?? ''; ?></strong></span>
-                        </p>
-                        <p>Mobile: <span><strong><?php echo "+91 - " . $orders['mobile'] ?? ''; ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo $orders['gst']; ?></strong></span></p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p>Invoice No.: <span><strong><?php echo $orders['INVOICE_PREFIX'] . $orders['invoice_name']; ?></span></strong></p>
-                        <p>Invoice Date: <span><strong><?php echo date("d.m.Y ", strtotime($orders['invicecreted'])) ?></strong></span></p>
-                        <p>GSTIN: <span><strong><?php echo config('constants.GSTIN_VALUE') ?></strong></span></p>
-                        <p>PAN No.: <span><strong><?php echo config('constants.PAN_VALUE') ?></strong></span></p>
-                        <p>SAC Code: <span><strong><?php echo config('constants.SAC_CODE') ?></strong></span></p>
-                        <p>Vendor Code : <span><strong><?php echo $orders['vendor_code'] ?></strong></span></p>
-                        <p>Place: <span><strong><?php echo config('constants.QI_ADDRESS') ?></strong></span></p>
-                        <p>Payment Due: <span><strong><?php echo ucfirst($payment_method) ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="client-info-bottom">
-                    <div class="client-info-leftside">
-                        <p>Kind Attention: <span class="block-text" style="white-space: break-spaces; display:inline;"><strong><?php echo $orders['first_name'] . ' ' . $orders['last_name']; ?></strong></span></p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p>Purchase Order No.: <span class="block-text"><strong><?php $orders['job_number']; ?></strong></span></p>
-                        <p>dated<span class="block-text"><strong><?php echo date("d.M.Y", strtotime($orders['po_detail'])) ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="client-info-bottom">
-                    <div class="client-info-leftside">
-                        <p>Total number of image(s)/footage(s):</p>
-                        <p><span><strong><?php echo $orders['package_products_count'] . ' (' . $orders['package_products_count_in_words'] . ')'; ?></strong></span></p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p>IF Sales Representative: <span><strong><?php echo Auth::guard('admins')->user()->name; ?></strong></span></p>
-                        <p>End Client: <span><strong><?php echo $orders['company'] ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="price-div package-title-div pb-10">
-                    <div class="client-info-leftside">
-                        <p><strong><?php echo $orders['package_name'] ?? '' ?></strong></p>
-                        <p>Quantity: <?php echo $orders['package_products_count'] ?? '' ?>&nbsp;<?php echo $orders['package_type'] ?? ''; ?></p>
-                        <p>
-                            <?php
-                            if ($orders['package_plan'] == 1) {
-                                $plan = 'Download Pack For '.$orders['package_expiry_yearly'].' year';
-                            } else {
-                                if ($orders['package_expiry_yearly'] == 0 || $orders['package_expiry_yearly'] == null) {
-                                    $plan = 'Subscription Pack For '.$orders['package_expiry'].' Month';
-                                } else {
-                                    $plan = 'Subscription Pack For '.$orders['package_expiry_yearly'].' Year';
-                                }
-                            }
-                            if ($orders['package_type'] == 'Footage') {
-                                if ($orders['pacage_size'] == 1) {
-                                    echo $orders['package_name'] . " HD " . $plan;
-                                } else {
-                                    echo $orders['package_name'] . " 4K " . $plan;
-                                }
-                            }else if($orders['package_type'] == 'Image'){
-                                echo $orders['package_name'] ." XL";
-                            }
-                             else {
-                                echo $orders['package_name'] . " " . $plan;
-                            }
-                            ?>&nbsp;
-                            <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?>
-                        </p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p><strong>INR <?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></p>
-                    </div>
-                </div>
-                <div class="price-div pb-10">
-                    <div class="client-info-leftside">
-                        <p>Amount (INR):</p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p><span class="block-text"><strong><?php echo number_format(($orders['total'] - $orders['tax']), 2) ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="price-div pb-10">
-                    <div class="client-info-leftside">
-                        <p>Add: GST @: <?php echo config('constants.GST_VALUE') ?>%</p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p><span class="block-text"><strong><?php echo number_format($orders['tax'], 2) ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="price-div pb-10">
-                    <div class="client-info-leftside">
-                        <p>Total Invoice Amount (INR)</p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p><span class="block-text"><strong><?php echo number_format($orders['total'], 2) ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="price-div">
-                    <div class="client-info-leftside">
-                        <p>In words:</p>
-                    </div>
-                    <div class="client-info-rightside">
-                        <p><span class="block-text"><strong>Rupees &nbsp; <?php echo $amount_in_words.' only' ?></strong></span></p>
-                    </div>
-                </div>
-                <div class="licensing-terms">
-                    <h2 class="h3"><strong>Payment Instructions:</strong></h2>
-                    <div class="licensing-condition">
-                        <ul>
-                            <li>License Rights are only assigned on payment of this invoice.</li>
+    <div class="sheet">
+        <section class="section">
+            <table class="header-table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="logo-cell">
+                        <img src="<?php echo $orders['company_logo']; ?>" alt="Company Logo">
+                    </td>
+                    <td class="title-cell">
+                        <div class="eyebrow">THIS IS YOUR</div>
+                        <div class="document-label"><?php echo htmlspecialchars($documentLabel); ?></div>
+                        <div class="hello-heading" style="color: <?php echo $helloColor; ?>;">hello</div>
+                    </td>
+                </tr>
+            </table>
 
-                            <li>Payment should be made Immediate from the date of download of the image(s) and can be sent to:
-                                <span><strong><?php config('constants.company_name')?>,</strong></span> c/o Conceptual Pictures Worldwide Pvt. Ltd., 3rd Floor, R5 Chambers, Opposite Pillar No. 2, Humayun Nagar, Mehdipatnam – Hyderabad – 500028, Telangana.
-                            </li>
-                            <li>
-                                If not paid within credit period allowed, <span><strong>interest @ 24%</strong></span> will be charged.
-                            </li>
-                            <li>Payment can be made in favour of <span><strong>Conceptual Pictures Worldwide Pvt. Ltd..</strong></span>
-                            </li>
-                        </ul>
-                        <ol>
-                            <li>Through A/c. Payee Cheques/DD payable at Hyderabad</li>
-                            <li> RTGS/NEFT to <span><strong>A/c. No. 50200000502220, HDFC Bank Ltd</strong></span>, Vijay Nagar Branch,
-                                Hyderabad
-                                IFSC Code: <span><strong>HDFC0001998</strong></span>.</li>
-                        </ol>
-                        <?php if (!empty($orders['payment_url'])) { ?>
-                        <table width="100%" role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 18px 0 10px;">
+            <table class="info-grid" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <table class="meta-table" cellpadding="0" cellspacing="0">
                             <tr>
-                                <td style="text-align: center;">
-                                    <a href="<?php echo $orders['payment_url']; ?>" style="display: inline-block; background: #d9534f; color: #ffffff; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700;">Pay Invoice with Razorpay</a>
-                                </td>
+                                <td class="meta-label">Invoice No.</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($invoiceNumber !== '' ? $invoiceNumber : '-'); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Invoice Date</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($invoiceDate !== '' ? $invoiceDate : '-'); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Vendor Code</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($clientCode !== '' ? $clientCode : '-'); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Payment Due</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($paymentMethodLabel); ?></td>
                             </tr>
                         </table>
-                        <?php } ?>
-                        <ul>
-                            <li>Goods once sold cannot be replaced or returned.</li>
-                            <li>Acknowledgement of the Invoice will be deemed as acceptance of this bill in full unless we receive a written communication to the contrary within 7 days of the invoice date.</li>
-                            <li>All disputes are subject to Hyderabad Jurisdiction.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                    </td>
+                    <td>
+                        <table class="meta-table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="meta-label">Company Name</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($issuerCompanyName); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">GSTIN</td>
+                                <td class="meta-value"><?php echo htmlspecialchars((string) config('constants.GSTIN_VALUE')); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">PAN No.</td>
+                                <td class="meta-value"><?php echo htmlspecialchars((string) config('constants.PAN_VALUE')); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">SAC Code</td>
+                                <td class="meta-value"><?php echo htmlspecialchars((string) config('constants.SAC_CODE')); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Place</td>
+                                <td class="meta-value"><?php echo htmlspecialchars((string) config('constants.QI_ADDRESS')); ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </section>
-        <!-- Table paragraph section end -->
-        <!-- Signature section start -->
-        <section class="signature">
-            <div class="container">
-                <p>For <span><?php config('constants.company_name')?></span></p>
-                <img src="<?php echo $orders['signature']; ?>" alt="signature" width="171" height="89">
-                <p>Authorized Signatory</p>
-            </div>
-        </section>
-        <!-- Signature section end -->
-    </main>
 
+        <section class="section">
+            <table class="details-grid" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <div class="section-title">Client Details</div>
+                        <p class="details-name"><?php echo htmlspecialchars($clientCompanyName); ?></p>
+                        <?php if ($clientAddress !== '') { ?>
+                            <p class="details-copy"><?php echo htmlspecialchars($clientAddress); ?></p>
+                        <?php } ?>
+                        <?php if ($clientLocation !== '') { ?>
+                            <p class="details-copy"><?php echo htmlspecialchars($clientLocation); ?></p>
+                        <?php } ?>
+                        <?php if ($clientCountry !== '') { ?>
+                            <p class="details-copy"><?php echo htmlspecialchars($clientCountry); ?></p>
+                        <?php } ?>
+                        <table class="meta-table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="meta-label">Kind Attention</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($contactName !== '' ? $contactName : $clientCompanyName); ?></td>
+                            </tr>
+                            <?php if ($clientEmail !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">Mail ID</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($clientEmail); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($clientMobile !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">Contact No.</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars('+91 - ' . $clientMobile); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($clientPan !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">Client PAN</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($clientPan); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($clientGstin !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">Client GSTIN</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($clientGstin); ?></td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </td>
+                    <td>
+                        <div class="section-title">Invoice Details</div>
+                        <p class="details-name"><?php echo htmlspecialchars($productDescription); ?></p>
+                        <p class="details-copy">Prepared by <?php echo htmlspecialchars($accountManager); ?></p>
+                        <?php if ($packageValidity !== '') { ?>
+                            <p class="details-copy"><?php echo htmlspecialchars($packageValidity); ?></p>
+                        <?php } ?>
+                        <table class="meta-table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="meta-label">Invoice Type</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($invoiceMode); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Package Type</td>
+                                <td class="meta-value"><?php echo htmlspecialchars($packageType !== '' ? $packageType : 'Package'); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Quantity</td>
+                                <td class="meta-value"><?php echo htmlspecialchars(trim(($packageQuantity !== '' ? $packageQuantity : '1') . ' ' . $packageType)); ?></td>
+                            </tr>
+                            <?php if ($licenseName !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">License</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($licenseName . ' License'); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($packageFormat !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">Delivery</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($packageFormat); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($endClient !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">End Client</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($endClient); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($poNumber !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">PO Number</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($poNumber); ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php if ($poDate !== '') { ?>
+                                <tr>
+                                    <td class="meta-label">PO Date</td>
+                                    <td class="meta-value"><?php echo htmlspecialchars($poDate); ?></td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <div class="section-title">Package Summary</div>
+            <table class="package-table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>S. No.</th>
+                    <th>Description</th>
+                    <th>Unit Price</th>
+                </tr>
+            </table>
+
+            <table class="package-card" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="package-sr">1</td>
+                    <td class="package-copy">
+                        <p class="package-title"><?php echo htmlspecialchars($packageName !== '' ? $packageName : $productDescription); ?></p>
+                        <p class="package-subcopy"><?php echo htmlspecialchars('Quantity: ' . trim(($packageQuantity !== '' ? $packageQuantity : '1') . ' ' . $packageType)); ?></p>
+                        <?php if ($packageDescriptor !== '') { ?>
+                            <p class="package-subcopy"><?php echo htmlspecialchars($packageDescriptor); ?></p>
+                        <?php } ?>
+                        <?php if ($taxAmount > 0) { ?>
+                            <p class="package-subcopy"><?php echo htmlspecialchars('GST @ ' . ((string) config('constants.GST_VALUE')) . '% applied to this invoice'); ?></p>
+                        <?php } ?>
+                    </td>
+                    <td class="package-price"><?php echo $currencySymbolHtml; ?><?php echo number_format($subTotal, 2); ?></td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <table class="summary-layout" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="summary-copy-cell">
+                        <div class="summary-copy-label">Total Assets</div>
+                        <div class="summary-copy-value"><?php echo htmlspecialchars($packageQuantity !== '' ? $packageQuantity : '1'); ?></div>
+                        <div class="summary-copy-label">Invoice Scope</div>
+                        <div class="summary-copy-text"><?php echo htmlspecialchars($invoiceMode . ' for ' . ($packageType !== '' ? $packageType : 'licensed assets')); ?></div>
+                        <?php if ($amountInWordsLine !== '') { ?>
+                            <div class="summary-copy-label" style="margin-top: 14px;">Amount In Words</div>
+                            <div class="summary-copy-text"><?php echo htmlspecialchars($amountInWordsLine); ?></div>
+                        <?php } ?>
+                    </td>
+                    <td class="summary-box-cell">
+                        <table class="summary-box" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>Sub Total</td>
+                                <td><?php echo $currencySymbolHtml; ?><?php echo number_format($subTotal, 2); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Discount</td>
+                                <td class="discount-value">-<?php echo $currencySymbolHtml; ?><?php echo number_format($discountAmount, 2); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Tax (GST)</td>
+                                <td><?php echo $currencySymbolHtml; ?><?php echo number_format($taxAmount, 2); ?></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Due</td>
+                                <td><?php echo $currencySymbolHtml; ?><?php echo number_format($totalAmount, 2); ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section terms-section">
+            <div class="section-title">Payment Instructions</div>
+            <div class="terms-heading">Please note the following:</div>
+            <ul class="terms-list">
+                <?php foreach ($paymentTerms as $term) { ?>
+                    <li><?php echo htmlspecialchars($term); ?></li>
+                <?php } ?>
+            </ul>
+        </section>
+
+        <section class="section">
+            <table class="bank-grid" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <div class="section-title">Payment Method</div>
+                        <p class="details-name" style="font-size: 14px;"><?php echo htmlspecialchars($paymentMethodLabel); ?></p>
+                        <p class="bank-copy">Use the invoice number <strong><?php echo htmlspecialchars($invoiceNumber !== '' ? $invoiceNumber : '-'); ?></strong> as your payment reference.</p>
+                        <?php if ($showPaymentCta) { ?>
+                            <a class="cta-link" href="<?php echo $orders['payment_url']; ?>">Pay Invoice with Razorpay</a>
+                        <?php } ?>
+                    </td>
+                    <td>
+                        <div class="section-title">Remit To</div>
+                        <p class="details-name" style="font-size: 14px;"><?php echo htmlspecialchars($legalCompanyName); ?></p>
+                        <p class="bank-copy"><?php echo htmlspecialchars($remitAddress); ?></p>
+                        <p class="bank-copy">Email: info@imagefootage.com</p>
+                        <p class="bank-copy">Website: <?php echo htmlspecialchars($frontendUrl); ?></p>
+                        <table class="meta-table" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+                            <tr>
+                                <td class="bank-label">Account Name</td>
+                                <td class="bank-value"><?php echo htmlspecialchars($legalCompanyName); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="bank-label">Account Number</td>
+                                <td class="bank-value">50200000502220</td>
+                            </tr>
+                            <tr>
+                                <td class="bank-label">Bank Name</td>
+                                <td class="bank-value">HDFC Bank Ltd</td>
+                            </tr>
+                            <tr>
+                                <td class="bank-label">IFSC Code</td>
+                                <td class="bank-value">HDFC0001998</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <table class="signoff-grid" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <div class="signoff-note">
+                            Invoice issued by <?php echo htmlspecialchars($issuerCompanyName); ?>.
+                            Please retain this copy for your records and reference the invoice number for all payment correspondence.
+                        </div>
+                        <div class="signoff-meta">
+                            info@imagefootage.com<br>
+                            <?php echo htmlspecialchars($frontendUrl); ?>
+                        </div>
+                    </td>
+                    <td class="signature-block">
+                        <div class="signoff-note" style="margin-bottom: 8px;">For <?php echo htmlspecialchars($legalCompanyName); ?></div>
+                        <img src="<?php echo $orders['signature']; ?>" alt="Authorized Signature">
+                        <div class="signature-copy">Authorized Signatory</div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
 </body>
 
 </html>

@@ -48,6 +48,8 @@
     $totalItems = count($quotation);
     $amountInWordsText = trim((string) ($amount_in_words ?? ''));
     $amountInWordsLine = $amountInWordsText !== '' ? 'Rupees ' . $amountInWordsText . ' only' : '';
+    $paymentStatus = strtolower(trim((string) ($quotation[0]['payment_status'] ?? '')));
+    $showPaymentCta = !empty($quotation[0]['payment_url']) && !in_array($paymentStatus, ['transction success', 'completed'], true);
     $placeholderImage = $quotation[0]['placeholder_image'] ?? ($quotation[0]['template_image'] ?? ($quotation[0]['music_image'] ?? ''));
     $placeholderVideo = $quotation[0]['placeholder_video'] ?? ($quotation[0]['template_image'] ?? $placeholderImage);
     $placeholderMusic = $quotation[0]['placeholder_music'] ?? ($quotation[0]['music_image'] ?? ($quotation[0]['template_image'] ?? $placeholderImage));
@@ -544,6 +546,18 @@
             line-height: 1.55;
         }
 
+        .cta-link {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 18px;
+            background: #DC2626;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         @media screen {
             body {
                 padding: 24px 0;
@@ -875,6 +889,9 @@
                         <p class="bank-copy">Opp. Pillar No. 02, Mehdipatnam</p>
                         <p class="bank-copy">Hyderabad, Telangana 500028</p>
                         <p class="bank-copy">accounts@conceptualpictures.com</p>
+                        <?php if ($showPaymentCta) { ?>
+                            <a class="cta-link" href="<?php echo $quotation[0]['payment_url']; ?>">Confirm Selection with Razorpay</a>
+                        <?php } ?>
                     </td>
                     <td>
                         <div class="section-title">Bank Transfer Details</div>
