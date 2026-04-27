@@ -233,6 +233,110 @@ class Common extends Model
         return $this->pdfImagePath($relativePath);
     }
 
+    private function pdfImageDataUriFromBinary(string $binary, string $source = ''): string
+    {
+        $mime = '';
+        if (function_exists('finfo_open') && function_exists('finfo_buffer')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            if ($finfo) {
+                $mime = (string) finfo_buffer($finfo, $binary);
+                finfo_close($finfo);
+            }
+        }
+
+        if ($mime === '') {
+            $extension = strtolower(pathinfo((string) (parse_url($source, PHP_URL_PATH) ?: $source), PATHINFO_EXTENSION));
+            $mimeMap = [
+                'jpg' => 'image/jpeg',
+                'jpeg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+                'webp' => 'image/webp',
+                'svg' => 'image/svg+xml',
+                'bmp' => 'image/bmp',
+            ];
+            $mime = $mimeMap[$extension] ?? 'image/png';
+        }
+
+        return 'data:' . $mime . ';base64,' . base64_encode($binary);
+    }
+
+    private function pdfImageDataUriFromAbsolutePath(string $absolutePath): ?string
+    {
+        if (!is_file($absolutePath) || !is_readable($absolutePath)) {
+            return null;
+        }
+
+        $binary = @file_get_contents($absolutePath);
+        if ($binary === false || $binary === '') {
+            return null;
+        }
+
+        return $this->pdfImageDataUriFromBinary($binary, $absolutePath);
+    }
+
+    private function resolvePdfThumbnailSource($source, string $fallback = ''): string
+    {
+        $source = trim((string) $source);
+        if ($source === '') {
+            return $fallback;
+        }
+
+        if (strpos($source, 'data:') === 0 || strpos($source, 'file:///') === 0) {
+            return $source;
+        }
+
+        if (is_file($source)) {
+            return $this->pdfImageDataUriFromAbsolutePath($source) ?: ('file:///' . str_replace('\\', '/', $source));
+        }
+
+        $normalizedPath = ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $source), DIRECTORY_SEPARATOR);
+        $publicCandidate = public_path($normalizedPath);
+        if (is_file($publicCandidate)) {
+            return $this->pdfImageDataUriFromAbsolutePath($publicCandidate) ?: $this->pdfImagePath($normalizedPath);
+        }
+
+        if (filter_var($source, FILTER_VALIDATE_URL)) {
+            $urlPath = (string) parse_url($source, PHP_URL_PATH);
+            if ($urlPath !== '') {
+                $publicUrlCandidate = public_path(ltrim(str_replace('/', DIRECTORY_SEPARATOR, urldecode($urlPath)), DIRECTORY_SEPARATOR));
+                if (is_file($publicUrlCandidate)) {
+                    return $this->pdfImageDataUriFromAbsolutePath($publicUrlCandidate) ?: $source;
+                }
+            }
+
+            $binary = @file_get_contents($source);
+            if ($binary !== false && $binary !== '') {
+                return $this->pdfImageDataUriFromBinary($binary, $source);
+            }
+
+            return $source;
+        }
+
+        return $fallback !== '' ? $fallback : $source;
+    }
+
+    private function hydratePdfItemThumbnails(array $items, string $imageFallback, string $videoFallback, string $musicFallback): array
+    {
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $itemType = strtolower(trim((string) ($item['type'] ?? '')));
+            $fallback = $imageFallback;
+            if (strpos($itemType, 'music') !== false) {
+                $fallback = $musicFallback;
+            } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
+                $fallback = $videoFallback;
+            }
+
+            $items[$index]['product_image_pdf'] = $this->resolvePdfThumbnailSource($item['product_image'] ?? '', $fallback);
+        }
+
+        return $items;
+    }
+
     private function buildAtomReturnUrl($path)
     {
         $configuredBase = env('ATOM_CALLBACK_BASE_URL') ?: config('app.url');
@@ -265,7 +369,8 @@ class Common extends Model
         }
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
-        $currency = $data['products']['product'][0]['currency'] ?? 'INR';
+            $currency = $data['products']['product'][0]['currency'] ?? 'INR';
+            $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
 
         $insert = array(
             'user_id'         => $data['uid'],
@@ -395,6 +500,12 @@ class Common extends Model
             $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
             $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
             $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
+            $dataForEmail = $this->hydratePdfItemThumbnails(
+                $dataForEmail,
+                $dataForEmail[0]['placeholder_image'],
+                $dataForEmail[0]['placeholder_video'],
+                $dataForEmail[0]['placeholder_music']
+            );
             $front_end_url_name               = config('app.front_end_url');
             $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
             $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
@@ -469,13 +580,16 @@ class Common extends Model
                             $itemTitle = 'Asset ' . ($index + 1);
                         }
 
-                        $itemType = strtolower((string) ($item['type'] ?? ''));
+                    $itemType = strtolower((string) ($item['type'] ?? ''));
+                    $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
+                    if ($itemThumbUrl === '') {
                         $itemThumbUrl = $defaultImageThumb;
                         if (strpos($itemType, 'music') !== false) {
                             $itemThumbUrl = !empty($defaultMusicThumb) ? $defaultMusicThumb : $defaultImageThumb;
                         } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
                             $itemThumbUrl = !empty($defaultVideoThumb) ? $defaultVideoThumb : $defaultImageThumb;
                         }
+                    }
 
                         $detailLines = [];
                         if (!empty($item['type'])) {
@@ -518,7 +632,7 @@ class Common extends Model
                             . '</div>'
                             . $extraDetailsBlock
                             . '</div>'
-                            . '<div class="item-price">' . number_format((float) ($item['subtotal'] ?? 0), 2) . '</div>'
+                            . '<div class="item-price">' . $currencySymbolHtml . number_format((float) ($item['subtotal'] ?? 0), 2) . '</div>'
                             . '</div>';
                     }
 
@@ -698,6 +812,7 @@ class Common extends Model
         $amount_in_words   =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $transactionRequest = new TransactionRequest();
         $currency = $request_data['currency'] ?? 'INR';
+        $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
         //Setting all values here
         $transactionRequest->setMode($this->mode);
         $transactionRequest->setLogin($this->login);
@@ -735,6 +850,12 @@ class Common extends Model
         $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
         $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
         $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
+        $dataForEmail = $this->hydratePdfItemThumbnails(
+            $dataForEmail,
+            $dataForEmail[0]['placeholder_image'],
+            $dataForEmail[0]['placeholder_video'],
+            $dataForEmail[0]['placeholder_music']
+        );
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
@@ -854,13 +975,16 @@ class Common extends Model
                     $itemTitle = 'Asset ' . ($index + 1);
                 }
 
-                $itemType = strtolower((string) ($item['type'] ?? ''));
+            $itemType = strtolower((string) ($item['type'] ?? ''));
+            $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
+            if ($itemThumbUrl === '') {
                 $itemThumbUrl = $defaultImageThumb;
                 if (strpos($itemType, 'music') !== false) {
                     $itemThumbUrl = $defaultMusicThumb;
                 } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
                     $itemThumbUrl = $defaultVideoThumb;
                 }
+            }
 
                 $detailLines = [];
                 if (!empty($item['type'])) {
@@ -911,7 +1035,7 @@ class Common extends Model
                     . '</div>'
                     . $extraDetailsBlock
                     . '</div>'
-                    . '<div class="item-price">' . number_format((float) ($item['subtotal'] ?? 0), 2) . '</div>'
+                    . '<div class="item-price">' . $currencySymbolHtml . number_format((float) ($item['subtotal'] ?? 0), 2) . '</div>'
                     . '</div>';
             }
 

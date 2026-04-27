@@ -34,7 +34,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     ffmpeg \
     chromium \
+    fonts-dejavu-core \
     fonts-liberation \
+    fonts-noto-core \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \

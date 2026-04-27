@@ -72,7 +72,7 @@
         body {
             margin: 0;
             color: #111827;
-            font-family: Inter, Roboto, "DejaVu Sans", Arial, sans-serif;
+            font-family: "Noto Sans", "DejaVu Sans", Inter, Roboto, Arial, sans-serif;
             font-size: 12px;
             line-height: 1.45;
         }
@@ -724,9 +724,8 @@
                     }
 
                     $itemType = trim((string) ($item['type'] ?? ''));
-                    $itemThumb = trim((string) ($item['product_image'] ?? ''));
-                    $isInlineOrLocalThumb = strpos($itemThumb, 'data:') === 0 || strpos($itemThumb, 'file:///') === 0;
-                    if ($itemThumb === '' || (!$isInlineOrLocalThumb && filter_var($itemThumb, FILTER_VALIDATE_URL))) {
+                    $itemThumb = trim((string) ($item['product_image_pdf'] ?? ($item['product_image'] ?? '')));
+                    if ($itemThumb === '') {
                         $itemTypeKey = strtolower($itemType);
                         if (strpos($itemTypeKey, 'music') !== false) {
                             $itemThumb = $placeholderMusic;
