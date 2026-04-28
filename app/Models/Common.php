@@ -521,6 +521,7 @@ class Common extends Model
         $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
 
         // Update Total applied code in promo code
+        $discount = 0;
         if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
             $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
             if ($promoCode) {
@@ -1684,7 +1685,7 @@ class Common extends Model
         } else if ($packge->package_expiry_yearly == 1) {
             $package_name = 'Annual';
         }
-
+        $discount = 0;
         // Update Total applied code in promo code
         if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
             $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
@@ -1951,6 +1952,7 @@ class Common extends Model
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s', strtotime("+" . $allFields['package_expiry_yearly'] . " years"));
         }
         $packge->save();
+        $discount = 0;
         $currency = $data['currency'] ?? ($data['plan_id']['currency'] ?? 'INR');
         // Update Total applied code in promo code
         if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {

@@ -42,9 +42,9 @@
     }
     $taxAmount = (float) ($quotation[0]['tax'] ?? 0);
     $totalAmount = (float) ($quotation[0]['total'] ?? 0);
-    $discountAmount = (float) ($quotation[0]['discount_amount'] ?? 0);
+   //  $discountAmount = (float) ($quotation[0]['discount_amount'] ?? 0);
     $subTotal = max($totalAmount - $taxAmount, 0);
-$discountAmount = 0.00;
+    $discountAmount = 0.00;
     $currencySymbol = (($quotation[0]['currency'] ?? 'INR') === 'USD') ? '$' : '&#8377;';
     $totalItems = count($quotation);
     $amountInWordsText = trim((string) ($amount_in_words ?? ''));
