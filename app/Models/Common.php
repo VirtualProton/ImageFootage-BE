@@ -517,8 +517,24 @@ class Common extends Model
         }
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
-            $currency = $data['products']['product'][0]['currency'] ?? 'INR';
-            $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
+        $currency = $data['products']['product'][0]['currency'] ?? 'INR';
+        $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
+
+        // Update Total applied code in promo code
+        if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
+            $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
+            if ($promoCode) {
+                $currentUsed                   = $promoCode->total_applied_code;
+                $promoCode->total_applied_code = $currentUsed + 1;
+                if ($promoCode->type == 'flat') {
+                    $discount = $promoCode->discount;
+                } else {
+                    $discount = $data['total'] * ($promoCode->discount / 100);
+                }
+
+                $promoCode->save();
+            }
+        }
 
         $insert = array(
             'user_id'         => $data['uid'],
@@ -528,7 +544,7 @@ class Common extends Model
             'invoice_name'    => $this->random_numbers(),
             'created'         => date('Y-m-d'),
             'modified'        => date('Y-m-d H:i:s'),
-            'promo_code'      => '',
+            'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
             'tax_selected'    => json_encode($selected_taxes),
             'total'           => $data['total'],
@@ -540,17 +556,11 @@ class Common extends Model
             'promo_code_id'   => isset($data['promo_code_id']) ? $data['promo_code_id'] : 0,
             'cancelled_on'    => $cancelled_on,
             'currency'        => $currency,
+            'discount_amount' => $discount ?? 0
         );
         DB::table('imagefootage_performa_invoices')->insert($insert);
         $id = DB::getPdo()->lastInsertId();
 
-        // Update Total applied code in promo code
-        if (!empty($data['promo_code_id'])) {
-            $promoCode                     = PromoCode::find($data['promo_code_id']);
-            $currentUsed                   = $promoCode->total_applied_code;
-            $promoCode->total_applied_code = $currentUsed + 1;
-            $promoCode->save();
-        }
         // End Update Total applied code in promo code
 
         if (count($data['products']) > 0) {
@@ -618,7 +628,8 @@ class Common extends Model
             $transactionRequest->setReqHashKey($this->atomRequestKey);
             $url = $transactionRequest->getPGUrl();
             $dataForEmail[0]['payment_url'] = $url;
-            
+            $dataForEmail[0]['discount_amount'] = $discount;
+
             // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
             $quotationReferenceId = 'QTN-' . ($dataForEmail[0]['invoice_name'] ?? '');
             $quotationPaymentLink = $this->createRazorpayPaymentLink(
@@ -733,16 +744,16 @@ class Common extends Model
                             $itemTitle = 'Asset ' . ($index + 1);
                         }
 
-                    $itemType = strtolower((string) ($item['type'] ?? ''));
-                    $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
-                    if ($itemThumbUrl === '') {
-                        $itemThumbUrl = $defaultImageThumb;
-                        if (strpos($itemType, 'music') !== false) {
-                            $itemThumbUrl = !empty($defaultMusicThumb) ? $defaultMusicThumb : $defaultImageThumb;
-                        } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
-                            $itemThumbUrl = !empty($defaultVideoThumb) ? $defaultVideoThumb : $defaultImageThumb;
+                        $itemType = strtolower((string) ($item['type'] ?? ''));
+                        $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
+                        if ($itemThumbUrl === '') {
+                            $itemThumbUrl = $defaultImageThumb;
+                            if (strpos($itemType, 'music') !== false) {
+                                $itemThumbUrl = !empty($defaultMusicThumb) ? $defaultMusicThumb : $defaultImageThumb;
+                            } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
+                                $itemThumbUrl = !empty($defaultVideoThumb) ? $defaultVideoThumb : $defaultImageThumb;
+                            }
                         }
-                    }
 
                         $detailLines = [];
                         if (!empty($item['type'])) {
@@ -1020,7 +1031,7 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $dataForEmail[0]['first_name'];
-        
+
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $invoicePaymentLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0),
@@ -1126,16 +1137,16 @@ class Common extends Model
                     $itemTitle = 'Asset ' . ($index + 1);
                 }
 
-            $itemType = strtolower((string) ($item['type'] ?? ''));
-            $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
-            if ($itemThumbUrl === '') {
-                $itemThumbUrl = $defaultImageThumb;
-                if (strpos($itemType, 'music') !== false) {
-                    $itemThumbUrl = $defaultMusicThumb;
-                } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
-                    $itemThumbUrl = $defaultVideoThumb;
+                $itemType = strtolower((string) ($item['type'] ?? ''));
+                $itemThumbUrl = trim((string) ($item['product_image_pdf'] ?? ''));
+                if ($itemThumbUrl === '') {
+                    $itemThumbUrl = $defaultImageThumb;
+                    if (strpos($itemType, 'music') !== false) {
+                        $itemThumbUrl = $defaultMusicThumb;
+                    } elseif (strpos($itemType, 'footage') !== false || strpos($itemType, 'video') !== false) {
+                        $itemThumbUrl = $defaultVideoThumb;
+                    }
                 }
-            }
 
                 $detailLines = [];
                 if (!empty($item['type'])) {
@@ -1361,7 +1372,7 @@ class Common extends Model
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
         $currency = 'INR';
-//test commit
+        //test commit
         $dataForEmail[0]['company_logo']                    = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']                       = $this->pdfImagePath('images/signature.png');
         $front_end_url_name                                 = config('app.front_end_url');
@@ -1379,7 +1390,7 @@ class Common extends Model
         $data["email"]   = $recipientEmail;
         $data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data['name']    = $dataForEmail[0]['first_name'];
-        
+
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $invoicePaymentLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0),
@@ -1674,6 +1685,21 @@ class Common extends Model
             $package_name = 'Annual';
         }
 
+        // Update Total applied code in promo code
+        if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
+            $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
+            if ($promoCode) {
+                $currentUsed                   = $promoCode->total_applied_code;
+                $promoCode->total_applied_code = $currentUsed + 1;
+                if ($promoCode->type == 'flat') {
+                    $discount = $promoCode->discount;
+                } else {
+                    $discount = $data['total'] * ($promoCode->discount / 100);
+                }
+
+                $promoCode->save();
+            }
+        }
         $insert = array(
             'user_id'         => $data['uid'],
             'email_id'        => $data['email'],
@@ -1681,7 +1707,7 @@ class Common extends Model
             'invoice_type'    => '1',
             'created'         => date('Y-m-d H:i:s'),
             'modified'        => date('Y-m-d H:i:s'),
-            'promo_code'      => '',
+            'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
             'tax_selected'    => "GST",
             'total'           => $data['total'],
@@ -1693,18 +1719,11 @@ class Common extends Model
             'created_by'      => Auth::guard('admins')->user()->id,
             'flag'            => $data['flag'] ?? '',
             'cancelled_on'    => $cancelled_on,
+            'discount_amount' => $discount ?? 0,
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);
         $id = DB::getPdo()->lastInsertId();
-
-        // Update Total applied code in promo code
-        if (!empty($data['promo_code_id'])) {
-            $promoCode                     = PromoCode::find($data['promo_code_id']);
-            $currentUsed                   = $promoCode->total_applied_code;
-            $promoCode->total_applied_code = $currentUsed + 1;
-            $promoCode->save();
-        }
         // End Update Total applied code in promo code
 
         if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
@@ -1750,7 +1769,7 @@ class Common extends Model
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
         $currency = 'INR';
-        
+
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $quotationReferenceId = 'QTN-SUB-' . ($dataForEmail[0]['invoice_name'] ?? '');
         $quotationPaymentLink = $this->createRazorpayPaymentLink(
@@ -1835,7 +1854,7 @@ class Common extends Model
 
             Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml) {
                 $message->to($data["email"])
-                            ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
+                    ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
                     ->attach($pdfPath, [
                         'as' => $fileName,
@@ -1933,6 +1952,21 @@ class Common extends Model
         }
         $packge->save();
         $currency = $data['currency'] ?? ($data['plan_id']['currency'] ?? 'INR');
+        // Update Total applied code in promo code
+        if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
+            $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
+            if ($promoCode) {
+                $currentUsed                   = $promoCode->total_applied_code;
+                $promoCode->total_applied_code = $currentUsed + 1;
+                if ($promoCode->type == 'flat') {
+                    $discount = $promoCode->discount;
+                } else {
+                    $discount = $data['total'] * ($promoCode->discount / 100);
+                }
+
+                $promoCode->save();
+            }
+        }
         $insert = array(
             'user_id'         => $data['uid'],
             'email_id'        => $data['email'],
@@ -1940,7 +1974,7 @@ class Common extends Model
             'invoice_type'    => '2',
             'created'         => date('Y-m-d H:i:s'),
             'modified'        => date('Y-m-d H:i:s'),
-            'promo_code'      => '',
+            'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
             'tax_selected'    => "GST",
             'total'           => $data['total'],
@@ -1953,18 +1987,13 @@ class Common extends Model
             'flag'            => $data['flag'] ?? '',
             'cancelled_on'    => $cancelled_on,
             'currency'        => $currency,
+            'discount_amount' => $discount ?? 0,
+
         );
 
         DB::table('imagefootage_performa_invoices')->insert($insert);
         $id = DB::getPdo()->lastInsertId();
 
-        // Update Total applied code in promo code
-        if (!empty($data['promo_code_id'])) {
-            $promoCode                     = PromoCode::find($data['promo_code_id']);
-            $currentUsed                   = $promoCode->total_applied_code;
-            $promoCode->total_applied_code = $currentUsed + 1;
-            $promoCode->save();
-        }
         // End Update Total applied code in promo code
 
         if (isset($data['old_quotation']) && $data['old_quotation'] > 0) {
@@ -2007,7 +2036,8 @@ class Common extends Model
         $transactionRequest->setReqHashKey($this->atomRequestKey);
         $url = $transactionRequest->getPGUrl();
         $dataForEmail[0]['payment_url'] = $url;
-        
+        $dataForEmail[0]['discount_amount'] = $discount ?? 0;
+
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
         $quotationReferenceId = 'QTN-DP-' . ($dataForEmail[0]['invoice_name'] ?? '');
         $quotationPaymentLink = $this->createRazorpayPaymentLink(
@@ -2093,7 +2123,7 @@ class Common extends Model
 
             Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml) {
                 $message->to($data["email"])
-                            ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
+                    ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
                     ->attach($pdfPath, [
                         'as' => $fileName,

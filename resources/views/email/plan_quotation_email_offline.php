@@ -47,7 +47,7 @@
     $taxAmount = (float) ($orders['tax'] ?? 0);
     $totalAmount = (float) ($orders['total'] ?? 0);
     $subTotal = max($totalAmount - $taxAmount, 0);
-    $discountAmount = 0.00;
+    $discountAmount = (float) ($orders['discount_amount'] ?? 0);
     $amountInWordsText = trim((string) ($amount_in_words ?? ''));
     $amountInWordsLine = $amountInWordsText !== '' ? 'Rupees ' . $amountInWordsText . ' only' : '';
     $paymentStatus = strtolower(trim((string) ($orders['payment_status'] ?? '')));
