@@ -11,6 +11,79 @@ app = angular.module("imageFootage", [], function ($interpolateProvider) {
     $interpolateProvider.startSymbol("<%");
     $interpolateProvider.endSymbol("%>");
 });
+
+function sanitizeAmountValue(value) {
+    if (value === undefined || value === null) {
+        return "";
+    }
+
+    var normalized = String(value).replace(/[^0-9.]/g, "");
+    if (!normalized) {
+        return "";
+    }
+
+    var hasDecimal = normalized.indexOf(".") !== -1;
+    var parts = normalized.split(".");
+    var integerPart = parts.shift() || "";
+    var decimalPart = parts.join("");
+
+    integerPart = integerPart.replace(/^0+(?=\d)/, "");
+    if (integerPart === "") {
+        integerPart = "0";
+    }
+
+    if (hasDecimal) {
+        return integerPart + "." + decimalPart.slice(0, 2);
+    }
+
+    return integerPart;
+}
+
+function sanitizeCustomProductPrices(products) {
+    angular.forEach(products || [], function (product) {
+        if (product) {
+            product.price = sanitizeAmountValue(product.price);
+        }
+    });
+}
+
+app.directive("twoDecimalAmount", function () {
+    return {
+        require: "ngModel",
+        link: function (scope, element, attrs, ngModelCtrl) {
+            function syncSanitizedValue() {
+                var currentValue = element.val();
+                var sanitizedValue = sanitizeAmountValue(currentValue);
+
+                if (sanitizedValue !== currentValue) {
+                    scope.$evalAsync(function () {
+                        ngModelCtrl.$setViewValue(sanitizedValue);
+                        ngModelCtrl.$render();
+                    });
+                }
+            }
+
+            ngModelCtrl.$parsers.unshift(function (value) {
+                return sanitizeAmountValue(value);
+            });
+
+            ngModelCtrl.$formatters.push(function (value) {
+                return sanitizeAmountValue(value);
+            });
+
+            element.on("input", syncSanitizedValue);
+            element.on("blur", syncSanitizedValue);
+            element.on("paste", syncSanitizedValue);
+
+            scope.$on("$destroy", function () {
+                element.off("input", syncSanitizedValue);
+                element.off("blur", syncSanitizedValue);
+                element.off("paste", syncSanitizedValue);
+            });
+        },
+    };
+});
+
 app.controller(
     "quotatationController",
     function ($scope, $http, $location, fileReader) {
@@ -20,12 +93,44 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.custom_expiry_time = "";
+        $scope.custom_subsc_expiry_time = "";
+        $scope.custom_download_expiry = "";
+        $scope.selected_currency = "INR";
         $scope.is_display_product_image = false;
         $scope.is_display_product_image_edit_page = true;
 
         //$scope.uid
-        $scope.quotation.product = [
-            {
+        function normalizeExpiryOption(value, defaultMode) {
+            var normalized = value == null ? "" : String(value).trim();
+            if (["7", "15", "30"].indexOf(normalized) !== -1) {
+                return { mode: normalized, custom: "" };
+            }
+            if (normalized !== "") {
+                return { mode: "custom", custom: normalized };
+            }
+            return { mode: defaultMode || "30", custom: "" };
+        }
+
+        function resolveExpiryValue(mode, customValue) {
+            var normalizedMode = mode == null ? "" : String(mode).trim();
+            if (normalizedMode === "custom") {
+                var normalizedCustom = customValue == null ? "" : String(customValue).trim();
+                if (!/^\d+$/.test(normalizedCustom) || parseInt(normalizedCustom, 10) <= 0) {
+                    return "";
+                }
+                return normalizedCustom;
+            }
+
+            if (["7", "15", "30"].indexOf(normalizedMode) !== -1) {
+                return normalizedMode;
+            }
+
+            return "";
+        }
+
+        function createEmptyCustomProduct() {
+            return {
                 name: "",
                 pro_size: "",
                 pro_type: "",
@@ -35,22 +140,31 @@ app.controller(
                 footage: "",
                 type: "Image",
                 licence_type: "",
-            },
-        ];
+                currency: $scope.selected_currency || "INR",
+            };
+        }
+        $scope.syncCustomProductCurrencies = function () {
+            var currency = $scope.selected_currency || "INR";
+            $scope.selected_currency = currency;
+            angular.forEach($scope.quotation.product || [], function (product) {
+                product.currency = currency;
+            });
+        };
+        $scope.sanitizeProductPrice = function (product) {
+            if (!product) {
+                return;
+            }
+            product.price = sanitizeAmountValue(product.price);
+        };
+        $scope.normalizeCustomProductPrices = function () {
+            sanitizeCustomProductPrices($scope.quotation.product);
+        };
+        $scope.quotation.product = [createEmptyCustomProduct()];
         $scope.quotation_type_var = "custom";
         $scope.addProduct = function () {
-            var newProduct = {
-                name: "",
-                pro_size: "",
-                pro_type: "",
-                id: "",
-                image: "",
-                price: "",
-                footage: "",
-                type: "Image",
-                licence_type: "",
-            };
+            var newProduct = createEmptyCustomProduct();
             $scope.quotation.product.push(newProduct);
+            $scope.syncCustomProductCurrencies();
             setTimeout(function () {
                 CKEDITOR.replace(
                     "licence_type-" + $scope.quotation.product.length
@@ -63,8 +177,19 @@ app.controller(
         });
 
         $scope.removeProduct = function (product) {
+            if (($scope.quotation.product || []).length <= 1) {
+                return;
+            }
             var index = $scope.quotation.product.indexOf(product);
+            if (index === -1) {
+                return;
+            }
             $scope.quotation.product.splice(index, 1);
+            if (!$scope.quotation.product.length) {
+                $scope.quotation.product.push(createEmptyCustomProduct());
+            }
+            $scope.syncCustomProductCurrencies();
+            $scope.getTheTotal();
         };
         $scope.prices = [];
         $scope.getproduct = function (product) {
@@ -201,8 +326,12 @@ app.controller(
         $scope.quotation_type_set = function (type) {
             $scope.search = false;
             $scope.quotation_type_var = type;
+            if (type === "custom") {
+                $scope.syncCustomProductCurrencies();
+            }
         };
         $scope.getTheTotal = function () {
+            $scope.normalizeCustomProductPrices();
             var subtotal = $scope.quotation.product;
             var subtotalvalue = 0;
             var total = 0;
@@ -217,6 +346,7 @@ app.controller(
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId='') {
+            $scope.normalizeCustomProductPrices();
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
             var subtotalvalue = 0;
@@ -549,6 +679,15 @@ app.controller(
                 return false;
             } else {
                 $("#loading").show();
+                var resolvedDownloadExpiry = resolveExpiryValue(
+                    $scope.download_expiry,
+                    $scope.custom_download_expiry
+                );
+                if (!resolvedDownloadExpiry) {
+                    $("#loading").hide();
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
 
                 var sendData = {
                     uid: $("#uid").val(),
@@ -557,11 +696,12 @@ app.controller(
                     plan_type_var: $scope.plan_type_var,
                     //"po": $scope.poDownload,
                     //"poDate": $scope.downloadpoDate,
-                    expiry_date: $scope.download_expiry,
+                    expiry_date: resolvedDownloadExpiry,
                     tax: $scope.taxdownload,
                     total: $scope.total_download,
                     subscription_subtotal: $scope.downloadprice,
                     GSTS: $scope.GSTD,
+                    currency: $scope.selected_currency || "INR",
                     email: $("#download_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
                     flag: $("#flag").val(),
@@ -606,6 +746,15 @@ app.controller(
                 return false;
             } else {
                 $("#loading").show();
+                var resolvedSubscriptionExpiry = resolveExpiryValue(
+                    $scope.subsc_expiry_time,
+                    $scope.custom_subsc_expiry_time
+                );
+                if (!resolvedSubscriptionExpiry) {
+                    $("#loading").hide();
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
 
                 var sendData = {
                     uid: $("#uid").val(),
@@ -614,7 +763,7 @@ app.controller(
                     plan_type_var: $scope.plan_type_var,
                     //"po": $scope.subsc_po,
                     //"poDate": $scope.subsc_poDate,
-                    expiry_date: $scope.subsc_expiry_time,
+                    expiry_date: resolvedSubscriptionExpiry,
                     tax: $scope.subsc_tax,
                     total: $scope.subsc_total,
                     subscription_subtotal: $scope.subscriptionprice,
@@ -664,6 +813,8 @@ app.controller(
 
         $scope.submitCustom = function () {
             //  console.log($scope.quotation);
+            $scope.syncCustomProductCurrencies();
+            $scope.normalizeCustomProductPrices();
 
             for (var i = 0; i < $scope.quotation.product.length; i++) {
                 if ($scope.quotation.product[i].price == undefined || $scope.quotation.product[i].price == "" || $scope.quotation.product[i].price == null) {
@@ -673,6 +824,15 @@ app.controller(
                 }
             }
             $("#loading").show();
+            var resolvedCustomExpiry = resolveExpiryValue(
+                $scope.expiry_time,
+                $scope.custom_expiry_time
+            );
+            if (!resolvedCustomExpiry) {
+                $("#loading").hide();
+                alert("Please select a valid expiry period");
+                return false;
+            }
 
 
             var sendData = {
@@ -682,7 +842,7 @@ app.controller(
                 promoCode: $scope.promoCode,
                 //"po": $scope.po,
                 //"poDate": $scope.poDate,
-                expiry_date: $scope.expiry_time,
+                expiry_date: resolvedCustomExpiry,
                 tax: $scope.tax,
                 total: $scope.total,
                 GST: $scope.SGST,
@@ -1105,8 +1265,72 @@ app.controller(
         $scope.plan_type = "";
         $scope.plansData = [];
         $scope.selected_plan = "";
+        $scope.selected_currency = "INR";
+        $scope.expiry_time = "30";
         $scope.subsc_expiry_time = "";
+        $scope.download_expiry = "30";
+        $scope.custom_expiry_time = "";
+        $scope.custom_subsc_expiry_time = "";
+        $scope.custom_download_expiry = "";
         var path = window.location.pathname.split("/").pop();
+        function normalizeExpiryOption(value, defaultMode) {
+            var normalized = value == null ? "" : String(value).trim();
+            if (["7", "15", "30"].indexOf(normalized) !== -1) {
+                return { mode: normalized, custom: "" };
+            }
+            if (normalized !== "") {
+                return { mode: "custom", custom: normalized };
+            }
+            return { mode: defaultMode || "30", custom: "" };
+        }
+
+        function resolveExpiryValue(mode, customValue) {
+            var normalizedMode = mode == null ? "" : String(mode).trim();
+            if (normalizedMode === "custom") {
+                var normalizedCustom = customValue == null ? "" : String(customValue).trim();
+                if (!/^\d+$/.test(normalizedCustom) || parseInt(normalizedCustom, 10) <= 0) {
+                    return "";
+                }
+                return normalizedCustom;
+            }
+
+            if (["7", "15", "30"].indexOf(normalizedMode) !== -1) {
+                return normalizedMode;
+            }
+
+            return "";
+        }
+
+        function createEmptyCustomProduct() {
+            return {
+                name: "",
+                pro_size: "",
+                pro_type: "",
+                id: "",
+                image: "",
+                price: "",
+                licence_type: "",
+                footage: "",
+                type: "Image",
+                currency: $scope.selected_currency || "INR",
+            };
+        }
+        $scope.syncCustomProductCurrencies = function () {
+            var currency = $scope.selected_currency || "INR";
+            $scope.selected_currency = currency;
+            angular.forEach($scope.quotation.product || [], function (product) {
+                product.currency = currency;
+            });
+        };
+        $scope.sanitizeProductPrice = function (product) {
+            if (!product) {
+                return;
+            }
+            product.price = sanitizeAmountValue(product.price);
+        };
+        $scope.normalizeCustomProductPrices = function () {
+            sanitizeCustomProductPrices($scope.quotation.product);
+        };
         $("#loading").show();
         $http({
             method: "POST",
@@ -1127,30 +1351,35 @@ app.controller(
                 $scope.po = response.job_number;
                 $scope.poDate = response.po_detail;
                 $scope.email = response.email_id;
-                $scope.expiry_time = response.expiry_invoices;
+                var normalizedExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
+                $scope.expiry_time = normalizedExpiry.mode;
+                $scope.custom_expiry_time = normalizedExpiry.custom;
                 $scope.flag = response.flag;
                 $scope.quotation.product = [];
                 $scope.prod_type = response.user_package?.package_type;
                 if (response.invoice_type == 1) {
                     // subscription
-                    $scope.subsc_expiry_time = response.expiry_invoices;
+                    var normalizedSubscriptionExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
+                    $scope.subsc_expiry_time = normalizedSubscriptionExpiry.mode;
+                    $scope.custom_subsc_expiry_time = normalizedSubscriptionExpiry.custom;
                     $scope.subscriptionprice = response.total - response.tax;
                     $scope.subsc_tax = response.tax;
                     $scope.subsc_total = response.total;
                     $scope.GSTS = $scope.subsc_tax > 0;
                 } else if (response.invoice_type == 2) {
                     // download
-                    $scope.download_expiry = response.expiry_invoices;
+                    var normalizedDownloadExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
+                    $scope.download_expiry = normalizedDownloadExpiry.mode;
+                    $scope.custom_download_expiry = normalizedDownloadExpiry.custom;
                     $scope.downloadprice = response.total - response.tax;
                     $scope.taxdownload = response.tax;
                     $scope.total_download = response.total;
                     $scope.GSTS = $scope.taxdownload > 0;
-                    $scope.selected_currency = response.currency;  // Add this line
+                    $scope.selected_currency = response.currency || "INR";
                 } else {
                     // custom
-                    $scope.expiry_time = response.expiry_invoices;
-                    //other
                     $scope.end_client = response.end_client;
+                    $scope.selected_currency = response.currency || "INR";
                 }
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
                 $scope.tax_selected = tax_selected;
@@ -1169,7 +1398,7 @@ app.controller(
                         type: value.type,
                         licence_type: value.licence_type,
                         extra_details:response.extra_details,
-                        currency: response.currency  // Add this line
+                        currency: response.currency || $scope.selected_currency
                     };
                     $scope.quotation.product.push(obj);
                     if (value.product_type == 'right_managed') {
@@ -1180,6 +1409,13 @@ app.controller(
                         }, 100);
                     }
                 });
+                if (
+                    response.invoice_type == 3 &&
+                    !$scope.quotation.product.length
+                ) {
+                    $scope.quotation.product.push(createEmptyCustomProduct());
+                }
+                $scope.syncCustomProductCurrencies();
                 if (response.user_package) {
                     get_play_type(response.user_package.package_expiry, response.user_package.package_expiry_yearly);
                     get_plan_data(response.user_package.package_id);
@@ -1191,6 +1427,7 @@ app.controller(
         );
 
         $scope.getTheTotal = function () {
+            $scope.normalizeCustomProductPrices();
             var subtotal = $scope.quotation.product;
             var subtotalvalue = 0;
             var total = 0;
@@ -1208,7 +1445,11 @@ app.controller(
         $scope.edit_quotation_type_set = function (type) {
             $scope.quotation_type = type;
             if (type == 3) {
-                $scope.addProduct();
+                if (!$scope.quotation.product.length) {
+                    $scope.addProduct();
+                } else {
+                    $scope.syncCustomProductCurrencies();
+                }
             }
         };
         $scope.edit_prod_type_set = function (type) {
@@ -1276,18 +1517,9 @@ app.controller(
         };
 
         $scope.addProduct = function () {
-            var newProduct = {
-                name: "",
-                pro_size: "",
-                pro_type: "",
-                id: "",
-                image: "",
-                price: "",
-                licence_type: "",
-                footage: "",
-                type: "Image",
-            };
+            var newProduct = createEmptyCustomProduct();
             $scope.quotation.product.push(newProduct);
+            $scope.syncCustomProductCurrencies();
             setTimeout(function () {
                 CKEDITOR.replace(
                     "licence_type-" + $scope.quotation.product.length
@@ -1296,8 +1528,18 @@ app.controller(
         };
 
         $scope.removeProduct = function (product) {
+            if (($scope.quotation.product || []).length <= 1) {
+                return;
+            }
             var index = $scope.quotation.product.indexOf(product);
+            if (index === -1) {
+                return;
+            }
             $scope.quotation.product.splice(index, 1);
+            if (!$scope.quotation.product.length) {
+                $scope.quotation.product.push(createEmptyCustomProduct());
+            }
+            $scope.syncCustomProductCurrencies();
             $scope.calculatePrice();
         };
         $scope.prices = [];
@@ -1405,6 +1647,7 @@ app.controller(
             // $scope.getTheTotal(vm.formData.names,index);
         };
         $scope.calculatePrice = function () {
+            $scope.normalizeCustomProductPrices();
             var subtotal = $scope.quotation.product;
             var subtotalvalue = 0;
             var total = 0;
@@ -1430,6 +1673,7 @@ app.controller(
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId) {
+            $scope.normalizeCustomProductPrices();
             if ($scope.quotation.product.length > 0) {
                 // when multiple product (images) data available
                 var subtotal = $scope.quotation.product;
@@ -1632,13 +1876,21 @@ app.controller(
                 alert("Please select expiry period");
                 return false;
             } else {
+                var resolvedSubscriptionExpiry = resolveExpiryValue(
+                    $scope.subsc_expiry_time,
+                    $scope.custom_subsc_expiry_time
+                );
+                if (!resolvedSubscriptionExpiry) {
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
                 $("#loading").show();
                 var sendData = {
                     uid: $("#uid").val(),
                     quotation_type: $scope.quotation_type,
                     plan_id: $scope.selected_sub_plan,
                     plan_type_var: $scope.plan_type,
-                    expiry_date: $scope.subsc_expiry_time,
+                    expiry_date: resolvedSubscriptionExpiry,
                     tax: $scope.subsc_tax,
                     total: $scope.subsc_total,
                     subscription_subtotal: $scope.subscriptionprice,
@@ -1683,17 +1935,26 @@ app.controller(
                 alert("Please select expiry period");
                 return false;
             } else {
+                var resolvedDownloadExpiry = resolveExpiryValue(
+                    $scope.download_expiry,
+                    $scope.custom_download_expiry
+                );
+                if (!resolvedDownloadExpiry) {
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
                 $("#loading").show();
                 var sendData = {
                     uid: $("#uid").val(),
                     quotation_type: $scope.quotation_type,
                     plan_id: $scope.selected_sub_plan,
                     plan_type_var: $scope.plan_type,
-                    expiry_date: $scope.download_expiry,
+                    expiry_date: resolvedDownloadExpiry,
                     tax: $scope.taxdownload,
                     total: $scope.total_download,
                     subscription_subtotal: $scope.downloadprice,
                     GSTS: $scope.GSTD,
+                    currency: $scope.selected_currency || "INR",
                     email: $("#download_email_id").val(),
                     promo_code_id: $("#promo_code_id").val(),
                     flag: $("#flag").val(),
@@ -1724,7 +1985,13 @@ app.controller(
         };
 
         $scope.submitEditCustom = function () {
-            if (!$scope.expiry_time) {
+            $scope.syncCustomProductCurrencies();
+            $scope.normalizeCustomProductPrices();
+            var resolvedCustomExpiry = resolveExpiryValue(
+                $scope.expiry_time,
+                $scope.custom_expiry_time
+            );
+            if (!resolvedCustomExpiry) {
                 alert("Please select expiry period");
                 return false;
             }
@@ -1745,7 +2012,7 @@ app.controller(
                 promoCode: $scope.promoCode,
                 po: $scope.po,
                 poDate: $scope.poDate,
-                expiry_date: $scope.expiry_time,
+                expiry_date: resolvedCustomExpiry,
                 tax: $scope.tax,
                 total: $scope.total,
                 GST: $scope.GST,
@@ -2253,9 +2520,21 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
         },
         link: function ($scope, el) {
             function getFile(file) {
+                if (!file) {
+                    return;
+                }
                 if (el[0]['id']) { // If upload new file than reset scope product
                     let productId = el[0]['id'].substring(4);
-                    $("#product_" + productId).val("");
+                    $("#product_" + productId).val("").trigger("input").trigger("change");
+                    if ($scope.$parent && $scope.$parent.product) {
+                        $scope.$parent.product.name = "";
+                        $scope.$parent.product.id = "";
+                        $scope.$parent.product.pro_size = "";
+                        $scope.$parent.product.pro_type = "";
+                        $scope.$parent.product.licence_type = "";
+                        $scope.$parent.product.footage = "";
+                        $scope.$parent.product.price = "";
+                    }
                 }
                 fileReader.readAsDataUrl(file, $scope).then(function (result) {
                     $timeout(function () {
@@ -2273,6 +2552,9 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
 });
 
 app.factory("fileReader", function ($q, $log) {
+    var THUMBNAIL_MAX_DIMENSION = 1200;
+    var THUMBNAIL_QUALITY = 0.82;
+
     var onLoad = function (reader, deferred, scope) {
         return function () {
             scope.$apply(function () {
@@ -2306,7 +2588,7 @@ app.factory("fileReader", function ($q, $log) {
         return reader;
     };
 
-    var readAsDataURL = function (file, scope) {
+    var readAsOriginalDataURL = function (file, scope) {
         var deferred = $q.defer();
 
         var reader = getReader(deferred, scope);
@@ -2315,8 +2597,105 @@ app.factory("fileReader", function ($q, $log) {
         return deferred.promise;
     };
 
+    var resolveDeferred = function (scope, deferred, value) {
+        scope.$applyAsync(function () {
+            deferred.resolve(value);
+        });
+    };
+
+    var rejectDeferred = function (scope, deferred, value) {
+        scope.$applyAsync(function () {
+            deferred.reject(value);
+        });
+    };
+
+    var readAsThumbnailDataURL = function (file, scope) {
+        if (!file || !file.type || file.type.indexOf("image/") !== 0) {
+            return readAsOriginalDataURL(file, scope);
+        }
+
+        var deferred = $q.defer();
+        var urlFactory = window.URL || window.webkitURL;
+
+        if (!urlFactory || typeof document === "undefined") {
+            return readAsOriginalDataURL(file, scope);
+        }
+
+        var image = new Image();
+        var objectUrl = urlFactory.createObjectURL(file);
+
+        var cleanup = function () {
+            if (objectUrl) {
+                urlFactory.revokeObjectURL(objectUrl);
+            }
+        };
+
+        image.onload = function () {
+            try {
+                var width = image.naturalWidth || image.width || 1;
+                var height = image.naturalHeight || image.height || 1;
+                var ratio = Math.min(
+                    1,
+                    THUMBNAIL_MAX_DIMENSION / Math.max(width, height)
+                );
+                var targetWidth = Math.max(1, Math.round(width * ratio));
+                var targetHeight = Math.max(1, Math.round(height * ratio));
+                var canvas = document.createElement("canvas");
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+
+                var context = canvas.getContext("2d");
+                if (!context) {
+                    cleanup();
+                    readAsOriginalDataURL(file, scope).then(
+                        function (result) {
+                            resolveDeferred(scope, deferred, result);
+                        },
+                        function (error) {
+                            rejectDeferred(scope, deferred, error);
+                        }
+                    );
+                    return;
+                }
+
+                context.drawImage(image, 0, 0, targetWidth, targetHeight);
+
+                var outputType =
+                    file.type === "image/png" || file.type === "image/webp"
+                        ? file.type
+                        : "image/jpeg";
+                var result = canvas.toDataURL(
+                    outputType,
+                    outputType === "image/png" ? undefined : THUMBNAIL_QUALITY
+                );
+
+                cleanup();
+                resolveDeferred(scope, deferred, result);
+            } catch (error) {
+                cleanup();
+                rejectDeferred(scope, deferred, error);
+            }
+        };
+
+        image.onerror = function () {
+            cleanup();
+            readAsOriginalDataURL(file, scope).then(
+                function (result) {
+                    resolveDeferred(scope, deferred, result);
+                },
+                function (error) {
+                    rejectDeferred(scope, deferred, error);
+                }
+            );
+        };
+
+        image.src = objectUrl;
+
+        return deferred.promise;
+    };
+
     return {
-        readAsDataUrl: readAsDataURL,
+        readAsDataUrl: readAsThumbnailDataURL,
     };
 });
 
@@ -2352,10 +2731,42 @@ app.controller(
         $scope.subsc_expiry_time = "30";
         $scope.expiry_time = "30";
         $scope.download_expiry = "30";
+        $scope.custom_expiry_time = "";
+        $scope.custom_subsc_expiry_time = "";
+        $scope.custom_download_expiry = "";
+        $scope.selected_currency = "INR";
 
         //$scope.uid
-        $scope.quotation.product = [
-            {
+        function normalizeExpiryOption(value, defaultMode) {
+            var normalized = value == null ? "" : String(value).trim();
+            if (["7", "15", "30"].indexOf(normalized) !== -1) {
+                return { mode: normalized, custom: "" };
+            }
+            if (normalized !== "") {
+                return { mode: "custom", custom: normalized };
+            }
+            return { mode: defaultMode || "30", custom: "" };
+        }
+
+        function resolveExpiryValue(mode, customValue) {
+            var normalizedMode = mode == null ? "" : String(mode).trim();
+            if (normalizedMode === "custom") {
+                var normalizedCustom = customValue == null ? "" : String(customValue).trim();
+                if (!/^\d+$/.test(normalizedCustom) || parseInt(normalizedCustom, 10) <= 0) {
+                    return "";
+                }
+                return normalizedCustom;
+            }
+
+            if (["7", "15", "30"].indexOf(normalizedMode) !== -1) {
+                return normalizedMode;
+            }
+
+            return "";
+        }
+
+        function createEmptyCustomProduct() {
+            return {
                 name: "",
                 pro_size: "",
                 pro_type: "",
@@ -2365,22 +2776,31 @@ app.controller(
                 footage: "",
                 type: "Image",
                 licence_type: "",
-            },
-        ];
+                currency: $scope.selected_currency || "INR",
+            };
+        }
+        $scope.syncCustomProductCurrencies = function () {
+            var currency = $scope.selected_currency || "INR";
+            $scope.selected_currency = currency;
+            angular.forEach($scope.quotation.product || [], function (product) {
+                product.currency = currency;
+            });
+        };
+        $scope.sanitizeProductPrice = function (product) {
+            if (!product) {
+                return;
+            }
+            product.price = sanitizeAmountValue(product.price);
+        };
+        $scope.normalizeCustomProductPrices = function () {
+            sanitizeCustomProductPrices($scope.quotation.product);
+        };
+        $scope.quotation.product = [createEmptyCustomProduct()];
         $scope.quotation_type_var = "custom";
         $scope.addProduct = function () {
-            var newProduct = {
-                name: "",
-                pro_size: "",
-                pro_type: "",
-                id: "",
-                image: "",
-                price: "",
-                footage: "",
-                type: "Image",
-                licence_type: "",
-            };
+            var newProduct = createEmptyCustomProduct();
             $scope.quotation.product.push(newProduct);
+            $scope.syncCustomProductCurrencies();
             setTimeout(function () {
                 CKEDITOR.replace(
                     "licence_type-" + $scope.quotation.product.length
@@ -2393,8 +2813,19 @@ app.controller(
         });
 
         $scope.removeProduct = function (product) {
+            if (($scope.quotation.product || []).length <= 1) {
+                return;
+            }
             var index = $scope.quotation.product.indexOf(product);
+            if (index === -1) {
+                return;
+            }
             $scope.quotation.product.splice(index, 1);
+            if (!$scope.quotation.product.length) {
+                $scope.quotation.product.push(createEmptyCustomProduct());
+            }
+            $scope.syncCustomProductCurrencies();
+            $scope.getTheTotal();
         };
         $scope.prices = [];
         $scope.getproduct = function (product,secondForm = '') {
@@ -2532,8 +2963,12 @@ app.controller(
 
             $scope.search = false;
             $scope.quotation_type_var = type;
+            if (type == "custom") {
+                $scope.syncCustomProductCurrencies();
+            }
         };
         $scope.getTheTotal = function () {
+            $scope.normalizeCustomProductPrices();
             var subtotal = $scope.quotation.product;
             var subtotalvalue = 0;
             var total = 0;
@@ -2548,6 +2983,7 @@ app.controller(
             $scope.tax = total;
         };
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId = '') {
+            $scope.normalizeCustomProductPrices();
             console.log("2319",countryId);
             var subtotal = $scope.quotation.product;
             //console.log(subtotal);
@@ -2779,6 +3215,15 @@ app.controller(
                 return false;
             } else {
                 $("#loading").show();
+                var resolvedDownloadExpiry = resolveExpiryValue(
+                    $scope.download_expiry,
+                    $scope.custom_download_expiry
+                );
+                if (!resolvedDownloadExpiry) {
+                    $("#loading").hide();
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
 
                 var sendData = {
                     uid: $("#uid").val(),
@@ -2787,11 +3232,12 @@ app.controller(
                     plan_type_var: $scope.plan_type_var,
                     //"po": $scope.poDownload,
                     //"poDate": $scope.downloadpoDate,
-                    expiry_date: $scope.download_expiry,
+                    expiry_date: resolvedDownloadExpiry,
                     tax: $scope.taxdownload,
                     total: $scope.total_download,
                     subscription_subtotal: $scope.downloadprice,
                     GSTS: $scope.GSTD,
+                    currency: $scope.selected_currency || "INR",
                     email: $("#download_email_id").val(),
                 };
                 // console.log(sendData);
@@ -2834,6 +3280,15 @@ app.controller(
                 return false;
             } else {
                 $("#loading").show();
+                var resolvedSubscriptionExpiry = resolveExpiryValue(
+                    $scope.subsc_expiry_time,
+                    $scope.custom_subsc_expiry_time
+                );
+                if (!resolvedSubscriptionExpiry) {
+                    $("#loading").hide();
+                    alert("Please select a valid expiry period");
+                    return false;
+                }
 
                 var sendData = {
                     uid: $("#uid").val(),
@@ -2842,7 +3297,7 @@ app.controller(
                     plan_type_var: $scope.plan_type_var,
                     //"po": $scope.subsc_po,
                     //"poDate": $scope.subsc_poDate,
-                    expiry_date: $scope.subsc_expiry_time,
+                    expiry_date: resolvedSubscriptionExpiry,
                     tax: $scope.subsc_tax,
                     total: $scope.subsc_total,
                     subscription_subtotal: $scope.subscriptionprice,
@@ -2889,6 +3344,8 @@ app.controller(
         };
 
         $scope.submitCustom = function () {
+                $scope.syncCustomProductCurrencies();
+                $scope.normalizeCustomProductPrices();
                 $scope.quotation.product.map(function (editor, index) {
                     if(editor.pro_type == 'right_managed'){
                         for (var i in CKEDITOR.instances) {
@@ -2917,6 +3374,15 @@ app.controller(
                 }
             }
               $("#loading").show();
+            var resolvedCustomExpiry = resolveExpiryValue(
+                $scope.expiry_time,
+                $scope.custom_expiry_time
+            );
+            if (!resolvedCustomExpiry) {
+                $("#loading").hide();
+                alert("Please select a valid expiry period");
+                return false;
+            }
 
             var sendData = {
                 uid: $("#uid").val(),
@@ -2926,7 +3392,7 @@ app.controller(
                 promoCode: $scope.promoCode,
                 //"po": $scope.po,
                 //"poDate": $scope.poDate,
-                expiry_date: $scope.expiry_time,
+                expiry_date: resolvedCustomExpiry,
                 tax: $scope.tax,
                 total: $scope.total,
                 GST: $scope.SGST,

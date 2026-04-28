@@ -178,7 +178,151 @@ class Common extends Model
         return rand(pow(10, $digits - 1), pow(10, $digits) - 1);
     }
 
-    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR')
+    private function normalizeRazorpayPaymentLinkExpiryTimestamp($expireAt)
+    {
+        if (empty($expireAt)) {
+            return null;
+        }
+
+        try {
+            if ($expireAt instanceof Carbon) {
+                $expiryAt = $expireAt->copy();
+            } elseif (is_numeric($expireAt)) {
+                $expiryAt = Carbon::createFromTimestamp((int) $expireAt);
+            } else {
+                $expiryAt = Carbon::parse((string) $expireAt);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Unable to parse Razorpay payment-link expiry.', [
+                'expire_at' => $expireAt,
+                'error' => $e->getMessage(),
+            ]);
+            return null;
+        }
+
+        $now = Carbon::now();
+        if ($expiryAt->lessThanOrEqualTo($now)) {
+            return null;
+        }
+
+        $maxAllowedExpiry = $now->copy()->addMonths(6);
+        if ($expiryAt->greaterThan($maxAllowedExpiry)) {
+            $expiryAt = $maxAllowedExpiry;
+        }
+
+        return $expiryAt->timestamp;
+    }
+
+    private function normalizeRazorpayPaymentLinkPayload($paymentLink, $referenceId = null, $requestedExpireBy = null)
+    {
+        if (empty($paymentLink)) {
+            return [];
+        }
+
+        if (is_array($paymentLink)) {
+            $payload = $paymentLink;
+        } elseif (is_object($paymentLink) && method_exists($paymentLink, 'toArray')) {
+            $payload = $paymentLink->toArray();
+        } else {
+            $payload = (array) $paymentLink;
+        }
+
+        $paymentLinkId = $payload['payment_link_id'] ?? ($payload['id'] ?? null);
+        $paymentLinkUrl = $payload['payment_link_url'] ?? ($payload['url'] ?? ($payload['short_url'] ?? null));
+        $paymentLinkStatus = $payload['payment_link_status'] ?? ($payload['status'] ?? null);
+
+        $payload['provider'] = 'Razorpay';
+        if (!empty($paymentLinkId)) {
+            $payload['payment_link_id'] = (string) $paymentLinkId;
+        }
+        if (!empty($paymentLinkUrl)) {
+            $payload['payment_link_url'] = $paymentLinkUrl;
+        }
+        if (!empty($paymentLinkStatus)) {
+            $payload['payment_link_status'] = (string) $paymentLinkStatus;
+        }
+        if (!empty($referenceId) && empty($payload['payment_link_reference_id'])) {
+            $payload['payment_link_reference_id'] = (string) $referenceId;
+        }
+        if (!empty($requestedExpireBy) && empty($payload['expire_by'])) {
+            $payload['expire_by'] = (int) $requestedExpireBy;
+        }
+
+        return $payload;
+    }
+
+    private function persistRazorpayPaymentLinkMetadata($invoiceId, $paymentLink, $referenceId = null, $requestedExpireBy = null)
+    {
+        if (empty($invoiceId) || empty($paymentLink)) {
+            return;
+        }
+
+        $payload = $this->normalizeRazorpayPaymentLinkPayload($paymentLink, $referenceId, $requestedExpireBy);
+        $paymentLinkId = $payload['payment_link_id'] ?? ($payload['id'] ?? null);
+        if (empty($paymentLinkId)) {
+            return;
+        }
+
+        try {
+            DB::table('imagefootage_performa_invoices')
+                ->where('id', '=', $invoiceId)
+                ->update([
+                    'payment_response' => json_encode($payload, JSON_UNESCAPED_SLASHES),
+                ]);
+        } catch (\Throwable $e) {
+            Log::warning('Unable to persist Razorpay payment-link metadata.', [
+                'invoice_id' => $invoiceId,
+                'reference_id' => $referenceId,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function cancelRazorpayPaymentLinkForInvoice($invoiceOrId, $reason = 'quotation_expired')
+    {
+        $invoice = $invoiceOrId instanceof Invoice ? $invoiceOrId : Invoice::find($invoiceOrId);
+        if (empty($invoice) || empty($invoice->payment_response)) {
+            return;
+        }
+
+        $storedPayload = json_decode((string) $invoice->payment_response, true);
+        if (!is_array($storedPayload)) {
+            return;
+        }
+
+        $paymentLinkId = $storedPayload['payment_link_id'] ?? ($storedPayload['id'] ?? null);
+        $paymentLinkStatus = strtolower((string) ($storedPayload['payment_link_status'] ?? ($storedPayload['status'] ?? '')));
+        if (empty($paymentLinkId) || in_array($paymentLinkStatus, ['paid', 'cancelled', 'expired'], true)) {
+            return;
+        }
+
+        try {
+            $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $cancelledPaymentLink = $api->paymentLink->fetch((string) $paymentLinkId)->cancel();
+            $payload = $this->normalizeRazorpayPaymentLinkPayload(
+                $cancelledPaymentLink,
+                $storedPayload['payment_link_reference_id'] ?? ($storedPayload['reference_id'] ?? null),
+                $storedPayload['expire_by'] ?? null
+            );
+            $payload['link_cancel_reason'] = (string) $reason;
+            $payload['link_cancelled_locally_at'] = Carbon::now()->timestamp;
+
+            DB::table('imagefootage_performa_invoices')
+                ->where('id', '=', $invoice->id)
+                ->update([
+                    'payment_response' => json_encode($payload, JSON_UNESCAPED_SLASHES),
+                ]);
+        } catch (\Throwable $e) {
+            Log::warning('Unable to cancel Razorpay payment link for quotation/invoice.', [
+                'invoice_id' => $invoice->id,
+                'payment_link_id' => $paymentLinkId,
+                'reason' => $reason,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null)
     {
         try {
             $amountInPaise = (int) round(((float) $amountInRupees) * 100);
@@ -187,6 +331,7 @@ class Common extends Model
             }
 
             $api = new Api($this->keyRazorId, $this->keyRazorSecret);
+            $expireBy = $this->normalizeRazorpayPaymentLinkExpiryTimestamp($expireAt);
             $payload = [
                 'amount' => $amountInPaise,
                 'currency' => $currency,
@@ -204,9 +349,12 @@ class Common extends Model
                 'callback_url' => rtrim(config('app.url'), '/') . '/api/razorpayInvoiceResponse',
                 'callback_method' => 'get',
             ];
+            if (!empty($expireBy)) {
+                $payload['expire_by'] = $expireBy;
+            }
 
             $paymentLink = $api->paymentLink->create($payload);
-            return $paymentLink['url'] ?? ($paymentLink['short_url'] ?? null);
+            return $this->normalizeRazorpayPaymentLinkPayload($paymentLink, $referenceId, $expireBy);
         } catch (\Throwable $e) {
             \Log::error('Razorpay payment link generation failed', [
                 'reference_id' => $referenceId,
@@ -440,6 +588,7 @@ class Common extends Model
                     'cancelled_by'    => Auth::guard('admins')->user()->id
                 ];
                 Invoice::where('id', '=', $data['old_quotation'])->update($update);
+                $this->cancelRazorpayPaymentLinkForInvoice((int) $data['old_quotation'], 'quotation_replaced');
             }
             // dd($id,$data['uid']);
             $dataForEmail = $this->getData($id, $data['uid']);
@@ -471,15 +620,19 @@ class Common extends Model
             $dataForEmail[0]['payment_url'] = $url;
             
             // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
-            $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
+            $quotationReferenceId = 'QTN-' . ($dataForEmail[0]['invoice_name'] ?? '');
+            $quotationPaymentLink = $this->createRazorpayPaymentLink(
                 $dataForEmail[0]['total'] ?? 0,
                 'Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
-                'QTN-' . ($dataForEmail[0]['invoice_name'] ?? ''),
+                $quotationReferenceId,
                 trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
                 $dataForEmail[0]['mobile'] ?? '',
-                $currency
+                $currency,
+                $cancelled_on
             );
+            $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
+            $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
             $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
             // dd($dataForEmail);
             $data["subject"] = "Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -869,7 +1022,7 @@ class Common extends Model
         $data["name"]    = $dataForEmail[0]['first_name'];
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
-        $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
+        $invoicePaymentLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -878,6 +1031,7 @@ class Common extends Model
             $dataForEmail[0]['mobile'] ?? '',
             $currency
         );
+        $invoicePayOnlineLink = $invoicePaymentLink['payment_link_url'] ?? ($invoicePaymentLink['url'] ?? null);
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink ?? '';
 
         $pdfDirectory = storage_path('app/public/pdf');
@@ -1227,7 +1381,7 @@ class Common extends Model
         $data['name']    = $dataForEmail[0]['first_name'];
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
-        $invoicePayOnlineLink = $this->createRazorpayPaymentLink(
+        $invoicePaymentLink = $this->createRazorpayPaymentLink(
             ($dataForEmail[0]['total'] ?? 0),
             'Invoice Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
             'INV-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
@@ -1236,6 +1390,7 @@ class Common extends Model
             $dataForEmail[0]['mobile'] ?? '',
             $currency
         );
+        $invoicePayOnlineLink = $invoicePaymentLink['payment_link_url'] ?? ($invoicePaymentLink['url'] ?? null);
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
 
         $pdf = PDF::setOptions([
@@ -1448,6 +1603,9 @@ class Common extends Model
     {
         $update = Invoice::where('id', '=', $quotation_id)
             ->update(['status' => $status]);
+        if ((int) $status === 3) {
+            $this->cancelRazorpayPaymentLinkForInvoice((int) $quotation_id, 'quotation_status_changed');
+        }
         $resp = array();
         if ($update) {
             $resp['statusdesc'] = "Your Quotation/Invoice status changed successfully.";
@@ -1559,6 +1717,7 @@ class Common extends Model
                 'cancelled_by'    => Auth::guard('admins')->user()->id
             ];
             Invoice::where('id', '=', $data['old_quotation'])->update($update);
+            $this->cancelRazorpayPaymentLinkForInvoice((int) $data['old_quotation'], 'quotation_replaced');
         }
 
         $dataForEmail  = $this->getSubData($id, $data['uid']);
@@ -1593,15 +1752,19 @@ class Common extends Model
         $currency = 'INR';
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
-        $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
+        $quotationReferenceId = 'QTN-SUB-' . ($dataForEmail[0]['invoice_name'] ?? '');
+        $quotationPaymentLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Subscription Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
-            'QTN-SUB-' . ($dataForEmail[0]['invoice_name'] ?? ''),
+            $quotationReferenceId,
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $currency,
+            $cancelled_on
         );
+        $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
+        $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
         $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $data["subject"]                  = "Subscription Quotation (" . $dataForEmail[0]['invoice_name'] . ")";
@@ -1612,7 +1775,7 @@ class Common extends Model
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
         $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
-        $dataForEmail[0]['description']   = 'Subscription Plan – Images – ' . $package_name . ' Pack';
+        $dataForEmail[0]['description']   = 'Subscription Plan - Images - ' . $package_name . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
@@ -1622,9 +1785,14 @@ class Common extends Model
         if (!is_dir($pdfDirectory)) {
             mkdir($pdfDirectory, 0777, true);
         }
-        $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"] . "subscription_quotation.pdf";
-        $pdf->save($pdfDirectory . '/' . $fileName);
+        $pdfPath = $pdfDirectory . '/' . $fileName;
+        $quotationHtml = view('email.plan_quotation_email_offline', [
+            'orders' => $dataForEmail[0],
+            'amount_in_words' => $amount_in_words,
+            'package_price_in_words' => $package_price_in_words,
+        ])->render();
+        $this->savePdfFromHtml($quotationHtml, $pdfPath);
         try {
             $customTemplatePath = base_path('email_task/Send Quotation/Custom/Quotation-IF.html');
             $customTemplateHtml = '';
@@ -1665,11 +1833,14 @@ class Common extends Model
                 $customTemplateHtml = preg_replace('/\[(?!CP_(?:LOGO|IMAGE|VIDEO|MUSIC)_CID\])[^\]]+\]/', '', $customTemplateHtml);
             }
 
-            Mail::send([], [], function ($message) use ($data, $pdf, $fileName, $customTemplateHtml) {
+            Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml) {
                 $message->to($data["email"])
                             ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
-                    ->attachData($pdf->output(), $fileName);
+                    ->attach($pdfPath, [
+                        'as' => $fileName,
+                        'mime' => 'application/pdf',
+                    ]);
                 $message->setBody('Please check your subscription quotation in the attached PDF.', 'text/plain');
             });
 
@@ -1680,7 +1851,7 @@ class Common extends Model
             ]);
 
             $path = 'quotation/' . $fileName;
-            $source = fopen(storage_path('app/public/pdf') . '/' . $fileName, 'rb');
+            $source = fopen($pdfPath, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -1699,7 +1870,7 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoices')
                     ->where('id', '=', $id)
                     ->update(['quotation_url' => $pdf_path]);
-                unlink(storage_path('app/public/pdf') . '/' . $fileName);
+                unlink($pdfPath);
             }
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";
@@ -1761,7 +1932,7 @@ class Common extends Model
             $packge->package_expiry_date_from_purchage  = date('Y-m-d H:i:s', strtotime("+" . $allFields['package_expiry_yearly'] . " years"));
         }
         $packge->save();
-        $currency = $data['plan_id']['currency'] ?? 'INR';
+        $currency = $data['currency'] ?? ($data['plan_id']['currency'] ?? 'INR');
         $insert = array(
             'user_id'         => $data['uid'],
             'email_id'        => $data['email'],
@@ -1806,6 +1977,7 @@ class Common extends Model
                 'cancelled_by'    => Auth::guard('admins')->user()->id
             ];
             Invoice::where('id', '=', $data['old_quotation'])->update($update);
+            $this->cancelRazorpayPaymentLinkForInvoice((int) $data['old_quotation'], 'quotation_replaced');
         }
 
         $dataForEmail  = $this->getSubData($id, $data['uid']);
@@ -1837,15 +2009,19 @@ class Common extends Model
         $dataForEmail[0]['payment_url'] = $url;
         
         // Generate Razorpay payment link BEFORE PDF generation so correct URL is embedded
-        $quotationPayOnlineLink = $this->createRazorpayPaymentLink(
+        $quotationReferenceId = 'QTN-DP-' . ($dataForEmail[0]['invoice_name'] ?? '');
+        $quotationPaymentLink = $this->createRazorpayPaymentLink(
             $dataForEmail[0]['total'] ?? 0,
             'Download Pack Quotation Payment for ' . ($dataForEmail[0]['invoice_name'] ?? ''),
-            'QTN-DP-' . ($dataForEmail[0]['invoice_name'] ?? ''),
+            $quotationReferenceId,
             trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? '')),
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $currency,
+            $cancelled_on
         );
+        $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
+        $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
         $dataForEmail[0]['payment_url'] = $quotationPayOnlineLink;
 
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
@@ -1857,19 +2033,24 @@ class Common extends Model
         $data["name"]                     = $dataForEmail[0]['first_name'];
         $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
         $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
-        $dataForEmail[0]['description']   = 'Download Plan – ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
+        $dataForEmail[0]['description']   = 'Download Plan - ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"] = $frontend_name[1] ?? '';
         $dataForEmail[0]["frontend_url"]  = $front_end_url_name;
 
-        $pdf = PDF::loadHTML(view('email.plan_quotation_email_offline', ['orders' => $dataForEmail[0], 'amount_in_words' => $amount_in_words, 'package_price_in_words' => $package_price_in_words]));
         $fileName = $data["invoice"] . "download_quotation.pdf";
         $pdfDirectory = storage_path('app/public/pdf');
         if (!is_dir($pdfDirectory)) {
             mkdir($pdfDirectory, 0777, true);
         }
-        $pdf->save($pdfDirectory . '/' . $fileName);
+        $pdfPath = $pdfDirectory . '/' . $fileName;
+        $quotationHtml = view('email.plan_quotation_email_offline', [
+            'orders' => $dataForEmail[0],
+            'amount_in_words' => $amount_in_words,
+            'package_price_in_words' => $package_price_in_words,
+        ])->render();
+        $this->savePdfFromHtml($quotationHtml, $pdfPath);
         try {
             $customTemplatePath = base_path('email_task/Send Quotation/Download Pack/Quotation-IFP.html');
             $customTemplateHtml = '';
@@ -1910,11 +2091,14 @@ class Common extends Model
                 $customTemplateHtml = preg_replace('/\[(?!CP_(?:LOGO|IMAGE|VIDEO|MUSIC)_CID\])[^\]]+\]/', '', $customTemplateHtml);
             }
 
-            Mail::send([], [], function ($message) use ($data, $pdf, $fileName, $customTemplateHtml) {
+            Mail::send([], [], function ($message) use ($data, $pdfPath, $fileName, $customTemplateHtml) {
                 $message->to($data["email"])
                             ->from(config('mail.from.address', 'info@imagefootage.com'), config('mail.from.name', 'Imagefootage'))
                     ->subject($data["subject"])
-                    ->attachData($pdf->output(), $fileName);
+                    ->attach($pdfPath, [
+                        'as' => $fileName,
+                        'mime' => 'application/pdf',
+                    ]);
                 $message->setBody('Please check your download pack quotation in the attached PDF.', 'text/plain');
             });
 
@@ -1924,7 +2108,7 @@ class Common extends Model
             ]);
 
             $path = 'quotation/' . $fileName;
-            $source = fopen($pdfDirectory . '/' . $fileName, 'rb');
+            $source = fopen($pdfPath, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -1943,7 +2127,7 @@ class Common extends Model
                 DB::table('imagefootage_performa_invoices')
                     ->where('id', '=', $id)
                     ->update(['quotation_url' => $pdf_path]);
-                unlink($pdfDirectory . '/' . $fileName);
+                unlink($pdfPath);
             }
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";

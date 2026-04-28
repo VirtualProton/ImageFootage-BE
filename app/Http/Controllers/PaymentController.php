@@ -1197,25 +1197,65 @@ class PaymentController extends Controller
             }
 
             $paymentLink = $api->paymentLink->fetch($paymentLinkId);
-            if ($paymentLink['status'] === 'paid') {
+            $paymentLinkPayload = method_exists($paymentLink, 'toArray') ? $paymentLink->toArray() : (array) $paymentLink;
+            $paymentLinkStatus = strtolower((string) ($paymentLinkPayload['status'] ?? ''));
+            $invoiceRecord = DB::table('imagefootage_performa_invoices')
+                ->select('id', 'status', 'proforma_type', 'cancelled_on')
+                ->where('invoice_name', $invoiceName)
+                ->first();
+            $isLocallyExpiredQuotation = !empty($invoiceRecord)
+                && (int) ($invoiceRecord->proforma_type ?? 0) === 1
+                && (
+                    (int) ($invoiceRecord->status ?? 0) === 3
+                    || (!empty($invoiceRecord->cancelled_on) && strtotime((string) $invoiceRecord->cancelled_on) <= time())
+                );
+
+            if ($paymentLinkStatus === 'paid') {
+                if ($isLocallyExpiredQuotation) {
+                    DB::table('imagefootage_performa_invoices')
+                        ->where('invoice_name', $invoiceName)
+                        ->update([
+                            'payment_mode' => 'Razorpay',
+                            'payment_status' => 'Transction Success',
+                            'status' => 3,
+                            'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
+                        ]);
+                    \Log::warning('Razorpay payment received for expired quotation. Manual review required.', [
+                        'invoice_name' => $invoiceName,
+                        'payment_link_id' => $paymentLinkId,
+                        'quotation_id' => $invoiceRecord->id ?? null,
+                    ]);
+                    return redirect($frontendSignin);
+                }
+
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
                     ->update([
                         'payment_mode' => 'Razorpay',
                         'payment_status' => 'Transction Success',
                         'status' => 1,
-                        'payment_response' => json_encode($paymentLink)
+                        'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
                     ]);
-                $this->finalizePaidQuotationOrInvoice((string) $invoiceName, 'Razorpay', method_exists($paymentLink, 'toArray') ? $paymentLink->toArray() : (array) $paymentLink);
+                $this->finalizePaidQuotationOrInvoice((string) $invoiceName, 'Razorpay', $paymentLinkPayload);
                 return redirect($frontendSignin);
-            } else if ($paymentLink['status'] === 'pending') {
+            } else if (in_array($paymentLinkStatus, ['created', 'partially_paid', 'pending'], true)) {
                 DB::table('imagefootage_performa_invoices')
                     ->where('invoice_name', $invoiceName)
                     ->update([
                         'payment_mode' => 'Razorpay',
                         'payment_status' => 'Pending',
                         'status' => 0,
-                        'payment_response' => json_encode($paymentLink)
+                        'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
+                    ]);
+                return redirect($frontendSignin);
+            } else if (in_array($paymentLinkStatus, ['expired', 'cancelled'], true)) {
+                DB::table('imagefootage_performa_invoices')
+                    ->where('invoice_name', $invoiceName)
+                    ->update([
+                        'payment_mode' => 'Razorpay',
+                        'payment_status' => 'Failed',
+                        'status' => 3,
+                        'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
                     ]);
                 return redirect($frontendSignin);
             } else {
@@ -1225,7 +1265,7 @@ class PaymentController extends Controller
                         'payment_mode' => 'Razorpay',
                         'payment_status' => 'Failed',
                         'status' => 3,
-                        'payment_response' => json_encode($paymentLink)
+                        'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
                     ]);
                 return redirect($frontendSignin);
             }

@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('currency:update')
         //        ->hourly();
         $schedule->command('quotation:deactive')
-                ->daily();
+                ->hourly();
         $schedule->command('package:to-credit-balance')
                 ->daily();
         // $schedule->command('regenerate:image')

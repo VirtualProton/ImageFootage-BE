@@ -367,7 +367,12 @@ class InvoiceController extends Controller
 
         // return view('admin.invoice.quotationsReport', compact('quotations'));
 
-        if (Invoice::where('id', $id)->update(array('status' => '3'))) {
+        if (Invoice::where('id', $id)->update([
+            'status' => '3',
+            'cancel_date' => date('Y-m-d H:i:s'),
+            'cancelled_by' => Auth::guard('admins')->user()->id ?? null,
+        ])) {
+            $this->Common->cancelRazorpayPaymentLinkForInvoice((int) $id, 'quotation_cancelled');
             return redirect("admin/quotation_report")->with("success", "Quotation Cancelled !!!");
         } else {
             return redirect("admin/quotation_report")->with("error", "Due to some error, Quotation is not updated yet. Please try again!");

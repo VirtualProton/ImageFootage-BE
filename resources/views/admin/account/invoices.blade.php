@@ -1367,7 +1367,7 @@
                     <td style="padding:5px;"><img src="<% item.product_image %>" width="150px" /></td>
                     <td style="padding:5px;"><% item.product_id %></td>
                     <td style="padding:5px;"><% item.product_size %></td>
-                    <td style="padding:5px;"><% item.total %></td>
+                    <td style="padding:5px;"><% item.subtotal || item.sub_total || item.price || item.standard_price || item.amount || item.total || (cusQuotationObj.items.length === 1 ? ((cusQuotationObj.subtotal || cusQuotationObj.sub_total || ((+cusQuotationObj.total || 0) - (+cusQuotationObj.tax || 0))) || 0) : 0) %></td>
                   </tr>
                 </table>
               </div>
@@ -1770,8 +1770,54 @@
     }
 
     function toMoney(value) {
-      var number = Number(value);
+      if (value === null || value === undefined) {
+        return 0;
+      }
+
+      if (typeof value === 'number') {
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      var normalized = String(value)
+        .replace(/&nbsp;/g, ' ')
+        .replace(/[₹$,]/g, '')
+        .replace(/,/g, '')
+        .trim();
+
+      var number = Number(normalized);
       return Number.isFinite(number) ? number : 0;
+    }
+
+    function getItemAmount(item, fallbackAmount) {
+      if (!item || typeof item !== 'object') {
+        return toMoney(fallbackAmount);
+      }
+
+      if (item.subtotal !== undefined && item.subtotal !== null && item.subtotal !== '') {
+        return item.subtotal;
+      }
+
+      if (item.sub_total !== undefined && item.sub_total !== null && item.sub_total !== '') {
+        return item.sub_total;
+      }
+
+      if (item.price !== undefined && item.price !== null && item.price !== '') {
+        return item.price;
+      }
+
+      if (item.standard_price !== undefined && item.standard_price !== null && item.standard_price !== '') {
+        return item.standard_price;
+      }
+
+      if (item.amount !== undefined && item.amount !== null && item.amount !== '') {
+        return item.amount;
+      }
+
+      if (item.total !== undefined && item.total !== null && item.total !== '') {
+        return item.total;
+      }
+
+      return toMoney(fallbackAmount);
     }
 
     function fillSubscription(quotation) {
@@ -1789,14 +1835,16 @@
       $('#fallback-cus-total').text(toMoney(quotation.total));
       $('#fallback-cus-currency').text(quotation.currency || '');
       var items = Array.isArray(quotation.items) ? quotation.items : [];
+      var quoteSubTotal = toMoney(quotation.subtotal || quotation.sub_total || (toMoney(quotation.total) - toMoney(quotation.tax)));
       var tableRows = '';
       items.forEach(function(item) {
+        var itemAmount = getItemAmount(item, items.length === 1 ? quoteSubTotal : 0);
         tableRows += '<tr>' +
           '<td style="padding:5px;">' + (item.type || '') + '</td>' +
           '<td style="padding:5px;"><img src="' + (item.product_image || '') + '" width="150px" /></td>' +
           '<td style="padding:5px;">' + (item.product_id || '') + '</td>' +
           '<td style="padding:5px;">' + (item.product_size || '') + '</td>' +
-          '<td style="padding:5px;">' + toMoney(item.total) + '</td>' +
+          '<td style="padding:5px;">' + toMoney(itemAmount) + '</td>' +
           '</tr>';
       });
 

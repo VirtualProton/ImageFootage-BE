@@ -97,14 +97,14 @@
                                  <div class="form-group">
                                     <label class=""><%product.type%> <%$index+1%></label>
                                     <input type="hidden" class="form-control" ng-model="product.id">
-                                    <input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="" ng-blur="getproduct(product)">
-                                    <input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_1" required="">
+                                    <input ng-if="product.type=='Footage' || product.type=='Image'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_<%$index+1%>" required="" ng-blur="getproduct(product)">
+                                    <input ng-if="product.type=='Music'" type="text" class="form-control" ng-model="product.name" name="product_name" id="product_<%$index+1%>" required="">
                                     <div>
                                     </div>
                                  </div>
                                  <div class="form-group">
-                                    <label>OR Upload New Image</label>
-                                    <span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
+                                    <label>OR Upload Thumbnail</label>
+                                    <span ng-show="!product.thumbnail_image"> <input class="form-control" type="file" accept="image/*" name="file<%$index+1%>" ng-model="product.image" id="file<%$index+1%>" style="position:inherit;top:0;left:0;z-index:2;opacity:1;cursor:pointer;" ng-file-select="onFileSelect($files)"></span>
                                     <span ng-show="product.image"><img ng-src="<%product.image%>" width="150" height="150" style="margin-top: 6px;" /></span>
                                  </div>
                                  {{-- <div class="form-group" ng-show="product.type =='Footage'">
@@ -169,22 +169,15 @@
                                     <div>
                                        <div class="form-group">
                                           <label for="sub_total">Sub Total</label>
-                                          <input type="text" class="form-control" ng-model="product.price" name="price" required ng-keyup="getTheTotal();" ngMousedown="getTheTotal();">
+                                          <input type="text" class="form-control" ng-model="product.price" name="price" required inputmode="decimal" two-decimal-amount ng-change="sanitizeProductPrice(product); getTheTotal();">
                                        </div>
                                     </div>
                                  </div>
-                                 <div class="form-group">
-                                    <label class="">Currency</label>
-                                    <select class="form-control" ng-model="product.currency" ng-init="product.currency='INR'">
-                                       <option value="INR" selected="">INR</option>
-                                       <option value="USD">USD</option>
-                                    </select>
-                                 </div>
-                                 <label>
-                                    <button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="$last">Delete Image</button>
-                                 </label>&nbsp;
+                                 <label ng-if="quotation.product.length > 1" style="margin-right:8px;">
+                                    <button type="button" class="btn btn-danger" ng-click="removeProduct(product)">Delete</button>
+                                 </label>
                                  <label class="">
-                                    <button type="button" class="btn btn-danger" ng-click="addProduct()" ng-show="$last">Add More Image</button>
+                                    <button type="button" class="btn btn-danger" ng-click="addProduct()" ng-show="$last">Add More</button>
                                  </label>
                               </div>
                            </div>
@@ -193,14 +186,23 @@
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
-                                    <label for="tax">Tax Applicable</label>
-                                    <div>
-                                       <span style="float: left;">
-                                          <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST',{},{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
-                                       </span>
-                                       <span style="float: left;padding-left:20px;">
-                                          <input type="text" ng-model="tax" class="form-control" style="width:150px;" name="tax" readonly="">
-                                       </span>
+                                    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;">
+                                       <div style="flex:1 1 260px;min-width:260px;">
+                                          <label for="tax" style="display:block;">Tax Applicable</label>
+                                          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
+                                             <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;">
+                                                <input type="checkbox" ng-model="GST" ng-change="checkThetax(GST,'GST',{},{{$userDetail->country}});" name="tax_checkbox[]" style="margin-right:8px;"> GST- +{{ config('constants.GST_VALUE').'%' }}
+                                             </label>
+                                             <input type="text" ng-model="tax" class="form-control" style="flex:1 1 180px;min-width:180px;" name="tax" readonly="">
+                                          </div>
+                                       </div>
+                                       <div style="flex:1 1 160px;min-width:160px;">
+                                          <label for="currency" style="display:block;">Currency</label>
+                                          <select class="form-control" ng-model="selected_currency" ng-init="selected_currency = selected_currency || 'INR'" ng-change="syncCustomProductCurrencies()">
+                                             <option value="INR">INR</option>
+                                             <option value="USD">USD</option>
+                                          </select>
+                                       </div>
                                     </div>
                                     <!-- <div>
                                           <input type="checkbox" ng-model="SGST" ng-change="checkThetax(SGST,'SGST');" name="tax_checkbox[]"> SGST- +6%
@@ -264,9 +266,24 @@
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="email_id" name="email_id" ng-model="email" value="{{$userDetail->email}}">
                                     <input type="hidden" class="form-control" id="flag" name="flag" ng-model="flag" value="1">
-                                    <label for="expiry">Expiry Period</label><br>
-                                    <input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-                                    <input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time">&nbsp;&nbsp;30 Days
+                                    <label for="expiry" style="display:block;">Expiry Period</label>
+                                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;">
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'7'" name="expiry" ng-model="expiry_time" style="margin:0 6px 0 0;">7 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'15'" name="expiry" ng-model="expiry_time" style="margin:0 6px 0 0;">15 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'30'" name="expiry" ng-model="expiry_time" style="margin:0 6px 0 0;">30 Days
+                                       </label>
+                                       <div style="display:inline-flex;align-items:center;gap:8px;">
+                                          <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                             <input type="radio" ng-value="'custom'" name="expiry" ng-model="expiry_time" style="margin:0 6px 0 0;">Custom
+                                          </label>
+                                          <input type="number" class="form-control" ng-model="custom_expiry_time" min="1" placeholder="Enter days" ng-disabled="expiry_time != 'custom'" ng-style="{'visibility': expiry_time == 'custom' ? 'visible' : 'hidden'}" style="width:120px;display:inline-block;">
+                                       </div>
+                                    </div>
                                  </div>
                                  <!-- </div>
                                  </div>
@@ -312,7 +329,7 @@
                                           <input type="checkbox" ng-model="GSTS" ng-change="checksubsctax(GSTS, 'GST',{{$userDetail->country}});" name="tax_checkbox[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
                                        </span>
                                        <span style="float: left;padding-left:20px;">
-                                          <input type="text" ng-model="subsc_tax" class="form-control" style="width:150px;" name="subsc_tax" readonly="">
+                                          <input type="text" ng-model="subsc_tax" class="form-control" style="flex:1 1 180px;min-width:180px;" name="subsc_tax" readonly="">
                                        </span>
                                     </div>
                                     <!-- <div>
@@ -375,9 +392,24 @@
                                     </div> */ ?>
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="subsc_email_id" name="subsc_email_id" ng-model="subsc_email_id" value="{{$userDetail->email}}">
-                                    <label for="expiry">Expiry Period</label><br>
-                                    <input type="radio" ng-value="'7'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-                                    <input type="radio" ng-value="'30'" name="subsc_expiry" ng-model="subsc_expiry_time">&nbsp;&nbsp;30 Days
+                                    <label for="expiry" style="display:block;">Expiry Period</label>
+                                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;">
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'7'" name="subsc_expiry" ng-model="subsc_expiry_time" style="margin:0 6px 0 0;">7 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'15'" name="subsc_expiry" ng-model="subsc_expiry_time" style="margin:0 6px 0 0;">15 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'30'" name="subsc_expiry" ng-model="subsc_expiry_time" style="margin:0 6px 0 0;">30 Days
+                                       </label>
+                                       <div style="display:inline-flex;align-items:center;gap:8px;">
+                                          <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                             <input type="radio" ng-value="'custom'" name="subsc_expiry" ng-model="subsc_expiry_time" style="margin:0 6px 0 0;">Custom
+                                          </label>
+                                          <input type="number" class="form-control" ng-model="custom_subsc_expiry_time" min="1" placeholder="Enter days" ng-disabled="subsc_expiry_time != 'custom'" ng-style="{'visibility': subsc_expiry_time == 'custom' ? 'visible' : 'hidden'}" style="width:120px;display:inline-block;">
+                                       </div>
+                                    </div>
                                  </div>
                                  <!-- </div>
                                  </div>
@@ -410,14 +442,23 @@
                            <div class="col-lg-12 col-md-12 col-xs-12">
                               <div class="col-lg-6 col-md-6 col-xs-6">
                                  <div class="form-group">
-                                    <label for="tax">Tax Applicable</label>
-                                    <div>
-                                       <span style="float: left;">
-                                          <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country ?? 0}});" name="tax_checkbox_download[]">&nbsp;&nbsp; GST- +{{ config('constants.GST_VALUE').'%' }}
-                                       </span>
-                                       <span style="float: left;padding-left:20px;">
-                                          <input type="text" ng-model="taxdownload" class="form-control" style="width:150px;" name="taxdownload" readonly="">
-                                       </span>
+                                    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;">
+                                       <div style="flex:1 1 260px;min-width:260px;">
+                                          <label for="tax" style="display:block;">Tax Applicable</label>
+                                          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
+                                             <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;">
+                                                <input type="checkbox" ng-model="GSTD" ng-change="checkDownloadtax(GSTD,'GST',{{$userDetail->country ?? 0}});" name="tax_checkbox_download[]" style="margin-right:8px;"> GST- +{{ config('constants.GST_VALUE').'%' }}
+                                             </label>
+                                             <input type="text" ng-model="taxdownload" class="form-control" style="flex:1 1 180px;min-width:180px;" name="taxdownload" readonly="">
+                                          </div>
+                                       </div>
+                                       <div style="flex:1 1 160px;min-width:160px;">
+                                          <label for="currency" style="display:block;">Currency</label>
+                                          <select class="form-control" ng-model="selected_currency" ng-init="selected_currency = selected_currency || 'INR'">
+                                             <option value="INR">INR</option>
+                                             <option value="USD">USD</option>
+                                          </select>
+                                       </div>
                                     </div>
                                     <!-- <div>
                                           <input type="checkbox" ng-model="SGSTD" ng-change="checkDownloadtax(SGSTD,'SGST');" name="tax_checkbox_download[]"> SGST- +6%
@@ -479,25 +520,30 @@
                                     </div> */ ?>
                                  <div class="form-group">
                                     <input type="hidden" class="form-control" id="download_email_id" name="download_email_id" value="{{$userDetail->email}}">
-                                    <label for="expiry">Expiry Period</label><br>
-                                    <input type="radio" ng-value="'7'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;7 Days &nbsp;&nbsp;
-                                    <input type="radio" ng-value="'30'" name="download_expiry" ng-model="download_expiry">&nbsp;&nbsp;30 Days
+                                    <label for="expiry" style="display:block;">Expiry Period</label>
+                                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;">
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'7'" name="download_expiry" ng-model="download_expiry" style="margin:0 6px 0 0;">7 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'15'" name="download_expiry" ng-model="download_expiry" style="margin:0 6px 0 0;">15 Days
+                                       </label>
+                                       <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                          <input type="radio" ng-value="'30'" name="download_expiry" ng-model="download_expiry" style="margin:0 6px 0 0;">30 Days
+                                       </label>
+                                       <div style="display:inline-flex;align-items:center;gap:8px;">
+                                          <label style="display:inline-flex;align-items:center;font-weight:400;margin:0;white-space:nowrap;">
+                                             <input type="radio" ng-value="'custom'" name="download_expiry" ng-model="download_expiry" style="margin:0 6px 0 0;">Custom
+                                          </label>
+                                          <input type="number" class="form-control" ng-model="custom_download_expiry" min="1" placeholder="Enter days" ng-disabled="download_expiry != 'custom'" ng-style="{'visibility': download_expiry == 'custom' ? 'visible' : 'hidden'}" style="width:120px;display:inline-block;">
+                                       </div>
+                                    </div>
                                  </div>
                                  <!-- </div>
                                  </div>
                                  <div class="col-lg-4 col-md-6 col-xs-4"></div> -->
                               </div>
-                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                       <div class="col-lg-6 col-md-6 col-xs-6">
-                                          <div class="form-group">
-                                             <label for="currency">Currency</label>
-                                             <input type="text" class="form-control" ng-model="selected_currency" readonly="">
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+                               </div>
                         </div>
                      </div>
                      <div class="">

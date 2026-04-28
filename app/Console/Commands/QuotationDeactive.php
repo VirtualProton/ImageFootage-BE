@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Common;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Log;
 
@@ -40,13 +41,19 @@ class QuotationDeactive extends Command
     public function handle()
     {
         Log::channel('quotationlog')->info("====== Quotation cancelled by cron : START =====");
-        $today = date('Y-m-d');
-        $invoices = Invoice::whereDate('cancelled_on', '<', $today)->where('proforma_type', 1)->where('status', '=', 0)->whereNotNull('cancelled_on')->get();
+        $now = now();
+        $common = app(Common::class);
+        $invoices = Invoice::where('cancelled_on', '<=', $now)
+            ->where('proforma_type', 1)
+            ->where('status', '=', 0)
+            ->whereNotNull('cancelled_on')
+            ->get();
         if(count($invoices) > 0) {
             foreach($invoices as $invoice) {
+                $common->cancelRazorpayPaymentLinkForInvoice($invoice, 'quotation_expired');
                 Invoice::where('id', $invoice->id)->update([
                     'status' => 3,
-                    'cancel_date' => date('Y-m-d H:i:s'),
+                    'cancel_date' => $now->format('Y-m-d H:i:s'),
                     'cancelled_by' => NULL
                 ]);
                 Log::channel('quotationlog')->info("====== Quotation cancelled id : " . $invoice->id ." =====");
