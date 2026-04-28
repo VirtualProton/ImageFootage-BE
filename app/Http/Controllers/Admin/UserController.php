@@ -188,10 +188,18 @@ class UserController extends Controller
         // }
         
         // Always scope comments to the currently viewed user profile.
-        $comments = Comment::where('user_id', $user_id)
+        $commentsQuery = Comment::where('user_id', $user_id)
             ->with('agent')
             ->with('admin')
-            ->with('agentAdmin')
+            ->with('agentAdmin');
+
+        // Non-super-admin users only see comments assigned to them as agent
+        $loggedInAdmin = Auth::guard('admins')->user();
+        if ($loggedInAdmin->role_id != 1) {
+            $commentsQuery->where('agent_id', $loggedInAdmin->id);
+        }
+
+        $comments = $commentsQuery
             ->orderBy('id', 'desc')
             ->limit(50)
             ->get()

@@ -36,8 +36,15 @@ class DashboardController extends Controller
         }
 
          // Fetch open and in-progress comments
-    $pendingComments = Comment::with('admin', 'agent')
-        ->whereIn('status', ['Open', 'In Progress'])
+    $pendingCommentsQuery = Comment::with('admin', 'agent')
+        ->whereIn('status', ['Open', 'In Progress']);
+
+    // Non-super-admin users only see comments assigned to them
+    if ($user->role_id != 1) {
+        $pendingCommentsQuery->where('agent_id', $user->id);
+    }
+
+    $pendingComments = $pendingCommentsQuery
         ->orderBy('created_at', 'desc')
         ->limit(10)
         ->get();
