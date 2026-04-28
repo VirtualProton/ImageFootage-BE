@@ -464,6 +464,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
     Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+
+    // All authenticated admin routes with permission checking
+    Route::group(['middleware' => ['admin', 'check.permission']], function () {
+
     Route::get('/outstanding-report-data', 'InvoiceController@getOutstandingReportData')->name('admin.outstanding.data');
     // ...existing code...
     Route::get('invoice/{user_id}/{id}', 'InvoiceController@showDetail')->name('admin.invoice.detail');
@@ -760,6 +764,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/editorials/status/{status}/{id}', 'EditorialController@changeStatus');
         Route::post('/price/check-duplicate', 'PriceController@checkDuplicate')->name('admin.price.check-duplicate');
     Route::resource('/price', 'PriceController');
+
+    }); // end check.permission middleware group
 });
 
 Route::get('emailVerification', 'UserContactusController@emailVerification');

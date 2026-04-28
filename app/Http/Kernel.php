@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'admin' =>     \App\Http\Middleware\Admin::class,
         'CORS' => \App\Http\Middleware\CORS::class,
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
+        'check.permission' => \App\Http\Middleware\CheckPermission::class,
 
     ];
 

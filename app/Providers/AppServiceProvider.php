@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Blade;
 use App\Models\Modules;
+use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\URL;
 use App\Services\Sms\SmsService;
 use App;
@@ -49,6 +51,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Schema::defaultStringLength(191); // NEW: Increase StringLength
+
+        // Register Blade directives for permission checks
+        // Usage: @canPermission(moduleId, 'action') ... @endcanPermission
+        Blade::if('canPermission', function ($moduleId, $action = 'view') {
+            return PermissionHelper::hasPermission($moduleId, $action);
+        });
 
         view()->composer('admin.layouts.default', function ($view) {
             $modules = Modules::with('submodules')

@@ -27,6 +27,7 @@ use Mail;
 use App\Models\UserInfo;
 use App\Models\Description;
 use App\Models\Package;
+use App\Helpers\PermissionHelper;
 
 class UserController extends Controller
 {
@@ -283,8 +284,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->role['role'] != 'Super Admin') {
-            return back()->with('success', 'You dont have acess to edit.');
+        // Check edit permission via PermissionHelper
+        if (!PermissionHelper::hasPermission(PermissionHelper::MODULE_CLIENTS, 'edit')) {
+            return back()->with('error', 'You do not have permission to edit clients.');
         }
         $title = "Edit Lead/User/Contact";
 
@@ -326,6 +328,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if (!PermissionHelper::hasPermission(PermissionHelper::MODULE_CLIENTS, 'delete')) {
+            return back()->with('error', 'You do not have permission to delete clients.');
+        }
         $delagent = User::find($id);
         $delagent->delete();
         return redirect('admin/users')->with('success', 'Successfully deleted the admin/agent!');
@@ -505,6 +510,50 @@ class UserController extends Controller
     public function updateUser(Request $request)
     {
         if (isset($_POST['updatebtn'])) {
+            $user = Auth::guard('admins')->user();
+
+            // Sales Agent: can only update Additional Info Box fields (description, partner, whitelist, blacklist, frozen, etc.)
+            if ((int) $user->department_id === PermissionHelper::DEPT_SALES
+                && (int) $user->role_id === PermissionHelper::ROLE_AGENT) {
+
+                try {
+                    // Only allow updating Additional Info fields
+                    $userinfo = UserInfo::where('user_id', '=', $request->user_id)->first();
+                    if ($userinfo === null) {
+                        $userinfo = new UserInfo;
+                        $userinfo->user_id = $request->user_id;
+                    }
+                    $userinfo->partner = $request->user_partner;
+                    $userinfo->whitelist = $request->user_whitelist;
+                    $userinfo->blacklist = $request->user_blacklist;
+                    $userinfo->frozen = $request->user_checkout_frozen;
+                    $userinfo->allow_certi = $request->user_allow_certi;
+                    $userinfo->enable_subs_multi = $request->user_enable_subs_multi;
+                    $userinfo->preferred_contact_method = $request->user_preferred_contact_method;
+                    $userinfo->save();
+
+                    // Allow description update
+                    if (!empty($request->user_client_des)) {
+                        $description = Description::where('user_id', '=', $request->user_id)->where('description', $request->user_client_des)->first();
+                        if (empty($description)) {
+                            $description = new Description;
+                            $description->user_id = $request->user_id;
+                            $description->description = $request->user_client_des;
+                            $description->save();
+                        }
+                    }
+
+                    return redirect('admin/users')->with('success', 'Additional info updated successfully.');
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Some problem occurred.');
+                }
+            }
+
+            // Check edit permission for full client update
+            if (!PermissionHelper::hasPermission(PermissionHelper::MODULE_CLIENTS, 'edit')) {
+                return back()->with('error', 'You do not have permission to edit client info.');
+            }
+
             $this->validate($request, [
                 'user_name' => 'required',
                 'user_email' => 'required'

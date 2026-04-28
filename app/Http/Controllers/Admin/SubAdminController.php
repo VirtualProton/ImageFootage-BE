@@ -12,6 +12,7 @@ use App\Models\RolesModulesMapping;
 use Illuminate\Support\Facades\Response;
 
 use App\Models\Country;
+use App\Helpers\PermissionHelper;
 use Auth;
 
 
@@ -103,8 +104,8 @@ class SubAdminController extends Controller
     public function edit($id)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->role['role'] != 'Super Admin') {
-            return back()->with('success', 'You dont have acess to edit.');
+        if (!PermissionHelper::hasPermission(PermissionHelper::MODULE_ADMIN_USER_MANAGEMENT, 'edit')) {
+            return back()->with('error', 'You do not have permission to edit admin/agent.');
         }
         $title = "Add Admin/Agent";
         $roles = Roles::where('status', '=', 'A')->get();
@@ -282,6 +283,8 @@ class SubAdminController extends Controller
                         ->update(['can_add' => $is_add, 'can_edit' => $is_edit, 'can_view' => $is_view, 'can_delete' => $is_delete]);
                 }
             }
+            // Clear permission cache for this department/role combination
+            PermissionHelper::clearCache($data['department'], $data['role']);
             return redirect("admin/subadmin/access_management")->with("success", "Access has been added/Modified successfully !!!");
         }
     }
