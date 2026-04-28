@@ -8,15 +8,19 @@ class AddDiscountAmountToImagefootagePerformaInvoicesTable extends Migration
 {
     public function up()
     {
-        Schema::table('imagefootage_performa_invoices', function (Blueprint $table) {
-            $table->float('discount_amount')->nullable()->default(null)->after('tax');
-        });
+        if (!Schema::hasColumn('imagefootage_performa_invoices', 'discount_amount')) {
+            Schema::table('imagefootage_performa_invoices', function (Blueprint $table) {
+                $table->float('discount_amount')->nullable()->default(null)->after('tax');
+            });
+        }
     }
 
     public function down()
     {
-        Schema::table('imagefootage_performa_invoices', function (Blueprint $table) {
-            $table->dropColumn('discount_amount');
-        });
+        if (Schema::hasColumn('imagefootage_performa_invoices', 'discount_amount')) {
+            Schema::table('imagefootage_performa_invoices', function (Blueprint $table) {
+                $table->dropColumn('discount_amount');
+            });
+        }
     }
 }
