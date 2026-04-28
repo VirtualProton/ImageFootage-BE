@@ -838,7 +838,8 @@
                             <button type="button"
                             ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $plan->id, "total" => $plan->package_price, "package_name" => $plan->package_name]) }}, {{$user_id}}); showModal();'
                             title="Download on Behalf"
-                            class="btn btn-xs btn-info">
+                            class="btn btn-xs btn-info"
+                            @if(($plan->downloaded_product ?? 0) >= $plan->package_products_count) disabled @endif>
                             <i class="fa fa-download" aria-hidden="true"></i> Download on Behalf
                             </button>
                                   <!-- Add your action buttons here -->
