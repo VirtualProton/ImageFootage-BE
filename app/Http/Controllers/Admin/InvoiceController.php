@@ -684,7 +684,7 @@ class InvoiceController extends Controller
 
             // Get invoice/order items
 
-            $checkdownload = UserProductDownload::where('product_id_api', $productId)->where('web_type', $flag)->where('user_id', $userId)->first();
+            $checkdownload = UserProductDownload::where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->where('package_id', $packageId)->first();
             if (!empty($checkdownload)) {
                 return response()->json(['status' => 'failed', 'message' => 'This product is already downloaded.']);
             }
@@ -730,7 +730,7 @@ class InvoiceController extends Controller
                     
                     Log::info('Footage API Response Type: ' . gettype($product_details_data));
                     if (is_array($product_details_data) && !empty($product_details_data)) {
-                        $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->first();
+                        $dataCheck = UserProductDownload::where('product_id_api', $download_id)->where('web_type', $type)->where('user_id', $userId)->where('package_id', $packageId)->first();
                         $product_id = $download_id;
                         $dataInsert = array(
                             'user_id' => $userId,
@@ -816,7 +816,7 @@ class InvoiceController extends Controller
                     Log::info('Image API Response Type: ' . gettype($product_details_data));
                     // Validate API response is an array before proceeding
                     if (is_array($product_details_data) && !empty($product_details_data)) {
-                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
+                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->where('package_id', $packageId)->first();
 
                         $isPending = isset($product_details_data['download_status']) && 
                                    is_array($product_details_data['download_status']) &&
@@ -915,7 +915,7 @@ class InvoiceController extends Controller
                     
                     Log::info('Music API Response Type: ' . gettype($product_details_data));
                     if (is_array($product_details_data) && !empty($product_details_data)) {
-                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->first();
+                        $dataCheck = UserProductDownload::select('product_id')->where('product_id_api', $productId)->where('web_type', $type)->where('user_id', $userId)->where('package_id', $packageId)->first();
 
                         /** TODO : set the array as per response */
                         $dataInsert = array(
