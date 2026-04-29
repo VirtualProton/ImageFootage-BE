@@ -464,10 +464,7 @@
                                   Paid
                                   @else
                                   @php
-                                    $disableDownloadPackInvoiceAction = !$canManagePackAndCustomActions
-                                      || $invioces->status == 3
-                                      || $invioces->status == 1
-                                      || $invioces->payment_method == 'online';
+                                    $disableDownloadPackInvoiceAction = !$canManagePackAndCustomActions;
                                   @endphp
                                   <select @if($disableDownloadPackInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
@@ -631,10 +628,7 @@
                                 <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
                                   @php
-                                    $disableCustomInvoiceAction = !$canManagePackAndCustomActions
-                                      || $invioces->status == 3
-                                      || $invioces->status == 1
-                                      || $invioces->payment_method == 'online';
+                                    $disableCustomInvoiceAction = !$canManagePackAndCustomActions;
                                   @endphp
                                   <select @if($disableCustomInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
@@ -793,10 +787,7 @@
                                 <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
                                   @php
-                                    $disableOtherInvoiceAction = !$canManagePackAndCustomActions
-                                      || $invioces->status == 3
-                                      || $invioces->status == 1
-                                      || $invioces->payment_method == 'online';
+                                    $disableOtherInvoiceAction = !$canManagePackAndCustomActions;
                                   @endphp
                                   <select @if($disableOtherInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
@@ -1609,7 +1600,6 @@
   }
 
   function changestatus(statust, quotation_id, oldstatus) {
-    event.preventDefault();
     if (confirm('Do you want to change the status of invoice/quotation') === true) {
       $('#loading').show();
       $.ajax({

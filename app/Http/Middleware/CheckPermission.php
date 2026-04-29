@@ -3,11 +3,61 @@
 namespace App\Http\Middleware;
 
 use App\Helpers\PermissionHelper;
+use App\Models\Invoice;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 class CheckPermission
 {
+    private function resolveTransactionInvoiceId($request): ?int
+    {
+        if ($request->route('id')) {
+            return (int) $request->route('id');
+        }
+
+        foreach (['quotation_id', 'quotation'] as $key) {
+            if ($request->filled($key)) {
+                return (int) $request->input($key);
+            }
+        }
+
+        return null;
+    }
+
+    private function shouldBypassPackAndCustomTransactionPermission($request, $user): bool
+    {
+        if ((int) $user->department_id !== PermissionHelper::DEPT_ACCOUNTS) {
+            return false;
+        }
+
+        $route = $request->route();
+        if (!$route) {
+            return false;
+        }
+
+        $supportedActions = [
+            'edit_quotation',
+            'edit_quotation_data',
+            'create_invoice',
+            'create_invoice_subcription',
+            'change_invoice_status',
+            'invoiceCancel',
+        ];
+
+        if (!in_array((string) $route->getActionMethod(), $supportedActions, true)) {
+            return false;
+        }
+
+        $invoiceId = $this->resolveTransactionInvoiceId($request);
+        if ($invoiceId <= 0) {
+            return false;
+        }
+
+        $invoice = Invoice::select('id', 'invoice_type')->find($invoiceId);
+
+        return $invoice && in_array((int) $invoice->invoice_type, [2, 3], true);
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -50,6 +100,10 @@ class CheckPermission
         // If no action specified, auto-detect from HTTP method + URL
         if (!$action) {
             $action = PermissionHelper::getActionFromRequest($request->method(), $request->path());
+        }
+
+        if ($this->shouldBypassPackAndCustomTransactionPermission($request, $user)) {
+            return $next($request);
         }
 
         if (!PermissionHelper::hasPermission((int) $moduleId, $action)) {

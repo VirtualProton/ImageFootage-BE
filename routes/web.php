@@ -772,6 +772,7 @@ Route::get('emailVerification', 'UserContactusController@emailVerification');
 Route::get('payu/{id}', 'PaymentController@payu');
 Route::get('payuplan/{id}', 'PaymentController@payuplan');
 Route::get('frontend-plan-invoice-preview', 'PaymentController@frontendPlanInvoicePreview')->name('frontend.plan.invoice.preview');
+Route::get('frontend-order-invoice-preview', 'PaymentController@frontendOrderInvoicePreview')->name('frontend.order.invoice.preview');
 Route::get('invoiceConfirmation/{id}', 'PaymentController@invoiceConfirmation');
 Route::get('invoiceFailed/{id}', 'PaymentController@invoiceFailed');
 

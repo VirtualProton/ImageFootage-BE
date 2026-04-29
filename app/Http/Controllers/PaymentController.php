@@ -184,6 +184,151 @@ class PaymentController extends Controller
         ]);
     }
 
+    private function normalizePdfAssetSource(?string $source, string $fallback = ''): string
+    {
+        $source = trim((string) $source);
+
+        if ($source === '') {
+            return $fallback;
+        }
+
+        if (preg_match('/^(data:|https?:\/\/|file:\/\/\/)/i', $source)) {
+            return $source;
+        }
+
+        $relativePath = ltrim(str_replace('\\', '/', $source), '/');
+        $absolutePath = public_path(str_replace('/', DIRECTORY_SEPARATOR, $relativePath));
+
+        if (file_exists($absolutePath)) {
+            return $this->pdfImageBase64($relativePath);
+        }
+
+        return $source;
+    }
+
+    private function buildFrontendStandaloneInvoiceDataFromOrder(array $order): array
+    {
+        $invoiceName = (string) ($order['txn_id'] ?? '');
+        $companyLogo = $this->pdfImageBase64('images/new-design-logo.png');
+        $signature = $this->pdfImageBase64('images/signature.png');
+        $placeholderImage = $this->pdfImageBase64('images/placeholder-image.png');
+        $placeholderVideo = $this->pdfImageBase64('images/placeholder-video.png');
+        $placeholderMusic = $this->pdfImageBase64('images/placeholder-music.png');
+        $frontendUrl = config('app.front_end_url') ?: config('app.url');
+
+        $baseRow = [
+            'invoice_name' => $invoiceName,
+            'invicecreted' => !empty($order['updated_at']) ? date('Y-m-d H:i:s', strtotime((string) $order['updated_at'])) : (!empty($order['order_date']) ? date('Y-m-d H:i:s', strtotime((string) $order['order_date'])) : ''),
+            'vendor_code' => $order['user']['vendor_code'] ?? '',
+            'company' => $order['user']['company'] ?? '',
+            'first_name' => $order['bill_firstname'] ?? ($order['user']['first_name'] ?? ''),
+            'last_name' => $order['bill_lastname'] ?? ($order['user']['last_name'] ?? ''),
+            'address' => $order['bill_address1'] ?? ($order['user']['address'] ?? ''),
+            'address2' => $order['bill_address2'] ?? '',
+            'cityname' => $order['city']['name'] ?? '',
+            'statename' => $order['state']['state'] ?? '',
+            'postal_code' => $order['bill_zip'] ?? ($order['user']['postal_code'] ?? ''),
+            'countryname' => $order['country']['name'] ?? '',
+            'pan' => $order['user']['pan'] ?? '',
+            'gst' => $order['user']['gst'] ?? '',
+            'email' => $order['order_email'] ?? '',
+            'email_id' => $order['order_email'] ?? '',
+            'mobile' => $order['bill_phone'] ?? ($order['user']['mobile'] ?? ''),
+            'contact_owner' => $order['user']['contact_owner'] ?? 'Imagefootage Sales Team',
+            'currency' => 'INR',
+            'tax' => (float) ($order['tax'] ?? 0),
+            'total' => (float) ($order['order_total'] ?? 0),
+            'discount_amount' => (float) ($order['coupon_value'] ?? ($order['coupon_discount'] ?? 0)),
+            'payment_status' => $order['order_status'] ?? '',
+            'payment_method' => strtolower((string) ($order['payment_mode'] ?? 'online')),
+            'payment_url' => '',
+            'company_logo' => $companyLogo,
+            'signature' => $signature,
+            'placeholder_music' => $placeholderMusic,
+            'placeholder_video' => $placeholderVideo,
+            'placeholder_image' => $placeholderImage,
+            'frontend_url' => $frontendUrl,
+            'frontend_name' => parse_url((string) $frontendUrl, PHP_URL_HOST) ?: 'imagefootage.com',
+            'flag' => 0,
+        ];
+
+        $quotation = [];
+
+        foreach (($order['items'] ?? []) as $item) {
+            $productType = trim((string) ($item['product_type'] ?? ($item['product']['product_main_type'] ?? '')));
+            $thumbnail = $this->normalizePdfAssetSource(
+                $item['product_thumb'] ?? ($item['product']['product_thumbnail'] ?? ''),
+                $placeholderImage
+            );
+            $standardSize = trim((string) ($item['standard_size'] ?? ($item['product']['product_size'] ?? '')));
+            $licenseType = trim((string) ($item['licence']['licence_name'] ?? ''));
+            if ($licenseType === '') {
+                $licenseType = trim((string) ($item['extended_name'] ?? ''));
+            }
+            $unitPrice = ((string) ($item['product_web'] ?? '')) === '4'
+                ? (float) ($item['total'] ?? 0)
+                : (float) ($item['standard_price'] ?? ($item['total'] ?? 0));
+
+            $quotation[] = array_merge($baseRow, [
+                'product_id' => $item['product_id'] ?? '',
+                'name' => $item['product_name'] ?? ($item['product']['product_title'] ?? ''),
+                'type' => $productType,
+                'product_image' => $thumbnail,
+                'product_image_pdf' => $thumbnail,
+                'product_size' => $standardSize,
+                'size' => $standardSize,
+                'licence_type' => $licenseType,
+                'product_type' => $productType,
+                'extra_details' => trim((string) ($item['product_desc'] ?? '')),
+                'subtotal' => $unitPrice,
+            ]);
+        }
+
+        if (empty($quotation)) {
+            $quotation[] = array_merge($baseRow, [
+                'product_id' => '',
+                'name' => $order['order_title'] ?? 'Purchased Assets',
+                'type' => '',
+                'product_image' => $placeholderImage,
+                'product_image_pdf' => $placeholderImage,
+                'product_size' => '',
+                'size' => '',
+                'licence_type' => '',
+                'product_type' => '',
+                'extra_details' => '',
+                'subtotal' => (float) ($order['order_total'] ?? 0),
+            ]);
+        }
+
+        return $quotation;
+    }
+
+    private function renderFrontendStandaloneInvoiceResponse(array $quotation, string $format = 'pdf')
+    {
+        $invoiceTotal = (float) ($quotation[0]['total'] ?? 0);
+        $amountInWords = $invoiceTotal > 0 ? strtoupper((string) $this->convert_number_to_words((int) round($invoiceTotal))) : '';
+        $html = view('email.backend_invoice', [
+            'quotation' => $quotation,
+            'amount_in_words' => $amountInWords,
+            'payment_method' => $quotation[0]['payment_method'] ?? 'online',
+            'po' => '',
+            'po_date' => '',
+        ])->render();
+
+        if (strtolower((string) $format) !== 'pdf') {
+            return response($html);
+        }
+
+        return PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ])->loadHTML($html)->stream(($quotation[0]['invoice_name'] ?? 'web-invoice') . '.pdf', [
+            'Attachment' => false,
+        ]);
+    }
+
     public function payment(Request $request)
     {
         ini_set('max_execution_time', 0);
@@ -845,6 +990,35 @@ class PaymentController extends Controller
         return $this->renderFrontendPlanInvoiceResponse($orders, (string) $request->query('format', 'pdf'));
     }
 
+    public function frontendOrderInvoicePreview(Request $request)
+    {
+        $orderId = (int) $request->query('order_id', 0);
+        $transactionId = trim((string) $request->query('transaction_id', ''));
+
+        $query = Orders::with([
+            'user' => function ($query) {
+                $query->select('id', 'first_name', 'last_name', 'email', 'mobile', 'phone', 'address', 'postal_code', 'state', 'country', 'pan', 'gst', 'company', 'vendor_code', 'contact_owner');
+            },
+            'items' => function ($query) {
+                $query->with('product')->with('licence');
+            },
+        ])->with('country')->with('state')->with('city')
+            ->whereIn('order_status', ['Completed', 'Transction Success']);
+
+        if ($orderId > 0) {
+            $query->where('id', $orderId);
+        } elseif ($transactionId !== '') {
+            $query->where('txn_id', $transactionId);
+        } else {
+            abort(404);
+        }
+
+        $order = $query->firstOrFail()->toArray();
+        $quotation = $this->buildFrontendStandaloneInvoiceDataFromOrder($order);
+
+        return $this->renderFrontendStandaloneInvoiceResponse($quotation, (string) $request->query('format', 'pdf'));
+    }
+
     public function  atompayinvoiceplan()
     {
         $datenow = date("d/m/Y h:m:s");
@@ -1032,6 +1206,21 @@ class PaymentController extends Controller
                 ->with('city')
                 ->get()->toArray();
 
+            if (!empty($OrderData)) {
+                foreach ($OrderData as &$order) {
+                    if (
+                        !empty($order['id'])
+                        && in_array((string) ($order['order_status'] ?? ''), ['Completed', 'Transction Success'], true)
+                    ) {
+                        $order['invoice'] = route('frontend.order.invoice.preview', [
+                            'order_id' => $order['id'],
+                            'format' => 'pdf',
+                        ]);
+                    }
+                }
+                unset($order);
+            }
+
             echo json_encode(['status' => "success", 'data' => $OrderData]);
         } else {
             echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
@@ -1041,10 +1230,21 @@ class PaymentController extends Controller
     public function invoiceWithemail($OrderData, $transaction)
     {
         ini_set('max_execution_time', 0);
-        $OrderData[0]['company_logo'] = 'images/new-design-logo.png';
-        $OrderData[0]['signature']     = 'images/signature.png';
-        $amount_in_words = $this->convert_number_to_words($OrderData[0]['order_total']);
-        $pdf = PDF::loadHTML(view('email.orders_invoice', ['orders' => $OrderData[0], 'amount_in_words' => $amount_in_words]));
+        $quotation = $this->buildFrontendStandaloneInvoiceDataFromOrder($OrderData[0]);
+        $amount_in_words = strtoupper((string) $this->convert_number_to_words((int) round((float) ($OrderData[0]['order_total'] ?? 0))));
+        $invoiceHtml = view('email.backend_invoice', [
+            'quotation' => $quotation,
+            'amount_in_words' => $amount_in_words,
+            'payment_method' => $quotation[0]['payment_method'] ?? 'online',
+            'po' => '',
+            'po_date' => '',
+        ])->render();
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ])->loadHTML($invoiceHtml);
         $fileName = $transaction . "_web_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $pdf_path = '';

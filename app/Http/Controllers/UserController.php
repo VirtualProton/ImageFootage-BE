@@ -76,6 +76,30 @@ class UserController extends Controller
         return $plan;
     }
 
+    private function resolveFrontendOrderInvoicePreviewUrl(array $order): string
+    {
+        if (empty($order['id']) && empty($order['txn_id'])) {
+            return (string) ($order['invoice'] ?? '');
+        }
+
+        return route('frontend.order.invoice.preview', [
+            'order_id' => $order['id'] ?? '',
+            'format' => 'pdf',
+        ]);
+    }
+
+    private function normalizeFrontendOrderPayload(array $order): array
+    {
+        if (
+            !empty($order['id'])
+            && in_array((string) ($order['order_status'] ?? ''), ['Completed', 'Transction Success'], true)
+        ) {
+            $order['invoice'] = $this->resolveFrontendOrderInvoicePreviewUrl($order);
+        }
+
+        return $order;
+    }
+
     // User Profile
     public function userProfile($id)
     {
@@ -385,6 +409,11 @@ class UserController extends Controller
                 ->whereIn('order_status', ['Completed', 'Transction Success'])
                 ->orderBy('id', 'desc')
                 ->get()->toArray();
+            if (!empty($OrderData)) {
+                $OrderData = array_map(function ($order) {
+                    return $this->normalizeFrontendOrderPayload($order);
+                }, $OrderData);
+            }
             echo json_encode(['status' => "success", 'data' => $OrderData]);
         } else {
             echo json_encode(['status' => "fail", 'data' => '', 'message' => 'Some error happened']);
@@ -444,6 +473,13 @@ class UserController extends Controller
 
                 ->paginate(5)
                 ->toArray();
+
+            if (!empty($orderData['data'])) {
+                foreach ($orderData['data'] as &$order) {
+                    $order = $this->normalizeFrontendOrderPayload($order);
+                }
+                unset($order);
+            }
 
             return json_encode(['status' => "success", 'data' => $orderData]);
         } else {

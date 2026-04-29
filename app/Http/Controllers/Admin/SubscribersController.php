@@ -5,16 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Common;
 use App\Models\User;
 use App\Models\UserPackage;
 use Auth;
-use DB;
 use Carbon\Carbon;
-use PDF;
-use Mail;
-use App\Mail\InvoiceExtendDate;
-use Illuminate\Support\Facades\Storage;
 
 class SubscribersController extends Controller
 {
@@ -148,27 +142,6 @@ class SubscribersController extends Controller
         $UserPackage->update([
             'package_extended_expiry_data' => $newExpiryDate->format('Y-m-d'),
         ]);
-
-        // send email and invoice
-        $orders = UserPackage::with(['user'=>function($query1){
-            $query1->select('id','user_name','first_name','last_name','email','phone','mobile','city','address','postal_code','state','country')
-                ->with('country')
-                ->with('state')
-                ->with('city');
-        }])->where('transaction_id',$UserPackage->transaction_id)->first()->toArray();
-
-        if(!Storage::exists('invoice')) {
-            Storage::makeDirectory('pdf', 0775, true);
-        }
-
-        $fileName = $UserPackage->transaction_id."_web_plan_invoice.pdf";
-        $filePath = storage_path("/app/pdf/". $fileName);
-
-        $pdf = PDF::loadHTML(view('email.plan_invoice_old',['orders' => $orders]));
-
-        $pdf->save(storage_path('app/pdf'). '/' . $fileName);
-
-        Mail::to($orders['user']['email'])->send(new InvoiceExtendDate($filePath, $UserPackage->transaction_id, $orders));
 
         return back()->with('success','Package expiry date updated successfully.');
     }
