@@ -206,6 +206,7 @@
                               <tr>
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
+                                <th>Quotation No.</th>
                                 <th>Invoice Date</th>
                                 <th>Amount (In INR)</th>
                                 <th>Plan</th>
@@ -229,6 +230,13 @@
                                   <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                   @else
                                   {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
+                                  @endif
+                                </td>
+                                <td>
+                                  @if($invioces->quotation_url)
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
+                                  @else
+                                  Q{{$invioces->invoice_name}}
                                   @endif
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
@@ -365,6 +373,7 @@
                               <tr>
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
+                                <th>Quotation No.</th>
                                 <th>Invoice Date</th>
                                 <th>Amount</th>
                                 <th>Currency</th>
@@ -388,6 +397,13 @@
                                   <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                   @else
                                   {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
+                                  @endif
+                                </td>
+                                <td>
+                                  @if($invioces->quotation_url)
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  @else
+                                  Q{{$invioces->invoice_name}}
                                   @endif
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
@@ -520,6 +536,7 @@
                               <tr>
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
+                                <th>Quotation No.</th>
                                 <th>Invoice Date</th>
                                 <th>Amount</th>
                                 <th>Currency</th>
@@ -543,6 +560,13 @@
                                   <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                   @else
                                   {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
+                                  @endif
+                                </td>
+                                <td>
+                                  @if($invioces->quotation_url)
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  @else
+                                  Q{{$invioces->invoice_name}}
                                   @endif
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
@@ -682,6 +706,7 @@
                               <tr>
                                 <th>Sl No</th>
                                 <th>Invoice No.</th>
+                                <th>Quotation No.</th>
                                 <th>Invoice Date</th>
                                 <th>Amount</th>
                                 <th>Currency</th>
@@ -706,6 +731,12 @@
                                   {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
                                   @endif
                                 </td>
+                                <td>
+                                  @if($invioces->quotation_url)
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  @else
+                                  Q{{$invioces->invoice_name}}
+                                  @endif
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
                                 <td>{{$invioces->currency}}</td>
