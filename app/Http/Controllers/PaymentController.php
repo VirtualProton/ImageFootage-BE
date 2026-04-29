@@ -26,9 +26,11 @@ use Aws\Exception\AwsException;
 use Aws\S3\MultipartUploader;
 use Aws\Exception\MultipartUploadException;
 use App\Http\TnnraoSms\TnnraoSms;
+use App\Support\BrowserPdf;
 use PDF;
 use Mail;
 use App\Models\PromoCode;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -105,6 +107,87 @@ class PaymentController extends Controller
         }
 
         return $directory;
+    }
+
+    private function savePdfFromHtml(string $html, string $targetPath, array $dompdfOptions = []): void
+    {
+        if (BrowserPdf::isAvailable()) {
+            try {
+                BrowserPdf::saveHtmlAsPdf($html, $targetPath);
+                Log::info('Frontend PDF rendered with browser engine.', [
+                    'target' => $targetPath,
+                    'renderer' => BrowserPdf::lastRenderer() ?: 'browser',
+                ]);
+
+                return;
+            } catch (\Throwable $exception) {
+                Log::warning('Frontend browser PDF rendering failed. Falling back to Dompdf.', [
+                    'target' => $targetPath,
+                    'message' => $exception->getMessage(),
+                ]);
+            }
+        }
+
+        $defaultOptions = [
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ];
+
+        PDF::setOptions(array_merge($defaultOptions, $dompdfOptions))
+            ->loadHTML($html)
+            ->save($targetPath);
+
+        Log::info('Frontend PDF rendered with Dompdf fallback.', [
+            'target' => $targetPath,
+            'renderer' => 'dompdf',
+        ]);
+    }
+
+    private function renderPdfPreviewResponse(string $html, string $fileName, array $dompdfOptions = [])
+    {
+        if (BrowserPdf::isAvailable()) {
+            try {
+                $pdfBinary = BrowserPdf::render($html);
+                $renderer = BrowserPdf::lastRenderer() ?: 'browser';
+
+                Log::info('Frontend preview PDF rendered with browser engine.', [
+                    'file' => $fileName,
+                    'renderer' => $renderer,
+                ]);
+
+                return response($pdfBinary, 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+                    'X-PDF-Renderer' => $renderer,
+                ]);
+            } catch (\Throwable $exception) {
+                Log::warning('Frontend browser PDF preview rendering failed. Falling back to Dompdf.', [
+                    'file' => $fileName,
+                    'message' => $exception->getMessage(),
+                ]);
+            }
+        }
+
+        $defaultOptions = [
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ];
+
+        Log::info('Frontend preview PDF rendered with Dompdf fallback.', [
+            'file' => $fileName,
+            'renderer' => 'dompdf',
+        ]);
+
+        return PDF::setOptions(array_merge($defaultOptions, $dompdfOptions))
+            ->loadHTML($html)
+            ->stream($fileName, [
+                'Attachment' => false,
+            ])
+            ->header('X-PDF-Renderer', 'dompdf');
     }
 
     private function decorateFrontendPlanInvoiceOrderData(array $orders, string $paymentMethod = 'online'): array
@@ -185,14 +268,10 @@ class PaymentController extends Controller
             return response($html);
         }
 
-        return PDF::setOptions([
-            'isRemoteEnabled' => false,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif',
-        ])->loadHTML($html)->stream(($orders['invoice_name'] ?? 'web-plan-invoice') . '.pdf', [
-            'Attachment' => false,
-        ]);
+        return $this->renderPdfPreviewResponse(
+            $html,
+            ($orders['invoice_name'] ?? 'web-plan-invoice') . '.pdf'
+        );
     }
 
     private function normalizePdfAssetSource(?string $source, string $fallback = ''): string
@@ -330,14 +409,11 @@ class PaymentController extends Controller
             return response($html);
         }
 
-        return PDF::setOptions([
-            'isRemoteEnabled' => true,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif',
-        ])->loadHTML($html)->stream(($quotation[0]['invoice_name'] ?? 'web-invoice') . '.pdf', [
-            'Attachment' => false,
-        ]);
+        return $this->renderPdfPreviewResponse(
+            $html,
+            ($quotation[0]['invoice_name'] ?? 'web-invoice') . '.pdf',
+            ['isRemoteEnabled' => true]
+        );
     }
 
     public function payment(Request $request)
@@ -1250,16 +1326,10 @@ class PaymentController extends Controller
             'po' => '',
             'po_date' => '',
         ])->render();
-        $pdf = PDF::setOptions([
-            'isRemoteEnabled' => true,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif',
-        ])->loadHTML($invoiceHtml);
         $fileName = $transaction . "_web_invoice.pdf";
         $pdfDirectory = $this->invoicePdfDirectory();
         $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
-        $pdf->save($pdfFilePath);
+        $this->savePdfFromHtml($invoiceHtml, $pdfFilePath, ['isRemoteEnabled' => true]);
         $pdf_path = '';
         // if (!file_exists($pdfPath)) {
         //     mkdir($pdfPath, 0755, true);
@@ -1301,11 +1371,14 @@ class PaymentController extends Controller
         $data["email"]   = $OrderData[0]['order_email'];
         //$data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $OrderData[0]['bill_firstname'];
-        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+        Mail::send('invoice', $data, function ($message) use ($data, $pdfFilePath, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
                 ->subject($data['subject'])
-                ->attachData($pdf->output(), $fileName);
+                ->attach($pdfFilePath, [
+                    'as' => $fileName,
+                    'mime' => 'application/pdf',
+                ]);
         });
     }
 
@@ -1315,20 +1388,15 @@ class PaymentController extends Controller
         $OrderData['tax'] = 0.00;
         $OrderData = $this->decorateFrontendPlanInvoiceOrderData($OrderData, 'online');
         $amount_in_words  = $this->convert_number_to_words((int) round((float) ($OrderData['package_price'] ?? 0)));
-        $pdf = PDF::setOptions([
-            'isRemoteEnabled' => false,
-            'isHtml5ParserEnabled' => true,
-            'dpi' => 96,
-            'defaultFont' => 'sans-serif',
-        ])->loadHTML(view('email.plan_invoice_email_offline', [
+        $invoiceHtml = view('email.plan_invoice_email_offline', [
             'orders' => $OrderData,
             'amount_in_words' => strtoupper((string) $amount_in_words),
             'payment_method' => $OrderData['payment_method'] ?? 'online',
-        ]));
+        ])->render();
         $fileName = $transaction . "_web_plan_invoice.pdf";
         $pdfDirectory = $this->invoicePdfDirectory();
         $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
-        $pdf->save($pdfFilePath);
+        $this->savePdfFromHtml($invoiceHtml, $pdfFilePath);
         $pdf_path = '';
         try {
             $s3Client = new S3Client([
@@ -1387,20 +1455,22 @@ class PaymentController extends Controller
         $data["email"]   = $OrderData['user']['email'];
         //$data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $OrderData['user']['first_name'];
-        Mail::send('invoice', $data, function ($message) use ($data, $pdf, $fileName) {
+        Mail::send('invoice', $data, function ($message) use ($data, $pdfFilePath, $fileName) {
             $message->to($data["email"])
                 ->from('admin@imagefootage.com', 'Imagefootage')
                 ->subject($data['subject'])
-                ->attachData($pdf->output(), $fileName);
+                ->attach($pdfFilePath, [
+                    'as' => $fileName,
+                    'mime' => 'application/pdf',
+                ]);
         });
     }
 
     public function emailHtml()
     {
-        $pdf = PDF::loadHTML(view('email.plan'));
         $fileName = "web_plan_invoice.pdf";
         $pdfDirectory = $this->invoicePdfDirectory();
-        $pdf->save($pdfDirectory . DIRECTORY_SEPARATOR . $fileName);
+        $this->savePdfFromHtml(view('email.plan')->render(), $pdfDirectory . DIRECTORY_SEPARATOR . $fileName);
     }
 
     public function convert_number_to_words($number)
