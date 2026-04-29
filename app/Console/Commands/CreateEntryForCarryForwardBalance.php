@@ -41,7 +41,9 @@ class CreateEntryForCarryForwardBalance extends Command
     public function handle()
     {
         Log::channel('carry-forward')->info("====== Carry Forward cron : START ======");
-        $getUserPackages = UserPackage::where(['status' => 1, 'package_plan' => 1])->where('package_expiry_date_from_purchage', '<', Carbon::today())->get();
+        $getUserPackages = UserPackage::where(['status' => 1, 'package_plan' => 1])
+            ->whereEffectiveExpiryBefore(Carbon::today())
+            ->get();
 
         Log::channel('carry-forward')->info("====== Total expired UserPackage records found : " . count($getUserPackages) ." ======");
         if ($getUserPackages->isNotEmpty()) {
@@ -50,7 +52,11 @@ class CreateEntryForCarryForwardBalance extends Command
                 Log::channel('carry-forward')->info("====== Downloaded Product: {$package->downloaded_product}, Package Products Count: {$package->package_products_count} ======");
                 if ($package->downloaded_product < $package->package_products_count) {
                     Log::channel('carry-forward')->info("====== Less downloads than allowed in package, credit remaining ======");
-                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])->where('created_at','>', $package->package_expiry_date_from_purchage)->where('package_expiry_date_from_purchage', '>=', Carbon::today())->exists();
+                    $effectiveExpiryDate = $package->resolveEffectiveExpiryDate();
+                    $getCurrentSamePlan = UserPackage::where(['status' => 1, 'user_id' => $package->user_id, 'package_id' => $package->package_id])
+                        ->where('created_at', '>', $effectiveExpiryDate ?: $package->package_expiry_date_from_purchage)
+                        ->whereEffectiveExpiryOnOrAfter(Carbon::today())
+                        ->exists();
 
                     if ($getCurrentSamePlan) {
                         Log::channel('carry-forward')->info("====== Found that user has another same type of active plan ======");

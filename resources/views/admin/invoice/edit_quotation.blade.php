@@ -254,6 +254,7 @@
 												<label for="promoCode">Promo code</label>
 												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code">
 												<span id="span-message"></span>
+												<div class="text-info" ng-show="discount_amount_display">Discount Applied: <%selected_currency || 'INR'%> <%discount_amount_display%></div>
 											</div>
 											<button class="btn btn-primary" type="button" id="btn-promocode">Apply Promo Code</button>
 										</div>
@@ -355,6 +356,7 @@
 												<label for="promoCode">Promo code</label>
 												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_sub">
 												<span id="span-message-sub"></span>
+												<div class="text-info" ng-show="subsc_discount_amount_display">Discount Applied: INR <%subsc_discount_amount_display%></div>
 											</div>
 											<button class="btn btn-primary" type="button" id="btn-promocode-sub">Apply Promo Code</button>
 										</div>
@@ -443,6 +445,7 @@
 												<label for="promoCode">Promo code</label>
 												<input type="text" class="form-control" name="promoCode" ng-model="promoCode" id="promo_code_dis">
 												<span id="span-message-dis"></span>
+												<div class="text-info" ng-show="download_discount_amount_display">Discount Applied: <%selected_currency || 'INR'%> <%download_discount_amount_display%></div>
 											</div>
 											<button class="btn btn-primary" type="button" id="btn-promocode-dis">Apply Promo Code</button>
 										</div>
@@ -516,15 +519,105 @@
 		})();
 
 		$('#btn-promocode').hide();
+		function toAmount(value) {
+			var amount = parseFloat(value);
+			return isNaN(amount) ? 0 : amount;
+		}
+
+		function getPromoTaxRate() {
+			return toAmount(window.gst_value);
+		}
+
+		function roundAmount(value) {
+			return Math.round((toAmount(value) + Number.EPSILON) * 100) / 100;
+		}
+
+		function sumProductPrices(scope) {
+			var subtotal = 0;
+			angular.forEach((scope.quotation && scope.quotation.product) || [], function(product) {
+				subtotal += toAmount(product && product.price);
+			});
+			return roundAmount(subtotal);
+		}
+
+		function calculatePromoTotals(subtotal, promo, applyTax) {
+			var normalizedSubtotal = roundAmount(subtotal);
+			var normalizedPromo = promo || {};
+			var discount = 0;
+
+			if (normalizedPromo.type === 'flat') {
+				discount = toAmount(normalizedPromo.discount);
+			} else if (normalizedPromo.type === 'percentage') {
+				discount = normalizedSubtotal * (toAmount(normalizedPromo.discount) / 100);
+			}
+
+			discount = roundAmount(Math.min(Math.max(discount, 0), normalizedSubtotal));
+			var discountedSubtotal = roundAmount(Math.max(normalizedSubtotal - discount, 0));
+			var tax = applyTax ? roundAmount((discountedSubtotal * getPromoTaxRate()) / 100) : 0;
+			var total = roundAmount(discountedSubtotal + tax);
+
+			return {
+				discount: discount > 0 ? discount.toFixed(2) : '',
+				tax: tax,
+				total: total.toFixed(2)
+			};
+		}
+
+		function applyPromoCalculation(buttonSelector, mode, promo) {
+			var scope = angular.element($(buttonSelector)).scope();
+			if (!scope) {
+				return;
+			}
+
+			if (mode === 'custom') {
+				var customResult = calculatePromoTotals(
+					sumProductPrices(scope),
+					promo,
+					!!scope.is_gst_applied || toAmount(scope.tax) > 0
+				);
+				scope.tax = customResult.tax;
+				scope.total = customResult.total;
+				scope.discount_amount_display = customResult.discount;
+			} else if (mode === 'subscription') {
+				var subResult = calculatePromoTotals(
+					toAmount(scope.subscriptionprice),
+					promo,
+					!!scope.GSTS || toAmount(scope.subsc_tax) > 0
+				);
+				scope.subsc_tax = subResult.tax;
+				scope.subsc_total = subResult.total;
+				scope.subsc_discount_amount_display = subResult.discount;
+			} else if (mode === 'download') {
+				var downloadResult = calculatePromoTotals(
+					toAmount(scope.downloadprice),
+					promo,
+					!!scope.GSTD || toAmount(scope.taxdownload) > 0
+				);
+				scope.taxdownload = downloadResult.tax;
+				scope.total_download = downloadResult.total;
+				scope.download_discount_amount_display = downloadResult.discount;
+			}
+
+			if (!scope.$$phase) {
+				scope.$apply();
+			}
+		}
+
+		function resetPromoState(buttonSelector, mode, messageSelector) {
+			$('#promo_code_id').val('');
+			applyPromoCalculation(buttonSelector, mode, {});
+			if (messageSelector) {
+				$(messageSelector).removeAttr('class');
+				$(messageSelector).text('');
+			}
+		}
+
 		$('#promo_code').keyup(function() {
 			if ($.trim(this.value).length > 0)
 				$('#btn-promocode').show()
 			else {
 				$('#btn-promocode').hide()
-				let gsttax = angular.element($("#btn-promocode")).scope().tax;
-				let isGST = gsttax > 0 ? true : false;
-				angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST',{},countryId);
-				angular.element('#btn-promocode').scope().$apply();
+				resetPromoState("#btn-promocode", "custom", "#span-message");
 			}
 		});
 		$('#promo_code_sub').keyup(function() {
@@ -532,6 +625,7 @@
 				$('#btn-promocode-sub').show()
 			else {
 				$('#btn-promocode-sub').hide()
+				resetPromoState("#btn-promocode-sub", "subscription", "#span-message-sub");
 			}
 		});
 		$('#promo_code_dis').keyup(function() {
@@ -539,6 +633,7 @@
 				$('#btn-promocode-dis').show()
 			else {
 				$('#btn-promocode-dis').hide()
+				resetPromoState("#btn-promocode-dis", "download", "#span-message-dis");
 			}
 		});
 		$(document).on("click", "#btn-promocode", function(e) {
@@ -562,6 +657,8 @@
 				success: function(result) {
 					// if error
 					if (result.status === 'error') {
+						$('#promo_code_id').val('');
+						applyPromoCalculation("#btn-promocode", "custom", {});
 						$('#span-message').removeAttr('class');
 						$('#span-message').text(result.message);
 						$('#span-message').addClass('text-danger');
@@ -574,13 +671,10 @@
 						$('#span-message').addClass('text-success');
 						let discountValue = result.data.discount;
 						let discountType = result.data.type;
-						let gsttax = angular.element($("#btn-promocode")).scope().tax;
-						let isGST = gsttax > 0 ? true : false;
-						angular.element($("#btn-promocode")).scope().checkThetax(isGST, 'GST', {
+						applyPromoCalculation("#btn-promocode", "custom", {
 							'type': discountType,
 							'discount': discountValue
-						},countryId);
-						angular.element('#btn-promocode').scope().$apply();
+						});
 						$('#promo_code_id').val(result.data.id);
 					}
 				}
@@ -606,6 +700,8 @@
 				},
 				success: function(result) {
 					if (result.status === 'error') {
+						$('#promo_code_id').val('');
+						applyPromoCalculation("#btn-promocode-sub", "subscription", {});
 						$('#span-message-sub').removeAttr('class');
 						$('#span-message-sub').text(result.message);
 						$('#span-message-sub').addClass('text-danger');
@@ -617,13 +713,10 @@
 						$('#span-message-sub').addClass('text-success');
 						let discountValue = result.data.discount;
 						let discountType = result.data.type;
-						let gsttax = angular.element($("#btn-promocode-sub")).scope().tax;
-						let isGST = gsttax > 0 ? true : false;
-						angular.element($("#btn-promocode-sub")).scope().checkTheSubtax(isGST, 'GST', {
+						applyPromoCalculation("#btn-promocode-sub", "subscription", {
 							'type': discountType,
 							'discount': discountValue
-						},countryId);
-						angular.element('#btn-promocode-sub').scope().$apply();
+						});
 						$('#promo_code_id').val(result.data.id);
 					}
 				}
@@ -650,6 +743,8 @@
 				},
 				success: function(result) {
 					if (result.status === 'error') {
+						$('#promo_code_id').val('');
+						applyPromoCalculation("#btn-promocode-dis", "download", {});
 						$('#span-message-dis').removeAttr('class');
 						$('#span-message-dis').text(result.message);
 						$('#span-message-dis').addClass('text-danger');
@@ -661,13 +756,10 @@
 						$('#span-message-dis').addClass('text-success');
 						let discountValue = result.data.discount;
 						let discountType = result.data.type;
-						let gsttax = angular.element($("#btn-promocode-dis")).scope().tax;
-						let isGST = gsttax > 0 ? true : false;
-						angular.element($("#btn-promocode-dis")).scope().checkTheDistax(isGST, 'GST', {
+						applyPromoCalculation("#btn-promocode-dis", "download", {
 							'type': discountType,
 							'discount': discountValue
-						},countryId);
-						angular.element('#btn-promocode-dis').scope().$apply();
+						});
 						$('#promo_code_id').val(result.data.id);
 					}
 				}

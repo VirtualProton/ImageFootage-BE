@@ -51,6 +51,31 @@ class UserController extends Controller
         $this->smsService = $smsService;
     }
 
+    private function resolveFrontendPlanInvoicePreviewUrl(array $plan): string
+    {
+        if (empty($plan['transaction_id'])) {
+            return (string) ($plan['invoice'] ?? '');
+        }
+
+        return route('frontend.plan.invoice.preview', [
+            'package_id' => $plan['id'],
+            'format' => 'pdf',
+        ]);
+    }
+
+    private function normalizeUserPlanPayload(array $plan): array
+    {
+        if (!empty($plan['package_extended_expiry_data'])) {
+            $plan['package_expiry_date_from_purchage'] = $plan['package_extended_expiry_data'];
+        }
+
+        if (!empty($plan['invoice']) && !empty($plan['id'])) {
+            $plan['invoice'] = $this->resolveFrontendPlanInvoicePreviewUrl($plan);
+        }
+
+        return $plan;
+    }
+
     // User Profile
     public function userProfile($id)
     {
@@ -65,9 +90,9 @@ class UserController extends Controller
                     $query->whereIn('payment_status', ['Completed', 'Transction Success'])
                         ->where(['status' => 1])
                         ->whereRaw('package_products_count > downloaded_product')
-                        ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
+                        ->whereEffectiveExpiryOnOrAfter(Carbon::today())
                         ->orderBy('id', 'desc')
-                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type', 'package_plan', 'footage_tier', 'pacage_size')
+                        ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'package_extended_expiry_data', 'invoice', 'order_type', 'package_plan', 'footage_tier', 'pacage_size')
                         ->with(['downloads' => function ($down_query) {
                             $down_query->select('id', 'product_id', 'user_id', 'package_id', 'product_name', 'product_size', 'downloaded_date', 'download_url', 'product_poster', 'product_thumb', 'web_type');
                         }])
@@ -93,7 +118,9 @@ class UserController extends Controller
                 $send_data['status'] = $user['status'];
                 $send_data['type'] = $user['type'];
                 $send_data['postal_code'] = $user['postal_code'];
-                $send_data['plans'] = $user['plans'];
+                $send_data['plans'] = array_map(function ($plan) {
+                    return $this->normalizeUserPlanPayload($plan);
+                }, $user['plans']);
                 $send_data['city'] = $user['city'];
                 $send_data['state'] = $user['state'];
                 $send_data['country'] = $user['country'];
@@ -159,10 +186,18 @@ class UserController extends Controller
         }
 
         $userlist = $userlist->orderBy('id', 'desc')
-            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'status', 'footage_tier', 'order_type')
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'package_extended_expiry_data', 'invoice', 'status', 'footage_tier', 'order_type')
             ->with('licence')
             ->paginate(5)
             ->toArray();
+
+        if (!empty($userlist['data'])) {
+            foreach ($userlist['data'] as &$plan) {
+                $plan = $this->normalizeUserPlanPayload($plan);
+            }
+            unset($plan);
+        }
+
         return ['status' => 1, 'message' => 'Plan details fetched successfully.', 'data' => $userlist];
     }
     public function getUserAddress(Request $request)
@@ -829,9 +864,9 @@ class UserController extends Controller
         $getUserPackages = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
             ->where(['status' => 1, 'user_id' => $request->user_id, 'package_type' => 'Image'])
             ->whereRaw('package_products_count > downloaded_product')
-            ->whereDate('package_expiry_date_from_purchage', '>=', Carbon::today())
+            ->whereEffectiveExpiryOnOrAfter(Carbon::today())
             ->orderBy('id', 'desc')
-            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'invoice', 'order_type')->get();
+            ->select('id', 'package_name', 'package_description', 'user_id', 'package_price', 'package_type', 'package_products_count', 'downloaded_product', 'transaction_id', 'created_at as updated_at', 'package_expiry_date_from_purchage', 'package_extended_expiry_data', 'invoice', 'order_type')->get();
 
         if ($getUserPackages->isNotEmpty()) {
             $checkAlreadyDownloadedImage = ProductsDownload::where('user_id', 208)
@@ -875,7 +910,7 @@ class UserController extends Controller
             if ($payload) {
                 $user = User::where('email', $payload['email'])->first();
                 if ($user) {
-                    $plans = UserPackage::where('user_id', '=', $user->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                    $plans = UserPackage::where('user_id', '=', $user->id)->whereEffectiveExpiryOnOrAfter(Carbon::today())->whereIn('payment_status', ['Completed', 'Transction Success'])
                         ->get()->toArray();
                     if (!$this->isProfileCompleted($user->id)) {
                         $profileCompleted = true;
@@ -883,7 +918,7 @@ class UserController extends Controller
                     $loginType = $payload['login_type'];
                 }
             } else {
-                $plans = UserPackage::where('user_id', '=', auth()->user()->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                $plans = UserPackage::where('user_id', '=', auth()->user()->id)->whereEffectiveExpiryOnOrAfter(Carbon::today())->whereIn('payment_status', ['Completed', 'Transction Success'])
                     ->get()->toArray();
                 if (!$this->isProfileCompleted(auth()->user()->id)) {
                     $profileCompleted = true;

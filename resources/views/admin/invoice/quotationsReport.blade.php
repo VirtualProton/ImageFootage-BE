@@ -62,13 +62,9 @@
                   <!-- <td>{{$quotation['user_name']}}</td> -->
                   <td><a href="{{ url('admin/users/invoices/'.$quotation['user_id']) }}">{{$quotation['user_name']}}</a></td>
                   <td>
-                     @if($quotation['quotation_url'])
-                    <a href="{{$quotation['quotation_url']}}" target="_blank">Q{{$quotation['invoice_name']}}</a>
-                    @else
-                    Q{{$quotation['invoice_name']}}
-                    @endif
+                    <a href="{{ $quotation['quotation_url'] ?: ($quotation['invoice_type'] == 3 ? route('backend.quotation.preview', ['user_id' => $quotation['user_id'], 'invoice_id' => $quotation['id'], 'format' => 'pdf']) : route('backend.plan.quotation.preview', ['user_id' => $quotation['user_id'], 'invoice_id' => $quotation['id'], 'format' => 'pdf'])) }}" target="_blank">Q{{$quotation['invoice_name']}}</a>
                   </td>
-                  <td>{{$quotation['created']}}</td>
+                  <td>{{$quotation['quotation_date_display'] ?? $quotation['created']}}</td>
                   <td>{{$quotation['total']}}</td>
                   <td>{{$quotation['currency']}}</td>
                   <td>

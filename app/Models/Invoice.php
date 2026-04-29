@@ -9,6 +9,36 @@ class Invoice extends Model
      protected $table = 'imagefootage_performa_invoices';
 	 protected $primaryKey = 'id';
 	// protected $fillable = ['user_id','txn_id','plan_id','invoice','download_plan_id','download_plan_title','tax','tax_selected','coupon_code','coupon_type','coupon_value','coupon_discount','order_total','order_date','order_status','order_title','order_cancel_status','order_type','order_email','ip','payment_mode','cc_number','cc_expiry_date','job_number','po_detail','po_image','order_comments','bill_firstname','bill_lastname','bill_address1','bill_address2','bill_city','bill_state','bill_zip','bill_country','bill_phone','created','modified','invoice_type','expiry_invoices','deletion_date','invoice_closed'];
+
+    public static function resolveQuotationDateDisplayValue($created, $modified = null, $invoiceType = null)
+    {
+        $created = trim((string) ($created ?? ''));
+        $modified = trim((string) ($modified ?? ''));
+
+        if ($created === '') {
+            return $modified;
+        }
+
+        $isCustomQuotation = (string) ($invoiceType ?? '') === '3';
+        $createdHasDateOnlyFormat = preg_match('/^\d{4}-\d{2}-\d{2}$/', $created) === 1;
+        $createdHasMidnightTime = substr($created, -8) === '00:00:00';
+
+        if ($isCustomQuotation && $modified !== '' && ($createdHasDateOnlyFormat || $createdHasMidnightTime)) {
+            return $modified;
+        }
+
+        return $created;
+    }
+
+    public function getQuotationDateDisplayAttribute()
+    {
+        return self::resolveQuotationDateDisplayValue(
+            $this->attributes['created'] ?? null,
+            $this->attributes['modified'] ?? null,
+            $this->attributes['invoice_type'] ?? null
+        );
+    }
+
     public function items(){
         return $this->hasMany(InvoiceItem::class,'invoice_id', 'id');
     }

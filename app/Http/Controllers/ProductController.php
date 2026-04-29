@@ -1669,25 +1669,134 @@ ini_set('max_execution_time', '0'); // for infinite time of execution
   //  }
 
 	public function getproduct($product_id){
-		$type  = $_REQUEST['type'] ;
-		try{
-			/* $imageMedia = new ImageApi();
-			$product_details = $imageMedia->get_media_info($product_id);
-			$prices = $imageMedia->getPriceFromList($product_details); */
-			
-			$imageMedia = new Pond5ImageApi();
-			$pond5_product_details = $imageMedia->getDetail($product_id);
-			
-			$prices = array();
-			if ($pond5_product_details && isset($pond5_product_details['id'])) {
-				$prices[0]['api_product_id'] = $pond5_product_details['id'];
-				$prices[0]['thumbnail_image'] = $pond5_product_details['thumbnail'];
-			} else {
+		$type  = $_REQUEST['type'] ?? '';
+
+		try {
+			if ($type == 'Image') {
+				$products = DB::table('imagefootage_products')
+					->select(
+						DB::raw('product_id as product_code'),
+						DB::raw('product_title as name'),
+						DB::raw('product_thumbnail as thumbnail_image'),
+						DB::raw('product_vertical as type'),
+						DB::raw('product_price_small as small_size'),
+						DB::raw('product_price_medium as medium_size'),
+						DB::raw('product_price_large as large_size'),
+						DB::raw('product_price_extralarge as x_large_size'),
+						'product_web',
+						'api_product_id',
+						DB::raw('COALESCE(api_product_id, product_id) as id')
+					)
+					->where(function ($query) use ($product_id) {
+						$query->where('product_id', $product_id)
+							->orWhere('api_product_id', $product_id);
+					});
+
+				$crm_products = DB::table('imagefootage_crm_products')
+					->select(
+						'product_code',
+						'name',
+						'thumbnail_image',
+						'type',
+						'small_size',
+						'medium_size',
+						'large_size',
+						'x_large_size',
+						'product_web',
+						'api_product_id',
+						DB::raw('COALESCE(api_product_id, product_code) as id')
+					)
+					->where(function ($query) use ($product_id) {
+						$query->where('product_code', $product_id)
+							->orWhere('api_product_id', $product_id);
+					})
+					->union($products)
+					->get()
+					->toArray();
+
+				if (count($crm_products) > 0) {
+					$product = (array) $crm_products[0];
+					$product['type'] = !empty($product['type']) ? $product['type'] : 'Royalty Free';
+					$product['id'] = !empty($product['id']) ? $product['id'] : ($product['api_product_id'] ?? $product['product_code']);
+
+					if (($product['product_web'] ?? '') == '2' && !empty($product['api_product_id'])) {
+						try {
+							$imageMedia = new ImageApi();
+							$product_details = $imageMedia->get_media_info($product['api_product_id']);
+							$prices = $imageMedia->getPriceFromList($product_details, $product['product_code']);
+
+							if (!empty($prices)) {
+								$prices[0]['id'] = $prices[0]['id'] ?? ($prices[0]['api_product_id'] ?? $product['product_code']);
+								return response()->json($prices);
+							}
+						} catch (\Exception $e) {
+							// Fall back to the local DB row if remote price refresh fails.
+						}
+					}
+
+					return response()->json([$product]);
+				}
+
+				try {
+					$imageMedia = new ImageApi();
+					$product_details = $imageMedia->get_media_info($product_id);
+					$prices = $imageMedia->getPriceFromList($product_details);
+					if (!empty($prices)) {
+						$prices[0]['id'] = $prices[0]['id'] ?? ($prices[0]['api_product_id'] ?? $product_id);
+						return response()->json($prices);
+					}
+				} catch (\Exception $e) {
+					// Continue to the Pond5 fallback for ids outside the legacy image API.
+				}
+
+				$pond5ImageApi = new Pond5ImageApi();
+				$pond5_product_details = $pond5ImageApi->getDetail($product_id);
+				if ($pond5_product_details && isset($pond5_product_details['id'])) {
+					return response()->json([[
+						'product_code' => $product_id,
+						'name' => $pond5_product_details['title'] ?? $product_id,
+						'thumbnail_image' => $pond5_product_details['thumbnail'] ?? '',
+						'type' => 'Royalty Free',
+						'small_size' => '',
+						'medium_size' => '',
+						'large_size' => '',
+						'x_large_size' => '',
+						'product_web' => 'pond5',
+						'api_product_id' => $pond5_product_details['id'],
+						'id' => $pond5_product_details['id'],
+					]]);
+				}
+
 				return response("image not found", 410);
 			}
-			return json_encode($prices);
+
+			$footages = DB::table('imagefootage_products')
+				->select('api_product_id')
+				->where('product_id', $product_id)
+				->get();
+
+			if (count($footages) > 0 && !empty($footages[0]->api_product_id)) {
+				$product_id = $footages[0]->api_product_id;
+			}
+
+			$footageMedia = new FootageApi();
+			$product_details_data = $footageMedia->getclipdata($product_id);
+
+			if (!isset($product_details_data['id'])) {
+				return response("image not found", 410);
+			}
+
+			$pond_id_withprefix = $product_details_data['id'];
+			if (strlen($product_details_data['id']) < 9) {
+				$add_zero = 9 - strlen($product_details_data['id']);
+				for ($i = 0; $i < $add_zero; $i++) {
+					$pond_id_withprefix = "0" . $pond_id_withprefix;
+				}
+			}
+
+			$product_details = array($product_details_data, $pond_id_withprefix . '_main_xl.mp4', $pond_id_withprefix . '_iconl.jpeg');
+			return response()->json($product_details);
 		} catch(\Exception $e){
-			return json_encode($e->getMessage());
 			return response("image not found", 410);
 		}
   	}

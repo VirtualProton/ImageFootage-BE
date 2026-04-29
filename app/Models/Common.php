@@ -499,6 +499,68 @@ class Common extends Model
         return $baseUrl . '/' . ltrim((string) $path, '/');
     }
 
+    private function getInvoiceSubtotalFromRequest(array $data): float
+    {
+        if (!empty($data['products']['product']) && is_array($data['products']['product'])) {
+            $subtotal = 0.0;
+            foreach ($data['products']['product'] as $product) {
+                $subtotal += (float) ($product['price'] ?? 0);
+            }
+
+            return round($subtotal, 2);
+        }
+
+        if (isset($data['subscription_subtotal'])) {
+            return round((float) $data['subscription_subtotal'], 2);
+        }
+
+        $total = (float) ($data['total'] ?? 0);
+        $tax = (float) ($data['tax'] ?? 0);
+
+        return round(max($total - $tax, 0), 2);
+    }
+
+    private function calculatePromoDiscountAmount(?PromoCode $promoCode, float $subtotal): float
+    {
+        if (!$promoCode || $subtotal <= 0) {
+            return 0.0;
+        }
+
+        if ($promoCode->type === 'flat') {
+            $discount = (float) $promoCode->discount;
+        } else {
+            $discount = $subtotal * ((float) $promoCode->discount / 100);
+        }
+
+        return round(min(max($discount, 0), $subtotal), 2);
+    }
+
+    private function shouldApplyInvoiceGst(array $data): bool
+    {
+        if (array_key_exists('GSTS', $data)) {
+            return (bool) $data['GSTS'];
+        }
+
+        if (array_key_exists('GST', $data)) {
+            return (bool) $data['GST'];
+        }
+
+        return (float) ($data['tax'] ?? 0) > 0;
+    }
+
+    private function recalculateInvoiceAmounts(array &$data, float $subtotal, float $discount): void
+    {
+        $discountedSubtotal = max($subtotal - $discount, 0);
+        $tax = 0.0;
+
+        if ($this->shouldApplyInvoiceGst($data)) {
+            $tax = $discountedSubtotal * ((float) config('constants.GST_VALUE') / 100);
+        }
+
+        $data['tax'] = round($tax, 2);
+        $data['total'] = round($discountedSubtotal + $data['tax'], 2);
+    }
+
 
     public function save_proforma($data)
     {
@@ -511,15 +573,12 @@ class Common extends Model
         ini_set('max_execution_time', 0);
         $selected_taxes = array();
 
-        if (isset($data['GSTS']) && $data['GSTS'] == 1) {
-            $selected_taxes['GST'] = '1';
-        } else {
-            $selected_taxes['GST'] = '0';
-        }
+        $selected_taxes['GST'] = $this->shouldApplyInvoiceGst($data) ? '1' : '0';
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
         $currency = $data['products']['product'][0]['currency'] ?? 'INR';
         $currencySymbolHtml = strtoupper((string) $currency) === 'USD' ? '$' : '&#8377;';
+        $subtotal = $this->getInvoiceSubtotalFromRequest($data);
 
         // Update Total applied code in promo code
         $discount = 0;
@@ -528,11 +587,8 @@ class Common extends Model
             if ($promoCode) {
                 $currentUsed                   = $promoCode->total_applied_code;
                 $promoCode->total_applied_code = $currentUsed + 1;
-                if ($promoCode->type == 'flat') {
-                    $discount = $promoCode->discount;
-                } else {
-                    $discount = $data['total'] * ($promoCode->discount / 100);
-                }
+                $discount = $this->calculatePromoDiscountAmount($promoCode, $subtotal);
+                $this->recalculateInvoiceAmounts($data, $subtotal, $discount);
 
                 $promoCode->save();
             }
@@ -544,7 +600,7 @@ class Common extends Model
             'email_id'        => $data['email'],
             'flag'            => $data['flag'],
             'invoice_name'    => $this->random_numbers(),
-            'created'         => date('Y-m-d'),
+            'created'         => date('Y-m-d H:i:s'),
             'modified'        => date('Y-m-d H:i:s'),
             'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
@@ -663,7 +719,7 @@ class Common extends Model
             }
             $dataForEmail[0]['template_image'] = $this->pdfImagePath('images/music-img.png');
             $dataForEmail[0]['music_image'] = $this->pdfImagePath('images/music-img.png');
-            $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+            $dataForEmail[0]['signature']     = $this->pdfImageBase64('images/signature.png');
             $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
             $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
             $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
@@ -1013,7 +1069,7 @@ class Common extends Model
             // For form2 quotation use other logo
             $dataForEmail[0]['company_logo'] = $this->pdfImageBase64('images/conceptual_logo.png');
         }
-        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+        $dataForEmail[0]['signature']     = $this->pdfImageBase64('images/signature.png');
         $dataForEmail[0]['placeholder_music'] = $this->pdfImageBase64('images/placeholder-music.png');
         $dataForEmail[0]['placeholder_video'] = $this->pdfImageBase64('images/placeholder-video.png');
         $dataForEmail[0]['placeholder_image'] = $this->pdfImageBase64('images/placeholder-image.png');
@@ -1280,7 +1336,8 @@ class Common extends Model
 
         $s3Client = new S3Client([
             'region' => 'us-east-2',
-            'version' => '2006-03-01'
+            'version' => '2006-03-01',
+            'suppress_php_deprecation_warning' => true,
         ]);
         $path = 'invoice/' . $fileName;
         $source = fopen($pdfPath, 'rb');
@@ -1381,7 +1438,7 @@ class Common extends Model
         $currency = 'INR';
         //test commit
         $dataForEmail[0]['company_logo']                    = $this->pdfImageBase64('images/new-design-logo.png');
-        $dataForEmail[0]['signature']                       = $this->pdfImagePath('images/signature.png');
+        $dataForEmail[0]['signature']                       = $this->pdfImageBase64('images/signature.png');
         $front_end_url_name                                 = config('app.front_end_url');
         $frontend_name                                      = explode('//', rtrim($front_end_url_name, '/#/'));
         $dataForEmail[0]["frontend_name"]                   = $frontend_name[1] ?? '';
@@ -1552,7 +1609,8 @@ class Common extends Model
 
         $s3Client = new S3Client([
             'region' => 'us-east-2',
-            'version' => '2006-03-01'
+            'version' => '2006-03-01',
+            'suppress_php_deprecation_warning' => true,
         ]);
         $path = 'invoice/' . $fileName;
         $pdfDirectory = storage_path('app/public/pdf');
@@ -1621,8 +1679,21 @@ class Common extends Model
 
     public function change_invoice_status($quotation_id, $status)
     {
+        $updateData = ['status' => $status];
+
+        if ((int) $status === 1) {
+            $updateData['payment_date'] = date('Y-m-d H:i:s');
+            $updateData['payment_status'] = 'Transction Success';
+        } elseif ((int) $status === 0) {
+            $updateData['payment_date'] = null;
+            $updateData['payment_status'] = 'Pending';
+        } elseif ((int) $status === 3) {
+            $updateData['payment_date'] = null;
+            $updateData['payment_status'] = 'Failed';
+        }
+
         $update = Invoice::where('id', '=', $quotation_id)
-            ->update(['status' => $status]);
+            ->update($updateData);
         if ((int) $status === 3) {
             $this->cancelRazorpayPaymentLinkForInvoice((int) $quotation_id, 'quotation_status_changed');
         }
@@ -1649,11 +1720,7 @@ class Common extends Model
 
         $selected_taxes = array();
 
-        if (isset($data['GSTS']) && $data['GSTS'] == 1) {
-            $selected_taxes['GST'] = '1';
-        } else {
-            $selected_taxes['GST'] = '0';
-        }
+        $selected_taxes['GST'] = $this->shouldApplyInvoiceGst($data) ? '1' : '0';
 
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
@@ -1693,6 +1760,7 @@ class Common extends Model
         } else if ($packge->package_expiry_yearly == 1) {
             $package_name = 'Annual';
         }
+        $subtotal = $this->getInvoiceSubtotalFromRequest($data);
         $discount = 0;
         // Update Total applied code in promo code
         if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
@@ -1700,11 +1768,8 @@ class Common extends Model
             if ($promoCode) {
                 $currentUsed                   = $promoCode->total_applied_code;
                 $promoCode->total_applied_code = $currentUsed + 1;
-                if ($promoCode->type == 'flat') {
-                    $discount = $promoCode->discount;
-                } else {
-                    $discount = $data['total'] * ($promoCode->discount / 100);
-                }
+                $discount = $this->calculatePromoDiscountAmount($promoCode, $subtotal);
+                $this->recalculateInvoiceAmounts($data, $subtotal, $discount);
 
                 $promoCode->save();
             }
@@ -1718,7 +1783,7 @@ class Common extends Model
             'modified'        => date('Y-m-d H:i:s'),
             'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
-            'tax_selected'    => "GST",
+            'tax_selected'    => $this->shouldApplyInvoiceGst($data) ? "GST" : "",
             'total'           => $data['total'],
             'status'          => '0',
             'proforma_type'   => '1',
@@ -1803,7 +1868,7 @@ class Common extends Model
         $amount_in_words                  =  $this->convert_number_to_words($dataForEmail[0]['total']);
         $package_price_in_words           =  $this->convert_number_to_words($dataForEmail[0]['package_price']);
         $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
-        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+        $dataForEmail[0]['signature']     = $this->pdfImageBase64('images/signature.png');
         $dataForEmail[0]['description']   = 'Subscription Plan - Images - ' . $package_name . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
@@ -1927,11 +1992,7 @@ class Common extends Model
         ini_set('max_execution_time', 0);
         $selected_taxes = array();
 
-        if (isset($data['GSTS']) && $data['GSTS'] == 1) {
-            $selected_taxes['GST'] = '1';
-        } else {
-            $selected_taxes['GST'] = '0';
-        }
+        $selected_taxes['GST'] = $this->shouldApplyInvoiceGst($data) ? '1' : '0';
 
         $today = Carbon::now();
         $cancelled_on = $today->addDays($data['expiry_date'])->format('Y-m-d H:i:s');
@@ -1963,17 +2024,15 @@ class Common extends Model
         $packge->save();
         $discount = 0;
         $currency = $data['currency'] ?? ($data['plan_id']['currency'] ?? 'INR');
+        $subtotal = $this->getInvoiceSubtotalFromRequest($data);
         // Update Total applied code in promo code
         if (!empty($data['promo_code_id']) || !empty($data['promoCode'])) {
             $promoCode = !empty($data['promo_code_id']) ? PromoCode::find($data['promo_code_id']) : PromoCode::where('name', $data['promoCode'])->first();
             if ($promoCode) {
                 $currentUsed                   = $promoCode->total_applied_code;
                 $promoCode->total_applied_code = $currentUsed + 1;
-                if ($promoCode->type == 'flat') {
-                    $discount = $promoCode->discount;
-                } else {
-                    $discount = $data['total'] * ($promoCode->discount / 100);
-                }
+                $discount = $this->calculatePromoDiscountAmount($promoCode, $subtotal);
+                $this->recalculateInvoiceAmounts($data, $subtotal, $discount);
 
                 $promoCode->save();
             }
@@ -1987,7 +2046,7 @@ class Common extends Model
             'modified'        => date('Y-m-d H:i:s'),
             'promo_code'      => $data['promoCode'] ?? '',
             'tax'             => $data['tax'] ?? '',
-            'tax_selected'    => "GST",
+            'tax_selected'    => $this->shouldApplyInvoiceGst($data) ? "GST" : "",
             'total'           => $data['total'],
             'status'          => '0',
             'proforma_type'   => '1',
@@ -2074,7 +2133,7 @@ class Common extends Model
         $data["invoice"]                  = $dataForEmail[0]['invoice_name'];
         $data["name"]                     = $dataForEmail[0]['first_name'];
         $dataForEmail[0]['company_logo']  = $this->pdfImageBase64('images/new-design-logo.png');
-        $dataForEmail[0]['signature']     = $this->pdfImagePath('images/signature.png');
+        $dataForEmail[0]['signature']     = $this->pdfImageBase64('images/signature.png');
         $dataForEmail[0]['description']   = 'Download Plan - ' . $dataForEmail[0]['package_type'] . ' - ' . $dataForEmail[0]['package_name'] . ' Pack';
         $front_end_url_name               = config('app.front_end_url');
         $frontend_name                    = explode('//', rtrim($front_end_url_name, '/#/'));
@@ -2146,7 +2205,8 @@ class Common extends Model
 
             $s3Client = new S3Client([
                 'region' => 'us-east-2',
-                'version' => '2006-03-01'
+                'version' => '2006-03-01',
+                'suppress_php_deprecation_warning' => true,
             ]);
 
             $path = 'quotation/' . $fileName;

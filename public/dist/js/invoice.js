@@ -47,6 +47,71 @@ function sanitizeCustomProductPrices(products) {
     });
 }
 
+function parseAmountNumber(value) {
+    var amount = parseFloat(value);
+    return isNaN(amount) ? 0 : amount;
+}
+
+function roundAmountValue(value) {
+    return Math.round((parseAmountNumber(value) + Number.EPSILON) * 100) / 100;
+}
+
+function createPromoState(promo) {
+    if (!promo || !promo.type) {
+        return { type: "", discount: 0 };
+    }
+
+    return {
+        type: String(promo.type).toLowerCase(),
+        discount: parseAmountNumber(promo.discount),
+    };
+}
+
+function hasPromoState(promo) {
+    return !!(promo && promo.type);
+}
+
+function getProductsSubtotal(products) {
+    var subtotal = 0;
+    angular.forEach(products || [], function (product) {
+        subtotal += parseAmountNumber(product && product.price);
+    });
+    return roundAmountValue(subtotal);
+}
+
+function calculatePromoAdjustedTotals(subtotal, shouldApplyTax, promo, taxRate) {
+    var normalizedSubtotal = roundAmountValue(subtotal);
+    var normalizedPromo = createPromoState(promo);
+    var discountAmount = 0;
+
+    if (normalizedPromo.type === "flat") {
+        discountAmount = normalizedPromo.discount;
+    } else if (normalizedPromo.type === "percentage") {
+        discountAmount =
+            normalizedSubtotal * (normalizedPromo.discount / 100);
+    }
+
+    discountAmount = roundAmountValue(
+        Math.min(Math.max(discountAmount, 0), normalizedSubtotal)
+    );
+
+    var discountedSubtotal = roundAmountValue(
+        Math.max(normalizedSubtotal - discountAmount, 0)
+    );
+    var taxAmount = shouldApplyTax
+        ? roundAmountValue((discountedSubtotal * parseAmountNumber(taxRate)) / 100)
+        : 0;
+    var totalAmount = roundAmountValue(discountedSubtotal + taxAmount);
+
+    return {
+        subtotal: normalizedSubtotal,
+        discount: discountAmount,
+        discountedSubtotal: discountedSubtotal,
+        tax: taxAmount,
+        total: totalAmount,
+    };
+}
+
 app.directive("twoDecimalAmount", function () {
     return {
         require: "ngModel",
@@ -140,6 +205,7 @@ app.controller(
                 footage: "",
                 type: "Image",
                 licence_type: "",
+                extra_details: "",
                 currency: $scope.selected_currency || "INR",
             };
         }
@@ -158,6 +224,109 @@ app.controller(
         };
         $scope.normalizeCustomProductPrices = function () {
             sanitizeCustomProductPrices($scope.quotation.product);
+        };
+        $scope.discount_amount_display = "";
+        $scope.subsc_discount_amount_display = "";
+        $scope.download_discount_amount_display = "";
+        $scope.customPromo = createPromoState();
+        $scope.subscriptionPromo = createPromoState();
+        $scope.downloadPromo = createPromoState();
+
+        function recalculateCustomTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                getProductsSubtotal($scope.quotation.product),
+                !!$scope.GST,
+                $scope.customPromo,
+                gst_value
+            );
+
+            $scope.tax = calculation.tax;
+            $scope.total = calculation.total.toFixed(2);
+            $scope.discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateSubscriptionTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.subscriptionprice,
+                !!$scope.GSTS,
+                $scope.subscriptionPromo,
+                gst_value
+            );
+
+            $scope.subsc_tax = calculation.tax;
+            $scope.subsc_total = calculation.total.toFixed(2);
+            $scope.subsc_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateDownloadTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.downloadprice,
+                !!$scope.GSTD,
+                $scope.downloadPromo,
+                gst_value
+            );
+
+            $scope.taxdownload = calculation.tax;
+            $scope.total_download = calculation.total.toFixed(2);
+            $scope.download_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        $scope.clearCustomPromo = function () {
+            $scope.customPromo = createPromoState();
+            recalculateCustomTotals();
+        };
+
+        $scope.clearSubscriptionPromo = function () {
+            $scope.subscriptionPromo = createPromoState();
+            recalculateSubscriptionTotals();
+        };
+
+        $scope.clearDownloadPromo = function () {
+            $scope.downloadPromo = createPromoState();
+            recalculateDownloadTotals();
+        };
+        $scope.applyCustomPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GST && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            $scope.normalizeCustomProductPrices();
+            recalculateCustomTotals();
+        };
+        $scope.applySubscriptionPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.subscriptionPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateSubscriptionTotals();
+        };
+        $scope.applyDownloadPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.downloadPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateDownloadTotals();
         };
         $scope.quotation.product = [createEmptyCustomProduct()];
         $scope.quotation_type_var = "custom";
@@ -260,7 +429,7 @@ app.controller(
                     function (error) {
                         $scope.quotation.product[index].image = ''; // Refresh previous display image
                         $scope.quotation.product[index].value = null;
-                        $("#product_1").val("");
+                        $("#product_" + productIndexId).val("");
                         alert("image not found");
                         $("#loading").hide();
                     }
@@ -331,76 +500,33 @@ app.controller(
             }
         };
         $scope.getTheTotal = function () {
+            if ($scope.quotation_type_var == "subscription") {
+                recalculateSubscriptionTotals();
+                return;
+            }
+
+            if ($scope.quotation_type_var == "download") {
+                recalculateDownloadTotals();
+                return;
+            }
+
             $scope.normalizeCustomProductPrices();
-            var subtotal = $scope.quotation.product;
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            if ($('input[name="tax_checkbox[]"]:checked').length > 0) {
-                total = (subtotalvalue * gst_value) / 100;
-            }
-            subtotal = Number(subtotalvalue);
-            $scope.total = (subtotal + total).toFixed(2);;
-            $scope.tax = total;
+            recalculateCustomTotals();
         };
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId='') {
-            $scope.normalizeCustomProductPrices();
-            var subtotal = $scope.quotation.product;
-            //console.log(subtotal);
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
             }
-            //var intialtotal = $scope.tax;
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
 
-            if (tax_percent == true) {
+            $scope.GST = !!tax_percent;
+            if ($scope.GST) {
                 if(countryId !== 101){
                     alert('This user is belongs to other country are you sure want to apply tax?')
                 }
-                //total = intialtotal + total;
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
-            }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.tax = total;
-            $scope.total = (total + subtotal).toFixed(2);;
-
-            if (promo.type == "flat") {
-                $scope.total = (total + subtotal - promo.discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
             }
 
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = (total + subtotal - discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
+            $scope.normalizeCustomProductPrices();
+            recalculateCustomTotals();
         };
 
         $scope.prod_type = function (type) {
@@ -489,155 +615,52 @@ app.controller(
 
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
-                $scope.total_download = selectedPlanData["package_price"];
                 $scope.selected_currency = selectedPlanData["currency"];
+                recalculateDownloadTotals();
             } else {
                 $scope.subscriptionprice = selectedPlanData["package_price"];
-                $scope.subsc_total = selectedPlanData["package_price"];
+                recalculateSubscriptionTotals();
             }
         };
 
         $scope.checkDownloadtax = function (tax_percent, type,countryId) {
-            var subtotalvalue = $scope.downloadprice;
-
-            // var intialtotal = $scope.taxdownload;
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true) {
-                //total = intialtotal + total;
+            $scope.GSTD = !!tax_percent;
+            if ($scope.GSTD) {
                 if(countryId !== 101){
                     alert('This user is belongs to other country are you sure want to apply tax?')
                 }
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
             }
-
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.taxdownload = total;
-            $scope.total_download = (total + subtotal).toFixed(2);
+            recalculateDownloadTotals();
         };
 
         $scope.checksubsctax = function (tax_percent, type,countryId) {
-            // console.log(type);
-            //  console.log(tax_percent);
-            var subtotalvalue = $scope.subscriptionprice;
-
-            //var intialtotal = $scope.subscriptionprice;
-
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true) {
-                //total = intialtotal + total;
+            $scope.GSTS = !!tax_percent;
+            if ($scope.GSTS) {
                 if(countryId !== 101){
                     alert('This user is belongs to other country are you sure want to apply tax?')
                 }
-
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
             }
-            //  console.log(total);
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.subsc_tax = total;
-            $scope.subsc_total = total + subtotal;
+            recalculateSubscriptionTotals();
         };
 
         $scope.checkTheSubtax = function (tax_percent, type, promo = {},countryId) {
-            var subtotalvalue = $scope.subscriptionprice;
-            if ($scope.subsc_tax > 0) {
-
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            if (hasPromoState(promo)) {
+                $scope.subscriptionPromo = createPromoState(promo);
             }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.subsc_total = total + subtotal;
-
-            if (promo.type == "flat") {
-                $scope.subsc_total = total + subtotal - promo.discount;
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
+            if ($scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.subsc_total = total + subtotal - discount;
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
+            recalculateSubscriptionTotals();
         };
 
         $scope.checkTheDistax = function (tax_percent, type, promo = {},countryId = 0) {
-            var subtotalvalue = $scope.downloadprice;
-            if ($scope.taxdownload > 0) {
-                if (type == "GST") {
-                    if(countryId !== 101){
-                        alert('This user is belongs to other country are you sure want to apply tax?')
-                    }
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            if (hasPromoState(promo)) {
+                $scope.downloadPromo = createPromoState(promo);
             }
-
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.taxdownload = total;
-
-            if (promo.type == "flat") {
-                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
+            if ($scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = (total + subtotal - discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
+            recalculateDownloadTotals();
         };
 
         $scope.submitQuotation = function () {
@@ -845,7 +868,7 @@ app.controller(
                 expiry_date: resolvedCustomExpiry,
                 tax: $scope.tax,
                 total: $scope.total,
-                GST: $scope.SGST,
+                GST: $scope.GST,
                 email: $("#email_id").val(),
                 flag: "0",
                 promo_code_id: $("#promo_code_id").val(),
@@ -1312,6 +1335,7 @@ app.controller(
                 licence_type: "",
                 footage: "",
                 type: "Image",
+                extra_details: "",
                 currency: $scope.selected_currency || "INR",
             };
         }
@@ -1331,6 +1355,109 @@ app.controller(
         $scope.normalizeCustomProductPrices = function () {
             sanitizeCustomProductPrices($scope.quotation.product);
         };
+        $scope.discount_amount_display = "";
+        $scope.subsc_discount_amount_display = "";
+        $scope.download_discount_amount_display = "";
+        $scope.customPromo = createPromoState();
+        $scope.subscriptionPromo = createPromoState();
+        $scope.downloadPromo = createPromoState();
+
+        function recalculateEditCustomTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                getProductsSubtotal($scope.quotation.product),
+                !!$scope.is_gst_applied,
+                $scope.customPromo,
+                gst_value
+            );
+
+            $scope.tax = calculation.tax;
+            $scope.total = calculation.total.toFixed(2);
+            $scope.discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateEditSubscriptionTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.subscriptionprice,
+                !!$scope.GSTS,
+                $scope.subscriptionPromo,
+                gst_value
+            );
+
+            $scope.subsc_tax = calculation.tax;
+            $scope.subsc_total = calculation.total.toFixed(2);
+            $scope.subsc_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateEditDownloadTotals() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.downloadprice,
+                !!$scope.GSTD,
+                $scope.downloadPromo,
+                gst_value
+            );
+
+            $scope.taxdownload = calculation.tax;
+            $scope.total_download = calculation.total.toFixed(2);
+            $scope.download_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        $scope.clearCustomPromo = function () {
+            $scope.customPromo = createPromoState();
+            recalculateEditCustomTotals();
+        };
+
+        $scope.clearSubscriptionPromo = function () {
+            $scope.subscriptionPromo = createPromoState();
+            recalculateEditSubscriptionTotals();
+        };
+
+        $scope.clearDownloadPromo = function () {
+            $scope.downloadPromo = createPromoState();
+            recalculateEditDownloadTotals();
+        };
+        $scope.applyCustomPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.is_gst_applied && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            $scope.normalizeCustomProductPrices();
+            recalculateEditCustomTotals();
+        };
+        $scope.applySubscriptionPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.subscriptionPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateEditSubscriptionTotals();
+        };
+        $scope.applyDownloadPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.downloadPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateEditDownloadTotals();
+        };
         $("#loading").show();
         $http({
             method: "POST",
@@ -1348,9 +1475,20 @@ app.controller(
                 $scope.is_gst_applied = $scope.tax > 0 ? true : false;
                 $scope.total = response.total;
                 $scope.total_saved = response.total;
+                $("#promo_code_id").val(response.promo_code_id || "");
                 $scope.po = response.job_number;
                 $scope.poDate = response.po_detail;
                 $scope.email = response.email_id;
+                var existingPromo =
+                    parseAmountNumber(response.discount_amount) > 0
+                        ? {
+                              type: "flat",
+                              discount: response.discount_amount,
+                          }
+                        : {};
+                var existingDiscountAmount = parseAmountNumber(
+                    response.discount_amount
+                );
                 var normalizedExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
                 $scope.expiry_time = normalizedExpiry.mode;
                 $scope.custom_expiry_time = normalizedExpiry.custom;
@@ -1362,23 +1500,40 @@ app.controller(
                     var normalizedSubscriptionExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
                     $scope.subsc_expiry_time = normalizedSubscriptionExpiry.mode;
                     $scope.custom_subsc_expiry_time = normalizedSubscriptionExpiry.custom;
-                    $scope.subscriptionprice = response.total - response.tax;
+                    $scope.subscriptionprice =
+                        response.total - response.tax + existingDiscountAmount;
                     $scope.subsc_tax = response.tax;
                     $scope.subsc_total = response.total;
                     $scope.GSTS = $scope.subsc_tax > 0;
+                    $scope.subscriptionPromo = createPromoState(existingPromo);
+                    $scope.subsc_discount_amount_display =
+                        existingDiscountAmount > 0
+                            ? existingDiscountAmount.toFixed(2)
+                            : "";
                 } else if (response.invoice_type == 2) {
                     // download
                     var normalizedDownloadExpiry = normalizeExpiryOption(response.expiry_invoices, "30");
                     $scope.download_expiry = normalizedDownloadExpiry.mode;
                     $scope.custom_download_expiry = normalizedDownloadExpiry.custom;
-                    $scope.downloadprice = response.total - response.tax;
+                    $scope.downloadprice =
+                        response.total - response.tax + existingDiscountAmount;
                     $scope.taxdownload = response.tax;
                     $scope.total_download = response.total;
-                    $scope.GSTS = $scope.taxdownload > 0;
+                    $scope.GSTD = $scope.taxdownload > 0;
+                    $scope.downloadPromo = createPromoState(existingPromo);
+                    $scope.download_discount_amount_display =
+                        existingDiscountAmount > 0
+                            ? existingDiscountAmount.toFixed(2)
+                            : "";
                     $scope.selected_currency = response.currency || "INR";
                 } else {
                     // custom
                     $scope.end_client = response.end_client;
+                    $scope.customPromo = createPromoState(existingPromo);
+                    $scope.discount_amount_display =
+                        existingDiscountAmount > 0
+                            ? existingDiscountAmount.toFixed(2)
+                            : "";
                     $scope.selected_currency = response.currency || "INR";
                 }
                 var tax_selected = response.tax_selected; //angular.fromJson(response.tax_selected);
@@ -1427,19 +1582,18 @@ app.controller(
         );
 
         $scope.getTheTotal = function () {
+            if ($scope.quotation_type == 1) {
+                recalculateEditSubscriptionTotals();
+                return;
+            }
+
+            if ($scope.quotation_type == 2) {
+                recalculateEditDownloadTotals();
+                return;
+            }
+
             $scope.normalizeCustomProductPrices();
-            var subtotal = $scope.quotation.product;
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            if ($('input[name="tax_checkbox[]"]:checked').length > 0) {
-                total = (subtotalvalue * gst_value) / 100;
-            }
-            subtotal = Number(subtotalvalue);
-            $scope.total = (subtotal + total).toFixed(2);
-            $scope.tax = total;
+            recalculateEditCustomTotals();
         };
 
         $scope.edit_quotation_type_set = function (type) {
@@ -1505,13 +1659,14 @@ app.controller(
                 $scope.subsc_tax = ""; // Reset tax
                 $scope.GSTS = false; // Reset gst checkbox
                 $scope.taxdownload = 0;
+                $scope.GSTD = false;
                 if (type == "download") {
                     $scope.downloadprice = plan[0].package_price;
-                    $scope.total_download = plan[0].package_price;
                     $scope.selected_currency = plan[0].currency;
+                    recalculateEditDownloadTotals();
                 } else {
                     $scope.subscriptionprice = plan[0].package_price;
-                    $scope.subsc_total = plan[0].package_price;
+                    recalculateEditSubscriptionTotals();
                 }
             }
         };
@@ -1648,195 +1803,61 @@ app.controller(
         };
         $scope.calculatePrice = function () {
             $scope.normalizeCustomProductPrices();
-            var subtotal = $scope.quotation.product;
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            var intialtotal = $scope.tax;
-
-            if ($scope["SGST"] == 1) {
-                total = total + 6;
-            } else if ($scope["CGST"] == 1) {
-                total = total + 6;
-            } else if ($scope["IGST"] == 1) {
-                total = total + 12;
-            } else if ($scope["IGSTT"] == 1) {
-                total = total + 18;
-            }
-            var intialtotal = (subtotalvalue * total) / 100;
-            subtotal = Number(subtotalvalue);
-            intialtotal = Number(intialtotal);
-            $scope.tax = intialtotal;
-            $scope.total = (intialtotal + subtotal).toFixed(2);
+            recalculateEditCustomTotals();
         };
 
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId) {
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
+            }
+
+            var shouldApplyTax =
+                typeof tax_percent === "boolean"
+                    ? tax_percent
+                    : !!$scope.is_gst_applied;
+            $scope.is_gst_applied = shouldApplyTax;
+            if ($scope.is_gst_applied && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
+            }
+
             $scope.normalizeCustomProductPrices();
-            if ($scope.quotation.product.length > 0) {
-                // when multiple product (images) data available
-                var subtotal = $scope.quotation.product;
-                //console.log(subtotal);
-                var subtotalvalue = 0;
-                var total = 0;
-                for (var j = 0; j < subtotal.length; j++) {
-                    subtotalvalue += Number(subtotal[j].price);
-                }
-            } else {
-                // when no data available
-                var subtotalvalue = $scope.total_saved;
-            }
-            //var intialtotal = $scope.tax;
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true || $scope.is_gst_applied) {
-                // when gst applied
-                //total = intialtotal + total;
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
-            }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.tax = total;
-            $scope.total = (total + subtotal).toFixed(2);
-
-            if (promo.type == "flat") {
-                $scope.total = (total + subtotal - promo.discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
-
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = (total + subtotal - discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
+            recalculateEditCustomTotals();
         };
 
         $scope.checksubsctax = function (tax_percent, type,countryId) {
-            var subtotalvalue = $scope.subscriptionprice;
-            if (tax_percent == true) {
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            $scope.GSTS = !!tax_percent;
+            if ($scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.subsc_tax = total;
-            $scope.subsc_total = total + subtotal;
+            recalculateEditSubscriptionTotals();
         };
 
         $scope.checkTheSubtax = function (tax_percent, type, promo = {},countryId = 0) {
-            var subtotalvalue = $scope.subscriptionprice;
-            if ($scope.subsc_tax > 0) {
-                if (type == "GST") {
-                    if(countryId !== 101){
-                        alert('This user is belongs to other country are you sure want to apply tax?')
-                    }
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            if (hasPromoState(promo)) {
+                $scope.subscriptionPromo = createPromoState(promo);
             }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.subsc_total = total + subtotal;
-
-            if (promo.type == "flat") {
-                $scope.subsc_total = total + subtotal - promo.discount;
-
-                if ($scope.subsc_total < 0) {
-                    $scope.subsc_total = 0;
-                }
+            if ($scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.subsc_total = total + subtotal - discount;
-
-                if ($scope.subsc_total < 0) {
-                    $scope.subsc_total = 0;
-                }
-            }
+            recalculateEditSubscriptionTotals();
         };
 
         $scope.checkDownloadtax = function (tax_percent, type,countryId) {
-            var subtotalvalue = $scope.downloadprice;
-            if (tax_percent == true) {
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            $scope.GSTD = !!tax_percent;
+            if ($scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.taxdownload = total;
-            $scope.total_download = (total + subtotal).toFixed(2);
+            recalculateEditDownloadTotals();
         };
 
         $scope.checkTheDistax = function (tax_percent, type, promo = {},countryId = 0) {
-            var subtotalvalue = $scope.downloadprice;
-            if ($scope.taxdownload > 0) {
-                if (type == "GST") {
-                    if(countryId !== 101){
-                        alert('This user is belongs to other country are you sure want to apply tax?')
-                    }
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                total = 0;
+            if (hasPromoState(promo)) {
+                $scope.downloadPromo = createPromoState(promo);
             }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.taxdownload = total;
-            if (promo.type == "flat") {
-                $scope.total_download = (total + subtotal - promo.discount).toFixed(2);
-
-                if ($scope.total_download < 0) {
-                    $scope.total_download = 0;
-                }
+            if ($scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total_download = (total + subtotal - discount).toFixed(2);
-
-                if ($scope.total_download < 0) {
-                    $scope.total_download = 0;
-                }
-            }
+            recalculateEditDownloadTotals();
         };
 
         $scope.submitQuotation = function () {
@@ -2133,6 +2154,179 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     $scope.download_product_id = "";
     $scope.expiry_due_date = "";
 
+    function getVisibleInvoiceModalBody() {
+        return $("#modal-default .modal-body:visible").first();
+    }
+
+    function getInvoiceModalFieldValue(container, selector) {
+        if (!container || !container.length) {
+            return "";
+        }
+
+        var field = container.find(selector).first();
+        if (!field.length) {
+            return "";
+        }
+
+        return field.val() || "";
+    }
+
+    function clearInvoiceValidationState(container) {
+        var target = container && container.length ? container : getVisibleInvoiceModalBody();
+        if (!target.length) {
+            return;
+        }
+
+        target.find(".invoice-field-error").removeClass("invoice-field-error");
+        target.find(".invoice-validation-message").hide().text("");
+    }
+
+    function showInvoiceValidationMessage(container, message) {
+        if (!container || !container.length) {
+            alert(message);
+            return;
+        }
+
+        var messageBox = container.find(".invoice-validation-message").first();
+        if (messageBox.length) {
+            messageBox.text(message).show();
+        } else {
+            alert(message);
+        }
+    }
+
+    function highlightInvoiceField(container, selector, firstInvalidField) {
+        var field = container.find(selector).filter(":visible").first();
+        if (!field.length) {
+            return firstInvalidField;
+        }
+
+        field.addClass("invoice-field-error");
+        return firstInvalidField || field;
+    }
+
+    function showInvoiceFieldError(container, selector, message) {
+        clearInvoiceValidationState(container);
+        var field = container.find(selector).filter(":visible").first();
+        if (field.length) {
+            field.addClass("invoice-field-error").focus();
+        }
+        showInvoiceValidationMessage(container, message);
+    }
+
+    function getInvoiceSubmitErrorMessage(error) {
+        if (!error) {
+            return "";
+        }
+
+        var payload = error.data;
+        if (!payload && error.responseText) {
+            payload = error.responseText;
+        }
+
+        if (typeof payload === "string") {
+            try {
+                payload = JSON.parse(payload);
+            } catch (parseError) {
+                var statusDescMatch = payload.match(/"statusdesc"\s*:\s*"([^"]+)"/i);
+                if (statusDescMatch && statusDescMatch[1]) {
+                    return statusDescMatch[1];
+                }
+                return payload;
+            }
+        }
+
+        if (!payload) {
+            return "";
+        }
+
+        if (payload.resp && payload.resp.statusdesc) {
+            return payload.resp.statusdesc;
+        }
+
+        if (payload.message) {
+            return payload.message;
+        }
+
+        if (payload.error) {
+            return payload.error;
+        }
+
+        return "";
+    }
+
+    function validateInvoiceModalFields(options) {
+        var container = options && options.container && options.container.length
+            ? options.container
+            : getVisibleInvoiceModalBody();
+        var paymentMethod = (
+            (options && options.paymentMethod) ||
+            getInvoiceModalFieldValue(container, "[name='payment_method']")
+        ).toString().trim();
+        var missingFields = [];
+        var firstInvalidField = null;
+
+        if (!container.length) {
+            return true;
+        }
+
+        clearInvoiceValidationState(container);
+
+        function requireField(selector, label) {
+            var field = container.find(selector).filter(":visible").first();
+            if (!field.length) {
+                return;
+            }
+
+            var value = (field.val() || "").toString().trim();
+            if (!value) {
+                missingFields.push(label);
+                firstInvalidField = highlightInvoiceField(container, selector, firstInvalidField);
+            }
+        }
+
+        requireField("#payment_method", "Method");
+        var visibleExpiryField = container.find("[name='expiry_due_date']").filter(":visible").first();
+        if (visibleExpiryField.length) {
+            requireField("[name='expiry_due_date']", "How many days");
+        }
+        requireField(options.countrySelector, "Country");
+        requireField(options.stateSelector, "State");
+        requireField(options.citySelector, "City");
+        requireField(options.addressSelector, "Street");
+
+        if (missingFields.length) {
+            showInvoiceValidationMessage(
+                container,
+                "Please fill the required fields: " + missingFields.join(", ") + "."
+            );
+            if (firstInvalidField && firstInvalidField.length) {
+                firstInvalidField.focus();
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    $(document)
+        .off("input.invoiceValidation change.invoiceValidation", "#modal-default input, #modal-default select")
+        .on("input.invoiceValidation change.invoiceValidation", "#modal-default input, #modal-default select", function () {
+            var field = $(this);
+            var container = field.closest(".modal-body");
+            field.removeClass("invoice-field-error");
+
+            if (container.length && !container.find(".invoice-field-error").length) {
+                container.find(".invoice-validation-message").hide().text("");
+            }
+        });
+
+    $("#modal-default")
+        .off("hidden.bs.modal.invoiceValidation")
+        .on("hidden.bs.modal.invoiceValidation", function () {
+            clearInvoiceValidationState($("#modal-default .modal-body"));
+        });
+
     function syncDownloadOnBehalfProductId(value) {
         $scope.download_product_id = value || "";
     }
@@ -2185,16 +2379,21 @@ app.controller("invoiceController", function ($scope, $http, $location) {
     
     $scope.create_invoice = function (quotation, user_id) {
         $scope.quotationObj = []
-
+        $scope.payment_method = "";
+        $scope.expiry_due_date = "";
         $scope.cusQuotationObj = quotation;
         $scope.quotation_user_cus = user_id;
+        clearInvoiceValidationState($("#modal-default .modal-body"));
 
     };
 
     $scope.create_invoice_subscription = function (quotation, user_id) {
         $scope.cusQuotationObj = []
+        $scope.payment_method = "";
+        $scope.expiry_due_date = "";
         $scope.quotationObj = quotation;
         $scope.quotation_user = user_id;
+        clearInvoiceValidationState($("#modal-default .modal-body"));
     };
 
     $scope.send_invoice = function (quotation_id, user_id) {
@@ -2202,6 +2401,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
             return;
         }
+        var modalBody = getVisibleInvoiceModalBody();
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         var reggst =
@@ -2210,23 +2410,29 @@ app.controller("invoiceController", function ($scope, $http, $location) {
          var gstNo = ($("#gstNo").val() || ($scope.quotationObj && $scope.quotationObj.gst) || "").toString().trim();
         var panNo = ($("#panNo").val() || ($scope.quotationObj && $scope.quotationObj.pan) || "").toString().trim();
         var phoneNo = ($("#phone").val() || ($scope.quotationObj && $scope.quotationObj.mobile) || "").toString().trim();
-        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
-        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val();
+        var paymentMethod = (getInvoiceModalFieldValue(modalBody, "[name='payment_method']") || $scope.payment_method || "").toString().trim();
+        var poDate = getInvoiceModalFieldValue(modalBody, "#po_date");
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.quotationObj && $scope.quotationObj.currency);
-         var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
+        var expiry_due_date = (getInvoiceModalFieldValue(modalBody, "[name='expiry_due_date']") || $scope.expiry_due_date || "").toString().trim();
 
-
-        if (gstNo && !reggst.test(gstNo)) {
+        if (!validateInvoiceModalFields({
+            container: modalBody,
+            paymentMethod: paymentMethod,
+            countrySelector: "#country_invoice",
+            stateSelector: "#state_invoice",
+            citySelector: "#city_invoice",
+            addressSelector: "#address_invoice",
+        })) {
+            return;
+        } else if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
         } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
         } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
         } else if (phoneNo && !regmob.test(phoneNo)) {
-            alert("Please enter 10 digit mobile no .");
-        } else if (!paymentMethod) {
-            alert("Please select payment method.");
+            showInvoiceFieldError(modalBody, "#phone", "Please enter 10 digit mobile no.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
                 $("#loading").show();
@@ -2236,18 +2442,18 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     data: {
                         quotation_id: quotation_id,
                         user_id: user_id,
-                        po: $('#po').val() ?? "",
+                        po: getInvoiceModalFieldValue(modalBody, "#po") || "",
                         po_date: poDate,
                         payment_method: paymentMethod,
                         gst: gstNo,
                         pan: panNo,
                         phone: phoneNo,
-                        country: $("#country_invoice").val() ?? "",
-                        state: $("#state_invoice").val() ?? "",
-                        city: $("#city_invoice").val() ?? "",
-                        address: $("#address_invoice").val() ?? "",
-                        address2: $("#address2_invoice").val() ?? "",
-                        postal_code: $("#postal_code_invoice").val() ?? "",
+                        country: getInvoiceModalFieldValue(modalBody, "#country_invoice") || "",
+                        state: getInvoiceModalFieldValue(modalBody, "#state_invoice") || "",
+                        city: getInvoiceModalFieldValue(modalBody, "#city_invoice") || "",
+                        address: getInvoiceModalFieldValue(modalBody, "#address_invoice") || "",
+                        address2: getInvoiceModalFieldValue(modalBody, "#address2_invoice") || "",
+                        postal_code: getInvoiceModalFieldValue(modalBody, "#postal_code_invoice") || "",
                         expiry_due_date: expiry_due_date ?? "",
                         currency: currency,
                     },
@@ -2266,10 +2472,12 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     },
                     function (error) {
                         $("#loading").hide();
-                        var errorMessage = (error && error.data && (error.data.message || error.data.error))
-                            ? (error.data.message || error.data.error)
-                            : "Unable to submit invoice. Please check server logs and try again.";
-                        alert(errorMessage);
+                        var errorMessage = getInvoiceSubmitErrorMessage(error) || "Unable to submit invoice. Please check server logs and try again.";
+                        if (errorMessage.toLowerCase().indexOf("how many days") > -1) {
+                            showInvoiceFieldError(modalBody, "[name='expiry_due_date']", errorMessage);
+                        } else {
+                            alert(errorMessage);
+                        }
                     }
                 );
             }
@@ -2281,6 +2489,7 @@ app.controller("invoiceController", function ($scope, $http, $location) {
             alert("Quotation ID is missing. Please reopen the invoice modal and try again.");
             return;
         }
+        var modalBody = getVisibleInvoiceModalBody();
         var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         var reggst =
@@ -2290,24 +2499,31 @@ app.controller("invoiceController", function ($scope, $http, $location) {
         var gstNo = ($("#gstNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.gst) || "").toString().trim();
         var panNo = ($("#panNocus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.pan) || "").toString().trim();
         var phoneNo = ($("#phonecus").val() || ($scope.cusQuotationObj && $scope.cusQuotationObj.mobile) || "").toString().trim();
-        var paymentMethod = $("#modal-default .modal-body:visible #payment_method").val() || $("#payment_method:visible").val() || $("#payment_method").val();
-        var poDate = $("#modal-default .modal-body:visible #po_date").val() || $('#po_date').val() || $scope.poDateCustom || $scope.po_date;
+        var paymentMethod = (getInvoiceModalFieldValue(modalBody, "[name='payment_method']") || $scope.payment_method || "").toString().trim();
+        var poDate = getInvoiceModalFieldValue(modalBody, "#po_date") || $scope.poDateCustom || $scope.po_date;
         var panno = gstNo.length >= 12 ? gstNo.substr(2, 10) : "";
         var currency = ($scope.cusQuotationObj && $scope.cusQuotationObj.currency);
-        var expiry_due_date = $("#modal-default .modal-body:visible #expiry_due_date").val() || $("#expiry_due_date:visible").val() || $("#expiry_due_date").val();
+        var expiry_due_date = (getInvoiceModalFieldValue(modalBody, "[name='expiry_due_date']") || $scope.expiry_due_date || "").toString().trim();
 
         //var expiry_due_date = ($scope.expiry_due_date || $("#modal-default .modal-body:visible #expiry_due_date").val() || "").toString().trim();
 
-        if (gstNo && !reggst.test(gstNo)) {
+        if (!validateInvoiceModalFields({
+            container: modalBody,
+            paymentMethod: paymentMethod,
+            countrySelector: "#country_invoice_cus",
+            stateSelector: "#state_invoice_cus",
+            citySelector: "#city_invoice_cus",
+            addressSelector: "#address_invoice_cus",
+        })) {
+            return;
+        } else if (gstNo && !reggst.test(gstNo)) {
             alert("Please enter valid GST no.");
         } else if (panNo && !regex.test(panNo)) {
             alert("Please enter valid pan no.");
         } else if (gstNo && panNo && panno !== panNo) {
             alert("Please enter valid pan no or GST Number.");
         } else if (phoneNo && !regmob.test(phoneNo)) {
-            alert("Please enter 10 digit mobile no .");
-        } else if (!paymentMethod) {
-            alert("Please select payment method.");
+            showInvoiceFieldError(modalBody, "#phonecus", "Please enter 10 digit mobile no.");
         } else {
             if (confirm("Do you want to send invoice for this quotation ?")) {
                 $("#loading").show();
@@ -2317,19 +2533,19 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     data: {
                         quotation_id: quotation_id,
                         user_id: user_id,
-                        po: $('#poCustom').val() ?? "",
+                        po: getInvoiceModalFieldValue(modalBody, "#poCustom") || "",
                         po_date: poDate,
                         payment_method: paymentMethod,
                         gst: gstNo,
                         pan: panNo,
                         phone: phoneNo,
                         expiry_due_date: expiry_due_date ?? "",
-                        country: $("#country_invoice_cus").val() ?? "",
-                        state: $("#state_invoice_cus").val() ?? "",
-                        city: $("#city_invoice_cus").val() ?? "",
-                        address: $("#address_invoice_cus").val() ?? "",
-                        address2: $("#address2_invoice_cus").val() ?? "",
-                        postal_code: $("#postal_code_invoice_cus").val() ?? "",
+                        country: getInvoiceModalFieldValue(modalBody, "#country_invoice_cus") || "",
+                        state: getInvoiceModalFieldValue(modalBody, "#state_invoice_cus") || "",
+                        city: getInvoiceModalFieldValue(modalBody, "#city_invoice_cus") || "",
+                        address: getInvoiceModalFieldValue(modalBody, "#address_invoice_cus") || "",
+                        address2: getInvoiceModalFieldValue(modalBody, "#address2_invoice_cus") || "",
+                        postal_code: getInvoiceModalFieldValue(modalBody, "#postal_code_invoice_cus") || "",
                         currency: currency,
                     },
                 }).then(
@@ -2347,10 +2563,12 @@ app.controller("invoiceController", function ($scope, $http, $location) {
                     },
                     function (error) {
                         $("#loading").hide();
-                         var errorMessage = (error && error.data && (error.data.message || error.data.error))
-                            ? (error.data.message || error.data.error)
-                            : "Unable to submit invoice. Please check server logs and try again.";
-                        alert(errorMessage);
+                        var errorMessage = getInvoiceSubmitErrorMessage(error) || "Unable to submit invoice. Please check server logs and try again.";
+                        if (errorMessage.toLowerCase().indexOf("how many days") > -1) {
+                            showInvoiceFieldError(modalBody, "[name='expiry_due_date']", errorMessage);
+                        } else {
+                            alert(errorMessage);
+                        }
                     }
                 );
             }
@@ -2776,6 +2994,7 @@ app.controller(
                 footage: "",
                 type: "Image",
                 licence_type: "",
+                extra_details: "",
                 currency: $scope.selected_currency || "INR",
             };
         }
@@ -2794,6 +3013,109 @@ app.controller(
         };
         $scope.normalizeCustomProductPrices = function () {
             sanitizeCustomProductPrices($scope.quotation.product);
+        };
+        $scope.discount_amount_display = "";
+        $scope.subsc_discount_amount_display = "";
+        $scope.download_discount_amount_display = "";
+        $scope.customPromo = createPromoState();
+        $scope.subscriptionPromo = createPromoState();
+        $scope.downloadPromo = createPromoState();
+
+        function recalculateCustomTotalsV2() {
+            var calculation = calculatePromoAdjustedTotals(
+                getProductsSubtotal($scope.quotation.product),
+                !!$scope.GST,
+                $scope.customPromo,
+                gst_value
+            );
+
+            $scope.tax = calculation.tax;
+            $scope.total = calculation.total.toFixed(2);
+            $scope.discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateSubscriptionTotalsV2() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.subscriptionprice,
+                !!$scope.GSTS,
+                $scope.subscriptionPromo,
+                gst_value
+            );
+
+            $scope.subsc_tax = calculation.tax;
+            $scope.subsc_total = calculation.total.toFixed(2);
+            $scope.subsc_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        function recalculateDownloadTotalsV2() {
+            var calculation = calculatePromoAdjustedTotals(
+                $scope.downloadprice,
+                !!$scope.GSTD,
+                $scope.downloadPromo,
+                gst_value
+            );
+
+            $scope.taxdownload = calculation.tax;
+            $scope.total_download = calculation.total.toFixed(2);
+            $scope.download_discount_amount_display =
+                calculation.discount > 0
+                    ? calculation.discount.toFixed(2)
+                    : "";
+        }
+
+        $scope.clearCustomPromo = function () {
+            $scope.customPromo = createPromoState();
+            recalculateCustomTotalsV2();
+        };
+
+        $scope.clearSubscriptionPromo = function () {
+            $scope.subscriptionPromo = createPromoState();
+            recalculateSubscriptionTotalsV2();
+        };
+
+        $scope.clearDownloadPromo = function () {
+            $scope.downloadPromo = createPromoState();
+            recalculateDownloadTotalsV2();
+        };
+        $scope.applyCustomPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GST && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            $scope.normalizeCustomProductPrices();
+            recalculateCustomTotalsV2();
+        };
+        $scope.applySubscriptionPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.subscriptionPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateSubscriptionTotalsV2();
+        };
+        $scope.applyDownloadPromo = function (promo, countryId) {
+            if (hasPromoState(promo)) {
+                $scope.downloadPromo = createPromoState(promo);
+            }
+
+            if (!!$scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?');
+            }
+
+            recalculateDownloadTotalsV2();
         };
         $scope.quotation.product = [createEmptyCustomProduct()];
         $scope.quotation_type_var = "custom";
@@ -2896,8 +3218,9 @@ app.controller(
                     function (error) {
                         $scope.quotation.product[index].image = ''; // Refresh previous display image
                         $scope.quotation.product[index].value = null;
+                        var productIndexId = index + 1;
                         if(secondForm == ''){
-                            $("#product_1").val("");
+                            $("#product_" + productIndexId).val("");
                             alert("image not found");
                         }
                         $("#loading").hide();
@@ -2968,77 +3291,31 @@ app.controller(
             }
         };
         $scope.getTheTotal = function () {
+            if ($scope.quotation_type_var == "subscription") {
+                recalculateSubscriptionTotalsV2();
+                return;
+            }
+
+            if ($scope.quotation_type_var == "download") {
+                recalculateDownloadTotalsV2();
+                return;
+            }
+
             $scope.normalizeCustomProductPrices();
-            var subtotal = $scope.quotation.product;
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            if ($('input[name="tax_checkbox[]"]:checked').length > 0) {
-                total = (subtotalvalue * gst_value) / 100;
-            }
-            subtotal = Number(subtotalvalue);
-            $scope.total = (subtotal + total).toFixed(2);
-            $scope.tax = total;
+            recalculateCustomTotalsV2();
         };
         $scope.checkThetax = function (tax_percent, type, promo = {},countryId = '') {
+            if (hasPromoState(promo)) {
+                $scope.customPromo = createPromoState(promo);
+            }
+
+            $scope.GST = !!tax_percent;
+            if ($scope.GST && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
+            }
+
             $scope.normalizeCustomProductPrices();
-            console.log("2319",countryId);
-            var subtotal = $scope.quotation.product;
-            //console.log(subtotal);
-            var subtotalvalue = 0;
-            var total = 0;
-            for (var j = 0; j < subtotal.length; j++) {
-                subtotalvalue += Number(subtotal[j].price);
-            }
-            //var intialtotal = $scope.tax;
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true) {
-                //total = intialtotal + total;
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * gst_value) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
-            }
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.tax = total;
-            $scope.total = (total + subtotal).toFixed(2);
-
-            if (promo.type == "flat") {
-                $scope.total = (total + subtotal - promo.discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
-
-            if (promo.type == "percentage") {
-                discount = ((total + subtotal) * promo.discount) / 100;
-                $scope.total = (total + subtotal - discount).toFixed(2);
-
-                if ($scope.total < 0) {
-                    $scope.total = 0;
-                }
-            }
+            recalculateCustomTotalsV2();
         };
 
         $scope.prod_type = function (type) {
@@ -3110,87 +3387,28 @@ app.controller(
             $scope.selected_plan = selectedPlanData;
             if (type == "download") {
                 $scope.downloadprice = selectedPlanData["package_price"];
-                $scope.total_download = selectedPlanData["package_price"];
                 $scope.selected_currency = selectedPlanData["currency"];
+                recalculateDownloadTotalsV2();
             } else {
                 $scope.subscriptionprice = selectedPlanData["package_price"];
-                $scope.subsc_total = selectedPlanData["package_price"];
+                recalculateSubscriptionTotalsV2();
             }
         };
 
         $scope.checkDownloadtax = function (tax_percent, type,countryId) {
-            var subtotalvalue = $scope.downloadprice;
-
-            // var intialtotal = $scope.taxdownload;
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true) {
-                //total = intialtotal + total;
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * 12) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
+            $scope.GSTD = !!tax_percent;
+            if ($scope.GSTD && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.taxdownload = total;
-            $scope.total_download = (total + subtotal).toFixed(2);
+            recalculateDownloadTotalsV2();
         };
 
         $scope.checksubsctax = function (tax_percent, type,countryId) {
-            //  console.log(type);
-            // console.log(tax_percent);
-            var subtotalvalue = $scope.subscriptionprice;
-
-            //var intialtotal = $scope.subscriptionprice;
-
-            // if (type == 'SGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'CGST') {
-            //     total = (subtotalvalue * (6) / 100);
-            // } else if (type == 'IGST') {
-            //     total = (subtotalvalue * (12) / 100);
-            // } else if (type == 'IGSTT') {
-            //     total = (subtotalvalue * (18) / 100);
-            // }
-
-            if (tax_percent == true) {
-                //total = intialtotal + total;
-                if(countryId !== 101){
-                    alert('This user is belongs to other country are you sure want to apply tax?')
-                }
-                if (type == "GST") {
-                    total = (subtotalvalue * 12) / 100;
-                }
-            } else {
-                // if (intialtotal > total) {
-                //     total = intialtotal - total;
-                // } else {
-                total = 0;
-                //}
+            $scope.GSTS = !!tax_percent;
+            if ($scope.GSTS && countryId !== 101) {
+                alert('This user is belongs to other country are you sure want to apply tax?')
             }
-            // console.log(total);
-            subtotal = Number(subtotalvalue);
-            total = Number(total);
-            $scope.subsc_tax = total;
-            $scope.subsc_total = total + subtotal;
+            recalculateSubscriptionTotalsV2();
         };
 
         $scope.submitQuotation = function () {
@@ -3395,7 +3613,7 @@ app.controller(
                 expiry_date: resolvedCustomExpiry,
                 tax: $scope.tax,
                 total: $scope.total,
-                GST: $scope.SGST,
+                GST: $scope.GST,
                 email: $("#email_id").val(),
                 flag: $("#flag").val(),
                 promo_code_id: $("#promo_code_id").val(),

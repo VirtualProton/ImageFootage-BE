@@ -1,7 +1,7 @@
 @component('mail::message')
 Hello {{ $order['user']['first_name'] }}
 
-Your Subscription Plan Expiry date extended to {{ date('Y-m-d', strtotime($order['extended_date'])) }}
+Your plan expiry date has been extended to {{ date('Y-m-d', strtotime($order['package_extended_expiry_data'] ?? $order['extended_date'])) }}
 
 Please check below attechments for more information
 

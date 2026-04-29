@@ -1,5 +1,32 @@
 @extends('admin.layouts.default')
 @section('content')
+<style>
+  .invoice-field-error {
+    border-color: #dd4b39 !important;
+    box-shadow: 0 0 0 1px rgba(221, 75, 57, 0.15);
+  }
+
+  .invoice-validation-message {
+    display: none;
+    margin: 8px 0 0;
+    color: #dd4b39;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .disabled-action-link {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+@php
+  $adminUser = Auth::guard('admins')->user();
+  $canManagePackAndCustomActions = $adminUser && (
+      in_array((int) $adminUser->role_id, config('constants.SUPER_ADMIN_ROLE_ID', []), true)
+      || (int) $adminUser->department_id === \App\Helpers\PermissionHelper::DEPT_ACCOUNTS
+  );
+@endphp
 <div class="content-wrapper" ng-controller="invoiceController">
   <section class="content-header">
     <h1>
@@ -165,13 +192,9 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_subscription_quotations->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($quotations->quotation_url)
-                                  <a href="{{$quotations->quotation_url}}" target="_blank">Q{{$quotations->invoice_name}}</a>
-                                  @else
-                                  Q{{$quotations->invoice_name}}
-                                  @endif
+                                  <a href="{{ $quotations->quotation_url ?: route('backend.plan.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $quotations->id, 'format' => 'pdf']) }}" target="_blank">Q{{$quotations->invoice_name}}</a>
                                 </td>
-                                <td>{{$quotations->created}}</td>
+                                <td>{{$quotations->quotation_date_display}}</td>
                                 <td>{{$quotations->total}}</td>
                                 <td>
                                   Subscription
@@ -214,6 +237,7 @@
                                 <th>Payment Status</th>
                                 <th>Due Date</th>
                                 <th>Payment Date</th>
+                                <th>Source</th>
                                 <th>Actions</th>
                                 <th>Update PO</th>
 
@@ -226,17 +250,13 @@
                                 <td>{{(($account_subscriptions_invoices->currentPage()-1)*10)+$k+1}}</td>
 
                                 <td>
-                                  @if($invioces->invoice_url)
-                                  <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
-                                  @else
-                                  {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ !empty($invioces->invoice_url) ? $invioces->invoice_url : route('backend.plan.invoice.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">{{ ($invioces->source_key ?? '') === 'frontend' ? $invioces->invoice_name : (config('constants.INVOICE_PREFIX') . $invioces->invoice_name) }}</a>
                                 </td>
                                 <td>
-                                  @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
+                                  @if(!empty($invioces->quotation_url))
+                                  <a href="{{ $invioces->quotation_url }}" target="_blank">{{$invioces->quotation_number_display ?? ('Q'.$invioces->invoice_name)}}</a>
                                   @else
-                                  Q{{$invioces->invoice_name}}
+                                  {{$invioces->quotation_number_display ?? ('Q'.$invioces->invoice_name)}}
                                   @endif
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
@@ -260,8 +280,11 @@
                                 </td>
                                 <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
+                                <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
-                                  <?php if ($invioces->status == '1' && $invioces->payment_by == '1') {
+                                  <?php if (($invioces->source_key ?? '') === 'frontend') {
+                                    echo "Paid";
+                                  } else if ($invioces->status == '1' && $invioces->payment_by == '1') {
                                     echo "Paid";
                                   } else { ?> {{-- payment_by (frontend) display 'Paid' --}}
                                     <select <?php if ($invioces->status == 3) {
@@ -280,16 +303,20 @@
                                   <?php } ?>
                                 </td>
                                 <td>
+                                  @if(($invioces->source_key ?? '') === 'frontend')
+                                  -
+                                  @else
                                   <a href="#" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
+                                  @endif
                                 </td>
                                 @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="10">{{$account_subscriptions_invoices->fragment('posts')->render()}}</td>
+                                <td colspan="13">{{$account_subscriptions_invoices->fragment('posts')->render()}}</td>
                               </tr>
                               @else
                               <tr style="text-align: center;">
-                                <td colspan="10"><strong> No Invoice Yet ...</strong></td>
+                                <td colspan="13"><strong> No Invoice Yet ...</strong></td>
                               </tr>
                               @endif
                             </tbody>
@@ -330,13 +357,9 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_download_pack_quotations->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($quotations->quotation_url)
-                                  <a href="{{$quotations->quotation_url}}" target="_blank">Q{{$quotations->invoice_name}}</a>
-                                  @else
-                                  Q{{$quotations->invoice_name}}
-                                  @endif
+                                  <a href="{{ $quotations->quotation_url ?: route('backend.plan.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $quotations->id, 'format' => 'pdf']) }}" target="_blank">Q{{$quotations->invoice_name}}</a>
                                 </td>
-                                <td>{{$quotations->created}}</td>
+                                <td>{{$quotations->quotation_date_display}}</td>
                                 <td>{{$quotations->total}}</td>
                                 <td>{{$quotations->currency}}</td>
                                 <td>
@@ -346,9 +369,15 @@
                                 <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                 <td>
                                   @if($quotations->status != 3)
+                                  @if($canManagePackAndCustomActions)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="#" class="js-convert-invoice" data-kind="subscription" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice_subscription({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @else
+                                  <a href="javascript:void(0);" title="Edit Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Convert to Invoice" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Cancel Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @endif
                                   @endif
                                 </td>
 
@@ -382,6 +411,7 @@
                                 <th>Payment Status</th>
                                 <th>Due Date</th>
                                 <th>Payment Date</th>
+                                <th>Source</th>
                                 <th>Actions</th>
                                 <th>Update PO</th>
 
@@ -393,17 +423,17 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_download_pack_invoices->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($invioces->invoice_url)
-                                  <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
-                                  @else
-                                  {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ !empty($invioces->invoice_url) ? $invioces->invoice_url : route('backend.plan.invoice.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">{{ ($invioces->source_key ?? '') === 'frontend' ? $invioces->invoice_name : (config('constants.INVOICE_PREFIX') . $invioces->invoice_name) }}</a>
                                 </td>
                                 <td>
-                                  @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
+                                  @if(!empty($invioces->quotation_url) || !empty($invioces->quotation_number_display))
+                                  @if(!empty($invioces->quotation_url))
+                                  <a href="{{ $invioces->quotation_url }}" target="_blank">{{$invioces->quotation_number_display ?? ('Q'.$invioces->invoice_name)}}</a>
                                   @else
-                                  Q{{$invioces->invoice_name}}
+                                  {{$invioces->quotation_number_display ?? ('Q'.$invioces->invoice_name)}}
+                                  @endif
+                                  @else
+                                  -
                                   @endif
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
@@ -428,10 +458,18 @@
                                 </td>
                                 <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
+                                <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
-                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
-                                            echo "disabled";
-                                          } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
+                                  @if(($invioces->source_key ?? '') === 'frontend')
+                                  Paid
+                                  @else
+                                  @php
+                                    $disableDownloadPackInvoiceAction = !$canManagePackAndCustomActions
+                                      || $invioces->status == 3
+                                      || $invioces->status == 1
+                                      || $invioces->payment_method == 'online';
+                                  @endphp
+                                  <select @if($disableDownloadPackInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
                                                         echo "Selected";
                                                       } ?>>Pending</option>
@@ -442,18 +480,23 @@
                                                         echo "Selected";
                                                       } ?>>Cancel</option>
                                   </select>
+                                  @endif
                                 </td>
                                 <td>
+                                  @if(($invioces->source_key ?? '') === 'frontend')
+                                  -
+                                  @else
                                   <a href="#" ng-click="open_modal_update_po({{$invioces->id}},{{$invioces->job_number ? $invioces->job_number : 0}})" title="Update PO" data-target="#modal-update_po" data-toggle="modal">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;</a>{{$invioces->job_number ?? ''}}
+                                  @endif
                                 </td>
                                 @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="10">{{$account_download_pack_invoices->fragment('posts')->render()}}</td>
+                                <td colspan="14">{{$account_download_pack_invoices->fragment('posts')->render()}}</td>
                               </tr>
                               @else
                               <tr style="text-align: center;">
-                                <td colspan="10"><strong> No Invoice Yet ...</strong></td>
+                                <td colspan="14"><strong> No Invoice Yet ...</strong></td>
                               </tr>
                               @endif
                             </tbody>
@@ -493,13 +536,9 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_custom_quotations->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($quotations->quotation_url)
-                                  <a href="{{$quotations->quotation_url}}" target="_blank">Q{{$quotations->invoice_name}}</a>
-                                  @else
-                                  Q{{$quotations->invoice_name}}
-                                  @endif
+                                  <a href="{{ $quotations->quotation_url ?: route('backend.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $quotations->id, 'format' => 'pdf']) }}" target="_blank">Q{{$quotations->invoice_name}}</a>
                                 </td>
-                                <td>{{$quotations->created}}</td>
+                                <td>{{$quotations->quotation_date_display}}</td>
                                 <td>{{$quotations->total}}</td>
                                 <td>{{$quotations->currency}}</td>
                                 <td>
@@ -509,9 +548,15 @@
                                 <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                 <td>
                                   @if($quotations->status != 3)
+                                  @if($canManagePackAndCustomActions)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="#" class="js-convert-invoice" data-kind="custom" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @else
+                                  <a href="javascript:void(0);" title="Edit Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Convert to Invoice" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Cancel Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @endif
                                   @endif
                                 </td>
 
@@ -556,18 +601,10 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_custom_invoices->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($invioces->invoice_url)
-                                  <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
-                                  @else
-                                  {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ $invioces->invoice_url ?: route('backend.invoice.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                 </td>
                                 <td>
-                                  @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
-                                  @else
-                                  Q{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ $invioces->quotation_url ?: route('backend.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">Q{{$invioces->invoice_name}}</a>
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
@@ -591,17 +628,15 @@
                                 </td>
                                 <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
+                                <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
-                                  @if($invioces->proforma_type == 2)
-                                  Backend
-                                  @else
-                                  Frontend
-                                  @endif
-                                </td>
-                                <td>
-                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
-                                            echo "disabled";
-                                          } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
+                                  @php
+                                    $disableCustomInvoiceAction = !$canManagePackAndCustomActions
+                                      || $invioces->status == 3
+                                      || $invioces->status == 1
+                                      || $invioces->payment_method == 'online';
+                                  @endphp
+                                  <select @if($disableCustomInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
                                                         echo "Selected";
                                                       } ?>>Pending</option>
@@ -619,11 +654,11 @@
                                 </td>
                                 @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="10">{{$account_custom_invoices->fragment('posts')->render()}}</td>
+                                <td colspan="14">{{$account_custom_invoices->fragment('posts')->render()}}</td>
                               </tr>
                               @else
                               <tr style="text-align: center;">
-                                <td colspan="10"><strong> No Invoice Yet ...</strong></td>
+                                <td colspan="14"><strong> No Invoice Yet ...</strong></td>
                               </tr>
                               @endif
                             </tbody>
@@ -663,13 +698,9 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_custom_quotations2->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($quotations->quotation_url)
-                                  <a href="{{$quotations->quotation_url}}" target="_blank">Q{{$quotations->invoice_name}}</a>
-                                  @else
-                                  Q{{$quotations->invoice_name}}
-                                  @endif
+                                  <a href="{{ $quotations->quotation_url ?: route('backend.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $quotations->id, 'format' => 'pdf']) }}" target="_blank">Q{{$quotations->invoice_name}}</a>
                                 </td>
-                                <td>{{$quotations->created}}</td>
+                                <td>{{$quotations->quotation_date_display}}</td>
                                 <td>{{$quotations->total}}</td>
                                 <td>{{$quotations->currency}}</td>
                                 <td>
@@ -679,9 +710,15 @@
                                 <td>{{ !empty($quotations->calcelled_user_name) ? ($quotations->calcelled_user_name) : ($quotations->status == 3 ? 'By Cron' : '') }}</td>
                                 <td>
                                   @if($quotations->status != 3)
+                                  @if($canManagePackAndCustomActions)
                                   <a href="{{ url('admin/edit_quotation/'.$user_id.'/'.$quotations->id) }}" title="Edit Quotation"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
                                   <a href="#" class="js-convert-invoice" data-kind="custom" data-quotation="{!! htmlspecialchars(json_encode($quotations), ENT_QUOTES, 'UTF-8') !!}" ng-click="create_invoice({{json_encode($quotations)}},{{$user_id}})" title="Convert to Invoice" data-target="#modal-default" data-toggle="modal"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
                                   <a href="{{ url('admin/invoice_cancel/'.$quotations->id) }}" title="Cancel Quotation" onclick="return confirm('Do You want to cancel the Quotation?')"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @else
+                                  <a href="javascript:void(0);" title="Edit Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Convert to Invoice" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-file-pdf-o " aria-hidden="true" alt="Convert to Invoice"></i></a> &nbsp;&nbsp;&nbsp;
+                                  <a href="javascript:void(0);" title="Cancel Quotation" class="disabled-action-link" aria-disabled="true" tabindex="-1"><i class="fa fa-close" aria-hidden="true" style="color: red;"></i></a> &nbsp;&nbsp;&nbsp;
+                                  @endif
                                   @endif
                                 </td>
 
@@ -715,6 +752,7 @@
                                 <th>Payment Status</th>
                                 <th>Due Date</th>
                                 <th>Payment Date</th>
+                                <th>Source</th>
                                 <th>Actions</th>
                                 <th>Update PO</th>
                               </tr>
@@ -725,18 +763,10 @@
                               <tr role="row" class="odd">
                                 <td>{{(($account_custom_invoices2->currentPage()-1)*10)+$k+1}}</td>
                                 <td>
-                                  @if($invioces->invoice_url)
-                                  <a href="{{$invioces->invoice_url}}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
-                                  @else
-                                  {{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ $invioces->invoice_url ?: route('backend.invoice.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">{{ config('constants.INVOICE_PREFIX') }}{{$invioces->invoice_name}}</a>
                                 </td>
                                 <td>
-                                  @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
-                                  @else
-                                  Q{{$invioces->invoice_name}}
-                                  @endif
+                                  <a href="{{ $invioces->quotation_url ?: route('backend.quotation.preview', ['user_id' => $user_id, 'invoice_id' => $invioces->id, 'format' => 'pdf']) }}" target="_blank">Q{{$invioces->invoice_name}}</a>
                                 </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
@@ -760,10 +790,15 @@
                                 </td>
                                 <td>{{$invioces->expiry_due_date ?? ''}}</td>
                                 <td>{{$invioces->payment_date ?? ''}}</td>
+                                <td>{{$invioces->source_label ?? 'Backend'}}</td>
                                 <td>
-                                  <select <?php if ($invioces->status == 3 || $invioces->status == 1 || $invioces->payment_method == 'online') {
-                                            echo "disabled";
-                                          } ?> onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
+                                  @php
+                                    $disableOtherInvoiceAction = !$canManagePackAndCustomActions
+                                      || $invioces->status == 3
+                                      || $invioces->status == 1
+                                      || $invioces->payment_method == 'online';
+                                  @endphp
+                                  <select @if($disableOtherInvoiceAction) disabled @endif onchange="changestatus(this,{{$invioces->id}},{{$invioces->status}})">
                                     <option value="0" <?php if ($invioces->status == '0') {
                                                         echo "Selected";
                                                       } ?>>Pending</option>
@@ -781,11 +816,11 @@
                                 </td>
                                 @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="10">{{$account_custom_invoices2->fragment('posts')->render()}}</td>
+                                <td colspan="14">{{$account_custom_invoices2->fragment('posts')->render()}}</td>
                               </tr>
                               @else
                               <tr style="text-align: center;">
-                                <td colspan="10"><strong> No Invoice Yet ...</strong></td>
+                                <td colspan="14"><strong> No Invoice Yet ...</strong></td>
                               </tr>
                               @endif
                             </tbody>
@@ -841,6 +876,10 @@
 
                           <h4 class="box-title">{!! "&nbsp;" !!}{!! "&nbsp;" !!} Active Download Packs</h4>
                           @if(!empty($data['active_download_plans']))
+                          @php
+                            $canManagePlanExpiry = in_array(Auth::guard('admins')->user()->role_id, config('constants.SUPER_ADMIN_ROLE_ID'));
+                            $activePlanColumnCount = $canManagePlanExpiry ? 8 : 7;
+                          @endphp
                           <table id="account" class="account table table-bordered table-striped dataTable" class="col-sm-12">
                             <thead>
                               <div class="form-group">
@@ -853,6 +892,9 @@
                                 <th>Pack Description</th>
                                 <th>Price</th>
                                 <th>Downloaded</th>
+                                @if($canManagePlanExpiry)
+                                <th>Extend Expiry</th>
+                                @endif
                                 <th>Actions</th>
                               </tr>
                             </thead>
@@ -865,7 +907,47 @@
                                 <td>{{$plan->package_type ?? ''}}</td>
                                 <td>{{$plan->package_description ?? ''}}</td>
                                 <td>{{$plan->package_price ?? ''}}</td>
-                                <td>{{$plan->downloaded_product ?? ''}}</td>
+                                <td>{{$plan->downloaded_product ?? 0}}/{{$plan->package_products_count ?? 0}}</td>
+                                @if($canManagePlanExpiry)
+                                <td>
+                                  @php
+                                    $baseExpiryDate = !empty($plan->package_expiry_date_from_purchage) ? date('Y-m-d', strtotime($plan->package_expiry_date_from_purchage)) : null;
+                                    $extendedExpiryDate = !empty($plan->package_extended_expiry_data) ? date('Y-m-d', strtotime($plan->package_extended_expiry_data)) : null;
+                                    $extendedDays = 0;
+
+                                    if ($baseExpiryDate && $extendedExpiryDate) {
+                                      $extendedDays = max(
+                                        \Carbon\Carbon::parse($baseExpiryDate)->diffInDays(\Carbon\Carbon::parse($extendedExpiryDate), false),
+                                        0
+                                      );
+                                    }
+                                  @endphp
+                                  <form action="{{ route('updateExpiredDate') }}" method="post" class="js-extend-expiry-form" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:0;">
+                                    @csrf
+                                    <input type="hidden" name="user_transaction_id" value="{{ $plan->id }}">
+                                    <select name="extend_expiry_option" class="form-control input-sm js-extend-expiry-select" style="width:140px;">
+                                      <option value="">Extend expiry</option>
+                                      <option value="15">15 Days</option>
+                                      <option value="30">30 Days</option>
+                                      <option value="45">45 Days</option>
+                                      <option value="60">60 Days</option>
+                                      <option value="custom">Custom Days</option>
+                                    </select>
+                                    <input type="number" name="custom_days" min="1" class="form-control input-sm js-custom-expiry-days" placeholder="Days" style="width:85px; display:none;">
+                                    <button type="submit" class="btn btn-xs btn-primary">Update</button>
+                                    @if($extendedExpiryDate)
+                                    <button type="submit" name="reset_extended_expiry" value="1" class="btn btn-xs btn-default" onclick="return confirm('Reset the extended expiry date?');">Reset</button>
+                                    @endif
+                                    <span style="width:100%; font-size:12px; color:#666;">
+                                      Expiry date: {{ $baseExpiryDate ?? '-' }}
+                                      @if($extendedExpiryDate)
+                                      <br>Extended expiry date: {{ $extendedExpiryDate }}
+                                      <br>Days extended: {{ $extendedDays }}
+                                      @endif
+                                    </span>
+                                  </form>
+                                </td>
+                                @endif
                                 <td>
                             <button type="button"
                             ng-click='open_download_on_behalf_modal({{ json_encode(["id" => $plan->id, "total" => $plan->package_price, "package_name" => $plan->package_name]) }}, {{$user_id}}); showModal();'
@@ -879,11 +961,11 @@
                               </tr>
                               @endforeach
                               <tr style="text-align: right;">
-                                <td colspan="9">{{$data['active_download_plans']->render()}}</td>
+                                <td colspan="{{ $activePlanColumnCount }}">{{$data['active_download_plans']->render()}}</td>
                               </tr>
                               @else
                               <tr style="text-align: center;">
-                                <td colspan="9"><strong> No Active Pack Yet ... </strong></td>
+                                <td colspan="{{ $activePlanColumnCount }}"><strong> No Active Pack Yet ... </strong></td>
                               </tr>
                               @endif
                             </tbody>
@@ -1026,9 +1108,9 @@
                   </div>
                 </div>
                 <div class="form-group row" ng-show="payment_method=='chq'">
-                  <label for="" class="col-md-6">How many days : </label>
+                  <label for="" class="col-md-6">How many days : <span style="color:red;">*</span></label>
                   <div class="col-md-6">
-                      <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                      <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date" ng-required="payment_method=='chq'">
                         <option value="">Select Days</option>
                         <option value="7">7 Days</option>
                         <option value="15">15 Days</option>
@@ -1157,6 +1239,7 @@
                 </div>
               </div>
               <div class="col-sm-12">
+                <div class="invoice-validation-message" id="invoice-validation-message-sub"></div>
                 <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
               </div>
               <div class="modal-footer">
@@ -1260,9 +1343,9 @@
                   </div>
                 </div>
                 <div class="form-group row" ng-show="payment_method=='chq'">
-                  <label for="" class="col-md-6">How many days : </label>
+                  <label for="" class="col-md-6">How many days : <span style="color:red;">*</span></label>
                   <div class="col-md-6">
-                      <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date">
+                      <select class="form-control" id="expiry_due_date" name="expiry_due_date" ng-model="expiry_due_date" ng-required="payment_method=='chq'">
                         <option value="">Select Days</option>
                         <option value="7">7 Days</option>
                         <option value="15">15 Days</option>
@@ -1406,6 +1489,7 @@
               </div>
             </div>
 
+            <div class="invoice-validation-message" id="invoice-validation-message-cus"></div>
             <p style="text-align: center;color:red;"><strong>Be Patient. Do not click more than once</strong></p>
             <div class="modal-footer">
               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -1551,6 +1635,15 @@
       return false;
     }
   }
+
+  $(document).on('change', '.js-extend-expiry-select', function() {
+    var customDaysInput = $(this).closest('form').find('.js-custom-expiry-days');
+    if ($(this).val() === 'custom') {
+      customDaysInput.show().prop('required', true).focus();
+    } else {
+      customDaysInput.hide().prop('required', false).val('');
+    }
+  });
 
   function resetPassword(id) {
     event.preventDefault();
@@ -1910,9 +2003,51 @@
       $('#modal-body-subscription, #modal-body-custom').show();
     });
   })();
+  function validateVisibleInvoiceModalFields() {
+    var visibleBody = $('#modal-default .modal-body:visible').first();
+    if (!visibleBody.length) {
+      return true;
+    }
+
+    visibleBody.find('.invoice-field-error').removeClass('invoice-field-error');
+    visibleBody.find('.invoice-validation-message').hide().text('');
+
+    function markFieldError(selector, message) {
+      var field = visibleBody.find(selector).filter(':visible').first();
+      if (field.length) {
+        field.addClass('invoice-field-error').focus();
+      }
+      var messageBox = visibleBody.find('.invoice-validation-message').first();
+      if (messageBox.length) {
+        messageBox.text(message).show();
+      } else {
+        alert(message);
+      }
+      return false;
+    }
+
+    var paymentMethodField = visibleBody.find('[name="payment_method"]').filter(':visible').first();
+    var paymentMethodValue = (paymentMethodField.val() || '').toString().trim();
+    if (!paymentMethodValue) {
+      return markFieldError('[name="payment_method"]', 'Method is required.');
+    }
+
+    var expiryDueDateField = visibleBody.find('[name="expiry_due_date"]').filter(':visible').first();
+    var expiryDueDateValue = (expiryDueDateField.val() || '').toString().trim();
+    if (expiryDueDateField.length && !expiryDueDateValue) {
+      return markFieldError('[name="expiry_due_date"]', 'How many days is required.');
+    }
+
+    return true;
+  }
+
   // Reliable wrapper for confirm submission in case ng-click binding is interrupted by other scripts.
   function invoiceConfirmSubmission(type, button) {
     try {
+      if (!validateVisibleInvoiceModalFields()) {
+        return false;
+      }
+
       var wrapper = document.querySelector('.content-wrapper[ng-controller="invoiceController"]');
       if (!wrapper || typeof angular === 'undefined') {
         alert('Invoice controller is not ready. Please reload the page and try again.');

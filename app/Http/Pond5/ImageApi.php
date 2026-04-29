@@ -300,6 +300,8 @@ class ImageApi
             CURLOPT_CONNECTTIMEOUT => 8,
             CURLOPT_TIMEOUT        => 20,
             CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYPEER => !app()->environment('local'),
+            CURLOPT_SSL_VERIFYHOST => app()->environment('local') ? 0 : 2,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(

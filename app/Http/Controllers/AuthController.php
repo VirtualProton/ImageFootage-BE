@@ -20,6 +20,7 @@ use App\Http\TnnraoSms\TnnraoSms;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use Carbon\Carbon;
 use Google_Client;
 use GuzzleHttp\Client;
 use App\Services\Sms\SmsService;
@@ -357,7 +358,7 @@ class AuthController extends Controller
             if ($payload) {
                 $user = User::where('email', $payload['email'])->first();
                 if ($user) {
-                    $plans = UserPackage::where('user_id', '=', $user->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                    $plans = UserPackage::where('user_id', '=', $user->id)->whereEffectiveExpiryOnOrAfter(Carbon::today())->whereIn('payment_status', ['Completed', 'Transction Success'])
                         ->get()->toArray();
                     if (!$this->isProfileCompleted($user->id)) {
                         $profileCompleted = true;
@@ -365,7 +366,7 @@ class AuthController extends Controller
                     $loginType = $payload['login_type'];
                 }
             } else {
-                $plans = UserPackage::where('user_id', '=', auth()->user()->id)->where('package_expiry_date_from_purchage', '>', Now())->whereIn('payment_status', ['Completed', 'Transction Success'])
+                $plans = UserPackage::where('user_id', '=', auth()->user()->id)->whereEffectiveExpiryOnOrAfter(Carbon::today())->whereIn('payment_status', ['Completed', 'Transction Success'])
                     ->get()->toArray();
                 if (!$this->isProfileCompleted(auth()->user()->id)) {
                     $profileCompleted = true;

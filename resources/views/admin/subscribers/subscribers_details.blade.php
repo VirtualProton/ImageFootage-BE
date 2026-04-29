@@ -62,13 +62,14 @@
                                                 <td>{{$eachPlan['transaction_id']}}</td>
                                                 <td>{{$eachPlan['created_at']}}</td>
                                                 <td>{{$eachPlan['package_expiry_date_from_purchage']}}</td>
-                                                <td>{{$eachPlan['extended_date']}}</td>
+                                                <td>{{$eachPlan['package_extended_expiry_data'] ?? ''}}</td>
                                                 <td><a href="{{$eachPlan['invoice']}}"
                                                         target="_blank">Download</a></td>
                                                 <td>
                                                     <a aria-expanded="true" class="" onclick="downloads(<?php echo json_encode($eachPlan['downloads']) ?>)"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
                                                     &nbsp; &nbsp;
-@if (now()->format('Y-m-d') < date('Y-m-d', strtotime($eachPlan['package_expiry_date_from_purchage'])) || now()->format('Y-m-d')  < date('Y-m-d', strtotime($eachPlan['extended_date'])))
+@php($effectiveExpiryDate = !empty($eachPlan['package_extended_expiry_data']) ? $eachPlan['package_extended_expiry_data'] : $eachPlan['package_expiry_date_from_purchage'])
+@if (!empty($effectiveExpiryDate) && now()->format('Y-m-d') < date('Y-m-d', strtotime($effectiveExpiryDate)))
     <a href="{{ route('editExpireDate', $eachPlan['id']) }}" title="Edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 @endif
                                                 </td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
@@ -32,6 +33,115 @@ use App\Models\Admin;
 
 class InvoiceController extends Controller
 {
+    private function canManagePackAndCustomInvoiceActions()
+    {
+        $user = Auth::guard('admins')->user();
+
+        return $user && (
+            in_array((int) $user->role_id, config('constants.SUPER_ADMIN_ROLE_ID', []), true)
+            || (int) $user->department_id === PermissionHelper::DEPT_ACCOUNTS
+        );
+    }
+
+    private function requiresPackAndCustomInvoiceActionPermission(?Invoice $invoice)
+    {
+        return $invoice && in_array((int) $invoice->invoice_type, [2, 3], true);
+    }
+
+    private function denyPackAndCustomInvoiceAction($message = 'You do not have access to perform this action.')
+    {
+        $request = request();
+
+        if ($request && ($request->expectsJson() || $request->ajax())) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => $message,
+                ],
+            ]);
+        }
+
+        return redirect()->back()->with('error', $message);
+    }
+
+    private function authorizePackAndCustomInvoiceAction(?Invoice $invoice, $message = 'You do not have access to perform this action.')
+    {
+        if ($this->requiresPackAndCustomInvoiceActionPermission($invoice) && !$this->canManagePackAndCustomInvoiceActions()) {
+            return $this->denyPackAndCustomInvoiceAction($message);
+        }
+
+        return null;
+    }
+
+    private function validateInvoiceCreationRequest(array $data)
+    {
+        $validator = Validator::make($data, [
+            'quotation_id' => 'required',
+            'user_id' => 'required',
+            'payment_method' => 'required|in:chq,online',
+            'expiry_due_date' => 'nullable|required_if:payment_method,chq|in:7,15,30,45',
+        ], [
+            'quotation_id.required' => 'Quotation id is required.',
+            'user_id.required' => 'User id is required.',
+            'payment_method.required' => 'Payment method is required.',
+            'payment_method.in' => 'Invalid payment method selected.',
+            'expiry_due_date.required_if' => 'How many days is required.',
+            'expiry_due_date.in' => 'Invalid Terms Granted day selection.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => $validator->errors()->first(),
+                ]
+            ], 422);
+        }
+
+        return null;
+    }
+
+    private function validateInvoiceUserDetails(array $data, User $user)
+    {
+        $requiredFields = [
+            'country' => [
+                'label' => 'Country',
+                'value' => $data['country'] ?? $user->country ?? '',
+            ],
+            'state' => [
+                'label' => 'State',
+                'value' => $data['state'] ?? $user->state ?? '',
+            ],
+            'city' => [
+                'label' => 'City',
+                'value' => $data['city'] ?? $user->city ?? '',
+            ],
+            'address' => [
+                'label' => 'Street',
+                'value' => $data['address'] ?? $user->address ?? '',
+            ],
+        ];
+
+        $missingFields = [];
+        foreach ($requiredFields as $field) {
+            $value = is_string($field['value']) ? trim($field['value']) : $field['value'];
+            if ($value === null || $value === '') {
+                $missingFields[] = $field['label'];
+            }
+        }
+
+        if (!empty($missingFields)) {
+            return response()->json([
+                'resp' => [
+                    'statuscode' => '0',
+                    'statusdesc' => 'Please fill the required fields: ' . implode(', ', $missingFields) . '.',
+                ]
+            ], 422);
+        }
+
+        return null;
+    }
+
     public function __construct()
     {
         $this->middleware('admin')->except('login', 'logout');
@@ -141,6 +251,11 @@ class InvoiceController extends Controller
 
     public function edit_quotation($user_id, $quotation_id)
     {
+        $invoice = Invoice::select('id', 'invoice_type')->find($quotation_id);
+        if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to edit this quotation.')) {
+            return $response;
+        }
+
         $getFootageSizeDetails = config('constants.footage_size_details');
         $getMusicLicenceDetails = config('constants.music_licence_details');
         $userDetail = User::find($user_id);
@@ -152,19 +267,26 @@ class InvoiceController extends Controller
         $data = $request->all();
         //print_r($data); die;
         if (!empty($data['quotation'])) {
+            $invoice = Invoice::select('id', 'invoice_type')->find($data['quotation']);
+            if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to edit this quotation.')) {
+                return $response;
+            }
+
             return $this->Common->getQuotationData($data['quotation']);
         }
     }
     public function create_invoice(Request $request)
     {
         $data = $request->all();
-        if (empty($data['quotation_id']) || empty($data['user_id']) || empty($data['payment_method'])) {
-            return response()->json([
-                'resp' => [
-                    'statuscode' => '0',
-                    'statusdesc' => 'Missing required fields: quotation_id, user_id or payment_method.'
-                ]
-            ], 422);
+        if (!empty($data['quotation_id'])) {
+            $invoice = Invoice::select('id', 'invoice_type')->find($data['quotation_id']);
+            if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to convert this quotation into an invoice.')) {
+                return $response;
+            }
+        }
+
+        if ($validationError = $this->validateInvoiceCreationRequest($data)) {
+            return $validationError;
         }
         // Update user address
         $user = User::where('id', $data['user_id'])->first();
@@ -175,6 +297,9 @@ class InvoiceController extends Controller
                     'statusdesc' => 'User not found for invoice conversion.'
                 ]
             ], 404);
+        }
+        if ($validationError = $this->validateInvoiceUserDetails($data, $user)) {
+            return $validationError;
         }
         if (!empty($data['country'])) {
             $user->country = $data['country'] ?? $user->country;
@@ -221,13 +346,15 @@ class InvoiceController extends Controller
     public function create_invoice_subcription(Request $request)
     {
         $data = $request->all();
-        if (empty($data['quotation_id']) || empty($data['user_id']) || empty($data['payment_method'])) {
-            return response()->json([
-                'resp' => [
-                    'statuscode' => '0',
-                    'statusdesc' => 'Missing required fields: quotation_id, user_id or payment_method.'
-                ]
-            ], 422);
+        if (!empty($data['quotation_id'])) {
+            $invoice = Invoice::select('id', 'invoice_type')->find($data['quotation_id']);
+            if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to convert this quotation into an invoice.')) {
+                return $response;
+            }
+        }
+
+        if ($validationError = $this->validateInvoiceCreationRequest($data)) {
+            return $validationError;
         }
         // Update user address
         $user = User::where('id', $data['user_id'])->first();
@@ -238,6 +365,9 @@ class InvoiceController extends Controller
                     'statusdesc' => 'User not found for invoice conversion.'
                 ]
             ], 404);
+        }
+        if ($validationError = $this->validateInvoiceUserDetails($data, $user)) {
+            return $validationError;
         }
         if (!empty($data['country'])) {
             $user->country = $data['country'] ?? $user->country;
@@ -267,6 +397,11 @@ class InvoiceController extends Controller
     {
         $data = $request->all();
         if (!empty($data['quotation_id']) && isset($data['status'])) {
+            $invoice = Invoice::select('id', 'invoice_type')->find($data['quotation_id']);
+            if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to update this invoice status.')) {
+                return $response;
+            }
+
             return $this->Common->change_invoice_status($data['quotation_id'], $data['status']);
         }
     }
@@ -338,6 +473,11 @@ class InvoiceController extends Controller
         $quotations = $query->get()->toArray();
 
         foreach ($quotations as &$quotation) {
+            $quotation['quotation_date_display'] = Invoice::resolveQuotationDateDisplayValue(
+                $quotation['created'] ?? null,
+                $quotation['modified'] ?? null,
+                $quotation['invoice_type'] ?? null
+            );
             $userDetails = User::find($quotation['user_id']);
             if (!empty($userDetails)) {
                 if (!empty($userDetails->account_manager_id)) {
@@ -576,6 +716,11 @@ class InvoiceController extends Controller
 
     public function invoiceCancel($id)
     {
+        $invoice = Invoice::select('id', 'invoice_type')->find($id);
+        if ($response = $this->authorizePackAndCustomInvoiceAction($invoice, 'You do not have access to cancel this quotation.')) {
+            return $response;
+        }
+
         $update = Invoice::where('id', $id)->update([
             'status' => '3',
             'cancel_date' => date('Y-m-d H:i:s'),
@@ -664,7 +809,7 @@ class InvoiceController extends Controller
             $pacakegalist = UserPackage::whereIn('payment_status', ['Completed', 'Transction Success'])
                 ->where('user_id', '=', $userId)
                 ->where('id', '=', $packageId)
-                ->where('package_expiry_date_from_purchage', '>', now())
+                ->whereEffectiveExpiryOnOrAfter(Carbon::today())
                 ->get();
 
             if ($pacakegalist->isNotEmpty()) {

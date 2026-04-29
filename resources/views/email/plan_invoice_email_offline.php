@@ -284,6 +284,8 @@
             margin: 0 0 4px;
             color: #374151;
             font-size: 12px;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .package-table {
@@ -336,6 +338,8 @@
 
         .package-copy {
             padding-right: 12px;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .package-title {
@@ -344,6 +348,8 @@
             font-size: 14px;
             font-weight: 700;
             line-height: 1.35;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .package-subcopy {
@@ -351,6 +357,8 @@
             color: #374151;
             font-size: 12px;
             line-height: 1.5;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .package-price {
@@ -473,20 +481,34 @@
             vertical-align: bottom;
         }
 
+        .signoff-grid td:first-child {
+            padding-right: 18px;
+        }
+
+        .signoff-grid td:last-child {
+            padding-left: 18px;
+            padding-right: 8px;
+        }
+
         .signoff-note {
             color: #374151;
             font-size: 12px;
             line-height: 1.55;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .signoff-meta {
             margin-top: 12px;
             color: #2563EB;
             font-size: 12px;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .signature-block {
             text-align: right;
+            padding-right: 8px;
         }
 
         .signature-block img {
@@ -500,6 +522,8 @@
             color: #111827;
             font-size: 12px;
             font-weight: 700;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         @media screen {

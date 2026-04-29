@@ -22,6 +22,13 @@ class ImageApi
     private $access_key = '';
     private $url = '';
 
+    private function getHttpClient()
+    {
+        return new Client([
+            'verify' => !app()->environment('local'),
+        ]);
+    }
+
     public function  __construct()
     {
         $this->api_key = config('thirdparty.panthermedia.api_key');
@@ -157,7 +164,7 @@ class ImageApi
     public function get_media_info($media_id)
     {
         $this->access_key = $this->getAccessKey();
-        $client = new Client(); //GuzzleHttp\Client
+        $client = $this->getHttpClient();
         $response = $client->post($this->url . '/get-media-info', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',

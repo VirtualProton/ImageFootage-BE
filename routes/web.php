@@ -226,7 +226,7 @@ if (app()->environment('local') || config('app.debug')) {
         $quotation[0]['placeholder_image'] = $pdfImageBase64('images/placeholder-image.png');
         $quotation[0]['template_image'] = $quotation[0]['template_image'] ?? $pdfImagePath('images/music-img.png');
         $quotation[0]['music_image'] = $quotation[0]['music_image'] ?? $pdfImagePath('images/music-img.png');
-        $quotation[0]['signature'] = $quotation[0]['signature'] ?? $pdfImagePath('images/signature.png');
+        $quotation[0]['signature'] = $quotation[0]['signature'] ?? $pdfImageBase64('images/signature.png');
         $quotation[0]['frontend_url'] = $quotation[0]['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
         $quotation[0]['document_label'] = $quotation[0]['document_label'] ?? $documentLabel;
         $quotation[0]['payment_url'] = $paymentMethod === 'online'
@@ -311,7 +311,7 @@ if (app()->environment('local') || config('app.debug')) {
         $orders['company_logo'] = $orders['flag'] === 0
             ? $pdfImageBase64('images/new-design-logo.png')
             : $pdfImageBase64('images/conceptual_logo.png');
-        $orders['signature'] = $orders['signature'] ?? $pdfImagePath('images/signature.png');
+        $orders['signature'] = $orders['signature'] ?? $pdfImageBase64('images/signature.png');
         $orders['frontend_url'] = $orders['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
         $orders['INVOICE_PREFIX'] = $orders['INVOICE_PREFIX'] ?? (config('constants.INVOICE_PREFIX') ?: '');
 
@@ -771,6 +771,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 Route::get('emailVerification', 'UserContactusController@emailVerification');
 Route::get('payu/{id}', 'PaymentController@payu');
 Route::get('payuplan/{id}', 'PaymentController@payuplan');
+Route::get('frontend-plan-invoice-preview', 'PaymentController@frontendPlanInvoicePreview')->name('frontend.plan.invoice.preview');
 Route::get('invoiceConfirmation/{id}', 'PaymentController@invoiceConfirmation');
 Route::get('invoiceFailed/{id}', 'PaymentController@invoiceFailed');
 

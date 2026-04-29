@@ -280,7 +280,7 @@ class MediaController extends Controller
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)
             ->where('id', '=', $package_id)
-            ->where('package_expiry_date_from_purchage', '>', Now())
+            ->whereEffectiveExpiryOnOrAfter(Carbon::today())
             ->get();
 
         $download = 0;
@@ -299,7 +299,7 @@ class MediaController extends Controller
                        $currentMonthDates= $this->calculateMonthlySubscriptionDates($perpack->created_at->format('Y-m-d'),$perpack->package_expiry,Carbon::now()->format('Y-m-d'));
 
                         $startDateOfSpecificMonth = isset($currentMonthDates['startDate']) && !empty($currentMonthDates['startDate']) ? $currentMonthDates['startDate'] : $perpack->created_at;
-                        $endDateOfSpecificMonth = isset($currentMonthDates['endDate']) && !empty($currentMonthDates['endDate']) ? $currentMonthDates['endDate'] : $perpack->package_expiry_date_from_purchage;
+                        $endDateOfSpecificMonth = isset($currentMonthDates['endDate']) && !empty($currentMonthDates['endDate']) ? $currentMonthDates['endDate'] : ($perpack->package_extended_expiry_data ?: $perpack->package_expiry_date_from_purchage);
 
                         // Count the number of downloads for the current month
                         $monthlyDownloads = ProductsDownload::where(['user_id' => $id, 'package_id' => $package_id])
@@ -536,7 +536,7 @@ class MediaController extends Controller
             ->where('user_id', '=', $id)
             ->where('package_type', '=', $flag)
             ->where('id', '=', $package_id)
-            ->where('package_expiry_date_from_purchage', '>', Now())
+            ->whereEffectiveExpiryOnOrAfter(Carbon::today())
             ->get();
 
         $download = 0;

@@ -75,11 +75,11 @@
                                 <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y h:i:s a",strtotime($orders['package_expiry_date_from_purchage'])) ?></td>
                             </tr>
                             <?php
-                            if($orders['extended_date']) {
+                            if(!empty($orders['package_extended_expiry_data']) || !empty($orders['extended_date'])) {
                                 ?>
                                 <tr>
                                     <td style="color: #fc8041; font-weight: 700">Extended Date:</td>
-                                    <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y h:i:s a",strtotime($orders['extended_date'])) ?></td>
+                                    <td style="color: #fc8041; font-weight: 700"><?php echo date("F , d Y h:i:s a",strtotime($orders['package_extended_expiry_data'] ?? $orders['extended_date'])) ?></td>
                                 </tr>
                                 <?php
                             }

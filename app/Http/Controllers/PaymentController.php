@@ -82,6 +82,108 @@ class PaymentController extends Controller
 
     }
 
+    private function pdfImageBase64(string $relativePath): string
+    {
+        $absolutePath = public_path(ltrim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $relativePath), DIRECTORY_SEPARATOR));
+
+        if (file_exists($absolutePath)) {
+            $mime = mime_content_type($absolutePath) ?: 'image/png';
+            $data = base64_encode(file_get_contents($absolutePath));
+
+            return 'data:' . $mime . ';base64,' . $data;
+        }
+
+        return asset($relativePath);
+    }
+
+    private function decorateFrontendPlanInvoiceOrderData(array $orders, string $paymentMethod = 'online'): array
+    {
+        $orders['frontend_url'] = $orders['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
+        $orders['INVOICE_PREFIX'] = $orders['INVOICE_PREFIX'] ?? (config('constants.INVOICE_PREFIX') ?: '');
+        $orders['company_logo'] = $orders['company_logo'] ?? $this->pdfImageBase64('images/new-design-logo.png');
+        $orders['signature'] = $orders['signature'] ?? $this->pdfImageBase64('images/signature.png');
+        $orders['package_products_count_in_words'] = $orders['package_products_count_in_words'] ?? ($this->convert_number_to_words((int) ($orders['package_products_count'] ?? 0)) ?? '');
+        $orders['tax'] = isset($orders['tax']) ? (float) $orders['tax'] : 0.00;
+        $orders['total'] = isset($orders['total']) ? (float) $orders['total'] : (float) ($orders['package_price'] ?? 0);
+        $orders['payment_method'] = $orders['payment_method'] ?? $paymentMethod;
+        $orders['payment_status'] = $orders['payment_status'] ?? 'Completed';
+        $orders['payment_url'] = $orders['payment_url'] ?? '';
+        $orders['description'] = $orders['description'] ?? ($orders['package_description'] ?? '');
+
+        return $orders;
+    }
+
+    private function buildFrontendPlanInvoiceOrderDataFromPackage(UserPackage $package): array
+    {
+        $package->loadMissing(['user.country', 'user.state', 'user.city', 'licence']);
+
+        $user = $package->user;
+
+        return $this->decorateFrontendPlanInvoiceOrderData([
+            'invoice_name' => $package->transaction_id,
+            'invicecreted' => !empty($package->created_at) ? date('Y-m-d H:i:s', strtotime((string) $package->created_at)) : '',
+            'vendor_code' => $user->vendor_code ?? '',
+            'company' => $user->company ?? '',
+            'first_name' => $user->first_name ?? '',
+            'last_name' => $user->last_name ?? '',
+            'address' => $user->address ?? '',
+            'address2' => $user->address2 ?? '',
+            'cityname' => $user && $user->city ? ($user->city->name ?? '') : '',
+            'statename' => $user && $user->state ? ($user->state->state ?? '') : '',
+            'postal_code' => $user->postal_code ?? '',
+            'countryname' => $user && $user->country ? ($user->country->name ?? '') : '',
+            'pan' => $user->pan ?? '',
+            'gst' => $user->gst ?? '',
+            'email' => $user->email ?? '',
+            'email_id' => $user->email ?? '',
+            'mobile' => $user->mobile ?? '',
+            'contact_owner' => $user->contact_owner ?? '',
+            'currency' => 'INR',
+            'tax' => 0.00,
+            'total' => (float) ($package->package_price ?? 0),
+            'package_plan' => $package->package_plan,
+            'package_expiry' => $package->package_expiry,
+            'package_expiry_yearly' => $package->package_expiry_yearly,
+            'pacage_size' => $package->pacage_size,
+            'package_name' => $package->package_name,
+            'package_type' => $package->package_type,
+            'package_products_count' => $package->package_products_count,
+            'package_price' => $package->package_price,
+            'package_description' => $package->package_description,
+            'description' => $package->package_description,
+            'licence_name' => optional($package->licence)->licence_name ?? '',
+            'invoice_type' => (int) $package->package_plan === 1 ? 2 : 1,
+            'job_number' => '',
+            'po_detail' => '',
+            'payment_status' => $package->payment_status,
+            'payment_method' => 'online',
+        ]);
+    }
+
+    private function renderFrontendPlanInvoiceResponse(array $orders, string $format = 'pdf')
+    {
+        $invoiceTotal = (float) ($orders['total'] ?? ($orders['package_price'] ?? 0));
+        $amountInWords = $invoiceTotal > 0 ? strtoupper((string) $this->convert_number_to_words((int) round($invoiceTotal))) : '';
+        $html = view('email.plan_invoice_email_offline', [
+            'orders' => $orders,
+            'amount_in_words' => $amountInWords,
+            'payment_method' => $orders['payment_method'] ?? 'online',
+        ])->render();
+
+        if (strtolower((string) $format) !== 'pdf') {
+            return response($html);
+        }
+
+        return PDF::setOptions([
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ])->loadHTML($html)->stream(($orders['invoice_name'] ?? 'web-plan-invoice') . '.pdf', [
+            'Attachment' => false,
+        ]);
+    }
+
     public function payment(Request $request)
     {
         ini_set('max_execution_time', 0);
@@ -402,7 +504,7 @@ class PaymentController extends Controller
         $checkAlreadyPlan = UserPackage::where('user_id', '=', $allFields['tokenData']['Utype'])
             ->where('package_type', '=', $allFields['plan']['package_type'])
             ->whereColumn('package_products_count', '>', 'downloaded_product')
-            ->where('package_expiry_date_from_purchage', '>=', date('Y-m-d H:i:s'))
+            ->whereEffectiveExpiryOnOrAfter()
             ->whereIn('payment_status', ['Completed', 'Transction Success'])
             ->get()->toArray();
 
@@ -665,6 +767,7 @@ class PaymentController extends Controller
                         ->update([
                             'payment_mode' => $_POST['discriminator'],
                             'payment_status' => 'Transction Success',
+                            'payment_date' => date('Y-m-d H:i:s'),
                             'payment_response' => json_encode($_POST)
                         ]);
                     $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
@@ -694,6 +797,7 @@ class PaymentController extends Controller
                         ->update([
                             'payment_mode' => $_POST['discriminator'],
                             'payment_status' => 'Transction Success',
+                            'payment_date' => date('Y-m-d H:i:s'),
                             'payment_response' => json_encode($_POST)
                         ]);
                     $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
@@ -714,6 +818,33 @@ class PaymentController extends Controller
         $dataForEmail = $this->getData($invoice_id);
         return view('invoiceconfirmation', ['quotation' => $dataForEmail]);
     }
+
+    public function frontendPlanInvoicePreview(Request $request)
+    {
+        $packageId = (int) $request->query('package_id', 0);
+        $transactionId = trim((string) $request->query('transaction_id', ''));
+
+        $query = UserPackage::query()
+            ->whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->where(function ($packageQuery) {
+                $packageQuery->whereNull('order_type')
+                    ->orWhere('order_type', '!=', 2);
+            });
+
+        if ($packageId > 0) {
+            $query->where('id', $packageId);
+        } elseif ($transactionId !== '') {
+            $query->where('transaction_id', $transactionId);
+        } else {
+            abort(404);
+        }
+
+        $package = $query->firstOrFail();
+        $orders = $this->buildFrontendPlanInvoiceOrderDataFromPackage($package);
+
+        return $this->renderFrontendPlanInvoiceResponse($orders, (string) $request->query('format', 'pdf'));
+    }
+
     public function  atompayinvoiceplan()
     {
         $datenow = date("d/m/Y h:m:s");
@@ -757,6 +888,7 @@ class PaymentController extends Controller
                         ->update([
                             'payment_mode' => $_POST['discriminator'],
                             'payment_status' => 'Transction Success',
+                            'payment_date' => date('Y-m-d H:i:s'),
                             'payment_response' => json_encode($_POST)
                         ]);
                     $this->finalizePaidQuotationOrInvoice((string) $_POST['mer_txn'], (string) ($_POST['discriminator'] ?? 'Atom'), $_POST);
@@ -965,14 +1097,19 @@ class PaymentController extends Controller
     public function invoiceWithemailPlan($OrderData, $transaction)
     {
         ini_set('max_execution_time', 0);
-        $OrderData['frontend_url'] = config('app.front_end_url');
-        $OrderData['INVOICE_PREFIX'] = config('constants.INVOICE_PREFIX') ?? '';
-        $OrderData['company_logo'] = 'images/new-design-logo.png';
-        $OrderData['signature']     = 'images/signature.png';
-        $OrderData['package_products_count_in_words'] = $this->convert_number_to_words($OrderData['package_products_count']) ?? '';
         $OrderData['tax'] = 0.00;
-        $amount_in_words  =  $this->convert_number_to_words($OrderData['package_price']);
-        $pdf = PDF::loadHTML(view('email.plan_invoice_email', ['orders' => $OrderData, 'amount_in_words' => $amount_in_words]));
+        $OrderData = $this->decorateFrontendPlanInvoiceOrderData($OrderData, 'online');
+        $amount_in_words  = $this->convert_number_to_words((int) round((float) ($OrderData['package_price'] ?? 0)));
+        $pdf = PDF::setOptions([
+            'isRemoteEnabled' => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi' => 96,
+            'defaultFont' => 'sans-serif',
+        ])->loadHTML(view('email.plan_invoice_email_offline', [
+            'orders' => $OrderData,
+            'amount_in_words' => strtoupper((string) $amount_in_words),
+            'payment_method' => $OrderData['payment_method'] ?? 'online',
+        ]));
         $fileName = $transaction . "_web_plan_invoice.pdf";
         $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
         $pdf_path = '';
@@ -1234,6 +1371,7 @@ class PaymentController extends Controller
                         'payment_mode' => 'Razorpay',
                         'payment_status' => 'Transction Success',
                         'status' => 1,
+                        'payment_date' => !empty($paymentLinkPayload['paid_at']) ? date('Y-m-d H:i:s', (int) $paymentLinkPayload['paid_at']) : date('Y-m-d H:i:s'),
                         'payment_response' => json_encode($paymentLinkPayload, JSON_UNESCAPED_SLASHES)
                     ]);
                 $this->finalizePaidQuotationOrInvoice((string) $invoiceName, 'Razorpay', $paymentLinkPayload);

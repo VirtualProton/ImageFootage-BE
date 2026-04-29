@@ -44,6 +44,72 @@ class UserController extends Controller
         $this->Country = new Country();
         $this->User = new User();
     }
+
+    private function paginateCollection($items, $perPage, $pageName)
+    {
+        $collection = collect($items)->values();
+        $currentPage = LengthAwarePaginator::resolveCurrentPage($pageName);
+
+        return new LengthAwarePaginator(
+            $collection->forPage($currentPage, $perPage)->values(),
+            $collection->count(),
+            $perPage,
+            $currentPage,
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => $pageName,
+            ]
+        );
+    }
+
+    private function resolveFrontendPlanInvoicePreviewUrl(UserPackage $package)
+    {
+        if (empty($package->transaction_id)) {
+            return $package->invoice;
+        }
+
+        return route('frontend.plan.invoice.preview', [
+            'package_id' => $package->id,
+            'format' => 'pdf',
+        ]);
+    }
+
+    private function buildFrontendPlanInvoiceRows($userId, $packagePlan)
+    {
+        return UserPackage::query()
+            ->where('user_id', $userId)
+            ->where('package_plan', $packagePlan)
+            ->whereNotNull('invoice')
+            ->where('invoice', '!=', '')
+            ->whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->where(function ($query) {
+                $query->whereNull('order_type')
+                    ->orWhere('order_type', '!=', 2);
+            })
+            ->orderBy('id', 'desc')
+            ->get()
+            ->map(function ($package) {
+                return (object) [
+                    'id' => $package->id,
+                    'invoice_url' => $this->resolveFrontendPlanInvoicePreviewUrl($package),
+                    'invoice_name' => $package->transaction_id,
+                    'quotation_url' => '',
+                    'quotation_number_display' => '-',
+                    'invoice_created' => !empty($package->created_at) ? date('Y-m-d H:i:s', strtotime($package->created_at)) : '',
+                    'total' => $package->package_price,
+                    'currency' => 'INR',
+                    'package_description' => $package->package_description,
+                    'payment_method' => 'online',
+                    'status' => 1,
+                    'expiry_due_date' => '',
+                    'payment_date' => !empty($package->updated_at) ? date('Y-m-d H:i:s', strtotime($package->updated_at)) : (!empty($package->created_at) ? date('Y-m-d H:i:s', strtotime($package->created_at)) : ''),
+                    'job_number' => '',
+                    'source_label' => 'Frontend',
+                    'source_key' => 'frontend',
+                    'payment_by' => 1,
+                ];
+            });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -230,11 +296,59 @@ class UserController extends Controller
         $get_invoices2 = clone $get_invoices;
         $get_invoices3 = clone $get_invoices;
         $get_invoices4 = clone $get_invoices;
+        $get_invoices5 = clone $get_invoices;
+
         $account_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->simplePaginate('10');
-        $account_download_pack_invoices = $get_invoices->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 2)->simplePaginate('10', ['*'], 'di');
-        $account_subscriptions_invoices = $get_invoices2->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 1)->simplePaginate('10', ['*'], 'si');
-        $account_custom_invoices = $get_invoices3->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10', ['*'], 'ci');
-        $account_custom_invoices2 = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10', ['*'], 'oi');
+
+        $backend_download_pack_invoices = $get_invoices2
+            ->where('invoice_type', '=', 2)
+            ->orderBy('imagefootage_performa_invoices.id', 'desc')
+            ->get()
+            ->map(function ($invoice) {
+                $invoice->source_label = 'Backend';
+                $invoice->source_key = 'backend';
+                $invoice->quotation_number_display = 'Q' . $invoice->invoice_name;
+                return $invoice;
+            });
+
+        $backend_subscription_invoices = $get_invoices3
+            ->where('invoice_type', '=', 1)
+            ->orderBy('imagefootage_performa_invoices.id', 'desc')
+            ->get()
+            ->map(function ($invoice) {
+                $invoice->source_label = 'Backend';
+                $invoice->source_key = 'backend';
+                $invoice->quotation_number_display = 'Q' . $invoice->invoice_name;
+                return $invoice;
+            });
+
+        $frontend_download_pack_invoices = $this->buildFrontendPlanInvoiceRows($user_id, 1);
+        $frontend_subscription_invoices = $this->buildFrontendPlanInvoiceRows($user_id, 2);
+
+        $account_download_pack_invoices = $this->paginateCollection(
+            $backend_download_pack_invoices
+                ->concat($frontend_download_pack_invoices)
+                ->sortByDesc(function ($invoice) {
+                    return strtotime((string) ($invoice->invoice_created ?? ''));
+                })
+                ->values(),
+            10,
+            'di'
+        );
+
+        $account_subscriptions_invoices = $this->paginateCollection(
+            $backend_subscription_invoices
+                ->concat($frontend_subscription_invoices)
+                ->sortByDesc(function ($invoice) {
+                    return strtotime((string) ($invoice->invoice_created ?? ''));
+                })
+                ->values(),
+            10,
+            'si'
+        );
+
+        $account_custom_invoices = $get_invoices4->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 0)->simplePaginate('10', ['*'], 'ci');
+        $account_custom_invoices2 = $get_invoices5->orderBy('imagefootage_performa_invoices.id', 'desc')->where('invoice_type', '=', 3)->where('flag', 2)->simplePaginate('10', ['*'], 'oi');
 
 
         $this->Country = new Country();
@@ -257,10 +371,24 @@ class UserController extends Controller
 
         $data['active_subscription_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type', 'imagefootage_user_package.package_products_count')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_expiry_date_from_purchage', 'imagefootage_user_package.package_extended_expiry_data')
+            ->where('imagefootage_user_package.user_id', $user_id)
+            ->whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->whereEffectiveExpiryOnOrAfter(Carbon::today(), 'imagefootage_user_package.package_extended_expiry_data', 'imagefootage_user_package.package_expiry_date_from_purchage')
+            ->where('imagefootage_user_package.package_plan', 2)
+            ->where('imagefootage_user_package.status', 1)
+            ->orderBy('id', 'desc')
+            ->simplePaginate('10');
         $data['active_download_plans'] = UserPackage::leftjoin('imagefootage_packages', function ($join) {
             $join->on('imagefootage_user_package.package_id', '=', 'imagefootage_packages.package_id');
-        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type', 'imagefootage_user_package.package_products_count')->where('imagefootage_user_package.user_id', $user_id)->whereIn('payment_status', ['Completed', 'Transction Success'])->where('package_expiry_date_from_purchage', '>', Now())->where('imagefootage_user_package.package_plan', 1)->where('imagefootage_user_package.status', 1)->orderBy('id', 'desc')->simplePaginate('10');
+        })->select('id', 'imagefootage_user_package.package_name', 'imagefootage_user_package.package_description', 'imagefootage_user_package.package_price', 'imagefootage_user_package.package_permonth_download', 'imagefootage_user_package.downloaded_product', 'imagefootage_user_package.package_type', 'imagefootage_user_package.package_products_count', 'imagefootage_user_package.package_expiry_date_from_purchage', 'imagefootage_user_package.package_extended_expiry_data')
+            ->where('imagefootage_user_package.user_id', $user_id)
+            ->whereIn('payment_status', ['Completed', 'Transction Success'])
+            ->whereEffectiveExpiryOnOrAfter(Carbon::today(), 'imagefootage_user_package.package_extended_expiry_data', 'imagefootage_user_package.package_expiry_date_from_purchage')
+            ->where('imagefootage_user_package.package_plan', 1)
+            ->where('imagefootage_user_package.status', 1)
+            ->orderBy('id', 'desc')
+            ->simplePaginate('10');
 
         return view('admin.account.invoices', compact('title', 'user_id', 'user', 'account_manager_name', 'city_name', 'state_name', 'country_name', 'user_plans', 'userPlanslist', 'agentlist', 'comments', 'user_data', 'states', 'countries', 'cities', 'user_info', 'descriptions', 'active_tab', 'active_nested_tab', 'plans'))
             ->with('account_invoices', $account_invoices)->with('account_quotations', $account_quotations)

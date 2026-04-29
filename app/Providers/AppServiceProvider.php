@@ -33,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Keep AWS SDK PHP deprecation warnings out of HTTP/AJAX responses while
+        // this codebase is still pinned to PHP 7.4.
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        $_ENV['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = 'true';
+        $_SERVER['AWS_SUPPRESS_PHP_DEPRECATION_WARNING'] = 'true';
+
         // Force scheme based on environment + APP_URL host
         if (App::environment('local')) {
             URL::forceScheme('http');
