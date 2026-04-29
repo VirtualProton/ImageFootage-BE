@@ -564,7 +564,7 @@
                                 </td>
                                 <td>
                                   @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoices_name}}</a>
                                   @else
                                   Q{{$invioces->invoice_name}}
                                   @endif
