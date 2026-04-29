@@ -243,18 +243,22 @@
 
         .items-table {
             width: 100%;
-            height: auto;
-            min-height: auto;
-        }
-
-        .items-header-table {
-            width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            height: auto;
+            min-height: auto;
             margin-bottom: 12px;
         }
 
-        .items-header-table th {
+        .items-table thead {
+            display: table-header-group;
+        }
+
+        .items-table tbody {
+            display: table-row-group;
+        }
+
+        .items-table th {
             padding: 11px 12px;
             color: #FFFFFF;
             font-size: 12px;
@@ -264,39 +268,30 @@
             border: none;
         }
 
-        .items-header-table .col-sno {
+        .items-table .col-sno {
             width: 52px;
             text-align: left;
             padding-left: 0;
             padding-right: 0;
         }
 
-        .items-header-table .col-description {
+        .items-table .col-description {
             text-align: left;
             padding-left: 0;
             padding-right: 12px;
         }
 
-        .items-header-table .col-price {
+        .items-table .col-price {
             width: 140px;
             text-align: right;
         }
 
-        .item-card-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            margin-bottom: 12px;
-            border: none;
+        .items-table > tbody > tr {
             break-inside: avoid;
             page-break-inside: avoid;
         }
 
-        .item-card-table:last-child {
-            margin-bottom: 0;
-        }
-
-        .item-card-table > tbody > tr > td {
+        .items-table > tbody > tr > td {
             vertical-align: top;
             padding-top: 14px;
             padding-bottom: 14px;
@@ -694,96 +689,90 @@
         </section>
 
         <section class="section">
-            <div class="items-table">
-                <table class="items-header-table" cellpadding="0" cellspacing="0">
-                    <colgroup>
-                        <col style="width: 52px;">
-                        <col>
-                        <col style="width: 140px;">
-                    </colgroup>
+            <table class="items-table" cellpadding="0" cellspacing="0">
+                <colgroup>
+                    <col style="width: 52px;">
+                    <col>
+                    <col style="width: 140px;">
+                </colgroup>
+                <thead>
                     <tr>
                         <th class="col-sno">S. No.</th>
                         <th class="col-description">Description</th>
                         <th class="col-price">Unit Price</th>
                     </tr>
-                </table>
-
-                <?php foreach ($quotation as $index => $item) {
-                    if (empty($item)) {
-                        continue;
-                    }
-
-                    $rawItemName = trim((string) ($item['name'] ?? ''));
-                    $rawItemCode = trim((string) ($item['product_id'] ?? ''));
-                    $itemTitle = 'Asset ' . ($index + 1);
-                    if ($rawItemCode !== '' && $rawItemName !== '' && strcasecmp($rawItemCode, $rawItemName) !== 0) {
-                        $itemTitle = $rawItemCode . ' : ' . $rawItemName;
-                    } elseif ($rawItemCode !== '') {
-                        $itemTitle = $rawItemCode;
-                    } elseif ($rawItemName !== '') {
-                        $itemTitle = $rawItemName;
-                    }
-
-                    $itemType = trim((string) ($item['type'] ?? ''));
-                    $itemThumb = trim((string) ($item['product_image_pdf'] ?? ($item['product_image'] ?? '')));
-                    if ($itemThumb === '') {
-                        $itemTypeKey = strtolower($itemType);
-                        if (strpos($itemTypeKey, 'music') !== false) {
-                            $itemThumb = $placeholderMusic;
-                        } elseif (strpos($itemTypeKey, 'footage') !== false || strpos($itemTypeKey, 'video') !== false) {
-                            $itemThumb = $placeholderVideo;
-                        } else {
-                            $itemThumb = $placeholderImage;
+                </thead>
+                <tbody>
+                    <?php foreach ($quotation as $index => $item) {
+                        if (empty($item)) {
+                            continue;
                         }
-                    }
 
-                    $resolutionValue = trim((string) ($item['resolution'] ?? ''));
-                    $sizeValue = trim((string) ($item['product_size'] ?? ''));
-                    if ($resolutionValue === '') {
-                        $resolutionValue = trim((string) ($item['size'] ?? ''));
-                    }
-                    $licenseValue = trim(strip_tags((string) ($item['licence_type'] ?? '')));
-                    if ($licenseValue === '') {
-                        $licenseValue = trim((string) ($item['product_type'] ?? ''));
-                    }
-                    $labelValue = trim((string) ($item['size'] ?? ''));
-                    $licensingModelValue = trim((string) ($item['product_type'] ?? ''));
-                    $durationValue = trim((string) ($item['duration'] ?? ''));
-                    $formatValue = trim((string) ($item['format'] ?? ''));
-                    $extraDetails = trim(strip_tags((string) ($item['extra_details'] ?? '')));
-                    $metaRows = [];
-                    if ($itemType !== '') {
-                        $metaRows[] = ['File Type', $itemType];
-                    }
-                    if ($sizeValue !== '') {
-                        $metaRows[] = ['Size', $sizeValue];
-                    }
-                    if ($labelValue !== '' && strcasecmp($labelValue, $sizeValue) !== 0) {
-                        $metaRows[] = ['Label', $labelValue];
-                    }
-                    if ($resolutionValue !== '' && strcasecmp($resolutionValue, $sizeValue) !== 0 && strcasecmp($resolutionValue, $labelValue) !== 0) {
-                        $metaRows[] = ['Resolution', $resolutionValue];
-                    }
-                    if ($licenseValue !== '') {
-                        $metaRows[] = ['License Type', $licenseValue];
-                    }
-                    if ($licensingModelValue !== '' && strcasecmp($licensingModelValue, $licenseValue) !== 0) {
-                        $metaRows[] = ['Licensing Model', $licensingModelValue];
-                    }
-                    if ($formatValue !== '') {
-                        $metaRows[] = ['File Format', $formatValue];
-                    }
-                    if ($durationValue !== '') {
-                        $metaRows[] = ['Duration', $durationValue];
-                    }
-                    ?>
-                    <table class="item-card-table" cellpadding="0" cellspacing="0">
-                        <colgroup>
-                            <col style="width: 52px;">
-                            <col>
-                            <col style="width: 140px;">
-                        </colgroup>
-                        <tr>
+                        $rawItemName = trim((string) ($item['name'] ?? ''));
+                        $rawItemCode = trim((string) ($item['product_id'] ?? ''));
+                        $itemTitle = 'Asset ' . ($index + 1);
+                        if ($rawItemCode !== '' && $rawItemName !== '' && strcasecmp($rawItemCode, $rawItemName) !== 0) {
+                            $itemTitle = $rawItemCode . ' : ' . $rawItemName;
+                        } elseif ($rawItemCode !== '') {
+                            $itemTitle = $rawItemCode;
+                        } elseif ($rawItemName !== '') {
+                            $itemTitle = $rawItemName;
+                        }
+
+                        $itemType = trim((string) ($item['type'] ?? ''));
+                        $itemThumb = trim((string) ($item['product_image_pdf'] ?? ($item['product_image'] ?? '')));
+                        if ($itemThumb === '') {
+                            $itemTypeKey = strtolower($itemType);
+                            if (strpos($itemTypeKey, 'music') !== false) {
+                                $itemThumb = $placeholderMusic;
+                            } elseif (strpos($itemTypeKey, 'footage') !== false || strpos($itemTypeKey, 'video') !== false) {
+                                $itemThumb = $placeholderVideo;
+                            } else {
+                                $itemThumb = $placeholderImage;
+                            }
+                        }
+
+                        $resolutionValue = trim((string) ($item['resolution'] ?? ''));
+                        $sizeValue = trim((string) ($item['product_size'] ?? ''));
+                        if ($resolutionValue === '') {
+                            $resolutionValue = trim((string) ($item['size'] ?? ''));
+                        }
+                        $licenseValue = trim(strip_tags((string) ($item['licence_type'] ?? '')));
+                        if ($licenseValue === '') {
+                            $licenseValue = trim((string) ($item['product_type'] ?? ''));
+                        }
+                        $labelValue = trim((string) ($item['size'] ?? ''));
+                        $licensingModelValue = trim((string) ($item['product_type'] ?? ''));
+                        $durationValue = trim((string) ($item['duration'] ?? ''));
+                        $formatValue = trim((string) ($item['format'] ?? ''));
+                        $extraDetails = trim(strip_tags((string) ($item['extra_details'] ?? '')));
+                        $metaRows = [];
+                        if ($itemType !== '') {
+                            $metaRows[] = ['File Type', $itemType];
+                        }
+                        if ($sizeValue !== '') {
+                            $metaRows[] = ['Size', $sizeValue];
+                        }
+                        if ($labelValue !== '' && strcasecmp($labelValue, $sizeValue) !== 0) {
+                            $metaRows[] = ['Label', $labelValue];
+                        }
+                        if ($resolutionValue !== '' && strcasecmp($resolutionValue, $sizeValue) !== 0 && strcasecmp($resolutionValue, $labelValue) !== 0) {
+                            $metaRows[] = ['Resolution', $resolutionValue];
+                        }
+                        if ($licenseValue !== '') {
+                            $metaRows[] = ['License Type', $licenseValue];
+                        }
+                        if ($licensingModelValue !== '' && strcasecmp($licensingModelValue, $licenseValue) !== 0) {
+                            $metaRows[] = ['Licensing Model', $licensingModelValue];
+                        }
+                        if ($formatValue !== '') {
+                            $metaRows[] = ['File Format', $formatValue];
+                        }
+                        if ($durationValue !== '') {
+                            $metaRows[] = ['Duration', $durationValue];
+                        }
+                        ?>
+                        <tr class="item-card-row">
                             <td class="item-card-sr"><?php echo $index + 1; ?></td>
                             <td class="item-card-description">
                                 <div class="item-content-wrap">
@@ -826,9 +815,9 @@
                             </td>
                             <td class="item-card-price"><?php echo $currencySymbol; ?><?php echo number_format((float) ($item['subtotal'] ?? 0), 2); ?></td>
                         </tr>
-                    </table>
-                <?php } ?>
-            </div>
+                    <?php } ?>
+                </tbody>
+            </table>
         </section>
 
         <section class="section">
