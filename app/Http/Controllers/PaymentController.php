@@ -1330,11 +1330,12 @@ class PaymentController extends Controller
         $pdfDirectory = $this->invoicePdfDirectory();
         $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
         $this->savePdfFromHtml($invoiceHtml, $pdfFilePath, ['isRemoteEnabled' => true]);
+        $pdfBinary = file_get_contents($pdfFilePath);
+        if ($pdfBinary === false) {
+            throw new \RuntimeException('Unable to read generated invoice PDF: ' . $pdfFilePath);
+        }
         $pdf_path = '';
-        // if (!file_exists($pdfPath)) {
-        //     mkdir($pdfPath, 0755, true);
-        // }
-        // $pdf->save($pdfPath . '/' . $fileName);
+        $source = null;
         try {
             $s3Client = new S3Client([
                 // 'credentials' => [
@@ -1359,27 +1360,33 @@ class PaymentController extends Controller
             }
             $pdf_path = $fileupresult['ObjectURL'];
         } catch (\Throwable $th) {
+        } finally {
+            if (is_resource($source)) {
+                fclose($source);
+            }
         }
         if (!empty($pdf_path)) {
             Orders::where('txn_id', '=', $transaction)
                 ->update(['invoice' => $pdf_path]);
-            if (is_file($pdfFilePath)) {
-                unlink($pdfFilePath);
-            }
         }
         $data["subject"] = 'Your Order (' . $OrderData[0]['txn_id'] . ') has been successfull!!';
         $data["email"]   = $OrderData[0]['order_email'];
         //$data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $OrderData[0]['bill_firstname'];
-        Mail::send('invoice', $data, function ($message) use ($data, $pdfFilePath, $fileName) {
-            $message->to($data["email"])
-                ->from('admin@imagefootage.com', 'Imagefootage')
-                ->subject($data['subject'])
-                ->attach($pdfFilePath, [
-                    'as' => $fileName,
-                    'mime' => 'application/pdf',
-                ]);
-        });
+        try {
+            Mail::send('invoice', $data, function ($message) use ($data, $pdfBinary, $fileName) {
+                $message->to($data["email"])
+                    ->from('admin@imagefootage.com', 'Imagefootage')
+                    ->subject($data['subject'])
+                    ->attachData($pdfBinary, $fileName, [
+                        'mime' => 'application/pdf',
+                    ]);
+            });
+        } finally {
+            if (is_file($pdfFilePath)) {
+                unlink($pdfFilePath);
+            }
+        }
     }
 
     public function invoiceWithemailPlan($OrderData, $transaction)
@@ -1397,7 +1404,12 @@ class PaymentController extends Controller
         $pdfDirectory = $this->invoicePdfDirectory();
         $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
         $this->savePdfFromHtml($invoiceHtml, $pdfFilePath);
+        $pdfBinary = file_get_contents($pdfFilePath);
+        if ($pdfBinary === false) {
+            throw new \RuntimeException('Unable to read generated plan invoice PDF: ' . $pdfFilePath);
+        }
         $pdf_path = '';
+        $source = null;
         try {
             $s3Client = new S3Client([
                 // 'credentials' => [
@@ -1421,13 +1433,14 @@ class PaymentController extends Controller
             }
             $pdf_path = $fileupresult['ObjectURL'];
         } catch (\Throwable $th) {
+        } finally {
+            if (is_resource($source)) {
+                fclose($source);
+            }
         }
         if (!empty($pdf_path)) {
             UserPackage::where('transaction_id', '=', $transaction)
                 ->update(['invoice' => $pdf_path]);
-            if (is_file($pdfFilePath)) {
-                unlink($pdfFilePath);
-            }
         }
         if ($OrderData['package_plan'] == 1) {
             $plan = 'Download Pack For ' . $OrderData['package_expiry_yearly'] . ' year';
@@ -1455,15 +1468,20 @@ class PaymentController extends Controller
         $data["email"]   = $OrderData['user']['email'];
         //$data["invoice"] = $dataForEmail[0]['invoice_name'];
         $data["name"]    = $OrderData['user']['first_name'];
-        Mail::send('invoice', $data, function ($message) use ($data, $pdfFilePath, $fileName) {
-            $message->to($data["email"])
-                ->from('admin@imagefootage.com', 'Imagefootage')
-                ->subject($data['subject'])
-                ->attach($pdfFilePath, [
-                    'as' => $fileName,
-                    'mime' => 'application/pdf',
-                ]);
-        });
+        try {
+            Mail::send('invoice', $data, function ($message) use ($data, $pdfBinary, $fileName) {
+                $message->to($data["email"])
+                    ->from('admin@imagefootage.com', 'Imagefootage')
+                    ->subject($data['subject'])
+                    ->attachData($pdfBinary, $fileName, [
+                        'mime' => 'application/pdf',
+                    ]);
+            });
+        } finally {
+            if (is_file($pdfFilePath)) {
+                unlink($pdfFilePath);
+            }
+        }
     }
 
     public function emailHtml()
