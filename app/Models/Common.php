@@ -322,7 +322,7 @@ class Common extends Model
         }
     }
 
-    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null)
+    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null, $sendRemainder = false)
     {
         try {
             $amountInPaise = (int) round(((float) $amountInRupees) * 100);
@@ -337,6 +337,7 @@ class Common extends Model
                 'currency' => $currency,
                 'description' => $description,
                 'reference_id' => (string) $referenceId,
+                'reminder_enable' => $sendRemainder,
                 'customer' => [
                     'name' => (string) ($customerName ?? ''),
                     'email' => (string) ($customerEmail ?? ''),
@@ -641,7 +642,8 @@ class Common extends Model
                 $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
                 $dataForEmail[0]['mobile'] ?? '',
                 $currency,
-                $cancelled_on
+                $cancelled_on,
+                false
             );
             $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
             $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
@@ -1042,7 +1044,9 @@ class Common extends Model
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $currency,
+            null,
+            true
             );
         }
         $invoicePayOnlineLink = $invoicePaymentLink['payment_link_url'] ?? ($invoicePaymentLink['url'] ?? null);
@@ -1402,7 +1406,9 @@ class Common extends Model
             $dataForEmail[0]['first_name'] ?? '',
             $data["email"] ?? '',
             $dataForEmail[0]['mobile'] ?? '',
-            $currency
+            $currency,
+            null,
+            true
         );
         $invoicePayOnlineLink = $invoicePaymentLink['payment_link_url'] ?? ($invoicePaymentLink['url'] ?? null);
         $dataForEmail[0]['payment_url'] = $invoicePayOnlineLink;
@@ -1783,7 +1789,8 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
             $currency,
-            $cancelled_on
+            $cancelled_on,
+            false
         );
         $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
         $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
@@ -2052,7 +2059,8 @@ class Common extends Model
             $dataForEmail[0]['email'] ?? ($dataForEmail[0]['email_id'] ?? ''),
             $dataForEmail[0]['mobile'] ?? '',
             $currency,
-            $cancelled_on
+            $cancelled_on,
+            false
         );
         $quotationPayOnlineLink = $quotationPaymentLink['payment_link_url'] ?? ($quotationPaymentLink['url'] ?? null);
         $this->persistRazorpayPaymentLinkMetadata($id, $quotationPaymentLink, $quotationReferenceId, $quotationPaymentLink['expire_by'] ?? null);
