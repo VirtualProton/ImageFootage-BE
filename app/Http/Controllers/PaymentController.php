@@ -96,6 +96,17 @@ class PaymentController extends Controller
         return asset($relativePath);
     }
 
+    private function invoicePdfDirectory(): string
+    {
+        $directory = storage_path('app/public/pdf');
+
+        if (!is_dir($directory) && !@mkdir($directory, 0777, true) && !is_dir($directory)) {
+            throw new \RuntimeException('Unable to create invoice PDF directory: ' . $directory);
+        }
+
+        return $directory;
+    }
+
     private function decorateFrontendPlanInvoiceOrderData(array $orders, string $paymentMethod = 'online'): array
     {
         $orders['frontend_url'] = $orders['frontend_url'] ?? (config('app.front_end_url') ?: config('app.url'));
@@ -1246,7 +1257,9 @@ class PaymentController extends Controller
             'defaultFont' => 'sans-serif',
         ])->loadHTML($invoiceHtml);
         $fileName = $transaction . "_web_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
+        $pdfDirectory = $this->invoicePdfDirectory();
+        $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
+        $pdf->save($pdfFilePath);
         $pdf_path = '';
         // if (!file_exists($pdfPath)) {
         //     mkdir($pdfPath, 0755, true);
@@ -1263,7 +1276,7 @@ class PaymentController extends Controller
                 'version' => '2006-03-01'
             ]);
             $path = 'invoice/' . $fileName;
-            $source = fopen(storage_path('app/public/pdf') . '/' . $fileName, 'rb');
+            $source = fopen($pdfFilePath, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -1280,7 +1293,9 @@ class PaymentController extends Controller
         if (!empty($pdf_path)) {
             Orders::where('txn_id', '=', $transaction)
                 ->update(['invoice' => $pdf_path]);
-            unlink(storage_path('app/public/pdf') . '/' . $fileName);
+            if (is_file($pdfFilePath)) {
+                unlink($pdfFilePath);
+            }
         }
         $data["subject"] = 'Your Order (' . $OrderData[0]['txn_id'] . ') has been successfull!!';
         $data["email"]   = $OrderData[0]['order_email'];
@@ -1311,7 +1326,9 @@ class PaymentController extends Controller
             'payment_method' => $OrderData['payment_method'] ?? 'online',
         ]));
         $fileName = $transaction . "_web_plan_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
+        $pdfDirectory = $this->invoicePdfDirectory();
+        $pdfFilePath = $pdfDirectory . DIRECTORY_SEPARATOR . $fileName;
+        $pdf->save($pdfFilePath);
         $pdf_path = '';
         try {
             $s3Client = new S3Client([
@@ -1324,7 +1341,7 @@ class PaymentController extends Controller
                 'version' => '2006-03-01'
             ]);
             $path = 'invoice/' . $fileName;
-            $source = fopen(storage_path('app/public/pdf') . '/' . $fileName, 'rb');
+            $source = fopen($pdfFilePath, 'rb');
             $uploader = new MultipartUploader($s3Client, $source, [
                 'bucket' => 'imgfootage',
                 'key' => $path,
@@ -1340,7 +1357,9 @@ class PaymentController extends Controller
         if (!empty($pdf_path)) {
             UserPackage::where('transaction_id', '=', $transaction)
                 ->update(['invoice' => $pdf_path]);
-            unlink(storage_path('app/public/pdf') . '/' . $fileName);
+            if (is_file($pdfFilePath)) {
+                unlink($pdfFilePath);
+            }
         }
         if ($OrderData['package_plan'] == 1) {
             $plan = 'Download Pack For ' . $OrderData['package_expiry_yearly'] . ' year';
@@ -1380,7 +1399,8 @@ class PaymentController extends Controller
     {
         $pdf = PDF::loadHTML(view('email.plan'));
         $fileName = "web_plan_invoice.pdf";
-        $pdf->save(storage_path('app/public/pdf') . '/' . $fileName);
+        $pdfDirectory = $this->invoicePdfDirectory();
+        $pdf->save($pdfDirectory . DIRECTORY_SEPARATOR . $fileName);
     }
 
     public function convert_number_to_words($number)
