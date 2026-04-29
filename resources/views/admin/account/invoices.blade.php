@@ -401,7 +401,7 @@
                                 </td>
                                 <td>
                                   @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
                                   @else
                                   Q{{$invioces->invoice_name}}
                                   @endif
@@ -733,10 +733,11 @@
                                 </td>
                                 <td>
                                   @if($invioces->quotation_url)
-                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->quotation_name}}</a>
+                                  <a href="{{$invioces->quotation_url}}" target="_blank">Q{{$invioces->invoice_name}}</a>
                                   @else
                                   Q{{$invioces->invoice_name}}
                                   @endif
+                                </td>
                                 <td>{{$invioces->invoice_created}}</td>
                                 <td>{{$invioces->total}}</td>
                                 <td>{{$invioces->currency}}</td>
