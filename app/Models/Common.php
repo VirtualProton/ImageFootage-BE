@@ -322,7 +322,7 @@ class Common extends Model
         }
     }
 
-    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null, $sendRemainder = false)
+    private function createRazorpayPaymentLink($amountInRupees, $description, $referenceId, $customerName, $customerEmail, $customerContact, $currency = 'INR', $expireAt = null, $sendReminder = false)
     {
         try {
             $amountInPaise = (int) round(((float) $amountInRupees) * 100);
@@ -337,7 +337,7 @@ class Common extends Model
                 'currency' => $currency,
                 'description' => $description,
                 'reference_id' => (string) $referenceId,
-                'reminder_enable' => $sendRemainder,
+                'reminder_enable' => $sendReminder,
                 'customer' => [
                     'name' => (string) ($customerName ?? ''),
                     'email' => (string) ($customerEmail ?? ''),
