@@ -25,7 +25,9 @@ FROM php:7.4.33-fpm
 WORKDIR /var/www/html
 
 # System packages & PHP extensions
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get -o Acquire::Check-Valid-Until=false update \
+    && apt-get install -y --no-install-recommends \
     nginx \
     git \
     curl \
