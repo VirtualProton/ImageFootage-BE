@@ -373,7 +373,7 @@ class SearchController extends Controller
         } */
         
         $imagesMedia        = new \App\Http\Pond5\ImageApi();
-        $pond5ImagesData    = $imagesMedia->search($keyword, [], 35, $keyword['pagenumber']);
+        $pond5ImagesData    = $imagesMedia->search($keyword, [], 50, $keyword['pagenumber']);
         if ($pond5ImagesData) {
             $getKeyword['productType'] = 1;
             $all_products = $this->setResponseFromApi($getKeyword, $pond5ImagesData, $type);
