@@ -26,7 +26,7 @@ WORKDIR /var/www/html
 
 # System packages & PHP extensions
 # RUN apt-get update && apt-get install -y --no-install-recommends \
-RUN RUN printf '%s\n' \
+RUN printf '%s\n' \
     'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20260831/ bullseye main' \
     'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20260831/ bullseye-updates main' \
     'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/20260831/ bullseye-security main' \
