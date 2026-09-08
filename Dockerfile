@@ -26,7 +26,10 @@ WORKDIR /var/www/html
 
 # System packages & PHP extensions
 # RUN apt-get update && apt-get install -y --no-install-recommends \
-RUN apt-get -o Acquire::Check-Valid-Until=false update \
+RUN echo "deb http://archive.debian.org/debian bullseye main" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
+    && rm -rf /etc/apt/sources.list.d/* \
+    && apt-get -o Acquire::Check-Valid-Until=false update \
     && apt-get install -y --no-install-recommends \
     nginx \
     git \
