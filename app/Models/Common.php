@@ -382,6 +382,17 @@ class Common extends Model
         return $this->pdfImagePath($relativePath);
     }
 
+    private function pdfAbsoluteImageBase64($absolutePath)
+    {
+        if (file_exists($absolutePath)) {
+            $mime = mime_content_type($absolutePath);
+            $data = base64_encode(file_get_contents($absolutePath));
+            return 'data:' . $mime . ';base64,' . $data;
+        }
+
+        return 'file:///' . str_replace('\\', '/', $absolutePath);
+    }
+
     private function pdfImageDataUriFromBinary(string $binary, string $source = ''): string
     {
         $mime = '';
@@ -740,8 +751,11 @@ class Common extends Model
             }
             $pdfPath = $pdfDirectory . '/' . $fileName;
 
-            $quotationHtml = view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words])->render();
-            $this->savePdfFromHtml($quotationHtml, $pdfPath);
+            $useCustomCpPdf = (int) ($data['flag'] ?? 0) === 2;
+            if (!$useCustomCpPdf) {
+                $quotationHtml = view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words])->render();
+                $this->savePdfFromHtml($quotationHtml, $pdfPath);
+            }
 
             try {
                 $customTemplatePath = base_path('email_task/Send Custom Quotation/Custom/Quotation-CP.html');
@@ -752,11 +766,13 @@ class Common extends Model
                     $customerName = trim(($dataForEmail[0]['first_name'] ?? '') . ' ' . ($dataForEmail[0]['last_name'] ?? ''));
                     $clientCompanyName = $dataForEmail[0]['company'] ?? '';
 
-                    // Use CID placeholders and replace them with embedded images while sending mail.
-                    $companyLogoUrl = '[CP_LOGO_CID]';
-                    $defaultImageThumb = '[CP_IMAGE_CID]';
-                    $defaultVideoThumb = '[CP_VIDEO_CID]';
-                    $defaultMusicThumb = '[CP_MUSIC_CID]';
+                    // Use real image sources for generated PDFs and CID placeholders for email body usage.
+                    $companyLogoUrl = $useCustomCpPdf
+                        ? $this->pdfAbsoluteImageBase64(base_path('email_task/Assets/cplogo.png'))
+                        : '[CP_LOGO_CID]';
+                    $defaultImageThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_image'] : '[CP_IMAGE_CID]';
+                    $defaultVideoThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_video'] : '[CP_VIDEO_CID]';
+                    $defaultMusicThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_music'] : '[CP_MUSIC_CID]';
                     $addressParts = array_filter([
                         $dataForEmail[0]['address'] ?? '',
                         $dataForEmail[0]['address2'] ?? '',
@@ -864,6 +880,12 @@ class Common extends Model
                     }
 
                     $customTemplateHtml = str_replace('[ITEM_ROWS]', $itemRowsHtml, $customTemplateHtml);
+                    $customTemplateHtml = preg_replace(
+                        '/<img\s+src="[^"]*"\s+alt="Company Logo"/i',
+                        '<img src="' . e($companyLogoUrl) . '" alt="Company Logo"',
+                        $customTemplateHtml,
+                        1
+                    );
 
                     // Hide field blocks where values are empty or unresolved placeholders.
                     $customTemplateHtml = preg_replace(
@@ -878,6 +900,15 @@ class Common extends Model
                     );
                     $customTemplateHtml = preg_replace('/\[(?!CP_(?:LOGO|IMAGE|VIDEO|MUSIC)_CID\])[^\]]+\]/', '', $customTemplateHtml);
                     $customTemplateHtml = preg_replace('/<div class="pan-row">\s*<\/div>/is', '', $customTemplateHtml);
+
+                    if ($useCustomCpPdf) {
+                        $this->savePdfFromHtml($customTemplateHtml, $pdfPath);
+                    }
+                }
+
+                if ($useCustomCpPdf && (!file_exists($pdfPath) || filesize($pdfPath) === 0)) {
+                    $quotationHtml = view('email.quotation', ['quotation' => $dataForEmail, 'amount_in_words' => $amount_in_words])->render();
+                    $this->savePdfFromHtml($quotationHtml, $pdfPath);
                 }
 
                 \Log::info('Quotation mail attempt started in save_proforma', [
@@ -1118,14 +1149,17 @@ class Common extends Model
         }
         $fileName = $dataForEmail[0]['invoice_name'] . "_invoice.pdf";
         $pdfPath = $pdfDirectory . '/' . $fileName;
-        $invoiceHtml = view('email.backend_invoice', [
-            'quotation' => $dataForEmail,
-            'amount_in_words' => strtoupper($amount_in_words),
-            'payment_method' => $payment_method,
-            'po' => $po,
-            'po_date' => $po_date,
-        ])->render();
-        $this->savePdfFromHtml($invoiceHtml, $pdfPath);
+        $useCustomCpPdf = (int) ($dataForEmail[0]['flag'] ?? 0) === 2;
+        if (!$useCustomCpPdf) {
+            $invoiceHtml = view('email.backend_invoice', [
+                'quotation' => $dataForEmail,
+                'amount_in_words' => strtoupper($amount_in_words),
+                'payment_method' => $payment_method,
+                'po' => $po,
+                'po_date' => $po_date,
+            ])->render();
+            $this->savePdfFromHtml($invoiceHtml, $pdfPath);
+        }
         // if ($payment_method == 'online') {
 
         //     // Send payment link to customer via email
@@ -1142,10 +1176,8 @@ class Common extends Model
         //             ->attachData($pdf->output(), $fileName);
         //     });
         // }
-        $isCustomIfInvoice = (int) ($dataForEmail[0]['flag'] ?? 0) === 2;
-        $customInvoiceTemplatePath = $isCustomIfInvoice
-            ? base_path('email_task/Send Quotation/Custom/Invoice-IF.html')
-            : base_path('email_task/Send Custom Quotation/Custom/Invoice-CP.html');
+        $isCustomIfInvoice = false;
+        $customInvoiceTemplatePath = base_path('email_task/Send Custom Quotation/Custom/Invoice-CP.html');
         $customTemplateHtml = '';
         if (file_exists($customInvoiceTemplatePath)) {
             $customTemplateHtml = file_get_contents($customInvoiceTemplatePath);
@@ -1196,9 +1228,12 @@ class Common extends Model
             ];
             $customTemplateHtml = str_replace(array_keys($replaceMap), array_values($replaceMap), $customTemplateHtml);
 
-            $defaultImageThumb = '[CP_IMAGE_CID]';
-            $defaultVideoThumb = '[CP_VIDEO_CID]';
-            $defaultMusicThumb = '[CP_MUSIC_CID]';
+            $companyLogoUrl = $useCustomCpPdf
+                ? $this->pdfAbsoluteImageBase64(base_path('email_task/Assets/cplogo.png'))
+                : '[CP_LOGO_CID]';
+            $defaultImageThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_image'] : '[CP_IMAGE_CID]';
+            $defaultVideoThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_video'] : '[CP_VIDEO_CID]';
+            $defaultMusicThumb = $useCustomCpPdf ? $dataForEmail[0]['placeholder_music'] : '[CP_MUSIC_CID]';
             $itemRowsHtml = '';
             foreach ($dataForEmail as $index => $item) {
                 $itemCode = trim((string) ($item['product_id'] ?? ''));
@@ -1282,11 +1317,26 @@ class Common extends Model
                 }
             }
 
-            $customTemplateHtml = preg_replace('/<img\s+src="[^"]*"\s+alt="Company Logo"/i', '<img src="[CP_LOGO_CID]" alt="Company Logo"', $customTemplateHtml, 1);
+            $customTemplateHtml = preg_replace('/<img\s+src="[^"]*"\s+alt="Company Logo"/i', '<img src="' . e($companyLogoUrl) . '" alt="Company Logo"', $customTemplateHtml, 1);
             $customTemplateHtml = preg_replace('/<div class="info-row">\s*<span class="info-label">[^<]*<\/span>\s*<span class="info-value">\s*(?:\[[^\]]+\]|)\s*<\/span>\s*<\/div>/is', '', $customTemplateHtml);
             $customTemplateHtml = preg_replace('/<div>\s*<span class="lbl">[^<]*<\/span>\s*<span class="val">\s*(?:\[[^\]]+\]|)\s*<\/span>\s*<\/div>/is', '', $customTemplateHtml);
             $customTemplateHtml = preg_replace('/\[(?!CP_(?:LOGO|IMAGE|VIDEO|MUSIC)_CID\])[^\]]+\]/', '', $customTemplateHtml);
             $customTemplateHtml = preg_replace('/<div class="pan-row">\s*<\/div>/is', '', $customTemplateHtml);
+
+            if ($useCustomCpPdf) {
+                $this->savePdfFromHtml($customTemplateHtml, $pdfPath);
+            }
+        }
+
+        if ($useCustomCpPdf && (!file_exists($pdfPath) || filesize($pdfPath) === 0)) {
+            $invoiceHtml = view('email.backend_invoice', [
+                'quotation' => $dataForEmail,
+                'amount_in_words' => strtoupper($amount_in_words),
+                'payment_method' => $payment_method,
+                'po' => $po,
+                'po_date' => $po_date,
+            ])->render();
+            $this->savePdfFromHtml($invoiceHtml, $pdfPath);
         }
 
         $invoiceMailFailures = [];
