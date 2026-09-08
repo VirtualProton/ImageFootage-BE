@@ -765,6 +765,9 @@ class Common extends Model
                     $city = $dataForEmail[0]['cityname'] ?? '';
                     $postalCode = $dataForEmail[0]['postal_code'] ?? '';
                     $country = $dataForEmail[0]['countryname'] ?? '';
+                    $state = trim((string) ($dataForEmail[0]['statename'] ?? ''));
+                    $gstinPrefix = substr(trim((string) ($dataForEmail[0]['gst'] ?? '')), 0, 2);
+                    $placeOfSupply = trim($state . ($gstinPrefix !== '' ? ' - ' . $gstinPrefix : ''));
                     $taxAmount = (float) ($dataForEmail[0]['tax'] ?? 0);
                     $totalAmount = (float) ($dataForEmail[0]['total'] ?? 0);
                     $subTotal = max($totalAmount - $taxAmount, 0);
@@ -782,6 +785,7 @@ class Common extends Model
                         '[City]' => $city,
                         '[Postal Code]' => $postalCode,
                         '[Country]' => $country,
+                        '[Place of Supply]' => $placeOfSupply,
                         '[Client PAN Number]' => $dataForEmail[0]['pan'] ?? '',
                         '[Client GSTIN]' => $dataForEmail[0]['gst'] ?? '',
                         '[Client Contact Number]' => $dataForEmail[0]['mobile'] ?? '',
@@ -1156,6 +1160,9 @@ class Common extends Model
             $city = $dataForEmail[0]['cityname'] ?? '';
             $postalCode = $dataForEmail[0]['postal_code'] ?? '';
             $country = $dataForEmail[0]['countryname'] ?? '';
+            $state = trim((string) ($dataForEmail[0]['statename'] ?? ''));
+            $gstinPrefix = substr(trim((string) ($dataForEmail[0]['gst'] ?? '')), 0, 2);
+            $placeOfSupply = trim($state . ($gstinPrefix !== '' ? ' - ' . $gstinPrefix : ''));
             $taxAmount = (float) ($dataForEmail[0]['tax'] ?? 0);
             $totalAmount = (float) ($dataForEmail[0]['total'] ?? 0);
             $subTotal = max($totalAmount - $taxAmount, 0);
@@ -1174,6 +1181,7 @@ class Common extends Model
                 '[City]' => $city,
                 '[Postal Code]' => $postalCode,
                 '[Country]' => $country,
+                '[Place of Supply]' => $placeOfSupply,
                 '[Client PAN Number]' => $dataForEmail[0]['pan'] ?? '',
                 '[Client GSTIN]' => $dataForEmail[0]['gst'] ?? '',
                 '[Client Contact Number]' => $dataForEmail[0]['mobile'] ?? '',

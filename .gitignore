@@ -17,3 +17,5 @@ yarn-error.log
 /public/mix-manifest.json
 /public/uploads/editorialmainimage/
 server-6.0.asc
+tmp
+output

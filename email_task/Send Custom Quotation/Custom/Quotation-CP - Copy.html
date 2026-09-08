@@ -118,106 +118,67 @@
     }
 
     /* ── META ── */
-    .invoice-info-section {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-      padding: 14px 28px 16px;
-      border-bottom: 2px solid #222;
-      color: #111;
-      font-size: 12.5px;
-      line-height: 1.1;
-    }
-
-    .invoice-info-left,
-    .invoice-info-right {
-      display: table-cell;
-      vertical-align: top;
-    }
-
-    .invoice-info-left {
-      width: 46%;
-      padding-right: 42px;
-    }
-
-    .invoice-info-right {
-      width: 54%;
-      padding-left: 12px;
-    }
-
-    .invoice-line-block {
-      border-left: 2px solid #111;
-      padding-left: 6px;
-      margin-bottom: 18px;
-    }
-
-    .invoice-to-block {
-      border-left: 2px solid #111;
-      padding-left: 6px;
-      margin-bottom: 46px;
-    }
-
-    .invoice-to-title {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.05;
-      margin-bottom: 2px;
-    }
-
-    .invoice-address {
-      line-height: 1.05;
+    .info-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 16px 40px;
+      gap: 20px;
+      border-bottom: 1px solid #ddd;
     }
 
     .info-row {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-      margin: 0;
-      line-height: 1.1;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    .info-label,
-    .info-value,
-    .lbl,
-    .val {
-      display: table-cell;
-      vertical-align: top;
-      color: #111;
-      font-weight: 400;
+      display: flex;
+      font-size: 11px;
+      margin-bottom: 3px;
     }
 
     .info-label {
-      width: 58%;
-      padding-right: 8px;
+      color: #777;
+      min-width: 110px;
+      flex-shrink: 0;
     }
 
     .info-value {
-      width: 42%;
+      color: #111;
+      font-weight: 500;
     }
 
-    .invoice-info-left .info-label,
-    .pan-row .lbl {
-      width: 66%;
+    /* ── CLIENT ── */
+    .client-title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #111;
+      padding: 12px 40px 0;
     }
 
-    .invoice-info-left .info-value,
-    .pan-row .val {
-      width: 34%;
+    .client-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 8px 40px 14px;
+      border-bottom: 2px solid #222;
+      gap: 20px;
     }
 
-    .right-spacer {
-      height: 22px;
-    }
-
-    .right-bottom-spacer {
-      height: 34px;
+    .client-address {
+      font-size: 11px;
+      color: #333;
+      line-height: 1.6;
     }
 
     .pan-row {
-      margin-top: 0;
-      line-height: 1.1;
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .pan-row .lbl {
+      color: #777;
+      margin-right: 6px;
+    }
+
+    .pan-row .val {
+      color: #111;
+      font-weight: 500;
     }
 
     /* ── TABLE HEADER ── */
@@ -546,7 +507,7 @@
     <div class="top-header">
       <div>
         <img src="../../Assets/cplogo.png" alt="Company Logo"
-          style="height:154px; width:154px; display:block; margin-top:-12px;"
+          style="height:154px; width:200px; display:block; margin-top:-12px;"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div
           style="display:none; width:120px; height:auto; border:1px dashed #ccc; align-items:center; justify-content:center; background:#f9f9f9; border-radius:4px;">
@@ -560,49 +521,41 @@
       </div>
     </div>
 
-    <!-- META / CLIENT -->
-    <div class="invoice-info-section">
-      <div class="invoice-info-left">
-        <div class="invoice-line-block">
-          <div class="info-row"><span class="info-label">Invoice No.</span><span class="info-value">[Estimate
-              Number]</span></div>
-          <div class="info-row"><span class="info-label">Invoice Date</span><span class="info-value">[Estimate
-              Date]</span></div>
-          <div class="info-row"><span class="info-label">Client Code</span><span class="info-value">[Client
-              Code]</span></div>
-        </div>
-
-        <div class="invoice-to-block">
-          <div class="invoice-to-title">Invoice To</div>
-          <div class="invoice-address">Accounts Payable<br>[Client Name]<br>[Company Name]<br>[Address]<br>[City] - [Postal Code]<br>[Country]
-          </div>
-        </div>
-
-        <div class="pan-row">
-          <div class="info-row"><span class="lbl">Permanent Account Number</span><span class="val">[Client PAN
-              Number]</span></div>
-          <div class="info-row"><span class="lbl">GSTIN</span><span class="val">[Client GSTIN]</span></div>
-          <div class="info-row"><span class="lbl">Place of Supply</span><span class="val">[Place of Supply]</span></div>
+    <!-- META -->
+    <div class="info-section">
+      <div>
+        <div class="info-row"><span class="info-label">Estimate No.</span><span class="info-value">[Estimate
+            Number]</span></div>
+        <div class="info-row"><span class="info-label">Estimate Date</span><span class="info-value">[Estimate
+            Date]</span></div>
+        <div class="info-row"><span class="info-label">Client Code</span><span class="info-value">[Client Code]</span>
         </div>
       </div>
-
-      <div class="invoice-info-right">
-        <div class="info-row"><span class="info-label">Permanent Account Number</span><span
-            class="info-value">AAFCC2629B</span></div>
+      <div>
+        <div class="info-row"><span class="info-label">Company Name</span><span class="info-value">Conceptual Pictures
+            Worldwide Pvt. Ltd</span></div>
+        <div class="info-row"><span class="info-label">Company Pan No</span><span class="info-value">AAFCC2629B</span>
+        </div>
         <div class="info-row"><span class="info-label">GSTIN</span><span class="info-value">36AAFCC2629B1Z3</span></div>
         <div class="info-row"><span class="info-label">CIN Number</span><span
             class="info-value">U123456TG20254728</span></div>
+      </div>
+    </div>
 
-        <div class="right-spacer"></div>
-
-        <div class="info-row"><span class="info-label">Purchase Order No.</span><span class="info-value">Email
-            Confirmation</span></div>
-        <div class="info-row"><span class="info-label">Purchase Order Date</span><span class="info-value">[Estimate
-            Date]</span></div>
+    <!-- CLIENT -->
+    <div class="client-title">Client Details</div>
+    <div class="client-section">
+      <div>
+        <div class="client-address">[Company Name]<br>[Address]<br>[City] - [Postal Code]<br>[Country]</div>
+        <div class="pan-row">
+          <div><span class="lbl">Pan No</span><span class="val">[Client PAN Number]</span></div>
+          <div><span class="lbl">GSTIN</span><span class="val">[Client GSTIN]</span></div>
+        </div>
+      </div>
+      <div>
         <div class="info-row"><span class="info-label">End Client</span><span class="info-value">[End Client
-            Name]</span></div>
-        <div class="info-row"><span class="info-label">Project Name</span><span class="info-value">For Your Eyes
-            Only</span></div>
+            Name]</span>
+        </div>
         <div class="info-row"><span class="info-label">Ordered By</span><span class="info-value">[Client Name]</span>
         </div>
         <div class="info-row"><span class="info-label">Mail ID</span><span class="info-value">[Client Email]</span>
@@ -611,14 +564,6 @@
             Number]</span></div>
         <div class="info-row"><span class="info-label">Sales Person</span><span class="info-value">[Account
             Manager]</span></div>
-        <div class="info-row"><span class="info-label">Estimate No.</span><span class="info-value">[Estimate
-            Number]</span></div>
-
-        <div class="right-bottom-spacer"></div>
-
-        <div class="info-row"><span class="info-label">Payment Terms</span><span class="info-value">Net 60 Days</span>
-        </div>
-        <div class="info-row"><span class="info-label">Due Date</span><span class="info-value">17-AUG-25</span></div>
       </div>
     </div>
 
