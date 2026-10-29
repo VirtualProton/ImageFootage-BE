@@ -782,20 +782,39 @@ class Common extends Model
                     $postalCode = $dataForEmail[0]['postal_code'] ?? '';
                     $country = $dataForEmail[0]['countryname'] ?? '';
                     $state = trim((string) ($dataForEmail[0]['statename'] ?? ''));
-                    $gstinPrefix = substr(trim((string) ($dataForEmail[0]['gst'] ?? '')), 0, 2);
-                    $placeOfSupply = trim($state . ($gstinPrefix !== '' ? ' - ' . $gstinPrefix : ''));
+                    $gstin = trim((string) ($dataForEmail[0]['gst'] ?? ''));
+                    $gstinPrefix = substr($gstin, 0, 2);
+                    $placeOfSupplyParts = array_filter([$gstinPrefix, $state], function ($value) {
+                        return trim((string) $value) !== '';
+                    });
+                    $placeOfSupply = implode(' - ', $placeOfSupplyParts);
+                    $clientContactNumber = trim((string) ($dataForEmail[0]['phone'] ?? ''));
+                    if ($clientContactNumber === '') {
+                        $clientContactNumber = trim((string) ($dataForEmail[0]['mobile'] ?? ''));
+                    }
+                    $salesPerson = trim((string) ($dataForEmail[0]['quotation_created_by_name'] ?? ''));
+                    $clientTaxRows = '';
+                    if (trim((string) ($dataForEmail[0]['pan'] ?? '')) !== '') {
+                        $clientTaxRows .= '<div class="info-row"><span class="lbl">Permanent Account Number</span><span class="val">' . e($dataForEmail[0]['pan']) . '</span></div>';
+                    }
+                    if ($gstin !== '') {
+                        $clientTaxRows .= '<div class="info-row"><span class="lbl">GSTIN</span><span class="val">' . e($gstin) . '</span></div>';
+                    }
+                    if ($placeOfSupply !== '') {
+                        $clientTaxRows .= '<div class="info-row"><span class="lbl">Place of Supply</span><span class="val">' . e($placeOfSupply) . '</span></div>';
+                    }
                     $taxAmount = (float) ($dataForEmail[0]['tax'] ?? 0);
                     $totalAmount = (float) ($dataForEmail[0]['total'] ?? 0);
                     $subTotal = max($totalAmount - $taxAmount, 0);
 
                     $replaceMap = [
                         '[Estimate Number]' => 'Q' . $dataForEmail[0]['invoice_name'],
-                        '[Estimate Date]' => date('d.m.Y', strtotime($dataForEmail[0]['invicecreted'])),
+                        '[Estimate Date]' => Carbon::now()->format('d.m.Y'),
                         '[Company Logo URL]' => $companyLogoUrl,
                         '[Client Name]' => $customerName,
                         '[Client Email]' => $dataForEmail[0]['email'] ?? '',
                         '[End Client Name]' => $dataForEmail[0]['end_client'] ?? '',
-                        '[Client Code]' => $dataForEmail[0]['vendor_code'] ?? '',
+                        '[Client Code]' => $dataForEmail[0]['client_user_id'] ?? ($dataForEmail[0]['user_id'] ?? ''),
                         '[Company Name]' => $clientCompanyName,
                         '[Address]' => $clientAddress,
                         '[City]' => $city,
@@ -804,8 +823,9 @@ class Common extends Model
                         '[Place of Supply]' => $placeOfSupply,
                         '[Client PAN Number]' => $dataForEmail[0]['pan'] ?? '',
                         '[Client GSTIN]' => $dataForEmail[0]['gst'] ?? '',
-                        '[Client Contact Number]' => $dataForEmail[0]['mobile'] ?? '',
-                        '[Account Manager]' => $dataForEmail[0]['contact_owner'] ?? '',
+                        '[Client Contact Number]' => $clientContactNumber,
+                        '[Account Manager]' => $salesPerson,
+                        '[CLIENT_TAX_ROWS]' => $clientTaxRows,
                         '[sub total]' => number_format($subTotal, 2),
                         '[discount amount]' => '0.00',
                         '[tax percentage]' => (string) config('constants.GST_VALUE'),
@@ -995,9 +1015,10 @@ class Common extends Model
     {
         if (!empty($invoice_id) && !empty($user_id)) {
             $all_datas = DB::table('imagefootage_performa_invoices')
-                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'imagefootage_performa_invoice_items.*', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'usr.vendor_code', 'ct.name as cityname', 'st.state as statename', 'cn.name as countryname')
+                ->select('imagefootage_performa_invoices.*', 'imagefootage_performa_invoices.modified as invicecreted', 'imagefootage_performa_invoice_items.*', 'usr.id as client_user_id', 'usr.first_name', 'usr.last_name', 'usr.title', 'usr.user_name', 'usr.contact_owner', 'usr.email', 'usr.mobile', 'usr.phone', 'usr.postal_code', 'usr.description', 'usr.gst', 'usr.pan', 'usr.company', 'usr.vendor_code', 'creator.name as quotation_created_by_name', 'ct.name as cityname', 'st.state as statename', 'cn.name as countryname')
                 ->join('imagefootage_performa_invoice_items', 'imagefootage_performa_invoice_items.invoice_id', '=', 'imagefootage_performa_invoices.id')
                 ->join('imagefootage_users as usr', 'usr.id', '=', 'imagefootage_performa_invoices.user_id')
+                ->leftJoin('imagefootage_admins as creator', 'creator.id', '=', 'imagefootage_performa_invoices.created_by')
                 ->where('imagefootage_performa_invoices.id', '=', $invoice_id)
                 ->where('imagefootage_performa_invoices.user_id', '=', $user_id)
                 ->join('countries as cn', 'cn.id', '=', 'usr.country', 'left')
